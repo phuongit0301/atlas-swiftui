@@ -14,6 +14,10 @@
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
+		3ED754972A11E302003072A1 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED754962A11E302003072A1 /* SimilaritySearchKit */; };
+		3ED754992A11E302003072A1 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */; };
+		3ED7549B2A11E302003072A1 /* SimilaritySearchKitMiniLMAll in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */; };
+		3ED7549D2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ED7549D2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */,
+				3ED7549B2A11E302003072A1 /* SimilaritySearchKitMiniLMAll in Frameworks */,
+				3ED754992A11E302003072A1 /* SimilaritySearchKitDistilbert in Frameworks */,
+				3ED754972A11E302003072A1 /* SimilaritySearchKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +151,12 @@
 			dependencies = (
 			);
 			name = ATLAS;
+			packageProductDependencies = (
+				3ED754962A11E302003072A1 /* SimilaritySearchKit */,
+				3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */,
+				3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */,
+				3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */,
+			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +229,9 @@
 				Base,
 			);
 			mainGroup = 3ED7545F2A11E1BA003072A1;
+			packageReferences = (
+				3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
+			);
 			productRefGroup = 3ED754692A11E1BA003072A1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -577,6 +594,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3ED754962A11E302003072A1 /* SimilaritySearchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKit;
+		};
+		3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKitDistilbert;
+		};
+		3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKitMiniLMAll;
+		};
+		3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			productName = SimilaritySearchKitMiniLMMultiQA;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3ED754602A11E1BA003072A1 /* Project object */;
 }
