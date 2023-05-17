@@ -100,18 +100,6 @@ struct ContentView: View {
                         Text(result)
                     }
                     .frame(maxWidth: 500)
-                    HStack {
-                        Button("📋 Print to console") {
-                            exportForLLM()
-                        }
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: 250)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                        .padding()
-                    }
                 }
             }
             Spacer()
@@ -168,50 +156,6 @@ struct ContentView: View {
         Task {
             let results = await index.search(searchText, top: 1)
 
-            searchResults = results.map { $0.text }
-//            let llmPrompt = SimilarityIndex.combinedResultsString(results)
-//            print(llmPrompt)
-//            // Use NaturalLanguage to extract relevant information from the search results
-//            // Use the BERT model to search for the answer.
-//            let bert = BERT()
-//
-//            // chunk llmPrompt into tokens of 384 max
-//            // for each chunk, determine if there is an answer
-//            let splitter1 = SentenceSplitter()
-//            //let (splitText1, _) = splitter1.split(text: llmPrompt)
-//            let chunks1 = splitter1.split(text: llmPrompt)
-//
-//            var answer = ""
-//            var selectedChunk = ""
-//            for chunk in chunks1 {
-//                print(chunk)
-//                answer = String(bert.findAnswer(for: searchText, in: chunk))
-//                if answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction." {
-//                    print(answer)
-//                    selectedChunk = chunk
-//                    break
-//                }
-//            }
-//
-//            // If answer found, return source and title
-//            if answer != "" {
-//                let title = fileName // Replace "nil" with the actual title
-//                // Print the generated text
-//                print("Final generated answer:", answer)
-//                print("Source:", selectedChunk)
-//                print("Document:", title)
-//            }
-//            else {
-//                print("Couldn't find a valid answer. Please try again.")
-//            }
-        }
-    }
-
-    func exportForLLM() {
-        guard let index = similarityIndex else { return }
-
-        Task {
-            let results = await index.search(searchText, top: 1)
             let llmPrompt = SimilarityIndex.combinedResultsString(results)
             
             // re index and refine the search
@@ -258,9 +202,12 @@ struct ContentView: View {
                 print("Final generated answer:", answer)
                 print("Source:", selectedChunk)
                 print("Document:", title)
+                let finalResult = ["Final generated answer: " + answer + "\n\nSource: " + selectedChunk + "\n\nDocument: " + title]
+                searchResults = finalResult
             }
             else {
                 print("Couldn't find a valid answer. Please try again.")
+                searchResults = ["Couldn't find a valid answer. Please try again."]
             }
         }
     }
