@@ -12,6 +12,9 @@ import UIKit
 import MobileCoreServices
 import PDFKit
 import QuickLookThumbnailing
+import Foundation
+import CoreML
+
 
 struct ContentView: View {
     @State private var documentText: String = ""
@@ -28,9 +31,10 @@ struct ContentView: View {
 
     @State private var similarityIndex: SimilarityIndex?
     
+    //app view wrapper
     var body: some View {
         VStack {
-            Text("🔍 PDF Search")
+            Text("🔍 PDF Search") //not required search view, to auto load the PDF files, and perform embedding
                 .font(.largeTitle)
                 .bold()
                 .padding()
@@ -134,6 +138,7 @@ struct ContentView: View {
         }
     }
 
+    // no need document picker
     func selectFromFiles() {
         let picker = DocumentPicker(document: $documentText, fileName: $fileName, fileIcon: $fileIcon, totalCharacters: $totalCharacters, totalTokens: $totalTokens)
         let hostingController = UIHostingController(rootView: picker)
@@ -183,11 +188,29 @@ struct ContentView: View {
         Task {
             let results = await index.search(searchText, top: 6)
             let llmPrompt = SimilarityIndex.exportLLMPrompt(query: searchText, results: results)
-            let pasteboard = UIPasteboard.general
-            pasteboard.string = llmPrompt
+            
+            // Use NaturalLanguage to extract relevant information from the search results
+            // Use the BERT model to search for the answer.
+            let bert = BERT()
+            let answer = bert.findAnswer(for: searchText, in: llmPrompt)
+            // chunk llmPrompt into tokens of 384 max
+
+            // if answer found, return source and title
+            if (answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction.") {
+                let source = bert.findAnswer(for: "What is the source?", in: llmPrompt)
+                let title = "nil"
+                // Print the generated text
+                print("Final generated answer:", answer)
+                print("Source: ", source)
+                print("Title: ", title)
+            }
+            else {
+                print("Couldn't find a valid answer. Please try again.")
+            }
         }
     }
 
+   
     func exportForPinecone() {
         struct PineconeExport: Codable {
             let vectors: [PineconeIndexItem]
