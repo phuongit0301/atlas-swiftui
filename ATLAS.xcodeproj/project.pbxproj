@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E03C6302A14B3CC0099ACA3 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */; };
+		3E03C6322A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */; };
+		3E03C6342A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */; };
+		3E03C6362A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */; };
+		3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6382A14B4410099ACA3 /* BERT.swift */; };
+		3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6392A14B4410099ACA3 /* BERTInput.swift */; };
+		3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */; };
+		3E03C6422A14B4420099ACA3 /* bert-base-uncased-vocab.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */; };
+		3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */; };
+		3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */; };
+		3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
-		3ED754972A11E302003072A1 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED754962A11E302003072A1 /* SimilaritySearchKit */; };
-		3ED754992A11E302003072A1 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */; };
-		3ED7549B2A11E302003072A1 /* SimilaritySearchKitMiniLMAll in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */; };
-		3ED7549D2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */; };
-		C5F9C8182A1485C40076396F /* Model in Resources */ = {isa = PBXBuildFile; fileRef = C5F9C8172A1485C30076396F /* Model */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E03C6382A14B4410099ACA3 /* BERT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERT.swift; sourceTree = "<group>"; };
+		3E03C6392A14B4410099ACA3 /* BERTInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTInput.swift; sourceTree = "<group>"; };
+		3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = BERTQAFP16.mlmodel; sourceTree = "<group>"; };
+		3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bert-base-uncased-vocab.txt"; sourceTree = "<group>"; };
+		3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTOutput.swift; sourceTree = "<group>"; };
+		3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTVocabulary.swift; sourceTree = "<group>"; };
+		3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenizedString.swift; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -47,7 +60,6 @@
 		3ED754822A11E1BD003072A1 /* ATLASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATLASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED754862A11E1BD003072A1 /* ATLASUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITests.swift; sourceTree = "<group>"; };
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C5F9C8172A1485C30076396F /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,10 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ED7549D2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */,
-				3ED7549B2A11E302003072A1 /* SimilaritySearchKitMiniLMAll in Frameworks */,
-				3ED754992A11E302003072A1 /* SimilaritySearchKitDistilbert in Frameworks */,
-				3ED754972A11E302003072A1 /* SimilaritySearchKit in Frameworks */,
+				3E03C6362A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */,
+				3E03C6342A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll in Frameworks */,
+				3E03C6322A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert in Frameworks */,
+				3E03C6302A14B3CC0099ACA3 /* SimilaritySearchKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +93,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E03C6372A14B4410099ACA3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3E03C6382A14B4410099ACA3 /* BERT.swift */,
+				3E03C6392A14B4410099ACA3 /* BERTInput.swift */,
+				3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */,
+				3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */,
+				3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */,
+				3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */,
+				3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
@@ -104,9 +130,9 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
+				3E03C6372A14B4410099ACA3 /* Model */,
 				C5F9C8192A1487870076396F /* ATLASApp.swift */,
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
-				C5F9C8172A1485C30076396F /* Model */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
 				3ED754712A11E1BC003072A1 /* Preview Content */,
 			);
@@ -155,10 +181,10 @@
 			);
 			name = ATLAS;
 			packageProductDependencies = (
-				3ED754962A11E302003072A1 /* SimilaritySearchKit */,
-				3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */,
-				3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */,
-				3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */,
+				3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */,
+				3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */,
+				3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */,
+				3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */,
 			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
@@ -233,8 +259,7 @@
 			);
 			mainGroup = 3ED7545F2A11E1BA003072A1;
 			packageReferences = (
-				3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
-				C5F9C7D42A1389590076396F /* XCRemoteSwiftPackageReference "swift-coreml-transformers" */,
+				3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 			);
 			productRefGroup = 3ED754692A11E1BA003072A1 /* Products */;
 			projectDirPath = "";
@@ -252,9 +277,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F9C8182A1485C40076396F /* Model in Resources */,
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */,
+				3E03C6422A14B4420099ACA3 /* bert-base-uncased-vocab.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +305,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
+				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
+				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
+				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
+				3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */,
+				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
+				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,43 +632,35 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
+		3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZachNagengast/similarity-search-kit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.5;
-			};
-		};
-		C5F9C7D42A1389590076396F /* XCRemoteSwiftPackageReference "swift-coreml-transformers" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/huggingface/swift-coreml-transformers";
-			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3ED754962A11E302003072A1 /* SimilaritySearchKit */ = {
+		3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKit;
 		};
-		3ED754982A11E302003072A1 /* SimilaritySearchKitDistilbert */ = {
+		3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitDistilbert;
 		};
-		3ED7549A2A11E302003072A1 /* SimilaritySearchKitMiniLMAll */ = {
+		3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitMiniLMAll;
 		};
-		3ED7549C2A11E302003072A1 /* SimilaritySearchKitMiniLMMultiQA */ = {
+		3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3ED754952A11E302003072A1 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
+			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
 			productName = SimilaritySearchKitMiniLMMultiQA;
 		};
 /* End XCSwiftPackageProductDependency section */
