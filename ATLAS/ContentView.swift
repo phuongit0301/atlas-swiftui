@@ -101,19 +101,8 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: 500)
                     HStack {
-                        Button("📋 Copy LLM Prompt") {
+                        Button("📋 Print to console") {
                             exportForLLM()
-                        }
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: 250)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                        .padding()
-
-                        Button("💾 Save for Pinecone") {
-                            exportForPinecone()
                         }
                         .font(.headline)
                         .foregroundColor(.white)
@@ -154,7 +143,8 @@ struct ContentView: View {
 
         Task {
             let splitter = RecursiveTokenSplitter(withTokenizer: BertTokenizer())
-            let (splitText, _) = splitter.split(text: documentText)
+
+            let (splitText, _) = splitter.split(text: documentText, chunkSize: 510)
             chunks = splitText
 
             embeddings = []
@@ -176,9 +166,44 @@ struct ContentView: View {
         guard let index = similarityIndex else { return }
 
         Task {
-            let results = await index.search(searchText)
+            let results = await index.search(searchText, top: 1)
 
             searchResults = results.map { $0.text }
+//            let llmPrompt = SimilarityIndex.combinedResultsString(results)
+//            print(llmPrompt)
+//            // Use NaturalLanguage to extract relevant information from the search results
+//            // Use the BERT model to search for the answer.
+//            let bert = BERT()
+//
+//            // chunk llmPrompt into tokens of 384 max
+//            // for each chunk, determine if there is an answer
+//            let splitter1 = SentenceSplitter()
+//            //let (splitText1, _) = splitter1.split(text: llmPrompt)
+//            let chunks1 = splitter1.split(text: llmPrompt)
+//
+//            var answer = ""
+//            var selectedChunk = ""
+//            for chunk in chunks1 {
+//                print(chunk)
+//                answer = String(bert.findAnswer(for: searchText, in: chunk))
+//                if answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction." {
+//                    print(answer)
+//                    selectedChunk = chunk
+//                    break
+//                }
+//            }
+//
+//            // If answer found, return source and title
+//            if answer != "" {
+//                let title = fileName // Replace "nil" with the actual title
+//                // Print the generated text
+//                print("Final generated answer:", answer)
+//                print("Source:", selectedChunk)
+//                print("Document:", title)
+//            }
+//            else {
+//                print("Couldn't find a valid answer. Please try again.")
+//            }
         }
     }
 
@@ -186,81 +211,57 @@ struct ContentView: View {
         guard let index = similarityIndex else { return }
 
         Task {
-            let results = await index.search(searchText, top: 6)
-            let llmPrompt = SimilarityIndex.exportLLMPrompt(query: searchText, results: results)
+            let results = await index.search(searchText, top: 1)
+            let llmPrompt = SimilarityIndex.combinedResultsString(results)
             
-            // Use NaturalLanguage to extract relevant information from the search results
-            // Use the BERT model to search for the answer.
-            let bert = BERT()
-            let answer = bert.findAnswer(for: searchText, in: llmPrompt)
-            // chunk llmPrompt into tokens of 384 max
+            // re index and refine the search
+            guard let newIndex = similarityIndex else { return }
+            newIndex.removeAll()
+            let splitter = SentenceSplitter()
+            let chunks = splitter.split(text: llmPrompt)
+            
+            var embeddings: [[Float]] = []
+            if let miniqa = newIndex.indexModel as? DistilbertEmbeddings {
+                for chunk in chunks {
+                    if let embedding = await miniqa.encode(sentence: chunk) {
+                        embeddings.append(embedding)
+                    }
+                }
+            }
 
-            // if answer found, return source and title
-            if (answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction.") {
-                let source = bert.findAnswer(for: "What is the source?", in: llmPrompt)
-                let title = "nil"
+            for (idx, chunk) in chunks.enumerated() {
+                await newIndex.addItem(id: "id\(idx)", text: chunk, metadata: ["source": fileName], embedding: embeddings[idx])
+            }
+            
+
+            let refinedResults = await newIndex.search(searchText, top: 1)
+            let refinedLLMPrompt = SimilarityIndex.combinedResultsString(refinedResults)
+
+            // Use NaturalLanguage to extract relevant information from the search results
+            // Use the BERT model to provide an answer.
+            let bert = BERT()
+            let refinedChunks = splitter.split(text: refinedLLMPrompt)
+            var answer = ""
+            var selectedChunk = ""
+            for chunk in refinedChunks {
+                answer = String(bert.findAnswer(for: searchText, in: chunk))
+                if answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction." {
+                    selectedChunk = chunk
+                    break
+                }
+            }
+            
+            // If answer found, return source and title
+            if answer != "" {
+                let title = fileName // Replace "nil" with the actual title
                 // Print the generated text
                 print("Final generated answer:", answer)
-                print("Source: ", source)
-                print("Title: ", title)
+                print("Source:", selectedChunk)
+                print("Document:", title)
             }
             else {
                 print("Couldn't find a valid answer. Please try again.")
             }
-        }
-    }
-
-   
-    func exportForPinecone() {
-        struct PineconeExport: Codable {
-            let vectors: [PineconeIndexItem]
-        }
-
-        struct PineconeIndexItem: Codable {
-            let id: String
-            let metadata: [String: String]
-            let values: [Float]
-        }
-
-        guard let index = similarityIndex else { return }
-
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-
-        // Map items into Pinecone import structure
-        var pineconeIndexItems: [PineconeIndexItem] = []
-        for item in index.indexItems {
-            let pineconeItem = PineconeIndexItem(
-                id: item.id,
-                metadata: [
-                    "text": item.text,
-                    "source": item.metadata["source"] ?? "",
-                ],
-                values: item.embedding
-            )
-            pineconeIndexItems.append(pineconeItem)
-        }
-
-        let pineconeExport = PineconeExport(vectors: pineconeIndexItems)
-
-        do {
-            let data = try encoder.encode(pineconeExport)
-            let fileName = "\(index.indexName)_\(String(describing: index.indexModel))_\(index.dimension).json"
-
-            if let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(fileName) {
-                try data.write(to: fileURL)
-
-                let documentPicker = UIDocumentPickerViewController(forExporting: [fileURL], asCopy: true)
-                documentPicker.modalPresentationStyle = .fullScreen
-
-                UIApplication.shared.connectedScenes
-                    .map { ($0 as? UIWindowScene)?.windows.first?.rootViewController }
-                    .compactMap { $0 }
-                    .first?
-                    .present(documentPicker, animated: true, completion: nil)
-            }
-        } catch {
-            print("Error encoding index:", error)
         }
     }
 }

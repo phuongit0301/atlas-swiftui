@@ -25,6 +25,7 @@
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
+		C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClasses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C5F9C81D2A14F3E00076396F /* customClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClasses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
 				3ED754712A11E1BC003072A1 /* Preview Content */,
+				C5F9C81D2A14F3E00076396F /* customClasses.swift */,
 			);
 			path = ATLAS;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
 				3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */,
 				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
+				C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
 			);
