@@ -154,15 +154,17 @@ struct ContentView: View {
         guard let index = similarityIndex else { return }
 
         Task {
-            let results = await index.search(searchText, top: 1)
+            let results = await index.search(searchText, top: 3)
 
             let llmPrompt = SimilarityIndex.combinedResultsString(results)
+            print(llmPrompt)
             
             // re index and refine the search
             guard let newIndex = similarityIndex else { return }
             newIndex.removeAll()
-            let splitter = SentenceSplitter()
-            let chunks = splitter.split(text: llmPrompt)
+            let splitter = TokenSplitter(withTokenizer: BertTokenizer())
+            let (splitText, _) = splitter.split(text: llmPrompt, chunkSize: 50)
+            let chunks = splitText
             
             var embeddings: [[Float]] = []
             if let miniqa = newIndex.indexModel as? DistilbertEmbeddings {
@@ -180,11 +182,13 @@ struct ContentView: View {
 
             let refinedResults = await newIndex.search(searchText, top: 1)
             let refinedLLMPrompt = SimilarityIndex.combinedResultsString(refinedResults)
+            print(refinedLLMPrompt)
 
             // Use NaturalLanguage to extract relevant information from the search results
             // Use the BERT model to provide an answer.
             let bert = BERT()
-            let refinedChunks = splitter.split(text: refinedLLMPrompt)
+            let sentenceSplitter = SentenceSplitter()
+            let refinedChunks = sentenceSplitter.split(text: refinedLLMPrompt)
             var answer = ""
             var selectedChunk = ""
             for chunk in refinedChunks {
