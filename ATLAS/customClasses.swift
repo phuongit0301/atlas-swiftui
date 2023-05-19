@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import PDFKit
+
 
 public class SentenceSplitter {
     let separator: String
@@ -43,4 +45,27 @@ public class SentenceSplitter {
 
         return chunks
     }
+}
+
+public func extractTextFromPDFbyPages(url: URL) -> [String: String]? {
+    let pdfDocument = PDFDocument(url: url)
+
+    guard let document = pdfDocument else {
+        print("Failed to load PDF document.")
+        return nil
+    }
+
+    let pageCount = document.pageCount
+    var extractedText: [String: String] = [:]
+
+    for pageIndex in 0..<pageCount {
+        if let page = document.page(at: pageIndex) {
+            if let pageContent = page.string {
+                let key = "\(url.lastPathComponent)_\(pageIndex + 1)"
+                extractedText[key] = pageContent
+            }
+        }
+    }
+
+    return extractedText
 }

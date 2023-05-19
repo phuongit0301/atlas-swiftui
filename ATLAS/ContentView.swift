@@ -17,13 +17,15 @@ import CoreML
 
 
 struct ContentView: View {
-    @State private var documentText: String = ""
+    //@State private var documentText: String = ""
+    @State private var documentText: [String: String] = [:]
     @State private var fileName: String = ""
     @State private var fileIcon: UIImage? = nil
     @State private var totalCharacters: Int = 0
     @State private var totalTokens: Int = 0
     @State private var progress: Double = 0
-    @State private var chunks: [String] = []
+    //@State private var chunks: [String] = []
+    @State private var chunks: [SimilarityIndex.IndexItem] = []
     @State private var embeddings: [[Float]] = []
     @State private var searchText: String = ""
     @State private var searchResults: [String] = []
@@ -69,7 +71,7 @@ struct ContentView: View {
                 .padding()
 
                 Button("🤖 Create Embedding Vectors") {
-                    vectorizeChunks()
+                    vectorizeChunksbyPages()
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -84,9 +86,10 @@ struct ContentView: View {
                 Text("🔢 Total Embeddings: \(embeddings.count)")
                     .font(.headline)
                     .padding()
-
-                if embeddings.count != chunks.count {
-                    ProgressView(value: Double(embeddings.count), total: Double(chunks.count))
+                //if embeddings.count != chunks.count
+                if embeddings.count != 131 {
+                    //ProgressView(value: Double(embeddings.count), total: Double(chunks.count))
+                    ProgressView(value: Double(embeddings.count), total: 131)
                         .frame(height: 10)
                         .frame(maxWidth: 500)
                         .padding()
@@ -125,48 +128,79 @@ struct ContentView: View {
             .first?
             .present(hostingController, animated: true, completion: nil)
     }
-
-    func vectorizeChunks() {
+    
+    func vectorizeChunksbyPages() {
         guard let index = similarityIndex else { return }
+        chunks = index.indexItems
+        embeddings = []
 
         Task {
             let splitter = RecursiveTokenSplitter(withTokenizer: BertTokenizer())
-
-            let (splitText, _) = splitter.split(text: documentText, chunkSize: 510)
-            chunks = splitText
-
-            embeddings = []
-            if let miniqa = index.indexModel as? DistilbertEmbeddings {
-                for chunk in chunks {
-                    if let embedding = await miniqa.encode(sentence: chunk) {
-                        embeddings.append(embedding)
+            var idx = 0
+            for (pageKey, chunk) in documentText {
+                let (splitText, _) = splitter.split(text: chunk, chunkSize: 510)
+                var embeddingsSplit: [[Float]] = []
+                if let miniqa = index.indexModel as? DistilbertEmbeddings {
+                    for split in splitText {
+                        if let embedding = await miniqa.encode(sentence: split) {
+                            embeddings.append(embedding)
+                            embeddingsSplit.append(embedding)
+                        }
                     }
                 }
-            }
-
-            for (idx, chunk) in chunks.enumerated() {
-                await index.addItem(id: "id\(idx)", text: chunk, metadata: ["source": fileName], embedding: embeddings[idx])
+                for (idy, splitChunk) in splitText.enumerated() {
+                    let chunkPageKey = "\(pageKey)"
+                    let metadata = ["source": chunkPageKey]
+                    await index.addItem(id: "id\(idx + idy)", text: splitChunk, metadata: metadata, embedding: embeddingsSplit[idy])
+                }
+                idx = idx + 1
             }
         }
     }
 
-    func searchDocument() {
-        guard let index = similarityIndex else { return }
 
-        Task {
-            let results = await index.search(searchText, top: 3)
+    func rankResults(_ results: [SimilarityIndex.SearchResult]) -> [SimilarityIndex.SearchResult] {
+        let sortedResults = results.sorted { (result1, result2) -> Bool in
+            if let score1 = result1.score as? Float, let score2 = result2.score as? Float {
+                return score1 > score2
+            }
+            return false
+        }
+        
+        let rankedResults = Array(sortedResults.prefix(3))
+        return rankedResults
+    }
 
-            let llmPrompt = SimilarityIndex.combinedResultsString(results)
-            print(llmPrompt)
+    func extractAnswer(from refinedLLMPrompt: String, SearchText: String) -> [String : String] {
+        let bert = BERT()
+        let sentenceSplitter = SentenceSplitter()
+        let refinedChunks = sentenceSplitter.split(text: refinedLLMPrompt)
+        var answer = ""
+        var selectedChunk = ""
+        
+        for chunk in refinedChunks {
+            answer = String(bert.findAnswer(for: SearchText, in: chunk))
             
-            // re index and refine the search
-            guard let newIndex = similarityIndex else { return }
-            newIndex.removeAll()
-            let splitter = TokenSplitter(withTokenizer: BertTokenizer())
-            let (splitText, _) = splitter.split(text: llmPrompt, chunkSize: 50)
+            if answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction." {
+                selectedChunk = chunk
+                break
+            }
+        }
+        
+        return ["answer": answer, "selectedChunk": selectedChunk]
+    }
+
+    func reindexAndRefineSearch(results: [SimilarityIndex.SearchResult], searchText: String) async -> [SimilarityIndex.SearchResult] {
+        guard let newIndex = similarityIndex else { return [] }
+        newIndex.removeAll()
+        let splitter = RecursiveTokenSplitter(withTokenizer: BertTokenizer())
+        var idx = 0
+        var embeddings: [[Float]] = []
+        
+        for result in results {
+            let (splitText, _) = splitter.split(text: result.text, chunkSize: 40)
             let chunks = splitText
             
-            var embeddings: [[Float]] = []
             if let miniqa = newIndex.indexModel as? DistilbertEmbeddings {
                 for chunk in chunks {
                     if let embedding = await miniqa.encode(sentence: chunk) {
@@ -174,51 +208,82 @@ struct ContentView: View {
                     }
                 }
             }
-
-            for (idx, chunk) in chunks.enumerated() {
-                await newIndex.addItem(id: "id\(idx)", text: chunk, metadata: ["source": fileName], embedding: embeddings[idx])
-            }
             
+            for (idy, chunk) in chunks.enumerated() {
+                await newIndex.addItem(id: "id\(idx + idy)", text: chunk, metadata: result.metadata, embedding: embeddings[idy])
+            }
+            idx += chunks.count
+        }
+        
+        let refinedResults = await newIndex.search(searchText, top: 1)
+        
+        return refinedResults
+    }
+    
 
-            let refinedResults = await newIndex.search(searchText, top: 1)
+    func searchDocument() {
+        guard let index = similarityIndex else { return }
+
+        Task {
+            let results = await index.search(searchText, top: 6)
+            print("INITIAL RESULTS: ", results)
+            // Sort by top 3
+            let rankedResults = rankResults(results)
+            print("\nRANKED RESULTS: ", rankedResults)
+
+            let llmPrompt = SimilarityIndex.combinedResultsString(rankedResults)
+            print(llmPrompt)
+
+            // Reindex and refine the search
+            let refinedResults = await reindexAndRefineSearch(results: rankedResults, searchText: searchText)
+            print("\nREFINED RESULTS: ", refinedResults)
+
+            processRefinedResults(refinedResults)
+        }
+    }
+
+    func processRefinedResults(_ refinedResults: [SimilarityIndex.SearchResult]) {
+        if let firstResult = refinedResults.first {
+            let title = firstResult.metadata
             let refinedLLMPrompt = SimilarityIndex.combinedResultsString(refinedResults)
             print(refinedLLMPrompt)
 
-            // Use NaturalLanguage to extract relevant information from the search results
-            // Use the BERT model to provide an answer.
-            let bert = BERT()
-            let sentenceSplitter = SentenceSplitter()
-            let refinedChunks = sentenceSplitter.split(text: refinedLLMPrompt)
-            var answer = ""
-            var selectedChunk = ""
-            for chunk in refinedChunks {
-                answer = String(bert.findAnswer(for: searchText, in: chunk))
-                if answer != "Couldn't find a valid answer. Please try again." || answer != "The BERT model is unable to make a prediction." {
-                    selectedChunk = chunk
-                    break
-                }
-            }
-            
-            // If answer found, return source and title
-            if answer != "" {
-                let title = fileName // Replace "nil" with the actual title
-                // Print the generated text
-                print("Final generated answer:", answer)
-                print("Source:", selectedChunk)
-                print("Document:", title)
-                let finalResult = ["Final generated answer: " + answer + "\n\nSource: " + selectedChunk + "\n\nDocument: " + title]
-                searchResults = finalResult
-            }
-            else {
-                print("Couldn't find a valid answer. Please try again.")
-                searchResults = ["Couldn't find a valid answer. Please try again."]
-            }
+            let extractedAnswer = extractAnswer(from: refinedLLMPrompt, SearchText: searchText)
+            let answer = extractedAnswer["answer"] ?? ""
+            let selectedChunk = extractedAnswer["selectedChunk"] ?? ""
+
+            handleAnswerResult(answer, selectedChunk, title)
+        } else {
+            print("No refined results found.")
+            searchResults = ["No refined results found."]
         }
+    }
+
+    func handleAnswerResult(_ answer: String, _ selectedChunk: String, _ title: [String:String]) {
+        // If answer found, return source and title
+        if !answer.isEmpty {
+            let docsource = title["source"]
+            // Print the generated text
+            print("Final generated answer:", answer)
+            print("Source:", selectedChunk)
+            print("Document:", docsource ?? "")
+            let finalResult = generateFinalResult(answer: answer, selectedChunk: selectedChunk, docsource: docsource ?? "")
+            searchResults = finalResult
+        } else {
+            print("Couldn't find a valid answer. Please try again.")
+            searchResults = ["Couldn't find a valid answer. Please try again."]
+        }
+    }
+
+    func generateFinalResult(answer: String, selectedChunk: String, docsource: String) -> [String] {
+        let finalResult = ["Final generated answer: \(answer)\n\nSource: \(selectedChunk)\n\nDocument: \(docsource)"]
+        return finalResult
     }
 }
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    @Binding var document: String
+    //@Binding var document: String
+    @Binding var document: [String: String]
     @Binding var fileName: String
     @Binding var fileIcon: UIImage?
     @Binding var totalCharacters: Int
@@ -246,12 +311,18 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
         func documentPicker(_: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first, let _ = PDFDocument(url: url) else { return }
-            let pdfText = Files.extractTextFromPDF(url: url) ?? ""
+            //let pdfText = Files.extractTextFromPDF(url: url) ?? ""
+            let pdfText = extractTextFromPDFbyPages(url: url)
 
-            parent.document = pdfText
+            parent.document = pdfText ?? [:]
             parent.fileName = url.lastPathComponent
-            parent.totalCharacters = pdfText.count
-            parent.totalTokens = BertTokenizer().tokenize(text: pdfText).count
+            parent.totalCharacters = 0
+            parent.totalTokens = 0
+            
+//            parent.document = pdfText
+//            parent.fileName = url.lastPathComponent
+//            parent.totalCharacters = pdfText.count
+//            parent.totalTokens = BertTokenizer().tokenize(text: pdfText).count
 
             // Create the thumbnail
             let size: CGSize = CGSize(width: 60, height: 60)
