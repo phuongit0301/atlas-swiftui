@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct TabBarView: View {
+struct TabbarScrollable: View {
     var tabbarItems: [String]
     @Namespace private var menuItemTransition
     @Binding var selectedIndex: Int
@@ -27,7 +27,7 @@ struct TabBarView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal, 16)
             .onChange(of: selectedIndex) { index in
                 withAnimation {
                     scrollView.scrollTo(index, anchor: .center)

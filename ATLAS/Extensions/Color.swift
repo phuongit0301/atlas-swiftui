@@ -17,4 +17,6 @@ struct ColorTheme {
     let eerieBlack = Color("EerieBlack")
     let tuftsBlue = Color("TuftsBlue")
     let aeroBlue = Color("AeroBlue")
+    let honeydew = Color("Honeydew")
+    let champagne = Color("Champagne")
 }

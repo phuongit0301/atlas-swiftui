@@ -1,18 +1,18 @@
 //
-//  FlightNoteView.swift
+//  FlightInformation.swift
 //  ATLAS
 //
-//  Created by phuong phan on 20/05/2023.
+//  Created by phuong phan on 21/05/2023.
 //
 
 import Foundation
 import SwiftUI
 
-struct FlightNoteView: View {
+struct FlightInformationCard: View {
     var viewModel = ListFlightNoteInformationModel()
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             // flight informations
             Collapsible {
                 Text("Flight Information")
@@ -30,6 +30,8 @@ struct FlightNoteView: View {
                                 Text(item.date).foregroundColor(Color.theme.eerieBlack).fontWeight(.regular).font(.system(size: 16))
                             }
                         }.buttonStyle(PlainButtonStyle())
+                            .padding(.vertical, 12)
+                        Divider()
                     }
                 }
             } headerContent: {
@@ -48,8 +50,10 @@ struct FlightNoteView: View {
                             .aspectRatio(contentMode: .fit)
                     }.padding(.horizontal, 32)
                 }
-            }
-        }.padding(16)
-        .background(Color.theme.cultured)
+            }.padding(.horizontal, 16)
+                .padding(.vertical, 8)
+        }.background(.white)
+            .cornerRadius(8)
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }

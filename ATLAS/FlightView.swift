@@ -24,12 +24,14 @@ struct FlightView: View {
     
     var body: some View {
         GeometryReader { geo in
-            VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
                 // Tabs
-                TabBarView(tabbarItems: [ "Overview", "Flight Notes", "Fuel", "Flight Plan", "Charts", "Weather", "Atlas Search", "Reporting" ], selectedIndex: $selectedTab).previewDisplayName("TabBarView")
+                TabbarScrollable(tabbarItems: [ "Overview", "Flight Notes", "Fuel", "Flight Plan", "Charts", "Weather", "Atlas Search", "Reporting" ], selectedIndex: $selectedTab).previewDisplayName("TabBarView")
                 
+                Rectangle().fill(Color.theme.cultured).frame(height: 8)
                 Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                
+                Rectangle().fill(Color.theme.cultured).frame(height: 8)
+
                 TabView(selection: $selectedTab,
                         content: {
                     OverviewView()
@@ -39,6 +41,7 @@ struct FlightView: View {
                     FlightNoteView()
                         .tag(1)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.theme.cultured)
                         .ignoresSafeArea()
                     FuelView()
                         .tag(2)
@@ -66,8 +69,8 @@ struct FlightView: View {
                         .ignoresSafeArea()
                 })
             }
-            .padding(16)
             .background(Color.theme.cultured)
+            .padding(16)
             .navigationBarBackButtonHidden(true)
             .ignoresSafeArea()
         }

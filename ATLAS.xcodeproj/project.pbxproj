@@ -43,8 +43,10 @@
 		3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF64A2A18FF7600A97ECF /* ReportingView.swift */; };
 		3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF64C2A18FFDD00A97ECF /* ChartView.swift */; };
 		3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF64E2A18FFF100A97ECF /* WeatherView.swift */; };
-		3E5AF6512A19035200A97ECF /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6502A19035200A97ECF /* TabbarView.swift */; };
+		3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */; };
 		3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6532A19979700A97ECF /* Collapsible.swift */; };
+		3E5AF6572A1A561F00A97ECF /* FlightInformationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6562A1A561F00A97ECF /* FlightInformationCard.swift */; };
+		3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -105,8 +107,10 @@
 		3E5AF64A2A18FF7600A97ECF /* ReportingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingView.swift; sourceTree = "<group>"; };
 		3E5AF64C2A18FFDD00A97ECF /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3E5AF64E2A18FFF100A97ECF /* WeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
-		3E5AF6502A19035200A97ECF /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarScrollable.swift; sourceTree = "<group>"; };
 		3E5AF6532A19979700A97ECF /* Collapsible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collapsible.swift; sourceTree = "<group>"; };
+		3E5AF6562A1A561F00A97ECF /* FlightInformationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightInformationCard.swift; sourceTree = "<group>"; };
+		3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNoteCard.swift; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -189,7 +193,7 @@
 		3E5AF6492A18FF2900A97ECF /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				3E5AF63F2A18D9E700A97ECF /* FlightNoteView.swift */,
+				3E5AF6552A1A55F200A97ECF /* FlightNoteView */,
 				3E5AF6412A18DAB800A97ECF /* AtlasSearchView.swift */,
 				3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */,
 				3E5AF6452A18FF0500A97ECF /* FuelView.swift */,
@@ -207,6 +211,16 @@
 				3E5AF6532A19979700A97ECF /* Collapsible.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		3E5AF6552A1A55F200A97ECF /* FlightNoteView */ = {
+			isa = PBXGroup;
+			children = (
+				3E5AF63F2A18D9E700A97ECF /* FlightNoteView.swift */,
+				3E5AF6562A1A561F00A97ECF /* FlightInformationCard.swift */,
+				3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */,
+			);
+			path = FlightNoteView;
 			sourceTree = "<group>";
 		};
 		3ED7545F2A11E1BA003072A1 = {
@@ -249,7 +263,7 @@
 				3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */,
 				3E5AF63B2A18BCB500A97ECF /* NavView.swift */,
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
-				3E5AF6502A19035200A97ECF /* TabbarView.swift */,
+				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
 			);
 			path = ATLAS;
 			sourceTree = "<group>";
@@ -430,13 +444,15 @@
 			files = (
 				3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
+				3E5AF6572A1A561F00A97ECF /* FlightInformationCard.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
-				3E5AF6512A19035200A97ECF /* TabbarView.swift in Sources */,
+				3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */,
+				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,

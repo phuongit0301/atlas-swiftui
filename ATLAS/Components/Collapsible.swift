@@ -28,7 +28,7 @@ struct Collapsible<Content: View, HeaderContent: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             Button(
                 action: { self.collapsed.toggle() },
                 label: {
@@ -40,6 +40,7 @@ struct Collapsible<Content: View, HeaderContent: View>: View {
                 }
             )
             .buttonStyle(PlainButtonStyle())
+            .padding(.bottom, 8)
             if collapsed {
                 Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                 VStack {
@@ -51,9 +52,7 @@ struct Collapsible<Content: View, HeaderContent: View>: View {
                 .animation(.easeOut(duration: 1.0))
                 .transition(.opacity)
             }
-        }.background(Color.theme.cultured)
-            .cornerRadius(8)
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
     }
 }
 

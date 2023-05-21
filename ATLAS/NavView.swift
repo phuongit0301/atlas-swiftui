@@ -23,7 +23,7 @@ struct NavView: View {
                     Text(selectedItem?.date ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 15))
                 }
                 Spacer()
-            }.padding()
+            }.padding(16)
             if currentScreen == .flight {
                 FlightView()
             } else {
