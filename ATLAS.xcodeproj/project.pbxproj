@@ -63,6 +63,7 @@
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
+		C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClasses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,7 @@
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C5F9C81D2A14F3E00076396F /* customClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClasses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 				3E5AF63B2A18BCB500A97ECF /* NavView.swift */,
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
+				C5F9C81D2A14F3E00076396F /* customClasses.swift */,
 			);
 			path = ATLAS;
 			sourceTree = "<group>";
@@ -507,9 +510,7 @@
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
 				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
-				3E5AF6342A187E3500A97ECF /* HomeView.swift in Sources */,
-				3E5AF6402A18D9E700A97ECF /* FlightNoteView.swift in Sources */,
-				3E5AF6442A18E0EA00A97ECF /* OverviewView.swift in Sources */,
+				C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E82506C2A1DC2FC008F616D /* AircraftStatusForm.swift in Sources */,
 				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
