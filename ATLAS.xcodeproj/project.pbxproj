@@ -21,14 +21,11 @@
 		3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */; };
 		3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C64C2A15D4D80099ACA3 /* Color.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
-		3E5AF6342A187E3500A97ECF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6332A187E3500A97ECF /* HomeView.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
-		3E5AF6402A18D9E700A97ECF /* FlightNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63F2A18D9E700A97ECF /* FlightNoteView.swift */; };
 		3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6412A18DAB800A97ECF /* AtlasSearchView.swift */; };
-		3E5AF6442A18E0EA00A97ECF /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */; };
 		3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6452A18FF0500A97ECF /* FuelView.swift */; };
 		3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6472A18FF1E00A97ECF /* FlightPlanView.swift */; };
 		3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF64A2A18FF7600A97ECF /* ReportingView.swift */; };
@@ -42,6 +39,7 @@
 		3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */; };
 		3E5AF65F2A1AE07000A97ECF /* QuickReferenceCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65E2A1AE07000A97ECF /* QuickReferenceCard.swift */; };
 		3E5AF6612A1B080E00A97ECF /* Form1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6602A1B080E00A97ECF /* Form1.swift */; };
+		3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */; };
 		3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250562A1BAE0A008F616D /* Inter-Medium.ttf */; };
 		3E8250602A1BAE0A008F616D /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250572A1BAE0A008F616D /* Inter-Black.ttf */; };
 		3E8250612A1BAE0A008F616D /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250582A1BAE0A008F616D /* Inter-Thin.ttf */; };
@@ -116,6 +114,7 @@
 		3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTab.swift; sourceTree = "<group>"; };
 		3E5AF65E2A1AE07000A97ECF /* QuickReferenceCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickReferenceCard.swift; sourceTree = "<group>"; };
 		3E5AF6602A1B080E00A97ECF /* Form1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form1.swift; sourceTree = "<group>"; };
+		3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOffline.swift; sourceTree = "<group>"; };
 		3E8250562A1BAE0A008F616D /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
 		3E8250572A1BAE0A008F616D /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		3E8250582A1BAE0A008F616D /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
@@ -283,6 +282,7 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
 				3E8250552A1BADF0008F616D /* Fonts */,
 				3E5AF6522A19978900A97ECF /* Components */,
 				3E5AF6492A18FF2900A97ECF /* Tabs */,
@@ -499,6 +499,7 @@
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
+				3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
 				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
 				3E82506A2A1CB6FA008F616D /* DepatureCardForm.swift in Sources */,
