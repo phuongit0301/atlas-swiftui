@@ -16,7 +16,7 @@ struct Tab {
 struct Tabs: View {
     var fixed = true
     
-    @Binding var tabs: [Tab]
+    var tabs: [Tab]
     let geoWidth: CGFloat
     @Binding var selectedTab: Int
     
@@ -35,20 +35,26 @@ struct Tabs: View {
                                     HStack {
                                         HStack {
                                             // Text
-                                            Text(tabs[row].title)
-                                                .font(Font.system(size: 18, weight: .semibold))
-                                                .foregroundColor(Color.theme.eerieBlack)
-                                                .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 15))
+                                            selectedTab == row ?
+                                                Text(tabs[row].title)
+                                                .font(.custom("Inter-SemiBold", size: 15))
+                                                    .foregroundColor(Color.theme.eerieBlack)
+                                                    .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
+                                            :
+                                                Text(tabs[row].title)
+                                                .font(.custom("Inter-Regular", size: 15))
+                                                    .foregroundColor(Color.theme.eerieBlack)
+                                                    .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
                                             // Image
                                             AnyView(tabs[row].icon)
                                                 .foregroundColor(.white)
                                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
-                                        }.padding(10)
-                                            .background(selectedTab == row ? Color.theme.aeroBlue : Color.theme.cultured)
-                                            .cornerRadius(8)
+                                        }
+//                                            .padding(10)
+//                                            .background(selectedTab == row ? Color.theme.aeroBlue : Color.theme.cultured)
                                     }
-                                    .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 52)
-                                    Rectangle().frame(height: 5)
+                                    .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 50)
+                                    Rectangle().frame(height: selectedTab == row ? 3 : 0)
                                     // Bar Indicator
                                     Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                                 }.fixedSize()
@@ -57,22 +63,18 @@ struct Tabs: View {
                                 .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    .onChange(of: selectedTab) { target in
-                        withAnimation {
-                            proxy.scrollTo(target)
-                        }
-                    }
                 }
             }
         }
-        .frame(height: 60)
-        .onAppear(perform: {
-//            UIScrollView.appearance().backgroundColor = Color.theme.cultured
-            UIScrollView.appearance().bounces = fixed ? false : true
-        })
-        .onDisappear(perform: {
-            UIScrollView.appearance().bounces = true
-        })
-        .background(Color.theme.cultured)
+        .frame(height: 53)
+//        .onAppear(perform: {
+//////            UIScrollView.appearance().backgroundColor = Color.theme.cultured
+////            UIScrollView.appearance().bounces = fixed ? false : true
+//
+//            UIScrollView.appearance().bounces = true
+//        })
+//        .onDisappear(perform: {
+//            UIScrollView.appearance().bounces = true
+//        })
     }
 }

@@ -38,7 +38,7 @@ struct FlightView: View {
                         .tag(0)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .ignoresSafeArea()
-                    FlightNoteView()
+                    FlightNoteView(geoWidth: geo.size.width)
                         .tag(1)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color.theme.cultured)
@@ -67,7 +67,7 @@ struct FlightView: View {
                         .tag(7)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .ignoresSafeArea()
-                })
+                }).id("Parent-TabView")
             }
             .background(Color.theme.cultured)
             .padding(16)

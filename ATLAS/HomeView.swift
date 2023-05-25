@@ -37,7 +37,7 @@ struct HomeView: View {
                                         .padding(.trailing, 10)
                                 }
                             }
-                        }
+                        }.navigationBarBackButtonHidden(true)
                     }.padding()
                 }
             }
@@ -45,9 +45,9 @@ struct HomeView: View {
             // flight informations
             List {
                 HStack {
-                    Text("Flight Information").foregroundColor(Color.theme.eerieBlack).fontWeight(.semibold).font(.system(size: 20))
-                    Spacer()
-                    Text("Last updated: 28 May 2023, 22:30 (UTC+8)").foregroundColor(Color.theme.eerieBlack).fontWeight(.regular).font(.system(size: 11))
+                    Text("Flight Information").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
+                    Rectangle().fill(.white).frame(width: 32)
+                    Text("Last updated: 28 May 2023, 22:30 (UTC+8)").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 11))
                     Spacer()
                     Button(action: {
                         print("Three dot clicked!!")
@@ -63,9 +63,9 @@ struct HomeView: View {
                         print("Clicked 11!")
                     }) {
                         HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).fontWeight(.semibold).font(.system(size: 16))
+                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16))
                             Spacer()
-                            Text(item.date).foregroundColor(Color.theme.eerieBlack).fontWeight(.regular).font(.system(size: 16))
+                            Text(item.date).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 16))
                         }
                     }
                 }

@@ -4,15 +4,15 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-Black</string>
-		<string>Inter-Bold</string>
-		<string>Inter-ExtraBold</string>
-		<string>Inter-ExtraLight</string>
-		<string>Inter-Light</string>
-		<string>Inter-Medium</string>
-		<string>Inter-Regular</string>
-		<string>Inter-SemiBold</string>
-		<string>Inter-Thin</string>
+		<string>Inter-Black.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-ExtraBold.ttf</string>
+		<string>Inter-ExtraLight.ttf</string>
+		<string>Inter-Light.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Thin.ttf</string>
 	</array>
 </dict>
 </plist>

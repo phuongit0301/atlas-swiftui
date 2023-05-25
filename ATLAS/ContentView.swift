@@ -32,9 +32,20 @@ struct ContentView: View {
     private var viewModel = SideMenuModel()
     
     @State private var similarityIndex: SimilarityIndex?
-    @State private var columnVisibility = NavigationSplitViewVisibility.all
+    @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
     @State var selectedItem: SubMenuItem? = nil
-
+//
+//    init() {
+//        for family: String in UIFont.familyNames
+//            {
+//                print(family)
+//                for names: String in UIFont.fontNames(forFamilyName: family)
+//                {
+//                    print("== \(names)")
+//                }
+//            }
+//    }
+    
     //app view wrapper
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -76,7 +87,6 @@ struct ContentView: View {
                 }.scrollContentBackground(.hidden)
 
             }
-            .ignoresSafeArea(edges: .top)
             .background(Color.theme.cultured)
         } detail: {
             ContentDetail(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)

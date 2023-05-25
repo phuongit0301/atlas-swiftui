@@ -32,16 +32,6 @@ struct NavView: View {
         }.background(Color.theme.cultured)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: toggleSidebar) {
-                    Image("sidebar_left")
-                        .frame(width: 26, height: 20)
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.trailing, 10)
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     dismiss()
                 }) {
