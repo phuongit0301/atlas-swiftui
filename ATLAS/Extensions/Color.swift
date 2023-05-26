@@ -24,4 +24,6 @@ struct ColorTheme {
     let middleGrey = Color("MiddleGrey") //888675
     let pastelOrange = Color("PastelOrange") //FBBB3D
     let alizarinCrimson = Color("AlizarinCrimson") //DF2D3B
+    let brightGray = Color("BrightGray") //EBEBEB
+    let philippineGray = Color("PhilippineGray") //919191
 }

@@ -1,5 +1,5 @@
 //
-//  FlightNoteCardForm.swift
+//  FlightNoteCardContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct EnrouteCardForm: View {
+struct EnrouteCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var enrouteTags: [ITag] = EnrouteTags().TagList
     

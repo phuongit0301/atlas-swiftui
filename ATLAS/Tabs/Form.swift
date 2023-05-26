@@ -180,6 +180,6 @@ struct Form: View {
 //                        } // End VStack List Categories
 //                    }.presentationDetents([.medium])
                 }
-        }.zIndex(100)
+        }
     }
 }

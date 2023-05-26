@@ -1,5 +1,5 @@
 //
-//  FlightNoteCardForm.swift
+//  FlightNoteCardContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DepatureCardForm: View {
+struct DepatureCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var depTags: [ITag] = DepartureTags().TagList
     
@@ -97,10 +97,12 @@ struct DepatureCardForm: View {
                             }.tint(Color.theme.alizarinCrimson)
                         }
                 }.onMove(perform: move)
-            }.listStyle(.plain)
+            }.listStyle(InsetGroupedListStyle())
                 .listRowBackground(Color.theme.champagne)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Form(tagList: self.$depTags).frame(height: 98)
+                .edgesIgnoringSafeArea(.bottom)
+            
+            DepartureForm(tagList: self.$depTags).frame(height: 98)
         }
     }
     

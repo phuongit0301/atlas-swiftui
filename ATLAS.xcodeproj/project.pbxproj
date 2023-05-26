@@ -40,6 +40,13 @@
 		3E5AF65F2A1AE07000A97ECF /* QuickReferenceCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65E2A1AE07000A97ECF /* QuickReferenceCard.swift */; };
 		3E5AF6612A1B080E00A97ECF /* Form1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6602A1B080E00A97ECF /* Form1.swift */; };
 		3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */; };
+		3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */; };
+		3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63F2A18D9E700A97ECF /* FlightNoteView.swift */; };
+		3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6332A187E3500A97ECF /* HomeView.swift */; };
+		3E7F68332A1FA57100EC2CA3 /* DepartureForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F68322A1FA57100EC2CA3 /* DepartureForm.swift */; };
+		3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */; };
+		3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F683D2A20ABA500EC2CA3 /* PresentationDetentReference.swift */; };
+		3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F683F2A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift */; };
 		3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250562A1BAE0A008F616D /* Inter-Medium.ttf */; };
 		3E8250602A1BAE0A008F616D /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250572A1BAE0A008F616D /* Inter-Black.ttf */; };
 		3E8250612A1BAE0A008F616D /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8250582A1BAE0A008F616D /* Inter-Thin.ttf */; };
@@ -49,10 +56,10 @@
 		3E8250652A1BAE0A008F616D /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E82505C2A1BAE0A008F616D /* Inter-Regular.ttf */; };
 		3E8250662A1BAE0A008F616D /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E82505D2A1BAE0A008F616D /* Inter-ExtraLight.ttf */; };
 		3E8250672A1BAE0A008F616D /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E82505E2A1BAE0A008F616D /* Inter-ExtraBold.ttf */; };
-		3E82506A2A1CB6FA008F616D /* DepatureCardForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8250692A1CB6FA008F616D /* DepatureCardForm.swift */; };
-		3E82506C2A1DC2FC008F616D /* AircraftStatusForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506B2A1DC2FC008F616D /* AircraftStatusForm.swift */; };
-		3E82506E2A1DC332008F616D /* EnrouteCardForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506D2A1DC332008F616D /* EnrouteCardForm.swift */; };
-		3E8250702A1DC345008F616D /* ArrivalCardForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506F2A1DC345008F616D /* ArrivalCardForm.swift */; };
+		3E82506A2A1CB6FA008F616D /* DepatureCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8250692A1CB6FA008F616D /* DepatureCardContainer.swift */; };
+		3E82506C2A1DC2FC008F616D /* AircraftStatusContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506B2A1DC2FC008F616D /* AircraftStatusContainer.swift */; };
+		3E82506E2A1DC332008F616D /* EnrouteCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506D2A1DC332008F616D /* EnrouteCardContainer.swift */; };
+		3E8250702A1DC345008F616D /* ArrivalCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82506F2A1DC345008F616D /* ArrivalCardContainer.swift */; };
 		3E8250772A1E1FB6008F616D /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8250762A1E1FB6008F616D /* View.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
@@ -115,6 +122,10 @@
 		3E5AF65E2A1AE07000A97ECF /* QuickReferenceCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickReferenceCard.swift; sourceTree = "<group>"; };
 		3E5AF6602A1B080E00A97ECF /* Form1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form1.swift; sourceTree = "<group>"; };
 		3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOffline.swift; sourceTree = "<group>"; };
+		3E7F68322A1FA57100EC2CA3 /* DepartureForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureForm.swift; sourceTree = "<group>"; };
+		3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCustom.swift; sourceTree = "<group>"; };
+		3E7F683D2A20ABA500EC2CA3 /* PresentationDetentReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentReference.swift; sourceTree = "<group>"; };
+		3E7F683F2A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentsViewModifier.swift; sourceTree = "<group>"; };
 		3E8250562A1BAE0A008F616D /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
 		3E8250572A1BAE0A008F616D /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		3E8250582A1BAE0A008F616D /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
@@ -124,10 +135,10 @@
 		3E82505C2A1BAE0A008F616D /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
 		3E82505D2A1BAE0A008F616D /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		3E82505E2A1BAE0A008F616D /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
-		3E8250692A1CB6FA008F616D /* DepatureCardForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepatureCardForm.swift; sourceTree = "<group>"; };
-		3E82506B2A1DC2FC008F616D /* AircraftStatusForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AircraftStatusForm.swift; sourceTree = "<group>"; };
-		3E82506D2A1DC332008F616D /* EnrouteCardForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteCardForm.swift; sourceTree = "<group>"; };
-		3E82506F2A1DC345008F616D /* ArrivalCardForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalCardForm.swift; sourceTree = "<group>"; };
+		3E8250692A1CB6FA008F616D /* DepatureCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepatureCardContainer.swift; sourceTree = "<group>"; };
+		3E82506B2A1DC2FC008F616D /* AircraftStatusContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AircraftStatusContainer.swift; sourceTree = "<group>"; };
+		3E82506D2A1DC332008F616D /* EnrouteCardContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteCardContainer.swift; sourceTree = "<group>"; };
+		3E82506F2A1DC345008F616D /* ArrivalCardContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalCardContainer.swift; sourceTree = "<group>"; };
 		3E8250762A1E1FB6008F616D /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -214,6 +225,7 @@
 		3E5AF6522A19978900A97ECF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F683C2A20AB9500EC2CA3 /* Presentation */,
 				3E5AF6532A19979700A97ECF /* Collapsible.swift */,
 				3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */,
 			);
@@ -229,6 +241,34 @@
 				3E5AF65E2A1AE07000A97ECF /* QuickReferenceCard.swift */,
 			);
 			path = FlightNoteView;
+			sourceTree = "<group>";
+		};
+		3E7F68342A1FA61A00EC2CA3 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				3E8250692A1CB6FA008F616D /* DepatureCardContainer.swift */,
+				3E82506D2A1DC332008F616D /* EnrouteCardContainer.swift */,
+				3E82506F2A1DC345008F616D /* ArrivalCardContainer.swift */,
+				3E82506B2A1DC2FC008F616D /* AircraftStatusContainer.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		3E7F68352A1FA62600EC2CA3 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				3E7F68322A1FA57100EC2CA3 /* DepartureForm.swift */,
+			);
+			path = Form;
+			sourceTree = "<group>";
+		};
+		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				3E7F683D2A20ABA500EC2CA3 /* PresentationDetentReference.swift */,
+				3E7F683F2A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		3E8250552A1BADF0008F616D /* Fonts */ = {
@@ -250,11 +290,9 @@
 		3E8250682A1CB6D6008F616D /* FlightNoteCard */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F68352A1FA62600EC2CA3 /* Form */,
+				3E7F68342A1FA61A00EC2CA3 /* Container */,
 				3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */,
-				3E8250692A1CB6FA008F616D /* DepatureCardForm.swift */,
-				3E82506D2A1DC332008F616D /* EnrouteCardForm.swift */,
-				3E82506F2A1DC345008F616D /* ArrivalCardForm.swift */,
-				3E82506B2A1DC2FC008F616D /* AircraftStatusForm.swift */,
 			);
 			path = FlightNoteCard;
 			sourceTree = "<group>";
@@ -300,6 +338,7 @@
 				3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */,
 				3E5AF63B2A18BCB500A97ECF /* NavView.swift */,
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
+				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
 				C5F9C81D2A14F3E00076396F /* customClasses.swift */,
 			);
@@ -483,38 +522,45 @@
 				3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
 				3E5AF6572A1A561F00A97ECF /* FlightInformationCard.swift in Sources */,
-				3E8250702A1DC345008F616D /* ArrivalCardForm.swift in Sources */,
+				3E8250702A1DC345008F616D /* ArrivalCardContainer.swift in Sources */,
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
-				3E82506E2A1DC332008F616D /* EnrouteCardForm.swift in Sources */,
+				3E82506E2A1DC332008F616D /* EnrouteCardContainer.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
+				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
+				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
 				3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */,
+				3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */,
 				3E5AF6612A1B080E00A97ECF /* Form1.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
+				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
 				3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
 				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
-				3E82506A2A1CB6FA008F616D /* DepatureCardForm.swift in Sources */,
+				3E82506A2A1CB6FA008F616D /* DepatureCardContainer.swift in Sources */,
+				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E5AF65F2A1AE07000A97ECF /* QuickReferenceCard.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
+				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
 				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
 				C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
-				3E82506C2A1DC2FC008F616D /* AircraftStatusForm.swift in Sources */,
+				3E82506C2A1DC2FC008F616D /* AircraftStatusContainer.swift in Sources */,
 				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
+				3E7F68332A1FA57100EC2CA3 /* DepartureForm.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,6 +729,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -713,6 +760,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -17,7 +17,7 @@ struct FlightNoteCard: View {
     
     @State private var currentTab: Int = 0
     @State var animatedContentHeight: CGFloat = 98
-
+    
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
         .init(title: "Departure"),
@@ -46,20 +46,48 @@ struct FlightNoteCard: View {
             
             if collapsed {
                 VStack(spacing: 0) {
-                    Tabs(tabs: tabs, geoWidth: geoWidth - 100, selectedTab: $currentTab)
-                    // Views
+//                    Tabs(tabs: tabs, geoWidth: geoWidth - 100, selectedTab: $currentTab)
+//                    // Views
+//                    TabView(selection: $currentTab,
+//                        content: {
+//                        AircraftStatusContainer().tag(0).ignoresSafeArea()
+//
+//                        DepatureCardContainer(itemList: self.$itemDepature).tag(1).ignoresSafeArea()
+//
+//                        EnrouteCardContainer(itemList: self.$itemEnroute).tag(2).ignoresSafeArea()
+//
+//                        ArrivalCardContainer(itemList: self.$itemArrival).tag(3).ignoresSafeArea()
+//
+//                    })
+//                    .tabViewStyle(.page)
+//                        .frame(height: animatedContentHeight)
+//                        .onChange(of: currentTab) { newValue in
+//                            if currentTab == 0 {
+//                                animatedContentHeight = 98
+//                            } else if currentTab == 1 {
+//                                animatedContentHeight = CGFloat(98 + (54 * itemDepature.count))
+//                            } else if currentTab == 2 {
+//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
+//                            } else {
+//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
+//                            }
+//                        }
+                    
+                    // Tabs
+                    TabViewCustom(tabbarItems: [ "Aircraft Status", "Departure", "Enroute", "Arrival" ],
+                                  geoWidth: geoWidth - 100, selectedIndex: $currentTab).previewDisplayName("TabBarCustomView")
+                    
                     TabView(selection: $currentTab,
-                        content: {
-                        AircraftStatusForm().tag(0).ignoresSafeArea()
+                            content: {
+                        AircraftStatusContainer().tag(0).ignoresSafeArea()
+
+                        DepatureCardContainer(itemList: self.$itemDepature).tag(1).ignoresSafeArea()
+
+                        EnrouteCardContainer(itemList: self.$itemEnroute).tag(2).ignoresSafeArea()
+
+                        ArrivalCardContainer(itemList: self.$itemArrival).tag(3).ignoresSafeArea()
                         
-                        DepatureCardForm(itemList: self.$itemDepature).tag(1).ignoresSafeArea()
-                        
-                        EnrouteCardForm(itemList: self.$itemEnroute).tag(2).ignoresSafeArea()
-                        
-                        ArrivalCardForm(itemList: self.$itemArrival).tag(3).ignoresSafeArea()
-                            
-                    })
-                    .tabViewStyle(DefaultTabViewStyle())
+                    }).id("Parent-TabViewCustom")
                         .frame(height: animatedContentHeight)
                         .onChange(of: currentTab) { newValue in
                             if currentTab == 0 {
@@ -72,9 +100,9 @@ struct FlightNoteCard: View {
                                 animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
                             }
                         }
+                    
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
-                    .clipped()
             }
         }.background(Color.theme.honeydew)
         .cornerRadius(8)

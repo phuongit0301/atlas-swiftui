@@ -74,6 +74,7 @@ struct ListFlightNoteInformationModel {
 struct ITag: Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var isChecked = false
 }
     
 struct IFlightInfoModel: Identifiable, Hashable {

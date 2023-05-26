@@ -1,5 +1,5 @@
 //
-//  FlightNoteCardForm.swift
+//  FlightNoteCardContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ArrivalCardForm: View {
+struct ArrivalCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var arrivalTags: [ITag] = ArrivalTags().TagList
     
