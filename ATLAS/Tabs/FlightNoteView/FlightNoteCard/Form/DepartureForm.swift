@@ -10,11 +10,11 @@ import SwiftUI
 
 struct DepartureForm: View {
     @State private var textNote: String = ""
-    @State private var arrSelectedLine: [ITag] = []
     @State private var showSheet = false
     
     @Binding var tagList: [ITag]
-    @State private var temp = DepartureTags().TagList
+    @Binding var itemList: [IFlightInfoModel]
+    var resetData: () -> Void
     
     @State var selectedLine: ITag?
     @Namespace var lineAnimation
@@ -22,26 +22,28 @@ struct DepartureForm: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(.white).padding(.bottom, 8)
-            
             VStack(spacing: 0) {
                 TextField("Add Note", text: $textNote)
                 
-                Button(action: {
-                    showSheet.toggle()
-                }, label: {
-                    Text("Add Tags")
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 16)
-                        .font(.custom("Inter-SemiBold", size: 16))
-                        .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
-                        .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
-                        .cornerRadius(12)
-                        .frame(alignment: .center)
-                })
-                
                 HStack {
+                    
+                    Button(action: {
+                        // check text empty or not
+                        if textNote != "" {
+                            showSheet.toggle()
+                        }
+                    }, label: {
+                        Text("Add Tags")
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 16)
+                            .font(.custom("Inter-SemiBold", size: 16))
+                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
+                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                            .cornerRadius(12)
+                            .frame(alignment: .center)
+                    })
+                    
+                    Spacer()
                     
                     Button(action: {
                         // To do show modal
@@ -57,7 +59,7 @@ struct DepartureForm: View {
                     })
                     
                     Button(action: {
-                        
+                        self.save()
                     }, label: {
                         Text("Save")
                             .padding(.vertical, 4)
@@ -69,7 +71,8 @@ struct DepartureForm: View {
                             .frame(alignment: .center)
                     })
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.padding(16)
+            }.padding(.horizontal, 16)
+                .padding(.vertical, 8)
                 .sheet(isPresented: $showSheet) {
                     // List categories
                     VStack(alignment: .leading, spacing: 0) {
@@ -102,10 +105,17 @@ struct DepartureForm: View {
                     
                     Spacer()
                 }
-        }
+        }.background(Color.white)
+            .roundedCorner(16, corners: [.bottomLeft, .bottomRight])
     }
     
-    func removeRows(at offsets: IndexSet) {
-        temp.remove(atOffsets: offsets)
+    func save() {
+        let tags: [ITag] = tagList.filter { $0.isChecked };
+        let newItem = IFlightInfoModel(name: textNote, tags: tags, isDefault: false)
+        
+        itemList.append(newItem)
+        
+        textNote = ""
+        self.resetData()
     }
 }

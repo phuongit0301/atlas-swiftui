@@ -81,16 +81,16 @@ struct IFlightInfoModel: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var tags: [ITag]
-    var isDefault: Bool
+    var isDefault: Bool = true
 }
 
 struct DepartureFlightInfoModel {
     var ListItem = {
         var MainItem = [
-            IFlightInfoModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITag(name: "Preflight")], isDefault: false),
-            IFlightInfoModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITag(name: "Departure")], isDefault: false),
-            IFlightInfoModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITag(name: "Dispatch")], isDefault: false),
-            IFlightInfoModel(name: "Expected POB: 315", tags: [ITag(name: "Dispatch")], isDefault: false),
+            IFlightInfoModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITag(name: "Preflight")], isDefault: true),
+            IFlightInfoModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITag(name: "Departure")], isDefault: true),
+            IFlightInfoModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITag(name: "Dispatch")], isDefault: true),
+            IFlightInfoModel(name: "Expected POB: 315", tags: [ITag(name: "Dispatch")], isDefault: true),
         ]
         
         return MainItem
@@ -112,8 +112,8 @@ struct DepartureTags {
 struct EnrouteFlightInfoModel {
     let ListItem = {
         let MainItem = [
-            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITag(name: "Enroute")], isDefault: false),
-            IFlightInfoModel(name: "Hills to the north of aerodrome", tags: [ITag(name: "Terrain")], isDefault: false),
+            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITag(name: "Enroute")], isDefault: true),
+            IFlightInfoModel(name: "Hills to the north of aerodrome", tags: [ITag(name: "Terrain")], isDefault: true),
         ]
         
         return MainItem
@@ -134,8 +134,8 @@ struct EnrouteTags {
 struct ArrivalFlightInfoModel {
     let ListItem = {
         let MainItem = [
-            IFlightInfoModel(name: "Birds in vicinity", tags: [ITag(name: "Threats")], isDefault: false),
-            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [ITag(name: "Weather")], isDefault: false),
+            IFlightInfoModel(name: "Birds in vicinity", tags: [ITag(name: "Threats")], isDefault: true),
+            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [ITag(name: "Weather")], isDefault: true),
         ]
         
         return MainItem
@@ -155,4 +155,16 @@ struct ArrivalTags {
         
         return MainItem
     }()
+}
+
+class DepViewModel: ObservableObject {
+    @Published var depTags: [ITag] = []
+
+    init() {
+        fetchDepTags()
+    }
+    
+    func fetchDepTags() {
+        depTags = DepartureTags().TagList
+    }
 }

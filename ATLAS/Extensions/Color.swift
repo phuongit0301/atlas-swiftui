@@ -26,4 +26,5 @@ struct ColorTheme {
     let alizarinCrimson = Color("AlizarinCrimson") //DF2D3B
     let brightGray = Color("BrightGray") //EBEBEB
     let philippineGray = Color("PhilippineGray") //919191
+    let lightGray = Color("LightGray") //D4D5D6
 }

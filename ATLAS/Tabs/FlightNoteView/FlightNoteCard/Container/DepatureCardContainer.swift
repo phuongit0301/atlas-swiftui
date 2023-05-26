@@ -40,12 +40,12 @@ struct DepatureCardContainer: View {
                                             )
                                 }
                             }
-                        }
+                        }.lineLimit(1)
                     }.padding(16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.theme.champagne)
+                        .listRowBackground(self.backgroundColor(for: item.isDefault))
                         .swipeActions(allowsFullSwipe: false) {
                             Button {
                                 print("Muting conversation")
@@ -97,17 +97,24 @@ struct DepatureCardContainer: View {
                             }.tint(Color.theme.alizarinCrimson)
                         }
                 }.onMove(perform: move)
-            }.listStyle(InsetGroupedListStyle())
+            }.listStyle(.plain)
                 .listRowBackground(Color.theme.champagne)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.bottom)
             
-            DepartureForm(tagList: self.$depTags).frame(height: 98)
+            DepartureForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
         }
     }
     
     func move(from source: IndexSet, to destination: Int) {
         print("Move");
         itemList.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    func resetData() {
+        self.depTags = DepartureTags().TagList
+    }
+    
+    private func backgroundColor(for isDefault: Bool) -> Color {
+        return isDefault ? Color.theme.champagne : Color.white
     }
 }

@@ -13,6 +13,8 @@ struct AircraftStatusContainer: View {
     
     var body: some View {
 //        Form()
-        Text("Aricraft")
+        VStack(spacing: 0) {
+            Text("Aricraft")
+        }.frame(maxWidth: .infinity)            
     }
 }
