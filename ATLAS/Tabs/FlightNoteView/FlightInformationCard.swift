@@ -20,6 +20,8 @@ struct FlightInformationCard: View {
                     .foregroundColor(.black)
             } content: {
                 VStack(spacing: 0) {
+                    Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
+                    
                     ForEach(viewModel.ListItem, id: \.self) { item in
                         Button(action: {
                             print("Clicked 11!")

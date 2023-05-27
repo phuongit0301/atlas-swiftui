@@ -40,9 +40,11 @@ struct DepatureCardContainer: View {
                                             )
                                 }
                             }
-                        }.lineLimit(1)
+                        }
                     }.padding(16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .frame(height: 50)
+                        .frame(maxWidth: .infinity, maxHeight: 50, alignment: .leading)
+                        .lineLimit(1)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(self.backgroundColor(for: item.isDefault))

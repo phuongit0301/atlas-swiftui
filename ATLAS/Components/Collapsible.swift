@@ -42,7 +42,6 @@ struct Collapsible<Content: View, HeaderContent: View>: View {
             .buttonStyle(PlainButtonStyle())
             .padding(.bottom, 8)
             if collapsed {
-                Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                 VStack {
                     self.content()
                 }

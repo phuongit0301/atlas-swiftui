@@ -1,14 +1,14 @@
 //
-//  FlightNoteCard.swift
+//  QuickReferenceCard.swift
 //  ATLAS
 //
-//  Created by phuong phan on 21/05/2023.
+//  Created by phuong phan on 22/05/2023.
 //
 
 import Foundation
 import SwiftUI
 
-struct FlightNoteCard: View {
+struct QuickReferenceCard: View {
     var geoWidth: Double = 0
     // Mock Data tabs
     @State var itemDepature = DepartureFlightInfoModel().ListItem
@@ -35,7 +35,7 @@ struct FlightNoteCard: View {
                 action: { self.collapsed.toggle() },
                 label: {
                     HStack(alignment: .center) {
-                        Text("Flight Notes")
+                        Text("Quick Reference")
                             .font(.custom("Inter-SemiBold", size: 20))
                             .foregroundColor(.black)
                         Spacer()
@@ -106,34 +106,6 @@ struct FlightNoteCard: View {
                             AircraftStatusContainer().tag(selectedSegment).ignoresSafeArea()
                         }
                     }.frame(height: animatedContentHeight).padding(.bottom, 16)
-                    
-                    
-//                    TabViewCustom(tabbarItems: [ "Aircraft Status", "Departure", "Enroute", "Arrival" ],
-//                                  geoWidth: geoWidth - 100, selectedIndex: $currentTab).previewDisplayName("TabBarCustomView")
-//
-//                    TabView(selection: $currentTab,
-//                            content: {
-//                        AircraftStatusContainer().tag(0).ignoresSafeArea()
-//
-//                        DepatureCardContainer(itemList: self.$itemDepature).tag(1).ignoresSafeArea()
-//
-//                        EnrouteCardContainer(itemList: self.$itemEnroute).tag(2).ignoresSafeArea()
-//
-//                        ArrivalCardContainer(itemList: self.$itemArrival).tag(3).ignoresSafeArea()
-//
-//                    }).id("Parent-TabViewCustom")
-//                        .frame(height: animatedContentHeight)
-//                        .onChange(of: currentTab) { newValue in
-//                            if currentTab == 0 {
-//                                animatedContentHeight = 98
-//                            } else if currentTab == 1 {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemDepature.count))
-//                            } else if currentTab == 2 {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
-//                            } else {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
-//                            }
-//                        }
                     
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
