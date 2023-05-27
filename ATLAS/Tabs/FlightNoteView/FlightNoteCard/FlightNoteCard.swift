@@ -11,12 +11,13 @@ import SwiftUI
 struct FlightNoteCard: View {
     var geoWidth: Double = 0
     // Mock Data tabs
+    @State var itemAircraft: [IFlightInfoModel] = []
     @State var itemDepature = DepartureFlightInfoModel().ListItem
     @State var itemArrival = ArrivalFlightInfoModel().ListItem
     @State var itemEnroute = EnrouteFlightInfoModel().ListItem
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 98
+    @State var animatedContentHeight: CGFloat = 174
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -59,13 +60,13 @@ struct FlightNoteCard: View {
                                                 selectedSegment = index
                                                 
                                                 if index == 0 {
-                                                    animatedContentHeight = 98
+                                                    animatedContentHeight = 174
                                                 } else if index == 1 {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemDepature.count))
+                                                    animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
                                                 } else if index == 2 {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemArrival.count))
+                                                    animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
                                                 } else {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemArrival.count))
+                                                    animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
                                                 }
                                             }
                                         }) {
@@ -95,7 +96,7 @@ struct FlightNoteCard: View {
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftStatusContainer().tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
                         case 1:
                             DepatureCardContainer(itemList: self.$itemDepature).tag(selectedSegment).ignoresSafeArea()
                         case 2:
@@ -103,7 +104,7 @@ struct FlightNoteCard: View {
                         case 3:
                             ArrivalCardContainer(itemList: self.$itemArrival).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftStatusContainer().tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
                         }
                     }.frame(height: animatedContentHeight).padding(.bottom, 16)
                     

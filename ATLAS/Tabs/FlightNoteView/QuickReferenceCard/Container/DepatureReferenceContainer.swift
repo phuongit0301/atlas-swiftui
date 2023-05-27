@@ -1,5 +1,5 @@
 //
-//  FlightNoteCardContainer.swift
+//  DepatureReferenceContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DepatureCardContainer: View {
+struct DepatureReferenceContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var depTags: [ITag] = DepartureTags().TagList
     
@@ -103,16 +103,16 @@ struct DepatureCardContainer: View {
                 .listRowBackground(Color.theme.champagne)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            DepartureForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
         }
     }
     
-    func move(from source: IndexSet, to destination: Int) {
+    private func move(from source: IndexSet, to destination: Int) {
         print("Move");
         itemList.move(fromOffsets: source, toOffset: destination)
     }
     
-    func resetData() {
+    private func resetData() {
         self.depTags = DepartureTags().TagList
     }
     

@@ -68,7 +68,8 @@ struct FlightView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .ignoresSafeArea()
                 }).id("Parent-TabView")
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+//                    .navigationBarHidden(true)
+//                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
             .background(Color.theme.cultured)
             .padding(16)

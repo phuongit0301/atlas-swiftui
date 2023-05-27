@@ -11,12 +11,13 @@ import SwiftUI
 struct QuickReferenceCard: View {
     var geoWidth: Double = 0
     // Mock Data tabs
-    @State var itemDepature = DepartureFlightInfoModel().ListItem
-    @State var itemArrival = ArrivalFlightInfoModel().ListItem
-    @State var itemEnroute = EnrouteFlightInfoModel().ListItem
+    @State var itemAircraft: [IFlightInfoModel] = []
+    @State var itemDepature: [IFlightInfoModel] = []
+    @State var itemArrival: [IFlightInfoModel] = []
+    @State var itemEnroute: [IFlightInfoModel] = []
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 98
+    @State var animatedContentHeight: CGFloat = 114
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -59,13 +60,13 @@ struct QuickReferenceCard: View {
                                                 selectedSegment = index
                                                 
                                                 if index == 0 {
-                                                    animatedContentHeight = 98
+                                                    animatedContentHeight = 114
                                                 } else if index == 1 {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemDepature.count))
+                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16 ))
                                                 } else if index == 2 {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemArrival.count))
+                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16))
                                                 } else {
-                                                    animatedContentHeight = CGFloat(98 + (64 * itemArrival.count))
+                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16))
                                                 }
                                             }
                                         }) {
@@ -95,22 +96,22 @@ struct QuickReferenceCard: View {
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftStatusContainer().tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureCardContainer(itemList: self.$itemDepature).tag(selectedSegment).ignoresSafeArea()
+                            DepatureReferenceContainer(itemList: self.$itemDepature).tag(selectedSegment).ignoresSafeArea()
                         case 2:
-                            EnrouteCardContainer(itemList: self.$itemEnroute).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteReferenceContainer(itemList: self.$itemEnroute).tag(selectedSegment).ignoresSafeArea()
                         case 3:
-                            ArrivalCardContainer(itemList: self.$itemArrival).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalReferenceContainer(itemList: self.$itemArrival).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftStatusContainer().tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
                         }
                     }.frame(height: animatedContentHeight).padding(.bottom, 16)
                     
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
             }
-        }.background(Color.theme.honeydew)
+        }.background(Color.theme.champagne)
         .cornerRadius(8)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }

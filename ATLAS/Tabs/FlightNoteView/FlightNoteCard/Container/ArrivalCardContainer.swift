@@ -1,5 +1,5 @@
 //
-//  FlightNoteCardContainer.swift
+//  ArrivalCardContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,14 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct EnrouteCardContainer: View {
+struct ArrivalCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
-    @State var enrouteTags: [ITag] = EnrouteTags().TagList
+    @State var arrivalTags: [ITag] = ArrivalTags().TagList
     
     var body: some View {
         VStack(spacing: 0) {
             List {
-                
                 ForEach(itemList, id: \.self) { item in
                     VStack(alignment: .leading) {
                         HStack(alignment: .top) {
@@ -36,9 +35,9 @@ struct EnrouteCardContainer: View {
                                         .font(.custom("Inter-Medium", size: 12))
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                        )
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
+                                            )
                                 }
                             }
                         }
@@ -51,13 +50,21 @@ struct EnrouteCardContainer: View {
             }.listStyle(.plain)
                 .listRowBackground(Color.theme.champagne)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            Form(tagList: self.$enrouteTags).frame(height: 98)
+
+            DepartureForm(tagList: self.$arrivalTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
         }
     }
     
-    func move(from source: IndexSet, to destination: Int) {
+    private func move(from source: IndexSet, to destination: Int) {
         print("Move");
         itemList.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    private func resetData() {
+        self.arrivalTags = ArrivalTags().TagList
+    }
+    
+    private func backgroundColor(for isDefault: Bool) -> Color {
+        return isDefault ? Color.theme.champagne : Color.white
     }
 }

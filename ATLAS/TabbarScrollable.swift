@@ -21,7 +21,15 @@ struct TabbarScrollable: View {
                         TabbarItem(name: tabbarItems[index], isActive: selectedIndex == index, namespace: menuItemTransition)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
-                                    selectedIndex = index
+                                    if (tabbarItems[index] == "Charts" || tabbarItems[index] == "Weather") {
+                                        if let url = URL(string: "App-Prefs:root=REMINDERS") {
+                                            if UIApplication.shared.canOpenURL(url) {
+                                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                            }
+                                        }
+                                    } else {
+                                        selectedIndex = index
+                                    }
                                 }
                             }
                     }
@@ -45,21 +53,41 @@ struct TabbarItem: View {
  
     var body: some View {
         if isActive {
-            Text(name)
-                .font(.custom("Inter-SemiBold", size: 13))
-                .fontWeight(.semibold)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .foregroundColor(Color.theme.eerieBlack)
-                .background(Color.theme.aeroBlue)
-                .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
-                .cornerRadius(8)
+            HStack {
+                Text(name)
+                    .font(.custom("Inter-SemiBold", size: 13))
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .foregroundColor(Color.theme.eerieBlack)
+                    .background(Color.theme.aeroBlue)
+                    .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
+                    .cornerRadius(8)
+                
+                if name == "Charts" || name == "Weather" {
+                    Image(systemName: "pip.exit")
+                        .foregroundColor(Color.theme.eerieBlack)
+                        .frame(width: 14, height: 16)
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
         } else {
-            Text(name)
-                .font(.custom("Inter-Regular", size: 13))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .foregroundColor(Color.theme.eerieBlack)
+            HStack {
+                Text(name)
+                    .font(.custom("Inter-Regular", size: 13))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .foregroundColor(Color.theme.eerieBlack)
+                
+                if name == "Charts" || name == "Weather" {
+                    Image(systemName: "pip.exit")
+                        .foregroundColor(Color.theme.eerieBlack)
+                        .frame(width: 14, height: 16)
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
         }
  
     }
