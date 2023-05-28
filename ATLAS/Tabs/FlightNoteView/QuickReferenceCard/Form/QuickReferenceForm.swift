@@ -52,21 +52,23 @@ struct QuickReferenceForm: View {
                             .padding(.vertical, 4)
                             .padding(.horizontal, 16)
                             .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
-                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
+                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
                             .cornerRadius(12)
                             .frame(alignment: .center)
                     })
                     
                     Button(action: {
-                        self.save()
+                        if textNote != "" {
+                            self.save()                            
+                        }
                     }, label: {
                         Text("Save")
                             .padding(.vertical, 4)
                             .padding(.horizontal, 16)
                             .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
-                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
+                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
                             .cornerRadius(12)
                             .frame(alignment: .center)
                     })

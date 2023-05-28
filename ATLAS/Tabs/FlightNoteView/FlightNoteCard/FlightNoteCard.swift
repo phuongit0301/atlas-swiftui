@@ -17,7 +17,7 @@ struct FlightNoteCard: View {
     @State var itemEnroute = EnrouteFlightInfoModel().ListItem
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 174
+    @State var animatedContentHeight: CGFloat = 150
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -59,15 +59,7 @@ struct FlightNoteCard: View {
                                             withAnimation(.interactiveSpring()) {
                                                 selectedSegment = index
                                                 
-                                                if index == 0 {
-                                                    animatedContentHeight = 174
-                                                } else if index == 1 {
-                                                    animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
-                                                } else if index == 2 {
-                                                    animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
-                                                } else {
-                                                    animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
-                                                }
+                                                self.calculateHeight()
                                             }
                                         }) {
                                             if selectedSegment == index {
@@ -92,49 +84,21 @@ struct FlightNoteCard: View {
                                 }
                             }
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }
+                        }.frame(height: 40).fixedSize(horizontal: true, vertical: false)
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftStatusContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureCardContainer(itemList: self.$itemDepature).tag(selectedSegment).ignoresSafeArea()
+                            DepatureCardContainer(itemList: self.$itemDepature, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
-                            EnrouteCardContainer(itemList: self.$itemEnroute).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteCardContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
-                            ArrivalCardContainer(itemList: self.$itemArrival).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalCardContainer(itemList: self.$itemArrival, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftStatusContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
                     }.frame(height: animatedContentHeight).padding(.bottom, 16)
-                    
-                    
-//                    TabViewCustom(tabbarItems: [ "Aircraft Status", "Departure", "Enroute", "Arrival" ],
-//                                  geoWidth: geoWidth - 100, selectedIndex: $currentTab).previewDisplayName("TabBarCustomView")
-//
-//                    TabView(selection: $currentTab,
-//                            content: {
-//                        AircraftStatusContainer().tag(0).ignoresSafeArea()
-//
-//                        DepatureCardContainer(itemList: self.$itemDepature).tag(1).ignoresSafeArea()
-//
-//                        EnrouteCardContainer(itemList: self.$itemEnroute).tag(2).ignoresSafeArea()
-//
-//                        ArrivalCardContainer(itemList: self.$itemArrival).tag(3).ignoresSafeArea()
-//
-//                    }).id("Parent-TabViewCustom")
-//                        .frame(height: animatedContentHeight)
-//                        .onChange(of: currentTab) { newValue in
-//                            if currentTab == 0 {
-//                                animatedContentHeight = 98
-//                            } else if currentTab == 1 {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemDepature.count))
-//                            } else if currentTab == 2 {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
-//                            } else {
-//                                animatedContentHeight = CGFloat(98 + (54 * itemArrival.count))
-//                            }
-//                        }
                     
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
@@ -142,5 +106,17 @@ struct FlightNoteCard: View {
         }.background(Color.theme.honeydew)
         .cornerRadius(8)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
+    
+    private func calculateHeight() {
+        if self.selectedSegment == 1 {
+            animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
+        } else if self.selectedSegment == 2 {
+            animatedContentHeight = CGFloat(98 + (60 * itemEnroute.count))
+        } else if self.selectedSegment == 3 {
+            animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
+        } else {
+            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
+        }
     }
 }

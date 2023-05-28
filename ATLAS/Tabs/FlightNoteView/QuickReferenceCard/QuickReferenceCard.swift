@@ -59,15 +59,7 @@ struct QuickReferenceCard: View {
                                             withAnimation(.interactiveSpring()) {
                                                 selectedSegment = index
                                                 
-                                                if index == 0 {
-                                                    animatedContentHeight = 114
-                                                } else if index == 1 {
-                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16 ))
-                                                } else if index == 2 {
-                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16))
-                                                } else {
-                                                    animatedContentHeight = CGFloat(98 + (itemDepature.count > 0 ? (64 * itemDepature.count) : 16))
-                                                }
+                                                self.calculateHeight()
                                             }
                                         }) {
                                             if selectedSegment == index {
@@ -92,19 +84,19 @@ struct QuickReferenceCard: View {
                                 }
                             }
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }
+                        }.frame(height: 40).fixedSize(horizontal: true, vertical: false)
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftReferenceContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureReferenceContainer(itemList: self.$itemDepature).tag(selectedSegment).ignoresSafeArea()
+                            DepatureReferenceContainer(itemList: self.$itemDepature, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).tag(selectedSegment).ignoresSafeArea()
                         case 2:
-                            EnrouteReferenceContainer(itemList: self.$itemEnroute).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteReferenceContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
-                            ArrivalReferenceContainer(itemList: self.$itemArrival).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalReferenceContainer(itemList: self.$itemArrival, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftReferenceContainer(itemList: self.$itemAircraft).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
                     }.frame(height: animatedContentHeight).padding(.bottom, 16)
                     
@@ -114,5 +106,17 @@ struct QuickReferenceCard: View {
         }.background(Color.theme.champagne)
         .cornerRadius(8)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
+    
+    private func calculateHeight() {
+        if self.selectedSegment == 1 {
+            animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
+        } else if self.selectedSegment == 2 {
+            animatedContentHeight = CGFloat(98 + (60 * itemEnroute.count))
+        } else if self.selectedSegment == 3 {
+            animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
+        } else {
+            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
+        }
     }
 }

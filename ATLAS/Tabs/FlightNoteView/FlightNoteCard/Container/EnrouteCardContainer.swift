@@ -11,46 +11,102 @@ import SwiftUI
 struct EnrouteCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var enrouteTags: [ITag] = EnrouteTags().TagList
+    var calculateHeight: () -> Void
+    var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            List {
-                
-                ForEach(itemList, id: \.self) { item in
-                    VStack(alignment: .leading) {
-                        HStack(alignment: .top) {
-                            Image("icon_dots_group")
-                                .frame(width: 14, height: 16)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                            
-                            Text(item.name)
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .font(.custom("Inter-Regular", size: 16))
-                            
-                            if !item.tags.isEmpty {
-                                ForEach(item.tags, id: \.self) { tag in
-                                    Text(tag.name)
-                                        .padding(.vertical, 4)
-                                        .padding(.horizontal, 8)
-                                        .font(.custom("Inter-Medium", size: 12))
-                                        .foregroundColor(Color.theme.eerieBlack)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                        )
+            if !itemList.isEmpty {
+                List {
+                    ForEach(itemList, id: \.self) { item in
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack(alignment: .top) {
+                                Image("icon_dots_group")
+                                    .frame(width: 14, height: 16)
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
+                                
+                                Text(item.name)
+                                    .foregroundColor(Color.theme.eerieBlack)
+                                    .font(.custom("Inter-Regular", size: 16))
+                                    .lineLimit(1)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                
+                                if !item.tags.isEmpty {
+                                    ForEach(item.tags, id: \.self) { tag in
+                                        Text(tag.name)
+                                            .padding(.vertical, 4)
+                                            .padding(.horizontal, 8)
+                                            .font(.custom("Inter-Medium", size: 12))
+                                            .foregroundColor(Color.theme.eerieBlack)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
+                                            )
+                                    }
                                 }
                             }
-                        }
-                    }.padding(16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.theme.champagne)
-                }.onMove(perform: move)
-            }.listStyle(.plain)
-                .listRowBackground(Color.theme.champagne)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }.padding(12)
+                            .frame(maxWidth: geoWidth, alignment: .leading)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(self.backgroundColor(for: item.isDefault))
+                            .swipeActions(allowsFullSwipe: false) {
+                                Button {
+                                    print("Muting conversation")
+                                } label: {
+                                    Image(systemName: "tag.fill")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                .tint(Color.theme.pastelOrange)
+                                
+                                Button {
+                                    print("Muting conversation")
+                                } label: {
+                                    Image(systemName: "square.and.pencil")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                .tint(Color.theme.eerieBlack)
+                                
+                                Button {
+                                    print("Muting conversation")
+                                } label: {
+                                    Image(systemName: "doc.on.doc.fill")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                .tint(Color.theme.tuftsBlue)
+                                
+                                Button {
+                                    print("Muting conversation")
+                                } label: {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                .tint(Color.theme.chineseSilver)
+                                
+                                Button(role: .destructive) {
+                                    print("Deleting conversation")
+                                } label: {
+                                    Image(systemName: "trash.fill")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }.tint(Color.theme.alizarinCrimson)
+                            }
+                    }.onMove(perform: move)
+                }.listStyle(.plain)
+                    .listRowBackground(Color.theme.champagne)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // end list
+            }
             
             DepartureForm(tagList: self.$enrouteTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
         }
@@ -63,6 +119,7 @@ struct EnrouteCardContainer: View {
     
     private func resetData() {
         self.enrouteTags = DepartureTags().TagList
+        self.calculateHeight()
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

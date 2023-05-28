@@ -43,7 +43,9 @@ struct NavView: View {
             }
             
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {}) {
+                Button(action: {
+                    
+                }) {
                     Image("icon_arrow_right")
                         .frame(width: 41, height: 72)
                         .scaledToFit()
