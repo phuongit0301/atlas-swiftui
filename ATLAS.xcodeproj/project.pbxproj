@@ -32,6 +32,11 @@
 		3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */; };
 		3E3FCBF02A21C924008017FA /* DepatureReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEF2A21C924008017FA /* DepatureReferenceContainer.swift */; };
 		3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBF12A21C934008017FA /* EnrouteReferenceContainer.swift */; };
+		3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBF32A23647D008017FA /* BottomTabs.swift */; };
+		3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBF52A23676A008017FA /* NavViewSplit.swift */; };
+		3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */; };
+		3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBFB2A236E55008017FA /* ExampleView.swift */; };
+		3E3FCBFE2A236E8F008017FA /* ExampleView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBFD2A236E8F008017FA /* ExampleView1.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
@@ -115,6 +120,11 @@
 		3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalReferenceContainer.swift; sourceTree = "<group>"; };
 		3E3FCBEF2A21C924008017FA /* DepatureReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepatureReferenceContainer.swift; sourceTree = "<group>"; };
 		3E3FCBF12A21C934008017FA /* EnrouteReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteReferenceContainer.swift; sourceTree = "<group>"; };
+		3E3FCBF32A23647D008017FA /* BottomTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabs.swift; sourceTree = "<group>"; };
+		3E3FCBF52A23676A008017FA /* NavViewSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewSplit.swift; sourceTree = "<group>"; };
+		3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewSplit.swift; sourceTree = "<group>"; };
+		3E3FCBFB2A236E55008017FA /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
+		3E3FCBFD2A236E8F008017FA /* ExampleView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleView1.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -367,6 +377,8 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
+				3E3FCBFB2A236E55008017FA /* ExampleView.swift */,
+				3E3FCBFD2A236E8F008017FA /* ExampleView1.swift */,
 				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
 				3E8250552A1BADF0008F616D /* Fonts */,
 				3E5AF6522A19978900A97ECF /* Components */,
@@ -381,13 +393,16 @@
 				3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */,
 				3E351CD62A17C02700207FF1 /* FlightPageModel.swift */,
 				3E5AF6332A187E3500A97ECF /* HomeView.swift */,
+				3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */,
 				3E5AF6352A187F7900A97ECF /* FlightView.swift */,
 				3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */,
 				3E5AF63B2A18BCB500A97ECF /* NavView.swift */,
+				3E3FCBF52A23676A008017FA /* NavViewSplit.swift */,
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
 				C5F9C81D2A14F3E00076396F /* customClasses.swift */,
+				3E3FCBF32A23647D008017FA /* BottomTabs.swift */,
 			);
 			path = ATLAS;
 			sourceTree = "<group>";
@@ -584,6 +599,7 @@
 				3E3FCBD92A21C6E4008017FA /* DepartureForm.swift in Sources */,
 				3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */,
 				3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */,
+				3E3FCBFE2A236E8F008017FA /* ExampleView1.swift in Sources */,
 				3E3FCBEA2A21C8E3008017FA /* QuickReferenceForm.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */,
 				3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */,
@@ -591,6 +607,7 @@
 				3E3FCBF02A21C924008017FA /* DepatureReferenceContainer.swift in Sources */,
 				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
+				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
@@ -603,6 +620,7 @@
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
+				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
 				3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */,
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
@@ -611,9 +629,11 @@
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
 				C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */,
+				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
+				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

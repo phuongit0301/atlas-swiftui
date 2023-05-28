@@ -60,3 +60,25 @@ struct SideMenuModel {
         return MainMenu
     }()
 }
+
+
+struct BottomMenuItem: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+}
+
+struct BottomMenuModel {
+    let BottomMenu = {
+        let MainMenu = [
+            BottomMenuItem(name: "list.bullet.clipboard"),
+            BottomMenuItem(name: "fuelpump"),
+            BottomMenuItem(name: "doc.plaintext"),
+            BottomMenuItem(name: "map"),
+            BottomMenuItem(name: "sun.max"),
+            BottomMenuItem(name: "globe"),
+            BottomMenuItem(name: "rectangle.stack"),
+        ]
+        
+        return MainMenu
+    }()
+}

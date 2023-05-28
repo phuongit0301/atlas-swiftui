@@ -23,5 +23,12 @@ extension View {
     func roundedCorner(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners) )
     }
+    
+    func Print(_ item: Any) -> some View {
+        #if DEBUG
+        print(item)
+        #endif
+        return self
+    }
 }
 

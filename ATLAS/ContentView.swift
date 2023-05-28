@@ -15,7 +15,7 @@ import QuickLookThumbnailing
 import Foundation
 import CoreML
 
-struct ContentView: View {
+struct MainView: View {
     @State private var documentText: String = ""
     @State private var fileName: String = ""
     @State private var fileIcon: UIImage? = nil
@@ -34,6 +34,9 @@ struct ContentView: View {
     @State private var similarityIndex: SimilarityIndex?
     @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
     @State var selectedItem: SubMenuItem? = nil
+    
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
 //
 //    init() {
 //        for family: String in UIFont.familyNames
@@ -85,11 +88,13 @@ struct ContentView: View {
                     }
                     
                 }.scrollContentBackground(.hidden)
-
-            }
-            .background(Color.theme.cultured)
+            }.background(Color.theme.cultured)
         } detail: {
-            ContentDetail(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
+            if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                ContentDetailSplit(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
+            } else {
+                ContentDetail(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
+            }
         }.navigationSplitViewStyle(.balanced)
          .onAppear() {
              if self.selectedItem == nil {
@@ -124,13 +129,24 @@ struct ContentView: View {
     struct ContentDetail: View {
         @Binding var selectedItem: SubMenuItem?
         @Binding var currentScreen: NavigationScreen
-        var viewModel = ListFlightModel()
-        var viewInformationModel = ListFlightInformationModel()
         
         var body: some View {
             NavigationStack {
                 VStack(spacing: 0) {
                     NavView(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
+                }
+            }
+        }
+    }
+    
+    struct ContentDetailSplit: View {
+        @Binding var selectedItem: SubMenuItem?
+        @Binding var currentScreen: NavigationScreen
+        
+        var body: some View {
+            NavigationStack {
+                VStack(spacing: 0) {
+                    NavViewSplit(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
                 }
             }
         }
@@ -145,8 +161,22 @@ func toggleSidebar() {
     #endif
 }
 
+struct ContentView: View {
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    
+    var body: some View {
+        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+            MainView()
+            BottomTabs()
+        } else {
+            MainView()
+        }
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().previewDisplayName("Ipad Preview").previewDevice("iPad Pro (12.9-inch) (5th generation)")
+        ContentView()
     }
 }

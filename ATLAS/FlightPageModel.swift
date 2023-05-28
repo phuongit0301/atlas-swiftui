@@ -168,3 +168,39 @@ class DepViewModel: ObservableObject {
         depTags = DepartureTags().TagList
     }
 }
+
+struct ListFlightSplitItem: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+    var description: String?
+    var subMenuItems: [ListFlightSplitItem]
+}
+
+
+
+struct ListFlightSplitModel {
+    let ListItem = {
+        let subMenu = [
+            ListFlightSplitItem(name: "Flight Plan", subMenuItems: []),
+            ListFlightSplitItem(name: "Aircraft Status", subMenuItems: []),
+            ListFlightSplitItem(name: "Departure", subMenuItems: []),
+            ListFlightSplitItem(name: "Enroute", subMenuItems: []),
+            ListFlightSplitItem(name: "Arrival", subMenuItems: []),
+            ListFlightSplitItem(name: "Atlas Search Notes", subMenuItems: []),
+            ListFlightSplitItem(name: "Reporting", subMenuItems: []),
+        ];
+        
+        let subMenu1 = [
+            ListFlightSplitItem(name: "China RVSM (Westbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: []),
+            ListFlightSplitItem(name: "China RVSM (Eastbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: []),
+            ListFlightSplitItem(name: "China RVSM (Eastbound) 1", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: []),
+        ];
+        
+        let MainItem = [
+            ListFlightSplitItem(name: "Notes", subMenuItems: subMenu),
+            ListFlightSplitItem(name: "Tables", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: subMenu1),
+        ]
+        
+        return MainItem
+    }()
+}
