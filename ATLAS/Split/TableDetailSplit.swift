@@ -1,5 +1,5 @@
 //
-//  TableDetail.swift
+//  TableDetailSplit.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct TableDetail: View {
+struct TableDetailSplit: View {
     @State var row: ListFlightSplitItem
     var data = ListDetailModel().ListItem
     

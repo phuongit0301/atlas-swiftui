@@ -1,5 +1,5 @@
 //
-//  NoteDetail.swift
+//  NoteDetailSplit.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteDetail: View {
+struct NoteDetailSplit: View {
     @State private var routingName: String = ""
     
     var body: some View {

@@ -51,9 +51,16 @@ struct HomeViewSplit: View {
     
     func getDestination(screen: NavigationEnumeration, item: ListFlightSplitItem, row: ListFlightSplitItem) -> AnyView {
         if screen == NavigationEnumeration.tableDetail {
-            return AnyView(TableDetail(row: row))
+            return AnyView(TableDetailSplit(row: row))
         } else {
-            return AnyView(NoteDetail())
+            if row.screen == NavigationEnumeration.noteDetail {
+                return AnyView(NoteDetailSplit())
+            }
+            
+            if row.screen == NavigationEnumeration.airCraftDetail {
+                return AnyView(AircraftSplit())
+            }
+            return AnyView(NoteDetailSplit())
         }
     }
 }
