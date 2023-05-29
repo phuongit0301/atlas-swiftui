@@ -172,11 +172,11 @@ class DepViewModel: ObservableObject {
 struct ListFlightSplitItem: Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var screen: NavigationEnumeration?
     var description: String?
     var subMenuItems: [ListFlightSplitItem]
+    var idReference: String?
 }
-
-
 
 struct ListFlightSplitModel {
     let ListItem = {
@@ -191,14 +191,49 @@ struct ListFlightSplitModel {
         ];
         
         let subMenu1 = [
-            ListFlightSplitItem(name: "China RVSM (Westbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: []),
-            ListFlightSplitItem(name: "China RVSM (Eastbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: []),
-            ListFlightSplitItem(name: "China RVSM (Eastbound) 1", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: []),
+            ListFlightSplitItem(name: "China RVSM (Westbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: [], idReference: "1"),
+            ListFlightSplitItem(name: "China RVSM (Eastbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: [], idReference: "2"),
+            ListFlightSplitItem(name: "China RVSM (Eastbound) 1", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: [], idReference: "2"),
         ];
         
         let MainItem = [
-            ListFlightSplitItem(name: "Notes", subMenuItems: subMenu),
-            ListFlightSplitItem(name: "Tables", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: subMenu1),
+            ListFlightSplitItem(name: "Notes", screen: NavigationEnumeration.noteDetail, subMenuItems: subMenu),
+            ListFlightSplitItem(name: "Tables", screen: NavigationEnumeration.tableDetail, description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: subMenu1),
+        ]
+        
+        return MainItem
+    }()
+}
+
+
+enum NavigationEnumeration {
+    case noteDetail
+    case tableDetail
+}
+
+struct ListDataDetail {
+    var id: String
+    var name: String
+    var location: String
+    var fromDegree: String
+    var toDegree: String
+    var cleared: [Int]
+    var select: [Int]
+}
+
+var CLEARS_MOCK_WEST = [12200, 11600, 11000, 10400, 9800, 9200, 8400, 7800, 7200, 6600, 6000, 5400, 4800, 4200, 3600, 3000, 2400, 1800, 1200, 600]
+
+var SELECT_MOCK_WEST = [40100, 38100, 36100, 34100, 32100, 30100, 27600, 25600, 23600, 21700, 19700, 17700, 15700, 13800, 11800, 9800, 7900, 5900, 3900, 2000]
+
+var CLEARS_MOCK_EAST = [12500, 11900, 11300, 10700, 10100, 9500, 8900, 8100, 7500, 6900, 6300, 5700, 5100, 4500, 3900, 3300, 2700, 2100, 1500, 900]
+
+var SELECT_MOCK_EAST = [41100, 39100, 37100, 35100, 33100, 31100, 29100, 26600, 24600, 22600, 20700, 18700, 16700, 14800, 12800, 10800, 8900, 6900, 4900, 3000]
+
+struct ListDetailModel {
+    let ListItem = {        
+        let MainItem = [
+            ListDataDetail(id: "1", name: "China RVSM (Westbound)", location: "Westbound", fromDegree: "180°", toDegree: "359°", cleared: CLEARS_MOCK_WEST, select: SELECT_MOCK_WEST),
+            ListDataDetail(id: "2", name: "China RVSM (Eastbound)", location: "Eastbound", fromDegree: "000°", toDegree: "179°", cleared: CLEARS_MOCK_EAST, select: SELECT_MOCK_EAST),
         ]
         
         return MainItem

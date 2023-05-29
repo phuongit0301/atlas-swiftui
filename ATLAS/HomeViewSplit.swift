@@ -14,7 +14,6 @@ struct HomeViewSplit: View {
     
     var viewModel = ListFlightSplitModel()
     @State private var currentScreen = NavigationScreen.flight
-
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,9 +23,7 @@ struct HomeViewSplit: View {
                     Section {
                         if !item.subMenuItems.isEmpty {
                             ForEach(item.subMenuItems, id: \.self) { row in
-                                Button(action: {
-                                    print("Clicked 11!")
-                                }) {
+                                NavigationLink(destination: getDestination(screen: item.screen ?? NavigationEnumeration.tableDetail, item: item, row: row)) {
                                     VStack(alignment: .leading, spacing: 0) {
                                         Text(row.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16)).padding(.bottom, 5)
                                         
@@ -35,6 +32,7 @@ struct HomeViewSplit: View {
                                         }
                                     }
                                 }
+                                    
                             }.onChange(of: selectedItem) { _ in
                                 self.currentScreen = NavigationScreen.home
                             }
@@ -49,5 +47,13 @@ struct HomeViewSplit: View {
             
         }
         
+    }
+    
+    func getDestination(screen: NavigationEnumeration, item: ListFlightSplitItem, row: ListFlightSplitItem) -> AnyView {
+        if screen == NavigationEnumeration.tableDetail {
+            return AnyView(TableDetail(row: row))
+        } else {
+            return AnyView(NoteDetail())
+        }
     }
 }
