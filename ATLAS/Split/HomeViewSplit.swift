@@ -60,6 +60,23 @@ struct HomeViewSplit: View {
             if row.screen == NavigationEnumeration.airCraftDetail {
                 return AnyView(AircraftSplit())
             }
+            
+            if row.screen == NavigationEnumeration.departureDetail {
+                return AnyView(DepartureSplit())
+            }
+            
+            if row.screen == NavigationEnumeration.enrouteDetail {
+                return AnyView(EnrouteSplit())
+            }
+            
+            if row.screen == NavigationEnumeration.arrivalDetail {
+                return AnyView(ArrivalSplit())
+            }
+            
+            if row.screen == NavigationEnumeration.atlasSearchDetail {
+                return AnyView(AtlasSearchSplit())
+            }
+            
             return AnyView(NoteDetailSplit())
         }
     }

@@ -82,9 +82,10 @@ struct FlightNoteCard: View {
                                     }
                                     
                                 }
-                            }
+                            }.frame(maxWidth: .infinity)
+                            
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }.frame(height: 40).fixedSize(horizontal: true, vertical: false)
+                        }.frame(width: geoWidth, height: 40).fixedSize(horizontal: true, vertical: false)
                         
                         switch selectedSegment {
                         case 0:

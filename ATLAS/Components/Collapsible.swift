@@ -45,7 +45,6 @@ struct Collapsible<Content: View, HeaderContent: View>: View {
                 VStack {
                     self.content()
                 }
-                //            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? .none : 0)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .clipped()
                 .animation(.easeOut(duration: 1.0))

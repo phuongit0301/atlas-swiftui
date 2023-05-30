@@ -1,5 +1,5 @@
 //
-//  AircraftSplitForm.swift
+//  ArrivalSplitForm.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AirCraftSplitForm: View {
+struct ArrivalSplitForm: View {
     @State private var textNote: String = ""
     @State private var showSheet = false
     

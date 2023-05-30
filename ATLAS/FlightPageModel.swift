@@ -183,10 +183,10 @@ struct ListFlightSplitModel {
         let subMenu = [
             ListFlightSplitItem(name: "Flight Plan", screen: NavigationEnumeration.fightPlanDetail, subMenuItems: []),
             ListFlightSplitItem(name: "Aircraft Status", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Departure", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Enroute", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Arrival", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Atlas Search Notes", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
+            ListFlightSplitItem(name: "Departure", screen: NavigationEnumeration.departureDetail, subMenuItems: []),
+            ListFlightSplitItem(name: "Enroute", screen: NavigationEnumeration.enrouteDetail, subMenuItems: []),
+            ListFlightSplitItem(name: "Arrival", screen: NavigationEnumeration.arrivalDetail, subMenuItems: []),
+            ListFlightSplitItem(name: "Atlas Search Notes", screen: NavigationEnumeration.atlasSearchDetail, subMenuItems: []),
             ListFlightSplitItem(name: "Reporting", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
         ];
         
@@ -211,6 +211,10 @@ enum NavigationEnumeration {
     case tableDetail
     case fightPlanDetail
     case airCraftDetail
+    case departureDetail
+    case enrouteDetail
+    case arrivalDetail
+    case atlasSearchDetail
 }
 
 struct ListDataDetail {

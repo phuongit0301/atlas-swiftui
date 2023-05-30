@@ -42,6 +42,16 @@
 		3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC032A24B2DF008017FA /* AircraftSplit.swift */; };
 		3E3FCC082A24B620008017FA /* AircraftSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC072A24B620008017FA /* AircraftSplitContainer.swift */; };
 		3E3FCC0A2A24B818008017FA /* AircraftSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */; };
+		3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC0C2A24E66C008017FA /* DepartureSplit.swift */; };
+		3E3FCC0F2A24E678008017FA /* DepartureSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC0E2A24E678008017FA /* DepartureSplitContainer.swift */; };
+		3E3FCC112A24E67F008017FA /* DepartureSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC102A24E67F008017FA /* DepartureSplitForm.swift */; };
+		3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC132A24FE2A008017FA /* EnrouteSplit.swift */; };
+		3E3FCC162A24FE69008017FA /* EnrouteSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC152A24FE69008017FA /* EnrouteSplitContainer.swift */; };
+		3E3FCC182A24FEB3008017FA /* EnrouteSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC172A24FEB3008017FA /* EnrouteSplitForm.swift */; };
+		3E3FCC1C2A2500CA008017FA /* ArrivalSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC1B2A2500CA008017FA /* ArrivalSplit.swift */; };
+		3E3FCC1E2A2500D3008017FA /* ArrivalSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC1D2A2500D3008017FA /* ArrivalSplitContainer.swift */; };
+		3E3FCC202A2500DC008017FA /* ArrivalSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC1F2A2500DC008017FA /* ArrivalSplitForm.swift */; };
+		3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC212A2587E8008017FA /* AtlasSearchSplit.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
@@ -135,6 +145,16 @@
 		3E3FCC032A24B2DF008017FA /* AircraftSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplit.swift; sourceTree = "<group>"; };
 		3E3FCC072A24B620008017FA /* AircraftSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplitContainer.swift; sourceTree = "<group>"; };
 		3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplitForm.swift; sourceTree = "<group>"; };
+		3E3FCC0C2A24E66C008017FA /* DepartureSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSplit.swift; sourceTree = "<group>"; };
+		3E3FCC0E2A24E678008017FA /* DepartureSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSplitContainer.swift; sourceTree = "<group>"; };
+		3E3FCC102A24E67F008017FA /* DepartureSplitForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSplitForm.swift; sourceTree = "<group>"; };
+		3E3FCC132A24FE2A008017FA /* EnrouteSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteSplit.swift; sourceTree = "<group>"; };
+		3E3FCC152A24FE69008017FA /* EnrouteSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteSplitContainer.swift; sourceTree = "<group>"; };
+		3E3FCC172A24FEB3008017FA /* EnrouteSplitForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteSplitForm.swift; sourceTree = "<group>"; };
+		3E3FCC1B2A2500CA008017FA /* ArrivalSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalSplit.swift; sourceTree = "<group>"; };
+		3E3FCC1D2A2500D3008017FA /* ArrivalSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalSplitContainer.swift; sourceTree = "<group>"; };
+		3E3FCC1F2A2500DC008017FA /* ArrivalSplitForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalSplitForm.swift; sourceTree = "<group>"; };
+		3E3FCC212A2587E8008017FA /* AtlasSearchSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtlasSearchSplit.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -286,8 +306,12 @@
 		3E3FCC052A24B59C008017FA /* Split */ = {
 			isa = PBXGroup;
 			children = (
+				3E3FCC1A2A2500BB008017FA /* ArrivalSplit */,
+				3E3FCC122A24FE13008017FA /* EnrouteSplit */,
+				3E3FCC0B2A24E656008017FA /* DepartureSplit */,
 				3E3FCBFF2A243A10008017FA /* NoteDetailSplit.swift */,
 				3E3FCC012A243A77008017FA /* TableDetailSplit.swift */,
+				3E3FCC212A2587E8008017FA /* AtlasSearchSplit.swift */,
 				3E3FCC062A24B5C2008017FA /* AircraftSplit */,
 				3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */,
 				3E3FCBF52A23676A008017FA /* NavViewSplit.swift */,
@@ -303,6 +327,36 @@
 				3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */,
 			);
 			path = AircraftSplit;
+			sourceTree = "<group>";
+		};
+		3E3FCC0B2A24E656008017FA /* DepartureSplit */ = {
+			isa = PBXGroup;
+			children = (
+				3E3FCC0C2A24E66C008017FA /* DepartureSplit.swift */,
+				3E3FCC0E2A24E678008017FA /* DepartureSplitContainer.swift */,
+				3E3FCC102A24E67F008017FA /* DepartureSplitForm.swift */,
+			);
+			path = DepartureSplit;
+			sourceTree = "<group>";
+		};
+		3E3FCC122A24FE13008017FA /* EnrouteSplit */ = {
+			isa = PBXGroup;
+			children = (
+				3E3FCC132A24FE2A008017FA /* EnrouteSplit.swift */,
+				3E3FCC152A24FE69008017FA /* EnrouteSplitContainer.swift */,
+				3E3FCC172A24FEB3008017FA /* EnrouteSplitForm.swift */,
+			);
+			path = EnrouteSplit;
+			sourceTree = "<group>";
+		};
+		3E3FCC1A2A2500BB008017FA /* ArrivalSplit */ = {
+			isa = PBXGroup;
+			children = (
+				3E3FCC1B2A2500CA008017FA /* ArrivalSplit.swift */,
+				3E3FCC1D2A2500D3008017FA /* ArrivalSplitContainer.swift */,
+				3E3FCC1F2A2500DC008017FA /* ArrivalSplitForm.swift */,
+			);
+			path = ArrivalSplit;
 			sourceTree = "<group>";
 		};
 		3E5AF6492A18FF2900A97ECF /* Tabs */ = {
@@ -613,23 +667,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */,
+				3E3FCC112A24E67F008017FA /* DepartureSplitForm.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
+				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E5AF6572A1A561F00A97ECF /* FlightInformationCard.swift in Sources */,
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E7F68462A20B60E00EC2CA3 /* CustomSegmentedControl.swift in Sources */,
+				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
+				3E3FCC202A2500DC008017FA /* ArrivalSplitForm.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
 				3E3FCBE62A21C8B4008017FA /* QuickReferenceCard.swift in Sources */,
+				3E3FCC1C2A2500CA008017FA /* ArrivalSplit.swift in Sources */,
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
 				3E3FCBD92A21C6E4008017FA /* DepartureForm.swift in Sources */,
 				3E3FCC002A243A11008017FA /* NoteDetailSplit.swift in Sources */,
+				3E3FCC162A24FE69008017FA /* EnrouteSplitContainer.swift in Sources */,
 				3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */,
 				3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */,
 				3E3FCBFE2A236E8F008017FA /* ExampleView1.swift in Sources */,
@@ -650,7 +710,9 @@
 				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
+				3E3FCC1E2A2500D3008017FA /* ArrivalSplitContainer.swift in Sources */,
 				3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */,
+				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
@@ -659,6 +721,7 @@
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
+				3E3FCC182A24FEB3008017FA /* EnrouteSplitForm.swift in Sources */,
 				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
@@ -666,6 +729,7 @@
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				3E3FCC0A2A24B818008017FA /* AircraftSplitForm.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
+				3E3FCC0F2A24E678008017FA /* DepartureSplitContainer.swift in Sources */,
 				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
 				3E3FCC082A24B620008017FA /* AircraftSplitContainer.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,

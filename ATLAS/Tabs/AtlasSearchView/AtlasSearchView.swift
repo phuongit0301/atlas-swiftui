@@ -8,8 +8,16 @@
 import Foundation
 import SwiftUI
 
+enum Status {
+    case normal
+    case like
+    case dislike
+}
+
 struct AtlasSearchView: View {
     @State private var txtSearch: String = ""
+    @State private var like = Status.normal
+    @State private var flag: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -62,7 +70,6 @@ struct AtlasSearchView: View {
                                 .padding(.vertical, 12)
                                 .frame(maxWidth: .infinity, maxHeight: 100)
                         }.background(.white)
-//                            .frame(maxWidth: .infinity, maxHeight: 100)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 0)
                                     .stroke(Color.theme.eerieBlack, lineWidth: 1)
@@ -73,10 +80,14 @@ struct AtlasSearchView: View {
                         // icons and button bottom
                         HStack(alignment: .center) {
                             Button(action: {
-                                // To do: Handle button click
+                                if like == Status.like {
+                                    self.like = Status.normal
+                                } else {
+                                    self.like = Status.like
+                                }
                             }) {
                                 Image(systemName: "hand.thumbsup")
-                                    .foregroundColor(Color.theme.eerieBlack)
+                                    .foregroundColor(self.like == Status.normal ? Color.theme.eerieBlack : Color.theme.tealDeer)
                                     .frame(width: 24, height: 24)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
@@ -86,21 +97,21 @@ struct AtlasSearchView: View {
                                 // To do: Handle button click
                             }) {
                                 Image(systemName: "hand.thumbsdown")
-                                    .foregroundColor(Color.theme.chineseSilver)
-                                    .frame(width: 24, height: 24)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                            
-                            Button(action: {
-                                // To do: Handle button click
-                            }) {
-                                Image(systemName: "flag")
                                     .foregroundColor(Color.theme.eerieBlack)
                                     .frame(width: 24, height: 24)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
                             }
+                            
+                            Button {
+                                self.flag.toggle()
+                            } label: {
+                                Image(systemName: "flag")
+                                    .tint(flag ? Color.theme.tealDeer : Color.theme.eerieBlack)
+                                    .frame(width: 24, height: 24)
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
+                            }.Print("Flag=========\(flag)")
                             
                             Spacer()
                             
@@ -156,5 +167,17 @@ struct AtlasSearchView: View {
     
     func onSearch() {
         //To do call API
+    }
+    
+    private func forcegroundColorLike(for likeNum: Status) -> Color {
+        return likeNum == Status.normal ? Color.theme.eerieBlack : Color.theme.tealDeer
+    }
+    
+    private func forcegroundColorDislike(for likeNum: Int) -> Color {
+        return likeNum == 2 ? Color.theme.tealDeer : Color.theme.eerieBlack
+    }
+    
+    private func forcegroundColorFlag(for isFlag: Bool) -> Color {
+        return isFlag ? Color.theme.tealDeer : Color.theme.eerieBlack
     }
 }
