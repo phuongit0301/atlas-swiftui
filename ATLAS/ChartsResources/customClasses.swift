@@ -168,7 +168,6 @@ class GlobalResponse: ObservableObject {
     private init() {}
 }
 
-
 class APIManager: ObservableObject {
     static let shared = APIManager()
     private let globalResponse = GlobalResponse.shared
@@ -176,20 +175,38 @@ class APIManager: ObservableObject {
     private init() {}
 
     func makePostRequest(completion: @escaping (String?) -> Void = { _ in }) async {
-        guard let url = URL(string: "https://official-joke-api.appspot.com/random_joke") else { return }
-        let request = URLRequest(url: url)
-        //        request.httpMethod = "POST"
-        //        let parameters = ["type": "general"]
-        //        request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-        //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_fuel_data") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // Create the request body data
+        let requestBody = [
+            "airline": "accumulus air",
+            "fltno": "EK352",
+            "eta": "18:00",
+            "arr": "SIN",
+            "dep": "DXB"
+        ]
+        print(requestBody)
         do {
+            // Convert the request body to JSON data
+            let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+            // Set the request body data
+            request.httpBody = requestData
+            
+            // Set the Content-Type header to indicate JSON format
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
             let (data, _) = try await URLSession.shared.data(for: request)
             if let responseString = String(data: data, encoding: .utf8) {
+                // to deal with API response as a string
+                //let trimmedString = responseString.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
                 DispatchQueue.main.async {
                     self.globalResponse.response = responseString
+                    //print("responseString: \(responseString)")
                 }
                 completion(responseString)
+                print("fetched")
             } else {
                 completion(nil)
             }
@@ -199,6 +216,4 @@ class APIManager: ObservableObject {
         }
     }
 }
-
-
 
