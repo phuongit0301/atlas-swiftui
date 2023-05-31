@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FlightNoteCard: View {
     var geoWidth: Double = 0
+    @Binding var collapsed: Bool
     // Mock Data tabs
     @State var itemAircraft: [IFlightInfoModel] = []
     @State var itemDepature = DepartureFlightInfoModel().ListItem
@@ -27,8 +28,6 @@ struct FlightNoteCard: View {
     ]
     
     @State private var selectedSegment = 0
-    
-    @State private var collapsed: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -85,7 +84,7 @@ struct FlightNoteCard: View {
                             }.frame(maxWidth: .infinity)
                             
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }.frame(width: geoWidth, height: 40).fixedSize(horizontal: true, vertical: false)
+                        }.frame(width: .infinity, height: 40)
                         
                         switch selectedSegment {
                         case 0:
@@ -99,14 +98,15 @@ struct FlightNoteCard: View {
                         default:
                             AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
-                    }.frame(height: animatedContentHeight).padding(.bottom, 16)
-                    
+                    }.padding(.bottom, 16)
+                    //                    .frame(height: animatedContentHeight).padding(.bottom, 16)
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
             }
         }.background(Color.theme.honeydew)
-        .cornerRadius(8)
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .cornerRadius(8)
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        
     }
     
     private func calculateHeight() {

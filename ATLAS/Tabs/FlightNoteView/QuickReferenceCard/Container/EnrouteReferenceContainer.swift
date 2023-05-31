@@ -106,6 +106,7 @@ struct EnrouteReferenceContainer: View {
             }
             
             QuickReferenceForm(tagList: self.$enrouteTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            Spacer()
         }
     }
     

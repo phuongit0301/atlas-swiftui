@@ -43,7 +43,7 @@ struct ArrivalReferenceContainer: View {
                                                 .stroke(Color.theme.eerieBlack, lineWidth: 1)
                                         )
                                 }
-                            }
+                            }.frame(height: 100)
                         }.padding(12)
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
@@ -105,7 +105,8 @@ struct ArrivalReferenceContainer: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             
-//            QuickReferenceForm(tagList: self.$arrivalTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$arrivalTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            Spacer()
         }
     }
     

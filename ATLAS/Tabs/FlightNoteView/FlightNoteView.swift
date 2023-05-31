@@ -10,6 +10,8 @@ import SwiftUI
 
 struct FlightNoteView: View {
     var geoWidth: Double = 0
+    @State var collapseFlightNote: Bool = false
+    @State var collapseQuickReference = false
     
     var viewModel = ListFlightNoteInformationModel()
     
@@ -21,12 +23,11 @@ struct FlightNoteView: View {
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
             
             // Flight Note Card
-            FlightNoteCard(geoWidth: geoWidth).id("flight-note-card")
-            
+            FlightNoteCard(geoWidth: geoWidth, collapsed: self.$collapseFlightNote).id("flight-note-card").Print("collapseQuickReference====\(collapseFlightNote)")
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
-            
+            Spacer()
             // Quick Reference
-            QuickReferenceCard()
+            QuickReferenceCard(geoWidth: geoWidth)
             Spacer()
         }.padding(.horizontal, 16)
     }

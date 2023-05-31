@@ -25,12 +25,10 @@ struct AircraftReferenceContainer: View {
                                     .frame(width: 14, height: 16)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
-                                
+
                                 Text(item.name)
                                     .foregroundColor(Color.theme.eerieBlack)
                                     .font(.custom("Inter-Regular", size: 16))
-                                    .lineLimit(1)
-                                    .fixedSize(horizontal: false, vertical: true)
                             }
                         }.padding(12)
                             .frame(maxWidth: geoWidth, alignment: .leading)
@@ -91,9 +89,13 @@ struct AircraftReferenceContainer: View {
                 }.listStyle(.plain)
                     .listRowBackground(Color.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
             QuickReferenceForm(tagList: self.$aircraftTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            
+            Spacer()
         }
     }
     

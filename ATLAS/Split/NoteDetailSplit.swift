@@ -10,6 +10,9 @@ import SwiftUI
 
 struct NoteDetailSplit: View {
     @State private var routingName: String = ""
+    @State var copiedText: String = ""
+    @State var pasteText: String = ""
+    private let pasteboard = UIPasteboard.general
     
     var body: some View {
         GeometryReader { geo in
@@ -105,14 +108,13 @@ struct NoteDetailSplit: View {
                     
                     Rectangle().fill(Color.theme.cultured).frame(height: 16)
                     
-                    
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Routing")
                             .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
                         
                         Rectangle().fill(Color.theme.cultured).frame(height: 16)
                         
-                        TextField("Enter Routing", text: $routingName)
+                        TextField("Enter Routing", text: $copiedText)
                             .frame(height: 150)
                             .padding()
                             .background(Color.white)
@@ -123,7 +125,9 @@ struct NoteDetailSplit: View {
                         HStack {
                             Spacer()
                             
-                            Button(action: {}, label: {
+                            Button(action: {
+                                pasteboard.string = copiedText
+                            }, label: {
                                 Text("Copy")
                                     .cornerRadius(12)
                                     .padding(.horizontal, 16)
@@ -134,7 +138,11 @@ struct NoteDetailSplit: View {
                                 
                             }).cornerRadius(12)
     
-                            Button(action: {}, label: {
+                            Button(action: {
+                                if let clipboardText = pasteboard.string {
+                                    pasteText = clipboardText
+                                }
+                            }, label: {
                                 Text("Paste")
                                     .cornerRadius(12)
                                     .padding(.horizontal, 16)

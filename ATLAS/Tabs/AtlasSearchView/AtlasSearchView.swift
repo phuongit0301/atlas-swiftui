@@ -15,9 +15,14 @@ enum Status {
 }
 
 struct AtlasSearchView: View {
-    @State private var txtSearch: String = ""
+    @EnvironmentObject var network: Network
+    
     @State private var like = Status.normal
     @State private var flag: Bool = false
+    @State private var showLoading: Bool = false
+    // For Search
+    @State private var txtSearch: String = ""
+    @State private var countTxt = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -63,17 +68,19 @@ struct AtlasSearchView: View {
                         
                         // search form
                         HStack {
-                            Text("Generate Search")
-                                .font(.custom("Inter-Regular", size: 16))
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
-                                .frame(maxWidth: .infinity, maxHeight: 100)
+                            TypeWriterText(string: network.dataSearch.result, count: network.txtCount)
+                               .frame(maxWidth: .infinity, alignment: .leading)
                         }.background(.white)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 0)
                                     .stroke(Color.theme.eerieBlack, lineWidth: 1)
                             )
+                            .onReceive(network.$txtCount) { newValue in
+                                withAnimation(.linear(duration: 30)) {
+                                    print("newValue=====\(newValue)")
+                                    self.countTxt = newValue
+                                }
+                            }
                         
                         Rectangle().fill(Color.theme.lavender).frame(height: 8)
                         
@@ -111,12 +118,25 @@ struct AtlasSearchView: View {
                                     .frame(width: 24, height: 24)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
-                            }.Print("Flag=========\(flag)")
+                            }
                             
                             Spacer()
                             
                             Button(action: {
-                                // To do: Handle button click
+                                if txtSearch != "" {
+                                    self.showLoading = true
+                                    
+                                    network.handleSearch(question: txtSearch, onSuccess: { response in
+                                        self.showLoading = false
+                                        
+//                                        withAnimation(.linear(duration: 30)) {
+//                                            self.countTxt = self.network.dataSearch.result.count
+//                                        }
+                                    }, onFailure: { response in
+                                        print("Failed to search => \(response).")
+                                        self.showLoading = false
+                                    })
+                                }
                             }) {
                                 Text("Regenerate Response")
                                     .font(.custom("Inter-Regular", size: 13))
@@ -128,12 +148,13 @@ struct AtlasSearchView: View {
                                             .stroke(Color.init(
                                                 Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 1)
                                     )
-                            }
+                                ActivityIndicator(shouldAnimate: self.$showLoading)
+                            }.disabled(self.showLoading)
                             
                             Button(action: {
                                 // To do: Handle button click
                             }) {
-                                Text("Save To…")
+                                Text("Save To...")
                                     .font(.custom("Inter-Regular", size: 13))
                                     .foregroundColor(Color.theme.eerieBlack)
                                     .background(Color.theme.tealDeer)

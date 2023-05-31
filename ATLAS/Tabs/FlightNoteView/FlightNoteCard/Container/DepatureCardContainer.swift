@@ -106,6 +106,7 @@ struct DepatureCardContainer: View {
                     .listRowBackground(Color.theme.champagne)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 // end list
+                Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
             DepartureForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)

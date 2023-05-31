@@ -32,3 +32,27 @@ extension View {
     }
 }
 
+struct TypeWriterText: View, Animatable {
+    var string: String
+    var count = 0
+
+    var animatableData: Double {
+        get { Double(count) }
+        set { count = Int(max(0, newValue)) }
+    }
+
+    var body: some View {
+        let stringToShow = String(string.prefix(count))
+        ScrollView {
+            Text(stringToShow).font(.custom("Inter-Regular", size: 16))
+                .foregroundColor(Color.theme.eerieBlack)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }.frame(maxWidth: .infinity, maxHeight: 200)
+    }
+}
+
+enum APIError: LocalizedError {
+  /// Invalid request, e.g. invalid URL
+  case invalidRequestError(String)
+}

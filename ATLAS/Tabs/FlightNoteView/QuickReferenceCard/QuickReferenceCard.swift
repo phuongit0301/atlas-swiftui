@@ -17,7 +17,7 @@ struct QuickReferenceCard: View {
     @State var itemEnroute: [IFlightInfoModel] = []
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 114
+    @State var animatedContentHeight: CGFloat = 150
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -84,7 +84,7 @@ struct QuickReferenceCard: View {
                                 }
                             }
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }.frame(height: 40).fixedSize(horizontal: true, vertical: false)
+                        }
                         
                         switch selectedSegment {
                         case 0:
@@ -110,13 +110,13 @@ struct QuickReferenceCard: View {
     
     private func calculateHeight() {
         if self.selectedSegment == 1 {
-            animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
+            animatedContentHeight = itemDepature.count > 1 ? CGFloat(98 + (60 * itemDepature.count)) : 150
         } else if self.selectedSegment == 2 {
-            animatedContentHeight = CGFloat(98 + (60 * itemEnroute.count))
+            animatedContentHeight = itemEnroute.count > 2 ? CGFloat(98 + (50 * itemEnroute.count)) : 150
         } else if self.selectedSegment == 3 {
-            animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
+            animatedContentHeight = itemArrival.count > 1 ? CGFloat(98 + (60 * itemArrival.count)) : 150
         } else {
-            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
+            animatedContentHeight = itemAircraft.count > 1 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
         }
     }
 }
