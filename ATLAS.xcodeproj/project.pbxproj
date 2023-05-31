@@ -55,7 +55,6 @@
 		3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC232A25E48B008017FA /* SearchModel.swift */; };
 		3E3FCC262A25E4D1008017FA /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC252A25E4D1008017FA /* Network.swift */; };
 		3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC272A263392008017FA /* ActivityIndicator.swift */; };
-		3E3FCC3B2A270851008017FA /* ChartsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC292A270850008017FA /* ChartsContentView.swift */; };
 		3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2B2A270851008017FA /* taxiChart.swift */; };
 		3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */; };
 		3E3FCC3E2A270851008017FA /* customClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2D2A270851008017FA /* customClasses.swift */; };
@@ -70,7 +69,6 @@
 		3E3FCC472A270851008017FA /* taxiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC362A270851008017FA /* taxiView.swift */; };
 		3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC372A270851008017FA /* projArrDelaysChart.swift */; };
 		3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC382A270851008017FA /* trackMilesView.swift */; };
-		3E3FCC4A2A270851008017FA /* ATLASchartsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC392A270851008017FA /* ATLASchartsApp.swift */; };
 		3E3FCC4B2A270851008017FA /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC3A2A270851008017FA /* SummaryView.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF6382A18BC2F00A97ECF /* DataEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6372A18BC2F00A97ECF /* DataEnum.swift */; };
@@ -113,7 +111,7 @@
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
-		C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClasses.swift */; };
+		C5F9C81E2A14F3E00076396F /* customClassesPdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,7 +176,6 @@
 		3E3FCC232A25E48B008017FA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		3E3FCC252A25E4D1008017FA /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3E3FCC272A263392008017FA /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		3E3FCC292A270850008017FA /* ChartsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsContentView.swift; sourceTree = "<group>"; };
 		3E3FCC2B2A270851008017FA /* taxiChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiChart.swift; sourceTree = "<group>"; };
 		3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = historicalDelaysChart.swift; sourceTree = "<group>"; };
 		3E3FCC2D2A270851008017FA /* customClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customClasses.swift; sourceTree = "<group>"; };
@@ -193,7 +190,6 @@
 		3E3FCC362A270851008017FA /* taxiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiView.swift; sourceTree = "<group>"; };
 		3E3FCC372A270851008017FA /* projArrDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = projArrDelaysChart.swift; sourceTree = "<group>"; };
 		3E3FCC382A270851008017FA /* trackMilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = trackMilesView.swift; sourceTree = "<group>"; };
-		3E3FCC392A270851008017FA /* ATLASchartsApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATLASchartsApp.swift; sourceTree = "<group>"; };
 		3E3FCC3A2A270851008017FA /* SummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -240,7 +236,7 @@
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		C5F9C81D2A14F3E00076396F /* customClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClasses.swift; sourceTree = "<group>"; };
+		C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClassesPdf.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -525,8 +521,6 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
-				3E3FCC392A270851008017FA /* ATLASchartsApp.swift */,
-				3E3FCC292A270850008017FA /* ChartsContentView.swift */,
 				3E3FCC2A2A270851008017FA /* ChartsResources */,
 				3E3FCC3A2A270851008017FA /* SummaryView.swift */,
 				3E3FCC052A24B59C008017FA /* Split */,
@@ -552,7 +546,7 @@
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
-				C5F9C81D2A14F3E00076396F /* customClasses.swift */,
+				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
 				3E3FCBF32A23647D008017FA /* BottomTabs.swift */,
 				3E3FCC232A25E48B008017FA /* SearchModel.swift */,
 				3E3FCC252A25E4D1008017FA /* Network.swift */,
@@ -743,7 +737,6 @@
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E5AF6572A1A561F00A97ECF /* FlightInformationCard.swift in Sources */,
-				3E3FCC3B2A270851008017FA /* ChartsContentView.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
@@ -766,7 +759,6 @@
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
-				3E3FCC4A2A270851008017FA /* ATLASchartsApp.swift in Sources */,
 				3E3FCBD92A21C6E4008017FA /* DepartureForm.swift in Sources */,
 				3E3FCC002A243A11008017FA /* NoteDetailSplit.swift in Sources */,
 				3E3FCC162A24FE69008017FA /* EnrouteSplitContainer.swift in Sources */,
@@ -813,7 +805,7 @@
 				3E3FCC432A270851008017FA /* historicalDelaysView.swift in Sources */,
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
-				C5F9C81E2A14F3E00076396F /* customClasses.swift in Sources */,
+				C5F9C81E2A14F3E00076396F /* customClassesPdf.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				3E3FCC0A2A24B818008017FA /* AircraftSplitForm.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,

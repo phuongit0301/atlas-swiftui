@@ -22,7 +22,7 @@ struct TabbarScrollable: View {
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
                                     if (tabbarItems[index] == "Charts" || tabbarItems[index] == "Weather") {
-                                        if let url = URL(string: "AviatorSdk:root=Profile") {
+                                        if let url = URL(string: "freeform://") {
                                             if UIApplication.shared.canOpenURL(url) {
                                                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                             }

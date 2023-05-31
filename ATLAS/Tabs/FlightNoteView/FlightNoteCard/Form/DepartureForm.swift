@@ -29,7 +29,7 @@ struct DepartureForm: View {
                     
                     Button(action: {
                         // check text empty or not
-                        if textNote != "" {
+                        if textNote != "" && !tagList.isEmpty {
                             showSheet.toggle()
                         }
                     }, label: {
@@ -37,8 +37,8 @@ struct DepartureForm: View {
                             .padding(.vertical, 4)
                             .padding(.horizontal, 16)
                             .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
-                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
+                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
                             .cornerRadius(12)
                             .frame(alignment: .center)
                     })

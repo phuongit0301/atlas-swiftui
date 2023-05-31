@@ -18,7 +18,7 @@ struct FlightNoteCard: View {
     @State var itemEnroute = EnrouteFlightInfoModel().ListItem
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 150
+    @State var animatedContentHeight: CGFloat = 140
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -98,8 +98,7 @@ struct FlightNoteCard: View {
                         default:
                             AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
-                    }.padding(.bottom, 16)
-                    //                    .frame(height: animatedContentHeight).padding(.bottom, 16)
+                    }.frame(height: animatedContentHeight).padding(.bottom, 16)
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
             }
@@ -117,7 +116,7 @@ struct FlightNoteCard: View {
         } else if self.selectedSegment == 3 {
             animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
         } else {
-            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
+            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 140
         }
     }
 }

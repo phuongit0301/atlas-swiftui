@@ -198,18 +198,25 @@ struct SummaryView: View {
             }
         }
         """
-        var allAPIresponse = convertAllresponseFromAPI(jsonString: testGlobalResponse)
+//        var allAPIresponse = convertAllresponseFromAPI(jsonString: testGlobalResponse)
         //
         // test api fetch
         //Text(globalResponse.response)
         // decode, split into charts and assign to variables
         //var allAPIresponse = convertAllResponseFromAPI(jsonString: globalResponse.response)
-        var projDelaysResponse = allAPIresponse["projDelays"]
-        var historicalDelaysResponse = allAPIresponse["historicalDelays"]
-        var flightLevelResponse = allAPIresponse["flightLevel"]
-        var trackMilesResponse = allAPIresponse["trackMiles"]
-        var taxiResponse = allAPIresponse["taxi"]
-        var enrWXResponse = allAPIresponse["enrWX"]
+//        var projDelaysResponse = allAPIresponse["projDelays"]
+//        var historicalDelaysResponse = allAPIresponse["historicalDelays"]
+//        var flightLevelResponse = allAPIresponse["flightLevel"]
+//        var trackMilesResponse = allAPIresponse["trackMiles"]
+//        var taxiResponse = allAPIresponse["taxi"]
+//        var enrWXResponse = allAPIresponse["enrWX"]
+        
+        var projDelaysResponse = fetchProjArrivalDelays()
+        var historicalDelaysResponse = fetchArrivalDelays()
+        var flightLevelResponse = fetchFlightLevel()
+        var trackMilesResponse = fetchTrackMiles()
+        var taxiResponse = fetchTaxi()
+        var enrWXResponse = fetchEnrWXTrackMiles()
 
         //
         WidthThresholdReader(widthThreshold: 520) { proxy in

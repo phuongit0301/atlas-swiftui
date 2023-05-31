@@ -114,7 +114,7 @@ struct NoteDetailSplit: View {
                         
                         Rectangle().fill(Color.theme.cultured).frame(height: 16)
                         
-                        TextField("Enter Routing", text: $copiedText)
+                        Text("WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L")
                             .frame(height: 150)
                             .padding()
                             .background(Color.white)
@@ -126,7 +126,7 @@ struct NoteDetailSplit: View {
                             Spacer()
                             
                             Button(action: {
-                                pasteboard.string = copiedText
+                                pasteboard.string = "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L"
                             }, label: {
                                 Text("Copy")
                                     .cornerRadius(12)

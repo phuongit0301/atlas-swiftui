@@ -32,18 +32,16 @@ struct EnrouteCardContainer: View {
                                     .lineLimit(1)
                                     .fixedSize(horizontal: false, vertical: true)
                                 
-                                if !item.tags.isEmpty {
-                                    ForEach(item.tags, id: \.self) { tag in
-                                        Text(tag.name)
-                                            .padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .font(.custom("Inter-Medium", size: 12))
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                            )
-                                    }
+                                ForEach(item.tags, id: \.self) { tag in
+                                    Text(tag.name)
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal, 8)
+                                        .font(.custom("Inter-Medium", size: 12))
+                                        .foregroundColor(Color.theme.eerieBlack)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(Color.theme.eerieBlack, lineWidth: 1)
+                                        )
                                 }
                             }
                         }.padding(12)

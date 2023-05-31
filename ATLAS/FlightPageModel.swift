@@ -187,13 +187,12 @@ struct ListFlightSplitModel {
             ListFlightSplitItem(name: "Enroute", screen: NavigationEnumeration.enrouteDetail, subMenuItems: []),
             ListFlightSplitItem(name: "Arrival", screen: NavigationEnumeration.arrivalDetail, subMenuItems: []),
             ListFlightSplitItem(name: "Atlas Search Notes", screen: NavigationEnumeration.atlasSearchDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Reporting", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
+//            ListFlightSplitItem(name: "Reporting", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
         ];
         
         let subMenu1 = [
             ListFlightSplitItem(name: "China RVSM (Westbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: [], idReference: "1"),
             ListFlightSplitItem(name: "China RVSM (Eastbound)", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: [], idReference: "2"),
-            ListFlightSplitItem(name: "China RVSM (Eastbound) 1", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat 12.", subMenuItems: [], idReference: "2"),
         ];
         
         let MainItem = [

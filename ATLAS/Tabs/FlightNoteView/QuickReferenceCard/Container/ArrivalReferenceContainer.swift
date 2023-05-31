@@ -106,7 +106,6 @@ struct ArrivalReferenceContainer: View {
             }
             
             QuickReferenceForm(tagList: self.$arrivalTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
-            Spacer()
         }
     }
     

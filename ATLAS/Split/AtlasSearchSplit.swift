@@ -15,7 +15,7 @@ struct AtlasSearchSplit: View {
     
     @State private var value = 0
 
-    let message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum eros urna, a eleifend orci aliquam nec. Vivamus non iaculis quam. Morbi ipsum dolor, venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum eros urna, a eleifend orci aliquam nec. Vivamus non iaculis quam. Morbi ipsum dolor, venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum eros urna, a eleifend orci aliquam nec. Vivamus non iaculis quam. Morbi ipsum dolor, venenatis."
+    let message = "Expected approach time is determined for an arriving aircraft that will be subjected to a delay of 10 minutes or more or such other period as has been determined by the appropriate authority. The expected approach time shall be transmitted to the aircraft as soon as practicable and preferably not later than at the commencement of its initial descent from cruising level. (6.5.7.1) Source: docs/ICAO-Doc4444-Pans-Atm-16thEdition-2016-OPSGROUP.pdf, page: 132"
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {

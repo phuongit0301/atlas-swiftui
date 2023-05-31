@@ -17,7 +17,7 @@ struct QuickReferenceCard: View {
     @State var itemEnroute: [IFlightInfoModel] = []
     
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 150
+    @State var animatedContentHeight: CGFloat = 140
     
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
@@ -98,7 +98,8 @@ struct QuickReferenceCard: View {
                         default:
                             AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
-                    }.frame(height: animatedContentHeight).padding(.bottom, 16)
+                    }
+                    .frame(height: animatedContentHeight).padding(.bottom, 16)
                     
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
@@ -110,13 +111,13 @@ struct QuickReferenceCard: View {
     
     private func calculateHeight() {
         if self.selectedSegment == 1 {
-            animatedContentHeight = itemDepature.count > 1 ? CGFloat(98 + (60 * itemDepature.count)) : 150
+            animatedContentHeight = itemDepature.count > 0 ? CGFloat(98 + (60 * itemDepature.count)) : 140
         } else if self.selectedSegment == 2 {
-            animatedContentHeight = itemEnroute.count > 2 ? CGFloat(98 + (50 * itemEnroute.count)) : 150
+            animatedContentHeight = itemEnroute.count > 0 ? CGFloat(98 + (60 * itemEnroute.count)) : 140
         } else if self.selectedSegment == 3 {
-            animatedContentHeight = itemArrival.count > 1 ? CGFloat(98 + (60 * itemArrival.count)) : 150
+            animatedContentHeight = itemArrival.count > 0 ? CGFloat(98 + (60 * itemArrival.count)) : 140
         } else {
-            animatedContentHeight = itemAircraft.count > 1 ? CGFloat(98 + (60 * itemAircraft.count)) : 150
+            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 140
         }
     }
 }

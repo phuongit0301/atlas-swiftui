@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-@main
-struct ATLASApp: App {
+//@main
+struct ATLASApp1: App {
     @ObservedObject var apiManager = APIManager.shared
 
     var body: some Scene {

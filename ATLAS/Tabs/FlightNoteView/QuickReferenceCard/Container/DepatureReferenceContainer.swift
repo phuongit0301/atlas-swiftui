@@ -106,7 +106,6 @@ struct DepatureReferenceContainer: View {
             }
             
             QuickReferenceForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
-            Spacer()
         }
     }
     

@@ -94,8 +94,6 @@ struct AircraftReferenceContainer: View {
             }
             
             QuickReferenceForm(tagList: self.$aircraftTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
-            
-            Spacer()
         }
     }
     

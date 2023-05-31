@@ -14,6 +14,7 @@ import PDFKit
 import QuickLookThumbnailing
 import Foundation
 import CoreML
+import os
 
 struct MainView: View {
     @State private var documentText: String = ""

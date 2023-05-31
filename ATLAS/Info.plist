@@ -44,6 +44,14 @@
 				<string>ewas</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>freeform</string>
+			</array>
+		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -51,6 +59,7 @@
 		<string>itms-apps</string>
 		<string>App-Prefs</string>
 		<string>AviatorSdk</string>
+		<string>freeform</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

@@ -25,7 +25,6 @@ struct FlightNoteView: View {
             // Flight Note Card
             FlightNoteCard(geoWidth: geoWidth, collapsed: self.$collapseFlightNote).id("flight-note-card").Print("collapseQuickReference====\(collapseFlightNote)")
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
-            Spacer()
             // Quick Reference
             QuickReferenceCard(geoWidth: geoWidth)
             Spacer()
