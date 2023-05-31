@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
     
 struct DepartureSplit: View {
-    @State var itemDeparture: [IFlightInfoModel] = DepartureFlightInfoModel().ListItem
-    @State var animatedContentHeight: CGFloat = 180
+    @State var itemDeparture: [IFlightInfoModel] = DepartureFlightInfoTempModel().ListItem
+    @State var animatedContentHeight: CGFloat = 90
 
     var body: some View {
         GeometryReader { geo in

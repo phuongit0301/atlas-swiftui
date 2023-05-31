@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
     
 struct ArrivalSplit: View {
-    @State var itemArrival: [IFlightInfoModel] = ArrivalFlightInfoModel().ListItem
+    @State var itemArrival: [IFlightInfoModel] = ArrivalFlightInfoTempModel().ListItem
     @State var animatedContentHeight: CGFloat = 90
 
     var body: some View {

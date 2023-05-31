@@ -12,9 +12,9 @@ struct QuickReferenceCard: View {
     var geoWidth: Double = 0
     // Mock Data tabs
     @State var itemAircraft: [IFlightInfoModel] = []
-    @State var itemDepature: [IFlightInfoModel] = []
-    @State var itemArrival: [IFlightInfoModel] = []
-    @State var itemEnroute: [IFlightInfoModel] = []
+    @State var itemDepature: [IFlightInfoModel] = DepartureFlightInfoTempModel().ListItem
+    @State var itemArrival: [IFlightInfoModel] = ArrivalFlightInfoTempModel().ListItem
+    @State var itemEnroute: [IFlightInfoModel] = EnrouteFlightInfoTempModel().ListItem
     
     @State private var currentTab: Int = 0
     @State var animatedContentHeight: CGFloat = 140
@@ -111,13 +111,13 @@ struct QuickReferenceCard: View {
     
     private func calculateHeight() {
         if self.selectedSegment == 1 {
-            animatedContentHeight = itemDepature.count > 0 ? CGFloat(98 + (60 * itemDepature.count)) : 140
+            animatedContentHeight = itemDepature.count > 0 ? CGFloat(110 + (60 * itemDepature.count)) : 140
         } else if self.selectedSegment == 2 {
-            animatedContentHeight = itemEnroute.count > 0 ? CGFloat(98 + (60 * itemEnroute.count)) : 140
+            animatedContentHeight = itemEnroute.count > 0 ? CGFloat(110 + (60 * itemEnroute.count)) : 140
         } else if self.selectedSegment == 3 {
-            animatedContentHeight = itemArrival.count > 0 ? CGFloat(98 + (60 * itemArrival.count)) : 140
+            animatedContentHeight = itemArrival.count > 0 ? CGFloat(110 + (60 * itemArrival.count)) : 140
         } else {
-            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 140
+            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(110 + (60 * itemAircraft.count)) : 140
         }
     }
 }

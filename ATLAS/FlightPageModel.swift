@@ -97,6 +97,16 @@ struct DepartureFlightInfoModel {
     }()
 }
 
+struct DepartureFlightInfoTempModel {
+    var ListItem = {
+        var MainItem = [
+            IFlightInfoModel(name: "Note digital clearance requirements 10mins before pushback", tags: [], isDefault: true),
+        ]
+        
+        return MainItem
+    }()
+}
+
 struct DepartureTags {
     let TagList = {
         let MainItem = [
@@ -120,6 +130,16 @@ struct EnrouteFlightInfoModel {
     }()
 }
 
+struct EnrouteFlightInfoTempModel {
+    let ListItem = {
+        let MainItem = [
+            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [], isDefault: true),
+        ]
+        
+        return MainItem
+    }()
+}
+
 struct EnrouteTags {
     let TagList = {
         let MainItem = [
@@ -136,6 +156,16 @@ struct ArrivalFlightInfoModel {
         let MainItem = [
             IFlightInfoModel(name: "Birds in vicinity", tags: [ITag(name: "Threats")], isDefault: true),
             IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [ITag(name: "Weather")], isDefault: true),
+        ]
+        
+        return MainItem
+    }()
+}
+
+struct ArrivalFlightInfoTempModel {
+    let ListItem = {
+        let MainItem = [
+            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [], isDefault: true),
         ]
         
         return MainItem
