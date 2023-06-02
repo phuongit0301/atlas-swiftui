@@ -3,4 +3,54 @@
    uuid = "D7876A0C-2A43-40A7-A14A-142C1BF61B8B"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E1C56F82-C325-4431-9057-1E3AFE4E3DDC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/SummaryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "convertAllResponseJSONToObject(json:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "E1C56F82-C325-4431-9057-1E3AFE4E3DDC - 9e230922ecdbe3aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.convertAllResponseJSONToObject(json: ATLAS.allAPIresponseNestedJSON) -&gt; Swift.Dictionary&lt;Swift.String, Any&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adil/Desktop/atlas/ATLAS/SummaryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "17560">
+               </Location>
+               <Location
+                  uuid = "E1C56F82-C325-4431-9057-1E3AFE4E3DDC - 9e230922ecdbe3aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.convertAllResponseJSONToObject(json: ATLAS.allAPIresponseNestedJSON) -&gt; Swift.Dictionary&lt;Swift.String, Any&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adil/Desktop/atlas/ATLAS/SummaryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "18468">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

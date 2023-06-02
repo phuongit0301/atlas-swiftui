@@ -88,7 +88,7 @@ struct allAPIresponseNestedJSON: Codable {
        
     struct projArrivalDelaysNestedJSON: Codable {
         let delays: [ProjArrivalDelaysJSON]
-        let expectedDelay: Int
+        let expectedDelay: Float
         let eta: String
 
         private enum CodingKeys: String, CodingKey {
@@ -328,14 +328,14 @@ func convertAllResponseJSONToObject(json: allAPIresponseNestedJSON) -> [String: 
             for delayJSON in nestedJSON.delays {
                 let projArrivalDelay = ProjArrivalDelays(
                     time: parseTimeString(delayJSON.time)!,
-                    delay: delayJSON.delay,
-                    mindelay: delayJSON.mindelay,
-                    maxdelay: delayJSON.maxdelay
+                    delay: Int(delayJSON.delay),
+                    mindelay: Int(delayJSON.mindelay),
+                    maxdelay: Int(delayJSON.maxdelay)
                 )
                 delays.append(projArrivalDelay)
             }
             let nestedObject: [String: Any] = [
-                "expectedDelay": nestedJSON.expectedDelay,
+                "expectedDelay": Int(nestedJSON.expectedDelay),
                 "eta": parseTimeString(nestedJSON.eta)!,
                 "delays": delays
             ]

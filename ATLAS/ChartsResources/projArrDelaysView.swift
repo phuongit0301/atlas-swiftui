@@ -73,7 +73,7 @@ func fetchProjArrivalDelays() -> [String: Any] {
 
 struct ProjArrivalDelaysJSON: Codable {
         let time: String
-        let delay: Int
-        let mindelay: Int
-        let maxdelay: Int
+        let delay: Float
+        let mindelay: Float
+        let maxdelay: Float
     }
