@@ -353,9 +353,9 @@ func convertAllresponseFromAPI(jsonString: String) -> [String : Any] {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let nestedJSON = try decoder.decode(allAPIresponseNestedJSON.self, from: jsonData)
-        print("nestedJSON: \(nestedJSON)")
+        //print("nestedJSON: \(nestedJSON)")
         object = convertAllResponseJSONToObject(json: nestedJSON)
-        print(object)
+        //print(object)
     } catch {
         print("Error decoding JSON: \(error)")
     }
