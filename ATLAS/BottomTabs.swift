@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BottomTabs: View {
     private var viewModel = BottomMenuModel()
-    @State private var currentScreen = NavigationScreen.home
+    @State private var currentScreen = MainScreen.HomeScreen
     @State var selectedItem: BottomMenuItem? = nil
     
     var body: some View {

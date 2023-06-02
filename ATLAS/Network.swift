@@ -11,7 +11,7 @@ class Network: ObservableObject {
     @Published var dataSearch: SearchModel = SearchModel(result: "")
     @Published var txtCount: Int = 0
     
-    func handleSearch(question: String, onSuccess: @escaping (SearchModel) -> Void, onFailure: @escaping (Error) -> Void) {
+    func handleSearch(question: String, onSuccess: @escaping () -> Void, onFailure: @escaping (Error) -> Void) {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_OnlineSearch") else { fatalError("Missing URL") }
         let parameter = ["question": question]
         
@@ -38,7 +38,7 @@ class Network: ObservableObject {
                         let decodedSearch = try JSONDecoder().decode(SearchModel.self, from: data)
                         self.dataSearch = decodedSearch
                         self.txtCount = decodedSearch.result.count
-                        onSuccess(decodedSearch)
+                        onSuccess()
                     } catch let error {
                         print("Error decoding: ", error)
                         onFailure(error)

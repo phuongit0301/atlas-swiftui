@@ -22,13 +22,13 @@ struct AtlasSearchView: View {
     @State private var showLoading: Bool = false
     // For Search
     @State private var txtSearch: String = ""
-    @State private var value = 0
-
-    let message = "Expected approach time is determined for an arriving aircraft that will be subjected to a delay of 10 minutes or more or such other period as has been determined by the appropriate authority. The expected approach time shall be transmitted to the aircraft as soon as practicable and preferably not later than at the commencement of its initial descent from cruising level. (6.5.7.1) Source: docs/ICAO-Doc4444-Pans-Atm-16thEdition-2016-OPSGROUP.pdf, page: 132"
+    
+    @State private var message = ""
+    @State private var messageCount = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading) {
                 // flight informations
                 
                 Text("Atlas Search")
@@ -69,7 +69,7 @@ struct AtlasSearchView: View {
                     
                     // search form
                     HStack {
-                        TypeWriterText(string: message, count: value)
+                        TypeWriterText(string: message, count: messageCount)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }.background(.white)
                         .overlay(
@@ -118,8 +118,19 @@ struct AtlasSearchView: View {
                         Spacer()
                         
                         Button(action: {
-                            withAnimation(.linear(duration: 30)) {
-                                value = message.count
+                            self.showLoading = true
+                            if txtSearch != "" {
+                                network.handleSearch(question: txtSearch, onSuccess: {
+                                    self.showLoading = false
+                                    
+                                    withAnimation(.linear(duration: 30)) {
+                                        message = network.dataSearch.result
+                                        messageCount = network.dataSearch.result.count
+                                    }
+                                }, onFailure: { error in
+                                    self.showLoading = false
+                                    print("Error fetch data == \(error)")
+                                })
                             }
                         }) {
                             Text("Regenerate Response")
@@ -152,13 +163,12 @@ struct AtlasSearchView: View {
                             .cornerRadius(12)
                         
                     }
-                }.padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                
-                
-            }.background(Color.theme.lavender)
+                }
+            }.padding(16)
+                .background(Color.theme.lavender)
                 .cornerRadius(8)
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            
             Spacer()
             
         }.padding(16)

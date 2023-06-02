@@ -211,12 +211,12 @@ struct ListFlightSplitItem: Identifiable, Hashable {
 struct ListFlightSplitModel {
     let ListItem = {
         let subMenu = [
-            ListFlightSplitItem(name: "Flight Plan", screen: NavigationEnumeration.fightPlanDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Aircraft Status", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Departure", screen: NavigationEnumeration.departureDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Enroute", screen: NavigationEnumeration.enrouteDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Arrival", screen: NavigationEnumeration.arrivalDetail, subMenuItems: []),
-            ListFlightSplitItem(name: "Atlas Search Notes", screen: NavigationEnumeration.atlasSearchDetail, subMenuItems: []),
+            ListFlightSplitItem(name: "Flight Plan", screen: NavigationEnumeration.FlightScreen, subMenuItems: []),
+            ListFlightSplitItem(name: "Aircraft Status", screen: NavigationEnumeration.AirCraftScreen, subMenuItems: []),
+            ListFlightSplitItem(name: "Departure", screen: NavigationEnumeration.DepartureScreen, subMenuItems: []),
+            ListFlightSplitItem(name: "Enroute", screen: NavigationEnumeration.EnrouteScreen, subMenuItems: []),
+            ListFlightSplitItem(name: "Arrival", screen: NavigationEnumeration.ArrivalScreen, subMenuItems: []),
+            ListFlightSplitItem(name: "Atlas Search Notes", screen: NavigationEnumeration.AtlasSearchScreen, subMenuItems: []),
 //            ListFlightSplitItem(name: "Reporting", screen: NavigationEnumeration.airCraftDetail, subMenuItems: []),
         ];
         
@@ -226,24 +226,12 @@ struct ListFlightSplitModel {
         ];
         
         let MainItem = [
-            ListFlightSplitItem(name: "Notes", screen: NavigationEnumeration.noteDetail, subMenuItems: subMenu),
-            ListFlightSplitItem(name: "Tables", screen: NavigationEnumeration.tableDetail, description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: subMenu1),
+            ListFlightSplitItem(name: "Notes", screen: NavigationEnumeration.NoteScreen, subMenuItems: subMenu),
+            ListFlightSplitItem(name: "Tables", screen: NavigationEnumeration.TableScreen, description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", subMenuItems: subMenu1),
         ]
         
         return MainItem
     }()
-}
-
-
-enum NavigationEnumeration {
-    case noteDetail
-    case tableDetail
-    case fightPlanDetail
-    case airCraftDetail
-    case departureDetail
-    case enrouteDetail
-    case arrivalDetail
-    case atlasSearchDetail
 }
 
 struct ListDataDetail {
@@ -273,4 +261,93 @@ struct ListDetailModel {
         
         return MainItem
     }()
+}
+
+
+// New Structure
+
+class FlightNoteModelState: ObservableObject {
+    // Departure
+    @Published var departureData: [IFlightInfoModel]
+    @Published var departureTag: [ITag]
+    // Quick Reference
+    @Published var departureQRData: [IFlightInfoModel]
+    
+    // Arrival
+    @Published var arrivalData: [IFlightInfoModel]
+    @Published var arrivalTag: [ITag]
+    // Quick Reference
+    @Published var arrivalQRData: [IFlightInfoModel]
+    
+    // Enroute
+    @Published var enrouteData: [IFlightInfoModel]
+    @Published var enrouteTag: [ITag]
+    // Quick Reference
+    @Published var enrouteQRData: [IFlightInfoModel]
+    
+    // Aircraft
+    @Published var aircraftData: [IFlightInfoModel]
+    @Published var aircraftTag: [ITag]
+    // Quick Reference
+    @Published var aircraftQRData: [IFlightInfoModel]
+    
+    
+    
+    init() {
+        self.departureData = [
+            IFlightInfoModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITag(name: "Preflight")], isDefault: true),
+            IFlightInfoModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITag(name: "Departure")], isDefault: true),
+            IFlightInfoModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITag(name: "Dispatch")], isDefault: true),
+            IFlightInfoModel(name: "Expected POB: 315", tags: [ITag(name: "Dispatch")], isDefault: true),
+        ]
+        
+        self.departureTag = [
+            ITag(name: "Preflight"),
+            ITag(name: "Departure"),
+            ITag(name: "Dispatch"),
+        ]
+        
+        self.departureQRData = []
+        
+        // Arrival
+        self.arrivalData = [
+            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [], isDefault: true),
+        ]
+        
+        self.arrivalTag = [
+            ITag(name: "Threats"),
+            ITag(name: "Weather"),
+            ITag(name: "Arrival"),
+            ITag(name: "Approach"),
+            ITag(name: "Landing"),
+            ITag(name: "Ground"),
+        ]
+        
+        self.arrivalQRData = []
+        
+        // Enroute
+        self.enrouteData = [
+            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [], isDefault: true),
+        ]
+        
+        self.enrouteTag = [
+            ITag(name: "Enroute"),
+            ITag(name: "Terrain"),
+        ]
+        
+        self.enrouteQRData = []
+        
+        
+        // Aircraft
+        self.aircraftData = []
+        
+        self.aircraftTag = []
+        
+        self.aircraftQRData = []
+    }
+    
+    func addDepartureQR(item: IFlightInfoModel) {
+        self.departureQRData.append(item)
+        objectWillChange.send()
+    }
 }

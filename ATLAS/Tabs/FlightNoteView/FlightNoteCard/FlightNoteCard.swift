@@ -12,6 +12,8 @@ struct FlightNoteCard: View {
     var geoWidth: Double = 0
     @Binding var collapsed: Bool
     // Mock Data tabs
+    @ObservedObject var viewModel = FlightNoteModelState()
+    
     @State var itemAircraft: [IFlightInfoModel] = []
     @State var itemDepature = DepartureFlightInfoModel().ListItem
     @State var itemArrival = ArrivalFlightInfoModel().ListItem
@@ -84,13 +86,13 @@ struct FlightNoteCard: View {
                             }.frame(maxWidth: .infinity)
                             
                             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }.frame(width: .infinity, height: 40)
+                        }.frame(width: .infinity)
                         
                         switch selectedSegment {
                         case 0:
                             AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureCardContainer(itemList: self.$itemDepature, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            DepatureCardContainer(itemList: $viewModel.departureData, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
                             EnrouteCardContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
@@ -98,7 +100,7 @@ struct FlightNoteCard: View {
                         default:
                             AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
-                    }.frame(height: animatedContentHeight).padding(.bottom, 16)
+                    }.padding(.bottom, 16)
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
             }

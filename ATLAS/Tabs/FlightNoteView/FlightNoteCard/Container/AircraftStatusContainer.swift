@@ -38,16 +38,14 @@ struct AircraftStatusContainer: View {
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.white)
                         .swipeActions(allowsFullSwipe: false) {
-                            Button {
-                                print("Muting conversation")
+                            Button(role: .destructive) {
+                                print("Deleting conversation")
                             } label: {
-                                Image(systemName: "tag.fill")
+                                Image(systemName: "trash.fill")
                                     .frame(width: 16, height: 16)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
-                            }
-                            .tint(Color.theme.pastelOrange)
-
+                            }.tint(Color.theme.alizarinCrimson)
                             Button {
                                 print("Muting conversation")
                             } label: {
@@ -57,41 +55,22 @@ struct AircraftStatusContainer: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                             .tint(Color.theme.eerieBlack)
-
-                            Button {
-                                print("Muting conversation")
-                            } label: {
-                                Image(systemName: "doc.on.doc.fill")
-                                    .frame(width: 16, height: 16)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                            .tint(Color.theme.tuftsBlue)
-
-                            Button {
-                                print("Muting conversation")
-                            } label: {
-                                Image(systemName: "square.and.arrow.up")
-                                    .frame(width: 16, height: 16)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                            .tint(Color.theme.chineseSilver)
-
-                            Button(role: .destructive) {
-                                print("Deleting conversation")
-                            } label: {
-                                Image(systemName: "trash.fill")
-                                    .frame(width: 16, height: 16)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }.tint(Color.theme.alizarinCrimson)
+                            
+//                            Button {
+//                                print("Muting conversation")
+//                            } label: {
+//                                Image(systemName: "tag.fill")
+//                                    .frame(width: 16, height: 16)
+//                                    .scaledToFit()
+//                                    .aspectRatio(contentMode: .fit)
+//                            }
+//                            .tint(Color.theme.eerieBlack)
                         }
                     }.onMove(perform: move)
                 }
                 .listStyle(.plain)
                     .listRowBackground(Color.white)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: 98)
 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }

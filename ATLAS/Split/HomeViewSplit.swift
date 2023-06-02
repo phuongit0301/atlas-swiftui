@@ -10,37 +10,36 @@ import SwiftUI
 
 struct HomeViewSplit: View {
 //    @Binding var currentScreen: NavigationScreen
-    @Binding var selectedItem: SubMenuItem?
-    
+//    @Binding var selectedItem: SubMenuItem?
+//
     var viewModel = ListFlightSplitModel()
-    @State private var currentScreen = NavigationScreen.flight
+    @EnvironmentObject var viewModelMenu: SideMenuModelState
+//    @State private var currentScreen = NavigationScreen.flight
     
     var body: some View {
         VStack(spacing: 0) {
             // flight informations
-            List (selection: $selectedItem) {
+            List (selection: $viewModelMenu.selectedMenu) {
                 ForEach(viewModel.ListItem, id: \.self) { item in
                     Section {
                         if !item.subMenuItems.isEmpty {
                             ForEach(item.subMenuItems, id: \.self) { row in
-                                NavigationLink(destination: getDestination(screen: item.screen ?? NavigationEnumeration.tableDetail, item: item, row: row)) {
+                                NavigationLink(destination: getDestination(screen: item.screen ?? NavigationEnumeration.TableScreen, item: item, row: row)) {
                                     VStack(alignment: .leading, spacing: 0) {
                                         Text(row.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16)).padding(.bottom, 5)
-                                        
+
                                         if row.description != nil {
                                             Text(row.description ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 11))
                                         }
                                     }
                                 }
-                                    
-                            }.onChange(of: selectedItem) { _ in
-                                self.currentScreen = NavigationScreen.home
+
                             }
                         }
                     } header: {
                         Text(item.name)
                             .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
-                        
+
                     }
                 }
             }.listStyle(.insetGrouped)
@@ -50,30 +49,30 @@ struct HomeViewSplit: View {
     }
     
     func getDestination(screen: NavigationEnumeration, item: ListFlightSplitItem, row: ListFlightSplitItem) -> AnyView {
-        if screen == NavigationEnumeration.tableDetail {
+        if screen == NavigationEnumeration.TableScreen {
             return AnyView(TableDetailSplit(row: row))
         } else {
-            if row.screen == NavigationEnumeration.noteDetail {
+            if row.screen == NavigationEnumeration.NoteScreen {
                 return AnyView(NoteDetailSplit())
             }
             
-            if row.screen == NavigationEnumeration.airCraftDetail {
+            if row.screen == NavigationEnumeration.AirCraftScreen {
                 return AnyView(AircraftSplit())
             }
             
-            if row.screen == NavigationEnumeration.departureDetail {
+            if row.screen == NavigationEnumeration.DepartureScreen {
                 return AnyView(DepartureSplit())
             }
             
-            if row.screen == NavigationEnumeration.enrouteDetail {
+            if row.screen == NavigationEnumeration.EnrouteScreen {
                 return AnyView(EnrouteSplit())
             }
             
-            if row.screen == NavigationEnumeration.arrivalDetail {
+            if row.screen == NavigationEnumeration.ArrivalScreen {
                 return AnyView(ArrivalSplit())
             }
             
-            if row.screen == NavigationEnumeration.atlasSearchDetail {
+            if row.screen == NavigationEnumeration.AtlasSearchScreen {
                 return AnyView(AtlasSearchSplit())
             }
             

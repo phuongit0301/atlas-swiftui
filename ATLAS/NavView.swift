@@ -9,26 +9,23 @@ import Foundation
 import SwiftUI
 
 struct NavView: View {
-    @Binding var selectedItem: SubMenuItem?
-    @Binding var currentScreen: NavigationScreen
+    @EnvironmentObject var sideMenuState: SideMenuModelState
+    
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(selectedItem?.name ?? "").foregroundColor(Color.theme.eerieBlack).padding(.trailing, 10).font(.custom("Inter-SemiBold", size: 34))
+                Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).padding(.trailing, 10).font(.custom("Inter-SemiBold", size: 34))
                 VStack {
-                    Text(selectedItem?.flight ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 15))
-                    Text(selectedItem?.date ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 15))
+                    Text(sideMenuState.selectedMenu?.flight ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 15))
+                    Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 15))
                 }
                 Spacer()
             }.padding(16)
-            if currentScreen == .flight {
-                FlightView()
-            } else {
-                HomeView(selectedItem: self.$selectedItem)
-            }
+
+            HomeView()
         }.background(Color.theme.cultured)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

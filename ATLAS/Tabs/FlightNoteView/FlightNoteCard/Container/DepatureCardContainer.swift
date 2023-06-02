@@ -11,6 +11,9 @@ import SwiftUI
 struct DepatureCardContainer: View {
     @Binding var itemList: [IFlightInfoModel]
     @State var depTags: [ITag] = DepartureTags().TagList
+    
+    @StateObject var viewModel = FlightNoteModelState()
+    
     var calculateHeight: () -> Void
     var geoWidth: Double = 0
     
@@ -50,15 +53,14 @@ struct DepatureCardContainer: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(self.backgroundColor(for: item.isDefault))
                             .swipeActions(allowsFullSwipe: false) {
-                                Button {
-                                    print("Muting conversation")
+                                Button(role: .destructive) {
+                                    print("Deleting conversation")
                                 } label: {
-                                    Image(systemName: "tag.fill")
+                                    Image(systemName: "trash.fill")
                                         .frame(width: 16, height: 16)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
-                                }
-                                .tint(Color.theme.pastelOrange)
+                                }.tint(Color.theme.alizarinCrimson)
                                 
                                 Button {
                                     print("Muting conversation")
@@ -71,33 +73,14 @@ struct DepatureCardContainer: View {
                                 .tint(Color.theme.eerieBlack)
                                 
                                 Button {
-                                    print("Muting conversation")
+                                    viewModel.addDepartureQR(item: item)
                                 } label: {
-                                    Image(systemName: "doc.on.doc.fill")
+                                    Image(systemName: "tag.fill")
                                         .frame(width: 16, height: 16)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }
-                                .tint(Color.theme.tuftsBlue)
-                                
-                                Button {
-                                    print("Muting conversation")
-                                } label: {
-                                    Image(systemName: "square.and.arrow.up")
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }
-                                .tint(Color.theme.chineseSilver)
-                                
-                                Button(role: .destructive) {
-                                    print("Deleting conversation")
-                                } label: {
-                                    Image(systemName: "trash.fill")
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }.tint(Color.theme.alizarinCrimson)
+                                .tint(Color.theme.eerieBlack)
                             }
                     }.onMove(perform: move)
                 }.listStyle(.plain)

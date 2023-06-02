@@ -17,24 +17,8 @@ import CoreML
 import os
 
 struct MainView: View {
-    @State private var documentText: String = ""
-    @State private var fileName: String = ""
-    @State private var fileIcon: UIImage? = nil
-    @State private var totalCharacters: Int = 0
-    @State private var totalTokens: Int = 0
-    @State private var progress: Double = 0
-    @State private var chunks: [String] = []
-    @State private var embeddings: [[Float]] = []
-    @State private var searchText: String = ""
-    @State private var searchResults: [String] = []
-    @State private var isLoading: Bool = false
-    @State private var selectedCategoryId: MenuItem.ID?
-    @State private var currentScreen = NavigationScreen.home
-    private var viewModel = SideMenuModel()
-    
-    @State private var similarityIndex: SimilarityIndex?
     @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
-    @State var selectedItem: SubMenuItem? = nil
+    @EnvironmentObject var sideMenuState: SideMenuModelState
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
@@ -74,35 +58,35 @@ struct MainView: View {
                     .cornerRadius(8)
                     .padding(15)
                 
-                List(viewModel.SideMenu, selection: $selectedItem) { item in
-                    if !item.subMenuItems.isEmpty {
-                        Section() {
-                            ForEach(item.subMenuItems, id: \.self) { row in
-                                RowSelection(item: row, selectedItem: self.$selectedItem)
-                            }.onChange(of: selectedItem) { _ in
-                                self.currentScreen = NavigationScreen.home
+                List(selection: $sideMenuState.selectedMenu) {
+                    ForEach(sideMenuState.mainMenu, id: \.self) { item in
+                        if !item.subMenuItems.isEmpty {
+                            Section() {
+                                ForEach(item.subMenuItems, id: \.self) { row in
+                                    RowSelection(item: row, selectedItem: $sideMenuState.selectedMenu)
+                                }
+                            } header: {
+                                Text(item.name)
+                                    .foregroundColor(Color.theme.eerieBlack).font(Font.custom("Inter-Medium", size: 17))
                             }
-                        } header: {
-                            Text(item.name)
-                                .foregroundColor(Color.theme.eerieBlack).font(Font.custom("Inter-Medium", size: 17))
                         }
                     }
-                    
                 }.scrollContentBackground(.hidden)
             }.background(Color.theme.cultured)
         } detail: {
-            if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-                ContentDetailSplit(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
-            } else {
-                ContentDetail(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
+            NavigationStack {
+                VStack(spacing: 0) {
+                    if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                        ContentDetailSplit()
+                    } else {
+                        ContentDetail()
+                    }
+                }
             }
         }.navigationSplitViewStyle(.balanced)
          .onAppear() {
-             if self.selectedItem == nil {
-                 self.selectedItem = viewModel.SideMenu.first?.subMenuItems.first;
-             }
             columnVisibility = .all
-        }.accentColor(Color.theme.tuftsBlue)
+        }.accentColor(Color.theme.tuftsBlue).environmentObject(FlightNoteModelState())
     }
     
     struct RowSelection: View {
@@ -128,28 +112,20 @@ struct MainView: View {
     }
     
     struct ContentDetail: View {
-        @Binding var selectedItem: SubMenuItem?
-        @Binding var currentScreen: NavigationScreen
+        @EnvironmentObject var navMenuState: MainNavModelState
+        @EnvironmentObject var modelState: TabModelState
         
         var body: some View {
-            NavigationStack {
-                VStack(spacing: 0) {
-                    NavView(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
-                }
-            }
+            HomeView()
         }
     }
     
     struct ContentDetailSplit: View {
-        @Binding var selectedItem: SubMenuItem?
-        @Binding var currentScreen: NavigationScreen
+//        @Binding var selectedItem: SubMenuItem?
+//        @Binding var currentScreen: MainScreen
         
         var body: some View {
-            NavigationStack {
-                VStack(spacing: 0) {
-                    NavViewSplit(selectedItem: self.$selectedItem, currentScreen: self.$currentScreen)
-                }
-            }
+            HomeViewSplit()
         }
     }
 
@@ -178,6 +154,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(Network())
+        ContentView()
+            .environmentObject(Network())
     }
 }

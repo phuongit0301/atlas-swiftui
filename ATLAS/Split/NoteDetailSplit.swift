@@ -9,9 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NoteDetailSplit: View {
-    @State private var routingName: String = ""
-    @State var copiedText: String = ""
-    @State var pasteText: String = ""
+    @State private var textRouting: String = ""
     private let pasteboard = UIPasteboard.general
     
     var body: some View {
@@ -114,8 +112,8 @@ struct NoteDetailSplit: View {
                         
                         Rectangle().fill(Color.theme.cultured).frame(height: 16)
                         
-                        Text("WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L")
-                            .frame(height: 150)
+                        TextField("Routing", text: $textRouting, axis: .vertical)
+                            .frame(height: 300, alignment: .leading)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(4)
@@ -126,7 +124,7 @@ struct NoteDetailSplit: View {
                             Spacer()
                             
                             Button(action: {
-                                pasteboard.string = "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L"
+                                pasteboard.string = self.textRouting
                             }, label: {
                                 Text("Copy")
                                     .cornerRadius(12)
@@ -140,7 +138,7 @@ struct NoteDetailSplit: View {
     
                             Button(action: {
                                 if let clipboardText = pasteboard.string {
-                                    pasteText = clipboardText
+                                    textRouting = clipboardText
                                 }
                             }, label: {
                                 Text("Paste")

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NavViewSplit: View {
     @Binding var selectedItem: SubMenuItem?
-    @Binding var currentScreen: NavigationScreen
+    @Binding var currentScreen: MainScreen
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
     
@@ -23,10 +23,11 @@ struct NavViewSplit: View {
                 Spacer()
             }.padding(16)
 
-            if currentScreen == .flight {
+            if currentScreen == .FlightScreen {
                 FlightView()
             } else {
-                HomeViewSplit(selectedItem: self.$selectedItem)
+                HomeViewSplit()
+//                HomeViewSplit(selectedItem: self.$selectedItem)
             }
             
         }.background(Color.theme.cultured)

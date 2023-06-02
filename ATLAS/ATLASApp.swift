@@ -10,11 +10,21 @@ import SwiftUI
 @main
 struct ATLASApp: App {
     @ObservedObject var apiManager = APIManager.shared
+    @StateObject var tabModelState = TabModelState()
+    @StateObject var sideMenuModelState = SideMenuModelState()
+    @StateObject var mainNavModelState = MainNavModelState()
+    @StateObject var flightNoteModelState = FlightNoteModelState()
+    
     var network = Network()
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(network)
+            ContentView()
+                .environmentObject(network)
+                .environmentObject(tabModelState)
+                .environmentObject(sideMenuModelState)
+                .environmentObject(mainNavModelState)
+                .environmentObject(flightNoteModelState)
                 .onAppear {
                     Task {
                         await apiManager.makePostRequest()
