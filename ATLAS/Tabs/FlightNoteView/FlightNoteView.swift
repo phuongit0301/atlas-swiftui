@@ -14,6 +14,7 @@ struct FlightNoteView: View {
     @State var collapseQuickReference = false
     
     var viewModel = ListFlightNoteInformationModel()
+    @StateObject var viewModelState = FlightNoteModelState()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -23,10 +24,10 @@ struct FlightNoteView: View {
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
             
             // Flight Note Card
-            FlightNoteCard(geoWidth: geoWidth, collapsed: self.$collapseFlightNote).id("flight-note-card").Print("collapseQuickReference====\(collapseFlightNote)")
+            FlightNoteCard(geoWidth: geoWidth, collapsed: self.$collapseFlightNote, viewModel: viewModelState).id("flight-note-card").Print("collapseQuickReference====\(collapseFlightNote)")
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
             // Quick Reference
-            QuickReferenceCard(geoWidth: geoWidth)
+            QuickReferenceCard(geoWidth: geoWidth, viewModel: viewModelState)
             Spacer()
         }.padding(.horizontal, 16)
     }

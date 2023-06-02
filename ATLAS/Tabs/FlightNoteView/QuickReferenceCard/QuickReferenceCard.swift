@@ -10,7 +10,7 @@ import SwiftUI
 
 struct QuickReferenceCard: View {
     var geoWidth: Double = 0
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @ObservedObject var viewModel: FlightNoteModelState
     
     // Mock Data tabs
     @State var itemAircraft: [IFlightInfoModel] = []
@@ -92,7 +92,7 @@ struct QuickReferenceCard: View {
                         case 0:
                             AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureReferenceContainer(itemList: $viewModel.departureQRData, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).tag(selectedSegment).ignoresSafeArea()
+                            DepatureReferenceContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).tag(selectedSegment).ignoresSafeArea()
                         case 2:
                             EnrouteReferenceContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
@@ -109,9 +109,6 @@ struct QuickReferenceCard: View {
         }.background(Color.theme.champagne)
         .cornerRadius(8)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .onReceive(self.viewModel.objectWillChange) { newItem in
-                print("new Item===\(newItem)")
-        }
     }
     
     private func calculateHeight() {

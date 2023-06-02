@@ -9,16 +9,17 @@ import Foundation
 import SwiftUI
 
 struct DepatureReferenceContainer: View {
-    @Binding var itemList: [IFlightInfoModel]
+    @ObservedObject var viewModel: FlightNoteModelState
+    
     @State var depTags: [ITag] = DepartureTags().TagList
     var calculateHeight: () -> Void
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !itemList.isEmpty {
+            if !viewModel.departureQRData.isEmpty {
                 List {
-                    ForEach(itemList, id: \.self) { item in
+                    ForEach(viewModel.departureQRData, id: \.self) { item in
                         VStack(alignment: .leading, spacing: 0) {
                             HStack(alignment: .top) {
                                 Image("icon_dots_group")
@@ -105,16 +106,13 @@ struct DepatureReferenceContainer: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             
-            QuickReferenceForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
-        }.onChange(of: itemList) { newValue in
-            print("newValue======", newValue)
-            
+            QuickReferenceForm(tagList: self.$depTags, itemList: $viewModel.departureQRData, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        itemList.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureQRData.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

@@ -9,19 +9,17 @@ import Foundation
 import SwiftUI
 
 struct DepatureCardContainer: View {
-    @Binding var itemList: [IFlightInfoModel]
+    @ObservedObject var viewModel: FlightNoteModelState
     @State var depTags: [ITag] = DepartureTags().TagList
-    
-    @StateObject var viewModel = FlightNoteModelState()
     
     var calculateHeight: () -> Void
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !itemList.isEmpty {
+            if !viewModel.departureData.isEmpty {
                 List {
-                    ForEach(itemList, id: \.self) { item in
+                    ForEach(viewModel.departureData, id: \.self) { item in
                         VStack(alignment: .leading, spacing: 0) {
                             HStack(alignment: .top) {
                                 Image("icon_dots_group")
@@ -90,13 +88,13 @@ struct DepatureCardContainer: View {
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$depTags, itemList: self.$itemList, resetData: self.resetData).frame(height: 98)
+            DepartureForm(tagList: self.$depTags, itemList: $viewModel.departureData, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        itemList.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureData.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

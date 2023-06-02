@@ -12,7 +12,7 @@ struct FlightNoteCard: View {
     var geoWidth: Double = 0
     @Binding var collapsed: Bool
     // Mock Data tabs
-    @ObservedObject var viewModel = FlightNoteModelState()
+    @ObservedObject var viewModel: FlightNoteModelState
     
     @State var itemAircraft: [IFlightInfoModel] = []
     @State var itemDepature = DepartureFlightInfoModel().ListItem
@@ -85,14 +85,14 @@ struct FlightNoteCard: View {
                                 }
                             }.frame(maxWidth: .infinity)
                             
-                            Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                        }.frame(width: .infinity)
+//                            Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
+                        }
                         
                         switch selectedSegment {
                         case 0:
                             AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureCardContainer(itemList: $viewModel.departureData, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            DepatureCardContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
                             EnrouteCardContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:

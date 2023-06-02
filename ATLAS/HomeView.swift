@@ -13,7 +13,6 @@ struct HomeView: View {
     @State private var currentScreen = MainScreen.FlightScreen
     @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
-    @EnvironmentObject var viewModel: FlightNoteModelState
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
     

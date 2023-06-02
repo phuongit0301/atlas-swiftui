@@ -77,16 +77,16 @@ struct MainView: View {
             NavigationStack {
                 VStack(spacing: 0) {
                     if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-                        ContentDetailSplit()
+                        HomeViewSplit()
                     } else {
-                        ContentDetail()
+                        HomeView()
                     }
                 }
             }
         }.navigationSplitViewStyle(.balanced)
          .onAppear() {
             columnVisibility = .all
-        }.accentColor(Color.theme.tuftsBlue).environmentObject(FlightNoteModelState())
+        }.accentColor(Color.theme.tuftsBlue)
     }
     
     struct RowSelection: View {
