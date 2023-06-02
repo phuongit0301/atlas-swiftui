@@ -9,7 +9,35 @@ import Foundation
 import SwiftUI
 
 struct FuelView: View {
+    @ObservedObject var globalResponse = GlobalResponse.shared
+    
     var body: some View {
-        SummaryView()
+        Group {
+            if globalResponse.response != "" {
+                SummaryView()
+            } else {
+                Text("Loading...")
+            }
+        }
+        .task {
+            await waitForResponse()
+        }
+    }
+    
+    func waitForResponse() async {
+        while globalResponse.response == "" {
+            do {
+                try await Task.sleep(nanoseconds: 500000000) // Sleep for 0.5 seconds
+            }
+            catch {
+                print("Error: \(error)")
+            }
+        }
     }
 }
+
+
+
+
+
+
