@@ -268,9 +268,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E03C6372A14B4410099ACA3 /* ModelSearch */ = {
+		3E03C6372A14B4410099ACA3 /* OfflineSearchResources */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
+				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
 				3E03C6382A14B4410099ACA3 /* BERT.swift */,
 				3E03C6392A14B4410099ACA3 /* BERTInput.swift */,
 				3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */,
@@ -279,7 +281,7 @@
 				3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */,
 				3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */,
 			);
-			path = ModelSearch;
+			path = OfflineSearchResources;
 			sourceTree = "<group>";
 		};
 		3E03C64B2A15D4C20099ACA3 /* Extensions */ = {
@@ -537,13 +539,12 @@
 				3E3FCC052A24B59C008017FA /* Split */,
 				3E3FCBFB2A236E55008017FA /* ExampleView.swift */,
 				3E3FCBFD2A236E8F008017FA /* ExampleView1.swift */,
-				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
 				3E8250552A1BADF0008F616D /* Fonts */,
 				3E5AF6522A19978900A97ECF /* Components */,
 				3E5AF6492A18FF2900A97ECF /* Tabs */,
 				3E5AF6322A18622F00A97ECF /* Info.plist */,
 				3E03C64B2A15D4C20099ACA3 /* Extensions */,
-				3E03C6372A14B4410099ACA3 /* ModelSearch */,
+				3E03C6372A14B4410099ACA3 /* OfflineSearchResources */,
 				C5F9C8192A1487870076396F /* ATLASApp.swift */,
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
@@ -554,7 +555,6 @@
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
-				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
 				3E3FCBF32A23647D008017FA /* BottomTabs.swift */,
 				3E3FCC232A25E48B008017FA /* SearchModel.swift */,
 				3E3FCC252A25E4D1008017FA /* Network.swift */,
