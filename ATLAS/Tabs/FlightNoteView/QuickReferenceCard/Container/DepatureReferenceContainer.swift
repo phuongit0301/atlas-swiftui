@@ -101,6 +101,8 @@ struct DepatureReferenceContainer: View {
                                 }.tint(Color.theme.alizarinCrimson)
                             }
                     }.onMove(perform: move)
+                        .onDelete(perform: delete)
+                    
                 }.listStyle(.plain)
                     .listRowBackground(Color.white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -111,8 +113,11 @@ struct DepatureReferenceContainer: View {
     }
     
     private func move(from source: IndexSet, to destination: Int) {
-        print("Move");
         viewModel.departureQRData.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    private func delete(at offsets: IndexSet) {
+        viewModel.departureQRData.remove(atOffsets: offsets)
     }
     
     private func resetData() {

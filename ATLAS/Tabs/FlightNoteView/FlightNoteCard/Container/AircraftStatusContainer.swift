@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AircraftStatusContainer: View {
-    @Binding var itemList: [IFlightInfoModel]
+    @ObservedObject var viewModel: FlightNoteModelState
     @State var aircraftTags: [ITag] = []
     var calculateHeight: () -> Void
     var geoWidth: Double = 0

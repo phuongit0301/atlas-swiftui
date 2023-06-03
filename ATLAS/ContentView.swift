@@ -110,24 +110,6 @@ struct MainView: View {
             }
         }
     }
-    
-    struct ContentDetail: View {
-        @EnvironmentObject var navMenuState: MainNavModelState
-        @EnvironmentObject var modelState: TabModelState
-        
-        var body: some View {
-            HomeView()
-        }
-    }
-    
-    struct ContentDetailSplit: View {
-//        @Binding var selectedItem: SubMenuItem?
-//        @Binding var currentScreen: MainScreen
-        
-        var body: some View {
-            HomeViewSplit()
-        }
-    }
 
 }
 

@@ -90,9 +90,9 @@ struct FlightNoteCard: View {
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureCardContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            DepatureCardContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
                             EnrouteCardContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:

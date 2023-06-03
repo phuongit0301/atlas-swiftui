@@ -350,4 +350,9 @@ class FlightNoteModelState: ObservableObject {
         self.departureQRData.append(item)
         objectWillChange.send()
     }
+    
+    func removeItemDeparture(item: IFlightInfoModel) {
+        self.departureData.removeAll(where: {$0.id == item.id })
+//        objectWillChange.send()
+    }
 }
