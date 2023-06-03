@@ -11,23 +11,13 @@ import SwiftUI
 struct QuickReferenceCard: View {
     var geoWidth: Double = 0
     @ObservedObject var viewModel: FlightNoteModelState
-    
-    // Mock Data tabs
-    @State var itemAircraft: [IFlightInfoModel] = []
-    @State var itemDepature: [IFlightInfoModel] = DepartureFlightInfoTempModel().ListItem
-    @State var itemArrival: [IFlightInfoModel] = ArrivalFlightInfoTempModel().ListItem
-    @State var itemEnroute: [IFlightInfoModel] = EnrouteFlightInfoTempModel().ListItem
-    
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 140
-    
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
         .init(title: "Departure"),
         .init(title: "Enroute"),
         .init(title: "Arrival"),
     ]
-    
     @State private var selectedSegment = 0
     
     @State private var collapsed: Bool = false
@@ -60,8 +50,6 @@ struct QuickReferenceCard: View {
                                         Button(action: {
                                             withAnimation(.interactiveSpring()) {
                                                 selectedSegment = index
-                                                
-                                                self.calculateHeight()
                                             }
                                         }) {
                                             if selectedSegment == index {
@@ -90,18 +78,17 @@ struct QuickReferenceCard: View {
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
-                            DepatureReferenceContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).tag(selectedSegment).ignoresSafeArea()
+                            DepatureReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
-                            EnrouteReferenceContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
-                            ArrivalReferenceContainer(itemList: self.$itemArrival, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftReferenceContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
-                    }
-                    .frame(height: animatedContentHeight).padding(.bottom, 16)
+                    }.padding(.bottom, 16)
                     
                 }.frame(minWidth: 0, maxWidth: .infinity)
                     .padding(.horizontal, 16)
@@ -109,17 +96,5 @@ struct QuickReferenceCard: View {
         }.background(Color.theme.champagne)
         .cornerRadius(8)
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-    
-    private func calculateHeight() {
-        if self.selectedSegment == 1 {
-            animatedContentHeight = itemDepature.count > 0 ? CGFloat(110 + (60 * itemDepature.count)) : 140
-        } else if self.selectedSegment == 2 {
-            animatedContentHeight = itemEnroute.count > 0 ? CGFloat(110 + (60 * itemEnroute.count)) : 140
-        } else if self.selectedSegment == 3 {
-            animatedContentHeight = itemArrival.count > 0 ? CGFloat(110 + (60 * itemArrival.count)) : 140
-        } else {
-            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(110 + (60 * itemAircraft.count)) : 140
-        }
     }
 }

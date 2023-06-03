@@ -311,7 +311,8 @@ class FlightNoteModelState: ObservableObject {
         
         // Arrival
         self.arrivalData = [
-            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [], isDefault: true),
+            IFlightInfoModel(name: "Birds in vicinity", tags: [ITag(name: "Threats")], isDefault: true),
+            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [ITag(name: "Weather")], isDefault: true),
         ]
         
         self.arrivalTag = [
@@ -327,7 +328,8 @@ class FlightNoteModelState: ObservableObject {
         
         // Enroute
         self.enrouteData = [
-            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [], isDefault: true),
+            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITag(name: "Enroute")], isDefault: true),
+            IFlightInfoModel(name: "Hills to the north of aerodrome", tags: [ITag(name: "Terrain")], isDefault: true),
         ]
         
         self.enrouteTag = [
@@ -346,13 +348,52 @@ class FlightNoteModelState: ObservableObject {
         self.aircraftQRData = []
     }
     
+    func addAircraftQR(item: IFlightInfoModel) {
+        self.aircraftQRData.append(item)
+    }
+    
     func addDepartureQR(item: IFlightInfoModel) {
         self.departureQRData.append(item)
-        objectWillChange.send()
+    }
+    
+    func addEnrouteQR(item: IFlightInfoModel) {
+        self.enrouteQRData.append(item)
+    }
+    
+    func addArrivalQR(item: IFlightInfoModel) {
+        self.arrivalQRData.append(item)
+    }
+    
+    func removeItemAircraft(item: IFlightInfoModel) {
+        self.aircraftData.removeAll(where: {$0.id == item.id })
+    }
+    
+    func removeItemAircraftQR(item: IFlightInfoModel) {
+        self.aircraftQRData.removeAll(where: {$0.id == item.id })
     }
     
     func removeItemDeparture(item: IFlightInfoModel) {
         self.departureData.removeAll(where: {$0.id == item.id })
 //        objectWillChange.send()
+    }
+
+    func removeItemDepartureQR(item: IFlightInfoModel) {
+        self.departureQRData.removeAll(where: {$0.id == item.id })
+    }
+    
+    func removeItemEnroute(item: IFlightInfoModel) {
+        self.enrouteData.removeAll(where: {$0.id == item.id })
+    }
+
+    func removeItemEnrouteQR(item: IFlightInfoModel) {
+        self.enrouteQRData.removeAll(where: {$0.id == item.id })
+    }
+    
+    func removeItemArrival(item: IFlightInfoModel) {
+        self.arrivalData.removeAll(where: {$0.id == item.id })
+    }
+
+    func removeItemArrivalQR(item: IFlightInfoModel) {
+        self.arrivalQRData.removeAll(where: {$0.id == item.id })
     }
 }

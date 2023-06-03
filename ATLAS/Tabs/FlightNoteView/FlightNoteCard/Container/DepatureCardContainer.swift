@@ -12,7 +12,6 @@ struct DepatureCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     @State var depTags: [ITag] = DepartureTags().TagList
     
-    var calculateHeight: () -> Void
     var geoWidth: Double = 0
     
     var body: some View {
@@ -85,7 +84,7 @@ struct DepatureCardContainer: View {
                         
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat($viewModel.departureData.count * 47))
+                        .frame(height: CGFloat(viewModel.departureData.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
@@ -102,7 +101,6 @@ struct DepatureCardContainer: View {
     
     private func resetData() {
         self.depTags = DepartureTags().TagList
-        self.calculateHeight()
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

@@ -13,22 +13,13 @@ struct FlightNoteCard: View {
     @Binding var collapsed: Bool
     // Mock Data tabs
     @ObservedObject var viewModel: FlightNoteModelState
-    
-    @State var itemAircraft: [IFlightInfoModel] = []
-    @State var itemDepature = DepartureFlightInfoModel().ListItem
-    @State var itemArrival = ArrivalFlightInfoModel().ListItem
-    @State var itemEnroute = EnrouteFlightInfoModel().ListItem
-    
     @State private var currentTab: Int = 0
-    @State var animatedContentHeight: CGFloat = 140
-    
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),
         .init(title: "Departure"),
         .init(title: "Enroute"),
         .init(title: "Arrival"),
     ]
-    
     @State private var selectedSegment = 0
     
     var body: some View {
@@ -59,8 +50,6 @@ struct FlightNoteCard: View {
                                         Button(action: {
                                             withAnimation(.interactiveSpring()) {
                                                 selectedSegment = index
-                                                
-                                                self.calculateHeight()
                                             }
                                         }) {
                                             if selectedSegment == index {
@@ -85,20 +74,20 @@ struct FlightNoteCard: View {
                                 }
                             }.frame(maxWidth: .infinity)
                             
-//                            Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
+                            Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                         }
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftStatusContainer(viewModel: viewModel, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(viewModel: viewModel,  geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 1:
                             DepatureCardContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 2:
-                            EnrouteCardContainer(itemList: self.$itemEnroute, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteCardContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         case 3:
-                            ArrivalCardContainer(itemList: self.$itemArrival, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalCardContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         default:
-                            AircraftStatusContainer(itemList: self.$itemAircraft, calculateHeight: self.calculateHeight, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftStatusContainer(viewModel: viewModel,  geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
                         }
                     }.padding(.bottom, 16)
                 }.frame(minWidth: 0, maxWidth: .infinity)
@@ -108,17 +97,5 @@ struct FlightNoteCard: View {
             .cornerRadius(8)
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         
-    }
-    
-    private func calculateHeight() {
-        if self.selectedSegment == 1 {
-            animatedContentHeight = CGFloat(98 + (60 * itemDepature.count))
-        } else if self.selectedSegment == 2 {
-            animatedContentHeight = CGFloat(98 + (60 * itemEnroute.count))
-        } else if self.selectedSegment == 3 {
-            animatedContentHeight = CGFloat(98 + (60 * itemArrival.count))
-        } else {
-            animatedContentHeight = itemAircraft.count > 0 ? CGFloat(98 + (60 * itemAircraft.count)) : 140
-        }
     }
 }
