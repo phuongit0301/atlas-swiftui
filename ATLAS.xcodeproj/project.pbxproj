@@ -57,8 +57,8 @@
 		3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC272A263392008017FA /* ActivityIndicator.swift */; };
 		3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2B2A270851008017FA /* taxiChart.swift */; };
 		3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */; };
-		3E3FCC3E2A270851008017FA /* customClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2D2A270851008017FA /* customClasses.swift */; };
-		3E3FCC3F2A270851008017FA /* SummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2E2A270851008017FA /* SummaryCard.swift */; };
+		3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */; };
+		3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */; };
 		3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */; };
 		3E3FCC412A270851008017FA /* enrWXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC302A270851008017FA /* enrWXView.swift */; };
 		3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC312A270851008017FA /* flightLevelView.swift */; };
@@ -69,7 +69,7 @@
 		3E3FCC472A270851008017FA /* taxiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC362A270851008017FA /* taxiView.swift */; };
 		3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC372A270851008017FA /* projArrDelaysChart.swift */; };
 		3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC382A270851008017FA /* trackMilesView.swift */; };
-		3E3FCC4B2A270851008017FA /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC3A2A270851008017FA /* SummaryView.swift */; };
+		3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */; };
 		3E3FCC502A28822A008017FA /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC4F2A28822A008017FA /* NavigationModel.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
@@ -178,8 +178,8 @@
 		3E3FCC272A263392008017FA /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		3E3FCC2B2A270851008017FA /* taxiChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiChart.swift; sourceTree = "<group>"; };
 		3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = historicalDelaysChart.swift; sourceTree = "<group>"; };
-		3E3FCC2D2A270851008017FA /* customClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customClasses.swift; sourceTree = "<group>"; };
-		3E3FCC2E2A270851008017FA /* SummaryCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryCard.swift; sourceTree = "<group>"; };
+		3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelCustomClasses.swift; sourceTree = "<group>"; };
+		3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryCard.swift; sourceTree = "<group>"; };
 		3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = projArrDelaysView.swift; sourceTree = "<group>"; };
 		3E3FCC302A270851008017FA /* enrWXView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrWXView.swift; sourceTree = "<group>"; };
 		3E3FCC312A270851008017FA /* flightLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flightLevelView.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 		3E3FCC362A270851008017FA /* taxiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiView.swift; sourceTree = "<group>"; };
 		3E3FCC372A270851008017FA /* projArrDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = projArrDelaysChart.swift; sourceTree = "<group>"; };
 		3E3FCC382A270851008017FA /* trackMilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = trackMilesView.swift; sourceTree = "<group>"; };
-		3E3FCC3A2A270851008017FA /* SummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryView.swift; sourceTree = "<group>"; };
 		3E3FCC4F2A28822A008017FA /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -268,9 +268,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E03C6372A14B4410099ACA3 /* ModelSearch */ = {
+		3E03C6372A14B4410099ACA3 /* OfflineSearchResources */ = {
 			isa = PBXGroup;
 			children = (
+				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
+				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
 				3E03C6382A14B4410099ACA3 /* BERT.swift */,
 				3E03C6392A14B4410099ACA3 /* BERTInput.swift */,
 				3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */,
@@ -279,7 +281,7 @@
 				3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */,
 				3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */,
 			);
-			path = ModelSearch;
+			path = OfflineSearchResources;
 			sourceTree = "<group>";
 		};
 		3E03C64B2A15D4C20099ACA3 /* Extensions */ = {
@@ -395,13 +397,14 @@
 			path = ArrivalSplit;
 			sourceTree = "<group>";
 		};
-		3E3FCC2A2A270851008017FA /* ChartsResources */ = {
+		3E3FCC2A2A270851008017FA /* FuelChartsResources */ = {
 			isa = PBXGroup;
 			children = (
+				3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */,
 				3E3FCC2B2A270851008017FA /* taxiChart.swift */,
 				3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */,
-				3E3FCC2D2A270851008017FA /* customClasses.swift */,
-				3E3FCC2E2A270851008017FA /* SummaryCard.swift */,
+				3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */,
+				3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */,
 				3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */,
 				3E3FCC302A270851008017FA /* enrWXView.swift */,
 				3E3FCC312A270851008017FA /* flightLevelView.swift */,
@@ -413,7 +416,7 @@
 				3E3FCC372A270851008017FA /* projArrDelaysChart.swift */,
 				3E3FCC382A270851008017FA /* trackMilesView.swift */,
 			);
-			path = ChartsResources;
+			path = FuelChartsResources;
 			sourceTree = "<group>";
 		};
 		3E3FCC4E2A2881FC008017FA /* Model */ = {
@@ -532,18 +535,16 @@
 			isa = PBXGroup;
 			children = (
 				3E3FCC4E2A2881FC008017FA /* Model */,
-				3E3FCC2A2A270851008017FA /* ChartsResources */,
-				3E3FCC3A2A270851008017FA /* SummaryView.swift */,
+				3E3FCC2A2A270851008017FA /* FuelChartsResources */,
 				3E3FCC052A24B59C008017FA /* Split */,
 				3E3FCBFB2A236E55008017FA /* ExampleView.swift */,
 				3E3FCBFD2A236E8F008017FA /* ExampleView1.swift */,
-				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
 				3E8250552A1BADF0008F616D /* Fonts */,
 				3E5AF6522A19978900A97ECF /* Components */,
 				3E5AF6492A18FF2900A97ECF /* Tabs */,
 				3E5AF6322A18622F00A97ECF /* Info.plist */,
 				3E03C64B2A15D4C20099ACA3 /* Extensions */,
-				3E03C6372A14B4410099ACA3 /* ModelSearch */,
+				3E03C6372A14B4410099ACA3 /* OfflineSearchResources */,
 				C5F9C8192A1487870076396F /* ATLASApp.swift */,
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
@@ -554,7 +555,6 @@
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
-				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
 				3E3FCBF32A23647D008017FA /* BottomTabs.swift */,
 				3E3FCC232A25E48B008017FA /* SearchModel.swift */,
 				3E3FCC252A25E4D1008017FA /* Network.swift */,
@@ -750,12 +750,12 @@
 				3E7F68462A20B60E00EC2CA3 /* CustomSegmentedControl.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
-				3E3FCC3F2A270851008017FA /* SummaryCard.swift in Sources */,
+				3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */,
 				3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
-				3E3FCC4B2A270851008017FA /* SummaryView.swift in Sources */,
+				3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */,
 				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
 				3E3FCC202A2500DC008017FA /* ArrivalSplitForm.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
@@ -784,7 +784,7 @@
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
-				3E3FCC3E2A270851008017FA /* customClasses.swift in Sources */,
+				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
