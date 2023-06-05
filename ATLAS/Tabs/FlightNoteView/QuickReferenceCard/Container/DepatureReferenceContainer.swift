@@ -17,10 +17,10 @@ struct DepatureReferenceContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.departureQRData.isEmpty {
+            if !viewModel.departureQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRData, id: \.self) { item in
+                        ForEach(viewModel.departureQRDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -28,7 +28,7 @@ struct DepatureReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.departureQRDataArray[index])
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                         .lineLimit(1)
@@ -53,7 +53,7 @@ struct DepatureReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemDepartureQR(item: item)
+//                                        viewModel.removeItemDepartureQR(item: item)
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -84,7 +84,7 @@ struct DepatureReferenceContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.departureQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.departureQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)

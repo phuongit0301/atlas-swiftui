@@ -73,7 +73,8 @@ struct DepatureCardContainer: View {
                                     }
                                     
                                     Button {
-                                        viewModel.addDepartureQR(item: item)
+//                                        viewModel.addDepartureQR(item: item)
+                                        viewModel.departureQRDataArray.append(item.name)
                                     } label: {
                                         Image(systemName: "tag.fill")
                                             .frame(width: 16, height: 16)

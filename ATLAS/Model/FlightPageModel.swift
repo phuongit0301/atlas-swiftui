@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ListFlightItem: Identifiable, Hashable {
     var id = UUID()
@@ -267,6 +268,15 @@ struct ListDetailModel {
 // New Structure
 
 class FlightNoteModelState: ObservableObject {
+    @AppStorage("departureQRDataArray") private var departureQRDataStorage: Data = Data()
+        
+    @Published var departureQRDataArray: [String] = [] {
+        didSet {
+            saveArray()
+        }
+    }
+        
+    
     // Departure
     @Published var departureData: [IFlightInfoModel]
     @Published var departureTag: [ITag]
@@ -346,6 +356,8 @@ class FlightNoteModelState: ObservableObject {
         self.aircraftTag = []
         
         self.aircraftQRData = []
+        
+        loadArray()
     }
     
     func addAircraftQR(item: IFlightInfoModel) {
@@ -407,5 +419,19 @@ class FlightNoteModelState: ObservableObject {
 
     func removeItemArrivalQR(item: IFlightInfoModel) {
         self.arrivalQRData.removeAll(where: {$0.id == item.id })
+    }
+    
+    private func loadArray() {
+        guard let decodedArray = try? JSONDecoder().decode([String].self, from: departureQRDataStorage) else {
+            return
+        }
+        departureQRDataArray = decodedArray
+    }
+    
+    private func saveArray() {
+        guard let encodedArray = try? JSONEncoder().encode(departureQRDataArray) else {
+            return
+        }
+        departureQRDataStorage = encodedArray
     }
 }
