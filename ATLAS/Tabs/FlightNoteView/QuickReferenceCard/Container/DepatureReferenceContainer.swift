@@ -11,7 +11,7 @@ import SwiftUI
 struct DepatureReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     
-    @State var depTags: [ITag] = []
+    @State var depTags: [ITagStorage] = []
 //    @State var depTags: [ITag] = DepartureTags().TagList
     var geoWidth: Double = 0
     
@@ -53,7 +53,7 @@ struct DepatureReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-//                                        viewModel.removeItemDepartureQR(item: item)
+                                        viewModel.removeItemDepartureQR(item: item)
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -86,21 +86,20 @@ struct DepatureReferenceContainer: View {
                         .listRowBackground(Color.white)
                         .frame(height: CGFloat(viewModel.departureQRDataArray.count * 45))
                 }.layoutPriority(1)
-                    .Print("data======>\(viewModel.departureQRDataArray)")
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$depTags, itemList: $viewModel.departureQRData, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$depTags, itemList: $viewModel.departureQRDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
-        viewModel.departureQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func delete(at offsets: IndexSet) {
-        viewModel.departureQRData.remove(atOffsets: offsets)
+        viewModel.departureQRDataArray.remove(atOffsets: offsets)
     }
     
     private func resetData() {

@@ -10,16 +10,16 @@ import SwiftUI
 
 struct EnrouteCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var enrouteTags: [ITag] = EnrouteTags().TagList
+    @State var enrouteTags: [ITagStorage] = EnrouteTags().TagList
     
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.enrouteData.isEmpty {
+            if !viewModel.enrouteDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteData, id: \.self) { item in
+                        ForEach(viewModel.enrouteDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -33,7 +33,7 @@ struct EnrouteCardContainer: View {
                                         .lineLimit(1)
                                         .fixedSize(horizontal: false, vertical: true)
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
+                                    ForEach(item.tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -85,23 +85,23 @@ struct EnrouteCardContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat($viewModel.enrouteData.count * 45))
+                        .frame(height: CGFloat($viewModel.enrouteDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteData, resetData: self.resetData).frame(height: 98)
+            DepartureForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.enrouteData.move(fromOffsets: source, toOffset: destination)
+        viewModel.enrouteDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {
-        self.enrouteTags = DepartureTags().TagList
+        self.enrouteTags = EnrouteTags().TagList
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

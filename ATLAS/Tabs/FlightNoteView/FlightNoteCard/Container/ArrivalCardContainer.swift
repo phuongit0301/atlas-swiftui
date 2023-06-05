@@ -10,16 +10,16 @@ import SwiftUI
 
 struct ArrivalCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var arrivalTags: [ITag] = ArrivalTags().TagList
+    @State var arrivalTags: [ITagStorage] = ArrivalTags().TagList
 
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.arrivalData.isEmpty {
+            if !viewModel.arrivalDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalData, id: \.self) { item in
+                        ForEach(viewModel.arrivalDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -34,7 +34,7 @@ struct ArrivalCardContainer: View {
                                         .fixedSize(horizontal: false, vertical: true)
                                     
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
+                                    ForEach(item.tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -85,20 +85,20 @@ struct ArrivalCardContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat(viewModel.arrivalData.count * 45))
+                        .frame(height: CGFloat(viewModel.arrivalDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
 
-            DepartureForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalData, resetData: self.resetData).frame(height: 98)
+            DepartureForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalDataArray, resetData: self.resetData).frame(height: 98)
             
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.arrivalData.move(fromOffsets: source, toOffset: destination)
+        viewModel.arrivalDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

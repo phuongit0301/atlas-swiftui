@@ -11,16 +11,16 @@ import SwiftUI
 struct EnrouteReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
 //    @State var enrouteTags: [ITag] = EnrouteTags().TagList
-    @State var enrouteTags: [ITag] = []
+    @State var enrouteTags: [ITagStorage] = []
 
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.enrouteQRData.isEmpty {
+            if !viewModel.enrouteQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteQRData, id: \.self) { item in
+                        ForEach(viewModel.enrouteQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -84,19 +84,19 @@ struct EnrouteReferenceContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.enrouteQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.enrouteQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteQRData, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteQRDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.enrouteQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.enrouteQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

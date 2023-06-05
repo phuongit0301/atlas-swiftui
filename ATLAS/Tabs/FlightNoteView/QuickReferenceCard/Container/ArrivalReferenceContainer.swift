@@ -10,17 +10,17 @@ import SwiftUI
 
 struct ArrivalReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var arrivalTags: [ITag] = []
+    @State var arrivalTags: [ITagStorage] = []
 //    @State var arrivalTags: [ITag] = ArrivalTags().TagList
     
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.arrivalQRData.isEmpty {
+            if !viewModel.arrivalQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalQRData, id: \.self) { item in
+                        ForEach(viewModel.arrivalQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -31,8 +31,6 @@ struct ArrivalReferenceContainer: View {
                                     Text(item.name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
-                                        .lineLimit(1)
-                                        .fixedSize(horizontal: false, vertical: true)
                                     
 //                                    ForEach(item.tags, id: \.self) { tag in
 //                                        Text(tag.name)
@@ -45,7 +43,7 @@ struct ArrivalReferenceContainer: View {
 //                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
 //                                            )
 //                                    }
-                                }.frame(height: 100)
+                                }
                             }.padding(12)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
@@ -83,19 +81,19 @@ struct ArrivalReferenceContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.arrivalQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.arrivalQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalQRData, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalQRDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.arrivalQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.arrivalQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

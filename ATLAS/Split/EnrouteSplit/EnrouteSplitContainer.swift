@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EnrouteSplitContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var enrouteTags: [ITag] = EnrouteTags().TagList
+    @State var enrouteTags: [ITagStorage] = EnrouteTags().TagList
 
     var geoWidth: Double = 0
     
@@ -34,10 +34,10 @@ struct EnrouteSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.enrouteQRData.isEmpty {
+            if !viewModel.enrouteQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteQRData, id: \.self) { item in
+                        ForEach(viewModel.enrouteQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -49,17 +49,17 @@ struct EnrouteSplitContainer: View {
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
-                                        Text(tag.name)
-                                            .padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .font(.custom("Inter-Medium", size: 12))
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                            )
-                                    }
+//                                    ForEach(item.tags, id: \.self) { tag in
+//                                        Text(tag.name)
+//                                            .padding(.vertical, 4)
+//                                            .padding(.horizontal, 8)
+//                                            .font(.custom("Inter-Medium", size: 12))
+//                                            .foregroundColor(Color.theme.eerieBlack)
+//                                            .overlay(
+//                                                RoundedRectangle(cornerRadius: 16)
+//                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
+//                                            )
+//                                    }
                                 }
                             }.padding(12)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
@@ -99,14 +99,14 @@ struct EnrouteSplitContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.enrouteQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.enrouteQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            EnrouteSplitForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteQRData, resetData: self.resetData).frame(height: 98)
+            EnrouteSplitForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteQRDataArray, resetData: self.resetData).frame(height: 98)
             
             Spacer()
         }.padding()
@@ -114,7 +114,7 @@ struct EnrouteSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.enrouteQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.enrouteQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {
@@ -122,6 +122,6 @@ struct EnrouteSplitContainer: View {
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
+        return Color.white
     }
 }

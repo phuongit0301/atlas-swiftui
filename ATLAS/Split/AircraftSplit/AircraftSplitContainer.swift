@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AircraftSplitContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var aircraftTags: [ITag] = []
+    @State var aircraftTags: [ITagStorage] = []
     
     var geoWidth: Double = 0
     
@@ -34,10 +34,10 @@ struct AircraftSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.aircraftQRData.isEmpty {
+            if !viewModel.aircraftQRDataArray.isEmpty {
                 VStack(alignment: .leading, spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftQRData, id: \.self) { item in
+                        ForEach(viewModel.aircraftQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -89,7 +89,7 @@ struct AircraftSplitContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.aircraftQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.aircraftQRDataArray.count * 45))
                     
                 }.layoutPriority(1)
                 // end list
@@ -97,7 +97,7 @@ struct AircraftSplitContainer: View {
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            AirCraftSplitForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftQRData, resetData: self.resetData).frame(height: 98)
+            AirCraftSplitForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftQRDataArray, resetData: self.resetData).frame(height: 98)
             
             Spacer()
         }.padding()
@@ -105,7 +105,7 @@ struct AircraftSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.aircraftQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.aircraftQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

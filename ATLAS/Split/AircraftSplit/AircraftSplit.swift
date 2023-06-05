@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
     
 struct AircraftSplit: View {
-    @ObservedObject var viewModel: FlightNoteModelState = FlightNoteModelState()
+    @EnvironmentObject var viewModel: FlightNoteModelState
     
     var body: some View {
         GeometryReader { geo in

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DepartureSplitContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var depTags: [ITag] = DepartureTags().TagList
+    @State var depTags: [ITagStorage] = DepartureTags().TagList
     
     var geoWidth: Double = 0
     
@@ -34,10 +34,10 @@ struct DepartureSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.departureQRData.isEmpty {
+            if !viewModel.departureQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRData, id: \.self) { item in
+                        ForEach(viewModel.departureQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -49,17 +49,17 @@ struct DepartureSplitContainer: View {
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
-                                        Text(tag.name)
-                                            .padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .font(.custom("Inter-Medium", size: 12))
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                            )
-                                    }
+//                                    ForEach(item.tags) { tag in
+//                                        Text(tag.name)
+//                                            .padding(.vertical, 4)
+//                                            .padding(.horizontal, 8)
+//                                            .font(.custom("Inter-Medium", size: 12))
+//                                            .foregroundColor(Color.theme.eerieBlack)
+//                                            .overlay(
+//                                                RoundedRectangle(cornerRadius: 16)
+//                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
+//                                            )
+//                                    }
                                 }
                             }.padding(12)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
@@ -99,14 +99,15 @@ struct DepartureSplitContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.departureQRData.count * 45))
+                        .frame(height: CGFloat(viewModel.departureQRDataArray.count * 45))
                 }.layoutPriority(1)
+                    .Print("viewModel.departureQRDataArray=====\(viewModel.departureQRDataArray)")
                 // end list
                 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureSplitForm(tagList: self.$depTags, itemList: $viewModel.departureQRData, resetData: self.resetData).frame(height: 98)
+            DepartureSplitForm(tagList: self.$depTags, itemList: $viewModel.departureQRDataArray, resetData: self.resetData).frame(height: 98)
             
             Spacer()
         }.padding()
@@ -114,7 +115,7 @@ struct DepartureSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.departureQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {
@@ -122,6 +123,6 @@ struct DepartureSplitContainer: View {
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
+        return Color.white
     }
 }

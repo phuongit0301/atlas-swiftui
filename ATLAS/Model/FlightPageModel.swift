@@ -85,9 +85,16 @@ struct IFlightInfoModel: Identifiable, Hashable {
     var isDefault: Bool = true
 }
 
-struct IFlightInfoModel1: Identifiable, Encodable, Decodable {
+struct ITagStorage: Identifiable, Encodable, Decodable {
     var id = UUID()
     var name: String
+    var isChecked = false
+}
+
+struct IFlightInfoStorageModel: Identifiable, Encodable, Decodable {
+    var id = UUID()
+    var name: String
+    var tags: [ITagStorage]
     var isDefault: Bool = true
 }
 
@@ -117,9 +124,9 @@ struct DepartureFlightInfoTempModel {
 struct DepartureTags {
     let TagList = {
         let MainItem = [
-            ITag(name: "Preflight"),
-            ITag(name: "Departure"),
-            ITag(name: "Dispatch"),
+            ITagStorage(name: "Preflight"),
+            ITagStorage(name: "Departure"),
+            ITagStorage(name: "Dispatch"),
         ]
         
         return MainItem
@@ -150,8 +157,8 @@ struct EnrouteFlightInfoTempModel {
 struct EnrouteTags {
     let TagList = {
         let MainItem = [
-            ITag(name: "Enroute"),
-            ITag(name: "Terrain"),
+            ITagStorage(name: "Enroute"),
+            ITagStorage(name: "Terrain"),
         ]
         
         return MainItem
@@ -182,28 +189,16 @@ struct ArrivalFlightInfoTempModel {
 struct ArrivalTags {
     let TagList = {
         let MainItem = [
-            ITag(name: "Threats"),
-            ITag(name: "Weather"),
-            ITag(name: "Arrival"),
-            ITag(name: "Approach"),
-            ITag(name: "Landing"),
-            ITag(name: "Ground"),
+            ITagStorage(name: "Threats"),
+            ITagStorage(name: "Weather"),
+            ITagStorage(name: "Arrival"),
+            ITagStorage(name: "Approach"),
+            ITagStorage(name: "Landing"),
+            ITagStorage(name: "Ground"),
         ]
         
         return MainItem
     }()
-}
-
-class DepViewModel: ObservableObject {
-    @Published var depTags: [ITag] = []
-
-    init() {
-        fetchDepTags()
-    }
-    
-    func fetchDepTags() {
-        depTags = DepartureTags().TagList
-    }
 }
 
 struct ListFlightSplitItem: Identifiable, Hashable {
@@ -274,187 +269,312 @@ struct ListDetailModel {
 // New Structure
 
 class FlightNoteModelState: ObservableObject {
+    // Aircraft, Aircraft QR
+    @AppStorage("aircraftDataArray") private var aircraftDataStorage: Data = Data()
+        
+    @Published var aircraftDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayAircraft()
+        }
+    }
+    
+    @AppStorage("aircraftQRDataArray") private var aircraftQRDataStorage: Data = Data()
+        
+    @Published var aircraftQRDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayAircraftQR()
+        }
+    }
+    
+    // END Aircraft, Aircraft QR
+    
+    // Departure, Departure QR
+    @AppStorage("departureDataArray") private var departureDataStorage: Data = Data()
+        
+    @Published var departureDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayDeparture()
+        }
+    }
+    
     @AppStorage("departureQRDataArray") private var departureQRDataStorage: Data = Data()
         
-    @Published var departureQRDataArray: [IFlightInfoModel1] = [] {
+    @Published var departureQRDataArray: [IFlightInfoStorageModel] = [] {
         didSet {
-            saveArray()
+            saveArrayDepartureQR()
         }
     }
     
-    // Departure
-    @Published var departureData: [IFlightInfoModel]
-    @Published var departureTag: [ITag]
-    // Quick Reference
-    @Published var departureQRData: [IFlightInfoModel]
+    // END Departure, Departure QR
     
-    // Arrival
-    @Published var arrivalData: [IFlightInfoModel]
-    @Published var arrivalTag: [ITag]
-    // Quick Reference
-    @Published var arrivalQRData: [IFlightInfoModel]
+    // Enroute, Enroute QR
+    @AppStorage("enrouteDataArray") private var enrouteDataStorage: Data = Data()
+        
+    @Published var enrouteDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayEnroute()
+        }
+    }
     
-    // Enroute
-    @Published var enrouteData: [IFlightInfoModel]
-    @Published var enrouteTag: [ITag]
-    // Quick Reference
-    @Published var enrouteQRData: [IFlightInfoModel]
+    @AppStorage("enrouteQRDataArray") private var enrouteQRDataStorage: Data = Data()
+        
+    @Published var enrouteQRDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayEnrouteQR()
+        }
+    }
     
-    // Aircraft
-    @Published var aircraftData: [IFlightInfoModel]
-    @Published var aircraftTag: [ITag]
-    // Quick Reference
-    @Published var aircraftQRData: [IFlightInfoModel]
+    // END Enroute, Enroute QR
     
+    // Arrival, Arrival QR
+    @AppStorage("arrivalDataArray") private var arrivalDataStorage: Data = Data()
+        
+    @Published var arrivalDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayArrival()
+        }
+    }
     
+    @AppStorage("arrivalQRDataArray") private var arrivalQRDataStorage: Data = Data()
+        
+    @Published var arrivalQRDataArray: [IFlightInfoStorageModel] = [] {
+        didSet {
+            saveArrayArrivalQR()
+        }
+    }
+    
+    // END Arrival, Arrival QR
     
     init() {
-        self.departureData = [
-            IFlightInfoModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITag(name: "Preflight")], isDefault: true),
-            IFlightInfoModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITag(name: "Departure")], isDefault: true),
-            IFlightInfoModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITag(name: "Dispatch")], isDefault: true),
-            IFlightInfoModel(name: "Expected POB: 315", tags: [ITag(name: "Dispatch")], isDefault: true),
-        ]
-        
-        self.departureTag = [
-            ITag(name: "Preflight"),
-            ITag(name: "Departure"),
-            ITag(name: "Dispatch"),
-        ]
-        
-        self.departureQRData = []
-        
-        // Arrival
-        self.arrivalData = [
-            IFlightInfoModel(name: "Birds in vicinity", tags: [ITag(name: "Threats")], isDefault: true),
-            IFlightInfoModel(name: "Any +TS expected to last 15mins", tags: [ITag(name: "Weather")], isDefault: true),
-        ]
-        
-        self.arrivalTag = [
-            ITag(name: "Threats"),
-            ITag(name: "Weather"),
-            ITag(name: "Arrival"),
-            ITag(name: "Approach"),
-            ITag(name: "Landing"),
-            ITag(name: "Ground"),
-        ]
-        
-        self.arrivalQRData = []
-        
-        // Enroute
-        self.enrouteData = [
-            IFlightInfoModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITag(name: "Enroute")], isDefault: true),
-            IFlightInfoModel(name: "Hills to the north of aerodrome", tags: [ITag(name: "Terrain")], isDefault: true),
-        ]
-        
-        self.enrouteTag = [
-            ITag(name: "Enroute"),
-            ITag(name: "Terrain"),
-        ]
-        
-        self.enrouteQRData = []
-        
-        
-        // Aircraft
-        self.aircraftData = []
-        
-        self.aircraftTag = []
-        
-        self.aircraftQRData = []
-        
-        loadArray()
+        loadArrayAircraft()
+        loadArrayAircraftQR()
+        loadArrayDeparture()
+        loadArrayDepartureQR()
+        loadArrayEnroute()
+        loadArrayEnrouteQR()
+        loadArrayArrival()
+        loadArrayArrivalQR()
     }
     
-    func addAircraftQR(item: IFlightInfoModel) {
-        let exists = self.aircraftQRData.first(where: {$0.id == item.id});
+    func addAircraftQR(item: IFlightInfoStorageModel) {
+        let exists = self.aircraftQRDataArray.first(where: {$0.id == item.id});
         if exists == nil {
-            self.aircraftQRData.append(item)
+            self.aircraftQRDataArray.append(item)
+        }
+    }
+
+    func addDepartureQR(item: IFlightInfoStorageModel) {
+        let exists = self.departureQRDataArray.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.departureQRDataArray.append(item)
+        }
+    }
+
+    func addEnrouteQR(item: IFlightInfoStorageModel) {
+        let exists = self.enrouteQRDataArray.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.enrouteQRDataArray.append(item)
+        }
+    }
+
+    func addArrivalQR(item: IFlightInfoStorageModel) {
+        let exists = self.arrivalQRDataArray.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.arrivalQRDataArray.append(item)
         }
     }
     
-    func addDepartureQR(item: IFlightInfoModel) {
-        let exists = self.departureQRData.first(where: {$0.id == item.id});
-        if exists == nil {
-            self.departureQRData.append(item)
-        }
+    func removeItemAircraft(item: IFlightInfoStorageModel) {
+        self.aircraftDataArray.removeAll(where: {$0.id == item.id })
     }
     
-    func addEnrouteQR(item: IFlightInfoModel) {
-        let exists = self.enrouteQRData.first(where: {$0.id == item.id});
-        if exists == nil {
-            self.enrouteQRData.append(item)
-        }
+    func removeItemAircraftQR(item: IFlightInfoStorageModel) {
+        self.aircraftQRDataArray.removeAll(where: {$0.id == item.id })
     }
     
-    func addArrivalQR(item: IFlightInfoModel) {
-        let exists = self.arrivalQRData.first(where: {$0.id == item.id});
-        if exists == nil {
-            self.arrivalQRData.append(item)
-        }
-    }
-    
-    func removeItemAircraft(item: IFlightInfoModel) {
-        self.aircraftData.removeAll(where: {$0.id == item.id })
-    }
-    
-    func removeItemAircraftQR(item: IFlightInfoModel) {
-        self.aircraftQRData.removeAll(where: {$0.id == item.id })
-    }
-    
-    func removeItemDeparture(item: IFlightInfoModel) {
-        self.departureData.removeAll(where: {$0.id == item.id })
+    func removeItemDeparture(item: IFlightInfoStorageModel) {
+        self.departureDataArray.removeAll(where: {$0.id == item.id })
 //        objectWillChange.send()
     }
 
-    func removeItemDepartureQR(item: IFlightInfoModel) {
-        self.departureQRData.removeAll(where: {$0.id == item.id })
+    func removeItemDepartureQR(item: IFlightInfoStorageModel) {
+        self.departureQRDataArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemEnroute(item: IFlightInfoModel) {
-        self.enrouteData.removeAll(where: {$0.id == item.id })
+    func removeItemEnroute(item: IFlightInfoStorageModel) {
+        self.enrouteDataArray.removeAll(where: {$0.id == item.id })
     }
 
-    func removeItemEnrouteQR(item: IFlightInfoModel) {
-        self.enrouteQRData.removeAll(where: {$0.id == item.id })
+    func removeItemEnrouteQR(item: IFlightInfoStorageModel) {
+        self.enrouteQRDataArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemArrival(item: IFlightInfoModel) {
-        self.arrivalData.removeAll(where: {$0.id == item.id })
+    func removeItemArrival(item: IFlightInfoStorageModel) {
+        self.arrivalDataArray.removeAll(where: {$0.id == item.id })
     }
 
-    func removeItemArrivalQR(item: IFlightInfoModel) {
-        self.arrivalQRData.removeAll(where: {$0.id == item.id })
+    func removeItemArrivalQR(item: IFlightInfoStorageModel) {
+        self.arrivalQRDataArray.removeAll(where: {$0.id == item.id })
     }
     
-    private func loadArray() {
-        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoModel1].self, from: departureQRDataStorage) else {
+    // Aircraft, Aircraft QR
+    
+    private func loadArrayAircraft() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: aircraftDataStorage)
+        else {
+            aircraftDataArray = []
             return
         }
         
-        if decodedArray.count > 0 {
-            departureQRDataArray = decodedArray
-        } else {
-            departureQRDataArray = [IFlightInfoModel1(name: "All crew to be simulator-qualified for RNP approach", isDefault: true)]
-        }
+        aircraftDataArray = decodedArray
     }
     
-    private func saveArray() {
+    private func saveArrayAircraft() {
+        guard let encodedArray = try? JSONEncoder().encode(aircraftDataArray) else {
+            return
+        }
+        aircraftDataStorage = encodedArray
+    }
+    
+    private func loadArrayAircraftQR() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: aircraftQRDataStorage)
+        else {
+            aircraftQRDataArray = []
+            return
+        }
+        
+        aircraftQRDataArray = decodedArray
+    }
+    
+    private func saveArrayAircraftQR() {
+        guard let encodedArray = try? JSONEncoder().encode(aircraftQRDataArray) else {
+            return
+        }
+        aircraftQRDataStorage = encodedArray
+    }
+    
+    // End Aircraft, Aircraft QR
+    
+    // Departure, Departure QR
+    
+    private func loadArrayDeparture() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: departureDataStorage)
+        else {
+            departureDataArray = [
+                IFlightInfoStorageModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITagStorage(name: "Preflight")], isDefault: true),
+                IFlightInfoStorageModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITagStorage(name: "Departure")], isDefault: true),
+                IFlightInfoStorageModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITagStorage(name: "Dispatch")], isDefault: true),
+                IFlightInfoStorageModel(name: "Expected POB: 315", tags: [ITagStorage(name: "Dispatch")], isDefault: true)
+            ]
+            return
+        }
+        
+        departureDataArray = decodedArray
+    }
+    
+    private func saveArrayDeparture() {
+        guard let encodedArray = try? JSONEncoder().encode(departureDataArray) else {
+            return
+        }
+        departureDataStorage = encodedArray
+    }
+    
+    private func loadArrayDepartureQR() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: departureQRDataStorage)
+        else {
+            departureQRDataArray = []
+            return
+        }
+        
+        departureQRDataArray = decodedArray
+    }
+    
+    private func saveArrayDepartureQR() {
         guard let encodedArray = try? JSONEncoder().encode(departureQRDataArray) else {
             return
         }
         departureQRDataStorage = encodedArray
     }
     
-    func convertIntoJSONString(arrayObject: [Any]) -> [String] {
-            do {
-                let jsonData: Data = try JSONSerialization.data(withJSONObject: arrayObject, options: [])
-                if  let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) {
-                    return [jsonString as String]
-                }
-                
-            } catch let error as NSError {
-                print("Array convertIntoJSON - \(error.description)")
-            }
-            return []
+    // End Departure, Departure QR
+    
+    // Enroute, EnrouteQR
+    private func loadArrayEnroute() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: enrouteDataStorage)
+        else {
+            enrouteDataArray = [
+                IFlightInfoStorageModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITagStorage(name: "Enroute")], isDefault: true),
+                IFlightInfoStorageModel(name: "Hills to the north of aerodrome", tags: [ITagStorage(name: "Terrain")], isDefault: true),
+            ]
+            return
         }
+        
+        enrouteDataArray = decodedArray
+    }
+    
+    private func saveArrayEnroute() {
+        guard let encodedArray = try? JSONEncoder().encode(enrouteDataArray) else {
+            return
+        }
+        enrouteDataStorage = encodedArray
+    }
+    
+    private func loadArrayEnrouteQR() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: enrouteQRDataStorage)
+        else {
+            enrouteQRDataArray = []
+            return
+        }
+        
+        enrouteQRDataArray = decodedArray
+    }
+    
+    private func saveArrayEnrouteQR() {
+        guard let encodedArray = try? JSONEncoder().encode(enrouteQRDataArray) else {
+            return
+        }
+        enrouteQRDataStorage = encodedArray
+    }
+    
+    // END Enroute, EnrouteQR
+    
+    // Arrival, ArrivalQR
+    private func loadArrayArrival() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: arrivalDataStorage)
+        else {
+            arrivalDataArray = [
+                IFlightInfoStorageModel(name: "Birds in vicinity", tags: [ITagStorage(name: "Threats")], isDefault: true),
+                IFlightInfoStorageModel(name: "Any +TS expected to last 15mins", tags: [ITagStorage(name: "Weather")], isDefault: true)
+            ]
+            return
+        }
+        
+        arrivalDataArray = decodedArray
+    }
+    
+    private func saveArrayArrival() {
+        guard let encodedArray = try? JSONEncoder().encode(arrivalDataArray) else {
+            return
+        }
+        arrivalDataStorage = encodedArray
+    }
+    
+    private func loadArrayArrivalQR() {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: arrivalQRDataStorage)
+        else {
+            arrivalQRDataArray = []
+            return
+        }
+        
+        arrivalQRDataArray = decodedArray
+    }
+    
+    private func saveArrayArrivalQR() {
+        guard let encodedArray = try? JSONEncoder().encode(arrivalQRDataArray) else {
+            return
+        }
+        arrivalQRDataStorage = encodedArray
+    }
+    
+    // END Arrival, ArrivalQR
 }

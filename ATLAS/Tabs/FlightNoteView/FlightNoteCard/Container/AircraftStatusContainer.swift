@@ -12,14 +12,14 @@ struct AircraftStatusContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     var geoWidth: Double = 0
     
-    @State var aircraftTags: [ITag] = []
+    @State var aircraftTags: [ITagStorage] = []
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.aircraftData.isEmpty {
+            if !viewModel.aircraftDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftData, id: \.self) { item in
+                        ForEach(viewModel.aircraftDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -70,19 +70,19 @@ struct AircraftStatusContainer: View {
                     }
                     .listStyle(.plain)
                     .listRowBackground(Color.white)
-                    .frame(height: CGFloat($viewModel.aircraftData.count * 45))
+                    .frame(height: CGFloat($viewModel.aircraftDataArray.count * 45))
                 }.layoutPriority(1)
 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$aircraftTags, itemList: self.$viewModel.aircraftData, resetData: self.resetData).frame(height: 98)
+            DepartureForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.aircraftData.move(fromOffsets: source, toOffset: destination)
+        viewModel.aircraftDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

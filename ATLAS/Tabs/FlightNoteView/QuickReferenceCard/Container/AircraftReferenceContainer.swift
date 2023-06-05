@@ -10,16 +10,16 @@ import SwiftUI
 
 struct AircraftReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var aircraftTags: [ITag] = []
+    @State var aircraftTags: [ITagStorage] = []
     
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.aircraftQRData.isEmpty {
+            if !viewModel.aircraftQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftQRData, id: \.self) { item in
+                        ForEach(viewModel.aircraftQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -70,19 +70,19 @@ struct AircraftReferenceContainer: View {
                         
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat($viewModel.aircraftQRData.count * 47))
+                        .frame(height: CGFloat($viewModel.aircraftQRDataArray.count * 47))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftQRData, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftQRDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.aircraftQRData.move(fromOffsets: source, toOffset: destination)
+        viewModel.aircraftQRDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

@@ -12,8 +12,8 @@ struct QuickReferenceForm: View {
     @State private var textNote: String = ""
     @State private var showSheet = false
     
-    @Binding var tagList: [ITag]
-    @Binding var itemList: [IFlightInfoModel]
+    @Binding var tagList: [ITagStorage]
+    @Binding var itemList: [IFlightInfoStorageModel]
     var resetData: () -> Void
     
     @State var selectedLine: ITag?
@@ -83,7 +83,7 @@ struct QuickReferenceForm: View {
                         Rectangle().fill(Color.white).frame(height: 16)
                         
                         HStack {
-                            ForEach(tagList, id: \.self) { item in
+                            ForEach(tagList) { item in
                                 Button(action: {
                                     if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
                                         self.tagList[matchingIndex].isChecked.toggle()
@@ -112,8 +112,8 @@ struct QuickReferenceForm: View {
     }
     
     func save() {
-        let tags: [ITag] = tagList.filter { $0.isChecked };
-        let newItem = IFlightInfoModel(name: textNote, tags: tags, isDefault: false)
+        let tags: [ITagStorage] = tagList.filter { $0.isChecked };
+        let newItem = IFlightInfoStorageModel(name: textNote, tags: tags, isDefault: false)
         
         itemList.append(newItem)
         

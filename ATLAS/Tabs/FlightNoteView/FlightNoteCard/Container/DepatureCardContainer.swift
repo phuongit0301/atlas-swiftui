@@ -10,16 +10,16 @@ import SwiftUI
 
 struct DepatureCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var depTags: [ITag] = DepartureTags().TagList
+    @State var depTags: [ITagStorage] = DepartureTags().TagList
     
     var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.departureData.isEmpty {
+            if !viewModel.departureDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureData, id: \.self) { item in
+                        ForEach(viewModel.departureDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -33,7 +33,7 @@ struct DepatureCardContainer: View {
                                         .lineLimit(1)
                                         .fixedSize(horizontal: false, vertical: true)
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
+                                    ForEach(item.tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -73,8 +73,7 @@ struct DepatureCardContainer: View {
                                     }
                                     
                                     Button {
-//                                        viewModel.addDepartureQR(item: item)
-                                        viewModel.departureQRDataArray.append(IFlightInfoModel1(name: item.name, isDefault: false))
+                                        viewModel.addDepartureQR(item: item)
                                     } label: {
                                         Image(systemName: "tag.fill")
                                             .frame(width: 16, height: 16)
@@ -87,19 +86,19 @@ struct DepatureCardContainer: View {
                         
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat(viewModel.departureData.count * 45))
+                        .frame(height: CGFloat(viewModel.departureDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$depTags, itemList: $viewModel.departureData, resetData: self.resetData).frame(height: 98)
+            DepartureForm(tagList: self.$depTags, itemList: $viewModel.departureDataArray, resetData: self.resetData).frame(height: 98)
         }
     }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.departureData.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureDataArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {
