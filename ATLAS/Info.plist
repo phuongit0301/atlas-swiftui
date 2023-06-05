@@ -23,6 +23,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.external.notes</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>App-Prefs</string>
@@ -39,9 +41,11 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>sg.accumulus.ios.book-flight</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ewas</string>
+				<string>atlas</string>
 			</array>
 		</dict>
 		<dict>
@@ -60,6 +64,7 @@
 		<string>App-Prefs</string>
 		<string>AviatorSdk</string>
 		<string>freeform</string>
+		<string>atlas</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

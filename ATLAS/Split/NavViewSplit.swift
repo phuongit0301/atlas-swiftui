@@ -27,7 +27,6 @@ struct NavViewSplit: View {
                 FlightView()
             } else {
                 HomeViewSplit()
-//                HomeViewSplit(selectedItem: self.$selectedItem)
             }
             
         }.background(Color.theme.cultured)

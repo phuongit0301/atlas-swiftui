@@ -13,13 +13,18 @@ struct HomeViewSplit: View {
 //    @Binding var selectedItem: SubMenuItem?
 //
     var viewModel = ListFlightSplitModel()
-    @EnvironmentObject var viewModelMenu: SideMenuModelState
+    @EnvironmentObject var sideMenuState: SideMenuModelState
 //    @State private var currentScreen = NavigationScreen.flight
     
     var body: some View {
         VStack(spacing: 0) {
+            Text(sideMenuState.selectedMenu?.name ?? "")
+                .foregroundColor(Color.theme.eerieBlack)
+                .font(.custom("Inter-SemiBold", size: 22))
+                .padding(.bottom, 16)
+            
             // flight informations
-            List (selection: $viewModelMenu.selectedMenu) {
+            List (selection: $sideMenuState.selectedMenu) {
                 ForEach(viewModel.ListItem, id: \.self) { item in
                     Section {
                         if !item.subMenuItems.isEmpty {

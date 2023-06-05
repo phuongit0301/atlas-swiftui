@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct ATLASApp: App {
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
     @StateObject var sideMenuModelState = SideMenuModelState()
@@ -31,5 +32,21 @@ struct ATLASApp: App {
                     }
                 }
         }
+        
+        WindowGroup {
+            ContentView()
+                .environmentObject(network)
+                .environmentObject(tabModelState)
+                .environmentObject(sideMenuModelState)
+                .environmentObject(mainNavModelState)
+                .environmentObject(flightNoteModelState)
+                .onAppear {
+                    Task {
+                        await apiManager.makePostRequest()
+                    }
+                }
+        }.handlesExternalEvents(
+            matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
+        )
     }
 }

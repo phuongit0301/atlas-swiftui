@@ -9,19 +9,14 @@ import Foundation
 import SwiftUI
     
 struct EnrouteSplit: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
-    @State var animatedContentHeight: CGFloat = 90
+    @ObservedObject var viewModel: FlightNoteModelState = FlightNoteModelState()
 
     var body: some View {
         GeometryReader { geo in
             VStack {
-                EnrouteSplitContainer(itemList: $viewModel.enrouteData, calculateHeight: self.calculateHeight, geoWidth: geo.size.width, contentHeight: animatedContentHeight)
+                EnrouteSplitContainer(viewModel: viewModel, geoWidth: geo.size.width)
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.theme.cultured)
         }
-    }
-    
-    private func calculateHeight() {
-        animatedContentHeight = CGFloat(48 * $viewModel.enrouteData.count)
     }
 }

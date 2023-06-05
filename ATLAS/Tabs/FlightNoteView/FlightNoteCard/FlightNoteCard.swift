@@ -13,6 +13,8 @@ struct FlightNoteCard: View {
     @Binding var collapsed: Bool
     // Mock Data tabs
     @ObservedObject var viewModel: FlightNoteModelState
+    @AppStorage("departureData") var departureData: FlightNoteModelState = FlightNoteModelState().departureData
+    
     @State private var currentTab: Int = 0
     @State private var tabs: [Tab] = [
         .init(title: "Aircraft Status"),

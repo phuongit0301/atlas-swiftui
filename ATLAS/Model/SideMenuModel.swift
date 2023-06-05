@@ -67,6 +67,7 @@ class SideMenuModelState: ObservableObject {
 struct BottomMenuItem: Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var isExternal = false
 }
 
 struct BottomMenuModel {
@@ -75,8 +76,8 @@ struct BottomMenuModel {
             BottomMenuItem(name: "list.bullet.clipboard"),
             BottomMenuItem(name: "fuelpump"),
             BottomMenuItem(name: "doc.plaintext"),
-            BottomMenuItem(name: "map"),
-            BottomMenuItem(name: "sun.max"),
+            BottomMenuItem(name: "map", isExternal: true),
+            BottomMenuItem(name: "sun.max", isExternal: true),
             BottomMenuItem(name: "globe"),
             BottomMenuItem(name: "rectangle.stack"),
         ]

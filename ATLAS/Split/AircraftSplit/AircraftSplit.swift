@@ -9,19 +9,15 @@ import Foundation
 import SwiftUI
     
 struct AircraftSplit: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
-    @State var animatedContentHeight: CGFloat = 45
+    @ObservedObject var viewModel: FlightNoteModelState = FlightNoteModelState()
     
     var body: some View {
         GeometryReader { geo in
             VStack {
-                AircraftSplitContainer(itemList: $viewModel.aircraftData, calculateHeight: self.calculateHeight, geoWidth: geo.size.width, contentHeight: animatedContentHeight)
+                AircraftSplitContainer(viewModel: viewModel, geoWidth: geo.size.width)
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.theme.cultured)
         }
     }
-    
-    private func calculateHeight() {
-        animatedContentHeight = CGFloat(45 * $viewModel.aircraftData.count)
-    }
+
 }
