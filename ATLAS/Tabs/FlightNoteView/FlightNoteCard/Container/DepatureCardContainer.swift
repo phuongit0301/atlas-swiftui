@@ -74,7 +74,7 @@ struct DepatureCardContainer: View {
                                     
                                     Button {
 //                                        viewModel.addDepartureQR(item: item)
-                                        viewModel.departureQRDataArray.append(item.name)
+                                        viewModel.departureQRDataArray.append(IFlightInfoModel1(name: item.name, isDefault: false))
                                     } label: {
                                         Image(systemName: "tag.fill")
                                             .frame(width: 16, height: 16)

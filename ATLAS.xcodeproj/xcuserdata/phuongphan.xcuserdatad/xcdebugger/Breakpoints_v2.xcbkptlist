@@ -324,8 +324,8 @@
             filePath = "ATLAS/Tabs/FlightNoteView/QuickReferenceCard/Container/DepatureReferenceContainer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "delete(at:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -436,42 +436,26 @@
             filePath = "ATLAS/Model/FlightPageModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "addAircraftQR(item:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2B837B43-F867-4B0D-AAF4-5C95599BC9C7 - b85b8b04be908b6c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ATLAS.FlightNoteModelState.addAircraftQR(item: ATLAS.IFlightInfoModel) -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Model/FlightPageModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "364"
-                  endingLineNumber = "364"
-                  offsetFromSymbolStart = "207">
-               </Location>
-               <Location
-                  uuid = "2B837B43-F867-4B0D-AAF4-5C95599BC9C7 - 84dd36e88a592223"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (ATLAS.IFlightInfoModel) -&gt; Swift.Bool in ATLAS.FlightNoteModelState.addAircraftQR(item: ATLAS.IFlightInfoModel) -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Model/FlightPageModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "364"
-                  endingLineNumber = "364"
-                  offsetFromSymbolStart = "115">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F591D42-3250-4585-B930-4C56E4BD9BF5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Model/FlightPageModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "loadArray()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

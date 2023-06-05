@@ -85,6 +85,12 @@ struct IFlightInfoModel: Identifiable, Hashable {
     var isDefault: Bool = true
 }
 
+struct IFlightInfoModel1: Identifiable, Encodable, Decodable {
+    var id = UUID()
+    var name: String
+    var isDefault: Bool = true
+}
+
 struct DepartureFlightInfoModel {
     var ListItem = {
         var MainItem = [
@@ -270,12 +276,11 @@ struct ListDetailModel {
 class FlightNoteModelState: ObservableObject {
     @AppStorage("departureQRDataArray") private var departureQRDataStorage: Data = Data()
         
-    @Published var departureQRDataArray: [String] = [] {
+    @Published var departureQRDataArray: [IFlightInfoModel1] = [] {
         didSet {
             saveArray()
         }
     }
-        
     
     // Departure
     @Published var departureData: [IFlightInfoModel]
@@ -422,10 +427,15 @@ class FlightNoteModelState: ObservableObject {
     }
     
     private func loadArray() {
-        guard let decodedArray = try? JSONDecoder().decode([String].self, from: departureQRDataStorage) else {
+        guard let decodedArray = try? JSONDecoder().decode([IFlightInfoModel1].self, from: departureQRDataStorage) else {
             return
         }
-        departureQRDataArray = decodedArray
+        
+        if decodedArray.count > 0 {
+            departureQRDataArray = decodedArray
+        } else {
+            departureQRDataArray = [IFlightInfoModel1(name: "All crew to be simulator-qualified for RNP approach", isDefault: true)]
+        }
     }
     
     private func saveArray() {
@@ -434,4 +444,17 @@ class FlightNoteModelState: ObservableObject {
         }
         departureQRDataStorage = encodedArray
     }
+    
+    func convertIntoJSONString(arrayObject: [Any]) -> [String] {
+            do {
+                let jsonData: Data = try JSONSerialization.data(withJSONObject: arrayObject, options: [])
+                if  let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) {
+                    return [jsonString as String]
+                }
+                
+            } catch let error as NSError {
+                print("Array convertIntoJSON - \(error.description)")
+            }
+            return []
+        }
 }

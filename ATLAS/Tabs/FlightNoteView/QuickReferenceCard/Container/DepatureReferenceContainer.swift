@@ -20,7 +20,7 @@ struct DepatureReferenceContainer: View {
             if !viewModel.departureQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.departureQRDataArray) { item in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -28,7 +28,7 @@ struct DepatureReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.departureQRDataArray[index])
+                                    Text(item.name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                         .lineLimit(1)
@@ -86,6 +86,7 @@ struct DepatureReferenceContainer: View {
                         .listRowBackground(Color.white)
                         .frame(height: CGFloat(viewModel.departureQRDataArray.count * 45))
                 }.layoutPriority(1)
+                    .Print("data======>\(viewModel.departureQRDataArray)")
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
