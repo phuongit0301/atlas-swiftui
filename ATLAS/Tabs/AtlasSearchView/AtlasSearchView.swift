@@ -8,18 +8,13 @@
 import Foundation
 import SwiftUI
 
-enum Status {
-    case normal
-    case like
-    case dislike
-}
-
 struct AtlasSearchView: View {
     @EnvironmentObject var network: Network
     
     @State private var like = Status.normal
     @State private var flag: Bool = false
     @State private var showLoading: Bool = false
+    @State private var firstLoading: Bool = true
     // For Search
     @State private var txtSearch: String = ""
     
@@ -48,11 +43,21 @@ struct AtlasSearchView: View {
                                 .padding(13)
                                 .frame(maxWidth: .infinity, maxHeight: 48)
                             
-                            Image(systemName: "arrow.forward")
-                                .foregroundColor(Color.theme.chineseSilver)
-                                .frame(width: 20, height: 16)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
+                            if !firstLoading {
+                                Button(action: {
+                                    self.message = ""
+                                    self.messageCount = 0
+                                    
+                                    self.showLoading = true
+                                    onSearch()
+                                }) {
+                                    Image(systemName: "arrow.forward")
+                                        .foregroundColor(Color.theme.eerieBlack)
+                                        .frame(width: 20, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }
                             
                         }.padding(.horizontal, 12)
                             .padding(.vertical, 6)
@@ -65,104 +70,150 @@ struct AtlasSearchView: View {
                             .stroke(.white, lineWidth: 1)
                     )
                     
-                    Rectangle().fill(Color.theme.lavender).frame(height: 8)
+                    Rectangle().fill(Color.theme.lavender).frame(height: 16)
                     
-                    // search form
-                    HStack {
-                        TypeWriterText(string: message, count: messageCount)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }.background(.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 0)
-                                .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                        )
-                    
-                    Rectangle().fill(Color.theme.lavender).frame(height: 8)
-                    
-                    // icons and button bottom
-                    HStack(alignment: .center) {
-                        Button(action: {
-                            if like == Status.like {
-                                self.like = Status.normal
-                            } else {
-                                self.like = Status.like
-                            }
-                        }) {
-                            Image(systemName: "hand.thumbsup")
-                                .foregroundColor(self.like == Status.normal ? Color.theme.eerieBlack : Color.theme.tealDeer)
-                                .frame(width: 24, height: 24)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                        
-                        Button(action: {
-                            // To do: Handle button click
-                        }) {
-                            Image(systemName: "hand.thumbsdown")
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .frame(width: 24, height: 24)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                        
-                        Button {
-                            self.flag.toggle()
-                        } label: {
-                            Image(systemName: "flag")
-                                .tint(flag ? Color.theme.tealDeer : Color.theme.eerieBlack)
-                                .frame(width: 24, height: 24)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.showLoading = true
-                            if txtSearch != "" {
-                                network.handleSearch(question: txtSearch, onSuccess: {
-                                    self.showLoading = false
+                    if firstLoading {
+                        HStack {
+                            Spacer()
+                            
+                            Button(action: {
+                                if txtSearch != "" {
+                                    self.message = ""
+                                    self.messageCount = 0
                                     
-                                    withAnimation(.linear(duration: 30)) {
-                                        message = network.dataSearch.result
-                                        messageCount = network.dataSearch.result.count
-                                    }
-                                }, onFailure: { error in
-                                    self.showLoading = false
-                                    print("Error fetch data == \(error)")
-                                })
+                                    self.showLoading = true
+                                    onSearch()
+                                }
+                            }) {
+                                Text("Search")
+                                    .font(.custom("Inter-Regular", size: 16))
+                                    .foregroundColor(txtSearch != "" ? Color.white : Color.theme.eerieBlack)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.theme.eerieBlack, lineWidth: 0)
+                                        )
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 4)
+                                
+                                if showLoading {
+                                    ActivityIndicator(shouldAnimate: self.$showLoading)
+                                        .foregroundColor(Color.white)
+                                }
                             }
-                        }) {
-                            Text("Regenerate Response")
-                                .font(.custom("Inter-Regular", size: 13))
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 4)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.init(
-                                            Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 1)
-                                )
-                            ActivityIndicator(shouldAnimate: self.$showLoading)
-                        }.disabled(self.showLoading)
-                        
-                        Button(action: {
-                            // To do: Handle button click
-                        }) {
-                            Text("Save To...")
-                                .font(.custom("Inter-Regular", size: 13))
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .background(Color.theme.tealDeer)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 4)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.theme.tealDeer, lineWidth: 1)
-                                )
-                        }.background(Color.theme.tealDeer)
+                            .background(txtSearch != "" ? Color.theme.eerieBlack : Color.theme.chineseSilver)
                             .cornerRadius(12)
-                        
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 4)
+                            .disabled(self.showLoading)
+                        }
                     }
+                    
+                    
+                    if txtSearch != "" && !firstLoading {
+                        VStack(spacing: 0) {
+                            // search form
+                            HStack {
+                                TypeWriterText(string: message, count: messageCount)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }.background(.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 0)
+                                        .stroke(Color.theme.eerieBlack, lineWidth: 1)
+                                )
+                            
+                            Rectangle().fill(Color.theme.lavender).frame(height: 8)
+                            
+                            // icons and button bottom
+                            HStack(alignment: .center) {
+                                Button(action: {
+                                    if like == Status.like {
+                                        self.like = Status.normal
+                                    } else {
+                                        self.like = Status.like
+                                    }
+                                }) {
+                                    Image(systemName: "hand.thumbsup")
+                                        .foregroundColor(self.like == Status.like ? Color.theme.tealDeer : Color.theme.eerieBlack)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                
+                                Button(action: {
+                                    if like == Status.dislike {
+                                        self.like = Status.normal
+                                    } else {
+                                        self.like = Status.dislike
+                                    }
+                                }) {
+                                    Image(systemName: "hand.thumbsdown")
+                                        .foregroundColor(self.like == Status.dislike ? Color.theme.tealDeer : Color.theme.eerieBlack)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                
+                                Button {
+                                    self.flag.toggle()
+                                } label: {
+                                    Image(systemName: "flag")
+                                        .tint(flag ? Color.theme.tealDeer : Color.theme.eerieBlack)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    if txtSearch != "" {
+                                        self.message = ""
+                                        self.messageCount = 0
+                                        
+                                        self.showLoading = true
+                                        onSearch()
+                                    }
+                                }) {
+                                    Text("Regenerate Response")
+                                        .font(.custom("Inter-Regular", size: 13))
+                                        .foregroundColor(Color.theme.eerieBlack)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 4)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.init(
+                                                    Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 0)
+                                        )
+                                    
+                                    if showLoading {
+                                        ActivityIndicator(shouldAnimate: self.$showLoading)
+                                    }
+                                }.disabled(self.showLoading)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 4)
+                                .border(Color.init(
+                                    Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), width: 1, cornerRadius: 12)
+                                
+//                                Button(action: {
+//                                    // To do: Handle button click
+//                                }) {
+//                                    Text("Save To...")
+//                                        .font(.custom("Inter-Regular", size: 13))
+//                                        .foregroundColor(Color.theme.eerieBlack)
+//                                        .background(Color.theme.tealDeer)
+//                                        .padding(.horizontal, 16)
+//                                        .padding(.vertical, 4)
+//                                        .overlay(
+//                                            RoundedRectangle(cornerRadius: 12)
+//                                                .stroke(Color.theme.tealDeer, lineWidth: 1)
+//                                        )
+//                                }.background(Color.theme.tealDeer)
+//                                    .cornerRadius(12)
+                                
+                            }
+                        }
+                    }
+                    
                 }
             }.padding(16)
                 .background(Color.theme.lavender)
@@ -177,7 +228,18 @@ struct AtlasSearchView: View {
     }
     
     func onSearch() {
-        //To do call API
+        network.handleSearch(question: txtSearch, onSuccess: {
+            self.showLoading = false
+            self.firstLoading = false
+            
+            withAnimation(.linear(duration: 30)) {
+                message = network.dataSearch.result
+                messageCount = network.dataSearch.result.count
+            }
+        }, onFailure: { error in
+            self.showLoading = false
+            print("Error fetch data == \(error)")
+        })
     }
     
     private func forcegroundColorLike(for likeNum: Status) -> Color {

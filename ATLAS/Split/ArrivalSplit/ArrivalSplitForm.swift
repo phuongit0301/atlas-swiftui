@@ -87,7 +87,7 @@ struct ArrivalSplitForm: View {
                                     .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
                                     .cornerRadius(16)
                             }
-                        }
+                        }.fixedSize(horizontal: false, vertical: false)
                     }.padding(16)
                         .presentationDetents([.height(150)])
                 }

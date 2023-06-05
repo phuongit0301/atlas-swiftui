@@ -51,24 +51,26 @@ struct EnrouteCardContainer: View {
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(self.backgroundColor(for: item.isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.removeItemEnroute(item: item)
-                                    } label: {
-                                        Image(systemName: "trash.fill")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }.tint(Color.theme.alizarinCrimson)
-                                    
-                                    Button {
-                                        print("Muting conversation")
-                                    } label: {
-                                        Image(systemName: "square.and.pencil")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
+                                    if !item.isDefault {
+                                        Button(role: .destructive) {
+                                            viewModel.removeItemEnroute(item: item)
+                                        } label: {
+                                            Image(systemName: "trash.fill")
+                                                .frame(width: 16, height: 16)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        }.tint(Color.theme.alizarinCrimson)
+                                        
+                                        Button {
+                                            print("Muting conversation")
+                                        } label: {
+                                            Image(systemName: "square.and.pencil")
+                                                .frame(width: 16, height: 16)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        }
+                                        .tint(Color.theme.eerieBlack)                                        
                                     }
-                                    .tint(Color.theme.eerieBlack)
                                     
                                     Button {
                                         viewModel.addEnrouteQR(item: item)

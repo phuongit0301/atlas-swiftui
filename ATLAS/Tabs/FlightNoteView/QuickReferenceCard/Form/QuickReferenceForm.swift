@@ -27,36 +27,36 @@ struct QuickReferenceForm: View {
                 
                 HStack {
                     
-                    Button(action: {
-                        // check text empty or not
-                        if textNote != "" && !tagList.isEmpty {
-                            showSheet.toggle()
-                        }
-                    }, label: {
-                        Text("Add Tags")
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 16)
-                            .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
-                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
-                            .cornerRadius(12)
-                            .frame(alignment: .center)
-                    })
+//                    Button(action: {
+//                        // check text empty or not
+//                        if textNote != "" && !tagList.isEmpty {
+//                            showSheet.toggle()
+//                        }
+//                    }, label: {
+//                        Text("Add Tags")
+//                            .padding(.vertical, 4)
+//                            .padding(.horizontal, 16)
+//                            .font(.custom("Inter-SemiBold", size: 16))
+//                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
+//                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
+//                            .cornerRadius(12)
+//                            .frame(alignment: .center)
+//                    })
                     
                     Spacer()
                     
-                    Button(action: {
-                        // To do show modal
-                    }, label: {
-                        Text("Save To...")
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 16)
-                            .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
-                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
-                            .cornerRadius(12)
-                            .frame(alignment: .center)
-                    })
+//                    Button(action: {
+//                        // To do show modal
+//                    }, label: {
+//                        Text("Save To...")
+//                            .padding(.vertical, 4)
+//                            .padding(.horizontal, 16)
+//                            .font(.custom("Inter-SemiBold", size: 16))
+//                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
+//                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
+//                            .cornerRadius(12)
+//                            .frame(alignment: .center)
+//                    })
                     
                     Button(action: {
                         if textNote != "" {

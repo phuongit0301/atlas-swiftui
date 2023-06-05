@@ -349,19 +349,31 @@ class FlightNoteModelState: ObservableObject {
     }
     
     func addAircraftQR(item: IFlightInfoModel) {
-        self.aircraftQRData.append(item)
+        let exists = self.aircraftQRData.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.aircraftQRData.append(item)
+        }
     }
     
     func addDepartureQR(item: IFlightInfoModel) {
-        self.departureQRData.append(item)
+        let exists = self.departureQRData.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.departureQRData.append(item)
+        }
     }
     
     func addEnrouteQR(item: IFlightInfoModel) {
-        self.enrouteQRData.append(item)
+        let exists = self.enrouteQRData.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.enrouteQRData.append(item)
+        }
     }
     
     func addArrivalQR(item: IFlightInfoModel) {
-        self.arrivalQRData.append(item)
+        let exists = self.arrivalQRData.first(where: {$0.id == item.id});
+        if exists == nil {
+            self.arrivalQRData.append(item)
+        }
     }
     
     func removeItemAircraft(item: IFlightInfoModel) {

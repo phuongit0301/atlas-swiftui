@@ -30,6 +30,10 @@ extension View {
         #endif
         return self
     }
+    
+    func border(_ color: Color, width: CGFloat, cornerRadius: CGFloat) -> some View {
+        overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(color, lineWidth: width))
+    }
 }
 
 extension String {
@@ -158,8 +162,8 @@ struct TypeWriterText: View, Animatable {
 //    }
 //}
 
-
-enum APIError: LocalizedError {
-  /// Invalid request, e.g. invalid URL
-  case invalidRequestError(String)
+enum Status {
+    case normal
+    case like
+    case dislike
 }

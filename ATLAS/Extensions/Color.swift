@@ -14,7 +14,7 @@ extension Color {
 
 struct ColorTheme {
     let cultured = Color("Cultured") //F7F7F7
-    let eerieBlack = Color("EerieBlack")
+    let eerieBlack = Color("EerieBlack") // 16161D
     let tuftsBlue = Color("TuftsBlue") //3E8BE2
     let aeroBlue = Color("AeroBlue")
     let honeydew = Color("Honeydew")

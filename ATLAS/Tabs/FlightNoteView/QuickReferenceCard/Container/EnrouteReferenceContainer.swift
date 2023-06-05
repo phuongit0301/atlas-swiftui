@@ -10,7 +10,8 @@ import SwiftUI
 
 struct EnrouteReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var enrouteTags: [ITag] = EnrouteTags().TagList
+//    @State var enrouteTags: [ITag] = EnrouteTags().TagList
+    @State var enrouteTags: [ITag] = []
 
     var geoWidth: Double = 0
     
@@ -33,17 +34,17 @@ struct EnrouteReferenceContainer: View {
                                         .lineLimit(1)
                                         .fixedSize(horizontal: false, vertical: true)
                                     
-                                    ForEach(item.tags, id: \.self) { tag in
-                                        Text(tag.name)
-                                            .padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .font(.custom("Inter-Medium", size: 12))
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                            )
-                                    }
+//                                    ForEach(item.tags, id: \.self) { tag in
+//                                        Text(tag.name)
+//                                            .padding(.vertical, 4)
+//                                            .padding(.horizontal, 8)
+//                                            .font(.custom("Inter-Medium", size: 12))
+//                                            .foregroundColor(Color.theme.eerieBlack)
+//                                            .overlay(
+//                                                RoundedRectangle(cornerRadius: 16)
+//                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
+//                                            )
+//                                    }
                                 }
                             }.padding(12)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
