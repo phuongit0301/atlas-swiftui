@@ -9,8 +9,10 @@ import Foundation
 import SwiftUI
 
 struct FlightView: View {
-    @State private var selectedTab: Int = 0
+    @State private var currentTab: ITabs
+    @State private var selectedTab: Int = 1
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var modelState: TabModelState
     
     // Custom Back button
     @Environment(\.dismiss) private var dismiss

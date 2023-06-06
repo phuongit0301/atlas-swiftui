@@ -41,8 +41,8 @@ class TabModelState: ObservableObject {
         self.tabs = [
             ITabs(name: "Overview", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: false, screenName: NavigationEnumeration.OverviewScreen),
             ITabs(name: "Flight Notes", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightScreen),
-            ITabs(name: "Fuel", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
             ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
+            ITabs(name: "Fuel", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
             ITabs(name: "Charts", iconName: "map", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
             ITabs(name: "Weather", iconName: "sun.max", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
             ITabs(name: "Atlas Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),

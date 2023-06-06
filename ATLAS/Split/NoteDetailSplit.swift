@@ -107,7 +107,7 @@ struct NoteDetailSplit: View {
                     Rectangle().fill(Color.theme.cultured).frame(height: 16)
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Routing")
+                        Text("")
                             .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
                         
                         Rectangle().fill(Color.theme.cultured).frame(height: 16)

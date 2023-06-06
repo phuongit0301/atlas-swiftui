@@ -15,6 +15,7 @@ struct EnrouteSplitForm: View {
     @Binding var tagList: [ITagStorage]
     @Binding var itemList: [IFlightInfoStorageModel]
     var resetData: () -> Void
+    @Binding var currentIndex: Int
     
     @State var selectedLine: ITag?
     @Namespace var lineAnimation
@@ -47,7 +48,11 @@ struct EnrouteSplitForm: View {
                     
                     Button(action: {
                         if textNote != "" {
-                            self.save()
+                            if currentIndex > -1 {
+                                self.update()
+                            } else {
+                                self.save()
+                            }
                         }
                     }, label: {
                         Text("Save")
@@ -60,8 +65,7 @@ struct EnrouteSplitForm: View {
                             .frame(alignment: .center)
                     })
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.padding(.horizontal, 16)
-                .padding(.vertical, 8)
+            }.padding(16)
                 .sheet(isPresented: $showSheet) {
                     // List categories
                     VStack(alignment: .leading, spacing: 0) {
@@ -93,6 +97,12 @@ struct EnrouteSplitForm: View {
                 }
         }.background(Color.white)
             .roundedCorner(16, corners: [.bottomLeft, .bottomRight])
+            .onChange(of: currentIndex) { newIndex in
+                
+                if currentIndex > -1 {
+                    self.textNote = itemList[currentIndex].name
+                }
+            }
     }
     
     func save() {
@@ -101,6 +111,12 @@ struct EnrouteSplitForm: View {
         
         itemList.append(newItem)
         
+        textNote = ""
+        self.resetData()
+    }
+    
+    func update() {
+        itemList[currentIndex].name = textNote
         textNote = ""
         self.resetData()
     }

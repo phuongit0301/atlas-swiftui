@@ -10,16 +10,18 @@ import SwiftUI
 
 struct AircraftStatusContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    var geoWidth: Double = 0
-    
     @State var aircraftTags: [ITagStorage] = []
+    
+    @State private var currentIndex: Int = -1
+    
+    var geoWidth: Double = 0
     
     var body: some View {
         VStack(spacing: 0) {
             if !viewModel.aircraftDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftDataArray) { item in
+                        ForEach(viewModel.aircraftDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -27,7 +29,7 @@ struct AircraftStatusContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.aircraftDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                 }
@@ -39,7 +41,7 @@ struct AircraftStatusContainer: View {
                             .listRowBackground(Color.white)
                             .swipeActions(allowsFullSwipe: false) {
                                 Button(role: .destructive) {
-                                    viewModel.removeItemAircraft(item: item)
+                                    viewModel.removeItemAircraft(item: viewModel.aircraftDataArray[index])
                                 } label: {
                                     Image(systemName: "trash.fill")
                                         .frame(width: 16, height: 16)
@@ -47,7 +49,7 @@ struct AircraftStatusContainer: View {
                                         .aspectRatio(contentMode: .fit)
                                 }.tint(Color.theme.alizarinCrimson)
                                 Button {
-                                    print("Muting conversation")
+                                    self.currentIndex = index
                                 } label: {
                                     Image(systemName: "square.and.pencil")
                                         .frame(width: 16, height: 16)
@@ -55,9 +57,8 @@ struct AircraftStatusContainer: View {
                                         .aspectRatio(contentMode: .fit)
                                 }
                                 .tint(Color.theme.eerieBlack)
-                                
                                 Button {
-                                    viewModel.addAircraftQR(item: item)
+                                    viewModel.addAircraftQR(item: viewModel.aircraftDataArray[index])
                                 } label: {
                                     Image(systemName: "tag.fill")
                                         .frame(width: 16, height: 16)
@@ -67,16 +68,23 @@ struct AircraftStatusContainer: View {
                                 .tint(Color.theme.eerieBlack)
                             }
                         }.onMove(perform: move)
-                    }
-                    .listStyle(.plain)
+                    }.listStyle(.plain)
                     .listRowBackground(Color.white)
                     .frame(height: CGFloat($viewModel.aircraftDataArray.count * 45))
+                    .padding(.bottom, 5)
                 }.layoutPriority(1)
-
+                    .background(Color.white)
+                // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftDataArray, resetData: self.resetData).frame(height: 98)
+            DepartureForm(
+                tagList: self.$aircraftTags,
+                itemList: $viewModel.aircraftDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex,
+                isShowTagBtn: false
+            ).frame(height: 98)
         }
     }
     
@@ -87,6 +95,10 @@ struct AircraftStatusContainer: View {
     
     private func resetData() {
         self.aircraftTags = []
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

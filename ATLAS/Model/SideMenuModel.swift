@@ -55,7 +55,7 @@ class SideMenuModelState: ObservableObject {
         self.mainMenu = [
             MenuItem(name: "Upcoming Flights", image: "linea-mini", subMenuItems: UpcomingMenuItems),
             MenuItem(name: "Completed Flights", image: "swift-mini", subMenuItems: CompletedMenuItems),
-            MenuItem(name: "Apps", image: "espresso-ep", subMenuItems: AppMenuItems)
+//            MenuItem(name: "Apps", image: "espresso-ep", subMenuItems: AppMenuItems)
         ]
         
         self.selectedMenu = UpcomingMenuItems.first

@@ -201,6 +201,23 @@ struct ArrivalTags {
     }()
 }
 
+struct CommonTags {
+    let TagList = {
+        let MainItem = [
+            ITagStorage(name: "Dispatch"),
+            ITagStorage(name: "Terrain"),
+            ITagStorage(name: "Weather"),
+            ITagStorage(name: "Approach"),
+            ITagStorage(name: "Airport"),
+            ITagStorage(name: "ATC"),
+            ITagStorage(name: "Aircraft"),
+            ITagStorage(name: "Environment"),
+        ]
+        
+        return MainItem
+    }()
+}
+
 struct ListFlightSplitItem: Identifiable, Hashable {
     var id = UUID()
     var name: String
@@ -369,6 +386,12 @@ class FlightNoteModelState: ObservableObject {
             self.departureQRDataArray.append(item)
         }
     }
+    
+    func updateDeparture(item: IFlightInfoStorageModel) {
+        if let matchingIndex = self.departureDataArray.firstIndex(where: {$0.id == item.id}) {
+            self.departureDataArray[matchingIndex].isDefault = false
+        }
+    }
 
     func addEnrouteQR(item: IFlightInfoStorageModel) {
         let exists = self.enrouteQRDataArray.first(where: {$0.id == item.id});
@@ -376,11 +399,23 @@ class FlightNoteModelState: ObservableObject {
             self.enrouteQRDataArray.append(item)
         }
     }
+    
+    func updateEnroute(item: IFlightInfoStorageModel) {
+        if let matchingIndex = self.enrouteDataArray.firstIndex(where: {$0.id == item.id}) {
+            self.enrouteDataArray[matchingIndex].isDefault = false
+        }
+    }
 
     func addArrivalQR(item: IFlightInfoStorageModel) {
         let exists = self.arrivalQRDataArray.first(where: {$0.id == item.id});
         if exists == nil {
             self.arrivalQRDataArray.append(item)
+        }
+    }
+    
+    func updateArrival(item: IFlightInfoStorageModel) {
+        if let matchingIndex = self.arrivalDataArray.firstIndex(where: {$0.id == item.id}) {
+            self.arrivalDataArray[matchingIndex].isDefault = false
         }
     }
     
@@ -461,10 +496,11 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: departureDataStorage)
         else {
             departureDataArray = [
-                IFlightInfoStorageModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITagStorage(name: "Preflight")], isDefault: true),
-                IFlightInfoStorageModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITagStorage(name: "Departure")], isDefault: true),
-                IFlightInfoStorageModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITagStorage(name: "Dispatch")], isDefault: true),
-                IFlightInfoStorageModel(name: "Expected POB: 315", tags: [ITagStorage(name: "Dispatch")], isDefault: true)
+                IFlightInfoStorageModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITagStorage(name: "Dispatch")], isDefault: false),
+                IFlightInfoStorageModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITagStorage(name: "Airport")], isDefault: false),
+                IFlightInfoStorageModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITagStorage(name: "Dispatch")], isDefault: false),
+                IFlightInfoStorageModel(name: "Expected POB: 315", tags: [ITagStorage(name: "Dispatch")], isDefault: false),
+                IFlightInfoStorageModel(name: "Hills to the north of aerodrome", tags: [ITagStorage(name: "Terrain")], isDefault: false)
             ]
             return
         }
@@ -503,8 +539,7 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: enrouteDataStorage)
         else {
             enrouteDataArray = [
-                IFlightInfoStorageModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITagStorage(name: "Enroute")], isDefault: true),
-                IFlightInfoStorageModel(name: "Hills to the north of aerodrome", tags: [ITagStorage(name: "Terrain")], isDefault: true),
+                IFlightInfoStorageModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITagStorage(name: "ATC")], isDefault: false),
             ]
             return
         }
@@ -543,8 +578,8 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: arrivalDataStorage)
         else {
             arrivalDataArray = [
-                IFlightInfoStorageModel(name: "Birds in vicinity", tags: [ITagStorage(name: "Threats")], isDefault: true),
-                IFlightInfoStorageModel(name: "Any +TS expected to last 15mins", tags: [ITagStorage(name: "Weather")], isDefault: true)
+                IFlightInfoStorageModel(name: "Birds in vicinity", tags: [ITagStorage(name: "Environment")], isDefault: false),
+                IFlightInfoStorageModel(name: "Any +TS expected to last 15mins", tags: [ITagStorage(name: "Weather")], isDefault: false)
             ]
             return
         }

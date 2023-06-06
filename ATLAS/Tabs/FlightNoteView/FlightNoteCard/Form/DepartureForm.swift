@@ -15,6 +15,8 @@ struct DepartureForm: View {
     @Binding var tagList: [ITagStorage]
     @Binding var itemList: [IFlightInfoStorageModel]
     var resetData: () -> Void
+    @Binding var currentIndex: Int
+    var isShowTagBtn = true
     
     @State var selectedLine: ITag?
     @Namespace var lineAnimation
@@ -22,26 +24,28 @@ struct DepartureForm: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            VStack(spacing: 0) {
+            VStack {
                 TextField("Add Note", text: $textNote)
                 
                 HStack {
                     
-                    Button(action: {
-                        // check text empty or not
-                        if textNote != "" && !tagList.isEmpty {
-                            showSheet.toggle()
-                        }
-                    }, label: {
-                        Text("Add Tags")
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 16)
-                            .font(.custom("Inter-SemiBold", size: 16))
-                            .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
-                            .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
-                            .cornerRadius(12)
-                            .frame(alignment: .center)
-                    })
+                    if isShowTagBtn {
+                        Button(action: {
+                            // check text empty or not
+                            if textNote != "" && !tagList.isEmpty {
+                                showSheet.toggle()
+                            }
+                        }, label: {
+                            Text("Add Tags")
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 16)
+                                .font(.custom("Inter-SemiBold", size: 16))
+                                .foregroundColor((textNote != "" && !tagList.isEmpty) ? Color.theme.eerieBlack : .white)
+                                .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                                .cornerRadius(12)
+                                .frame(alignment: .center)
+                        })                        
+                    }
                     
                     Spacer()
                     
@@ -59,7 +63,13 @@ struct DepartureForm: View {
 //                    })
                     
                     Button(action: {
-                        self.save()
+                        if(textNote != "") {
+                            if currentIndex > -1 {
+                                self.update()
+                            } else {
+                                self.save()
+                            }
+                        }
                     }, label: {
                         Text("Save")
                             .padding(.vertical, 4)
@@ -71,8 +81,7 @@ struct DepartureForm: View {
                             .frame(alignment: .center)
                     })
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.padding(.horizontal, 16)
-                .padding(.vertical, 8)
+            }.padding(16)
                 .sheet(isPresented: $showSheet) {
                     // List categories
                     VStack(alignment: .leading, spacing: 0) {
@@ -107,6 +116,19 @@ struct DepartureForm: View {
                 }
         }.background(Color.white)
             .roundedCorner(16, corners: [.bottomLeft, .bottomRight])
+            .onChange(of: currentIndex) { newIndex in
+                if currentIndex > -1 {
+                    self.textNote = itemList[currentIndex].name
+                    
+                    if itemList[currentIndex].tags.count > 0 {
+                        for index in 0..<tagList.count {
+                            if itemList[currentIndex].tags.contains(where: {$0.name == tagList[index].name}) {
+                                tagList[index].isChecked = true
+                            }
+                        }
+                    }
+                }
+            }
     }
     
     func save() {
@@ -114,6 +136,14 @@ struct DepartureForm: View {
         let newItem = IFlightInfoStorageModel(name: textNote, tags: tags, isDefault: false)
         
         itemList.append(newItem)
+        
+        textNote = ""
+        self.resetData()
+    }
+    
+    func update() {
+        itemList[currentIndex].name = textNote
+        itemList[currentIndex].tags = tagList.filter { $0.isChecked }
         
         textNote = ""
         self.resetData()

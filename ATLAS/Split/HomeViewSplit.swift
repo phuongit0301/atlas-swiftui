@@ -14,7 +14,6 @@ struct HomeViewSplit: View {
 //
     var viewModel = ListFlightSplitModel()
     @EnvironmentObject var sideMenuState: SideMenuModelState
-//    @State private var currentScreen = NavigationScreen.flight
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,30 +23,32 @@ struct HomeViewSplit: View {
                 .padding(.bottom, 16)
             
             // flight informations
-            List (selection: $sideMenuState.selectedMenu) {
-                ForEach(viewModel.ListItem, id: \.self) { item in
-                    Section {
-                        if !item.subMenuItems.isEmpty {
-                            ForEach(item.subMenuItems, id: \.self) { row in
-                                NavigationLink(destination: getDestination(screen: item.screen ?? NavigationEnumeration.TableScreen, item: item, row: row)) {
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        Text(row.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16)).padding(.bottom, 5)
-
-                                        if row.description != nil {
-                                            Text(row.description ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 11))
+            NavigationStack {
+                List (selection: $sideMenuState.selectedMenu) {
+                    ForEach(viewModel.ListItem, id: \.self) { item in
+                        Section {
+                            if !item.subMenuItems.isEmpty {
+                                ForEach(item.subMenuItems, id: \.self) { row in
+                                    NavigationLink(destination: getDestination(screen: item.screen ?? NavigationEnumeration.TableScreen, item: item, row: row)) {
+                                        VStack(alignment: .leading, spacing: 0) {
+                                            Text(row.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16)).padding(.bottom, 5)
+                                            
+                                            if row.description != nil {
+                                                Text(row.description ?? "").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 11))
+                                            }
                                         }
                                     }
+                                    
                                 }
-
                             }
+                        } header: {
+                            Text(item.name)
+                                .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
+                            
                         }
-                    } header: {
-                        Text(item.name)
-                            .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
-
                     }
-                }
-            }.listStyle(.insetGrouped)
+                }.listStyle(.insetGrouped)
+            }
             
         }
         

@@ -75,34 +75,35 @@ struct AtlasSearchView: View {
                     if firstLoading {
                         HStack {
                             Spacer()
-                            
+
                             Button(action: {
                                 if txtSearch != "" {
                                     self.message = ""
                                     self.messageCount = 0
-                                    
+
                                     self.showLoading = true
                                     onSearch()
                                 }
                             }) {
-                                Text("Search")
-                                    .font(.custom("Inter-Regular", size: 16))
-                                    .foregroundColor(txtSearch != "" ? Color.white : Color.theme.eerieBlack)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(Color.theme.eerieBlack, lineWidth: 0)
+                                HStack {
+                                    Text("Search")
+                                        .font(.custom("Inter-Regular", size: 16))
+                                        .foregroundColor(txtSearch != "" ? Color.white : Color.theme.eerieBlack)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.theme.eerieBlack, lineWidth: 0)
                                         )
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 4)
-                                
-                                if showLoading {
-                                    ActivityIndicator(shouldAnimate: self.$showLoading)
-                                        .foregroundColor(Color.white)
-                                }
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+
+                                    if showLoading {
+                                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                                    }
+                                }.padding(.horizontal, 8)
                             }
                             .background(txtSearch != "" ? Color.theme.eerieBlack : Color.theme.chineseSilver)
                             .cornerRadius(12)
-                            .padding(.horizontal, 16)
+                            .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                             .disabled(self.showLoading)
                         }
@@ -120,9 +121,9 @@ struct AtlasSearchView: View {
                                     RoundedRectangle(cornerRadius: 0)
                                         .stroke(Color.theme.eerieBlack, lineWidth: 1)
                                 )
-                            
+
                             Rectangle().fill(Color.theme.lavender).frame(height: 8)
-                            
+
                             // icons and button bottom
                             HStack(alignment: .center) {
                                 Button(action: {
@@ -138,7 +139,7 @@ struct AtlasSearchView: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }
-                                
+
                                 Button(action: {
                                     if like == Status.dislike {
                                         self.like = Status.normal
@@ -152,7 +153,7 @@ struct AtlasSearchView: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }
-                                
+
                                 Button {
                                     self.flag.toggle()
                                 } label: {
@@ -162,14 +163,14 @@ struct AtlasSearchView: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }
-                                
+
                                 Spacer()
-                                
+
                                 Button(action: {
                                     if txtSearch != "" {
                                         self.message = ""
                                         self.messageCount = 0
-                                        
+
                                         self.showLoading = true
                                         onSearch()
                                     }
@@ -177,23 +178,23 @@ struct AtlasSearchView: View {
                                     Text("Regenerate Response")
                                         .font(.custom("Inter-Regular", size: 13))
                                         .foregroundColor(Color.theme.eerieBlack)
-                                        .padding(.horizontal, 16)
+                                        .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 12)
                                                 .stroke(Color.init(
                                                     Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 0)
                                         )
-                                    
+
                                     if showLoading {
                                         ActivityIndicator(shouldAnimate: self.$showLoading)
                                     }
                                 }.disabled(self.showLoading)
-                                    .padding(.horizontal, 16)
+                                    .padding(.horizontal, 8)
                                     .padding(.vertical, 4)
                                 .border(Color.init(
                                     Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), width: 1, cornerRadius: 12)
-                                
+
 //                                Button(action: {
 //                                    // To do: Handle button click
 //                                }) {
@@ -209,7 +210,7 @@ struct AtlasSearchView: View {
 //                                        )
 //                                }.background(Color.theme.tealDeer)
 //                                    .cornerRadius(12)
-                                
+
                             }
                         }
                     }
@@ -224,7 +225,6 @@ struct AtlasSearchView: View {
             
         }.padding(16)
         
-        Spacer()
     }
     
     func onSearch() {

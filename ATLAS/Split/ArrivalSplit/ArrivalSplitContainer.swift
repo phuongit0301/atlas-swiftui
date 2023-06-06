@@ -12,6 +12,8 @@ struct ArrivalSplitContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     @State var arrivalTags: [ITagStorage] = ArrivalTags().TagList
     
+    @State private var currentIndex: Int = -1
+    
     var geoWidth: Double = 0
     
     var body: some View {
@@ -37,7 +39,7 @@ struct ArrivalSplitContainer: View {
             if !viewModel.arrivalQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalQRDataArray) { item in
+                        ForEach(viewModel.arrivalQRDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -45,7 +47,7 @@ struct ArrivalSplitContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.arrivalQRDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
@@ -65,10 +67,11 @@ struct ArrivalSplitContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: item.isDefault))
+                                .listRowBackground(self.backgroundColor(for: viewModel.arrivalQRDataArray[index].isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemArrivalQR(item: item)
+                                        viewModel.updateArrival(item: viewModel.arrivalQRDataArray[index])
+                                        viewModel.removeItemArrivalQR(item: viewModel.arrivalQRDataArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -77,7 +80,7 @@ struct ArrivalSplitContainer: View {
                                     }.tint(Color.theme.alizarinCrimson)
                                     
                                     Button {
-                                        print("Muting conversation")
+                                        self.currentIndex = index
                                     } label: {
                                         Image(systemName: "square.and.pencil")
                                             .frame(width: 16, height: 16)
@@ -86,15 +89,15 @@ struct ArrivalSplitContainer: View {
                                     }
                                     .tint(Color.theme.eerieBlack)
                                     
-                                    Button {
-                                        print("Tag")
-                                    } label: {
-                                        Image(systemName: "tag.fill")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                    .tint(Color.theme.eerieBlack)
+//                                    Button {
+//                                        print("Tag")
+//                                    } label: {
+//                                        Image(systemName: "tag.fill")
+//                                            .frame(width: 16, height: 16)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    }
+//                                    .tint(Color.theme.eerieBlack)
                                 }
                         }.onMove(perform: move)
                     }.listStyle(.plain)
@@ -106,7 +109,12 @@ struct ArrivalSplitContainer: View {
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            ArrivalSplitForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalQRDataArray, resetData: self.resetData).frame(height: 98)
+            ArrivalSplitForm(
+                tagList: self.$arrivalTags,
+                itemList: $viewModel.arrivalQRDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            ).frame(height: 98)
             
             Spacer()
         }.padding()
@@ -119,6 +127,10 @@ struct ArrivalSplitContainer: View {
     
     private func resetData() {
         self.arrivalTags = ArrivalTags().TagList
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

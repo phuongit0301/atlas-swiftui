@@ -10,7 +10,9 @@ import SwiftUI
 
 struct EnrouteCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var enrouteTags: [ITagStorage] = EnrouteTags().TagList
+    @State var enrouteTags: [ITagStorage] = CommonTags().TagList
+    
+    @State private var currentIndex: Int = -1
     
     var geoWidth: Double = 0
     
@@ -19,7 +21,7 @@ struct EnrouteCardContainer: View {
             if !viewModel.enrouteDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteDataArray) { item in
+                        ForEach(viewModel.enrouteDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -27,13 +29,11 @@ struct EnrouteCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.enrouteDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
-                                        .lineLimit(1)
-                                        .fixedSize(horizontal: false, vertical: true)
                                     
-                                    ForEach(item.tags) { tag in
+                                    ForEach(viewModel.enrouteDataArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -49,11 +49,11 @@ struct EnrouteCardContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: item.isDefault))
+                                .listRowBackground(self.backgroundColor(for: viewModel.enrouteDataArray[index].isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    if !item.isDefault {
+                                    if !viewModel.enrouteDataArray[index].isDefault {
                                         Button(role: .destructive) {
-                                            viewModel.removeItemEnroute(item: item)
+                                            viewModel.removeItemEnroute(item: viewModel.enrouteDataArray[index])
                                         } label: {
                                             Image(systemName: "trash.fill")
                                                 .frame(width: 16, height: 16)
@@ -62,7 +62,7 @@ struct EnrouteCardContainer: View {
                                         }.tint(Color.theme.alizarinCrimson)
                                         
                                         Button {
-                                            print("Muting conversation")
+                                            self.currentIndex = index
                                         } label: {
                                             Image(systemName: "square.and.pencil")
                                                 .frame(width: 16, height: 16)
@@ -73,7 +73,8 @@ struct EnrouteCardContainer: View {
                                     }
                                     
                                     Button {
-                                        viewModel.addEnrouteQR(item: item)
+                                        viewModel.addEnrouteQR(item: viewModel.enrouteDataArray[index])
+                                        viewModel.enrouteDataArray[index].isDefault = true
                                     } label: {
                                         Image(systemName: "tag.fill")
                                             .frame(width: 16, height: 16)
@@ -86,12 +87,19 @@ struct EnrouteCardContainer: View {
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
                         .frame(height: CGFloat($viewModel.enrouteDataArray.count * 45))
+                        .padding(.bottom, 5)
                 }.layoutPriority(1)
+                    .background(Color.white)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$enrouteTags, itemList: $viewModel.enrouteDataArray, resetData: self.resetData).frame(height: 98)
+            DepartureForm(
+                tagList: self.$enrouteTags,
+                itemList: $viewModel.enrouteDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            ).frame(height: 98)
         }
     }
     
@@ -101,7 +109,11 @@ struct EnrouteCardContainer: View {
     }
     
     private func resetData() {
-        self.enrouteTags = EnrouteTags().TagList
+        self.enrouteTags = CommonTags().TagList
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

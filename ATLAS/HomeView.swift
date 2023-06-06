@@ -33,7 +33,7 @@ struct HomeView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 0) {
                         ForEach($modelState.tabs) { $item in
-                            NavigationLink(destination: FlightView()) {
+                            NavigationLink(destination: FlightView(currentTab: $item)) {
                                 if item.isShowTabbar {
                                     VStack(spacing: 0) {
                                         VStack(alignment: .center) {

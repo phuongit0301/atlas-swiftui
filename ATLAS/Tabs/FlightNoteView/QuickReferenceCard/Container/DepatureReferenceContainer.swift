@@ -10,9 +10,10 @@ import SwiftUI
 
 struct DepatureReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    
     @State var depTags: [ITagStorage] = []
-//    @State var depTags: [ITag] = DepartureTags().TagList
+    
+    @State private var currentIndex: Int = -1
+    
     var geoWidth: Double = 0
     
     var body: some View {
@@ -20,7 +21,7 @@ struct DepatureReferenceContainer: View {
             if !viewModel.departureQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRDataArray) { item in
+                        ForEach(viewModel.departureQRDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -28,7 +29,7 @@ struct DepatureReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.departureQRDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                         .lineLimit(1)
@@ -53,7 +54,8 @@ struct DepatureReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemDepartureQR(item: item)
+                                        viewModel.updateDeparture(item: viewModel.departureQRDataArray[index])
+                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRDataArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -62,7 +64,7 @@ struct DepatureReferenceContainer: View {
                                     }.tint(Color.theme.alizarinCrimson)
                                     
                                     Button {
-                                        print("Muting conversation")
+                                        self.currentIndex = index
                                     } label: {
                                         Image(systemName: "square.and.pencil")
                                             .frame(width: 16, height: 16)
@@ -71,15 +73,15 @@ struct DepatureReferenceContainer: View {
                                     }
                                     .tint(Color.theme.eerieBlack)
                                     
-                                    Button {
-                                        print("Tag")
-                                    } label: {
-                                        Image(systemName: "tag.fill")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                    .tint(Color.theme.eerieBlack)
+//                                    Button {
+//                                        print("Tag")
+//                                    } label: {
+//                                        Image(systemName: "tag.fill")
+//                                            .frame(width: 16, height: 16)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    }
+//                                    .tint(Color.theme.eerieBlack)
                                 }
                         }.onMove(perform: move)
                     }.listStyle(.plain)
@@ -90,7 +92,12 @@ struct DepatureReferenceContainer: View {
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$depTags, itemList: $viewModel.departureQRDataArray, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(
+                tagList: self.$depTags,
+                itemList: $viewModel.departureQRDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            ).frame(height: 98)
         }
     }
     
@@ -104,6 +111,10 @@ struct DepatureReferenceContainer: View {
     
     private func resetData() {
         self.depTags = DepartureTags().TagList
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

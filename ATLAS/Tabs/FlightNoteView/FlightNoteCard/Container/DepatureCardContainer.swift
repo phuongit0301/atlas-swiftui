@@ -10,7 +10,9 @@ import SwiftUI
 
 struct DepatureCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var depTags: [ITagStorage] = DepartureTags().TagList
+    @State var depTags: [ITagStorage] = CommonTags().TagList
+    
+    @State private var currentIndex: Int = -1
     
     var geoWidth: Double = 0
     
@@ -19,7 +21,7 @@ struct DepatureCardContainer: View {
             if !viewModel.departureDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureDataArray) { item in
+                        ForEach(viewModel.departureDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -27,13 +29,11 @@ struct DepatureCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.departureDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
-                                        .lineLimit(1)
-                                        .fixedSize(horizontal: false, vertical: true)
                                     
-                                    ForEach(item.tags) { tag in
+                                    ForEach(viewModel.departureDataArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -45,54 +45,62 @@ struct DepatureCardContainer: View {
                                             )
                                     }
                                 }
-                            }.padding(12)
-                                .frame(maxWidth: geoWidth, alignment: .leading)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: item.isDefault))
-                                .swipeActions(allowsFullSwipe: false) {
-                                    if !item.isDefault {
-                                        Button(role: .destructive) {
-                                            viewModel.removeItemDeparture(item: item)
-                                        } label: {
-                                            Image(systemName: "trash.fill")
-                                                .frame(width: 16, height: 16)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }.tint(Color.theme.alizarinCrimson)
-                                        
-                                        Button {
-                                            print("Muting conversation")
-                                        } label: {
-                                            Image(systemName: "square.and.pencil")
-                                                .frame(width: 16, height: 16)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }
-                                        .tint(Color.theme.eerieBlack)
-                                    }
+                            }
+                            .padding(12)
+                            .frame(maxWidth: geoWidth, alignment: .leading)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(self.backgroundColor(for: viewModel.departureDataArray[index].isDefault))
+                            .swipeActions(allowsFullSwipe: false) {
+                                if !viewModel.departureDataArray[index].isDefault {
+                                    Button(role: .destructive) {
+                                        viewModel.removeItemDeparture(item: viewModel.departureDataArray[index])
+                                    } label: {
+                                        Image(systemName: "trash.fill")
+                                            .frame(width: 16, height: 16)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }.tint(Color.theme.alizarinCrimson)
                                     
                                     Button {
-                                        viewModel.addDepartureQR(item: item)
+                                        self.currentIndex = index
                                     } label: {
-                                        Image(systemName: "tag.fill")
+                                        Image(systemName: "square.and.pencil")
                                             .frame(width: 16, height: 16)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     }
                                     .tint(Color.theme.eerieBlack)
                                 }
+                                
+                                Button {
+                                    viewModel.addDepartureQR(item: viewModel.departureDataArray[index])
+                                    viewModel.departureDataArray[index].isDefault = true
+                                } label: {
+                                    Image(systemName: "tag.fill")
+                                        .frame(width: 16, height: 16)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                .tint(Color.theme.eerieBlack)
+                            }
                         }.onMove(perform: move)
-                        
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
                         .frame(height: CGFloat(viewModel.departureDataArray.count * 45))
+                        .padding(.bottom, 5)
                 }.layoutPriority(1)
+                    .background(Color.white)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            DepartureForm(tagList: self.$depTags, itemList: $viewModel.departureDataArray, resetData: self.resetData).frame(height: 98)
+            DepartureForm(
+                tagList: self.$depTags,
+                itemList: $viewModel.departureDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            ).frame(height: 98)
         }
     }
     
@@ -102,7 +110,11 @@ struct DepatureCardContainer: View {
     }
     
     private func resetData() {
-        self.depTags = DepartureTags().TagList
+        self.depTags = CommonTags().TagList
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

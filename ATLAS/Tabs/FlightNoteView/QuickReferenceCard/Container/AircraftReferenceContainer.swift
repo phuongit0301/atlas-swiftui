@@ -12,6 +12,8 @@ struct AircraftReferenceContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     @State var aircraftTags: [ITagStorage] = []
     
+    @State private var currentIndex: Int = -1
+    
     var geoWidth: Double = 0
     
     var body: some View {
@@ -19,7 +21,7 @@ struct AircraftReferenceContainer: View {
             if !viewModel.aircraftQRDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftQRDataArray) { item in
+                        ForEach(viewModel.aircraftQRDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -27,7 +29,7 @@ struct AircraftReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.aircraftQRDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                 }
@@ -38,16 +40,16 @@ struct AircraftReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemAircraftQR(item: item)
+                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRDataArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     }.tint(Color.theme.alizarinCrimson)
-                                    
+
                                     Button {
-                                        print("Muting conversation")
+                                        self.currentIndex = index
                                     } label: {
                                         Image(systemName: "square.and.pencil")
                                             .frame(width: 16, height: 16)
@@ -56,27 +58,32 @@ struct AircraftReferenceContainer: View {
                                     }
                                     .tint(Color.theme.eerieBlack)
                                     
-                                    Button {
-                                        print("Tag")
-                                    } label: {
-                                        Image(systemName: "tag.fill")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                    .tint(Color.theme.eerieBlack)
+//                                    Button {
+//                                        print("Tag")
+//                                    } label: {
+//                                        Image(systemName: "tag.fill")
+//                                            .frame(width: 16, height: 16)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    }
+//                                    .tint(Color.theme.eerieBlack)
                                 }
                         }.onMove(perform: move)
-                        
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat($viewModel.aircraftQRDataArray.count * 47))
+                        .frame(height: CGFloat($viewModel.aircraftQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
             
-            QuickReferenceForm(tagList: self.$aircraftTags, itemList: $viewModel.aircraftQRDataArray, resetData: self.resetData).frame(height: 98)
+            QuickReferenceForm(
+                tagList: self.$aircraftTags,
+                itemList: $viewModel.aircraftQRDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            )
+            .frame(height: 98)
         }
     }
     
@@ -87,6 +94,10 @@ struct AircraftReferenceContainer: View {
     
     private func resetData() {
         self.aircraftTags = []
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {

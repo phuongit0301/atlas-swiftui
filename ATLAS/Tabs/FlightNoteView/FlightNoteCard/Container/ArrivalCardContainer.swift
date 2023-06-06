@@ -10,8 +10,10 @@ import SwiftUI
 
 struct ArrivalCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var arrivalTags: [ITagStorage] = ArrivalTags().TagList
-
+    @State var arrivalTags: [ITagStorage] = CommonTags().TagList
+    
+    @State private var currentIndex: Int = -1
+    
     var geoWidth: Double = 0
     
     var body: some View {
@@ -19,7 +21,7 @@ struct ArrivalCardContainer: View {
             if !viewModel.arrivalDataArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalDataArray) { item in
+                        ForEach(viewModel.arrivalDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -27,14 +29,12 @@ struct ArrivalCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(item.name)
+                                    Text(viewModel.arrivalDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
-                                        .lineLimit(1)
-                                        .fixedSize(horizontal: false, vertical: true)
                                     
                                     
-                                    ForEach(item.tags) { tag in
+                                    ForEach(viewModel.arrivalDataArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -50,11 +50,11 @@ struct ArrivalCardContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: item.isDefault))
+                                .listRowBackground(self.backgroundColor(for: viewModel.arrivalDataArray[index].isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    if !item.isDefault {
+                                    if !viewModel.arrivalDataArray[index].isDefault {
                                         Button(role: .destructive) {
-                                            viewModel.removeItemArrival(item: item)
+                                            viewModel.removeItemArrival(item: viewModel.arrivalDataArray[index])
                                         } label: {
                                             Image(systemName: "trash.fill")
                                                 .frame(width: 16, height: 16)
@@ -62,7 +62,7 @@ struct ArrivalCardContainer: View {
                                                 .aspectRatio(contentMode: .fit)
                                         }.tint(Color.theme.alizarinCrimson)
                                         Button {
-                                            print("Muting conversation")
+                                            self.currentIndex = index
                                         } label: {
                                             Image(systemName: "square.and.pencil")
                                                 .frame(width: 16, height: 16)
@@ -73,7 +73,8 @@ struct ArrivalCardContainer: View {
                                     }
                                     
                                     Button {
-                                        viewModel.addArrivalQR(item: item)
+                                        viewModel.addArrivalQR(item: viewModel.arrivalDataArray[index])
+                                        viewModel.arrivalDataArray[index].isDefault = true
                                     } label: {
                                         Image(systemName: "tag.fill")
                                             .frame(width: 16, height: 16)
@@ -86,12 +87,19 @@ struct ArrivalCardContainer: View {
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
                         .frame(height: CGFloat(viewModel.arrivalDataArray.count * 45))
+                        .padding(.bottom, 5)
                 }.layoutPriority(1)
+                    .background(Color.white)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }
 
-            DepartureForm(tagList: self.$arrivalTags, itemList: $viewModel.arrivalDataArray, resetData: self.resetData).frame(height: 98)
+            DepartureForm(
+                tagList: self.$arrivalTags,
+                itemList: $viewModel.arrivalDataArray,
+                resetData: self.resetData,
+                currentIndex: $currentIndex
+            ).frame(height: 98)
             
         }
     }
@@ -102,7 +110,11 @@ struct ArrivalCardContainer: View {
     }
     
     private func resetData() {
-        self.arrivalTags = ArrivalTags().TagList
+        self.arrivalTags = CommonTags().TagList
+        
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
     
     private func backgroundColor(for isDefault: Bool) -> Color {
