@@ -9,29 +9,41 @@ import Foundation
 import SwiftUI
 
 struct SummaryCardViewSlideOver: View {
+#if os(iOS)
+    @Environment(\.horizontalSizeClass) private var sizeClass
+//    @ObservedObject var apiManager = APIManager.shared
+    @ObservedObject var globalResponse = GlobalResponse.shared
+#endif
         
     var body: some View {
+        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
+        let projDelaysResponse = allAPIresponse["projDelays"]
+        let flightLevelResponse = allAPIresponse["flightLevel"]
+        let trackMilesResponse = allAPIresponse["trackMiles"]
+        let taxiResponse = allAPIresponse["taxi"]
+        let enrWXResponse = allAPIresponse["enrWX"]
+        
         // arrival delays
-        let fetchedDelays: [String: Any] = fetchProjArrivalDelays()
+        let fetchedDelays: [String: Any] = projDelaysResponse as! [String : Any]
         let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
         
         // taxi
-        let fetchedTimes: [String : [String : Any]] = fetchTaxi()
+        let fetchedTimes: [String : [String : Any]] = taxiResponse as! [String : [String : Any]]
         let threeFlightsTaxi = fetchedTimes["flights3"]!
         let aveDiffTaxi: Int = threeFlightsTaxi["aveDiff"] as! Int
         
         // track miles
-        let fetchedMiles: [String : [String : Any]] = fetchTrackMiles()
+        let fetchedMiles: [String : [String : Any]] = trackMilesResponse as! [String : [String : Any]]
         let threeFlightsMiles = fetchedMiles["flights3"]!
         let sumMINS: Int = threeFlightsMiles["sumMINS"] as! Int
         
         // enroute weather
-        let fetchedEnrWX: [String : [String : Any]] = fetchEnrWXTrackMiles()
+        let fetchedEnrWX: [String : [String : Any]] = enrWXResponse as! [String : [String : Any]]
         let threeFlightsEnrWX = fetchedEnrWX["flights3"]!
         let aveDiffEnrWX: Int = threeFlightsEnrWX["aveMINS"] as! Int
         
         // flight level
-        let fetchedLevels: [String : [String : Any]] = fetchFlightLevel()
+        let fetchedLevels: [String : [String : Any]] = flightLevelResponse as! [String : [String : Any]]
         let threeFlightsLevels = fetchedLevels["flights3"]!
         let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
         

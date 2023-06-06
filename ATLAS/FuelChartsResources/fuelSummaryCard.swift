@@ -9,29 +9,29 @@ import Foundation
 import SwiftUI
 
 struct SummaryCardView: View {
-        
+    let fetchedDelays: [String: Any]
+    let fetchedTimes: [String : [String : Any]]
+    let fetchedMiles: [String : [String : Any]]
+    let fetchedEnrWX: [String : [String : Any]]
+    let fetchedLevels: [String : [String : Any]]
+
     var body: some View {
         // arrival delays
-        let fetchedDelays: [String: Any] = fetchProjArrivalDelays()
         let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
         
         // taxi
-        let fetchedTimes: [String : [String : Any]] = fetchTaxi()
         let threeFlightsTaxi = fetchedTimes["flights3"]!
         let aveDiffTaxi: Int = threeFlightsTaxi["aveDiff"] as! Int
         
         // track miles
-        let fetchedMiles: [String : [String : Any]] = fetchTrackMiles()
         let threeFlightsMiles = fetchedMiles["flights3"]!
         let sumMINS: Int = threeFlightsMiles["sumMINS"] as! Int
         
         // enroute weather
-        let fetchedEnrWX: [String : [String : Any]] = fetchEnrWXTrackMiles()
         let threeFlightsEnrWX = fetchedEnrWX["flights3"]!
         let aveDiffEnrWX: Int = threeFlightsEnrWX["aveMINS"] as! Int
         
         // flight level
-        let fetchedLevels: [String : [String : Any]] = fetchFlightLevel()
         let threeFlightsLevels = fetchedLevels["flights3"]!
         let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
         
@@ -149,17 +149,3 @@ struct SummaryCardView: View {
     }
 }
 
-struct SummaryCardView_Previews: PreviewProvider {
-    
-    struct Preview: View {
-        var body: some View {
-            SummaryCardView()
-        }
-    }
-    
-    static var previews: some View {
-        NavigationStack {
-            Preview()
-        }
-    }
-}
