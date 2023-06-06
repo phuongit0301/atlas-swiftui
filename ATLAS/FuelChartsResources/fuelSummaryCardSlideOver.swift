@@ -1,0 +1,167 @@
+//
+//  fuelSummaryCardSlideOver.swift
+//  ATLAS
+//
+//  Created by Muhammad Adil on 6/6/23.
+//
+
+import Foundation
+import SwiftUI
+
+struct SummaryCardViewSlideOver: View {
+        
+    var body: some View {
+        // arrival delays
+        let fetchedDelays: [String: Any] = fetchProjArrivalDelays()
+        let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
+        
+        // taxi
+        let fetchedTimes: [String : [String : Any]] = fetchTaxi()
+        let threeFlightsTaxi = fetchedTimes["flights3"]!
+        let aveDiffTaxi: Int = threeFlightsTaxi["aveDiff"] as! Int
+        
+        // track miles
+        let fetchedMiles: [String : [String : Any]] = fetchTrackMiles()
+        let threeFlightsMiles = fetchedMiles["flights3"]!
+        let sumMINS: Int = threeFlightsMiles["sumMINS"] as! Int
+        
+        // enroute weather
+        let fetchedEnrWX: [String : [String : Any]] = fetchEnrWXTrackMiles()
+        let threeFlightsEnrWX = fetchedEnrWX["flights3"]!
+        let aveDiffEnrWX: Int = threeFlightsEnrWX["aveMINS"] as! Int
+        
+        // flight level
+        let fetchedLevels: [String : [String : Any]] = fetchFlightLevel()
+        let threeFlightsLevels = fetchedLevels["flights3"]!
+        let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
+        
+        let extraFuel = projDelay + aveDiffTaxi + sumMINS + aveDiffEnrWX
+        
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                Text("Extra fuel requirement")
+                  .font(.title2)
+                  .foregroundColor(.blue)
+                  .fontWeight(.regular)
+                Text("Aggregate extra fuel requirement in mins")
+                  .font(.subheadline)
+                  .fontWeight(.light)
+                if (extraFuel < 0) {
+                    let savings = extraFuel * -1
+                    Text("0 mins")
+                      .font(.largeTitle)
+                      .fontWeight(.semibold)
+                      .padding(.top, 1)
+                    Text("Fuel savings of \(savings) mins expected")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                } else {
+                    Text("+\(extraFuel.formatted()) mins")
+                      .font(.largeTitle)
+                      .fontWeight(.semibold)
+                      .padding(.top, 1)
+                }
+                
+            }
+            .padding()
+            Divider()
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    Text("+\(projDelay.formatted()) mins")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    Text("Projected arrival delay")
+                        .font(.callout)
+                        .fontWeight(.regular)
+                        .padding(.top, 1)
+                }
+                .padding()
+                VStack(alignment: .leading) {
+                    if (aveDiffTaxi < 0) {
+                        Text("\(aveDiffTaxi.formatted()) mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("+\(aveDiffTaxi.formatted()) mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    Text("Actual minus plan taxi time")
+                        .font(.callout)
+                        .fontWeight(.regular)
+                        .padding(.top, 1)
+                }
+                .padding()
+                VStack(alignment: .leading) {
+                    if (sumMINS < 0) {
+                        Text("\(sumMINS.formatted()) mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("0 mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    Text("Expected track shortening")
+                        .font(.callout)
+                        .fontWeight(.regular)
+                        .padding(.top, 1)
+                }
+                .padding()
+                VStack(alignment: .leading) {
+                    if (aveDiffEnrWX < 0) {
+                        Text("0 mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("+\(aveDiffEnrWX.formatted()) mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    Text("Enroute weather deviation")
+                        .font(.callout)
+                        .fontWeight(.regular)
+                        .padding(.top, 1)
+                }
+                .padding()
+                VStack(alignment: .leading) {
+                    if (aveDiffLevels < 0) {
+                        Text("\(aveDiffLevels.formatted()) ft")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("+\(aveDiffLevels.formatted()) ft")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    Text("Actual minus plan flight level")
+                        .font(.callout)
+                        .fontWeight(.regular)
+                        .padding(.top, 1)
+                }
+                .padding()
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .navigationTitle("Fuel Summary")
+        .background()
+    }
+}
+
+struct SummaryCardViewSlideOver_Previews: PreviewProvider {
+    
+    struct Preview: View {
+        var body: some View {
+            SummaryCardViewSlideOver()
+        }
+    }
+    
+    static var previews: some View {
+        NavigationStack {
+            Preview()
+        }
+        .previewDevice("iPhone 14")
+    }
+}
+
