@@ -1,37 +1,49 @@
 //
-//  SummaryCard.swift
+//  fuelSummaryCardSlideOver.swift
 //  ATLAS
 //
-//  Created by Muhammad Adil on 26/5/23.
+//  Created by Muhammad Adil on 6/6/23.
 //
 
 import Foundation
 import SwiftUI
 
-struct SummaryCardView: View {
-    let fetchedDelays: [String: Any]
-    let fetchedTimes: [String : [String : Any]]
-    let fetchedMiles: [String : [String : Any]]
-    let fetchedEnrWX: [String : [String : Any]]
-    let fetchedLevels: [String : [String : Any]]
-
+struct SummaryCardViewSlideOver: View {
+#if os(iOS)
+    @Environment(\.horizontalSizeClass) private var sizeClass
+//    @ObservedObject var apiManager = APIManager.shared
+    @ObservedObject var globalResponse = GlobalResponse.shared
+#endif
+        
     var body: some View {
+        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
+        let projDelaysResponse = allAPIresponse["projDelays"]
+        let flightLevelResponse = allAPIresponse["flightLevel"]
+        let trackMilesResponse = allAPIresponse["trackMiles"]
+        let taxiResponse = allAPIresponse["taxi"]
+        let enrWXResponse = allAPIresponse["enrWX"]
+        
         // arrival delays
+        let fetchedDelays: [String: Any] = projDelaysResponse as! [String : Any]
         let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
         
         // taxi
+        let fetchedTimes: [String : [String : Any]] = taxiResponse as! [String : [String : Any]]
         let threeFlightsTaxi = fetchedTimes["flights3"]!
         let aveDiffTaxi: Int = threeFlightsTaxi["aveDiff"] as! Int
         
         // track miles
+        let fetchedMiles: [String : [String : Any]] = trackMilesResponse as! [String : [String : Any]]
         let threeFlightsMiles = fetchedMiles["flights3"]!
         let sumMINS: Int = threeFlightsMiles["sumMINS"] as! Int
         
         // enroute weather
+        let fetchedEnrWX: [String : [String : Any]] = enrWXResponse as! [String : [String : Any]]
         let threeFlightsEnrWX = fetchedEnrWX["flights3"]!
         let aveDiffEnrWX: Int = threeFlightsEnrWX["aveMINS"] as! Int
         
         // flight level
+        let fetchedLevels: [String : [String : Any]] = flightLevelResponse as! [String : [String : Any]]
         let threeFlightsLevels = fetchedLevels["flights3"]!
         let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
         
@@ -65,7 +77,7 @@ struct SummaryCardView: View {
             }
             .padding()
             Divider()
-            HStack(alignment: .top) {
+            VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
                     Text("+\(projDelay.formatted()) mins")
                         .font(.title2)
@@ -144,8 +156,24 @@ struct SummaryCardView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .navigationTitle("Summary Card")
+        .navigationTitle("Fuel Summary")
         .background()
+    }
+}
+
+struct SummaryCardViewSlideOver_Previews: PreviewProvider {
+    
+    struct Preview: View {
+        var body: some View {
+            SummaryCardViewSlideOver()
+        }
+    }
+    
+    static var previews: some View {
+        NavigationStack {
+            Preview()
+        }
+        .previewDevice("iPhone 14")
     }
 }
 

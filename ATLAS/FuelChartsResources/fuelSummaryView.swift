@@ -30,7 +30,7 @@ struct SummaryView: View {
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
                 VStack(spacing: 16) {
-                    summaryCard
+                    SummaryCardView(fetchedDelays: projDelaysResponse as! [String : Any], fetchedTimes: taxiResponse as! [String : [String : Any]], fetchedMiles: trackMilesResponse as! [String : [String : Any]], fetchedEnrWX: enrWXResponse as! [String : [String : Any]], fetchedLevels: flightLevelResponse as! [String : [String : Any]])
                         .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                         .fixedSize(horizontal: false, vertical: true)
                         .padding([.horizontal, .top], 12)
@@ -78,9 +78,9 @@ struct SummaryView: View {
     }
     // MARK: - Cards
     
-    var summaryCard: some View {
-        SummaryCardView()
-    }
+//    var summaryCard: some View {
+//        SummaryCardView(fetchedDelays: projDelaysResponse, fetchedTimes: taxiResponse, fetchedMiles: trackMilesResponse, fetchedEnrWX: enrWXResponse, fetchedLevels: flightLevelResponse)
+//    }
     
 }
 
