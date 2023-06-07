@@ -86,7 +86,6 @@ struct EnrouteReferenceContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.enrouteQRDataArray.count * 45))
                 }.layoutPriority(1)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)

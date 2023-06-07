@@ -33,9 +33,35 @@ struct HomeView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 0) {
                         ForEach($modelState.tabs) { $item in
-                            NavigationLink(destination: FlightView(currentTab: $item)) {
-                                if item.isShowTabbar {
-                                    VStack(spacing: 0) {
+                            if item.isExternal {
+                                VStack(alignment: .center, spacing: 0) {
+                                    VStack(alignment: .center) {
+                                        Image(systemName: item.iconName)
+                                            .foregroundColor(Color.theme.eerieBlack)
+                                            .frame(width: 32, height: 34)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }.frame(width: 60, height: 60, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
+                                    
+                                    Text(item.name).foregroundColor(Color.theme.eerieBlack).padding(.vertical, 5).font(.custom("Inter-Regular", size: 13))
+                                    
+                                    Image(systemName: "pip.exit")
+                                        .foregroundColor(Color.black)
+                                        .frame(width: 22, height: 17)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }.onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        if let url = URL(string: "freeform://") {
+                                            if UIApplication.shared.canOpenURL(url) {
+                                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                NavigationLink(destination: FlightView(selectedTab: item)) {
+                                    VStack(alignment: .center, spacing: 0) {
                                         VStack(alignment: .center) {
                                             Image(systemName: item.iconName)
                                                 .foregroundColor(Color.theme.eerieBlack)
@@ -45,17 +71,9 @@ struct HomeView: View {
                                         }.frame(width: 60, height: 60, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                                         
                                         Text(item.name).foregroundColor(Color.theme.eerieBlack).padding(.vertical, 5).font(.custom("Inter-Regular", size: 13))
-                                        
-                                        if item.isExternal {
-                                            Image(systemName: "pip.exit")
-                                                .frame(width: 22, height: 17)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.trailing, 10)
-                                        }
                                     }
-                                }
-                            }.navigationBarBackButtonHidden(true)
+                                }.navigationBarBackButtonHidden(true)
+                            }
                         }.padding()
                     }
                 }

@@ -45,7 +45,8 @@ struct ATLASApp: App {
                         await apiManager.makePostRequest()
                     }
                 }
-        }.handlesExternalEvents(
+        }
+        .handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )
     }

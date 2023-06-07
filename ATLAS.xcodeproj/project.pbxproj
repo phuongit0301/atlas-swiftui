@@ -113,6 +113,7 @@
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
+		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
 		C5F9C81E2A14F3E00076396F /* customClassesPdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */; };
@@ -242,6 +243,7 @@
 		3ED754822A11E1BD003072A1 /* ATLASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATLASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED754862A11E1BD003072A1 /* ATLASUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITests.swift; sourceTree = "<group>"; };
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClassesPdf.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				3E7F68452A20B60E00EC2CA3 /* CustomSegmentedControl.swift */,
 				3E3FCC272A263392008017FA /* ActivityIndicator.swift */,
 				3E3FCC5A2A2D6284008017FA /* Storage.swift */,
+				3EF93D4F2A3025550043E91E /* MeasureSize.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
+				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3E3FCC182A24FEB3008017FA /* EnrouteSplitForm.swift in Sources */,
 				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
 				3E3FCC432A270851008017FA /* historicalDelaysView.swift in Sources */,

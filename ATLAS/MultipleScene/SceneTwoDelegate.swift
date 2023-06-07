@@ -31,7 +31,6 @@ final class SceneTwoDelegate: UIResponder, UIWindowSceneDelegate {
       .environment(\.sceneSession, session)
     let window = UIWindow(windowScene: windowScene)
     window.rootViewController = UIHostingController(rootView: contentView)
-    window.makeKeyAndVisible()
     self.window = window
   }
 }

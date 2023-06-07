@@ -70,7 +70,6 @@ struct AircraftStatusContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                     .listRowBackground(Color.white)
-                    .frame(height: CGFloat($viewModel.aircraftDataArray.count * 45))
                     .padding(.bottom, 5)
                 }.layoutPriority(1)
                     .background(Color.white)

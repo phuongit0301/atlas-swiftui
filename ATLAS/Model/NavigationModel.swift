@@ -13,13 +13,17 @@ enum NavigationEnumeration {
     case FlightScreen
     case OverviewScreen
     case NoteScreen
-    case FightPlanScreen
+    case FlightPlanScreen
     case AirCraftScreen
     case DepartureScreen
     case EnrouteScreen
     case ArrivalScreen
     case AtlasSearchScreen
     case TableScreen // For split screen
+    case FuelScreen
+    case ChartScreen
+    case WeatherScreen
+    case ReportingScreen
 }
 
 struct ITabs: Identifiable, Hashable {
@@ -29,6 +33,22 @@ struct ITabs: Identifiable, Hashable {
     var isExternal: Bool = false
     var isShowTabbar: Bool = false // for Overview, it won't display on Tabbar
     var screenName: NavigationEnumeration
+    var isDefault = false
+}
+
+struct DataTabs {
+    let Data = {
+        return [
+            ITabs(name: "Overview", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen, isDefault: false),
+            ITabs(name: "Flight Notes", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightScreen, isDefault: true),
+            ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanScreen,  isDefault: false),
+            ITabs(name: "Fuel", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FuelScreen, isDefault: false),
+            ITabs(name: "Charts", iconName: "map", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false),
+            ITabs(name: "Weather", iconName: "sun.max", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.WeatherScreen, isDefault: false),
+            ITabs(name: "Atlas Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.AtlasSearchScreen, isDefault: false),
+            ITabs(name: "Reporting", iconName: "rectangle.stack", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen, isDefault: false),
+        ]
+    }()
 }
 
 class TabModelState: ObservableObject {
@@ -38,18 +58,9 @@ class TabModelState: ObservableObject {
     
     init() {
         self.selectedNav = NavigationEnumeration.FlightScreen
-        self.tabs = [
-            ITabs(name: "Overview", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: false, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Flight Notes", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightScreen),
-            ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Fuel", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Charts", iconName: "map", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Weather", iconName: "sun.max", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Atlas Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-            ITabs(name: "Reporting", iconName: "rectangle.stack", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen),
-        ]
-        
-        self.selectedTab = ITabs(name: "Overview", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: false, screenName: NavigationEnumeration.OverviewScreen)
+        self.tabs = DataTabs().Data
+        self.selectedTab = DataTabs().Data[1]
+
     }
 }
 

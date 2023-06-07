@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FlightView: View {
-    @State private var currentTab: ITabs
-    @State private var selectedTab: Int = 1
+    @State var selectedTab: ITabs
     @EnvironmentObject var sideMenuState: SideMenuModelState
     @EnvironmentObject var modelState: TabModelState
     
@@ -31,13 +30,13 @@ struct FlightView: View {
             GeometryReader { geo in
                 VStack(alignment: .leading, spacing: 0) {
                     // Tabs
-                    TabbarScrollable(tabbarItems: [ "Flight Notes", "Fuel", "Atlas Search", "Flight Plan", "Charts", "Weather" ], selectedIndex: $selectedTab).previewDisplayName("TabBarView")
+                    TabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("TabBarView")
                     
                     Rectangle().fill(Color.theme.cultured).frame(height: 8)
                     Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                     Rectangle().fill(Color.theme.cultured).frame(height: 8)
                     
-                    TabView(selection: $selectedTab,
+                    TabView(selection: $modelState.selectedTab.screenName,
                             content: {
                         //                    OverviewView()
                         //                        .tag(0)
@@ -45,41 +44,41 @@ struct FlightView: View {
                         //                        .toolbar(.hidden, for: .tabBar)
                         //                        .ignoresSafeArea()
                         FlightNoteView(geoWidth: geo.size.width)
-                            .tag(0)
+                            .tag(NavigationEnumeration.FlightScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color.theme.cultured)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
                         FuelView()
-                            .tag(1)
+                            .tag(NavigationEnumeration.FuelScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
                         AtlasSearchView()
-                            .tag(2)
+                            .tag(NavigationEnumeration.AtlasSearchScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
                         FlightPlanView()
-                            .tag(3)
+                            .tag(NavigationEnumeration.FlightPlanScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
                         ChartView()
-                            .tag(4)
+                            .tag(NavigationEnumeration.ChartScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
                         WeatherView()
-                            .tag(5)
+                            .tag(NavigationEnumeration.WeatherScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
-                        //                    ReportingView()
-                        //                        .tag(7)
-                        //                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        //                        .toolbar(.hidden, for: .tabBar)
-                        //                        .ignoresSafeArea()
+                        ReportingView()
+                            .tag(NavigationEnumeration.ReportingScreen)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .toolbar(.hidden, for: .tabBar)
+                            .ignoresSafeArea()
                     }).id("Parent-TabView")
                     //                    .navigationBarHidden(true)
                     //                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -90,6 +89,9 @@ struct FlightView: View {
                 .ignoresSafeArea()
             }
         }.background(Color.theme.cultured)
+            .onAppear {
+                modelState.selectedTab = selectedTab
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {

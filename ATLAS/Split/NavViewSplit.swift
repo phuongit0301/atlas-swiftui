@@ -24,7 +24,7 @@ struct NavViewSplit: View {
             }.padding(16)
 
             if currentScreen == .FlightScreen {
-                FlightView()
+//                FlightView()
             } else {
                 HomeViewSplit()
             }

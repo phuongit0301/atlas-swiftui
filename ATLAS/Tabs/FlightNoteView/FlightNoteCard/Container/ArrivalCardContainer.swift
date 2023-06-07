@@ -86,7 +86,6 @@ struct ArrivalCardContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat(viewModel.arrivalDataArray.count * 45))
                         .padding(.bottom, 5)
                 }.layoutPriority(1)
                     .background(Color.white)

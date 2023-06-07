@@ -9,36 +9,38 @@ import Foundation
 import SwiftUI
 
 struct TabbarScrollable: View {
-    var tabbarItems: [String]
+    var tabbarItems: [ITabs]
     @Namespace private var menuItemTransition
-    @Binding var selectedIndex: Int
+    @Binding var selectedTab: ITabs
  
     var body: some View {
         ScrollViewReader { scrollView in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(tabbarItems.indices, id: \.self) { index in
-                        TabbarItem(name: tabbarItems[index], isActive: selectedIndex == index, namespace: menuItemTransition)
-                            .onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    if (tabbarItems[index] == "Charts" || tabbarItems[index] == "Weather") {
-                                        if let url = URL(string: "freeform://") {
-                                            if UIApplication.shared.canOpenURL(url) {
-                                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    ForEach(tabbarItems, id: \.self) { item in
+                        if item.isShowTabbar {
+                            TabbarItem(item: item, isActive: item.id == selectedTab.id, namespace: menuItemTransition)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        if (item.isExternal) {
+                                            if let url = URL(string: "freeform://") {
+                                                if UIApplication.shared.canOpenURL(url) {
+                                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                                }
                                             }
+                                        } else {
+                                            selectedTab = item
                                         }
-                                    } else {
-                                        selectedIndex = index
                                     }
                                 }
-                            }
+                        }
                     }
                 }
             }
             .padding(.horizontal, 16)
-            .onChange(of: selectedIndex) { index in
+            .onChange(of: selectedTab) { newItem in
                 withAnimation {
-                    scrollView.scrollTo(index, anchor: .center)
+                    scrollView.scrollTo(newItem, anchor: .center)
                 }
             }
         }
@@ -47,47 +49,47 @@ struct TabbarScrollable: View {
 }
 
 struct TabbarItem: View {
-    var name: String
+    var item: ITabs
     var isActive: Bool = false
     let namespace: Namespace.ID
  
     var body: some View {
         if isActive {
             HStack {
-                Text(name)
+                Text(item.name)
                     .font(.custom("Inter-SemiBold", size: 13))
                     .fontWeight(.semibold)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                     .foregroundColor(Color.theme.eerieBlack)
                     .background(Color.theme.aeroBlue)
                     .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
                     .cornerRadius(8)
                 
-                if name == "Charts" || name == "Weather" {
+                if item.isExternal {
                     Image(systemName: "pip.exit")
                         .foregroundColor(Color.theme.eerieBlack)
                         .frame(width: 14, height: 16)
                         .scaledToFit()
                         .aspectRatio(contentMode: .fit)
                 }
-            }
+            }.padding(.horizontal, 8)
         } else {
             HStack {
-                Text(name)
+                Text(item.name)
                     .font(.custom("Inter-Regular", size: 13))
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                     .foregroundColor(Color.theme.eerieBlack)
                 
-                if name == "Charts" || name == "Weather" {
+                if item.isExternal {
                     Image(systemName: "pip.exit")
                         .foregroundColor(Color.theme.eerieBlack)
                         .frame(width: 14, height: 16)
                         .scaledToFit()
                         .aspectRatio(contentMode: .fit)
                 }
-            }
+            }.padding(.horizontal, 8)
         }
  
     }
