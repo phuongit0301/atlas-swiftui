@@ -86,10 +86,8 @@ struct EnrouteCardContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
-                        .frame(height: CGFloat($viewModel.enrouteDataArray.count * 45))
                         .padding(.bottom, 5)
-                }.layoutPriority(1)
-                    .background(Color.white)
+                }.background(Color.white)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }

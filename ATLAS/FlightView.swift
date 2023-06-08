@@ -38,11 +38,11 @@ struct FlightView: View {
                     
                     TabView(selection: $modelState.selectedTab.screenName,
                             content: {
-                        //                    OverviewView()
-                        //                        .tag(0)
-                        //                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        //                        .toolbar(.hidden, for: .tabBar)
-                        //                        .ignoresSafeArea()
+                        OverviewView()
+                            .tag(NavigationEnumeration.OverviewScreen)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .toolbar(.hidden, for: .tabBar)
+                            .ignoresSafeArea()
                         FlightNoteView(geoWidth: geo.size.width)
                             .tag(NavigationEnumeration.FlightScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)

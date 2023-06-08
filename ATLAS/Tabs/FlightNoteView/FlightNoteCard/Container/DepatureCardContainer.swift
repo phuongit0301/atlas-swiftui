@@ -88,8 +88,7 @@ struct DepatureCardContainer: View {
                     }.listStyle(.plain)
                         .listRowBackground(Color.theme.champagne)
                         .padding(.bottom, 5)
-                }.layoutPriority(1)
-                    .background(Color.white)
+                }.background(Color.white)
                 // end list
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)
             }

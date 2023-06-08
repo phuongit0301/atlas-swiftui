@@ -78,6 +78,7 @@ struct MainView: View {
                 VStack(spacing: 0) {
                     if verticalSizeClass == .regular && horizontalSizeClass == .compact {
                         HomeViewSplit()
+                        BottomTabs()
                     } else {
                         HomeView()
                     }
@@ -125,12 +126,7 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
     var body: some View {
-        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-            MainView()
-            BottomTabs()
-        } else {
-            MainView()
-        }
+        MainView()
     }
 }
 

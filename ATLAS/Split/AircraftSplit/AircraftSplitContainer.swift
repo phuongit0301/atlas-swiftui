@@ -91,9 +91,7 @@ struct AircraftSplitContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.aircraftQRDataArray.count * 45))
-                    
-                }.layoutPriority(1)
+                }.background(Color.white)
                 // end list
                 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)

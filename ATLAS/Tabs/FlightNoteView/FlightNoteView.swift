@@ -28,6 +28,7 @@ struct FlightNoteView: View {
             Rectangle().fill(Color.theme.cultured).frame(height: 8)
             // Quick Reference
             QuickReferenceCard(geoWidth: geoWidth, viewModel: viewModelState)
+            Rectangle().fill(Color.theme.cultured).frame(height: 30)
             Spacer()
         }.padding(.horizontal, 16)
     }

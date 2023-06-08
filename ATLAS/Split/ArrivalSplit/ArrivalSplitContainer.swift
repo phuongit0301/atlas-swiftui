@@ -102,8 +102,7 @@ struct ArrivalSplitContainer: View {
                         }.onMove(perform: move)
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
-                        .frame(height: CGFloat(viewModel.arrivalQRDataArray.count * 45))
-                }.layoutPriority(1)
+                }.background(Color.white)
                 // end list
 
                 Rectangle().fill(Color.theme.lightGray).frame(height: 1)

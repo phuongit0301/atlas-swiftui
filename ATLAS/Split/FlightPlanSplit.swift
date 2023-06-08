@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteDetailSplit: View {
+struct FlightPlanSplit: View {
     @State private var textRouting: String = ""
     private let pasteboard = UIPasteboard.general
     
