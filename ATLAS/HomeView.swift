@@ -54,7 +54,8 @@ struct HomeView: View {
                                                 .aspectRatio(contentMode: .fit)
                                         }.onTapGesture {
                                             withAnimation(.easeInOut) {
-                                                if let url = URL(string: "freeform://") {
+                                                let url = item.name == "Weather" ? "ewas://" : "jdmpro.jeppesen://"
+                                                if let url = URL(string: url) {
                                                     if UIApplication.shared.canOpenURL(url) {
                                                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                                     }

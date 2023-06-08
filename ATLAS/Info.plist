@@ -17,7 +17,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>itms-apps</string>
+				<string>jdmpro.jeppesen</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,7 +35,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>AviatorSdk</string>
+				<string>ewas</string>
 			</array>
 		</dict>
 		<dict>
@@ -60,9 +60,9 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>prefs</string>
-		<string>itms-apps</string>
+		<string>jdmpro.jeppesen</string>
 		<string>App-Prefs</string>
-		<string>AviatorSdk</string>
+		<string>ewas</string>
 		<string>freeform</string>
 		<string>atlas</string>
 	</array>

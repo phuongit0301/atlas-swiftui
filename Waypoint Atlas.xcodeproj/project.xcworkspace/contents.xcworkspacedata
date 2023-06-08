@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/phuongphan/Working/Swift/Atlas/ATLAS/Waypoint Atlas.xcodeproj">
    </FileRef>
 </Workspace>
