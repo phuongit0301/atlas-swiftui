@@ -112,7 +112,7 @@ struct FlightPlanSplit: View {
                         
                         Rectangle().fill(Color.theme.cultured).frame(height: 16)
                         
-                        TextField("Routing", text: $textRouting, axis: .vertical)
+                        TextField("", text: $textRouting, axis: .vertical)
                             .frame(height: 300, alignment: .leading)
                             .padding()
                             .background(Color.white)

@@ -59,7 +59,7 @@ struct TypeWriterText: View, Animatable {
                 .foregroundColor(Color.theme.eerieBlack)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
-        }.frame(maxWidth: .infinity, maxHeight: 200)
+        }.frame(maxWidth: .infinity, maxHeight: 300)
     }
 }
 //

@@ -8,18 +8,33 @@
 import Foundation
 import SwiftUI
 
+class SearchModelSplitState: ObservableObject {
+    @Published var textSearch: String
+    @Published var message: String
+    @Published var messageCount: Int
+    @Published var firstLoading: Bool
+    
+    init() {
+        self.textSearch = ""
+        self.message = ""
+        self.messageCount = 0
+        self.firstLoading = true
+    }
+}
+
 struct AtlasSearchSplit: View {
     @EnvironmentObject var network: Network
     
     @State private var like = Status.normal
     @State private var flag: Bool = false
     @State private var showLoading: Bool = false
-    @State private var firstLoading: Bool = true
     // For Search
-    @State private var txtSearch: String = ""
-
-    @State private var message = ""
-    @State private var messageCount = 0
+    @EnvironmentObject var searchModel: SearchModelSplitState
+    
+//    @State private var txtSearch: String = ""
+//
+//    @State private var message = ""
+//    @State private var messageCount = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -37,15 +52,15 @@ struct AtlasSearchSplit: View {
                             .scaledToFit()
                             .aspectRatio(contentMode: .fit)
                         
-                        TextField("Search", text: $txtSearch, onCommit: onSearch)
+                        TextField("Search", text: $searchModel.textSearch, onCommit: onSearch)
                             .font(.custom("Inter-Regular", size: 16))
                             .padding(13)
                             .frame(maxWidth: .infinity, maxHeight: 48)
                         
-                        if !firstLoading {
+                        if !searchModel.firstLoading {
                             Button(action: {
-                                self.message = ""
-                                self.messageCount = 0
+                                searchModel.message = ""
+                                searchModel.messageCount = 0
                                 
                                 self.showLoading = true
                                 onSearch()
@@ -71,14 +86,14 @@ struct AtlasSearchSplit: View {
                 
                 Rectangle().fill(Color.theme.lavender).frame(height: 8)
                 
-                if firstLoading {
+                if searchModel.firstLoading {
                     HStack {
                         Spacer()
                         
                         Button(action: {
-                            if txtSearch != "" {
-                                self.message = ""
-                                self.messageCount = 0
+                            if searchModel.textSearch != "" {
+                                searchModel.message = ""
+                                searchModel.messageCount = 0
                                 
                                 self.showLoading = true
                                 onSearch()
@@ -87,7 +102,7 @@ struct AtlasSearchSplit: View {
                             HStack {
                                 Text("Search")
                                     .font(.custom("Inter-Regular", size: 16))
-                                    .foregroundColor(txtSearch != "" ? Color.white : Color.theme.eerieBlack)
+                                    .foregroundColor(searchModel.textSearch != "" ? Color.white : Color.theme.eerieBlack)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 12)
                                             .stroke(Color.theme.eerieBlack, lineWidth: 0)
@@ -100,7 +115,7 @@ struct AtlasSearchSplit: View {
                                 }
                             }.padding(.horizontal, 8)
                         }
-                        .background(txtSearch != "" ? Color.theme.eerieBlack : Color.theme.chineseSilver)
+                        .background(searchModel.textSearch != "" ? Color.theme.eerieBlack : Color.theme.chineseSilver)
                         .cornerRadius(12)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 4)
@@ -108,10 +123,10 @@ struct AtlasSearchSplit: View {
                     }
                 }
                 
-                if txtSearch != "" && !firstLoading {
+                if searchModel.textSearch != "" && !searchModel.firstLoading {
                     VStack(spacing: 0) {
                         HStack {
-                            TypeWriterText(string: message, count: messageCount)
+                            TypeWriterText(string: searchModel.message, count: searchModel.messageCount)
                                .frame(maxWidth: .infinity, alignment: .leading)
                         }.background(.white)
                         .overlay(
@@ -164,9 +179,9 @@ struct AtlasSearchSplit: View {
                             Spacer()
                             
                             Button(action: {
-                                if txtSearch != "" {
-                                    self.message = ""
-                                    self.messageCount = 0
+                                if searchModel.textSearch != "" {
+                                    searchModel.message = ""
+                                    searchModel.messageCount = 0
                                     
                                     self.showLoading = true
                                     onSearch()
@@ -223,13 +238,13 @@ struct AtlasSearchSplit: View {
     }
     
     func onSearch() {
-        network.handleSearch(question: txtSearch, onSuccess: {
-            self.showLoading = false
-            self.firstLoading = false
+        network.handleSearch(question: searchModel.textSearch, onSuccess: {
+            showLoading = false
+            searchModel.firstLoading = false
             
             withAnimation(.linear(duration: 30)) {
-                message = network.dataSearch.result
-                messageCount = network.dataSearch.result.count
+                searchModel.message = network.dataSearch.result
+                searchModel.messageCount = network.dataSearch.result.count
             }
         }, onFailure: { error in
             self.showLoading = false
