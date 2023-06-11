@@ -50,9 +50,9 @@ struct DepatureCardContainer: View {
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
-                            .listRowBackground(self.backgroundColor(for: viewModel.departureDataArray[index].isDefault))
+                            .listRowBackground(self.backgroundColor(isDefault: viewModel.departureDataArray[index].isDefault, canDelete: viewModel.departureDataArray[index].canDelete))
                             .swipeActions(allowsFullSwipe: false) {
-                                if !viewModel.departureDataArray[index].isDefault {
+                                if viewModel.departureDataArray[index].canDelete {
                                     Button(role: .destructive) {
                                         viewModel.removeItemDeparture(item: viewModel.departureDataArray[index])
                                     } label: {
@@ -74,7 +74,10 @@ struct DepatureCardContainer: View {
                                 }
                                 
                                 Button {
-                                    viewModel.addDepartureQR(item: viewModel.departureDataArray[index])
+                                    var obj = viewModel.departureDataArray[index]
+                                    obj.canDelete = false
+                                    
+                                    viewModel.addDepartureQR(item: obj)
                                     viewModel.departureDataArray[index].isDefault = true
                                 } label: {
                                     Image(systemName: "tag.fill")
@@ -115,7 +118,7 @@ struct DepatureCardContainer: View {
         }
     }
     
-    private func backgroundColor(for isDefault: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
+    private func backgroundColor(isDefault: Bool, canDelete: Bool) -> Color {
+        return isDefault && !canDelete ? Color.theme.champagne : Color.white
     }
 }

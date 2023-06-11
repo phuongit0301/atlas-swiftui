@@ -7,18 +7,18 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>prefs</string>
-			</array>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>jdmpro.jeppesen</string>
-			</array>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
@@ -33,10 +33,10 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ewas</string>
-			</array>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
@@ -52,18 +52,16 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>freeform</string>
-			</array>
+			<array/>
 		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>prefs</string>
+		<string>Aerodocs</string>
 		<string>jdmpro.jeppesen</string>
 		<string>App-Prefs</string>
 		<string>ewas</string>
-		<string>freeform</string>
+		<string>com.adobe.Adobe-Reader</string>
 		<string>atlas</string>
 	</array>
 	<key>UIAppFonts</key>

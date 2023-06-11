@@ -27,7 +27,6 @@ struct HomeView: View {
                 Spacer()
             }.padding(16)
             
-            
             VStack(spacing: 0) {
                 // header list icons
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -54,8 +53,7 @@ struct HomeView: View {
                                                 .aspectRatio(contentMode: .fit)
                                         }.onTapGesture {
                                             withAnimation(.easeInOut) {
-                                                let url = item.name == "Weather" ? "ewas://" : "jdmpro.jeppesen://"
-                                                if let url = URL(string: url) {
+                                                if let url = URL(string: item.scheme) {
                                                     if UIApplication.shared.canOpenURL(url) {
                                                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                                     }

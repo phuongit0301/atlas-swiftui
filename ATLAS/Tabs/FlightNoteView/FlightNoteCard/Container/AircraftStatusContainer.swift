@@ -98,8 +98,4 @@ struct AircraftStatusContainer: View {
             self.currentIndex = -1
         }
     }
-    
-    private func backgroundColor(for isDefault: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
-    }
 }

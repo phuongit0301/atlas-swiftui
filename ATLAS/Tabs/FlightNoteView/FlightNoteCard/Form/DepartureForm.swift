@@ -44,23 +44,23 @@ struct DepartureForm: View {
                                 .background((textNote != "" && !tagList.isEmpty) ? Color.theme.tealDeer : Color.theme.chineseSilver)
                                 .cornerRadius(12)
                                 .frame(alignment: .center)
-                        })                        
+                        })
                     }
                     
                     Spacer()
                     
-//                    Button(action: {
-//                        // To do show modal
-//                    }, label: {
-//                        Text("Save To...")
-//                            .padding(.vertical, 4)
-//                            .padding(.horizontal, 16)
-//                            .font(.custom("Inter-SemiBold", size: 16))
-//                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
-//                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
-//                            .cornerRadius(12)
-//                            .frame(alignment: .center)
-//                    })
+                    //                    Button(action: {
+                    //                        // To do show modal
+                    //                    }, label: {
+                    //                        Text("Save To...")
+                    //                            .padding(.vertical, 4)
+                    //                            .padding(.horizontal, 16)
+                    //                            .font(.custom("Inter-SemiBold", size: 16))
+                    //                            .foregroundColor(textNote != "" ? Color.theme.eerieBlack : .white)
+                    //                            .background(textNote != "" ? Color.theme.tealDeer : Color.theme.chineseSilver)
+                    //                            .cornerRadius(12)
+                    //                            .frame(alignment: .center)
+                    //                    })
                     
                     Button(action: {
                         if(textNote != "") {
@@ -110,7 +110,7 @@ struct DepartureForm: View {
                         }
                     }.padding(16)
                         .presentationDetents([.height(100)])
-                        
+                    
                     
                     Spacer()
                 }
@@ -133,7 +133,7 @@ struct DepartureForm: View {
     
     func save() {
         let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-        let newItem = IFlightInfoStorageModel(name: textNote, tags: tags, isDefault: false)
+        let newItem = IFlightInfoStorageModel(name: textNote, tags: tags, isDefault: false, canDelete: true)
         
         itemList.append(newItem)
         

@@ -7,17 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E03C6302A14B3CC0099ACA3 /* SimilaritySearchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */; };
-		3E03C6322A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */; };
-		3E03C6342A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */; };
-		3E03C6362A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */ = {isa = PBXBuildFile; productRef = 3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */; };
-		3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6382A14B4410099ACA3 /* BERT.swift */; };
-		3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6392A14B4410099ACA3 /* BERTInput.swift */; };
-		3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */; };
-		3E03C6422A14B4420099ACA3 /* bert-base-uncased-vocab.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */; };
-		3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */; };
-		3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */; };
-		3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */; };
 		3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */; };
 		3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C64C2A15D4D80099ACA3 /* Color.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
@@ -90,7 +79,7 @@
 		3E5AF6592A1A579A00A97ECF /* FlightNoteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */; };
 		3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65A2A1A5AEE00A97ECF /* Form.swift */; };
 		3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */; };
-		3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */; };
+		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */; };
 		3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63F2A18D9E700A97ECF /* FlightNoteView.swift */; };
 		3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6332A187E3500A97ECF /* HomeView.swift */; };
@@ -117,7 +106,6 @@
 		3EF93D882A3090940043E91E /* fuelSummaryCardSlideOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
-		C5F9C81E2A14F3E00076396F /* customClassesPdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,13 +126,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3E03C6382A14B4410099ACA3 /* BERT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERT.swift; sourceTree = "<group>"; };
-		3E03C6392A14B4410099ACA3 /* BERTInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTInput.swift; sourceTree = "<group>"; };
-		3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = BERTQAFP16.mlmodel; sourceTree = "<group>"; };
-		3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bert-base-uncased-vocab.txt"; sourceTree = "<group>"; };
-		3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTOutput.swift; sourceTree = "<group>"; };
-		3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERTVocabulary.swift; sourceTree = "<group>"; };
-		3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenizedString.swift; sourceTree = "<group>"; };
 		3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
 		3E03C64C2A15D4D80099ACA3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
@@ -221,7 +202,7 @@
 		3E5AF6582A1A579A00A97ECF /* FlightNoteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNoteCard.swift; sourceTree = "<group>"; };
 		3E5AF65A2A1A5AEE00A97ECF /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTab.swift; sourceTree = "<group>"; };
-		3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOffline.swift; sourceTree = "<group>"; };
+		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCustom.swift; sourceTree = "<group>"; };
 		3E7F683D2A20ABA500EC2CA3 /* PresentationDetentReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentReference.swift; sourceTree = "<group>"; };
 		3E7F683F2A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentsViewModifier.swift; sourceTree = "<group>"; };
@@ -248,7 +229,6 @@
 		3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryCardSlideOver.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customClassesPdf.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,10 +236,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E03C6362A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA in Frameworks */,
-				3E03C6342A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll in Frameworks */,
-				3E03C6322A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert in Frameworks */,
-				3E03C6302A14B3CC0099ACA3 /* SimilaritySearchKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,27 +256,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E03C6372A14B4410099ACA3 /* OfflineSearchResources */ = {
-			isa = PBXGroup;
-			children = (
-				3E7F682D2A1F617300EC2CA3 /* SearchOffline.swift */,
-				C5F9C81D2A14F3E00076396F /* customClassesPdf.swift */,
-				3E03C6382A14B4410099ACA3 /* BERT.swift */,
-				3E03C6392A14B4410099ACA3 /* BERTInput.swift */,
-				3E03C63A2A14B4410099ACA3 /* BERTQAFP16.mlmodel */,
-				3E03C63B2A14B4410099ACA3 /* bert-base-uncased-vocab.txt */,
-				3E03C63C2A14B4410099ACA3 /* BERTOutput.swift */,
-				3E03C63D2A14B4410099ACA3 /* BERTVocabulary.swift */,
-				3E03C63E2A14B4410099ACA3 /* TokenizedString.swift */,
-			);
-			path = OfflineSearchResources;
-			sourceTree = "<group>";
-		};
 		3E03C64B2A15D4C20099ACA3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				3E03C64C2A15D4D80099ACA3 /* Color.swift */,
 				3E8250762A1E1FB6008F616D /* View.swift */,
+				3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -570,7 +531,6 @@
 				3E5AF6492A18FF2900A97ECF /* Tabs */,
 				3E5AF6322A18622F00A97ECF /* Info.plist */,
 				3E03C64B2A15D4C20099ACA3 /* Extensions */,
-				3E03C6372A14B4410099ACA3 /* OfflineSearchResources */,
 				C5F9C8192A1487870076396F /* ATLASApp.swift */,
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
@@ -630,10 +590,6 @@
 			);
 			name = ATLAS;
 			packageProductDependencies = (
-				3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */,
-				3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */,
-				3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */,
-				3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */,
 			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
@@ -698,7 +654,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3ED754632A11E1BA003072A1 /* Build configuration list for PBXProject "Waypoint Atlas" */;
+			buildConfigurationList = 3ED754632A11E1BA003072A1 /* Build configuration list for PBXProject "ATLAS" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -735,7 +691,6 @@
 				3E8250652A1BAE0A008F616D /* Inter-Regular.ttf in Resources */,
 				3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */,
 				3E8250662A1BAE0A008F616D /* Inter-ExtraLight.ttf in Resources */,
-				3E03C6422A14B4420099ACA3 /* bert-base-uncased-vocab.txt in Resources */,
 				3E8250622A1BAE0A008F616D /* Inter-SemiBold.ttf in Resources */,
 				3E8250672A1BAE0A008F616D /* Inter-ExtraBold.ttf in Resources */,
 			);
@@ -774,6 +729,7 @@
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
+				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
 				3E7F68462A20B60E00EC2CA3 /* CustomSegmentedControl.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
@@ -792,7 +748,6 @@
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
-				3E03C6432A14B4420099ACA3 /* BERTOutput.swift in Sources */,
 				3E3FCBD92A21C6E4008017FA /* DepartureForm.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E3FCC162A24FE69008017FA /* EnrouteSplitContainer.swift in Sources */,
@@ -812,20 +767,16 @@
 				3E3FCC502A28822A008017FA /* NavigationModel.swift in Sources */,
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
-				3E03C6412A14B4420099ACA3 /* BERTQAFP16.mlmodel in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
-				3E7F682E2A1F617300EC2CA3 /* SearchOffline.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
-				3E03C63F2A14B4420099ACA3 /* BERT.swift in Sources */,
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
 				3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E3FCC1E2A2500D3008017FA /* ArrivalSplitContainer.swift in Sources */,
-				3E03C6452A14B4420099ACA3 /* TokenizedString.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
 				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
@@ -841,16 +792,13 @@
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
 				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3E3FCC182A24FEB3008017FA /* EnrouteSplitForm.swift in Sources */,
-				3E03C6442A14B4420099ACA3 /* BERTVocabulary.swift in Sources */,
 				3E3FCC432A270851008017FA /* historicalDelaysView.swift in Sources */,
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
-				C5F9C81E2A14F3E00076396F /* customClassesPdf.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				3E3FCC0A2A24B818008017FA /* AircraftSplitForm.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E3FCC0F2A24E678008017FA /* DepartureSplitContainer.swift in Sources */,
-				3E03C6402A14B4420099ACA3 /* BERTInput.swift in Sources */,
 				3E3FCC082A24B620008017FA /* AircraftSplitContainer.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,
@@ -1011,7 +959,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
@@ -1031,9 +979,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sg.accumulus.ios.atlas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -1044,7 +995,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
@@ -1064,9 +1015,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sg.accumulus.ios.atlas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -1145,7 +1099,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3ED754632A11E1BA003072A1 /* Build configuration list for PBXProject "Waypoint Atlas" */ = {
+		3ED754632A11E1BA003072A1 /* Build configuration list for PBXProject "ATLAS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3ED7548A2A11E1BD003072A1 /* Debug */,
@@ -1193,29 +1147,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		3E03C62F2A14B3CC0099ACA3 /* SimilaritySearchKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKit;
-		};
-		3E03C6312A14B3CC0099ACA3 /* SimilaritySearchKitDistilbert */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKitDistilbert;
-		};
-		3E03C6332A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMAll */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKitMiniLMAll;
-		};
-		3E03C6352A14B3CC0099ACA3 /* SimilaritySearchKitMiniLMMultiQA */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */;
-			productName = SimilaritySearchKitMiniLMMultiQA;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3ED754602A11E1BA003072A1 /* Project object */;
 }

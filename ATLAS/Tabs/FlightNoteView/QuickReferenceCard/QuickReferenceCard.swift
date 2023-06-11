@@ -78,15 +78,15 @@ struct QuickReferenceCard: View {
                         
                         switch selectedSegment {
                         case 0:
-                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea().ignoresSafeArea(.keyboard)
                         case 1:
-                            DepatureReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            DepatureReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea().ignoresSafeArea(.keyboard)
                         case 2:
-                            EnrouteReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            EnrouteReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea().ignoresSafeArea(.keyboard)
                         case 3:
-                            ArrivalReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            ArrivalReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea().ignoresSafeArea(.keyboard)
                         default:
-                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea()
+                            AircraftReferenceContainer(viewModel: viewModel, geoWidth: geoWidth).tag(selectedSegment).ignoresSafeArea().ignoresSafeArea(.keyboard)
                         }
                     }.padding(.bottom, 16)
                     

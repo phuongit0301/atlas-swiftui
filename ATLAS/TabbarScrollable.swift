@@ -23,7 +23,7 @@ struct TabbarScrollable: View {
                                 .onTapGesture {
                                     withAnimation(.easeInOut) {
                                         if (item.isExternal) {
-                                            if let url = URL(string: "freeform://") {
+                                            if let url = URL(string: item.scheme) {
                                                 if UIApplication.shared.canOpenURL(url) {
                                                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                                 }

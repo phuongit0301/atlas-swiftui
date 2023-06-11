@@ -30,7 +30,7 @@ struct BottomTabs: View {
                                 }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                             }.onTapGesture {
                                 withAnimation(.easeInOut) {
-                                    if let url = URL(string: "App-Prefs://root=NOTES") {
+                                    if let url = URL(string: item.scheme) {
                                         if UIApplication.shared.canOpenURL(url) {
                                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                         }
@@ -54,7 +54,7 @@ struct BottomTabs: View {
                             }
                             
                         } else {
-                            NavigationLink(destination: getDestinationSplit(item: item)) {
+                            if (item.name == "Flight Notes") {
                                 VStack(alignment: .center) {
                                     Image(systemName: item.iconName)
                                         .foregroundColor(Color.theme.eerieBlack)
@@ -62,6 +62,16 @@ struct BottomTabs: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
+                            } else {
+                                NavigationLink(destination: getDestinationSplit(item: item)) {
+                                    VStack(alignment: .center) {
+                                        Image(systemName: item.iconName)
+                                            .foregroundColor(Color.theme.eerieBlack)
+                                            .frame(width: 16, height: 16)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
+                                }
                             }
                         }
                         

@@ -33,24 +33,26 @@ struct ATLASApp: App {
                         await apiManager.makePostRequest()
                     }
                 }
-        }
-        
-        WindowGroup {
-            ContentView()
-                .environmentObject(network)
-                .environmentObject(tabModelState)
-                .environmentObject(sideMenuModelState)
-                .environmentObject(mainNavModelState)
-                .environmentObject(flightNoteModelState)
-                .environmentObject(searchModelSplitState)
-                .onAppear {
-                    Task {
-                        await apiManager.makePostRequest()
-                    }
-                }
-        }
-        .handlesExternalEvents(
+        }.handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )
+        
+//        WindowGroup {
+//            ContentView()
+//                .environmentObject(network)
+//                .environmentObject(tabModelState)
+//                .environmentObject(sideMenuModelState)
+//                .environmentObject(mainNavModelState)
+//                .environmentObject(flightNoteModelState)
+//                .environmentObject(searchModelSplitState)
+//                .onAppear {
+//                    Task {
+//                        await apiManager.makePostRequest()
+//                    }
+//                }
+//        }
+//        .handlesExternalEvents(
+//            matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
+//        )
     }
 }

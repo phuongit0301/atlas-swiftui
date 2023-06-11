@@ -49,9 +49,9 @@ struct EnrouteCardContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: viewModel.enrouteDataArray[index].isDefault))
+                                .listRowBackground(self.backgroundColor(isDefault: viewModel.enrouteDataArray[index].isDefault, canDelete: viewModel.enrouteDataArray[index].canDelete))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    if !viewModel.enrouteDataArray[index].isDefault {
+                                    if viewModel.enrouteDataArray[index].canDelete {
                                         Button(role: .destructive) {
                                             viewModel.removeItemEnroute(item: viewModel.enrouteDataArray[index])
                                         } label: {
@@ -73,7 +73,10 @@ struct EnrouteCardContainer: View {
                                     }
                                     
                                     Button {
-                                        viewModel.addEnrouteQR(item: viewModel.enrouteDataArray[index])
+                                        var obj = viewModel.enrouteDataArray[index]
+                                        obj.canDelete = false
+                                        
+                                        viewModel.addEnrouteQR(item: obj)
                                         viewModel.enrouteDataArray[index].isDefault = true
                                     } label: {
                                         Image(systemName: "tag.fill")
@@ -114,7 +117,7 @@ struct EnrouteCardContainer: View {
         }
     }
     
-    private func backgroundColor(for isDefault: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
+    private func backgroundColor(isDefault: Bool, canDelete: Bool) -> Color {
+        return isDefault && !canDelete ? Color.theme.champagne : Color.white
     }
 }
