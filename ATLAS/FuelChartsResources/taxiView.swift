@@ -40,9 +40,17 @@ struct taxiView: View {
                     Text("\(aveTime.formatted()) mins")
                         .font(.headline)
                     
-                    taxiChart(taxiTimes: taxiTimes)
-                        .frame(minHeight: 300)
-                        .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
+                    if (chartType == "bar") {
+                        taxiChartBar(taxiTimes: taxiTimes)
+                            .frame(minHeight: 300)
+                            .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
+                    }
+                    else {
+                        taxiChartLine(taxiTimes: taxiTimes)
+                            .frame(minHeight: 300)
+                            .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
+                    }
+                    
                 }
                 .padding()
             }
@@ -51,6 +59,17 @@ struct taxiView: View {
         .background()
     }
     // switcher by period
+    var chartType: String {
+        switch timeframe {
+        case .threeFlights:
+            return "bar"
+        case .week:
+            return "bar"
+        case .months:
+            return "line"
+        }
+    }
+    
     var taxiTimes: [TaxiTimes] {
         let fetchedTimes: [String : [String : Any]] = convertedJSON
 

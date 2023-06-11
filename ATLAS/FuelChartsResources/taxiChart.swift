@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct taxiChart: View {
+struct taxiChartLine: View {
     var taxiTimes: [TaxiTimes]
     var body: some View {
         Chart(taxiTimes) {
@@ -17,7 +17,27 @@ struct taxiChart: View {
                 y: .value("Date", $0.taxiTime)
             )
             .foregroundStyle(by: .value("condition", $0.condition))
-            //.position(by: .value("condition", $0.condition))
+            .interpolationMethod(.catmullRom)
+            .symbol(by: .value("condition", $0.condition))
+            
+        }
+        .chartLegend(position: .top)
+        .chartXAxis {
+            AxisMarks(values: .automatic(desiredCount: 3))
+        }
+    }
+}
+
+struct taxiChartBar: View {
+    var taxiTimes: [TaxiTimes]
+    var body: some View {
+        Chart(taxiTimes) {
+            BarMark(
+                x: .value("Date", $0.date, unit: .day),
+                y: .value("Date", $0.taxiTime)
+            )
+            .foregroundStyle(by: .value("condition", $0.condition))
+            .position(by: .value("condition", $0.condition))
             .symbol(by: .value("condition", $0.condition))
             
         }

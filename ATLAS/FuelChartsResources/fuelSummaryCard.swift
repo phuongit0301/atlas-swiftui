@@ -46,34 +46,40 @@ struct SummaryCardView: View {
                 Text("Aggregate extra fuel requirement in mins")
                   .font(.subheadline)
                   .fontWeight(.light)
-                if (extraFuel < 0) {
-                    let savings = extraFuel * -1
-                    Text("0 mins")
-                      .font(.largeTitle)
-                      .fontWeight(.semibold)
-                      .padding(.top, 1)
-                    Text("Fuel savings of \(savings) mins expected")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                } else {
-                    Text("+\(extraFuel.formatted()) mins")
-                      .font(.largeTitle)
-                      .fontWeight(.semibold)
-                      .padding(.top, 1)
-                }
+//                if (extraFuel < 0) {
+//                    let savings = extraFuel * -1
+//                    Text("0 mins")
+//                      .font(.largeTitle)
+//                      .fontWeight(.semibold)
+//                      .padding(.top, 1)
+//                    Text("Fuel savings of \(savings) mins expected")
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
+//                } else {
+//                    Text("+\(extraFuel.formatted()) mins")
+//                      .font(.largeTitle)
+//                      .fontWeight(.semibold)
+//                      .padding(.top, 1)
+//                }
                 
             }
             .padding()
             Divider()
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Text("+\(projDelay.formatted()) mins")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                    Text("Projected arrival delay")
-                        .font(.callout)
-                        .fontWeight(.regular)
-                        .padding(.top, 1)
+                    if (projDelay < 0) {
+                        Text("0 mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text("+\(projDelay.formatted()) mins")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Text("Projected arrival delay")
+                            .font(.callout)
+                            .fontWeight(.regular)
+                            .padding(.top, 1)
+                    }
                 }
                 .padding()
                 VStack(alignment: .leading) {
@@ -86,7 +92,7 @@ struct SummaryCardView: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                     }
-                    Text("Actual minus plan taxi time")
+                    Text("Additional taxi time")
                         .font(.callout)
                         .fontWeight(.regular)
                         .padding(.top, 1)
