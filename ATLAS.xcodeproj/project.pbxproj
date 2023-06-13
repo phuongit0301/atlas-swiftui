@@ -104,6 +104,7 @@
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EF93D882A3090940043E91E /* fuelSummaryCardSlideOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */; };
+		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -227,6 +228,7 @@
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryCardSlideOver.swift; sourceTree = "<group>"; };
+		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -326,6 +328,7 @@
 				3E3FCC062A24B5C2008017FA /* AircraftSplit */,
 				3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */,
 				3E3FCBF52A23676A008017FA /* NavViewSplit.swift */,
+				C59C714C2A38AB130063D16B /* FuelViewSplit.swift */,
 			);
 			path = Split;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
+				C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */,
 				3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */,
 				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
 				3E3FCC202A2500DC008017FA /* ArrivalSplitForm.swift in Sources */,

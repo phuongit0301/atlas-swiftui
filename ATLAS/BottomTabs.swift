@@ -92,7 +92,7 @@ struct BottomTabs: View {
         }
         
         if item.screenName == NavigationEnumeration.FuelScreen {
-            return AnyView(SummaryCardViewSlideOver())
+            return AnyView(FuelViewSplit())
         }
         
         if item.screenName == NavigationEnumeration.DepartureScreen {
