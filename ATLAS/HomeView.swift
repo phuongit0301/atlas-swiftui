@@ -116,6 +116,9 @@ struct HomeView: View {
             }
             
         }.background(Color.theme.cultured)
+            .onAppear {
+                sideMenuState.selectedMenu = UpcomingMenuItems.first
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
