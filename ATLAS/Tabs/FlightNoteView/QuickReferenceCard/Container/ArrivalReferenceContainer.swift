@@ -73,7 +73,7 @@ struct ArrivalReferenceContainer: View {
 //                                    Button {
 //                                        print("Tags")
 //                                    } label: {
-//                                        Image(systemName: "tag.fill")
+//                                        Image(systemName: "pin.fill")
 //                                            .frame(width: 16, height: 16)
 //                                            .scaledToFit()
 //                                            .aspectRatio(contentMode: .fit)

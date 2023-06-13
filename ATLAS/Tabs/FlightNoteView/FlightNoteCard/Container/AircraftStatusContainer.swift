@@ -38,7 +38,7 @@ struct AircraftStatusContainer: View {
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
-                            .listRowBackground(Color.white)
+                            .listRowBackground(self.backgroundColor(isDefault: viewModel.aircraftDataArray[index].isDefault, canDelete: viewModel.aircraftDataArray[index].canDelete))
                             .swipeActions(allowsFullSwipe: false) {
                                 Button(role: .destructive) {
                                     viewModel.removeItemAircraft(item: viewModel.aircraftDataArray[index])
@@ -59,8 +59,9 @@ struct AircraftStatusContainer: View {
                                 .tint(Color.theme.eerieBlack)
                                 Button {
                                     viewModel.addAircraftQR(item: viewModel.aircraftDataArray[index])
+                                    viewModel.aircraftDataArray[index].isDefault = true
                                 } label: {
-                                    Image(systemName: "tag.fill")
+                                    Image(systemName: "pin.fill")
                                         .frame(width: 16, height: 16)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
@@ -97,5 +98,9 @@ struct AircraftStatusContainer: View {
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
+    }
+    
+    private func backgroundColor(isDefault: Bool, canDelete: Bool) -> Color {
+        return isDefault ? Color.theme.champagne : Color.white
     }
 }

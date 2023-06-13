@@ -316,6 +316,12 @@ class FlightNoteModelState: ObservableObject {
             self.aircraftQRDataArray.append(item)
         }
     }
+    
+    func updateAircraft(item: IFlightInfoStorageModel) {
+        if let matchingIndex = self.aircraftDataArray.firstIndex(where: {$0.id == item.id}) {
+            self.aircraftDataArray[matchingIndex].isDefault = false
+        }
+    }
 
     func addDepartureQR(item: IFlightInfoStorageModel) {
         let exists = self.departureQRDataArray.first(where: {$0.id == item.id});

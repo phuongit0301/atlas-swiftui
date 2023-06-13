@@ -64,6 +64,10 @@
 		<string>com.adobe.Adobe-Reader</string>
 		<string>atlas</string>
 	</array>
+    <key>LSMinimumSystemVersion</key>
+    <string>13.3</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <string>NO</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>

@@ -32,8 +32,6 @@ struct EnrouteReferenceContainer: View {
                                     Text(viewModel.enrouteQRDataArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
-                                        .lineLimit(1)
-                                        .fixedSize(horizontal: false, vertical: true)
                                     
 //                                    ForEach(item.tags, id: \.self) { tag in
 //                                        Text(tag.name)
@@ -76,7 +74,7 @@ struct EnrouteReferenceContainer: View {
 //                                    Button {
 //                                        print("Tag")
 //                                    } label: {
-//                                        Image(systemName: "tag.fill")
+//                                        Image(systemName: "pin.fill")
 //                                            .frame(width: 16, height: 16)
 //                                            .scaledToFit()
 //                                            .aspectRatio(contentMode: .fit)

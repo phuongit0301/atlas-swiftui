@@ -38,10 +38,10 @@ struct HomeView: View {
                                         VStack(alignment: .center, spacing: 0) {
                                             VStack(alignment: .center) {
                                                 Image(systemName: item.iconName)
+                                                    .resizable()
                                                     .foregroundColor(Color.theme.eerieBlack)
-                                                    .frame(width: 32, height: 34)
-                                                    .scaledToFit()
                                                     .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 30, height: 40)
                                             }.frame(width: 60, height: 60, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                                             
                                             Text(item.name).foregroundColor(Color.theme.eerieBlack).padding(.vertical, 5).font(.custom("Inter-Regular", size: 13))
@@ -65,10 +65,10 @@ struct HomeView: View {
                                             VStack(alignment: .center, spacing: 0) {
                                                 VStack(alignment: .center) {
                                                     Image(systemName: item.iconName)
+                                                        .resizable()
                                                         .foregroundColor(Color.theme.eerieBlack)
-                                                        .frame(width: 32, height: 34)
-                                                        .scaledToFit()
                                                         .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 30, height: 40)
                                                 }.frame(width: 60, height: 60, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                                                 
                                                 Text(item.name).foregroundColor(Color.theme.eerieBlack).padding(.vertical, 5).font(.custom("Inter-Regular", size: 13))

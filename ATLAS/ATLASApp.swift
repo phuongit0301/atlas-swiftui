@@ -12,12 +12,12 @@ struct ATLASApp: App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
-    @StateObject var sideMenuModelState = SideMenuModelState()
     @StateObject var mainNavModelState = MainNavModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
     @StateObject var searchModelSplitState = SearchModelSplitState()
     
     var network = Network()
+    var sideMenuModelState = SideMenuModelState()
     
     var body: some Scene {
         WindowGroup {

@@ -82,7 +82,7 @@ struct QuickReferenceForm: View {
                 .sheet(isPresented: $showSheet) {
                     // List categories
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Select applicable flight phase").font(.custom("Inter-SemiBold", size: 16)).foregroundColor(Color.theme.eerieBlack)
+                        Text("Select Applicable Tags").font(.custom("Inter-SemiBold", size: 16)).foregroundColor(Color.theme.eerieBlack)
                         
                         Rectangle().fill(Color.white).frame(height: 16)
                         

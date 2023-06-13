@@ -24,9 +24,9 @@ struct BottomTabs: View {
                             VStack(spacing: 0) {
                                 VStack(alignment: .center) {
                                     Image(systemName: item.iconName)
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
+                                        .resizable()
                                         .aspectRatio(contentMode: .fit)
+                                        .frame(width: 22, height: 26)
                                 }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                             }.onTapGesture {
                                 withAnimation(.easeInOut) {
@@ -57,18 +57,18 @@ struct BottomTabs: View {
                             if (item.name == "Flight Notes") {
                                 VStack(alignment: .center) {
                                     Image(systemName: item.iconName)
+                                        .resizable()
                                         .foregroundColor(Color.theme.eerieBlack)
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
+                                        .frame(width: 22, height: 26)
                                 }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                             } else {
                                 NavigationLink(destination: getDestinationSplit(item: item)) {
                                     VStack(alignment: .center) {
                                         Image(systemName: item.iconName)
+                                            .resizable()
                                             .foregroundColor(Color.theme.eerieBlack)
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
+                                            .frame(width: 22, height: 26)
                                             .aspectRatio(contentMode: .fit)
                                     }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
                                 }

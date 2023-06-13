@@ -79,7 +79,7 @@ struct EnrouteCardContainer: View {
                                         viewModel.addEnrouteQR(item: obj)
                                         viewModel.enrouteDataArray[index].isDefault = true
                                     } label: {
-                                        Image(systemName: "tag.fill")
+                                        Image(systemName: "pin.fill")
                                             .frame(width: 16, height: 16)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
@@ -118,6 +118,6 @@ struct EnrouteCardContainer: View {
     }
     
     private func backgroundColor(isDefault: Bool, canDelete: Bool) -> Color {
-        return isDefault && !canDelete ? Color.theme.champagne : Color.white
+        return isDefault ? Color.theme.champagne : Color.white
     }
 }

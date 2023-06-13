@@ -40,6 +40,7 @@ struct AircraftReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
+                                        viewModel.updateAircraft(item: viewModel.aircraftQRDataArray[index])
                                         viewModel.removeItemAircraftQR(item: viewModel.aircraftQRDataArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
@@ -61,7 +62,7 @@ struct AircraftReferenceContainer: View {
 //                                    Button {
 //                                        print("Tag")
 //                                    } label: {
-//                                        Image(systemName: "tag.fill")
+//                                        Image(systemName: "pin.fill")
 //                                            .frame(width: 16, height: 16)
 //                                            .scaledToFit()
 //                                            .aspectRatio(contentMode: .fit)

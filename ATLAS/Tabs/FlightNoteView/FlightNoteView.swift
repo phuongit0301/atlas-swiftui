@@ -34,7 +34,7 @@ struct FlightNoteView: View {
                     Spacer()
                 }.padding(.horizontal, 16)
                     .frame(height: geo.size.height)
-            }.modifier(AdaptsToSoftwareKeyboard())
+            }.keyboardAvoiding()
         }
     }
 }
