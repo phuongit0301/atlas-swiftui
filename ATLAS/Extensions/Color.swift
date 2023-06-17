@@ -27,7 +27,12 @@ struct ColorTheme {
     let alizarinCrimson = Color("AlizarinCrimson") //DF2D3B
     let brightGray = Color("BrightGray") //EBEBEB
     let philippineGray = Color("PhilippineGray") //919191
+    let philippineGray2 = Color("PhilippineGray2") //8A8A8E
     let lightGray = Color("LightGray") //D4D5D6
     let lavender = Color("Lavender") //D4D5D6
     let azureishWhite = Color("AzureishWhite") //DBE5F1
+    let tangerineYellow = Color("TangerineYellow") //FFCC00
+    let ufoGreen = Color("UFOGreen") //34C759
+    let azure = Color("Azure") //007AFF
+    let antiFlashWhite = Color("AntiFlashWhite") //F2F2F7
 }

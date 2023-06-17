@@ -37,7 +37,8 @@ struct TabbarScrollable: View {
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding()
+            .background(Color.theme.antiFlashWhite)
             .onChange(of: selectedTab) { newItem in
                 withAnimation {
                     scrollView.scrollTo(newItem, anchor: .center)
@@ -57,39 +58,39 @@ struct TabbarItem: View {
         if isActive {
             HStack {
                 Text(item.name)
-                    .font(.custom("Inter-SemiBold", size: 13))
+                    .font(.custom("Inter-SemiBold", size: 17))
                     .fontWeight(.semibold)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 8)
-                    .foregroundColor(Color.theme.eerieBlack)
-                    .background(Color.theme.aeroBlue)
+                    .foregroundColor(Color.white)
                     .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
-                    .cornerRadius(8)
+                    .cornerRadius(5)
                 
                 if item.isExternal {
                     Image(systemName: "pip.exit")
-                        .foregroundColor(Color.theme.eerieBlack)
+                        .foregroundColor(Color.theme.azure)
                         .frame(width: 14, height: 16)
                         .scaledToFit()
                         .aspectRatio(contentMode: .fit)
                 }
-            }.padding(.horizontal, 8)
+            }.padding(.horizontal, 22)
+                .padding(.vertical, 14)
+                .background(Color.theme.azure)
+                .cornerRadius(5)
         } else {
             HStack {
                 Text(item.name)
-                    .font(.custom("Inter-Regular", size: 13))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 8)
-                    .foregroundColor(Color.theme.eerieBlack)
+                    .font(.custom("Inter-Regular", size: 17))
+                    .foregroundColor(Color.theme.azure)
                 
                 if item.isExternal {
                     Image(systemName: "pip.exit")
-                        .foregroundColor(Color.theme.eerieBlack)
+                        .foregroundColor(Color.theme.azure)
                         .frame(width: 14, height: 16)
                         .scaledToFit()
                         .aspectRatio(contentMode: .fit)
                 }
-            }.padding(.horizontal, 8)
+            }.padding(.horizontal, 22)
+                .padding(.vertical, 14)
+                .cornerRadius(5)
         }
  
     }

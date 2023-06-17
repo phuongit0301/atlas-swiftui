@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum EMenuStatus {
+    case working // double circle
+    case none // circle
+    case done // green circle
+    case notDone // yellow circle
+}
+
 struct MenuItem: Identifiable, Hashable {
     var id = UUID()
     var name: String
@@ -20,21 +27,22 @@ struct SubMenuItem: Identifiable, Hashable {
     var date: String?
     var flight: String?
     var isExternal: Bool?
+    var status: EMenuStatus?
 }
 
 let UpcomingMenuItems = [
-    SubMenuItem(name: "SQ123", date: "31 May 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ124", date: "1 Jun 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ300", date: "4 Jun 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ301", date: "5 Jun 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ1235", date: "7 Jun 2023", flight: "SIN-LHR"),
+    SubMenuItem(name: "SQ123", date: "31 May 2023", flight: "SIN-LHR", status: EMenuStatus.working),
+    SubMenuItem(name: "SQ124", date: "1 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.working),
+    SubMenuItem(name: "SQ300", date: "4 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.none),
+    SubMenuItem(name: "SQ301", date: "5 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.none),
+    SubMenuItem(name: "SQ1235", date: "7 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.none),
 ]
 
 let CompletedMenuItems = [
-    SubMenuItem(name: "SQ123", date: "24 May 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ124", date: "25 Jun 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ300", date: "27 Jun 2023", flight: "SIN-LHR"),
-    SubMenuItem(name: "SQ301", date: "28 Jun 2023", flight: "SIN-LHR"),
+    SubMenuItem(name: "SQ123", date: "24 May 2023", flight: "SIN-LHR", status: EMenuStatus.done),
+    SubMenuItem(name: "SQ124", date: "25 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.notDone),
+    SubMenuItem(name: "SQ300", date: "27 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.done),
+    SubMenuItem(name: "SQ301", date: "28 Jun 2023", flight: "SIN-LHR", status: EMenuStatus.notDone),
 ]
 
 let AppMenuItems = [

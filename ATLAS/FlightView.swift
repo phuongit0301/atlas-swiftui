@@ -117,3 +117,12 @@ struct FlightView: View {
             }
     }
 }
+
+struct FlightView_Previews: PreviewProvider {
+    static var previews: some View {
+        FlightView(selectedTab: TabModelState().selectedTab)
+            .environmentObject(SideMenuModelState())
+            .environmentObject(TabModelState())
+            .environmentObject(FlightNoteModelState())
+    }
+}

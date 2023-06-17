@@ -42,17 +42,25 @@ struct ListFlightInformationItem: Identifiable, Hashable {
 struct ListFlightInformationModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "Scheduled Departure", date: "XX:XX (UTC+8)"),
-            ListFlightInformationItem(name: "Scheduled Arrival", date: "XX:XX (UTC+8)"),
-            ListFlightInformationItem(name: "Block Time", date: "XX:XX"),
-            ListFlightInformationItem(name: "Flight Time", date: "XX:XX"),
-            ListFlightInformationItem(name: "Taxi Time", date: "00:XX"),
-            ListFlightInformationItem(name: "Buffer", date: "XX:XX"),
-            ListFlightInformationItem(name: "POB", date: "XXX"),
-            ListFlightInformationItem(name: "Aircraft", date: "XXX"),
-            ListFlightInformationItem(name: "Gate", date: "XXX"),
-            ListFlightInformationItem(name: "Crew", date: "XXX"),
-            ListFlightInformationItem(name: "Password", date: "XXX"),
+            ListFlightInformationItem(name: "Flight Plan", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "Fuel", date: "XX:XX"),
+            ListFlightInformationItem(name: "Departure", date: "XX:XX"),
+            ListFlightInformationItem(name: "Enroute", date: "00:XX"),
+            ListFlightInformationItem(name: "Arrival", date: "XX:XX"),
+            ListFlightInformationItem(name: "AI Search", date: "XXX"),
+            ListFlightInformationItem(name: "Scratchpad", date: "XXX"),
+        ]
+        
+        return MainItem
+    }()
+}
+
+struct ListFlightUtilitiesModel {
+    let ListItem = {
+        let MainItem = [
+            ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "China RVSM (Eastbound)", date: "XX:XX (UTC+8)"),
         ]
         
         return MainItem
