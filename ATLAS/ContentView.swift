@@ -30,7 +30,6 @@ struct MainView: View {
 //                }
 //            }
 //    }
-//    
     //app view wrapper
     var body: some View {
         if verticalSizeClass == .regular && horizontalSizeClass == .compact {

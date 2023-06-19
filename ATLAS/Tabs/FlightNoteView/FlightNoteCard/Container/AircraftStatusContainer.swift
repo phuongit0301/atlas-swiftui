@@ -24,8 +24,9 @@ struct AircraftStatusContainer: View {
                         ForEach(viewModel.aircraftDataArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
-                                    Image("icon_dots_group")
-                                        .frame(width: 14, height: 16)
+                                    Image(systemName: "line.3.horizontal")
+                                        .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                        .frame(width: 22, height: 22)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
