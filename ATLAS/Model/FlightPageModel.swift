@@ -37,9 +37,32 @@ struct ListFlightInformationItem: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var date: String
+    var isTextBox: Bool = false
 }
 
 struct ListFlightInformationModel {
+    let ListItem = {
+        let MainItem = [
+            ListFlightInformationItem(name: "Scheduled Departure", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "Scheduled Arrival", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "Block Time", date: "XX:XX"),
+            ListFlightInformationItem(name: "Flight Time", date: "XX:XX"),
+            ListFlightInformationItem(name: "Taxi Time", date: "00:XX"),
+            ListFlightInformationItem(name: "Buffer", date: "XX:XX"),
+            ListFlightInformationItem(name: "POB", date: "XXX", isTextBox: true),
+            ListFlightInformationItem(name: "Aircraft", date: "XXX", isTextBox: true),
+            ListFlightInformationItem(name: "Gate", date: "XXX"),
+            ListFlightInformationItem(name: "Crew", date: "XXX", isTextBox: true),
+            ListFlightInformationItem(name: "Password", date: "XXX", isTextBox: true),
+            ListFlightInformationItem(name: "Chocks Off", date: "XXX"),
+            ListFlightInformationItem(name: "Chocks On", date: "XXX"),
+        ]
+        
+        return MainItem
+    }()
+}
+
+struct ListReferenceModel {
     let ListItem = {
         let MainItem = [
             ListFlightInformationItem(name: "Flight Plan", date: "XX:XX (UTC+8)"),
@@ -56,7 +79,7 @@ struct ListFlightInformationModel {
     }()
 }
 
-struct ListFlightUtilitiesModel {
+struct ListUtilitiesModel {
     let ListItem = {
         let MainItem = [
             ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)"),

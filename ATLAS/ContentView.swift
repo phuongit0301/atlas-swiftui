@@ -30,33 +30,29 @@ struct MainView: View {
 //                }
 //            }
 //    }
-    
+//    
     //app view wrapper
     var body: some View {
-//        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-//            NavigationSplitView(columnVisibility: $columnVisibility) {
-//                Sidebar()
-//            } detail: {
-//                NavigationStack {
-//                    VStack(spacing: 0) {
-//                        HomeViewSplit()
-//                        BottomTabs()
-//                    }
-//                }
-//            }.navigationSplitViewStyle(.balanced)
-//                .accentColor(Color.theme.tuftsBlue)
-//        } else {
+        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
             NavigationSplitView(columnVisibility: $columnVisibility) {
                 Sidebar()
             } detail: {
                 NavigationStack {
-                    VStack(spacing: 0) {
-                        HomeView()
-                    }
+                    HomeViewSplit()
+                    BottomTabs()
                 }
             }.navigationSplitViewStyle(.balanced)
                 .accentColor(Color.theme.tuftsBlue)
-//        }
+        } else {
+            NavigationSplitView(columnVisibility: $columnVisibility) {
+                Sidebar()
+            } detail: {
+                NavigationStack {
+                    HomeView()
+                }
+            }.navigationSplitViewStyle(.balanced)
+                .accentColor(Color.theme.tuftsBlue)
+        }
     }
 }
 

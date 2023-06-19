@@ -16,70 +16,37 @@ struct BottomTabs: View {
     
     var body: some View {
         // header list icons
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(alignment: .top, spacing: 0) {
-                ForEach(viewModel.tabs, id: \.self) { item in
-                    if(item.name != "Overview") {
-                        if item.isExternal {
-                            VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            GeometryReader {proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(viewModel.tabs, id: \.self) { item in
+                            if item.isExternal {
                                 VStack(alignment: .center) {
                                     Image(systemName: item.iconName)
                                         .resizable()
+                                        .foregroundColor(Color.theme.azure)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 22, height: 26)
-                                }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
-                            }.onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    if let url = URL(string: item.scheme) {
-                                        if UIApplication.shared.canOpenURL(url) {
-                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    Text(item.name).foregroundColor(Color.theme.azure).font(.custom("Inter-SemiBold", size: 10))
+                                }
+                                .frame(width: proxy.size.width / 4)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        if let url = URL(string: item.scheme) {
+                                            if UIApplication.shared.canOpenURL(url) {
+                                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                            }
                                         }
                                     }
-                                    
-                                    //                                else {
-                                    //                                    let userActivity = NSUserActivity(
-                                    //                                        activityType: "sg.accumulus.ios.book-flight"
-                                    //                                    )
-                                    //                                    userActivity.targetContentIdentifier =
-                                    //                                    "sg.accumulus.ios.book-flight"
-                                    //
-                                    //                                    UIApplication.shared.requestSceneSessionActivation(
-                                    //                                        nil,
-                                    //                                        userActivity: userActivity,
-                                    //                                        options: nil,
-                                    //                                        errorHandler: nil
-                                    //                                    )
-                                    //                                }
                                 }
                             }
                             
-                        } else {
-                            if (item.name == "Flight Notes") {
-                                VStack(alignment: .center) {
-                                    Image(systemName: item.iconName)
-                                        .resizable()
-                                        .foregroundColor(Color.theme.eerieBlack)
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 22, height: 26)
-                                }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
-                            } else {
-                                NavigationLink(destination: getDestinationSplit(item: item)) {
-                                    VStack(alignment: .center) {
-                                        Image(systemName: item.iconName)
-                                            .resizable()
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .frame(width: 22, height: 26)
-                                            .aspectRatio(contentMode: .fit)
-                                    }.frame(width: 32, height: 32, alignment: .center).padding().background(Color.theme.aeroBlue).cornerRadius(12)
-                                }
-                            }
-                        }
-                        
+                        }.padding()
                     }
-
-                }.padding(12)
+                }
             }
-        }
+        }.frame(height: 80)
     }
     
     func getDestinationSplit(item: ITabs) -> AnyView {

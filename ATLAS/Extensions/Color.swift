@@ -35,4 +35,7 @@ struct ColorTheme {
     let ufoGreen = Color("UFOGreen") //34C759
     let azure = Color("Azure") //007AFF
     let antiFlashWhite = Color("AntiFlashWhite") //F2F2F7
+    let spanishGray = Color("SpanishGray") //999999
+    let arsenic = Color("Arsenic") //3C3C43
+    let sonicSilver = Color("SonicSilver") //767680
 }

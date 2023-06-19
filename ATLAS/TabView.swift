@@ -8,11 +8,6 @@
 import Foundation
 import SwiftUI
 
-struct Tab {
-    var icon: Image?
-    var title: String
-}
-
 struct Tabs: View {
     var fixed = true
     
@@ -38,12 +33,12 @@ struct Tabs: View {
                                             selectedTab == row ?
                                                 Text(tabs[row].title)
                                                 .font(.custom("Inter-SemiBold", size: 15))
-                                                    .foregroundColor(Color.theme.eerieBlack)
+                                                    .foregroundColor(Color.theme.azure)
                                                     .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
                                             :
                                                 Text(tabs[row].title)
                                                 .font(.custom("Inter-Regular", size: 15))
-                                                    .foregroundColor(Color.theme.eerieBlack)
+                                                    .foregroundColor(Color.theme.spanishGray)
                                                     .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
                                             // Image
                                             AnyView(tabs[row].icon)
@@ -53,28 +48,19 @@ struct Tabs: View {
 //                                            .padding(10)
 //                                            .background(selectedTab == row ? Color.theme.aeroBlue : Color.theme.cultured)
                                     }
-                                    .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 50)
-                                    Rectangle().frame(height: selectedTab == row ? 3 : 0)
+                                    .frame(width: geoWidth / CGFloat(tabs.count), height: 58)
+//                                    Rectangle().frame(height: selectedTab == row ? 3 : 0)
                                     // Bar Indicator
-                                    Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
+//                                    Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
                                 }.fixedSize()
                             })
                             .accentColor(Color.theme.eerieBlack)
                                 .buttonStyle(PlainButtonStyle())
                         }
                     }
-                }
+                }.background(.white.opacity(0.75))
+                    .frame(height: 58)
             }
         }
-        .frame(height: 53)
-//        .onAppear(perform: {
-//////            UIScrollView.appearance().backgroundColor = Color.theme.cultured
-////            UIScrollView.appearance().bounces = fixed ? false : true
-//
-//            UIScrollView.appearance().bounces = true
-//        })
-//        .onDisappear(perform: {
-//            UIScrollView.appearance().bounces = true
-//        })
     }
 }

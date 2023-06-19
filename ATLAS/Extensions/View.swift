@@ -40,6 +40,19 @@ extension String {
     subscript(offset: Int) -> Character {
         self[index(startIndex, offsetBy: offset)]
     }
+    
+//    func toDateFormat( inputDateFormat inputFormat  : String,  ouputDateFormat outputFormat  : String ) -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = inputFormat
+//        if let date = (dateFormatter.date(from: self) != nil) {
+////            let date = dateFormatter.date(from: self)
+//            dateFormatter.dateFormat = outputFormat
+//            return dateFormatter.string(from: date)
+//        }
+//        else {
+//            return ""
+//        }
+//    }
 }
 
 struct TypeWriterText: View, Animatable {

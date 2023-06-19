@@ -9,26 +9,26 @@ import Foundation
 import SwiftUI
 
 struct OverviewView: View {
-    var viewInformationModel = ListFlightInformationModel()
-    var viewUtilitiesModel = ListFlightUtilitiesModel()
+    var viewInformationModel = ListReferenceModel()
+    var viewUtilitiesModel = ListUtilitiesModel()
     
     var body: some View {
         // flight informations
         VStack {
             List {
                 HStack {
-                    Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
-                }
+                    Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+                }.padding(.vertical, 10)
                 ForEach(viewInformationModel.ListItem, id: \.self) { item in
                     NavigationLink(destination: ExampleView()) {
                         HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16))
+                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }
                     }
                 }
                 
                 HStack {
-                    Text("Utilities").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
+                    Text("Utilities").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                     
                     Spacer()
                     
@@ -38,13 +38,13 @@ struct OverviewView: View {
                             .frame(width: 16, height: 16)
                             .foregroundColor(Color.theme.azure)
                         Text("Add Item").foregroundColor(Color.theme.azure)
-                            .font(.custom("Inter-Regular", size: 17))
+                            .font(.system(size: 17, weight: .regular))
                     }
-                }
+                }.padding(.vertical, 10)
                 ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
                     NavigationLink(destination: ExampleView()) {
                         HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 16))
+                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }
                     }
                 }
