@@ -14,7 +14,7 @@ struct OverviewView: View {
     
     var body: some View {
         // flight informations
-        VStack {
+        VStack (spacing: 0) {
             List {
                 HStack {
                     Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))

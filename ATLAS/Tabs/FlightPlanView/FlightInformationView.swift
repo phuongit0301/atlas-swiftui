@@ -55,7 +55,6 @@ struct FlightInformationView: View {
         .scrollContentBackground(.hidden)
         .background(Color.theme.cultured)
         .listStyle(.insetGrouped)
-        .navigationBarTitleDisplayMode(.inline)
 
     }
 }

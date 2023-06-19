@@ -14,15 +14,17 @@ struct FlightPlanView: View {
     @State private var planTab = IFlightPlanTabs().ListItem
     
     var body: some View {
-        GeometryReader { proxy in
-            VStack {
-                if selectedTab == 0 {
-                    FlightInformationView()
-                } else {
-                    ExampleView()
+        VStack(spacing: 0) {
+            GeometryReader { proxy in
+                VStack {
+                    if selectedTab == 0 {
+                        FlightInformationView()
+                    } else {
+                        ExampleView()
+                    }
+                    Spacer()
+                    CustomSegmentedControl(preselectedIndex: $selectedTab, options: planTab, geoWidth: proxy.size.width)
                 }
-                Spacer()
-                CustomSegmentedControl(preselectedIndex: $selectedTab, options: planTab, geoWidth: proxy.size.width)
             }
         }
     }

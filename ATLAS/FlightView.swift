@@ -43,7 +43,7 @@ struct FlightView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
-                        FlightNoteView(geoWidth: geo.size.width)
+                        FlightNoteView()
                             .tag(NavigationEnumeration.FlightScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color.theme.cultured)
