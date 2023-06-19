@@ -18,10 +18,10 @@ struct AircraftReferenceContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.aircraftQRDataArray.isEmpty {
+            if !viewModel.aircraftQRArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.aircraftQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,7 +29,7 @@ struct AircraftReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.aircraftQRDataArray[index].name)
+                                    Text(viewModel.aircraftQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                 }
@@ -40,8 +40,8 @@ struct AircraftReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.updateAircraft(item: viewModel.aircraftQRDataArray[index])
-                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRDataArray[index])
+                                        viewModel.updateAircraft(item: viewModel.aircraftQRArray[index])
+                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -79,7 +79,7 @@ struct AircraftReferenceContainer: View {
             
             QuickReferenceForm(
                 tagList: self.$aircraftTags,
-                itemList: $viewModel.aircraftQRDataArray,
+                itemList: $viewModel.aircraftQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             )
@@ -89,7 +89,7 @@ struct AircraftReferenceContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.aircraftQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.aircraftQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

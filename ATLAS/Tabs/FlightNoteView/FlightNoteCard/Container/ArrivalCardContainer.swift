@@ -18,10 +18,10 @@ struct ArrivalCardContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.arrivalDataArray.isEmpty {
+            if !viewModel.arrivalArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.arrivalArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,12 +29,12 @@ struct ArrivalCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.arrivalDataArray[index].name)
+                                    Text(viewModel.arrivalArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
                                     
-                                    ForEach(viewModel.arrivalDataArray[index].tags) { tag in
+                                    ForEach(viewModel.arrivalArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -50,11 +50,11 @@ struct ArrivalCardContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(isDefault: viewModel.arrivalDataArray[index].isDefault, canDelete: viewModel.arrivalDataArray[index].canDelete))
+                                .listRowBackground(self.backgroundColor(isDefault: viewModel.arrivalArray[index].isDefault, canDelete: viewModel.arrivalArray[index].canDelete))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    if viewModel.arrivalDataArray[index].canDelete {
+                                    if viewModel.arrivalArray[index].canDelete {
                                         Button(role: .destructive) {
-                                            viewModel.removeItemArrival(item: viewModel.arrivalDataArray[index])
+                                            viewModel.removeItemArrival(item: viewModel.arrivalArray[index])
                                         } label: {
                                             Image(systemName: "trash.fill")
                                                 .frame(width: 16, height: 16)
@@ -73,11 +73,11 @@ struct ArrivalCardContainer: View {
                                     }
                                     
                                     Button {
-                                        var obj = viewModel.arrivalDataArray[index]
+                                        var obj = viewModel.arrivalArray[index]
                                         obj.canDelete = false
                                         
                                         viewModel.addArrivalQR(item: obj)
-                                        viewModel.arrivalDataArray[index].isDefault = true
+                                        viewModel.arrivalArray[index].isDefault = true
                                     } label: {
                                         Image(systemName: "pin.fill")
                                             .frame(width: 16, height: 16)
@@ -97,7 +97,7 @@ struct ArrivalCardContainer: View {
 
             DepartureForm(
                 tagList: self.$arrivalTags,
-                itemList: $viewModel.arrivalDataArray,
+                itemList: $viewModel.arrivalArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -107,7 +107,7 @@ struct ArrivalCardContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.arrivalDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.arrivalArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

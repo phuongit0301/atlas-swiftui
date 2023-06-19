@@ -36,10 +36,10 @@ struct DepartureSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.departureQRDataArray.isEmpty {
+            if !viewModel.departureQRArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.departureQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -47,7 +47,7 @@ struct DepartureSplitContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.departureQRDataArray[index].name)
+                                    Text(viewModel.departureQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
@@ -67,11 +67,11 @@ struct DepartureSplitContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: viewModel.departureQRDataArray[index].isDefault))
+                                .listRowBackground(self.backgroundColor(for: viewModel.departureQRArray[index].isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.updateDeparture(item: viewModel.departureQRDataArray[index])
-                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRDataArray[index])
+                                        viewModel.updateDeparture(item: viewModel.departureQRArray[index])
+                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -110,7 +110,7 @@ struct DepartureSplitContainer: View {
             
             DepartureSplitForm(
                 tagList: self.$depTags,
-                itemList: $viewModel.departureQRDataArray,
+                itemList: $viewModel.departureQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -121,7 +121,7 @@ struct DepartureSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.departureQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

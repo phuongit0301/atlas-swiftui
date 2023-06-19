@@ -36,10 +36,10 @@ struct EnrouteSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.enrouteQRDataArray.isEmpty {
+            if !viewModel.enrouteQRArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.enrouteQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -47,7 +47,7 @@ struct EnrouteSplitContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.enrouteQRDataArray[index].name)
+                                    Text(viewModel.enrouteQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
@@ -67,11 +67,11 @@ struct EnrouteSplitContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(for: viewModel.enrouteQRDataArray[index].isDefault))
+                                .listRowBackground(self.backgroundColor(for: viewModel.enrouteQRArray[index].isDefault))
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.updateEnroute(item: viewModel.enrouteQRDataArray[index])
-                                        viewModel.removeItemEnrouteQR(item: viewModel.enrouteQRDataArray[index])
+                                        viewModel.updateEnroute(item: viewModel.enrouteQRArray[index])
+                                        viewModel.removeItemEnrouteQR(item: viewModel.enrouteQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -110,7 +110,7 @@ struct EnrouteSplitContainer: View {
             
             EnrouteSplitForm(
                 tagList: self.$enrouteTags,
-                itemList: $viewModel.enrouteQRDataArray,
+                itemList: $viewModel.enrouteQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -121,7 +121,7 @@ struct EnrouteSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.enrouteQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.enrouteQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

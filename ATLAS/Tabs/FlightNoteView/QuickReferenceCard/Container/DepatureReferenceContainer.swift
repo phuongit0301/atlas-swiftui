@@ -18,10 +18,10 @@ struct DepatureReferenceContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.departureQRDataArray.isEmpty {
+            if !viewModel.departureQRArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.departureQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,7 +29,7 @@ struct DepatureReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.departureQRDataArray[index].name)
+                                    Text(viewModel.departureQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
@@ -52,8 +52,8 @@ struct DepatureReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.updateDeparture(item: viewModel.departureQRDataArray[index])
-                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRDataArray[index])
+                                        viewModel.updateDeparture(item: viewModel.departureQRArray[index])
+                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -91,7 +91,7 @@ struct DepatureReferenceContainer: View {
             
             QuickReferenceForm(
                 tagList: self.$depTags,
-                itemList: $viewModel.departureQRDataArray,
+                itemList: $viewModel.departureQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -99,11 +99,11 @@ struct DepatureReferenceContainer: View {
     }
     
     private func move(from source: IndexSet, to destination: Int) {
-        viewModel.departureQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func delete(at offsets: IndexSet) {
-        viewModel.departureQRDataArray.remove(atOffsets: offsets)
+        viewModel.departureQRArray.remove(atOffsets: offsets)
     }
     
     private func resetData() {

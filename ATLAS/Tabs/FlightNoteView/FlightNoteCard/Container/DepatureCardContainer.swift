@@ -18,10 +18,10 @@ struct DepatureCardContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.departureDataArray.isEmpty {
+            if !viewModel.departureArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.departureDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.departureArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,11 +29,11 @@ struct DepatureCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.departureDataArray[index].name)
+                                    Text(viewModel.departureArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
-                                    ForEach(viewModel.departureDataArray[index].tags) { tag in
+                                    ForEach(viewModel.departureArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -50,11 +50,11 @@ struct DepatureCardContainer: View {
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
-                            .listRowBackground(self.backgroundColor(isDefault: viewModel.departureDataArray[index].isDefault, canDelete: viewModel.departureDataArray[index].canDelete))
+                            .listRowBackground(self.backgroundColor(isDefault: viewModel.departureArray[index].isDefault, canDelete: viewModel.departureArray[index].canDelete))
                             .swipeActions(allowsFullSwipe: false) {
-                                if viewModel.departureDataArray[index].canDelete {
+                                if viewModel.departureArray[index].canDelete {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemDeparture(item: viewModel.departureDataArray[index])
+                                        viewModel.removeItemDeparture(item: viewModel.departureArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -74,11 +74,11 @@ struct DepatureCardContainer: View {
                                 }
                                 
                                 Button {
-                                    var obj = viewModel.departureDataArray[index]
+                                    var obj = viewModel.departureArray[index]
                                     obj.canDelete = false
                                     
                                     viewModel.addDepartureQR(item: obj)
-                                    viewModel.departureDataArray[index].isDefault = true
+                                    viewModel.departureArray[index].isDefault = true
                                 } label: {
                                     Image(systemName: "pin.fill")
                                         .frame(width: 16, height: 16)
@@ -98,7 +98,7 @@ struct DepatureCardContainer: View {
             
             DepartureForm(
                 tagList: self.$depTags,
-                itemList: $viewModel.departureDataArray,
+                itemList: $viewModel.departureArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -107,7 +107,7 @@ struct DepatureCardContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.departureDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.departureArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

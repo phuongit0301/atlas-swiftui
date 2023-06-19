@@ -18,10 +18,10 @@ struct EnrouteCardContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.enrouteDataArray.isEmpty {
+            if !viewModel.enrouteArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.enrouteDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.enrouteArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,11 +29,11 @@ struct EnrouteCardContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.enrouteDataArray[index].name)
+                                    Text(viewModel.enrouteArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
-                                    ForEach(viewModel.enrouteDataArray[index].tags) { tag in
+                                    ForEach(viewModel.enrouteArray[index].tags) { tag in
                                         Text(tag.name)
                                             .padding(.vertical, 4)
                                             .padding(.horizontal, 8)
@@ -49,11 +49,11 @@ struct EnrouteCardContainer: View {
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(self.backgroundColor(isDefault: viewModel.enrouteDataArray[index].isDefault, canDelete: viewModel.enrouteDataArray[index].canDelete))
+                                .listRowBackground(self.backgroundColor(isDefault: viewModel.enrouteArray[index].isDefault, canDelete: viewModel.enrouteArray[index].canDelete))
                                 .swipeActions(allowsFullSwipe: false) {
-                                    if viewModel.enrouteDataArray[index].canDelete {
+                                    if viewModel.enrouteArray[index].canDelete {
                                         Button(role: .destructive) {
-                                            viewModel.removeItemEnroute(item: viewModel.enrouteDataArray[index])
+                                            viewModel.removeItemEnroute(item: viewModel.enrouteArray[index])
                                         } label: {
                                             Image(systemName: "trash.fill")
                                                 .frame(width: 16, height: 16)
@@ -73,11 +73,11 @@ struct EnrouteCardContainer: View {
                                     }
                                     
                                     Button {
-                                        var obj = viewModel.enrouteDataArray[index]
+                                        var obj = viewModel.enrouteArray[index]
                                         obj.canDelete = false
                                         
                                         viewModel.addEnrouteQR(item: obj)
-                                        viewModel.enrouteDataArray[index].isDefault = true
+                                        viewModel.enrouteArray[index].isDefault = true
                                     } label: {
                                         Image(systemName: "pin.fill")
                                             .frame(width: 16, height: 16)
@@ -97,7 +97,7 @@ struct EnrouteCardContainer: View {
             
             DepartureForm(
                 tagList: self.$enrouteTags,
-                itemList: $viewModel.enrouteDataArray,
+                itemList: $viewModel.enrouteArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -106,7 +106,7 @@ struct EnrouteCardContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.enrouteDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.enrouteArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

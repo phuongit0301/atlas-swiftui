@@ -26,5 +26,6 @@ struct CustomSegmentedControl: View {
             }
         }
         .frame(height: 65)
+        .background(.white)
     }
 }

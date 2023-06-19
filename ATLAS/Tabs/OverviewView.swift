@@ -48,10 +48,7 @@ struct OverviewView: View {
                         }
                     }
                 }
-            }
-            .scrollContentBackground(.hidden)
-            .background(Color.theme.cultured)
-            .listStyle(.insetGrouped)
+            }.scrollContentBackground(.hidden)
         }
     }
     

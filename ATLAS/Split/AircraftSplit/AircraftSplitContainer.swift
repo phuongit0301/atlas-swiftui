@@ -36,10 +36,10 @@ struct AircraftSplitContainer: View {
             
             Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
             
-            if !viewModel.aircraftQRDataArray.isEmpty {
+            if !viewModel.aircraftQRArray.isEmpty {
                 VStack(alignment: .leading, spacing: 0) {
                     List {
-                        ForEach(viewModel.aircraftQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.aircraftQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -47,7 +47,7 @@ struct AircraftSplitContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.aircraftQRDataArray[index].name)
+                                    Text(viewModel.aircraftQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                         .lineLimit(1)
@@ -60,7 +60,7 @@ struct AircraftSplitContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRDataArray[index])
+                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -99,7 +99,7 @@ struct AircraftSplitContainer: View {
             
             AirCraftSplitForm(
                 tagList: self.$aircraftTags,
-                itemList: $viewModel.aircraftQRDataArray,
+                itemList: $viewModel.aircraftQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -110,7 +110,7 @@ struct AircraftSplitContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.aircraftQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.aircraftQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

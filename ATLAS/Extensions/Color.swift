@@ -38,4 +38,8 @@ struct ColorTheme {
     let spanishGray = Color("SpanishGray") //999999
     let arsenic = Color("Arsenic") //3C3C43
     let sonicSilver = Color("SonicSilver") //767680
+    let platinum = Color("Platinum") //E7E7E7
+    let graniteGray = Color("GraniteGray") //636366
+    let orangePeel = Color("OrangePeel") //FF9F0A
+    let coralRed = Color("CoralRed") //FF453A
 }

@@ -16,7 +16,8 @@ struct FlightNoteView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack {
-                switch selectedTab {
+                VStack {
+                    switch selectedTab {
                     case 0:
                         AircraftStatusContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
                     case 1:
@@ -27,7 +28,8 @@ struct FlightNoteView: View {
                         ArrivalCardContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
                     default:
                         AircraftStatusContainer(viewModel: viewModel,  geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
-                }
+                    }                    
+                }.padding()
                 
                 Spacer()
                 CustomSegmentedControl(preselectedIndex: $selectedTab, options: noteTab, geoWidth: proxy.size.width)

@@ -18,10 +18,10 @@ struct ArrivalReferenceContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.arrivalQRDataArray.isEmpty {
+            if !viewModel.arrivalQRArray.isEmpty {
                 VStack(spacing: 0) {
                     List {
-                        ForEach(viewModel.arrivalQRDataArray.indices, id: \.self) { index in
+                        ForEach(viewModel.arrivalQRArray.indices, id: \.self) { index in
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .top) {
                                     Image("icon_dots_group")
@@ -29,7 +29,7 @@ struct ArrivalReferenceContainer: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(viewModel.arrivalQRDataArray[index].name)
+                                    Text(viewModel.arrivalQRArray[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.custom("Inter-Regular", size: 16))
                                     
@@ -52,8 +52,8 @@ struct ArrivalReferenceContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.updateArrival(item: viewModel.arrivalQRDataArray[index])
-                                        viewModel.removeItemArrivalQR(item: viewModel.arrivalQRDataArray[index])
+                                        viewModel.updateArrival(item: viewModel.arrivalQRArray[index])
+                                        viewModel.removeItemArrivalQR(item: viewModel.arrivalQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
@@ -90,7 +90,7 @@ struct ArrivalReferenceContainer: View {
             
             QuickReferenceForm(
                 tagList: self.$arrivalTags,
-                itemList: $viewModel.arrivalQRDataArray,
+                itemList: $viewModel.arrivalQRArray,
                 resetData: self.resetData,
                 currentIndex: $currentIndex
             ).frame(height: 98)
@@ -99,7 +99,7 @@ struct ArrivalReferenceContainer: View {
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
-        viewModel.arrivalQRDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.arrivalQRArray.move(fromOffsets: source, toOffset: destination)
     }
     
     private func resetData() {

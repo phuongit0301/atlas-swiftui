@@ -14,36 +14,41 @@ struct TabbarScrollable: View {
     @Binding var selectedTab: ITabs
  
     var body: some View {
-        ScrollViewReader { scrollView in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(tabbarItems, id: \.self) { item in
-                        if item.isShowTabbar {
-                            TabbarItem(item: item, isActive: item.id == selectedTab.id, namespace: menuItemTransition)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut) {
-                                        if (item.isExternal) {
-                                            if let url = URL(string: item.scheme) {
-                                                if UIApplication.shared.canOpenURL(url) {
-                                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        VStack (spacing: 0) {
+            ScrollViewReader { scrollView in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(tabbarItems, id: \.self) { item in
+                            if item.isShowTabbar {
+                                TabbarItem(item: item, isActive: item.id == selectedTab.id, namespace: menuItemTransition)
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut) {
+                                            if (item.isExternal) {
+                                                if let url = URL(string: item.scheme) {
+                                                    if UIApplication.shared.canOpenURL(url) {
+                                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                                    }
                                                 }
+                                            } else {
+                                                selectedTab = item
                                             }
-                                        } else {
-                                            selectedTab = item
                                         }
                                     }
-                                }
+                            }
                         }
                     }
+                    .frame(maxWidth: .infinity)
                 }
-            }
-            .padding()
-            .background(Color.theme.antiFlashWhite)
-            .onChange(of: selectedTab) { newItem in
-                withAnimation {
-                    scrollView.scrollTo(newItem, anchor: .center)
-                }
-            }
+                .padding(4)
+                .background(Color.theme.sonicSilver.opacity(0.12))
+                    .onChange(of: selectedTab) { newItem in
+                        withAnimation {
+                            scrollView.scrollTo(newItem, anchor: .center)
+                        }
+                    }
+            }.cornerRadius(5)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }
  
     }
