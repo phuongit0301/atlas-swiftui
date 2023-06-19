@@ -16,15 +16,13 @@ struct FlightPlanView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack {
-                TabView(selection: $selectedTab,
-                        content: {
+                if selectedTab == 0 {
                     FlightInformationView()
-                        .tag(0)
-                        .toolbar(.hidden, for: .tabBar)
-                }).id("tabView")
-                
-                Tabs(tabs: planTab, geoWidth: proxy.size.width, selectedTab: $selectedTab).id("tabViewBottom")
+                } else {
+                    ExampleView()
+                }
                 Spacer()
+                CustomSegmentedControl(preselectedIndex: $selectedTab, options: planTab, geoWidth: proxy.size.width)
             }
         }
     }

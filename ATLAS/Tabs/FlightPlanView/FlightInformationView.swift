@@ -51,6 +51,7 @@ struct FlightInformationView: View {
                 }
             }
         }
+        .keyboardAvoiding()
         .scrollContentBackground(.hidden)
         .background(Color.theme.cultured)
         .listStyle(.insetGrouped)

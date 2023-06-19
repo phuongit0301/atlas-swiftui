@@ -110,6 +110,7 @@
 		3EFA5EF22A3DFC6E001ED6CF /* FlightInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EF12A3DFC6E001ED6CF /* FlightInformationView.swift */; };
 		3EFA5EF42A3EBE31001ED6CF /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EF32A3EBE31001ED6CF /* SearchBar.swift */; };
 		3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EF52A3F0E6A001ED6CF /* HeaderViewSplit.swift */; };
+		3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EF72A3FEB60001ED6CF /* CustomSegmentedControl.swift */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
@@ -240,6 +241,7 @@
 		3EFA5EF12A3DFC6E001ED6CF /* FlightInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightInformationView.swift; sourceTree = "<group>"; };
 		3EFA5EF32A3EBE31001ED6CF /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		3EFA5EF52A3F0E6A001ED6CF /* HeaderViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewSplit.swift; sourceTree = "<group>"; };
+		3EFA5EF72A3FEB60001ED6CF /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				3E3FCC272A263392008017FA /* ActivityIndicator.swift */,
 				3E3FCC5A2A2D6284008017FA /* Storage.swift */,
 				3EF93D4F2A3025550043E91E /* MeasureSize.swift */,
+				3EFA5EF72A3FEB60001ED6CF /* CustomSegmentedControl.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3E3FCBD92A21C6E4008017FA /* DepartureForm.swift in Sources */,
+				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E3FCC162A24FE69008017FA /* EnrouteSplitContainer.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
