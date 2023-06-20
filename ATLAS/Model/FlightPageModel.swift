@@ -179,6 +179,13 @@ struct CommonTags {
             ITagStorage(name: "ATC"),
             ITagStorage(name: "Aircraft"),
             ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
+            ITagStorage(name: "Environment"),
         ]
         
         return MainItem
@@ -393,36 +400,36 @@ class FlightNoteModelState: ObservableObject {
         }
     }
     
-    func removeItemAircraft(item: IFlightInfoStorageModel) {
+    func removeAircraft(item: IFlightInfoStorageModel) {
         self.aircraftArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemAircraftQR(item: IFlightInfoStorageModel) {
+    func removeAircraftQR(item: IFlightInfoStorageModel) {
         self.aircraftQRArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemDeparture(item: IFlightInfoStorageModel) {
+    func removeDeparture(item: IFlightInfoStorageModel) {
         self.departureArray.removeAll(where: {$0.id == item.id })
 //        objectWillChange.send()
     }
 
-    func removeItemDepartureQR(item: IFlightInfoStorageModel) {
+    func removeDepartureQR(item: IFlightInfoStorageModel) {
         self.departureQRArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemEnroute(item: IFlightInfoStorageModel) {
+    func removeEnroute(item: IFlightInfoStorageModel) {
         self.enrouteArray.removeAll(where: {$0.id == item.id })
     }
 
-    func removeItemEnrouteQR(item: IFlightInfoStorageModel) {
+    func removeEnrouteQR(item: IFlightInfoStorageModel) {
         self.enrouteQRArray.removeAll(where: {$0.id == item.id })
     }
     
-    func removeItemArrival(item: IFlightInfoStorageModel) {
+    func removeArrival(item: IFlightInfoStorageModel) {
         self.arrivalArray.removeAll(where: {$0.id == item.id })
     }
 
-    func removeItemArrivalQR(item: IFlightInfoStorageModel) {
+    func removeArrivalQR(item: IFlightInfoStorageModel) {
         self.arrivalQRArray.removeAll(where: {$0.id == item.id })
     }
     

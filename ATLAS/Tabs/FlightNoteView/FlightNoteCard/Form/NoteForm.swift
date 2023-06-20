@@ -64,33 +64,35 @@ struct NoteForm: View {
                             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
                             
                             TextField("Tap in this space to type or edit", text: $textNote, axis: .vertical)
-                                .padding(.vertical, 16)
+                                .padding(.vertical, 10)
                                 .frame(width: geo.size.width - 64 > 0 ? geo.size.width - 64 : geo.size.width, alignment: .leading)
-                                .lineLimit(15, reservesSpace: true)
+                                .lineLimit(8, reservesSpace: true)
                             
                             
                             if tagList.count > 0 {
                                 Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
                                 
-                                HStack {
-                                    ForEach(tagList) { item in
-                                        Button(action: {
-                                            if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
-                                                self.tagList[matchingIndex].isChecked.toggle()
-                                            }
-                                            withAnimation(.easeInOut(duration: 0.5)) {
-                                                self.animate = true
-                                            }
-                                        }, label: {
-                                            Text(item.name)
-                                                .font(.custom("Inter-Medium", size: 12))
-                                        }).padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .background(item.isChecked ? Color.theme.tealDeer : Color.theme.brightGray)
-                                            .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
-                                            .cornerRadius(16)
+                                ScrollView(showsIndicators: false) {
+                                    HStack {
+                                        ForEach(tagList) { item in
+                                            Button(action: {
+                                                if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
+                                                    self.tagList[matchingIndex].isChecked.toggle()
+                                                }
+                                                withAnimation(.easeInOut(duration: 0.5)) {
+                                                    self.animate = true
+                                                }
+                                            }, label: {
+                                                Text(item.name)
+                                                    .font(.custom("Inter-Medium", size: 12))
+                                            }).padding(.vertical, 4)
+                                                .padding(.horizontal, 8)
+                                                .background(item.isChecked ? Color.theme.tealDeer : Color.theme.brightGray)
+                                                .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
+                                                .cornerRadius(16)
+                                        }
                                     }
-                                }.fixedSize(horizontal: false, vertical: false)
+                                }.padding(.vertical, 16)
                             }
                             
                             Spacer()
@@ -110,10 +112,19 @@ struct NoteForm: View {
                 .onAppear {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].name
+                        
+                        if itemList[currentIndex].tags.count > 0 {
+                            for index in 0..<tagList.count {
+                                if itemList[currentIndex].tags.contains(where: {$0.name == tagList[index].name}) {
+                                    tagList[index].isChecked = true
+                                }
+                            }
+                        }
                     }
                 }
+
             
-        }
+        }.ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     func save() {

@@ -1,5 +1,5 @@
 //
-//  DepatureCardContainer.swift
+//  DepartureCardContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,106 +8,52 @@
 import Foundation
 import SwiftUI
 
-struct DepatureCardContainer: View {
+struct DepartureCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
     @State var depTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
+    @State private var showSheet: Bool = false
+    @State private var textNote: String = ""
+    var header: String = "Departure Status"
     
     var geoWidth: Double = 0
     
     var body: some View {
-        VStack(spacing: 0) {
-            if !viewModel.departureArray.isEmpty {
-                VStack(spacing: 0) {
-                    List {
-                        ForEach(viewModel.departureArray.indices, id: \.self) { index in
-                            VStack(alignment: .leading, spacing: 0) {
-                                HStack(alignment: .top) {
-                                    Image("icon_dots_group")
-                                        .frame(width: 14, height: 16)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                    
-                                    Text(viewModel.departureArray[index].name)
-                                        .foregroundColor(Color.theme.eerieBlack)
-                                        .font(.custom("Inter-Regular", size: 16))
-                                    
-                                    ForEach(viewModel.departureArray[index].tags) { tag in
-                                        Text(tag.name)
-                                            .padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .font(.custom("Inter-Medium", size: 12))
-                                            .foregroundColor(Color.theme.eerieBlack)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                            )
-                                    }
-                                }
-                            }
-                            .padding(12)
-                            .frame(maxWidth: geoWidth, alignment: .leading)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets())
-                            .listRowBackground(self.backgroundColor(isDefault: viewModel.departureArray[index].isDefault, canDelete: viewModel.departureArray[index].canDelete))
-                            .swipeActions(allowsFullSwipe: false) {
-                                if viewModel.departureArray[index].canDelete {
-                                    Button(role: .destructive) {
-                                        viewModel.removeItemDeparture(item: viewModel.departureArray[index])
-                                    } label: {
-                                        Image(systemName: "trash.fill")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }.tint(Color.theme.alizarinCrimson)
-                                    
-                                    Button {
-                                        self.currentIndex = index
-                                    } label: {
-                                        Image(systemName: "square.and.pencil")
-                                            .frame(width: 16, height: 16)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                    .tint(Color.theme.eerieBlack)
-                                }
-                                
-                                Button {
-                                    var obj = viewModel.departureArray[index]
-                                    obj.canDelete = false
-                                    
-                                    viewModel.addDepartureQR(item: obj)
-                                    viewModel.departureArray[index].isDefault = true
-                                } label: {
-                                    Image(systemName: "pin.fill")
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }
-                                .tint(Color.theme.eerieBlack)
-                            }
-                        }.onMove(perform: move)
-                    }.listStyle(.plain)
-                        .listRowBackground(Color.theme.champagne)
-                        .padding(.bottom, 5)
-                }.background(Color.white)
-                // end list
-                Rectangle().fill(Color.theme.lightGray).frame(height: 1)
+        ItemList(
+            header: header,
+            showSheet: $showSheet,
+            currentIndex: $currentIndex,
+            itemList: $viewModel.departureArray,
+            geoWidth: geoWidth,
+            remove: remove,
+            addQR: addQR,
+            removeQR: removeQR
+        ).frame(maxHeight: .infinity)
+            .padding()
+            .background(Color.white)
+            .cornerRadius(8)
+            .sheet(isPresented: $showSheet) {
+                NoteForm(
+                    textNote: $textNote,
+                    tagList: $depTags,
+                    itemList: $viewModel.departureArray,
+                    currentIndex: $currentIndex,
+                    showSheet: $showSheet,
+                    resetData: self.resetData)
             }
-            
-            DepartureForm(
-                tagList: self.$depTags,
-                itemList: $viewModel.departureArray,
-                resetData: self.resetData,
-                currentIndex: $currentIndex
-            ).frame(height: 98)
-        }
     }
     
-    private func move(from source: IndexSet, to destination: Int) {
-        print("Move");
-        viewModel.departureArray.move(fromOffsets: source, toOffset: destination)
+    private func remove(_ index: Int) {
+        viewModel.removeDeparture(item: viewModel.departureArray[index])
+    }
+    
+    private func addQR(_ index: Int) {
+        viewModel.addDepartureQR(item: viewModel.departureArray[index])
+    }
+    
+    private func removeQR(_ index: Int) {
+        viewModel.removeDepartureQR(item: viewModel.departureArray[index])
     }
     
     private func resetData() {
@@ -117,8 +63,10 @@ struct DepatureCardContainer: View {
             self.currentIndex = -1
         }
     }
-    
-    private func backgroundColor(isDefault: Bool, canDelete: Bool) -> Color {
-        return isDefault ? Color.theme.champagne : Color.white
+}
+
+struct DepartureCardContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        DepartureCardContainer(viewModel: FlightNoteModelState())
     }
 }

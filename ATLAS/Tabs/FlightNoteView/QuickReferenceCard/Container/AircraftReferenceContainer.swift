@@ -41,7 +41,7 @@ struct AircraftReferenceContainer: View {
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         viewModel.updateAircraft(item: viewModel.aircraftQRArray[index])
-                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRArray[index])
+                                        viewModel.removeAircraftQR(item: viewModel.aircraftQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)

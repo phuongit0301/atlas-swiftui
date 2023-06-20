@@ -45,15 +45,15 @@ struct AircraftStatusContainer: View {
     }
     
     private func remove(_ index: Int) {
-        viewModel.removeItemAircraft(item: viewModel.aircraftArray[index])
+        viewModel.removeAircraft(item: viewModel.aircraftArray[index])
     }
     
     private func addQR(_ index: Int) {
-        viewModel.removeItemAircraftQR(item: viewModel.aircraftArray[index])
+        viewModel.addAircraftQR(item: viewModel.aircraftArray[index])
     }
     
     private func removeQR(_ index: Int) {
-        viewModel.removeItemAircraftQR(item: viewModel.aircraftArray[index])
+        viewModel.removeAircraftQR(item: viewModel.aircraftArray[index])
     }
     
     private func resetData() {

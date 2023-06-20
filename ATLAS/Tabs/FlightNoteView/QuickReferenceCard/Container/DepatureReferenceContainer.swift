@@ -53,7 +53,7 @@ struct DepatureReferenceContainer: View {
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         viewModel.updateDeparture(item: viewModel.departureQRArray[index])
-                                        viewModel.removeItemDepartureQR(item: viewModel.departureQRArray[index])
+                                        viewModel.removeDepartureQR(item: viewModel.departureQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)

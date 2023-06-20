@@ -53,7 +53,7 @@ struct EnrouteReferenceContainer: View {
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         viewModel.updateEnroute(item: viewModel.enrouteQRArray[index])
-                                        viewModel.removeItemEnrouteQR(item: viewModel.enrouteQRArray[index])
+                                        viewModel.removeEnrouteQR(item: viewModel.enrouteQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)

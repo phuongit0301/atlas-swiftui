@@ -64,6 +64,21 @@ struct ItemList: View {
                                     
                                     Spacer()
                                     
+                                    ForEach(itemList[index].tags) { tag in
+                                        HStack {
+                                            Text(tag.name)
+                                                .padding(.vertical, 4)
+                                                .padding(.horizontal, 8)
+                                                .font(.system(size: 12, weight: .regular))
+                                                .foregroundColor(Color.theme.eerieBlack)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 16)
+                                                        .stroke(Color.theme.eerieBlack, lineWidth: 1)
+                                                )
+                                        }.padding(.horizontal, 3)
+                                    }
+
+                                    
                                     Button(action: {
                                         if (itemList[index].isDefault) {
                                             removeQR(index)
@@ -85,7 +100,7 @@ struct ItemList: View {
                                                 .frame(width: 22, height: 22)
                                                 .scaledToFit()
                                                 .aspectRatio(contentMode: .fit)
-                                    }
+                                    }.padding(.horizontal, 5)
                                 }
                             }
                             .padding(12)
@@ -94,11 +109,13 @@ struct ItemList: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
                             .swipeActions(allowsFullSwipe: false) {
-                                Button(role: .destructive) {
-                                    remove(index)
-                                } label: {
-                                    Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                }.tint(Color.theme.coralRed)
+                                if itemList[index].canDelete {
+                                    Button(role: .destructive) {
+                                        remove(index)
+                                    } label: {
+                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                    }.tint(Color.theme.coralRed)
+                                }
                                 
                                 Button {
                                     self.currentIndex = index

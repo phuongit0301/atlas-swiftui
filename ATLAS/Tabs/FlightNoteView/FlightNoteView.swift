@@ -21,7 +21,7 @@ struct FlightNoteView: View {
                     case 0:
                         AircraftStatusContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
                     case 1:
-                        DepatureCardContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
+                        DepartureCardContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
                     case 2:
                         EnrouteCardContainer(viewModel: viewModel, geoWidth: proxy.size.width).tag(selectedTab).ignoresSafeArea()
                     case 3:

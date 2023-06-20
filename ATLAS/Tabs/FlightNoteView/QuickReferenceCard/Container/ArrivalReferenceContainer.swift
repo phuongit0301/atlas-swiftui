@@ -53,7 +53,7 @@ struct ArrivalReferenceContainer: View {
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         viewModel.updateArrival(item: viewModel.arrivalQRArray[index])
-                                        viewModel.removeItemArrivalQR(item: viewModel.arrivalQRArray[index])
+                                        viewModel.removeArrivalQR(item: viewModel.arrivalQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)

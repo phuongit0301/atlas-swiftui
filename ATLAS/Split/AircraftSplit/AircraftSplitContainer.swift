@@ -60,7 +60,7 @@ struct AircraftSplitContainer: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        viewModel.removeItemAircraftQR(item: viewModel.aircraftQRArray[index])
+                                        viewModel.removeAircraftQR(item: viewModel.aircraftQRArray[index])
                                     } label: {
                                         Image(systemName: "trash.fill")
                                             .frame(width: 16, height: 16)
