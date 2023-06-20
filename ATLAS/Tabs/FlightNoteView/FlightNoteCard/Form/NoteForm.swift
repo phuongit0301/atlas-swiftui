@@ -21,7 +21,7 @@ struct NoteForm: View {
     var body: some View {
         GeometryReader { geo in
             // List categories
-            ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Button(action: {
@@ -64,8 +64,10 @@ struct NoteForm: View {
                             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
                             
                             TextField("Tap in this space to type or edit", text: $textNote, axis: .vertical)
-                                .frame(width: geo.size.width - 64 > 0 ? geo.size.width - 64 : geo.size.width, height: geo.size.height / 3 > 0 ? geo.size.height / 3 : geo.size.height, alignment: .leading)
-                                .lineLimit(10, reservesSpace: true)
+                                .padding(.vertical, 16)
+                                .frame(width: geo.size.width - 64 > 0 ? geo.size.width - 64 : geo.size.width, alignment: .leading)
+                                .lineLimit(15, reservesSpace: true)
+                            
                             
                             if tagList.count > 0 {
                                 Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
@@ -115,22 +117,30 @@ struct NoteForm: View {
     }
     
     func save() {
-        let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-        let newItem = IFlightInfoStorageModel(name: textNote, tags: tags, isDefault: false, canDelete: true)
+        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        itemList.append(newItem)
-        
-        textNote = ""
-        self.resetData()
-        self.showSheet.toggle()
+        if !name.isEmpty {
+            let tags: [ITagStorage] = tagList.filter { $0.isChecked };
+            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: false, canDelete: true)
+            
+            itemList.append(newItem)
+            
+            textNote = ""
+            self.resetData()
+            self.showSheet.toggle()
+        }
     }
     
     func update() {
-        itemList[currentIndex].name = textNote
-        itemList[currentIndex].tags = tagList.filter { $0.isChecked }
+        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        textNote = ""
-        self.resetData()
-        self.showSheet.toggle()
+        if !name.isEmpty {
+            itemList[currentIndex].name = name
+            itemList[currentIndex].tags = tagList.filter { $0.isChecked }
+            
+            textNote = ""
+            self.resetData()
+            self.showSheet.toggle()
+        }
     }
 }

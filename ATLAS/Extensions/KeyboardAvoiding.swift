@@ -74,36 +74,36 @@ import Combine
 //}
 
 
-//struct AdaptsToSoftwareKeyboard: ViewModifier {
-//  @State var currentHeight: CGFloat = 0
-//
-//  func body(content: Content) -> some View {
-//    content
-//      .padding(.bottom, currentHeight)
-////      .edgesIgnoringSafeArea(.bottom)
-//      .edgesIgnoringSafeArea(currentHeight == 0 ? [] : .bottom)
-//      .onAppear(perform: subscribeToKeyboardEvents)
-//  }
-//
-//  private func subscribeToKeyboardEvents() {
-//    NotificationCenter.Publisher(
-//      center: NotificationCenter.default,
-//      name: UIResponder.keyboardWillShowNotification
-//    ).compactMap { notification in
-//        notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
-//    }.map { rect in
-//      rect.height
-//    }.subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
-//
-//    NotificationCenter.Publisher(
-//      center: NotificationCenter.default,
-//      name: UIResponder.keyboardWillHideNotification
-//    ).compactMap { notification in
-//      CGFloat.zero
-//    }.subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
-//  }
-//}
-//
+struct AdaptsToSoftwareKeyboard: ViewModifier {
+  @State var currentHeight: CGFloat = 0
+
+  func body(content: Content) -> some View {
+    content
+      .padding(.bottom, currentHeight)
+//      .edgesIgnoringSafeArea(.bottom)
+      .edgesIgnoringSafeArea(currentHeight == 0 ? [] : .bottom)
+      .onAppear(perform: subscribeToKeyboardEvents)
+  }
+
+  private func subscribeToKeyboardEvents() {
+    NotificationCenter.Publisher(
+      center: NotificationCenter.default,
+      name: UIResponder.keyboardWillShowNotification
+    ).compactMap { notification in
+        notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
+    }.map { rect in
+      rect.height
+    }.subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
+
+    NotificationCenter.Publisher(
+      center: NotificationCenter.default,
+      name: UIResponder.keyboardWillHideNotification
+    ).compactMap { notification in
+      CGFloat.zero
+    }.subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
+  }
+}
+
 //extension Animation {
 //    static var keyboard: Animation {
 //        .interpolatingSpring(mass: 3, stiffness: 1000, damping: 500, initialVelocity: 0.0)
@@ -138,12 +138,14 @@ public struct KeyboardAvoiding: ViewModifier {
                 EmptyView().frame(height: 0)
             }
             .onReceive(Publishers.keyboardHeight) {
-                if $0.native == 0 {
-                    self.keyboardActiveAdjustment = min($0, 0)
-                } else {
-                    self.keyboardActiveAdjustment = max($0, 580)
-                }
+                self.keyboardActiveAdjustment = min($0, 0)
                 
+//                if $0.native == 0 {
+//                    self.keyboardActiveAdjustment = min($0, 0)
+//                } else {
+//                    self.keyboardActiveAdjustment = max($0, 580)
+//                }
+//                
             }
             .scrollDismissesKeyboard(.immediately)
     }
@@ -152,5 +154,9 @@ public struct KeyboardAvoiding: ViewModifier {
 public extension View {
     func keyboardAvoiding() -> some View {
         modifier(KeyboardAvoiding())
+    }
+    
+    func adaptKeyboard() -> some View {
+        modifier(AdaptsToSoftwareKeyboard())
     }
 }
