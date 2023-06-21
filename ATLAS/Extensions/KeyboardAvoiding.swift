@@ -9,25 +9,25 @@ import Foundation
 import SwiftUI
 import Combine
 
-//extension UIResponder {
-//    static var currentFirstResponder: UIResponder? {
-//        _currentFirstResponder = nil
-//        UIApplication.shared.sendAction(#selector(UIResponder.findFirstResponder(_:)), to: nil, from: nil, for: nil)
-//        return _currentFirstResponder
-//    }
-//
-//    private static weak var _currentFirstResponder: UIResponder?
-//
-//    @objc private func findFirstResponder(_ sender: Any) {
-//        UIResponder._currentFirstResponder = self
-//    }
-//
-//    var globalFrame: CGRect? {
-//        guard let view = self as? UIView else { return nil }
-//        return view.superview?.convert(view.frame, to: nil)
-//    }
-//}
-//
+extension UIResponder {
+    static var currentFirstResponder: UIResponder? {
+        _currentFirstResponder = nil
+        UIApplication.shared.sendAction(#selector(UIResponder.findFirstResponder(_:)), to: nil, from: nil, for: nil)
+        return _currentFirstResponder
+    }
+
+    private static weak var _currentFirstResponder: UIResponder?
+
+    @objc private func findFirstResponder(_ sender: Any) {
+        UIResponder._currentFirstResponder = self
+    }
+
+    var globalFrame: CGRect? {
+        guard let view = self as? UIView else { return nil }
+        return view.superview?.convert(view.frame, to: nil)
+    }
+}
+
 //extension Publishers {
 //    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
 //        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
@@ -148,12 +148,30 @@ public struct KeyboardAvoiding: ViewModifier {
     }
 }
 
+// Handle for modal sheet
+struct KeyboardAdaptive: ViewModifier {
+    @State private var height: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        GeometryReader { geometry in
+            withAnimation(.easeInOut(duration: 0.16)) {
+                content
+                    .presentationDetents([.height(height)])
+                    .padding(.bottom, height > 0 ? 16 : 0)
+                    .onReceive(Publishers.keyboardHeight) { keyboardHeight in
+                        self.height = keyboardHeight > 0 ? geometry.frame(in: .global).height - 60 - keyboardHeight : 0
+                }
+            }
+        }
+    }
+}
+
 public extension View {
     func keyboardAvoiding() -> some View {
         modifier(KeyboardAvoiding())
     }
     
-//    func adaptKeyboard() -> some View {
-//        modifier(AdaptsToSoftwareKeyboard())
-//    }
+    func keyboardAdaptive() -> some View {
+        modifier(KeyboardAdaptive())
+    }
 }

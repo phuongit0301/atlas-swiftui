@@ -12,7 +12,10 @@ struct HeaderViewSplit: View {
     @EnvironmentObject var sideMenuState: SideMenuModelState
     @Environment(\.dismiss) private var dismiss
     
-    @State private var searchText: String = ""
+    @State var searchText: String = ""
+    var isBack: Bool = false
+    var isMenu: Bool = false
+    var isNext: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -21,17 +24,27 @@ struct HeaderViewSplit: View {
                 )
                 
                 HStack(spacing: 0) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        HStack(spacing: 0) {
-                            Image(systemName: "chevron.left")
-                                .frame(width: 17, height: 22)
-                                .foregroundColor(Color.theme.azure)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                            Text("Back")
-                                .font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    if isBack {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            HStack(spacing: 0) {
+                                Image(systemName: "chevron.left")
+                                    .frame(width: 17, height: 22)
+                                    .foregroundColor(Color.theme.azure)
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
+                                Text("Back")
+                                    .font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                            }
+                        }
+                    }
+                    
+                    if isMenu {
+                        Button(action: {
+                            // todo: Handle press menu
+                        }) {
+                            Text("Menu").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
                         }
                     }
                     
@@ -43,6 +56,14 @@ struct HeaderViewSplit: View {
                             Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 5).font(.system(size: 17, weight: .semibold))
                         }
                     }.frame(maxWidth: .infinity)
+                    
+                    if isNext {
+                        Button(action: {
+                            // todo: Handle press menu
+                        }) {
+                            Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
+                        }
+                    }
                     
                 }
                 
@@ -59,7 +80,7 @@ struct HeaderViewSplit: View {
                 }
 
             }.padding()
-        }
+        }.background(.white)
         Rectangle().fill(Color.black.opacity(0.3)).frame(height: 1)
     }
 }

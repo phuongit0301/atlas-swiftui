@@ -23,3 +23,47 @@ struct IFlightPlanTabs {
         return MainItem
     }()
 }
+
+struct IFPSplitModel: Identifiable, Encodable, Decodable {
+    var id = UUID()
+    var name: String
+    var date: String
+    var isFavourite: Bool = false
+}
+
+// For Flight Plan Split
+class FPModelSplitState: ObservableObject {
+    
+    // Flight Plan Split
+    @AppStorage("fpSplitArray") private var fpSplitDataStorage: Data = Data()
+    
+    @Published var fpSplitArray: [IFPSplitModel] = [] {
+        didSet {
+            saveFPSplit()
+        }
+    }
+    
+    init() {
+        loadFPSplit()
+    }
+    
+    private func loadFPSplit() {
+        guard let decodedArray = try? JSONDecoder().decode([IFPSplitModel].self, from: fpSplitDataStorage)
+        else {
+            fpSplitArray = [
+                IFPSplitModel(name: "Scheduled Departure", date: "XX:XX", isFavourite: false),
+                IFPSplitModel(name: "POB", date: "XX:XX", isFavourite: false),
+            ]
+            return
+        }
+        
+        fpSplitArray = decodedArray
+    }
+    
+    private func saveFPSplit() {
+        guard let encodedArray = try? JSONEncoder().encode(fpSplitArray) else {
+            return
+        }
+        fpSplitDataStorage = encodedArray
+    }
+}

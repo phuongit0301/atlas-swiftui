@@ -181,35 +181,38 @@ enum Status {
     case dislike
 }
 
-func getDestination(screen: NavigationEnumeration, item: ListFlightSplitItem, row: ListFlightSplitItem) -> AnyView {
-    if screen == NavigationEnumeration.TableScreen {
-        return AnyView(TableDetailSplit(row: row))
-    } else {
-        if row.screen == NavigationEnumeration.NoteScreen {
-            return AnyView(FlightPlanSplit())
-        }
-        
-        if row.screen == NavigationEnumeration.AirCraftScreen {
-            return AnyView(AircraftSplit())
-        }
-        
-        if row.screen == NavigationEnumeration.DepartureScreen {
-            return AnyView(DepartureSplit())
-        }
-        
-        if row.screen == NavigationEnumeration.EnrouteScreen {
-            return AnyView(EnrouteSplit())
-        }
-        
-        if row.screen == NavigationEnumeration.ArrivalScreen {
-            return AnyView(ArrivalSplit())
-        }
-        
-        if row.screen == NavigationEnumeration.AtlasSearchScreen {
-            return AnyView(AtlasSearchSplit())
-        }
-        
+func getDestination(_ item: ListFlightInformationItem) -> AnyView {
+    if item.screenName == NavigationEnumeration.AirCraftScreen {
+        return AnyView(AircraftSplit())
+    }
+    
+    if item.screenName == NavigationEnumeration.FuelScreen {
+        return AnyView(FuelViewSplit())
+    }
+    
+    if item.screenName == NavigationEnumeration.NoteScreen {
         return AnyView(FlightPlanSplit())
     }
+    
+    if item.screenName == NavigationEnumeration.DepartureScreen {
+        return AnyView(DepartureSplit())
+    }
+    
+    if item.screenName == NavigationEnumeration.EnrouteScreen {
+        return AnyView(EnrouteSplit())
+    }
+    
+    if item.screenName == NavigationEnumeration.ArrivalScreen {
+        return AnyView(ArrivalSplit())
+    }
+    
+    if item.screenName == NavigationEnumeration.AtlasSearchScreen {
+        return AnyView(AtlasSearchSplit())
+    }
+    
+    return AnyView(FlightPlanSplit())
 }
 
+func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
+    return AnyView(TableDetailSplit(row: item))
+}

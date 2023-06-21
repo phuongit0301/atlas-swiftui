@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct OverviewView: View {
+struct OverviewSplitView: View {
     var viewInformationModel = ListReferenceModel()
     var viewUtilitiesModel = ListUtilitiesModel()
-    @EnvironmentObject var modelState: TabModelState
     
     var body: some View {
         // flight informations
@@ -21,21 +20,9 @@ struct OverviewView: View {
                     Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                 }.padding(.vertical, 10)
                 ForEach(viewInformationModel.ListItem, id: \.self) { item in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            if let itemSelected = modelState.tabs.first(where: { $0.screenName == item.screenName }) {
-                                modelState.selectedTab = itemSelected
-                            }
-                        }
-                    }) {
+                    NavigationLink(destination: getDestination(item)) {
                         HStack {
                             Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .resizable()
-                                .frame(width: 8, height: 12)
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
                         }
                     }
                 }
@@ -54,15 +41,15 @@ struct OverviewView: View {
                             .font(.system(size: 17, weight: .regular))
                     }
                 }.padding(.vertical, 10)
-                
                 ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
-                    NavigationLink(destination: ExampleView()) {
+                    NavigationLink(destination: getDestinationTable(item)) {
                         HStack {
                             Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }
                     }
                 }
             }.scrollContentBackground(.hidden)
+                
         }
     }
     

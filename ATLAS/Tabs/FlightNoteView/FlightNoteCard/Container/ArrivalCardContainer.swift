@@ -40,7 +40,9 @@ struct ArrivalCardContainer: View {
                     itemList: $viewModel.arrivalArray,
                     currentIndex: $currentIndex,
                     showSheet: $showSheet,
-                    resetData: self.resetData)
+                    resetData: self.resetData
+                ).keyboardAdaptive()
+                    .interactiveDismissDisabled(true)
             }
     }
     

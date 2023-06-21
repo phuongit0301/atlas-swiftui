@@ -18,19 +18,19 @@ struct SidebarItem: View {
                 if item == selectedItem {
                     renderImage
                     VStack {
-                        Text(item.name).background(Color.clear).font(.custom("Inter-Regular", size: 16))
-                        Text(item.flight ?? "").background(Color.clear).font(.custom("Inter-Regular", size: 13))
+                        Text(item.name).foregroundColor(.white).font(.system(size: 17, weight: .regular))
+                        Text(item.flight ?? "").foregroundColor(.white).font(.system(size: 13, weight: .regular))
                     }
                     Spacer()
-                    Text(item.date ?? "").foregroundColor(.white).font(.custom("Inter-SemiBold", size: 16))
+                    Text(item.date ?? "").foregroundColor(.white).font(.system(size: 17, weight: .regular))
                 } else {
                     renderImage
                     VStack {
-                        Text(item.name).background(Color.clear).font(.custom("Inter-Regular", size: 16))
-                        Text(item.flight ?? "").background(Color.clear).font(.custom("Inter-Regular", size: 13))
+                        Text(item.name).background(Color.clear).font(.system(size: 17, weight: .regular))
+                        Text(item.flight ?? "").background(Color.clear).font(.system(size: 13, weight: .regular))
                     }
                     Spacer()
-                    Text(item.date ?? "").background(Color.clear).font(.custom("Inter-Regular", size: 16))
+                    Text(item.date ?? "").background(Color.clear).font(.system(size: 17, weight: .regular))
                 }
             }.padding(.horizontal, 15)
         }

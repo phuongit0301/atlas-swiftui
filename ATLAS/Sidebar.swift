@@ -13,25 +13,11 @@ struct Sidebar: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Spacer()
-            
             Image("logo")
                 .frame(width: 163, height: 26)
                 .scaledToFit()
                 .aspectRatio(contentMode: .fit)
                 .padding(20)
-            
-            HStack {
-                Image("icon_profile")
-                    .frame(width: 40, height: 40)
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(20)
-                
-            }.frame(maxWidth: .infinity, alignment: .leading)
-                .background(.white)
-                .cornerRadius(8)
-                .padding(15)
             
             List(selection: $sideMenuState.selectedMenu) {
                 ForEach(sideMenuState.mainMenu, id: \.self) { item in
@@ -42,11 +28,24 @@ struct Sidebar: View {
                             }
                         } header: {
                             Text(item.name)
-                                .foregroundColor(Color.theme.eerieBlack).font(Font.custom("Inter-Medium", size: 17))
+                                .foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                         }
                     }
                 }
             }.scrollContentBackground(.hidden)
         }.background(Color.theme.cultured)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        
+                    }) {
+                        Image(systemName: "person.crop.circle").foregroundColor(Color.theme.azure)
+                            .frame(width: 22, height: 22)
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                }
+            }
     }
 }

@@ -9,153 +9,44 @@ import Foundation
 import SwiftUI
 
 struct FlightPlanSplit: View {
-    @State private var textRouting: String = ""
-    private let pasteboard = UIPasteboard.general
+    @EnvironmentObject var viewModel: FPModelSplitState
     
     var body: some View {
-        GeometryReader { geo in
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Flight Plan")
-                        .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
-                    
-                    Rectangle().fill(Color.theme.cultured).frame(height: 16)
-                    
-                    Text("OFP Updates")
-                        .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
-                    
-                    Rectangle().fill(Color.theme.cultured).frame(height: 16)
-                    
-                    VStack(alignment: .center, spacing: 0) {
-                        Text("Actual Weights").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                            .padding(10)
-                            .frame(maxWidth: .infinity)
-                            .border(Color.theme.chineseSilver2, width: 1)
-                        HStack(spacing: 0) {
-                            Text("PZFW").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("PTOW").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("PLWT").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                        }
-                        HStack(spacing: 0) {
-                            Text("142560").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("227000").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("150500").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                        }
-                    }.border(Color.theme.chineseSilver2, width: 1)
-                        .cornerRadius(4)
-                        .background(Color.white)
-                        .frame(maxWidth: .infinity)
-                    
-                    Rectangle().fill(Color.theme.cultured).frame(height: 16)
-                    
-                    VStack(alignment: .center, spacing: 0) {
-                        Text("Extra Fuel").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                            .padding(10)
-                            .frame(maxWidth: .infinity)
-                            .border(Color.theme.chineseSilver2, width: 1)
-                        HStack(spacing: 0) {
-                            Text("Time").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("Fuel (Kg)").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("Reason").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                        }
-                        HStack(spacing: 0) {
-                            Text("00:15").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("1000").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                            Text("ENR WX, ARR DELAYS").foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-Regular", size: 12))
-                                .padding(10)
-                                .frame(maxWidth: .infinity)
-                                .border(Color.theme.chineseSilver2, width: 1)
-                        }
-                    }.border(Color.theme.chineseSilver2, width: 1)
-                        .cornerRadius(4)
-                        .background(Color.white)
-                        .frame(maxWidth: .infinity)
-                    
-                    Rectangle().fill(Color.theme.cultured).frame(height: 16)
-                    
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("")
-                            .foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 20))
+        VStack (spacing: 0) {
+            HeaderViewSplit(isMenu: true, isNext: true)
+            
+            List {
+                HStack {
+                    Text("Flight Plan").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+                }.padding(.vertical, 10)
+                ForEach(viewModel.fpSplitArray.indices, id: \.self) { index in
+                    HStack {
+                        Text(viewModel.fpSplitArray[index].name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         
-                        Rectangle().fill(Color.theme.cultured).frame(height: 16)
+                        Spacer()
+                        Text(viewModel.fpSplitArray[index].date).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular)).padding(.horizontal, 8)
                         
-                        TextField("", text: $textRouting, axis: .vertical)
-                            .frame(height: 250, alignment: .leading)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(4)
-                        
-                        Rectangle().fill(Color.theme.cultured).frame(height: 16)
-                        
-                        HStack {
-                            Spacer()
-                            
-                            Button(action: {
-                                pasteboard.string = self.textRouting
-                            }, label: {
-                                Text("Copy")
-                                    .cornerRadius(12)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 4)
-                                    .foregroundColor(Color.white)
-                                    .background(Color.theme.tuftsBlue)
-                                    .font(.custom("Inter-Regular", size: 13))
-                                
-                            }).cornerRadius(12)
-    
-                            Button(action: {
-                                if let clipboardText = pasteboard.string {
-                                    textRouting = clipboardText
-                                }
-                            }, label: {
-                                Text("Paste")
-                                    .cornerRadius(12)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 4)
-                                    .foregroundColor(Color.white)
-                                    .background(Color.theme.tuftsBlue)
-                                    .font(.custom("Inter-Regular", size: 13))
-                            }).cornerRadius(12)
+                        Button(action: {
+                            viewModel.fpSplitArray[index].isFavourite.toggle()
+                        }) {
+                            viewModel.fpSplitArray[index].isFavourite ?
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(Color.theme.azure)
+                                    .frame(width: 22, height: 22)
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
+                                :
+                                Image(systemName: "star")
+                                    .foregroundColor(Color.theme.azure)
+                                    .frame(width: 22, height: 22)
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
                         }
                     }
-                    
-                    Spacer()
-                }.padding()
-                    .background(Color.theme.cultured)
-            }.background(Color.theme.cultured)
-        }
+                }
+            }.scrollContentBackground(.hidden)
+                
+        }.navigationBarBackButtonHidden()
+        .ignoresSafeArea()
     }
 }

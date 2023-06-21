@@ -38,6 +38,8 @@ struct ListFlightInformationItem: Identifiable, Hashable {
     var name: String
     var date: String
     var isTextBox: Bool = false
+    var screenName: NavigationEnumeration?
+    var idReference: String?
 }
 
 struct ListFlightInformationModel {
@@ -65,13 +67,13 @@ struct ListFlightInformationModel {
 struct ListReferenceModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "Flight Plan", date: "XX:XX (UTC+8)"),
-            ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)"),
-            ListFlightInformationItem(name: "Fuel", date: "XX:XX"),
-            ListFlightInformationItem(name: "Departure", date: "XX:XX"),
-            ListFlightInformationItem(name: "Enroute", date: "00:XX"),
-            ListFlightInformationItem(name: "Arrival", date: "XX:XX"),
-            ListFlightInformationItem(name: "AI Search", date: "XXX"),
+            ListFlightInformationItem(name: "Flight Plan", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightPlanScreen),
+            ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
+            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
+            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen),
+            ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen),
+            ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen),
+            ListFlightInformationItem(name: "AI Search", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
             ListFlightInformationItem(name: "Scratchpad", date: "XXX"),
         ]
         
@@ -82,8 +84,8 @@ struct ListReferenceModel {
 struct ListUtilitiesModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)"),
-            ListFlightInformationItem(name: "China RVSM (Eastbound)", date: "XX:XX (UTC+8)"),
+            ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)", idReference: "1"),
+            ListFlightInformationItem(name: "China RVSM (Eastbound)", date: "XX:XX (UTC+8)", idReference: "2"),
         ]
         
         return MainItem
@@ -178,13 +180,6 @@ struct CommonTags {
             ITagStorage(name: "Airport"),
             ITagStorage(name: "ATC"),
             ITagStorage(name: "Aircraft"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
-            ITagStorage(name: "Environment"),
             ITagStorage(name: "Environment"),
         ]
         

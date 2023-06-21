@@ -40,8 +40,10 @@ struct EnrouteCardContainer: View {
                     itemList: $viewModel.enrouteArray,
                     currentIndex: $currentIndex,
                     showSheet: $showSheet,
-                    resetData: self.resetData)
-            }.Print("model=======\(viewModel.enrouteArray)")
+                    resetData: self.resetData
+                ).keyboardAdaptive()
+                    .interactiveDismissDisabled(true)
+            }
     }
     
     private func remove(_ index: Int) {

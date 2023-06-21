@@ -40,7 +40,9 @@ struct DepartureCardContainer: View {
                     itemList: $viewModel.departureArray,
                     currentIndex: $currentIndex,
                     showSheet: $showSheet,
-                    resetData: self.resetData)
+                    resetData: self.resetData
+                ).keyboardAdaptive()
+                    .interactiveDismissDisabled(true)
             }
     }
     

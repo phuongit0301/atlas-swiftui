@@ -13,7 +13,8 @@ struct HomeViewSplit: View {
         VStack(spacing: 0) {
             HeaderViewSplit()
             
-            OverviewView()
+            OverviewSplitView()
+                .background(Color.theme.antiFlashWhite)
                 .tag(NavigationEnumeration.OverviewScreen)
                 .frame(maxWidth: .infinity)
                 .navigationBarBackButtonHidden()

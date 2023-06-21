@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TableDetailSplit: View {
-    @State var row: ListFlightSplitItem
+    @State var row: ListFlightInformationItem
     var data = ListDetailModel().ListItem
     
     var body: some View {

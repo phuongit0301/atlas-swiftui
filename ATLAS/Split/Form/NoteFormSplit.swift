@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteForm: View {
+struct NoteFormSplit: View {
     @Binding var textNote: String
     @Binding var tagList: [ITagStorage]
     @Binding var itemList: [IFlightInfoStorageModel]
