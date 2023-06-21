@@ -19,7 +19,7 @@ func fetchFlightPlanData() -> [String: Any] {
     
     let routeData = RouteData(routeNo: "SINBER91", route: "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO  Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L", depRwy: "WSSS/20L", arrRwy: "EDDB/25L", levels: "SIN/360/UDULO/380/PEKEM/390/MIGMA/400/KEA/410/KOROS/430/TEXTI/380")
     
-    let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "200", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
+    let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "500", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
     
     let fuelData = FuelData(burnoff: ["time": "14:21", "fuel": "076157", "unit": "100"], cont: ["time": "00:34", "fuel": "003000", "policy": "5%"], altn: ["time": "00:42", "fuel": "003279", "unit": "100"], hold: ["time": "00:30", "fuel": "002031", "unit": "100"], topup60: ["time": "00:00", "fuel": "000000"], taxi: ["time": "N.A", "fuel": "000500", "policy": "7mins std taxi time", "unit": "100"], planReq: ["time": "16:07", "fuel": "084967"], dispAdd: ["time": "00:10", "fuel": "000600", "policy": "PER COMPANY POLICY FOR SINBER FLIGHTS"])
     
@@ -191,11 +191,13 @@ struct FlightPlanView: View {
     @State private var includedOthers = true
     @State private var selectedArrDelays: Int = 0
     @State private var selectedTaxi: Int = 0
-    @State private var selectedFlightLevel: Int = 0
+    @State private var selectedFlightLevel000: Int = 0
+    @State private var selectedFlightLevel00: Int = 0
     @State private var selectedTrackShortening: Int = 0
     @State private var selectedEnrWx: Int = 0
     @State private var selectedReciprocalRwy: Int = 0
-    @State private var selectedOthers: Int = 0
+    @State private var selectedOthers000: Int = 0
+    @State private var selectedOthers00: Int = 0
     @State private var actualZFW: Int = 0
 
     var body: some View {
@@ -224,7 +226,7 @@ struct FlightPlanView: View {
         let threeFlightsLevels = fetchedLevels["flights3"]!
         let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
         // reciprocal rwy
-        let reciprocalRwy: Int = 5  // todo add reciprocal rwy fuel data
+        let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
         
         // set up flight info table data
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
@@ -265,35 +267,121 @@ struct FlightPlanView: View {
         var calculatedDelayFuel: Int {
             return selectedArrDelays * Int(fuelData.hold["unit"]!)!
         }
+        var includedDelayFuel: [String: Any] {
+            if includedArrDelays {
+                return ["fuel": selectedArrDelays * Int(fuelData.hold["unit"]!)!, "time": selectedArrDelays, "remarks": "Arrival Delays \("")"] // todo set to textfield value
+            } else {
+                return ["fuel": 0, "time": 0, "remarks": ""]
+            }
+        }
         var calculatedTaxiFuel: Int {
             return selectedTaxi * Int(fuelData.taxi["unit"]!)!
         }
+        var includedTaxiFuel: [String: Any] {
+            if includedTaxi {
+                return ["fuel": selectedTaxi * Int(fuelData.taxi["unit"]!)!, "remarks": "Additional Taxi Time \("")"] // todo set to textfield value
+            } else {
+                return ["fuel": 0, "remarks": ""]
+            }
+        }
+        
         var calculatedFlightLevelFuel: Int {
-            return selectedFlightLevel * (Int(perfData.lvlChange)! / 2000)
+            let selectedFlightLevel: Int = selectedFlightLevel000 * 1000 + selectedFlightLevel00 * 100
+            let unit: Int = Int(perfData.lvlChange)! / 2000
+            return selectedFlightLevel * unit
+        }
+        var includedFlightLevelFuel: [String: Any] {
+            let selectedFlightLevel = selectedFlightLevel000 * 1000 + selectedFlightLevel00 * 100
+            if includedFlightLevel {
+                return ["fuel": selectedFlightLevel * (Int(perfData.lvlChange)! / 2000), "remarks": "Flight Level Deviation \("")"] // todo set to textfield value
+            } else {
+                return ["fuel": 0, "remarks": ""]
+            }
         }
         var calculatedTrackShorteningFuel: Int {
             return selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
         }
+        var includedTrackShorteningFuel: Int {
+            if includedTrackShortening {
+                return selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+            } else {
+                return 0
+            }
+        }
         var calculatedEnrWxFuel: Int {
             return selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
+        }
+        var includedEnrWxFuel: [String: Any] {
+            if includedEnrWx {
+                return ["fuel": selectedEnrWx * Int(fuelData.burnoff["unit"]!)!, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation \("")"] // todo set to textfield value
+            } else {
+                return ["fuel": 0, "time": 0, "remarks": ""]
+            }
         }
         var calculatedReciprocalRwyFuel: Int {
             return selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
         }
+        var includedReciprocalRwyFuel: [String: Any] {
+            if (includedReciprocalRwy && selectedReciprocalRwy > 0) {
+                return ["fuel": selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy \("")"] // todo set to textfield value
+            } else if (includedReciprocalRwy && selectedReciprocalRwy < 0) {
+                return ["fuel": selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!, "time": selectedReciprocalRwy, "remarks": ""]
+            } else {
+                return ["fuel": 0, "time": 0, "remarks": ""]
+            }
+        }
         var calculatedZFWFuel: Int {
             return (actualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)  // todo change to textfield value for actualZFW
         }
+        var includedZFWFuel: [String: Any] {
+            let fuelBurn = (actualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000) // todo change to textfield value for actualZFW
+            if (includedZFWchange && fuelBurn > 0) {
+                return ["fuel": fuelBurn, "remarks": "ZFW Increase \("")"] // todo set to textfield value
+            } else if (includedZFWchange && fuelBurn < 0) {
+                return ["fuel": fuelBurn, "remarks": ""]
+            } else {
+                return ["fuel": 0, "remarks": ""]
+            }
+        }
         var calculatedOthersFuel: Int {
+            let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
             return selectedOthers
         }
-        var totalExtraFuelAmt: Int {
-            return calculatedDelayFuel + calculatedTaxiFuel + calculatedFlightLevelFuel + calculatedZFWFuel + calculatedEnrWxFuel + calculatedReciprocalRwyFuel + calculatedTrackShorteningFuel + calculatedOthersFuel // todo change to 000digits in front
+        var includedOthersFuel: [String: Any] {
+            let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
+            if includedOthers {
+                return ["fuel": selectedOthers, "remarks": "\("")"]
+            } else {
+                return ["fuel": 0, "remarks": ""]
+            }
         }
-        var totalExtraFuelTime: Int {
-            return selectedArrDelays + selectedEnrWx + selectedReciprocalRwy + selectedTrackShortening  // todo change to hhmm
+
+        var includedExtraFuelAmt: Int {
+            let delayFuel: Int = includedDelayFuel["fuel"] as! Int
+            let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
+            let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
+            let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
+            let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
+            let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
+            let trackShorteningFuel: Int = includedTrackShorteningFuel
+            let othersFuel: Int = includedOthersFuel["fuel"] as! Int
+            return delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel // todo change to 000digits in front
         }
-        var totalExtraFuelRemarks: String {
-            return ""  // todo set up logic
+        var includedExtraFuelTime: Int {
+            let delayTime: Int = includedDelayFuel["time"] as! Int
+            let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
+            let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
+            return delayTime + enrWxTime + reciprocalRwyTime // todo change to hhmm
+        }
+        var includedExtraFuelRemarks: String {
+            let delayRemarks: String = includedDelayFuel["remarks"] as! String
+            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
+            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
+            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
+            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
+            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
+            let othersRemarks: String = includedOthersFuel["remarks"] as! String
+            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
         }
 
         // set up altn table data
@@ -491,11 +579,11 @@ struct FlightPlanView: View {
                         HStack(alignment: .center) {
                             Text("(I) Pilot Extra Fuel")
                                 .frame(maxWidth: 310, alignment: .leading)
-                            Text("Confirm requirements")  // todo change to dynamic - totalExtraFuelTime
+                            Text("Confirm requirements")  // todo change to dynamic - includedExtraFuelTime
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("Confirm requirements") // todo change to dynamic - totalExtraFuelAmt
+                            Text("Confirm requirements") // todo change to dynamic - includedExtraFuelAmt
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("Confirm requirements") // todo change to dynamic - totalExtraFuelRemarks
+                            Text("Confirm requirements") // todo change to dynamic - includedExtraFuelRemarks
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         .padding(.leading, 25)
@@ -579,10 +667,16 @@ struct FlightPlanView: View {
                                     Text("+\(String(aveDiffLevels))ft")
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                                Picker("Select", selection: $selectedFlightLevel) {
-                                    ForEach(0...1000, id: \.self) { number in
-                                        Text("+\(number)ft")
-                                    }  // todo make + / - scale in thousands
+                                Picker("Select", selection: $selectedFlightLevel000) {
+                                    ForEach(-10...10, id: \.self) { number in
+                                        Text("\(number)000ft")
+                                    }
+                                }
+                                .pickerStyle(.wheel) // todo make into modal as per figma design
+                                Picker("Select", selection: $selectedFlightLevel00) {
+                                    ForEach(-9...9, id: \.self) { number in
+                                        Text("\(number)00ft")
+                                    }
                                 }
                                 .pickerStyle(.wheel) // todo make into modal as per figma design
                                 Text("\(String(calculatedFlightLevelFuel))KG")
@@ -677,12 +771,22 @@ struct FlightPlanView: View {
                             HStack(alignment: .center) {
                                 Toggle(isOn: $includedOthers) {}  // todo toggle logic flow
                                     .frame(maxWidth: 65, alignment: .leading)
-                                Text("ZFW Change")
+                                Text("Others")
                                     .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
                                 Text("N.A.")
                                     .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("N.A.")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
+                                Picker("Select", selection: $selectedOthers000) {
+                                    ForEach(0...10, id: \.self) { number in
+                                        Text("\(number)000KG")
+                                    }
+                                }
+                                .pickerStyle(.wheel) // todo make into modal as per figma design
+                                Picker("Select", selection: $selectedOthers00) {
+                                    ForEach(0...9, id: \.self) { number in
+                                        Text("\(number)00KG")
+                                    }
+                                }
+                                .pickerStyle(.wheel) // todo make into modal as per figma design
                                 Text("\(String(calculatedOthersFuel))KG")
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 Text("Enter remarks (optional)")
@@ -694,8 +798,12 @@ struct FlightPlanView: View {
                         HStack(alignment: .center) {
                             Text("Total Extra Fuel")
                                 .frame(maxWidth: 310, alignment: .leading)
-                            Text("\(totalExtraFuelAmt)")
+                            Text("\(includedExtraFuelAmt)KG")
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                            Text("\(includedExtraFuelTime)mins")
+                                .frame(maxWidth: .infinity, alignment: .leading)  // remove after testing
+                            Text("\(includedExtraFuelRemarks)")
+                                .frame(maxWidth: .infinity, alignment: .leading)  // remove after testing
                         }
                         .padding(.leading, 25)
                         .background(Color.cyan)  // todo correct design
