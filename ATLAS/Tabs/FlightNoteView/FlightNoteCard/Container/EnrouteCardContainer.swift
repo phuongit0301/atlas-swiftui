@@ -51,7 +51,10 @@ struct EnrouteCardContainer: View {
     }
     
     private func addQR(_ index: Int) {
-        viewModel.addEnrouteQR(item: viewModel.enrouteArray[index])
+        var item = viewModel.enrouteArray[index]
+        item.fromParent = true
+        item.canDelete = true
+        viewModel.addEnrouteQR(item: item)
     }
     
     private func removeQR(_ index: Int) {

@@ -51,7 +51,10 @@ struct ArrivalCardContainer: View {
     }
     
     private func addQR(_ index: Int) {
-        viewModel.addArrivalQR(item: viewModel.arrivalArray[index])
+        var item = viewModel.arrivalArray[index]
+        item.fromParent = true
+        item.canDelete = true
+        viewModel.addArrivalQR(item: item)
     }
     
     private func removeQR(_ index: Int) {

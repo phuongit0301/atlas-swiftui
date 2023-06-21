@@ -21,22 +21,8 @@ struct OverviewView: View {
                     Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                 }.padding(.vertical, 10)
                 ForEach(viewInformationModel.ListItem, id: \.self) { item in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            if let itemSelected = modelState.tabs.first(where: { $0.screenName == item.screenName }) {
-                                modelState.selectedTab = itemSelected
-                            }
-                        }
-                    }) {
-                        HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .resizable()
-                                .frame(width: 8, height: 12)
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                        }
+                    NavigationLink(destination: getDestination(item)) {
+                        Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                     }
                 }
                 
@@ -68,7 +54,8 @@ struct OverviewView: View {
     
     struct OverviewView_Previews: PreviewProvider {
         static var previews: some View {
-            OverviewView()
+            OverviewView().environmentObject(TabModelState())
+                .environmentObject(SideMenuModelState())
         }
     }
 }

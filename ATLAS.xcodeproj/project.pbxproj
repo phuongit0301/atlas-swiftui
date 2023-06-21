@@ -14,7 +14,7 @@
 		3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */; };
 		3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDE2A21C719008017FA /* DepatureCardContainer.swift */; };
 		3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE02A21C72B008017FA /* EnrouteCardContainer.swift */; };
-		3E3FCBEA2A21C8E3008017FA /* QuickReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* QuickReferenceForm.swift */; };
+		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
 		3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */; };
 		3E3FCBF02A21C924008017FA /* DepatureReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEF2A21C924008017FA /* DepatureReferenceContainer.swift */; };
@@ -27,7 +27,6 @@
 		3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBFF2A243A10008017FA /* FlightPlanSplit.swift */; };
 		3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC012A243A77008017FA /* TableDetailSplit.swift */; };
 		3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC032A24B2DF008017FA /* AircraftSplit.swift */; };
-		3E3FCC082A24B620008017FA /* AircraftSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC072A24B620008017FA /* AircraftSplitContainer.swift */; };
 		3E3FCC0A2A24B818008017FA /* AircraftSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */; };
 		3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC0C2A24E66C008017FA /* DepartureSplit.swift */; };
 		3E3FCC0F2A24E678008017FA /* DepartureSplitContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC0E2A24E678008017FA /* DepartureSplitContainer.swift */; };
@@ -112,6 +111,7 @@
 		3EFA5F032A41DB82001ED6CF /* OverviewSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F022A41DB82001ED6CF /* OverviewSplitView.swift */; };
 		3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F052A42122E001ED6CF /* ItemListSplit.swift */; };
 		3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F072A421261001ED6CF /* NoteFormSplit.swift */; };
+		3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F0A2A429B25001ED6CF /* ItemListReference.swift */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
@@ -142,7 +142,7 @@
 		3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCardContainer.swift; sourceTree = "<group>"; };
 		3E3FCBDE2A21C719008017FA /* DepatureCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepatureCardContainer.swift; sourceTree = "<group>"; };
 		3E3FCBE02A21C72B008017FA /* EnrouteCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteCardContainer.swift; sourceTree = "<group>"; };
-		3E3FCBE92A21C8E3008017FA /* QuickReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickReferenceForm.swift; sourceTree = "<group>"; };
+		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
 		3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalReferenceContainer.swift; sourceTree = "<group>"; };
 		3E3FCBEF2A21C924008017FA /* DepatureReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepatureReferenceContainer.swift; sourceTree = "<group>"; };
@@ -155,7 +155,6 @@
 		3E3FCBFF2A243A10008017FA /* FlightPlanSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPlanSplit.swift; sourceTree = "<group>"; };
 		3E3FCC012A243A77008017FA /* TableDetailSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDetailSplit.swift; sourceTree = "<group>"; };
 		3E3FCC032A24B2DF008017FA /* AircraftSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplit.swift; sourceTree = "<group>"; };
-		3E3FCC072A24B620008017FA /* AircraftSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplitContainer.swift; sourceTree = "<group>"; };
 		3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftSplitForm.swift; sourceTree = "<group>"; };
 		3E3FCC0C2A24E66C008017FA /* DepartureSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSplit.swift; sourceTree = "<group>"; };
 		3E3FCC0E2A24E678008017FA /* DepartureSplitContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureSplitContainer.swift; sourceTree = "<group>"; };
@@ -244,6 +243,7 @@
 		3EFA5F022A41DB82001ED6CF /* OverviewSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewSplitView.swift; sourceTree = "<group>"; };
 		3EFA5F052A42122E001ED6CF /* ItemListSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListSplit.swift; sourceTree = "<group>"; };
 		3EFA5F072A421261001ED6CF /* NoteFormSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteFormSplit.swift; sourceTree = "<group>"; };
+		3EFA5F0A2A429B25001ED6CF /* ItemListReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListReference.swift; sourceTree = "<group>"; };
 		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -306,6 +306,7 @@
 		3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */ = {
 			isa = PBXGroup;
 			children = (
+				3EFA5F0C2A429B2C001ED6CF /* List */,
 				3E3FCBE82A21C8CB008017FA /* Container */,
 				3E3FCBE72A21C8C6008017FA /* Form */,
 			);
@@ -315,7 +316,7 @@
 		3E3FCBE72A21C8C6008017FA /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				3E3FCBE92A21C8E3008017FA /* QuickReferenceForm.swift */,
+				3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -356,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				3E3FCC032A24B2DF008017FA /* AircraftSplit.swift */,
-				3E3FCC072A24B620008017FA /* AircraftSplitContainer.swift */,
 				3E3FCC092A24B818008017FA /* AircraftSplitForm.swift */,
 			);
 			path = AircraftSplit;
@@ -439,10 +439,11 @@
 		3E5AF6492A18FF2900A97ECF /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				3E5AF6332A187E3500A97ECF /* HomeView.swift */,
+				3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */,
 				3EFA5EF02A3DFC34001ED6CF /* FlightPlanView */,
 				3E7F68472A217B9500EC2CA3 /* AtlasSearchView */,
 				3E5AF6552A1A55F200A97ECF /* FlightNoteView */,
+				3E5AF6332A187E3500A97ECF /* HomeView.swift */,
 				3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */,
 				3E5AF6452A18FF0500A97ECF /* FuelView.swift */,
 				3E5AF64C2A18FFDD00A97ECF /* ChartView.swift */,
@@ -601,7 +602,6 @@
 		3EFA5EF02A3DFC34001ED6CF /* FlightPlanView */ = {
 			isa = PBXGroup;
 			children = (
-				3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */,
 				3E5AF6472A18FF1E00A97ECF /* FlightPlanView.swift */,
 				3EFA5EF12A3DFC6E001ED6CF /* FlightInformationView.swift */,
 			);
@@ -630,6 +630,14 @@
 				3EFA5F072A421261001ED6CF /* NoteFormSplit.swift */,
 			);
 			path = Form;
+			sourceTree = "<group>";
+		};
+		3EFA5F0C2A429B2C001ED6CF /* List */ = {
+			isa = PBXGroup;
+			children = (
+				3EFA5F0A2A429B25001ED6CF /* ItemListReference.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -818,7 +826,7 @@
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
 				3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */,
 				3E3FCBFE2A236E8F008017FA /* ExampleView1.swift in Sources */,
-				3E3FCBEA2A21C8E3008017FA /* QuickReferenceForm.swift in Sources */,
+				3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */,
 				3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
@@ -830,6 +838,7 @@
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
+				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
@@ -866,7 +875,6 @@
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E3FCC0F2A24E678008017FA /* DepartureSplitContainer.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
-				3E3FCC082A24B620008017FA /* AircraftSplitContainer.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,

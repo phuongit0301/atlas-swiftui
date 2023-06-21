@@ -51,7 +51,10 @@ struct DepartureCardContainer: View {
     }
     
     private func addQR(_ index: Int) {
-        viewModel.addDepartureQR(item: viewModel.departureArray[index])
+        var item = viewModel.departureArray[index]
+        item.fromParent = true
+        item.canDelete = true
+        viewModel.addDepartureQR(item: item)
     }
     
     private func removeQR(_ index: Int) {

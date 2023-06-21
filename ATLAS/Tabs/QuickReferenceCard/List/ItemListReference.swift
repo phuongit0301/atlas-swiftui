@@ -1,14 +1,14 @@
 //
-//  ItemListSplit.swift
+//  ItemList.swift
 //  ATLAS
 //
-//  Created by phuong phan on 20/06/2023.
+//  Created by phuong phan on 19/06/2023.
 //
 
 import Foundation
 import SwiftUI
 
-struct ItemListSplit: View {
+struct ItemListReference: View {
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var currentIndex: Int
@@ -34,7 +34,7 @@ struct ItemListSplit: View {
                             .font(.system(size: 17, weight: .regular))
                     }
                 }
-            }.padding()
+            }.padding(.vertical, 16)
             
             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
             
@@ -78,13 +78,13 @@ struct ItemListSplit: View {
 
                                     
                                     Button(action: {
-                                        if (itemList[index].canDelete) {
+                                        if (itemList[index].canDelete && itemList[index].fromParent) {
                                             update(index)
                                         } else {
                                             itemList[index].isDefault = !itemList[index].isDefault
                                         }
                                     }) {
-                                        itemList[index].isDefault ?
+                                        itemList[index].isDefault || itemList[index].fromParent ?
                                             Image(systemName: "star.fill")
                                                 .foregroundColor(Color.theme.azure)
                                                 .frame(width: 22, height: 22)
@@ -100,6 +100,7 @@ struct ItemListSplit: View {
                                 }
                             }
                             .padding(12)
+                            .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
@@ -129,7 +130,6 @@ struct ItemListSplit: View {
                     }.listStyle(.plain)
                         .listRowBackground(Color.white)
                         .padding(.bottom, 5)
-                        .scrollContentBackground(.hidden)
                 }
             }
             

@@ -20,7 +20,7 @@ struct OverviewSplitView: View {
                     Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                 }.padding(.vertical, 10)
                 ForEach(viewInformationModel.ListItem, id: \.self) { item in
-                    NavigationLink(destination: getDestination(item)) {
+                    NavigationLink(destination: getDestinationSplit(item)) {
                         HStack {
                             Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }

@@ -51,7 +51,10 @@ struct AircraftStatusContainer: View {
     }
     
     private func addQR(_ index: Int) {
-        viewModel.addAircraftQR(item: viewModel.aircraftArray[index])
+        var item = viewModel.aircraftArray[index]
+        item.fromParent = true
+        item.canDelete = true
+        viewModel.addAircraftQR(item: item)
     }
     
     private func removeQR(_ index: Int) {

@@ -183,6 +183,34 @@ enum Status {
 
 func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     if item.screenName == NavigationEnumeration.AirCraftScreen {
+        return AnyView(AircraftReferenceContainer())
+    }
+    
+    if item.screenName == NavigationEnumeration.FuelScreen {
+        return AnyView(FuelView())
+    }
+    
+    if item.screenName == NavigationEnumeration.DepartureScreen {
+        return AnyView(DepatureReferenceContainer())
+    }
+    
+    if item.screenName == NavigationEnumeration.EnrouteScreen {
+        return AnyView(EnrouteReferenceContainer())
+    }
+    
+    if item.screenName == NavigationEnumeration.ArrivalScreen {
+        return AnyView(ArrivalReferenceContainer())
+    }
+    
+    if item.screenName == NavigationEnumeration.AtlasSearchScreen {
+        return AnyView(AtlasSearchView())
+    }
+    
+    return AnyView(FlightPlanView())
+}
+
+func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
+    if item.screenName == NavigationEnumeration.AirCraftScreen {
         return AnyView(AircraftSplit())
     }
     

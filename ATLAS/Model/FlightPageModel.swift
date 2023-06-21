@@ -130,6 +130,7 @@ struct IFlightInfoStorageModel: Identifiable, Encodable, Decodable {
     var tags: [ITagStorage]
     var isDefault: Bool = true
     var canDelete: Bool = true
+    var fromParent: Bool = false
 }
 
 struct DepartureTags {
@@ -472,11 +473,11 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: departureDataStorage)
         else {
             departureArray = [
-                IFlightInfoStorageModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false),
-                IFlightInfoStorageModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITagStorage(name: "Airport")], isDefault: false, canDelete: false),
-                IFlightInfoStorageModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false),
-                IFlightInfoStorageModel(name: "Expected POB: 315", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false),
-                IFlightInfoStorageModel(name: "Hills to the north of aerodrome", tags: [ITagStorage(name: "Terrain")], isDefault: false, canDelete: false)
+                IFlightInfoStorageModel(name: "All crew to be simulator-qualified for RNP approach", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false, fromParent: false),
+                IFlightInfoStorageModel(name: "Note digital clearance requirements 10mins before pushback", tags: [ITagStorage(name: "Airport")], isDefault: false, canDelete: false, fromParent: false),
+                IFlightInfoStorageModel(name: "Reduce ZFW by 1 ton for preliminary fuel", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false, fromParent: false),
+                IFlightInfoStorageModel(name: "Expected POB: 315", tags: [ITagStorage(name: "Dispatch")], isDefault: false, canDelete: false, fromParent: false),
+                IFlightInfoStorageModel(name: "Hills to the north of aerodrome", tags: [ITagStorage(name: "Terrain")], isDefault: false, canDelete: false, fromParent: false)
             ]
             return
         }
@@ -515,7 +516,7 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: enrouteDataStorage)
         else {
             enrouteArray = [
-                IFlightInfoStorageModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITagStorage(name: "ATC")], isDefault: false, canDelete: false),
+                IFlightInfoStorageModel(name: "Non-standard levels when large scale weather deviation in progress", tags: [ITagStorage(name: "ATC")], isDefault: false, canDelete: false, fromParent: false),
             ]
             return
         }
@@ -554,8 +555,8 @@ class FlightNoteModelState: ObservableObject {
         guard let decodedArray = try? JSONDecoder().decode([IFlightInfoStorageModel].self, from: arrivalDataStorage)
         else {
             arrivalArray = [
-                IFlightInfoStorageModel(name: "Birds in vicinity", tags: [ITagStorage(name: "Environment")], isDefault: false, canDelete: false),
-                IFlightInfoStorageModel(name: "Any +TS expected to last 15mins", tags: [ITagStorage(name: "Weather")], isDefault: false, canDelete: false)
+                IFlightInfoStorageModel(name: "Birds in vicinity", tags: [ITagStorage(name: "Environment")], isDefault: false, canDelete: false, fromParent: false),
+                IFlightInfoStorageModel(name: "Any +TS expected to last 15mins", tags: [ITagStorage(name: "Weather")], isDefault: false, canDelete: false, fromParent: false)
             ]
             return
         }
