@@ -13,9 +13,6 @@ struct HomeView: View {
     @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
-    // Custom Back button
-    @Environment(\.dismiss) private var dismiss
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             GeometryReader { geo in
@@ -85,42 +82,7 @@ struct HomeView: View {
                             
                 }
                 .background(Color.theme.sonicSilver.opacity(0.12))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbarBackground(.visible, for: .navigationBar)
-                .toolbarBackground(.white, for: .navigationBar)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image("icon_arrow_left")
-                                .frame(width: 41, height: 72)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            
-                        }) {
-                            Image("icon_arrow_right")
-                                .frame(width: 41, height: 72)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .principal) {
-                        HStack(alignment: .center) {
-                            Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
-                            
-                            Text(sideMenuState.selectedMenu?.flight ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
-                            
-                            Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
-                        }
-                    }
-                }
+                .hasToolbar()
             }
             
         }

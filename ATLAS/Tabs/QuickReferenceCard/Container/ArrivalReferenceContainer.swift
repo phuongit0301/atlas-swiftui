@@ -14,7 +14,7 @@ struct ArrivalReferenceContainer: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
-    @State var arrivalTags: [ITagStorage] = []
+    @State var arrivalTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
@@ -91,7 +91,7 @@ struct ArrivalReferenceContainer: View {
     }
     
     private func resetData() {
-        self.arrivalTags = []
+        self.arrivalTags = CommonTags().TagList
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

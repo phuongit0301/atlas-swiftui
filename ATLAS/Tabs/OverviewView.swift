@@ -42,7 +42,7 @@ struct OverviewView: View {
                 }.padding(.vertical, 10)
                 
                 ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
-                    NavigationLink(destination: ExampleView()) {
+                    NavigationLink(destination: getDestinationTable(item)) {
                         HStack {
                             Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }

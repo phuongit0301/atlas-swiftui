@@ -337,7 +337,6 @@
 			children = (
 				3EFA5F092A42126B001ED6CF /* Form */,
 				3EFA5F042A421221001ED6CF /* List */,
-				3EFA5F022A41DB82001ED6CF /* OverviewSplitView.swift */,
 				3E3FCC1A2A2500BB008017FA /* ArrivalSplit */,
 				3E3FCC122A24FE13008017FA /* EnrouteSplit */,
 				3E3FCC0B2A24E656008017FA /* DepartureSplit */,
@@ -346,6 +345,7 @@
 				3E3FCC212A2587E8008017FA /* AtlasSearchSplit.swift */,
 				3E3FCC062A24B5C2008017FA /* AircraftSplit */,
 				3E3FCBF92A236D14008017FA /* HomeViewSplit.swift */,
+				3EFA5F022A41DB82001ED6CF /* OverviewSplitView.swift */,
 				3E3FCBF52A23676A008017FA /* NavViewSplit.swift */,
 				C59C714C2A38AB130063D16B /* FuelViewSplit.swift */,
 				3EFA5EF52A3F0E6A001ED6CF /* HeaderViewSplit.swift */,

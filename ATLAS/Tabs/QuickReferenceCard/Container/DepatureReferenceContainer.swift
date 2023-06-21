@@ -14,7 +14,7 @@ struct DepatureReferenceContainer: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
-    @State var depTags: [ITagStorage] = []
+    @State var depTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
@@ -91,7 +91,7 @@ struct DepatureReferenceContainer: View {
     }
     
     private func resetData() {
-        self.depTags = []
+        self.depTags = CommonTags().TagList
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

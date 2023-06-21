@@ -14,7 +14,7 @@ struct EnrouteReferenceContainer: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
-    @State var enrouteTags: [ITagStorage] = []
+    @State var enrouteTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
@@ -91,7 +91,7 @@ struct EnrouteReferenceContainer: View {
     }
     
     private func resetData() {
-        self.enrouteTags = []
+        self.enrouteTags = CommonTags().TagList
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

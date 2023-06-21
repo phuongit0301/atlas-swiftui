@@ -80,6 +80,7 @@ struct TableDetailSplit: View {
                         .frame(maxWidth: .infinity)                        
                     }
                 }.padding()
+                    .hasToolbar()
             }
         }
     }

@@ -34,6 +34,10 @@ extension View {
     func border(_ color: Color, width: CGFloat, cornerRadius: CGFloat) -> some View {
         overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(color, lineWidth: width))
     }
+    
+    func hasToolbar() -> some View {
+        ModifiedContent(content: self, modifier: HasToolbar())
+    }
 }
 
 extension String {
@@ -243,4 +247,57 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
 
 func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(TableDetailSplit(row: item))
+}
+
+public struct HasToolbar: ViewModifier {
+    @EnvironmentObject var sideMenuState: SideMenuModelState
+    // Custom Back button
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+
+    public func body(content: Content) -> some View {
+        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+            content
+        } else {
+            content
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden()
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarBackground(.white, for: .navigationBar)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image("icon_arrow_left")
+                                .frame(width: 41, height: 72)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            
+                        }) {
+                            Image("icon_arrow_right")
+                                .frame(width: 41, height: 72)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .principal) {
+                        HStack(alignment: .center) {
+                            Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            
+                            Text(sideMenuState.selectedMenu?.flight ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            
+                            Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                        }
+                    }
+                }
+        }
+    }
 }
