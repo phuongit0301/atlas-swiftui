@@ -112,6 +112,10 @@
 		3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F052A42122E001ED6CF /* ItemListSplit.swift */; };
 		3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F072A421261001ED6CF /* NoteFormSplit.swift */; };
 		3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F0A2A429B25001ED6CF /* ItemListReference.swift */; };
+		3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F112A42E825001ED6CF /* PersistenceController.swift */; };
+		3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F1A2A433EF6001ED6CF /* Notes.xcdatamodeld */; };
+		3EFA5F292A4341FB001ED6CF /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F272A4341FB001ED6CF /* Note+CoreDataClass.swift */; };
+		3EFA5F2A2A4341FB001ED6CF /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F282A4341FB001ED6CF /* Note+CoreDataProperties.swift */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
@@ -244,6 +248,10 @@
 		3EFA5F052A42122E001ED6CF /* ItemListSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListSplit.swift; sourceTree = "<group>"; };
 		3EFA5F072A421261001ED6CF /* NoteFormSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteFormSplit.swift; sourceTree = "<group>"; };
 		3EFA5F0A2A429B25001ED6CF /* ItemListReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListReference.swift; sourceTree = "<group>"; };
+		3EFA5F112A42E825001ED6CF /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		3EFA5F1B2A433EF6001ED6CF /* Notes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notes.xcdatamodel; sourceTree = "<group>"; };
+		3EFA5F272A4341FB001ED6CF /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EFA5F282A4341FB001ED6CF /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -524,6 +532,8 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EFA5F272A4341FB001ED6CF /* Note+CoreDataClass.swift */,
+				3EFA5F282A4341FB001ED6CF /* Note+CoreDataProperties.swift */,
 				3ED7546A2A11E1BA003072A1 /* ATLAS */,
 				3ED7547B2A11E1BD003072A1 /* ATLASTests */,
 				3ED754852A11E1BD003072A1 /* ATLASUITests */,
@@ -570,6 +580,8 @@
 				3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */,
 				3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */,
 				3EFA5EF32A3EBE31001ED6CF /* SearchBar.swift */,
+				3EFA5F112A42E825001ED6CF /* PersistenceController.swift */,
+				3EFA5F1A2A433EF6001ED6CF /* Notes.xcdatamodeld */,
 			);
 			path = ATLAS;
 			sourceTree = "<group>";
@@ -784,6 +796,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */,
 				3EFA5EF42A3EBE31001ED6CF /* SearchBar.swift in Sources */,
 				3E3FCC112A24E67F008017FA /* DepartureSplitForm.swift in Sources */,
 				3E3FCC472A270851008017FA /* taxiView.swift in Sources */,
@@ -818,6 +831,7 @@
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
+				3EFA5F292A4341FB001ED6CF /* Note+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
@@ -846,12 +860,14 @@
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
+				3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */,
 				3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E3FCC1E2A2500D3008017FA /* ArrivalSplitContainer.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
 				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3EFA5EEF2A3D5D8C001ED6CF /* FlightPlanModel.swift in Sources */,
+				3EFA5F2A2A4341FB001ED6CF /* Note+CoreDataProperties.swift in Sources */,
 				3EFA5EFF2A408B2E001ED6CF /* ItemList.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E3FCC452A270851008017FA /* enrWXChart.swift in Sources */,
@@ -1040,6 +1056,7 @@
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ATLAS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Waypoint Atlas";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1077,6 +1094,7 @@
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ATLAS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Waypoint Atlas";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1225,6 +1243,19 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCVersionGroup section */
+		3EFA5F1A2A433EF6001ED6CF /* Notes.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3EFA5F1B2A433EF6001ED6CF /* Notes.xcdatamodel */,
+			);
+			currentVersion = 3EFA5F1B2A433EF6001ED6CF /* Notes.xcdatamodel */;
+			path = Notes.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3ED754602A11E1BA003072A1 /* Project object */;
 }

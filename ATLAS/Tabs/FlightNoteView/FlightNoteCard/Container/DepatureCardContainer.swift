@@ -19,31 +19,56 @@ struct DepartureCardContainer: View {
     
     var geoWidth: Double = 0
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: Note.entity(), sortDescriptors: [])
+    var notes: FetchedResults<Note>
+    
     var body: some View {
-        ItemList(
-            header: header,
-            showSheet: $showSheet,
-            currentIndex: $currentIndex,
-            itemList: $viewModel.departureArray,
-            geoWidth: geoWidth,
-            remove: remove,
-            addQR: addQR,
-            removeQR: removeQR
-        ).frame(maxHeight: .infinity)
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .sheet(isPresented: $showSheet) {
-                NoteForm(
-                    textNote: $textNote,
-                    tagList: $depTags,
-                    itemList: $viewModel.departureArray,
-                    currentIndex: $currentIndex,
-                    showSheet: $showSheet,
-                    resetData: self.resetData
-                ).keyboardAdaptive()
-                    .interactiveDismissDisabled(true)
+        VStack {
+            List{
+                ForEach(notes, id: \.self) { note in
+                    HStack {
+                        Text(note.name ?? "-").foregroundColor(.black)
+                        Spacer()
+                        Text(String(note.isDefault))
+                    }
+                }
+            }.Print("data=====\(notes)")
+            
+            Button(action: {
+                let product = Note(context: viewContext)
+                product.name = "Hello World"
+                product.isDefault = false
+                
+                saveContext()
+            }) {
+                Text("Add New").foregroundColor(.black)
             }
+        }
+//        ItemList(
+//            header: header,
+//            showSheet: $showSheet,
+//            currentIndex: $currentIndex,
+//            itemList: $viewModel.departureArray,
+//            geoWidth: geoWidth,
+//            remove: remove,
+//            addQR: addQR,
+//            removeQR: removeQR
+//        ).frame(maxHeight: .infinity)
+//            .padding()
+//            .background(Color.white)
+//            .cornerRadius(8)
+//            .sheet(isPresented: $showSheet) {
+//                NoteForm(
+//                    textNote: $textNote,
+//                    tagList: $depTags,
+//                    itemList: $viewModel.departureArray,
+//                    currentIndex: $currentIndex,
+//                    showSheet: $showSheet,
+//                    resetData: self.resetData
+//                ).keyboardAdaptive()
+//                    .interactiveDismissDisabled(true)
+//            }
     }
     
     private func remove(_ index: Int) {
@@ -68,10 +93,20 @@ struct DepartureCardContainer: View {
             self.currentIndex = -1
         }
     }
+    
+    private func saveContext() {
+            do {
+                try viewContext.save()
+            } catch {
+                let error = error as NSError
+                fatalError("An error occured: \(error)")
+            }
+        }
 }
 
 struct DepartureCardContainer_Previews: PreviewProvider {
     static var previews: some View {
         DepartureCardContainer(viewModel: FlightNoteModelState())
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }

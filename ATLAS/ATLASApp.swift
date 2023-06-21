@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct ATLASApp: App {
+    let persistenceController = PersistenceController.shared
+    
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
@@ -35,6 +37,7 @@ struct ATLASApp: App {
                         await apiManager.makePostRequest()
                     }
                 }
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }.handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )
