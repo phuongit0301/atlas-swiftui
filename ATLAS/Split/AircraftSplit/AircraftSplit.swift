@@ -44,9 +44,8 @@ struct AircraftSplit: View {
                             resetData: self.resetData
                         ).interactiveDismissDisabled(true)
                     }
-            }.padding(.vertical)
-        }.padding()
-            .background(Color.theme.antiFlashWhite)
+            }.padding()
+        }.background(Color.theme.antiFlashWhite)
             .navigationBarBackButtonHidden()
             .ignoresSafeArea()
     }

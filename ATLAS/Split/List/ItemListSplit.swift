@@ -20,20 +20,20 @@ struct ItemListSplit: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(header).foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
-                Spacer()
-                
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(Color.theme.azure)
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
+//                Spacer()
+//
+//                Button(action: {
+//                    self.showSheet.toggle()
+//                }) {
+//                    HStack {
+//                        Image(systemName: "plus")
+//                            .resizable()
+//                            .frame(width: 16, height: 16)
+//                            .foregroundColor(Color.theme.azure)
+//                        Text("Add Note").foregroundColor(Color.theme.azure)
+//                            .font(.system(size: 17, weight: .regular))
+//                    }
+//                }
             }.padding()
             
             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
@@ -84,7 +84,7 @@ struct ItemListSplit: View {
                                             itemList[index].isDefault = !itemList[index].isDefault
                                         }
                                     }) {
-                                        itemList[index].isDefault ?
+                                        itemList[index].isDefault || itemList[index].fromParent ?
                                             Image(systemName: "star.fill")
                                                 .foregroundColor(Color.theme.azure)
                                                 .frame(width: 22, height: 22)
