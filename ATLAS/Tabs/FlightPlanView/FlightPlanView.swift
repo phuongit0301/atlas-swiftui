@@ -28,7 +28,7 @@ struct FlightPlanView: View {
                 }.frame(maxHeight: .infinity)
                     
             }
-        }
+        }.padding(.top, 50)
     }
 }
 

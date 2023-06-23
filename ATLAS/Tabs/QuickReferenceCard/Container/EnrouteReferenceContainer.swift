@@ -32,7 +32,8 @@ struct EnrouteReferenceContainer: View {
                     geoWidth: proxy.size.width,
                     update: update
                 ).frame(maxHeight: .infinity)
-                    .padding()
+                    .padding(.vertical, 32)
+                    .padding(.horizontal, 16)
                     .background(Color.white)
                     .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {

@@ -65,7 +65,7 @@ struct SummaryView: View {
                         }
                     }
                 }
-            }
+            }.padding(.vertical, 32)
         }
 #if os(iOS)
         .background(Color(uiColor: .systemGroupedBackground))

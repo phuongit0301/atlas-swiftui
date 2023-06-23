@@ -42,6 +42,10 @@ extension View {
     func hasTabbar() -> some View {
         ModifiedContent(content: self, modifier: HasTabbar())
     }
+    
+    func breadCrumb(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
+        ModifiedContent(content: self, modifier: BreadCrumb(screenName: screenName))
+    }
 }
 
 extension String {
@@ -191,34 +195,75 @@ enum Status {
 
 func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     if item.screenName == NavigationEnumeration.AirCraftScreen {
-        return AnyView(AircraftReferenceContainer().navigationBarBackButtonHidden())
+        return AnyView(
+            AircraftReferenceContainer()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+            
+        )
     }
     
     if item.screenName == NavigationEnumeration.FuelScreen {
-        return AnyView(FuelView().navigationBarBackButtonHidden())
+        return AnyView(
+            FuelView()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
     if item.screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(DepatureReferenceContainer().navigationBarBackButtonHidden())
+        return AnyView(
+            DepatureReferenceContainer()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
     if item.screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(EnrouteReferenceContainer().navigationBarBackButtonHidden())
+        return AnyView(
+            EnrouteReferenceContainer()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
     if item.screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(ArrivalReferenceContainer().navigationBarBackButtonHidden())
+        return AnyView(
+            ArrivalReferenceContainer()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(AtlasSearchView().navigationBarBackButtonHidden())
+        return AnyView(
+            AtlasSearchView()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
     if item.screenName == NavigationEnumeration.FlightPlanScreen {
-        return AnyView(FlightPlanView().navigationBarBackButtonHidden())
+        return AnyView(
+            FlightPlanView()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
     }
     
-    return AnyView(FlightPlanView().navigationBarBackButtonHidden())
+    return AnyView(
+        FlightPlanView()
+            .navigationBarBackButtonHidden()
+            .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+            .ignoresSafeArea()
+    )
 }
 
 func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
@@ -254,7 +299,12 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
 }
 
 func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
-    return AnyView(TableDetailSplit(row: item))
+    return AnyView(
+        TableDetail(row: item)
+            .navigationBarBackButtonHidden()
+            .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+            .ignoresSafeArea()
+    )
 }
 
 //final class SwiftUIViewController: UIHostingController<hasTabbar> {
@@ -344,5 +394,70 @@ public struct HasTabbar: ViewModifier {
             TabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("TabBarView")
             content
         }.background(Color.theme.sonicSilver.opacity(0.12))
+    }
+}
+
+public struct BreadCrumb: ViewModifier {
+    @Environment(\.dismiss) private var dismiss
+    var screenName: NavigationEnumeration
+    
+    public func body(content: Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    VStack {
+                        Rectangle().fill(Color.clear).frame(height: screenName == NavigationEnumeration.FuelScreen ? 8 : 16 )
+                        HStack(alignment: .center) {
+                            Button {
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Text("Reference").font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                }
+                            }
+                            Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
+                            Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                        }.padding()
+                        if screenName == NavigationEnumeration.FuelScreen || screenName == NavigationEnumeration.FlightPlanScreen {
+                            Rectangle().fill(Color.clear).frame(height: 8)
+                        }
+                    }
+                }
+            }
+    }
+    
+    private func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
+        switch screenName {
+            case .HomeScreen:
+                return "Home"
+            case .FlightScreen:
+                return "Flight Note"
+            case .OverviewScreen:
+                return "Reference"
+            case .NoteScreen:
+                return "Note"
+            case .FlightPlanScreen:
+                return "Flight Plan"
+            case .AirCraftScreen:
+                return "Aircraft Status"
+            case .DepartureScreen:
+                return "Departure"
+            case .EnrouteScreen:
+                return "Enroute"
+            case .ArrivalScreen:
+                return "Arrival"
+            case .AtlasSearchScreen:
+                return "AI Search"
+            case .TableScreen:
+                return "Utilities"
+            case .FuelScreen:
+                return "Fuel"
+            case .ChartScreen:
+                return "Chart"
+            case .WeatherScreen:
+                return "Weather"
+            case .ReportingScreen:
+                return "Reporting"
+        }
     }
 }

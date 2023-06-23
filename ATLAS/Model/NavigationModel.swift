@@ -26,6 +26,59 @@ enum NavigationEnumeration {
     case ReportingScreen
 }
 
+enum NavigationEnumerationToString: CustomStringConvertible {
+    case HomeScreen
+    case FlightScreen
+    case OverviewScreen
+    case NoteScreen
+    case FlightPlanScreen
+    case AirCraftScreen
+    case DepartureScreen
+    case EnrouteScreen
+    case ArrivalScreen
+    case AtlasSearchScreen
+    case TableScreen
+    case FuelScreen
+    case ChartScreen
+    case WeatherScreen
+    case ReportingScreen
+    
+    var description: String {
+        switch self {
+            case .HomeScreen:
+                return "Home"
+            case .FlightScreen:
+                return "Flight Note"
+            case .OverviewScreen:
+                return "Reference"
+            case .NoteScreen:
+                return "Note"
+            case .FlightPlanScreen:
+                return "Flight Plan"
+            case .AirCraftScreen:
+                return "Aircraft Status"
+            case .DepartureScreen:
+                return "Departure"
+            case .EnrouteScreen:
+                return "Enroute"
+            case .ArrivalScreen:
+                return "Arrival"
+            case .AtlasSearchScreen:
+                return "AI Search"
+            case .TableScreen:
+                return "Utilities"
+            case .FuelScreen:
+                return "Fuel"
+            case .ChartScreen:
+                return "Chart"
+            case .WeatherScreen:
+                return "Weather"
+            case .ReportingScreen:
+                return "Reporting"
+        }
+    }
+}
+
 struct ITabs: Identifiable, Hashable {
     var id = UUID()
     var name: String

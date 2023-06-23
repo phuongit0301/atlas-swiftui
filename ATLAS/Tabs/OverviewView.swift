@@ -52,8 +52,9 @@ struct OverviewView: View {
                     }
                     
                 }.scrollContentBackground(.hidden)
-                    .navigationBarTitleDisplayMode(.inline)
-            }.navigationBarTitleDisplayMode(.inline)
+                    .navigationBarHidden(true)
+                    .ignoresSafeArea()
+            }
         }
     }
     
