@@ -13,14 +13,80 @@ struct HomeView: View {
     @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
+    @State private var goHome = UUID()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             GeometryReader { geo in
                 // Menu Top
                 VStack(alignment: .leading, spacing: 0) {
                     // Tabs
-                    TabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("TabBarView")
-                    
+//                    TabView(selection: $modelState.selectedTab.screenName,
+//                            content: {
+//                            OverviewView()
+//                                .tag(NavigationEnumeration.OverviewScreen)
+//                                                        .frame(height: geo.size.height)
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                                .toolbar(.hidden, for: .tabBar)
+//                                .gesture(DragGesture())
+//                                .ignoresSafeArea()
+//                        FlightNoteView()
+//                            .tag(NavigationEnumeration.FlightScreen)
+//                            .frame(height: CGFloat(geo.size.height - 65) > 0 ? CGFloat(geo.size.height - 65) : geo.size.height)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .background(Color.theme.cultured)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//                        FuelView()
+//                            .tag(NavigationEnumeration.FuelScreen)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//                        AtlasSearchView()
+//                            .tag(NavigationEnumeration.AtlasSearchScreen)
+//                            .frame(height: geo.size.height)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//                        FlightPlanView()
+//                            .tag(NavigationEnumeration.FlightPlanScreen)
+//                            .frame(height: CGFloat(geo.size.height - 65) > 0 ? CGFloat(geo.size.height - 65) : geo.size.height)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//                        ChartView()
+//                            .tag(NavigationEnumeration.ChartScreen)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//
+//                        WeatherView()
+//                            .tag(NavigationEnumeration.WeatherScreen)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//
+//                        ReportingView()
+//                            .tag(NavigationEnumeration.ReportingScreen)
+//                            .frame(height: geo.size.height)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .toolbar(.hidden, for: .tabBar)
+//                            .gesture(DragGesture())
+//                            .ignoresSafeArea()
+//                    }).id("Parent-TabView")
+//                        .ignoresSafeArea()
+//                            .tabViewStyle(.page(indexDisplayMode: .never))
+//        }.navigationBarTitleDisplayMode(.inline)
+//            .background(Color.theme.sonicSilver.opacity(0.12))
+//            .hasTabbar()
+//            .hasToolbar()
+
                     switch modelState.selectedTab.screenName {
                         case NavigationEnumeration.OverviewScreen:
                             OverviewView()
@@ -41,7 +107,7 @@ struct HomeView: View {
                                 .background(Color.theme.cultured)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
-                            
+
                         case NavigationEnumeration.FuelScreen:
                             FuelView()
                                 .tag(NavigationEnumeration.FuelScreen)
@@ -72,16 +138,19 @@ struct HomeView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
+
                         default:
                             OverviewView()
                                 .tag(NavigationEnumeration.OverviewScreen)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
+
                         }
-                            
+
                 }
                 .background(Color.theme.sonicSilver.opacity(0.12))
+                .hasTabbar()
                 .hasToolbar()
             }
             

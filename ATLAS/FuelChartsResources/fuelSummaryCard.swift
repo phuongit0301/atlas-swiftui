@@ -150,7 +150,6 @@ struct SummaryCardView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .navigationTitle("Summary Card")
         .background()
     }
 }

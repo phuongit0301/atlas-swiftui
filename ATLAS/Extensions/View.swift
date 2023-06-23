@@ -38,6 +38,10 @@ extension View {
     func hasToolbar() -> some View {
         ModifiedContent(content: self, modifier: HasToolbar())
     }
+    
+    func hasTabbar() -> some View {
+        ModifiedContent(content: self, modifier: HasTabbar())
+    }
 }
 
 extension String {
@@ -187,30 +191,34 @@ enum Status {
 
 func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     if item.screenName == NavigationEnumeration.AirCraftScreen {
-        return AnyView(AircraftReferenceContainer())
+        return AnyView(AircraftReferenceContainer().navigationBarBackButtonHidden())
     }
     
     if item.screenName == NavigationEnumeration.FuelScreen {
-        return AnyView(FuelView())
+        return AnyView(FuelView().navigationBarBackButtonHidden())
     }
     
     if item.screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(DepatureReferenceContainer())
+        return AnyView(DepatureReferenceContainer().navigationBarBackButtonHidden())
     }
     
     if item.screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(EnrouteReferenceContainer())
+        return AnyView(EnrouteReferenceContainer().navigationBarBackButtonHidden())
     }
     
     if item.screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(ArrivalReferenceContainer())
+        return AnyView(ArrivalReferenceContainer().navigationBarBackButtonHidden())
     }
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(AtlasSearchView())
+        return AnyView(AtlasSearchView().navigationBarBackButtonHidden())
     }
     
-    return AnyView(FlightPlanView())
+    if item.screenName == NavigationEnumeration.FlightPlanScreen {
+        return AnyView(FlightPlanView().navigationBarBackButtonHidden())
+    }
+    
+    return AnyView(FlightPlanView().navigationBarBackButtonHidden())
 }
 
 func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
@@ -248,6 +256,31 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
 func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(TableDetailSplit(row: item))
 }
+
+//final class SwiftUIViewController: UIHostingController<hasTabbar> {
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder, rootView: hasTabbar())
+//        rootView.dismiss = dismiss
+//    }
+//
+//    init() {
+//        super.init(rootView: hasTabbar())
+//        rootView.dismiss = dismiss
+//    }
+//
+//    func dismiss() {
+//        dismiss(animated: true, completion: nil)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        rootView.prepareExit()
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+//        rootView.doExit()
+//    }
+//}
+
 
 public struct HasToolbar: ViewModifier {
     @EnvironmentObject var sideMenuState: SideMenuModelState
@@ -299,5 +332,17 @@ public struct HasToolbar: ViewModifier {
                     }
                 }
         }
+    }
+}
+
+public struct HasTabbar: ViewModifier {
+    @EnvironmentObject var modelState: TabModelState
+    
+    public func body(content: Content) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Tabs
+            TabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("TabBarView")
+            content
+        }.background(Color.theme.sonicSilver.opacity(0.12))
     }
 }

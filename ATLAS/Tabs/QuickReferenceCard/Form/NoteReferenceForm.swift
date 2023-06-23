@@ -127,7 +127,7 @@ struct NoteReferenceForm: View {
         
         if !name.isEmpty {
             let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: false, canDelete: true)
+            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: true, canDelete: true)
             
             itemList.append(newItem)
             

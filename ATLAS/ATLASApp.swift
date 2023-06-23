@@ -16,6 +16,7 @@ struct ATLASApp: App {
     @StateObject var flightNoteModelState = FlightNoteModelState()
     @StateObject var searchModelSplitState = SearchModelSplitState()
     @StateObject var fpModelSplitState = FPModelSplitState()
+    @StateObject var nav = NavigationStateManager()
     
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -30,6 +31,7 @@ struct ATLASApp: App {
                 .environmentObject(flightNoteModelState)
                 .environmentObject(searchModelSplitState)
                 .environmentObject(fpModelSplitState)
+                .environmentObject(nav)
                 .onAppear {
                     Task {
                         await apiManager.makePostRequest()

@@ -37,7 +37,7 @@ struct projArrivalDelaysView: View {
                 .padding()
             }
         }
-        .navigationTitle("Projected Delay")
+        .navigationTitle("")
         .background()
     }
 }

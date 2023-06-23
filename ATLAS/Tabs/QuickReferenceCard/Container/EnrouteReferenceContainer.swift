@@ -47,8 +47,7 @@ struct EnrouteReferenceContainer: View {
                             .interactiveDismissDisabled(true)
                     }
             }
-        }.hasToolbar()
-            .padding()
+        }.padding()
             .background(Color.theme.antiFlashWhite)
     }
     

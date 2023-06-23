@@ -17,6 +17,7 @@ import os
 struct MainView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var modelState: TabModelState
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
@@ -43,14 +44,10 @@ struct MainView: View {
             }.navigationSplitViewStyle(.balanced)
                 .accentColor(Color.theme.tuftsBlue)
         } else {
-            NavigationSplitView(columnVisibility: $columnVisibility) {
+            NavigationView {
                 Sidebar()
-            } detail: {
-                NavigationStack {
-                    HomeView()
-                }
-            }.navigationSplitViewStyle(.balanced)
-                .accentColor(Color.theme.tuftsBlue)
+                HomeView()
+            }.accentColor(Color.theme.tuftsBlue)
         }
     }
 }
