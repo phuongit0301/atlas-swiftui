@@ -1,13 +1,12 @@
 //
-//  FlightPlanView.swift
+//  FlightPlanSummaryView.swift
 //  ATLAS
 //
-//  Created by phuong phan on 20/05/2023.
+//  Created by Muhammad Adil on 22/6/23.
 //
 
 import Foundation
 import SwiftUI
-import CoreData
 
 // fetch flight plan data - todo replace with API / core data
 func fetchFlightPlanData() -> [String: Any] {
@@ -41,8 +40,14 @@ func fetchFlightPlanData() -> [String: Any] {
     
     -PBN/A1A1B1B1C1C1D1D1L1L1O1O1S2S2 NAV/RNP2,RNP2 DAT/CPDLCX,CPDLCX SUR/RSP180,RSP180 DOF/211202 REG/9VOFH EET/WMFC0001 WIIF0037 WMFC0116 VOMF0125 VABF0412 OOMM0549 OMAE0646 OEJD0657 HECC0923 LGGG1118 LBSR1223 LYBA1236 LHCC1307 LOVV1325 LKAA1335 EDUU1352 EDWW1404 SEL/FJAQ CODE/76BCC8 OPR/TGW 65 66922602 PER/D RMK/ACASII EQUIPPED CALLSIGN SCOOTER TCAS OMAN PERMIT DATOFTGW00092021 SAUDI PERMIT 202160995TA EGYPT PERMIT CAD569817OCT21
     """
+    let waypointsData = [
+        waypoints(posn: "A", actm: "somestring", ztm: "00:05", eta: "0130", ata: "0135", afl: "220", oat: "M59", adn: "somestring", aWind: "25015", tas: "somestring", vws: "somestring", zfrq: "0.3", afrm: "086.9", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
+        waypoints(posn: "B", actm: "somestring", ztm: "00:02", eta: "0135", ata: "0140", afl: "230", oat: "M60", adn: "somestring", aWind: "26527", tas: "somestring", vws: "somestring", zfrq: "0.2", afrm: "086.6", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
+        waypoints(posn: "C", actm: "somestring", ztm: "00:03", eta: "0140", ata: "0145", afl: "240", oat: "M61", adn: "somestring", aWind: "27018", tas: "somestring", vws: "somestring", zfrq: "0.4", afrm: "086.3", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
+        waypoints(posn: "D", actm: "somestring", ztm: "00:01", eta: "0145", ata: "0150", afl: "250", oat: "M62", adn: "somestring", aWind: "28019", tas: "somestring", vws: "somestring", zfrq: "0.5", afrm: "086.2", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring")
+    ]
     
-    let object = ["infoData": infoData, "routeData": routeData, "perfData": perfData, "fuelData": fuelData, "altnData": altnData, "atcFlightPlanData": atcFlightPlanData] as [String : Any]
+    let object = ["infoData": infoData, "routeData": routeData, "perfData": perfData, "fuelData": fuelData, "altnData": altnData, "atcFlightPlanData": atcFlightPlanData, "waypointsData": waypointsData] as [String : Any]
     return object
 }
 
@@ -177,7 +182,7 @@ struct altn: Identifiable {
 }
 
 
-struct FlightPlanView: View {
+struct FlightPlanSummaryView: View {
     // initialise state variables
     @ObservedObject var globalResponse = GlobalResponse.shared
     @State private var showUTC = true
@@ -356,7 +361,7 @@ struct FlightPlanView: View {
             }
         }
 
-        var includedExtraFuelAmt: Int {
+        var includedExtraFuelAmt: String {
             let delayFuel: Int = includedDelayFuel["fuel"] as! Int
             let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
             let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
@@ -365,13 +370,15 @@ struct FlightPlanView: View {
             let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
             let trackShorteningFuel: Int = includedTrackShorteningFuel
             let othersFuel: Int = includedOthersFuel["fuel"] as! Int
-            return delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel // todo change to 000digits in front
+            let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
+            return formatFuelNumber(result)
         }
-        var includedExtraFuelTime: Int {
+        var includedExtraFuelTime: String {
             let delayTime: Int = includedDelayFuel["time"] as! Int
             let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
             let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
-            return delayTime + enrWxTime + reciprocalRwyTime // todo change to hhmm
+            let result = delayTime + enrWxTime + reciprocalRwyTime
+            return formatTime(result)
         }
         var includedExtraFuelRemarks: String {
             let delayRemarks: String = includedDelayFuel["remarks"] as! String
@@ -841,5 +848,20 @@ struct FlightPlanView: View {
         .navigationTitle("Summary")
         .background(Color(.systemGroupedBackground))
     }
-    
+    func formatFuelNumber(_ number: Int) -> String {
+        let formattedString = String(format: "%06d", number)
+        return formattedString
+    }
+    func formatTime(_ minutes: Int) -> String {
+        let hours = minutes / 60
+        let mins = minutes % 60
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
+        
+        return formatter.string(from: date)
+    }
 }
+
