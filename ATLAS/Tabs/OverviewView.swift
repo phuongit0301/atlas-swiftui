@@ -12,12 +12,11 @@ struct OverviewView: View {
     var viewInformationModel = ListReferenceModel()
     var viewUtilitiesModel = ListUtilitiesModel()
     @EnvironmentObject var modelState: TabModelState
-    @EnvironmentObject var nav: NavigationStateManager
     
     var body: some View {
         // flight informations
         VStack (spacing: 0) {
-            NavigationStack(path: $nav.selectionPath) {
+            NavigationStack {
                 List {
                     HStack {
                         Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
