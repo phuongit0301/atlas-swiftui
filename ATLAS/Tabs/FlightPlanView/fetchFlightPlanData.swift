@@ -9,7 +9,7 @@ import Foundation
 
 // fetch flight plan data - todo replace with API / core data
 func fetchFlightPlanData() -> [String: Any] {
-    let infoData = InfoData(planNo: "20", fltNo: "SQ123", tailNo: "9VSHM", dep: "SIN", dest: "BER", flightDate: "040723", STDUTC: "08:00", STAUTC: "17:00", STDLocal: "10:00", STALocal: "21:00")
+    let infoData = InfoData(planNo: "20", fltNo: "SQ123", tailNo: "9VSHM", dep: "SIN", dest: "BER", depICAO: "WSSS", destICAO: "EDDB", flightDate: "040723", STDUTC: "04 08:00", STAUTC: "04 17:00", STDLocal: "04 10:00", STALocal: "04 21:00")
     
     let routeData = RouteData(routeNo: "SINBER91", route: "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO  Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L", depRwy: "WSSS/20L", arrRwy: "EDDB/25L", levels: "SIN/360/UDULO/380/PEKEM/390/MIGMA/400/KEA/410/KOROS/430/TEXTI/380")
     
@@ -35,12 +35,14 @@ func fetchFlightPlanData() -> [String: Any] {
     
     -PBN/A1A1B1B1C1C1D1D1L1L1O1O1S2S2 NAV/RNP2,RNP2 DAT/CPDLCX,CPDLCX SUR/RSP180,RSP180 DOF/211202 REG/9VOFH EET/WMFC0001 WIIF0037 WMFC0116 VOMF0125 VABF0412 OOMM0549 OMAE0646 OEJD0657 HECC0923 LGGG1118 LBSR1223 LYBA1236 LHCC1307 LOVV1325 LKAA1335 EDUU1352 EDWW1404 SEL/FJAQ CODE/76BCC8 OPR/TGW 65 66922602 PER/D RMK/ACASII EQUIPPED CALLSIGN SCOOTER TCAS OMAN PERMIT DATOFTGW00092021 SAUDI PERMIT 202160995TA EGYPT PERMIT CAD569817OCT21
     """
+    
     let waypointsData = [
         waypoints(posn: "A", actm: "somestring", ztm: "00:05", eta: "0130", ata: "0135", afl: "220", oat: "M59", adn: "somestring", aWind: "25015", tas: "somestring", vws: "somestring", zfrq: "0.3", afrm: "086.9", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
         waypoints(posn: "B", actm: "somestring", ztm: "00:02", eta: "0135", ata: "0140", afl: "230", oat: "M60", adn: "somestring", aWind: "26527", tas: "somestring", vws: "somestring", zfrq: "0.2", afrm: "086.6", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
         waypoints(posn: "C", actm: "somestring", ztm: "00:03", eta: "0140", ata: "0145", afl: "240", oat: "M61", adn: "somestring", aWind: "27018", tas: "somestring", vws: "somestring", zfrq: "0.4", afrm: "086.3", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
         waypoints(posn: "D", actm: "somestring", ztm: "00:01", eta: "0145", ata: "0150", afl: "250", oat: "M62", adn: "somestring", aWind: "28019", tas: "somestring", vws: "somestring", zfrq: "0.5", afrm: "086.2", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring")
     ]
+    
     let notamsData = NotamsData(depNotams: ["""
                                 A1333/23 NOTAMN
                                 Q) WSJC/QMXLC/IV/BO/A/000/999/0122N10359E005
@@ -76,7 +78,14 @@ func fetchFlightPlanData() -> [String: Any] {
                                 SERVICE
                                 """])
     
-    let object = ["infoData": infoData, "routeData": routeData, "perfData": perfData, "fuelData": fuelData, "altnData": altnData, "atcFlightPlanData": atcFlightPlanData, "waypointsData": waypointsData, "notamsData": notamsData] as [String : Any]
+    let metarTafData = MetarTafData(depMetar: "METAR WSSS 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", depTaf: "TAF WSSS 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", arrMetar: "METAR EDDB 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", arrTaf: "TAF EDDB 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", altnTaf: [
+        AltnTafData(altnRwy: "EDDH/15", eta: "1742", taf: "TAF EDDH 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+        AltnTafData(altnRwy: "EDDK/32R", eta: "1755", taf: "TAF EDDK 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+        AltnTafData(altnRwy: "EDDL/05L", eta: "1757", taf: "TAF EDDL 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+        AltnTafData(altnRwy: "EDDF/25L", eta: "1749", taf: "TAF EDDF 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015")
+    ])
+    
+    let object = ["infoData": infoData, "routeData": routeData, "perfData": perfData, "fuelData": fuelData, "altnData": altnData, "atcFlightPlanData": atcFlightPlanData, "waypointsData": waypointsData, "notamsData": notamsData, "metarTafData": metarTafData] as [String : Any]
     return object
 }
 
@@ -87,6 +96,8 @@ struct InfoData: Codable {
     let tailNo: String
     let dep: String
     let dest: String
+    let depICAO: String
+    let destICAO: String
     let flightDate: String
     let STDUTC: String
     let STAUTC: String
@@ -149,4 +160,18 @@ struct NotamsData: Codable {
     let depNotams: [String]
     let enrNotams: [String]
     let arrNotams: [String]
+}
+
+struct MetarTafData: Codable {
+    let depMetar: String
+    let depTaf: String
+    let arrMetar: String
+    let arrTaf: String
+    let altnTaf: [AltnTafData]
+}
+
+struct AltnTafData: Codable {
+    let altnRwy: String
+    let eta: String
+    let taf: String
 }
