@@ -18,6 +18,7 @@ struct altnTaf: Identifiable {
 
 struct FlightPlanMETARTAFView: View {
     // initialise state variables
+    let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
 
     var body: some View {
         // fetch flight plan data
@@ -56,23 +57,104 @@ struct FlightPlanMETARTAFView: View {
             List {
                 // Dep METAR section
                 Section(header: Text("DEP METAR | PLAN DEP \(flightInfoData.depICAO)  \(flightRouteData.depRwy)").foregroundStyle(Color.black)) {
-                    Text(depMetar)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(depMetar.components(separatedBy: " "), id: \.self) { word in
+                                if redWords.contains(word) {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if let number = Int(word), number < 3000 {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else {
+                                    Text(word)
+                                }
+                            }
+                        }
                         .padding(.leading, 25)
+                    } // todo make fit to content without scrollview
                 }
+                
                 // Dep TAF section
                 Section(header: Text("DEP TAF | PLAN DEP \(flightInfoData.depICAO)  \(flightRouteData.depRwy)").foregroundStyle(Color.black)) {
-                    Text(depTaf)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(depTaf.components(separatedBy: " "), id: \.self) { word in
+                                if redWords.contains(word) {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if let number = Int(word), number < 3000 {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else {
+                                    Text(word)
+                                }
+                            }
+                        }
                         .padding(.leading, 25)
+                    } // todo make fit to content without scrollview
                 }
                 // Arr METAR section
                 Section(header: Text("ARR METAR | PLAN ARR \(flightInfoData.destICAO)  \(flightRouteData.arrRwy)").foregroundStyle(Color.black)) {
-                    Text(arrMetar)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(arrMetar.components(separatedBy: " "), id: \.self) { word in
+                                if redWords.contains(word) {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if let number = Int(word), number < 3000 {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else {
+                                    Text(word)
+                                }
+                            }
+                        }
                         .padding(.leading, 25)
+                    } // todo make fit to content without scrollview
                 }
                 // Arr TAF section
                 Section(header: Text("ARR TAF | PLAN ARR \(flightInfoData.destICAO)  \(flightRouteData.arrRwy)").foregroundStyle(Color.black)) {
-                    Text(arrTaf)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(arrTaf.components(separatedBy: " "), id: \.self) { word in
+                                if redWords.contains(word) {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if let number = Int(word), number < 3000 {
+                                    Text(word)
+                                        .foregroundColor(.red)
+                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                    Text(word)
+                                        .foregroundColor(.green)
+                                } else {
+                                    Text(word)
+                                }
+                            }
+                        }
                         .padding(.leading, 25)
+                    } // todo make fit to content without scrollview
                 }
                 // ALTN TAF section
                 Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
@@ -84,10 +166,10 @@ struct FlightPlanMETARTAFView: View {
                     }
                     .frame(minHeight: 250)
                     .scrollDisabled(true)
-                } // todo fix spacing
+                } // todo fix spacing, make color selection like above (no need to use table if not required)
             }
         }
-        .navigationTitle("NOTAMS")
+        .navigationTitle("METAR / TAF")
         .background(Color(.systemGroupedBackground))
     }
 }

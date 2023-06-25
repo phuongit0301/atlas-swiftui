@@ -14,7 +14,7 @@ struct FlightPlanView: View {
         //FlightPlanDepView()
         //FlightPlanEnrView()
         //FlightPlanArrView()
-        //FlightPlanNOTAMView()
-        FlightPlanMETARTAFView()
+        FlightPlanNOTAMView()
+        //FlightPlanMETARTAFView()
     }
 }
