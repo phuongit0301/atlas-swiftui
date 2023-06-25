@@ -1,24 +1,19 @@
-//
-//  customKeyboard.swift
-//  ATLAS
-//
-//  Created by Muhammad Adil on 24/6/23.
-//
-
-import Foundation
 import SwiftUI
 
 struct CustomKeyboardView: View {
     @Binding var text: String
     @Binding var cursorPosition: Int
+    @FocusState var currentFocus: Bool
+    @FocusState var nextFocus: Bool
+    @FocusState var prevFocus: Bool
 
     let numeric: [[String]] = [
         ["", "", ""],
-        ["←", "→", " "],
+        ["←", "→", "/"],
         ["1", "2", "3"],
         ["4", "5", "6"],
         ["7", "8", "9"],
-        ["0", ".", ""],
+        [".", "0", "-"],
     ]
     
     let alpha: [[String]] = [
@@ -27,7 +22,7 @@ struct CustomKeyboardView: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "/", ""]
+        ["Z", "/", "SP", "⌫", "EXEC"]
     ]
 
     var body: some View {
@@ -73,13 +68,16 @@ struct CustomKeyboardView: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "SP" {
+        if character == "EXEC" {
+            submit()
+        }
+        else if character == "SP" {
             insertCharacter(" ")
         }
         else if character == "←" {
-            moveCursorBackward()
+            moveBackward()
         } else if character == "→" {
-            moveCursorForward()
+            moveForward()
         } else if character == "⌫" {
             deletePreviousCharacter()
         } else {
@@ -88,17 +86,25 @@ struct CustomKeyboardView: View {
         }
     }
 
+    private func submit() {
+        currentFocus = false
+        nextFocus = true
+    }
+    
     private func insertCharacter(_ character: String) {
         let start = text.index(text.startIndex, offsetBy: cursorPosition)
         text.insert(contentsOf: character, at: start)
     }
 
-    private func moveCursorBackward() {
-        if cursorPosition > 0 {
-            cursorPosition -= 1
-        }
+    private func moveBackward() {
+        currentFocus = false
+        prevFocus = true
     }
 
+    private func moveForward() {
+        submit()
+    }
+    
     private func moveCursorForward() {
         if cursorPosition < text.count {
             cursorPosition += 1
@@ -114,41 +120,57 @@ struct CustomKeyboardView: View {
         text.remove(at: start)
         cursorPosition -= 1
     }
-    
-    // Property observer to update cursorPosition when text changes
-    private var textBinding: Binding<String> {
-        Binding<String>(
-            get: { self.text },
-            set: {
-                self.text = $0
-                self.cursorPosition = $0.count
-            }
-        )
-    }
 }
 
-// to use:
-struct testKeyboardContentView: View {
-    @State private var text = ""
-    @State private var isEditing = false
-    @State private var cursorPosition = 0
-
-    var body: some View {
-        VStack {
-            TextField("Enter text", text: $text, onEditingChanged: { editing in
-                isEditing = editing
-            })
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
-            .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { _ in
-                    cursorPosition = text.count
-                }
-            if isEditing {
-                CustomKeyboardView(text: $text, cursorPosition: $cursorPosition)
-            }
-        }
-        .onAppear {
-            cursorPosition = text.count // Set the initial cursor position to the end of the text
-        }
-    }
-}
+// example on how to use:
+//struct customKeyboardContentView: View {
+//    @State private var text1 = ""
+//    @State private var text2 = ""
+//    @State private var text3 = ""
+//    @State private var isEditing1 = false
+//    @State private var isEditing2 = false
+//    @State private var isEditing3 = false
+//    @State private var cursorPosition1 = 0
+//    @State private var cursorPosition2 = 0
+//    @State private var cursorPosition3 = 0
+//    @FocusState private var isTextField1Focused: Bool
+//    @FocusState private var isTextField2Focused: Bool
+//    @FocusState private var isTextField3Focused: Bool
+//
+//
+//    var body: some View {
+//        VStack {
+//            TextField("Enter text1", text: $text1, onEditingChanged: { editing in
+//                isEditing1 = editing
+//            })
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//            .padding()
+//            .focused($isTextField1Focused)
+//            if isEditing1 {
+//                CustomKeyboardView(text: $text1, cursorPosition: $cursorPosition1, currentFocus: _isTextField1Focused, nextFocus: _isTextField2Focused, prevFocus: _isTextField3Focused)
+//            }
+//            TextField("Enter text2", text: $text2, onEditingChanged: { editing in
+//                isEditing2 = editing
+//            })
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//            .padding()
+//            .focused($isTextField2Focused)
+//            if isEditing2 {
+//                CustomKeyboardView(text: $text2, cursorPosition: $cursorPosition2, currentFocus: _isTextField2Focused, nextFocus: _isTextField3Focused, prevFocus: _isTextField1Focused)
+//            }
+//            TextField("Enter text3", text: $text3, onEditingChanged: { editing in
+//                isEditing3 = editing
+//            })
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//            .padding()
+//            .focused($isTextField3Focused)
+//            if isEditing3 {
+//                CustomKeyboardView(text: $text3, cursorPosition: $cursorPosition3, currentFocus: _isTextField3Focused, nextFocus: _isTextField1Focused, prevFocus: _isTextField2Focused)
+//            }
+//        }
+//        .onAppear {
+//            cursorPosition1 = text1.count // Set the initial cursor position to the end of the text
+//            cursorPosition2 = text2.count // Set the initial cursor position to the end of the text
+//        }
+//    }
+//}
