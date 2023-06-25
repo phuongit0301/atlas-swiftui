@@ -603,3 +603,34 @@ struct IFlightNoteTabs {
         return MainItem
     }()
 }
+
+//class CoreDataModel: ObservableObject {
+//    // save fetched notes for view loading
+//    @Published var notes: [NoteList] = []
+//
+//    let dataService = PersistenceController.shared
+//
+//    init(_ target: String = "departure") {
+//        getAllNotesByTarget(target)
+//    }
+//
+//    func getAllNotesByTarget(_ target: String = "departure") {
+//        notes = dataService.read(target: target)
+//    }
+    
+//    func createNote() {
+//        dataService.create(title: noteTitle, body: noteBody, isFavorite: noteIsFav)
+//        getAllNotesByTarget()
+//    }
+//
+//    func toggleFav(note: Note) {
+//        dataService.update(entity: note, isFavorite: !note.isFavorite)
+//        getAllNotesByTarget()
+//    }
+//
+//    func deleteNote(note: Note) {
+//        dataService.delete(note)
+//        getAllNotesByTarget()
+//    }
+
+//}

@@ -9,11 +9,13 @@ import Foundation
 import SwiftUI
 
 struct NoteForm: View {
+    @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
-    @Binding var tagList: [ITagStorage]
-    @Binding var itemList: [IFlightInfoStorageModel]
+    @Binding var tagList: [TagList]
+    @Binding var itemList: [NoteList]
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
+    @State var target: String
     var resetData: () -> Void
     
     @State private var animate = false
@@ -77,6 +79,7 @@ struct NoteForm: View {
                                         Button(action: {
                                             if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
                                                 self.tagList[matchingIndex].isChecked.toggle()
+                                                persistenceController.container.context.ref
                                             }
                                             withAnimation(.easeInOut(duration: 0.5)) {
                                                 self.animate = true
@@ -89,6 +92,7 @@ struct NoteForm: View {
                                             .background(item.isChecked ? Color.theme.tealDeer : Color.theme.brightGray)
                                             .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
                                             .cornerRadius(16)
+                                            .Print("tag========>\(item)")
                                     }
                                 }.padding(.vertical)
                             }
@@ -110,9 +114,11 @@ struct NoteForm: View {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].name
                         
-                        if itemList[currentIndex].tags.count > 0 {
+                        let tags = itemList[currentIndex].tags?.allObjects ?? []
+                        
+                        if tags.count > 0 {
                             for index in 0..<tagList.count {
-                                if itemList[currentIndex].tags.contains(where: {$0.name == tagList[index].name}) {
+                                if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
                                     tagList[index].isChecked = true
                                 }
                             }
@@ -126,10 +132,17 @@ struct NoteForm: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: false, canDelete: true)
+            let tags: [TagList] = tagList.filter { $0.isChecked };
             
-            itemList.append(newItem)
+            let item = NoteList(context: persistenceController.container.viewContext)
+            item.name = name
+            item.tags = NSSet(array: tags)
+            item.isDefault = false
+            item.canDelete = true
+            item.fromParent = false
+            item.target = target
+            
+            persistenceController.save()
             
             textNote = ""
             self.resetData()
@@ -142,7 +155,9 @@ struct NoteForm: View {
         
         if !name.isEmpty {
             itemList[currentIndex].name = name
-            itemList[currentIndex].tags = tagList.filter { $0.isChecked }
+            itemList[currentIndex].tags = NSSet(array: tagList.filter { $0.isChecked })
+            
+            persistenceController.save()
             
             textNote = ""
             self.resetData()

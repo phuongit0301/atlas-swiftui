@@ -18,7 +18,8 @@ struct ATLASApp: App {
     @StateObject var flightNoteModelState = FlightNoteModelState()
     @StateObject var searchModelSplitState = SearchModelSplitState()
     @StateObject var fpModelSplitState = FPModelSplitState()
-    
+    @StateObject var coreDataModel = CoreDataModelState()
+
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
     
@@ -32,13 +33,13 @@ struct ATLASApp: App {
                 .environmentObject(flightNoteModelState)
                 .environmentObject(searchModelSplitState)
                 .environmentObject(fpModelSplitState)
+                .environmentObject(coreDataModel)
+                .environmentObject(persistenceController)
                 .onAppear {
                     Task {
                         await apiManager.makePostRequest()
+                        await persistenceController.checkAndSyncData()
                     }
-                    NSPersistentStore
-                    let per = PersistenceController(inMemory: false)
-                    per.initData()
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }.handlesExternalEvents(

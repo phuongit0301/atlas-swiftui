@@ -7,70 +7,89 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 struct DepartureCardContainer: View {
     @ObservedObject var viewModel: FlightNoteModelState
-    @State var depTags: [ITagStorage] = CommonTags().TagList
+    @ObservedObject var viewModel: CoreDataModelState
+//    @EnvironmentObject var persistenceController: PersistenceController
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Departure Status"
+    var target: String = "departure"
     
     var geoWidth: Double = 0
     
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: NoteList.entity(), sortDescriptors: [])
-    var notes: FetchedResults<NoteList>
-    
+    @State var notes: [NoteList] = []
+    @ObservedObject var depTags: [TagList] = 
+
     var body: some View {
-        VStack {
-            List{
-                ForEach(notes, id: \.self) { note in
-                    HStack {
-                        Text(note.name ?? "-").foregroundColor(.black)
-                        Spacer()
-                        Text(String(note.isDefault))
-                        
-                        Text(String(note.tags?.name ?? ""))
-                    }
-                }
-            }.Print("data=====\(notes)")
-            
-            Button(action: {
-                let product = NoteList(context: viewContext)
-                product.name = "Hello World"
-                product.isDefault = false
-                
-                saveContext()
-            }) {
-                Text("Add New").foregroundColor(.black)
-            }
-        }
-//        ItemList(
-//            header: header,
-//            showSheet: $showSheet,
-//            currentIndex: $currentIndex,
-//            itemList: $viewModel.departureArray,
-//            geoWidth: geoWidth,
-//            remove: remove,
-//            addQR: addQR,
-//            removeQR: removeQR
-//        ).frame(maxHeight: .infinity)
-//            .padding()
-//            .background(Color.white)
-//            .cornerRadius(8)
-//            .sheet(isPresented: $showSheet) {
-//                NoteForm(
-//                    textNote: $textNote,
-//                    tagList: $depTags,
-//                    itemList: $viewModel.departureArray,
-//                    currentIndex: $currentIndex,
-//                    showSheet: $showSheet,
-//                    resetData: self.resetData
-//                ).keyboardAdaptive()
-//                    .interactiveDismissDisabled(true)
+//        VStack {
+//            List{
+//                ForEach(notes, id: \.self) { note in
+//                    HStack {
+//                        Text(note.name ?? "-").foregroundColor(.black)
+//                        Spacer()
+//                        Text(String(note.isDefault))
+//
+//                        Text(String(note.tags?.name ?? ""))
+//                    }
+//                }
+//            }.Print("data=====\(notes)")
+//
+//            Button(action: {
+//                let product = NoteList(context: viewContext)
+//                product.name = "Hello World"
+//                product.isDefault = false
+//
+//                saveContext()
+//            }) {
+//                Text("Add New").foregroundColor(.black)
 //            }
+//        }
+        ItemList(
+            header: header,
+            showSheet: $showSheet,
+            currentIndex: $currentIndex,
+            itemList: $notes,
+            geoWidth: geoWidth,
+            remove: remove,
+            addQR: addQR,
+            removeQR: removeQR
+        ).frame(maxHeight: .infinity)
+            .padding()
+            .background(Color.white)
+            .cornerRadius(8)
+            .sheet(isPresented: $showSheet) {
+                NoteForm(
+                    textNote: $textNote,
+                    tagList: $depTags,
+                    itemList: $notes,
+                    currentIndex: $currentIndex,
+                    showSheet: $showSheet,
+                    target: target,
+                    resetData: self.resetData
+                ).keyboardAdaptive()
+                    .interactiveDismissDisabled(true)
+            }
+            .onAppear {
+                let results = persistenceController.read("departure")
+                let tags = persistenceController.readTag()
+                self.notes = results
+                self.depTags = tags
+//                let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
+//                request.predicate = NSPredicate(format: "target=%@", "depature")
+//                do {
+//                    let results = try persistenceController.container.viewContext.fetch(request)
+//                    self.notes = results
+//                } catch {
+//                    print("Unable to Fetch Workouts, (\(error))")
+//                }
+                
+            }
     }
     
     private func remove(_ index: Int) {
@@ -89,7 +108,7 @@ struct DepartureCardContainer: View {
     }
     
     private func resetData() {
-        self.depTags = CommonTags().TagList
+//        self.depTags = CommonTags().TagList
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
@@ -106,9 +125,9 @@ struct DepartureCardContainer: View {
         }
 }
 
-struct DepartureCardContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        DepartureCardContainer(viewModel: FlightNoteModelState())
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-    }
-}
+//struct DepartureCardContainer_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DepartureCardContainer(viewModel: FlightNoteModelState())
+//            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+//    }
+//}

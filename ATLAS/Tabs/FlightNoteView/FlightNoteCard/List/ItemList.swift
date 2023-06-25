@@ -12,7 +12,7 @@ struct ItemList: View {
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [IFlightInfoStorageModel] // itemList
+    @Binding var itemList: [NoteList] // itemList
     var geoWidth: Double
     var remove: (_ index: Int) -> Void
     var addQR: (_ index: Int) -> Void
@@ -64,7 +64,7 @@ struct ItemList: View {
                                     
                                     Spacer()
                                     
-                                    ForEach(itemList[index].tags) { tag in
+                                    ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
                                         HStack {
                                             Text(tag.name)
                                                 .padding(.vertical, 4)

@@ -20,30 +20,31 @@ struct AircraftStatusContainer: View {
     var geoWidth: Double = 0
     
     var body: some View {
-        ItemList(
-            header: header,
-            showSheet: $showSheet,
-            currentIndex: $currentIndex,
-            itemList: $viewModel.aircraftArray,
-            geoWidth: geoWidth,
-            remove: remove,
-            addQR: addQR,
-            removeQR: removeQR
-        ).frame(maxHeight: .infinity)
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .sheet(isPresented: $showSheet) {
-                NoteForm(
-                    textNote: $textNote,
-                    tagList: $aircraftTags,
-                    itemList: $viewModel.aircraftArray,
-                    currentIndex: $currentIndex,
-                    showSheet: $showSheet,
-                    resetData: self.resetData
-                ).keyboardAdaptive()
-                    .interactiveDismissDisabled(true)
-            }
+        Text("123")
+//        ItemList(
+//            header: header,
+//            showSheet: $showSheet,
+//            currentIndex: $currentIndex,
+//            itemList: $viewModel.aircraftArray,
+//            geoWidth: geoWidth,
+//            remove: remove,
+//            addQR: addQR,
+//            removeQR: removeQR
+//        ).frame(maxHeight: .infinity)
+//            .padding()
+//            .background(Color.white)
+//            .cornerRadius(8)
+//            .sheet(isPresented: $showSheet) {
+//                NoteForm(
+//                    textNote: $textNote,
+//                    tagList: $aircraftTags,
+//                    itemList: $viewModel.aircraftArray,
+//                    currentIndex: $currentIndex,
+//                    showSheet: $showSheet,
+//                    resetData: self.resetData
+//                ).keyboardAdaptive()
+//                    .interactiveDismissDisabled(true)
+//            }
     }
     
     private func remove(_ index: Int) {

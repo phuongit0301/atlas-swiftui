@@ -2,7 +2,7 @@
 //  TagList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 23/06/2023.
+//  Created by phuong phan on 25/06/2023.
 //
 //
 
@@ -17,7 +17,8 @@ extension TagList {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
+    @NSManaged public var name: String
+    @NSManaged public var isChecked: Bool
 
 }
 
