@@ -199,7 +199,6 @@ struct FlightPlanEnrView: View {
         .background(Color(.systemGroupedBackground))
     }
     
-    // todo fix value not updating issue
     private func updateValues(editedIndex: Int) {       
         let dateFormatterTime = DateFormatter()
         dateFormatterTime.dateFormat = "HHmm"

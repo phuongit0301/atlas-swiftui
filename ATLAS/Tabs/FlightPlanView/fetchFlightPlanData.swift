@@ -9,7 +9,7 @@ import Foundation
 
 // fetch flight plan data - todo replace with API / core data
 func fetchFlightPlanData() -> [String: Any] {
-    let infoData = InfoData(planNo: "20", fltNo: "SQ123", tailNo: "9VSHM", dep: "SIN", dest: "BER", depICAO: "WSSS", destICAO: "EDDB", flightDate: "040723", STDUTC: "04 08:00", STAUTC: "04 17:00", STDLocal: "04 10:00", STALocal: "04 21:00")
+    let infoData = InfoData(planNo: "20", fltNo: "SQ123", tailNo: "9VSHM", dep: "SIN", dest: "BER", depICAO: "WSSS", destICAO: "EDDB", flightDate: "040723", STDUTC: "04 08:00", STAUTC: "04 17:00", STDLocal: "04 10:00", STALocal: "04 21:00", BLKTime: "09:00", FLTTime: "08:45")
     
     let routeData = RouteData(routeNo: "SINBER91", route: "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO  Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L", depRwy: "WSSS/20L", arrRwy: "EDDB/25L", levels: "SIN/360/UDULO/380/PEKEM/390/MIGMA/400/KEA/410/KOROS/430/TEXTI/380")
     
@@ -103,6 +103,8 @@ struct InfoData: Codable {
     let STAUTC: String
     let STDLocal: String
     let STALocal: String
+    let BLKTime: String
+    let FLTTime: String
 }
 
 struct RouteData: Codable {

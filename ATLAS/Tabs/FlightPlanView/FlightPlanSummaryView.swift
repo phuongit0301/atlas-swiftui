@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 // creating flight info table structure
-struct flightInfo: Identifiable {
+struct flightInfo: Identifiable, Equatable {
     let flightNo: String
     let aircraft: String
     let depDest: String
@@ -18,6 +18,8 @@ struct flightInfo: Identifiable {
     let staUTC: String
     let stdLocal: String
     let staLocal: String
+    let blkTime: String
+    let fltTime: String
     let id = UUID()
 }
 
@@ -85,6 +87,8 @@ struct FlightPlanSummaryView: View {
     @State private var includedReciprocalRwy = true
     @State private var includedZFWchange = true
     @State private var includedOthers = true
+    
+    // for these variables: todo save/fetch all to/from core data
     @State private var selectedArrDelays: Int = 0
     @State private var selectedTaxi: Int = 0
     @State private var selectedFlightLevel000: Int = 0
@@ -95,6 +99,8 @@ struct FlightPlanSummaryView: View {
     @State private var selectedOthers000: Int = 0
     @State private var selectedOthers00: Int = 0
     @State private var actualZFW: Int = 0
+    @State private var pob: String = ""
+
 
     var body: some View {
         // fetch flight plan data
@@ -126,9 +132,8 @@ struct FlightPlanSummaryView: View {
         
         // set up flight info table data
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        @State var infoTable = [
-            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal)
-        ]
+        @State var infoTable =
+            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
         
         // set up route data
         let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
@@ -332,28 +337,108 @@ struct FlightPlanSummaryView: View {
                         Toggle(isOn: $showUTC) {}
                         Text("UTC")
                     }) {
-                    // table body
+                    // table body - todo fix alignment and design
                     if showUTC {
-                        Table(infoTable) {
-                            TableColumn("Flight No.", value: \.flightNo)
-                            TableColumn("Aircraft", value: \.aircraft)
-                            TableColumn("DEP / DEST", value: \.depDest)
-                            TableColumn("Date", value: \.date)
-                            TableColumn("STD", value: \.stdUTC)
-                            TableColumn("STA", value: \.staUTC)
+                        VStack {
+                            HStack {
+                                Group {
+                                    Text("Flight No.")
+                                    Text("Aircraft")
+                                    Text("DEP / DEST")
+                                    Text("Date")
+                                    Text("STD")
+                                    Text("STA")
+                                    Text("BLK Time")
+                                    Text("FLT Time")
+                                    Text("POB")
+                                }
+                                .foregroundStyle(Color.blue)
+                            }
+                            HStack {
+                                Group {
+                                    Text("\(infoTable.flightNo)")
+                                    Text("\(infoTable.aircraft)")
+                                    Text("\(infoTable.depDest)")
+                                    Text("\(infoTable.date)")
+                                    Text("\(infoTable.stdUTC)")
+                                    Text("\(infoTable.staUTC)")
+                                    Text("\(infoTable.blkTime)")
+                                    Text("\(infoTable.fltTime)")
+                                }
+                                Group {
+                                    // entry here
+                                    TextField(
+                                        "POB",
+                                        text: $pob
+                                    )
+                                    .onSubmit {
+                                        // todo save to core data
+                                    }
+                                    .textInputAutocapitalization(.never)
+                                    .disableAutocorrection(true)
+                                    .border(.secondary) // todo todo change design
+                                }
+                            }
                         }
-                        .frame(minHeight: 65)
+//                        Table(infoTable) {
+//                            TableColumn("Flight No.", value: \.flightNo)
+//                            TableColumn("Aircraft", value: \.aircraft)
+//                            TableColumn("DEP / DEST", value: \.depDest)
+//                            TableColumn("Date", value: \.date)
+//                            TableColumn("STD", value: \.stdUTC)
+//                            TableColumn("STA", value: \.staUTC)
+//                        }
+//                        .frame(minHeight: 65)
                     }
                     else {
-                        Table(infoTable) {
-                            TableColumn("Flight No.", value: \.flightNo)
-                            TableColumn("Aircraft", value: \.aircraft)
-                            TableColumn("DEP / DEST", value: \.depDest)
-                            TableColumn("Date", value: \.date)
-                            TableColumn("STD", value: \.stdLocal)
-                            TableColumn("STA", value: \.staLocal)
+                        VStack {
+                            HStack {
+                                Group {
+                                    Text("Flight No.")
+                                    Text("Aircraft")
+                                    Text("DEP / DEST")
+                                    Text("Date")
+                                    Text("STD")
+                                    Text("STA")
+                                    Text("BLK Time")
+                                    Text("FLT Time")
+                                    Text("POB")
+                                }
+                                .foregroundStyle(Color.blue)
+                            }
+                            HStack {
+                                Group {
+                                    Text("\(infoTable.flightNo)")
+                                    Text("\(infoTable.aircraft)")
+                                    Text("\(infoTable.depDest)")
+                                    Text("\(infoTable.date)")
+                                    Text("\(infoTable.stdLocal)")
+                                    Text("\(infoTable.staLocal)")
+                                    Text("\(infoTable.blkTime)")
+                                    Text("\(infoTable.fltTime)")
+                                    // entry here
+                                    TextField(
+                                        "POB",
+                                        text: $pob
+                                    )
+                                    .onSubmit {
+                                        // todo save to core data
+                                    }
+                                    .textInputAutocapitalization(.never)
+                                    .disableAutocorrection(true)
+                                    .border(.secondary) // todo change design
+                                }
+                            }
                         }
-                        .frame(minHeight: 65)
+//                        Table(infoTable) {
+//                            TableColumn("Flight No.", value: \.flightNo)
+//                            TableColumn("Aircraft", value: \.aircraft)
+//                            TableColumn("DEP / DEST", value: \.depDest)
+//                            TableColumn("Date", value: \.date)
+//                            TableColumn("STD", value: \.stdLocal)
+//                            TableColumn("STA", value: \.staLocal)
+//                        }
+//                        .frame(minHeight: 65)
                     }
                     
                 }
