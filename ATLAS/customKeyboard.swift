@@ -94,6 +94,7 @@ struct CustomKeyboardView: View {
     private func insertCharacter(_ character: String) {
         let start = text.index(text.startIndex, offsetBy: cursorPosition)
         text.insert(contentsOf: character, at: start)
+        moveCursorForward()
     }
 
     private func moveBackward() {
@@ -121,56 +122,3 @@ struct CustomKeyboardView: View {
         cursorPosition -= 1
     }
 }
-
-// example on how to use:
-//struct customKeyboardContentView: View {
-//    @State private var text1 = ""
-//    @State private var text2 = ""
-//    @State private var text3 = ""
-//    @State private var isEditing1 = false
-//    @State private var isEditing2 = false
-//    @State private var isEditing3 = false
-//    @State private var cursorPosition1 = 0
-//    @State private var cursorPosition2 = 0
-//    @State private var cursorPosition3 = 0
-//    @FocusState private var isTextField1Focused: Bool
-//    @FocusState private var isTextField2Focused: Bool
-//    @FocusState private var isTextField3Focused: Bool
-//
-//
-//    var body: some View {
-//        VStack {
-//            TextField("Enter text1", text: $text1, onEditingChanged: { editing in
-//                isEditing1 = editing
-//            })
-//            .textFieldStyle(RoundedBorderTextFieldStyle())
-//            .padding()
-//            .focused($isTextField1Focused)
-//            if isEditing1 {
-//                CustomKeyboardView(text: $text1, cursorPosition: $cursorPosition1, currentFocus: _isTextField1Focused, nextFocus: _isTextField2Focused, prevFocus: _isTextField3Focused)
-//            }
-//            TextField("Enter text2", text: $text2, onEditingChanged: { editing in
-//                isEditing2 = editing
-//            })
-//            .textFieldStyle(RoundedBorderTextFieldStyle())
-//            .padding()
-//            .focused($isTextField2Focused)
-//            if isEditing2 {
-//                CustomKeyboardView(text: $text2, cursorPosition: $cursorPosition2, currentFocus: _isTextField2Focused, nextFocus: _isTextField3Focused, prevFocus: _isTextField1Focused)
-//            }
-//            TextField("Enter text3", text: $text3, onEditingChanged: { editing in
-//                isEditing3 = editing
-//            })
-//            .textFieldStyle(RoundedBorderTextFieldStyle())
-//            .padding()
-//            .focused($isTextField3Focused)
-//            if isEditing3 {
-//                CustomKeyboardView(text: $text3, cursorPosition: $cursorPosition3, currentFocus: _isTextField3Focused, nextFocus: _isTextField1Focused, prevFocus: _isTextField2Focused)
-//            }
-//        }
-//        .onAppear {
-//            cursorPosition1 = text1.count // Set the initial cursor position to the end of the text
-//            cursorPosition2 = text2.count // Set the initial cursor position to the end of the text
-//        }
-//    }
-//}

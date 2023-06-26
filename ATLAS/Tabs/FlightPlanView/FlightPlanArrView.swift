@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct FlightPlanArrView: View {
     // initialise state variables
@@ -104,6 +105,15 @@ struct FlightPlanArrView: View {
     @FocusState private var isTextFieldEntLdgFocused: Bool
     @FocusState private var isTextFieldEntFuelOnChocksFocused: Bool
     @FocusState private var isTextFieldEntOnFocused: Bool
+    
+    // autofill variables
+    @State private var isShowingAutofillOptionsWx = false
+    @State private var isShowingAutofillOptionsCloud = false
+    @State private var isShowingAutofillOptionsRemarks = false
+    @State private var isShowingAutofillOptionsAtcRte = false
+
+    @State private var autofillOptions: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // Replace with your own autofill options
+    @State private var autofillText = ""
     
     var body: some View {
         let flightPlanData: [String : Any] = fetchFlightPlanData()
@@ -563,25 +573,31 @@ struct FlightPlanArrView: View {
                                 TextField("Wx", text: $wx, onEditingChanged: { editing in
                                         isEditingWx = editing
                                     })
-//                                .onChange(of: wx) { newValue in
-//                                    if newValue.count > 5 {
-//                                        wx = String(newValue.prefix(6))
-//                                        isTextFieldWxFocused = false
-//                                        isTextFieldCloudFocused = true
-//                                    }
-//                                }
                                 .focused($isTextFieldWxFocused)
+                                .onReceive(Just(wx)) { text in
+                                    let components = text.components(separatedBy: " ")
+                                    if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                        let searchTerm = String(lastComponent.dropFirst())
+                                        autofillText = searchTerm
+                                        isShowingAutofillOptionsWx = true
+                                    } else {
+                                        isShowingAutofillOptionsWx = false
+                                    }
+                                }
                                 TextField("Cloud", text: $cloud, onEditingChanged: { editing in
                                         isEditingCloud = editing
                                     })
-//                                .onChange(of: cloud) { newValue in
-//                                    if newValue.count > 5 {
-//                                        cloud = String(newValue.prefix(6))
-//                                        isTextFieldCloudFocused = false
-//                                        isTextFieldTempFocused = true
-//                                    }
-//                                }
                                 .focused($isTextFieldCloudFocused)
+                                .onReceive(Just(cloud)) { text in
+                                    let components = text.components(separatedBy: " ")
+                                    if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                        let searchTerm = String(lastComponent.dropFirst())
+                                        autofillText = searchTerm
+                                        isShowingAutofillOptionsCloud = true
+                                    } else {
+                                        isShowingAutofillOptionsCloud = false
+                                    }
+                                }
                             }
                             Group {
                                 TextField("Temp", text: $temp, onEditingChanged: { editing in
@@ -624,13 +640,17 @@ struct FlightPlanArrView: View {
                                 TextField("Remarks", text: $remarks, onEditingChanged: { editing in
                                         isEditingRemarks = editing
                                     })
-    //                            .onChange(of: remarks) { newValue in
-    //                                if newValue.count > 1 {
-    //                                    remarks = String(newValue.prefix(2))
-    //                                    isTextFieldRemarksFocused = false
-    //                                }
-    //                            }
                                 .focused($isTextFieldRemarksFocused)
+                                .onReceive(Just(remarks)) { text in
+                                    let components = text.components(separatedBy: " ")
+                                    if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                        let searchTerm = String(lastComponent.dropFirst())
+                                        autofillText = searchTerm
+                                        isShowingAutofillOptionsRemarks = true
+                                    } else {
+                                        isShowingAutofillOptionsRemarks = false
+                                    }
+                                }
                             }
                         }
                         .padding(.top, 5)
@@ -848,6 +868,50 @@ struct FlightPlanArrView: View {
                 }
                 if isEditingEntFuelOnChocks {
                     CustomKeyboardView(text: $entFuelOnChocks, cursorPosition: $cursorPositionEntFuelOnChocks, currentFocus: _isTextFieldEntFuelOnChocksFocused, nextFocus: _isTextFieldEntLdgFocused, prevFocus: _isTextFieldEntOnFocused)
+                }
+            }
+            Group {
+                if isShowingAutofillOptionsWx {
+                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                        Button(action: {
+                            let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
+                            cursorPositionWx -= wx.count
+                            wx = modifiedText + " " + option + " "
+                            cursorPositionWx += wx.count
+                            isShowingAutofillOptionsWx = false
+                        }) {
+                            Text(option)
+                        }
+                    }
+                    .listStyle(GroupedListStyle())
+                }
+                if isShowingAutofillOptionsCloud {
+                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                        Button(action: {
+                            let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
+                            cursorPositionCloud -= cloud.count
+                            cloud = modifiedText + " " + option + " "
+                            cursorPositionCloud += cloud.count
+                            isShowingAutofillOptionsCloud = false
+                        }) {
+                            Text(option)
+                        }
+                    }
+                    .listStyle(GroupedListStyle())
+                }
+                if isShowingAutofillOptionsRemarks {
+                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                        Button(action: {
+                            let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
+                            cursorPositionRemarks -= remarks.count
+                            remarks = modifiedText + " " + option + " "
+                            cursorPositionRemarks += remarks.count
+                            isShowingAutofillOptionsRemarks = false
+                        }) {
+                            Text(option)
+                        }
+                    }
+                    .listStyle(GroupedListStyle())
                 }
             }
         }
