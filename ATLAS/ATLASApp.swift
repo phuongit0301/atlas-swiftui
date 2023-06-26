@@ -38,7 +38,7 @@ struct ATLASApp: App {
                 .onAppear {
                     Task {
                         await apiManager.makePostRequest()
-                        await persistenceController.checkAndSyncData()
+                        await coreDataModel.checkAndSyncData()
                     }
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)

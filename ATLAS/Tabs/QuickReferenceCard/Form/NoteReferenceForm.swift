@@ -9,11 +9,15 @@ import Foundation
 import SwiftUI
 
 struct NoteReferenceForm: View {
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
-    @Binding var tagList: [ITagStorage]
-    @Binding var itemList: [IFlightInfoStorageModel]
+    @Binding var tagList: [TagList]
+    @Binding var itemList: [NoteList]
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
+    @State var target: String
+    @State var tagListSelected: [TagList] = []
     var resetData: () -> Void
     
     @State private var animate = false
@@ -25,6 +29,8 @@ struct NoteReferenceForm: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Button(action: {
+                            textNote = ""
+                            tagListSelected = []
                             self.showSheet.toggle()
                         }) {
                             Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
@@ -73,22 +79,8 @@ struct NoteReferenceForm: View {
                                 Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
                                 
                                 NewFlowLayout(alignment: .leading) {
-                                    ForEach(tagList) { item in
-                                        Button(action: {
-                                            if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
-                                                self.tagList[matchingIndex].isChecked.toggle()
-                                            }
-                                            withAnimation(.easeInOut(duration: 0.5)) {
-                                                self.animate = true
-                                            }
-                                        }, label: {
-                                            Text(item.name)
-                                                .font(.system(size: 12, weight: .regular))
-                                        }).padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .background(item.isChecked ? Color.theme.tealDeer : Color.theme.brightGray)
-                                            .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
-                                            .cornerRadius(16)
+                                    ForEach(tagList, id: \.self) { item in
+                                        TagItem(tagList: $tagList, item: item, tagListSelected: $tagListSelected)
                                     }
                                 }.padding(.vertical)
                             }
@@ -110,10 +102,12 @@ struct NoteReferenceForm: View {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].name
                         
-                        if itemList[currentIndex].tags.count > 0 {
+                        let tags = itemList[currentIndex].tags?.allObjects ?? []
+                        
+                        if tags.count > 0 {
                             for index in 0..<tagList.count {
-                                if itemList[currentIndex].tags.contains(where: {$0.name == tagList[index].name}) {
-                                    tagList[index].isChecked = true
+                                if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
+                                    tagListSelected.append(tagList[index])
                                 }
                             }
                         }
@@ -126,12 +120,19 @@ struct NoteReferenceForm: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: true, canDelete: true)
+            let item = NoteList(context: persistenceController.container.viewContext)
+            item.id = UUID()
+            item.name = name
+            item.isDefault = true
+            item.canDelete = true
+            item.fromParent = false
+            item.target = target
+            item.addToTags(NSSet(array: tagListSelected))
             
-            itemList.append(newItem)
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }
@@ -142,9 +143,12 @@ struct NoteReferenceForm: View {
         
         if !name.isEmpty {
             itemList[currentIndex].name = name
-            itemList[currentIndex].tags = tagList.filter { $0.isChecked }
+            itemList[currentIndex].tags = NSSet(array: tagListSelected)
+            
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }

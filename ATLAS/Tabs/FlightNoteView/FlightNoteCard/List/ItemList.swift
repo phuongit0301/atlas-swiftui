@@ -14,7 +14,7 @@ struct ItemList: View {
     @Binding var currentIndex: Int
     @Binding var itemList: [NoteList] // itemList
     var geoWidth: Double
-    var remove: (_ index: Int) -> Void
+    var remove: (_ item: NoteList) -> Void
     var addQR: (_ index: Int) -> Void
     var removeQR: (_ index: Int) -> Void
     
@@ -82,10 +82,8 @@ struct ItemList: View {
                                     Button(action: {
                                         if (itemList[index].isDefault) {
                                             removeQR(index)
-                                            itemList[index].isDefault = false
                                         } else {
                                             addQR(index)
-                                            itemList[index].isDefault = true
                                         }
                                     }) {
                                         itemList[index].isDefault ?
@@ -111,7 +109,7 @@ struct ItemList: View {
                             .swipeActions(allowsFullSwipe: false) {
                                 if itemList[index].canDelete {
                                     Button(role: .destructive) {
-                                        remove(index)
+                                        remove(itemList[index])
                                     } label: {
                                         Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                     }.tint(Color.theme.coralRed)
@@ -127,7 +125,6 @@ struct ItemList: View {
                                 
                                 Button {
                                     addQR(index)
-                                    itemList[index].isDefault = true
                                 } label: {
                                     Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                 }

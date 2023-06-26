@@ -107,10 +107,11 @@
 		3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F112A42E825001ED6CF /* PersistenceController.swift */; };
 		3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F1A2A433EF6001ED6CF /* Notes.xcdatamodeld */; };
 		3EFA5F2E2A458F25001ED6CF /* TableDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F2D2A458F25001ED6CF /* TableDetail.swift */; };
-		3EFA5F532A470026001ED6CF /* TagList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F4F2A470026001ED6CF /* TagList+CoreDataClass.swift */; };
-		3EFA5F542A470026001ED6CF /* TagList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F502A470026001ED6CF /* TagList+CoreDataProperties.swift */; };
-		3EFA5F552A470026001ED6CF /* NoteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F512A470026001ED6CF /* NoteList+CoreDataClass.swift */; };
-		3EFA5F562A470026001ED6CF /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F522A470026001ED6CF /* NoteList+CoreDataProperties.swift */; };
+		3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F572A494158001ED6CF /* TagItem.swift */; };
+		3EFA5F652A497815001ED6CF /* TagList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F612A497815001ED6CF /* TagList+CoreDataClass.swift */; };
+		3EFA5F662A497815001ED6CF /* TagList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F622A497815001ED6CF /* TagList+CoreDataProperties.swift */; };
+		3EFA5F672A497815001ED6CF /* NoteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F632A497815001ED6CF /* NoteList+CoreDataClass.swift */; };
+		3EFA5F682A497815001ED6CF /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5F642A497815001ED6CF /* NoteList+CoreDataProperties.swift */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
@@ -238,10 +239,11 @@
 		3EFA5F112A42E825001ED6CF /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		3EFA5F1B2A433EF6001ED6CF /* Notes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notes.xcdatamodel; sourceTree = "<group>"; };
 		3EFA5F2D2A458F25001ED6CF /* TableDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDetail.swift; sourceTree = "<group>"; };
-		3EFA5F4F2A470026001ED6CF /* TagList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EFA5F502A470026001ED6CF /* TagList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3EFA5F512A470026001ED6CF /* NoteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EFA5F522A470026001ED6CF /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EFA5F572A494158001ED6CF /* TagItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagItem.swift; sourceTree = "<group>"; };
+		3EFA5F612A497815001ED6CF /* TagList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EFA5F622A497815001ED6CF /* TagList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EFA5F632A497815001ED6CF /* NoteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EFA5F642A497815001ED6CF /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				3EFA5EFB2A407204001ED6CF /* NoteForm.swift */,
+				3EFA5F572A494158001ED6CF /* TagItem.swift */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -516,10 +519,10 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
-				3EFA5F4F2A470026001ED6CF /* TagList+CoreDataClass.swift */,
-				3EFA5F502A470026001ED6CF /* TagList+CoreDataProperties.swift */,
-				3EFA5F512A470026001ED6CF /* NoteList+CoreDataClass.swift */,
-				3EFA5F522A470026001ED6CF /* NoteList+CoreDataProperties.swift */,
+				3EFA5F612A497815001ED6CF /* TagList+CoreDataClass.swift */,
+				3EFA5F622A497815001ED6CF /* TagList+CoreDataProperties.swift */,
+				3EFA5F632A497815001ED6CF /* NoteList+CoreDataClass.swift */,
+				3EFA5F642A497815001ED6CF /* NoteList+CoreDataProperties.swift */,
 				3ED7546A2A11E1BA003072A1 /* ATLAS */,
 				3ED7547B2A11E1BD003072A1 /* ATLASTests */,
 				3ED754852A11E1BD003072A1 /* ATLASUITests */,
@@ -783,8 +786,6 @@
 			files = (
 				3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */,
 				3EFA5EF42A3EBE31001ED6CF /* SearchBar.swift in Sources */,
-				3EFA5F532A470026001ED6CF /* TagList+CoreDataClass.swift in Sources */,
-				3EFA5F542A470026001ED6CF /* TagList+CoreDataProperties.swift in Sources */,
 				3E3FCC472A270851008017FA /* taxiView.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
@@ -793,7 +794,6 @@
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
-				3EFA5F562A470026001ED6CF /* NoteList+CoreDataProperties.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
@@ -806,6 +806,7 @@
 				3EFA5EFC2A407204001ED6CF /* NoteForm.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
+				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */,
 				3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */,
@@ -836,15 +837,17 @@
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
+				3EFA5F672A497815001ED6CF /* NoteList+CoreDataClass.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
+				3EFA5F682A497815001ED6CF /* NoteList+CoreDataProperties.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
-				3EFA5F552A470026001ED6CF /* NoteList+CoreDataClass.swift in Sources */,
 				3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */,
+				3EFA5F652A497815001ED6CF /* TagList+CoreDataClass.swift in Sources */,
 				3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
@@ -863,6 +866,7 @@
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
+				3EFA5F662A497815001ED6CF /* TagList+CoreDataProperties.swift in Sources */,
 				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3E3FCC432A270851008017FA /* historicalDelaysView.swift in Sources */,
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,

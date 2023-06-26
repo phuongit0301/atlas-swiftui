@@ -10,9 +10,8 @@ import SwiftUI
 import CoreData
 
 struct DepartureCardContainer: View {
-    @ObservedObject var viewModel: FlightNoteModelState
     @ObservedObject var viewModel: CoreDataModelState
-//    @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var persistenceController: PersistenceController
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
@@ -21,40 +20,13 @@ struct DepartureCardContainer: View {
     var target: String = "departure"
     
     var geoWidth: Double = 0
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    @State var notes: [NoteList] = []
-    @ObservedObject var depTags: [TagList] = 
 
     var body: some View {
-//        VStack {
-//            List{
-//                ForEach(notes, id: \.self) { note in
-//                    HStack {
-//                        Text(note.name ?? "-").foregroundColor(.black)
-//                        Spacer()
-//                        Text(String(note.isDefault))
-//
-//                        Text(String(note.tags?.name ?? ""))
-//                    }
-//                }
-//            }.Print("data=====\(notes)")
-//
-//            Button(action: {
-//                let product = NoteList(context: viewContext)
-//                product.name = "Hello World"
-//                product.isDefault = false
-//
-//                saveContext()
-//            }) {
-//                Text("Add New").foregroundColor(.black)
-//            }
-//        }
         ItemList(
             header: header,
             showSheet: $showSheet,
             currentIndex: $currentIndex,
-            itemList: $notes,
+            itemList: $viewModel.departureArray,
             geoWidth: geoWidth,
             remove: remove,
             addQR: addQR,
@@ -66,8 +38,8 @@ struct DepartureCardContainer: View {
             .sheet(isPresented: $showSheet) {
                 NoteForm(
                     textNote: $textNote,
-                    tagList: $depTags,
-                    itemList: $notes,
+                    tagList: $viewModel.tagList,
+                    itemList: $viewModel.departureArray,
                     currentIndex: $currentIndex,
                     showSheet: $showSheet,
                     target: target,
@@ -75,59 +47,57 @@ struct DepartureCardContainer: View {
                 ).keyboardAdaptive()
                     .interactiveDismissDisabled(true)
             }
-            .onAppear {
-                let results = persistenceController.read("departure")
-                let tags = persistenceController.readTag()
-                self.notes = results
-                self.depTags = tags
-//                let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
-//                request.predicate = NSPredicate(format: "target=%@", "depature")
-//                do {
-//                    let results = try persistenceController.container.viewContext.fetch(request)
-//                    self.notes = results
-//                } catch {
-//                    print("Unable to Fetch Workouts, (\(error))")
-//                }
-                
-            }
     }
     
-    private func remove(_ index: Int) {
-        viewModel.removeDeparture(item: viewModel.departureArray[index])
+    private func remove(_ item: NoteList) {
+        viewModel.delete(item)
+        viewModel.save()
+        resetData()
     }
     
     private func addQR(_ index: Int) {
-        var item = viewModel.departureArray[index]
-        item.fromParent = true
+        let data = viewModel.departureArray[index]
+        let item = NoteList(context: persistenceController.container.viewContext)
+        item.id = UUID()
+        item.name = data.name
+        item.isDefault = false
         item.canDelete = true
-        viewModel.addDepartureQR(item: item)
+        item.fromParent = true
+        item.target = "departureref"
+        item.parentId = data.id
+
+        if let tags = data.tags {
+            item.addToTags(tags)
+        }
+        
+        data.isDefault = true
+        viewModel.save()
+        resetData()
     }
     
     private func removeQR(_ index: Int) {
-        viewModel.removeDepartureQR(item: viewModel.departureArray[index])
+        viewModel.departureArray[index].isDefault = false
+        
+        if let found = viewModel.departureRefArray.first(where: {$0.parentId == viewModel.departureArray[index].id}) {
+            viewModel.delete(found)
+        }
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-//        self.depTags = CommonTags().TagList
+        viewModel.departureArray = viewModel.read("departure")
+        viewModel.departureRefArray = viewModel.read("departureref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
     }
-    
-    private func saveContext() {
-            do {
-                try viewContext.save()
-            } catch {
-                let error = error as NSError
-                fatalError("An error occured: \(error)")
-            }
-        }
 }
 
-//struct DepartureCardContainer_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DepartureCardContainer(viewModel: FlightNoteModelState())
-//            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-//    }
-//}
+struct DepartureCardContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        DepartureCardContainer(viewModel: CoreDataModelState())
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+    }
+}

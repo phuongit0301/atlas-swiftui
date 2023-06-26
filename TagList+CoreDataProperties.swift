@@ -2,7 +2,7 @@
 //  TagList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 25/06/2023.
+//  Created by phuong phan on 26/06/2023.
 //
 //
 
@@ -16,9 +16,27 @@ extension TagList {
         return NSFetchRequest<TagList>(entityName: "Tag")
     }
 
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: UUID
     @NSManaged public var name: String
     @NSManaged public var isChecked: Bool
+    @NSManaged public var notes: NSSet?
+
+}
+
+// MARK: Generated accessors for notes
+extension TagList {
+
+    @objc(addNotesObject:)
+    @NSManaged public func addToNotes(_ value: NoteList)
+
+    @objc(removeNotesObject:)
+    @NSManaged public func removeFromNotes(_ value: NoteList)
+
+    @objc(addNotes:)
+    @NSManaged public func addToNotes(_ values: NSSet)
+
+    @objc(removeNotes:)
+    @NSManaged public func removeFromNotes(_ values: NSSet)
 
 }
 

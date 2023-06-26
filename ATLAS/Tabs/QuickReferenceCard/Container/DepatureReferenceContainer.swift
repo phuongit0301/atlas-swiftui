@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct DepatureReferenceContainer: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var sideMenuState: SideMenuModelState
-    
-    @State var depTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Depature Status"
+    var target: String = "departureref"
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,37 +27,55 @@ struct DepatureReferenceContainer: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.departureQRArray,
+                    itemList: $viewModel.departureRefArray,
                     geoWidth: proxy.size.width,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
-                    .padding(.vertical, 32)
-                    .padding(.horizontal, 16)
-                    .background(Color.white)
-                    .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteReferenceForm(
                             textNote: $textNote,
-                            tagList: $depTags,
-                            itemList: $viewModel.departureQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.departureRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).keyboardAdaptive()
                             .interactiveDismissDisabled(true)
                     }
             }
-        }.padding()
-            .background(Color.theme.antiFlashWhite)
+        }
     }
     
     private func update(_ index: Int) {
-        viewModel.updateDeparture(item: viewModel.departureQRArray[index])
-        viewModel.removeDepartureQR(item: viewModel.departureQRArray[index])
+        if let found = viewModel.departureArray.first(where: {$0.id == viewModel.departureRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.departureRefArray[index])
+        } else {
+            viewModel.departureRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.departureRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.departureRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.depTags = CommonTags().TagList
+        viewModel.departureArray = viewModel.read("departure")
+        viewModel.departureRefArray = viewModel.read("departureref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

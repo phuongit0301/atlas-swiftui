@@ -46,6 +46,10 @@ extension View {
     func breadCrumb(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
         ModifiedContent(content: self, modifier: BreadCrumb(screenName: screenName))
     }
+    
+    func breadCrumbRef(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
+        ModifiedContent(content: self, modifier: BreadCrumbRef(screenName: screenName))
+    }
 }
 
 extension String {
@@ -198,7 +202,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             AircraftReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
             
         )
@@ -217,7 +222,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             DepatureReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -226,7 +232,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             EnrouteReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -235,7 +242,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             ArrivalReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -397,6 +405,37 @@ public struct HasTabbar: ViewModifier {
     }
 }
 
+public struct BreadCrumbRef: ViewModifier {
+    @Environment(\.dismiss) private var dismiss
+    var screenName: NavigationEnumeration
+    
+    public func body(content: Content) -> some View {
+        VStack (alignment: .leading, spacing: 0) {
+            VStack (alignment: .leading, spacing: 0) {
+
+                HStack(alignment: .center) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text("Reference").font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                        }
+                    }
+                    Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                }.padding()
+                
+                content.padding(.horizontal)
+                
+            }.padding()
+                .background(Color.white)
+                .cornerRadius(8)
+        }.padding()
+            .background(Color.theme.antiFlashWhite)
+            
+    }
+}
+
 public struct BreadCrumb: ViewModifier {
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
@@ -425,39 +464,39 @@ public struct BreadCrumb: ViewModifier {
                 }
             }
     }
-    
-    private func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
-        switch screenName {
-            case .HomeScreen:
-                return "Home"
-            case .FlightScreen:
-                return "Flight Note"
-            case .OverviewScreen:
-                return "Reference"
-            case .NoteScreen:
-                return "Note"
-            case .FlightPlanScreen:
-                return "Flight Plan"
-            case .AirCraftScreen:
-                return "Aircraft Status"
-            case .DepartureScreen:
-                return "Departure"
-            case .EnrouteScreen:
-                return "Enroute"
-            case .ArrivalScreen:
-                return "Arrival"
-            case .AtlasSearchScreen:
-                return "AI Search"
-            case .TableScreen:
-                return "Utilities"
-            case .FuelScreen:
-                return "Fuel"
-            case .ChartScreen:
-                return "Chart"
-            case .WeatherScreen:
-                return "Weather"
-            case .ReportingScreen:
-                return "Reporting"
-        }
+}
+
+func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
+    switch screenName {
+        case .HomeScreen:
+            return "Home"
+        case .FlightScreen:
+            return "Flight Note"
+        case .OverviewScreen:
+            return "Reference"
+        case .NoteScreen:
+            return "Note"
+        case .FlightPlanScreen:
+            return "Flight Plan"
+        case .AirCraftScreen:
+            return "Aircraft Status"
+        case .DepartureScreen:
+            return "Departure"
+        case .EnrouteScreen:
+            return "Enroute"
+        case .ArrivalScreen:
+            return "Arrival"
+        case .AtlasSearchScreen:
+            return "AI Search"
+        case .TableScreen:
+            return "Utilities"
+        case .FuelScreen:
+            return "Fuel"
+        case .ChartScreen:
+            return "Chart"
+        case .WeatherScreen:
+            return "Weather"
+        case .ReportingScreen:
+            return "Reporting"
     }
 }

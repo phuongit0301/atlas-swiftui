@@ -2,7 +2,7 @@
 //  NoteList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 25/06/2023.
+//  Created by phuong phan on 26/06/2023.
 //
 //
 
@@ -18,10 +18,11 @@ extension NoteList {
 
     @NSManaged public var canDelete: Bool
     @NSManaged public var fromParent: Bool
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: UUID
     @NSManaged public var isDefault: Bool
     @NSManaged public var name: String
     @NSManaged public var target: String?
+    @NSManaged public var parentId: UUID?
     @NSManaged public var tags: NSSet?
 
 }

@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct ArrivalReferenceContainer: View {    
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var sideMenuState: SideMenuModelState
-    
-    @State var arrivalTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Arrival Status"
+    var target: String = "arrivalref"
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,37 +27,55 @@ struct ArrivalReferenceContainer: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.arrivalQRArray,
+                    itemList: $viewModel.arrivalRefArray,
                     geoWidth: proxy.size.width,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
-                    .padding(.vertical, 32)
-                    .padding(.horizontal, 16)
-                    .background(Color.white)
-                    .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteReferenceForm(
                             textNote: $textNote,
-                            tagList: $arrivalTags,
-                            itemList: $viewModel.arrivalQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.arrivalRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).keyboardAdaptive()
                             .interactiveDismissDisabled(true)
                     }
             }
-        }.padding()
-            .background(Color.theme.antiFlashWhite)
+        }
     }
     
     private func update(_ index: Int) {
-        viewModel.updateArrival(item: viewModel.arrivalQRArray[index])
-        viewModel.removeArrivalQR(item: viewModel.arrivalQRArray[index])
+        if let found = viewModel.arrivalArray.first(where: {$0.id == viewModel.arrivalRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.arrivalRefArray[index])
+        } else {
+            viewModel.arrivalRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.arrivalRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete( viewModel.arrivalRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.arrivalTags = CommonTags().TagList
+        viewModel.arrivalArray = viewModel.read("arrival")
+        viewModel.arrivalRefArray = viewModel.read("arrivalref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

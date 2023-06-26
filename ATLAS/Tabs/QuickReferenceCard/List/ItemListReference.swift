@@ -12,16 +12,17 @@ struct ItemListReference: View {
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [IFlightInfoStorageModel] // itemList
+    @Binding var itemList: [NoteList] // itemList
     var geoWidth: Double
     var update: (_ index: Int) -> Void
+    var updateStatus: (_ index: Int) -> Void
+    var delete: (_ index: Int) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(header).foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                 Spacer()
-                
                 Button(action: {
                     self.showSheet.toggle()
                 }) {
@@ -35,7 +36,6 @@ struct ItemListReference: View {
                     }
                 }
             }.padding(.vertical, 16)
-            
             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
             
             if itemList.isEmpty {
@@ -62,7 +62,7 @@ struct ItemListReference: View {
                                     
                                     Spacer()
                                     
-                                    ForEach(itemList[index].tags) { tag in
+                                    ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
                                         HStack {
                                             Text(tag.name)
                                                 .padding(.vertical, 4)
@@ -81,7 +81,7 @@ struct ItemListReference: View {
                                         if (itemList[index].canDelete && itemList[index].fromParent) {
                                             update(index)
                                         } else {
-                                            itemList[index].isDefault = !itemList[index].isDefault
+                                            updateStatus(index)
                                         }
                                     }) {
                                         itemList[index].isDefault || itemList[index].fromParent ?
@@ -106,7 +106,7 @@ struct ItemListReference: View {
                             .listRowBackground(Color.white)
                             .swipeActions(allowsFullSwipe: false) {
                                 Button(role: .destructive) {
-                                    update(index)
+                                    delete(index)
                                 } label: {
                                     Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                 }.tint(Color.theme.coralRed)

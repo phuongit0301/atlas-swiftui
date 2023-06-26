@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct EnrouteReferenceContainer: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var sideMenuState: SideMenuModelState
-    
-    @State var enrouteTags: [ITagStorage] = CommonTags().TagList
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Enroute Status"
+    var target: String = "enrouteref"
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,37 +27,56 @@ struct EnrouteReferenceContainer: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.enrouteQRArray,
+                    itemList: $viewModel.enrouteRefArray,
                     geoWidth: proxy.size.width,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
-                    .padding(.vertical, 32)
-                    .padding(.horizontal, 16)
-                    .background(Color.white)
-                    .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteReferenceForm(
                             textNote: $textNote,
-                            tagList: $enrouteTags,
-                            itemList: $viewModel.enrouteQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.enrouteRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).keyboardAdaptive()
                             .interactiveDismissDisabled(true)
                     }
+                    .breadCrumb(NavigationEnumeration.EnrouteScreen)
             }
-        }.padding()
-            .background(Color.theme.antiFlashWhite)
+        }
     }
     
     private func update(_ index: Int) {
-        viewModel.updateEnroute(item: viewModel.enrouteQRArray[index])
-        viewModel.removeEnrouteQR(item: viewModel.enrouteQRArray[index])
+        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.enrouteRefArray[index])
+        } else {
+            viewModel.enrouteRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.enrouteRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.enrouteRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.enrouteTags = CommonTags().TagList
+        viewModel.enrouteArray = viewModel.read("enroute")
+        viewModel.enrouteRefArray = viewModel.read("enrouteref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

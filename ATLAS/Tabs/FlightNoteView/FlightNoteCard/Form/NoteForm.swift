@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NoteForm: View {
+    @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
     @Binding var tagList: [TagList]
@@ -16,6 +17,7 @@ struct NoteForm: View {
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
     @State var target: String
+    @State var tagListSelected: [TagList] = []
     var resetData: () -> Void
     
     @State private var animate = false
@@ -27,6 +29,8 @@ struct NoteForm: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         Button(action: {
+                            textNote = ""
+                            tagListSelected = []
                             self.showSheet.toggle()
                         }) {
                             Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
@@ -39,7 +43,6 @@ struct NoteForm: View {
                         } else {
                             Text("Add New Note").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
                         }
-                        
                         
                         Spacer()
                         
@@ -75,24 +78,8 @@ struct NoteForm: View {
                                 Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
                                 
                                 NewFlowLayout(alignment: .leading) {
-                                    ForEach(tagList) { item in
-                                        Button(action: {
-                                            if let matchingIndex = self.tagList.firstIndex(where: { $0.id == item.id }) {
-                                                self.tagList[matchingIndex].isChecked.toggle()
-                                                persistenceController.container.context.ref
-                                            }
-                                            withAnimation(.easeInOut(duration: 0.5)) {
-                                                self.animate = true
-                                            }
-                                        }, label: {
-                                            Text(item.name)
-                                                .font(.system(size: 12, weight: .regular))
-                                        }).padding(.vertical, 4)
-                                            .padding(.horizontal, 8)
-                                            .background(item.isChecked ? Color.theme.tealDeer : Color.theme.brightGray)
-                                            .foregroundColor(item.isChecked ? Color.theme.eerieBlack : Color.theme.philippineGray)
-                                            .cornerRadius(16)
-                                            .Print("tag========>\(item)")
+                                    ForEach(tagList, id: \.self) { item in
+                                        TagItem(tagList: $tagList, item: item, tagListSelected: $tagListSelected)
                                     }
                                 }.padding(.vertical)
                             }
@@ -119,7 +106,7 @@ struct NoteForm: View {
                         if tags.count > 0 {
                             for index in 0..<tagList.count {
                                 if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
-                                    tagList[index].isChecked = true
+                                    tagListSelected.append(tagList[index])
                                 }
                             }
                         }
@@ -132,19 +119,19 @@ struct NoteForm: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            let tags: [TagList] = tagList.filter { $0.isChecked };
-            
             let item = NoteList(context: persistenceController.container.viewContext)
+            item.id = UUID()
             item.name = name
-            item.tags = NSSet(array: tags)
             item.isDefault = false
             item.canDelete = true
             item.fromParent = false
             item.target = target
+            item.addToTags(NSSet(array: tagListSelected))
             
-            persistenceController.save()
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }
@@ -155,11 +142,12 @@ struct NoteForm: View {
         
         if !name.isEmpty {
             itemList[currentIndex].name = name
-            itemList[currentIndex].tags = NSSet(array: tagList.filter { $0.isChecked })
+            itemList[currentIndex].tags = NSSet(array: tagListSelected)
             
-            persistenceController.save()
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }

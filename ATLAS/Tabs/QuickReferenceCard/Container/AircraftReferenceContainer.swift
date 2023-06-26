@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct AircraftReferenceContainer: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var sideMenuState: SideMenuModelState
-    
-    @State var aircraftTags: [ITagStorage] = []
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Aircraft Status"
+    var target: String = "aircraftref"
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,37 +27,56 @@ struct AircraftReferenceContainer: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.aircraftQRArray,
+                    itemList: $viewModel.aircraftRefArray,
                     geoWidth: proxy.size.width,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
-                    .padding(.vertical, 32)
-                    .padding(.horizontal, 16)
-                    .background(Color.white)
-                    .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteReferenceForm(
                             textNote: $textNote,
-                            tagList: $aircraftTags,
-                            itemList: $viewModel.aircraftQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.aircraftRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).keyboardAdaptive()
                             .interactiveDismissDisabled(true)
                     }
+                    
             }
-        }.padding()
-            .background(Color.theme.antiFlashWhite)
+        }
     }
     
     private func update(_ index: Int) {
-        viewModel.updateAircraft(item: viewModel.aircraftQRArray[index])
-        viewModel.removeAircraftQR(item: viewModel.aircraftQRArray[index])
+        if let found = viewModel.aircraftArray.first(where: {$0.id == viewModel.aircraftRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.aircraftRefArray[index])
+        } else {
+            viewModel.aircraftRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.aircraftRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.aircraftRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.aircraftTags = []
+        viewModel.aircraftArray = viewModel.read("aircraft")
+        viewModel.aircraftRefArray = viewModel.read("aircraftref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
