@@ -116,12 +116,16 @@ struct FlightPlanDepView: View {
     @State private var isShowingAutofillOptionsRemarks = false
     @State private var isShowingAutofillOptionsAtcRte = false
 
-    @State private var autofillOptions: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // Replace with your own autofill options
+    @State private var autofillOptionsATIS: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // Replace with your own autofill options
     @State private var autofillText = ""
+    @State private var isShowingCustomKeyboard = false
     
     var body: some View {
         let flightPlanData: [String : Any] = fetchFlightPlanData()
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
+        let routeData: RouteData = flightPlanData["routeData"] as! RouteData
+        let route = routeData.route
+        let routeList: [String] = route.components(separatedBy: " ")
         
         VStack(alignment: .leading) {
             // fixed header section, todo clean up design
@@ -580,7 +584,7 @@ struct FlightPlanDepView: View {
                                     } else {
                                         isShowingAutofillOptionsWx = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                                 TextField("Cloud", text: $cloud, onEditingChanged: { editing in
                                         isEditingCloud = editing
                                     })
@@ -594,7 +598,7 @@ struct FlightPlanDepView: View {
                                     } else {
                                         isShowingAutofillOptionsCloud = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                             }
                             Group {
                                 TextField("Temp", text: $temp, onEditingChanged: { editing in
@@ -647,7 +651,7 @@ struct FlightPlanDepView: View {
                                     } else {
                                         isShowingAutofillOptionsRemarks = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                             }
                         }
                         .padding(.top, 5)
@@ -909,7 +913,7 @@ struct FlightPlanDepView: View {
             }
             Group {
                 if isShowingAutofillOptionsWx {
-                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                    List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                         Button(action: {
                             let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
                             cursorPositionWx -= wx.count
@@ -923,7 +927,7 @@ struct FlightPlanDepView: View {
                     .listStyle(GroupedListStyle())
                 }
                 if isShowingAutofillOptionsCloud {
-                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                    List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                         Button(action: {
                             let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
                             cursorPositionCloud -= cloud.count
@@ -937,7 +941,7 @@ struct FlightPlanDepView: View {
                     .listStyle(GroupedListStyle())
                 }
                 if isShowingAutofillOptionsRemarks {
-                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                    List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                         Button(action: {
                             let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
                             cursorPositionRemarks -= remarks.count
@@ -951,7 +955,7 @@ struct FlightPlanDepView: View {
                     .listStyle(GroupedListStyle())
                 }
                 if isShowingAutofillOptionsAtcRte {
-                    List(autofillOptions.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                    List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                         Button(action: {
                             let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
                             cursorPositionAtcRte -= atcRte.count

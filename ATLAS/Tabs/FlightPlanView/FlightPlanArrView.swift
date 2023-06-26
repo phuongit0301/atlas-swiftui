@@ -583,7 +583,7 @@ struct FlightPlanArrView: View {
                                     } else {
                                         isShowingAutofillOptionsWx = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                                 TextField("Cloud", text: $cloud, onEditingChanged: { editing in
                                         isEditingCloud = editing
                                     })
@@ -597,7 +597,7 @@ struct FlightPlanArrView: View {
                                     } else {
                                         isShowingAutofillOptionsCloud = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                             }
                             Group {
                                 TextField("Temp", text: $temp, onEditingChanged: { editing in
@@ -650,7 +650,7 @@ struct FlightPlanArrView: View {
                                     } else {
                                         isShowingAutofillOptionsRemarks = false
                                     }
-                                }
+                                } // todo hide autofilloptions when submit or when focus on another textfield
                             }
                         }
                         .padding(.top, 5)
