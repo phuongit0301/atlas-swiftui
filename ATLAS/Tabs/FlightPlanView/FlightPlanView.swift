@@ -10,9 +10,9 @@ import SwiftUI
 
 struct FlightPlanView: View {
     var body: some View {
-        FlightPlanSummaryView()
+        //FlightPlanSummaryView()
         //FlightPlanDepView()
-        //FlightPlanEnrView()
+        FlightPlanEnrView()
         //FlightPlanArrView()
         //FlightPlanNOTAMView()
         //FlightPlanMETARTAFView()

@@ -26,7 +26,7 @@ struct waypoints: Identifiable, Equatable {
     let Cord: String
     let Msa: String
     let Dis: String
-    let Diff: String
+    var Diff: String
     let Pfl: String
     let Imt: String
     let Pdn: String
@@ -34,7 +34,7 @@ struct waypoints: Identifiable, Equatable {
     let Gsp: String
     let Drm: String
     let Pfrm: String
-    let fDiff: String
+    var fDiff: String
     let id = UUID()
 }
 
@@ -290,10 +290,78 @@ struct FlightPlanEnrView: View {
                 waypointsTable[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
             }
         }
+        
+        for index in editedIndex..<waypointsTable.count {
+            //diff
+            let diffDefaultValue = waypointsTableDefault[index].Diff
+            if dateFormatterTime.date(from: waypointsTable[index].eta) != nil &&  dateFormatterTime.date(from: waypointsTable[index].ata) != nil {
+                // Update the value based on the eta and ata
+                let etaMins = waypointsTable[index].eta.suffix(2)
+                let etaHrs = waypointsTable[index].eta.prefix(2)
+                let eta = Int(etaHrs)! * 60 + Int(etaMins)!
+                let ataMins = waypointsTable[index].ata.suffix(2)
+                let ataHrs = waypointsTable[index].ata.prefix(2)
+                let ata = Int(ataHrs)! * 60 + Int(ataMins)!
+                var NewValue = ata - eta
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    let NewValueString = formatTime(NewValue)
+                    waypointsTable[index].Diff = "-"+NewValueString
+                } else {
+                    let NewValueString = formatTime(NewValue)
+                    waypointsTable[index].Diff = NewValueString
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].Diff = diffDefaultValue
+            }
+            
+            //fDiff
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].fDiff)
+            if Double(waypointsTable[index].fDiff) != nil {
+                // Update the value based on the previous row's value in column
+                let afrm = Double(waypointsTable[index].afrm) ?? 0
+                let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
+                let NewValue = afrm - pfrm
+                waypointsTable[index].fDiff = formatFuelNumberDouble(NewValue)
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].fDiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
+        
+        for index in editedIndex..<waypointsTable.count {
+            //fDiff
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].fDiff)
+            if Double(waypointsTable[index].fDiff) != nil {
+                // Update the value based on the previous row's value in column
+                let afrm = Double(waypointsTable[index].afrm) ?? 0
+                let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
+                let NewValue = afrm - pfrm
+                waypointsTable[index].fDiff = formatFuelNumberDouble(NewValue)
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].fDiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
     }
     
     func formatFuelNumberDouble(_ number: Double) -> String {
         let formattedString = String(format: "%05.1f", number)
         return formattedString
+    }
+    func formatTime(_ minutes: Int) -> String {
+        let hours = minutes / 60
+        let mins = minutes % 60
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
+        
+        return formatter.string(from: date)
     }
 }

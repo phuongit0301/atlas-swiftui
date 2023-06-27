@@ -18,10 +18,10 @@ func fetchFlightPlanData() -> [String: Any] {
     let fuelData = FuelData(burnoff: ["time": "14:21", "fuel": "076157", "unit": "100"], cont: ["time": "00:34", "fuel": "003000", "policy": "5%"], altn: ["time": "00:42", "fuel": "003279", "unit": "100"], hold: ["time": "00:30", "fuel": "002031", "unit": "100"], topup60: ["time": "00:00", "fuel": "000000"], taxi: ["time": "N.A", "fuel": "000500", "policy": "7mins std taxi time", "unit": "100"], planReq: ["time": "16:07", "fuel": "084967"], dispAdd: ["time": "00:10", "fuel": "000600", "policy": "PER COMPANY POLICY FOR SINBER FLIGHTS"])
     
     let altnData = [
-        AltnData(altnRwy: "EDDH/15", rte: "EDDB SOGMA1N SOGMA M748 RARUP T909 HAM DCT", app: "VOR", minima: "670", dist: "0190", fl: "220", comp: "M015", time: "0042", fuel: "03279"),
-        AltnData(altnRwy: "EDDK/32R", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y221 EBANA T841 ERNEP ERNEP1C", app: "VOR", minima: "800", dist: "0270", fl: "280", comp: "M017", time: "0055", fuel: "04269"),
-        AltnData(altnRwy: "EDDL/05L", rte: "EDDB POVEL1N POVEL DCT EXOBA DCT HMM T851 HALME HALME1X", app: "VOR", minima: "550", dist: "0301", fl: "320", comp: "M018", time: "0057", fuel: "04512"),
-        AltnData(altnRwy: "EDDF/25L", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y222 FUL T152 KERAX KERAX3A", app: "VOR", minima: "940", dist: "0246", fl: "280", comp: "M014", time: "0049", fuel: "03914")
+        AltnData(altnRwy: "EDDH/15", rte: "EDDB SOGMA1N SOGMA M748 RARUP T909 HAM DCT", vis: "1600", minima: "670", dist: "0190", fl: "220", comp: "M015", time: "0042", fuel: "03279"),
+        AltnData(altnRwy: "EDDK/32R", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y221 EBANA T841 ERNEP ERNEP1C", vis: "1600", minima: "800", dist: "0270", fl: "280", comp: "M017", time: "0055", fuel: "04269"),
+        AltnData(altnRwy: "EDDL/05L", rte: "EDDB POVEL1N POVEL DCT EXOBA DCT HMM T851 HALME HALME1X", vis: "1600", minima: "550", dist: "0301", fl: "320", comp: "M018", time: "0057", fuel: "04512"),
+        AltnData(altnRwy: "EDDF/25L", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y222 FUL T152 KERAX KERAX3A", vis: "1600", minima: "940", dist: "0246", fl: "280", comp: "M014", time: "0049", fuel: "03914")
         ]
     
     let atcFlightPlanData = """
@@ -37,10 +37,10 @@ func fetchFlightPlanData() -> [String: Any] {
     """
     
     let waypointsData = [
-        waypoints(posn: "A", actm: "somestring", ztm: "00:05", eta: "0130", ata: "0135", afl: "220", oat: "M59", adn: "somestring", aWind: "25015", tas: "somestring", vws: "somestring", zfrq: "0.3", afrm: "086.9", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
-        waypoints(posn: "B", actm: "somestring", ztm: "00:02", eta: "0135", ata: "0140", afl: "230", oat: "M60", adn: "somestring", aWind: "26527", tas: "somestring", vws: "somestring", zfrq: "0.2", afrm: "086.6", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
-        waypoints(posn: "C", actm: "somestring", ztm: "00:03", eta: "0140", ata: "0145", afl: "240", oat: "M61", adn: "somestring", aWind: "27018", tas: "somestring", vws: "somestring", zfrq: "0.4", afrm: "086.3", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring"),
-        waypoints(posn: "D", actm: "somestring", ztm: "00:01", eta: "0145", ata: "0150", afl: "250", oat: "M62", adn: "somestring", aWind: "28019", tas: "somestring", vws: "somestring", zfrq: "0.5", afrm: "086.2", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "somestring", fDiff: "somestring")
+        waypoints(posn: "A", actm: "somestring", ztm: "00:05", eta: "0130", ata: "0135", afl: "220", oat: "M59", adn: "somestring", aWind: "25015", tas: "somestring", vws: "somestring", zfrq: "0.3", afrm: "086.9", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "086.9", fDiff: "somestring"),
+        waypoints(posn: "B", actm: "somestring", ztm: "00:02", eta: "0135", ata: "0140", afl: "230", oat: "M60", adn: "somestring", aWind: "26527", tas: "somestring", vws: "somestring", zfrq: "0.2", afrm: "086.6", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "086.6", fDiff: "somestring"),
+        waypoints(posn: "C", actm: "somestring", ztm: "00:03", eta: "0140", ata: "0145", afl: "240", oat: "M61", adn: "somestring", aWind: "27018", tas: "somestring", vws: "somestring", zfrq: "0.4", afrm: "086.3", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "086.3", fDiff: "somestring"),
+        waypoints(posn: "D", actm: "somestring", ztm: "00:01", eta: "0145", ata: "0150", afl: "250", oat: "M62", adn: "somestring", aWind: "28019", tas: "somestring", vws: "somestring", zfrq: "0.5", afrm: "086.2", Cord: "somestring", Msa: "somestring", Dis: "somestring", Diff: "somestring", Pfl: "somestring", Imt: "somestring", Pdn: "somestring", fWind: "somestring", Gsp: "somestring", Drm: "somestring", Pfrm: "086.2", fDiff: "somestring")
     ]
     
     let notamsData = NotamsData(depNotams: ["""
@@ -149,7 +149,7 @@ struct FuelData: Codable {
 struct AltnData: Codable {
     let altnRwy: String
     let rte: String
-    let app: String
+    let vis: String
     let minima: String
     let dist: String
     let fl: String

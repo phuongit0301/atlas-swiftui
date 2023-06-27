@@ -64,7 +64,7 @@ struct fuel: Identifiable {
 struct altn: Identifiable {
     let altnRwy: String
     let rte: String
-    let app: String
+    let vis: String
     let minima: String
     let dist: String
     let fl: String
@@ -293,7 +293,7 @@ struct FlightPlanSummaryView: View {
             return altn(
                 altnRwy: item.altnRwy,
                 rte: item.rte,
-                app: item.app,
+                vis: item.vis,
                 minima: item.minima,
                 dist: item.dist,
                 fl: item.fl,
@@ -802,7 +802,7 @@ struct FlightPlanSummaryView: View {
                     Table(altnTable) {
                         TableColumn("ALTN / RWY", value: \.altnRwy)
                         TableColumn("RTE", value: \.rte)
-                        TableColumn("APP", value: \.app)
+                        TableColumn("VIS", value: \.vis)
                         TableColumn("MINIMA", value: \.minima)
                         TableColumn("DIST", value: \.dist)
                         TableColumn("FL", value: \.fl)
