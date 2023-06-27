@@ -154,6 +154,7 @@ struct FlightPlanEnrView: View {
                                 }
                                 Group {
                                     Text("\(row.vws)")
+                                        .foregroundColor(textColorVws(for: row.vws))
                                     Text("\(row.zfrq)")
                                     // entry here
                                     TextField(
@@ -171,7 +172,7 @@ struct FlightPlanEnrView: View {
                             HStack {
                                 Group {
                                     Text("\(row.Cord)")
-                                    Text("\(row.Msa)")
+                                    Text("\(row.Msa)").foregroundColor(textColorMsa(for: row.Msa))
                                     Text("\(row.Dis)")
                                     Text("\(row.Diff)")
                                     Text("\(row.Pfl)")
@@ -373,5 +374,31 @@ struct FlightPlanEnrView: View {
         let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
         
         return formatter.string(from: date)
+    }
+    func textColorMsa(for value: String) -> Color {
+        if let value1: Int = Int(value) {
+            if value1 > 80 {
+                    return .red
+            } else {
+                return .black
+            }
+        } else {
+            if value.contains("*") {
+                return .red
+            } else {
+                return .black
+            }
+        }
+    }
+    func textColorVws(for value: String) -> Color {
+        if let value1: Int = Int(value) {
+            if value1 > 4 {
+                    return .red
+            } else {
+                return .black
+            }
+        } else {
+            return .black
+        }
     }
 }
