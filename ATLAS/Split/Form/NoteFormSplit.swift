@@ -9,11 +9,15 @@ import Foundation
 import SwiftUI
 
 struct NoteFormSplit: View {
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
-    @Binding var tagList: [ITagStorage]
-    @Binding var itemList: [IFlightInfoStorageModel]
+    @Binding var tagList: [TagList]
+    @Binding var itemList: [NoteList]
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
+    @State var target: String
+    @State var tagListSelected: [TagList] = []
     var resetData: () -> Void
     
     @State private var animate = false
@@ -110,10 +114,12 @@ struct NoteFormSplit: View {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].name
                         
-                        if itemList[currentIndex].tags.count > 0 {
+                        let tags = itemList[currentIndex].tags?.allObjects ?? []
+                        
+                        if tags.count > 0 {
                             for index in 0..<tagList.count {
-                                if itemList[currentIndex].tags.contains(where: {$0.name == tagList[index].name}) {
-                                    tagList[index].isChecked = true
+                                if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
+                                    tagListSelected.append(tagList[index])
                                 }
                             }
                         }
@@ -126,12 +132,19 @@ struct NoteFormSplit: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            let tags: [ITagStorage] = tagList.filter { $0.isChecked };
-            let newItem = IFlightInfoStorageModel(name: name, tags: tags, isDefault: false, canDelete: true)
+            let item = NoteList(context: persistenceController.container.viewContext)
+            item.id = UUID()
+            item.name = name
+            item.isDefault = true
+            item.canDelete = true
+            item.fromParent = false
+            item.target = target
+            item.addToTags(NSSet(array: tagListSelected))
             
-            itemList.append(newItem)
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }
@@ -142,9 +155,12 @@ struct NoteFormSplit: View {
         
         if !name.isEmpty {
             itemList[currentIndex].name = name
-            itemList[currentIndex].tags = tagList.filter { $0.isChecked }
+            itemList[currentIndex].tags = NSSet(array: tagListSelected)
+            
+            viewModel.save()
             
             textNote = ""
+            tagListSelected = []
             self.resetData()
             self.showSheet.toggle()
         }

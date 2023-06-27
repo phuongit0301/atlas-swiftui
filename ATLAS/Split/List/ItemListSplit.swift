@@ -12,9 +12,11 @@ struct ItemListSplit: View {
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [IFlightInfoStorageModel] // itemList
+    @Binding var itemList: [NoteList] // itemList
     var geoWidth: Double
     var update: (_ index: Int) -> Void
+    var updateStatus: (_ index: Int) -> Void
+    var delete: (_ index: Int) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -62,7 +64,7 @@ struct ItemListSplit: View {
                                     
                                     Spacer()
                                     
-                                    ForEach(itemList[index].tags) { tag in
+                                    ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
                                         HStack {
                                             Text(tag.name)
                                                 .padding(.vertical, 4)
@@ -78,10 +80,10 @@ struct ItemListSplit: View {
 
                                     
                                     Button(action: {
-                                        if (itemList[index].canDelete) {
+                                        if (itemList[index].canDelete && itemList[index].fromParent) {
                                             update(index)
                                         } else {
-                                            itemList[index].isDefault = !itemList[index].isDefault
+                                            updateStatus(index)
                                         }
                                     }) {
                                         itemList[index].isDefault || itemList[index].fromParent ?
@@ -105,18 +107,18 @@ struct ItemListSplit: View {
                             .listRowBackground(Color.white)
                             .swipeActions(allowsFullSwipe: false) {
                                 Button(role: .destructive) {
-                                    update(index)
+                                    delete(index)
                                 } label: {
                                     Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                 }.tint(Color.theme.coralRed)
                                 
-                                Button {
-                                    self.currentIndex = index
-                                    self.showSheet.toggle()
-                                } label: {
-                                    Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                }
-                                .tint(Color.theme.orangePeel)
+//                                Button {
+//                                    self.currentIndex = index
+//                                    self.showSheet.toggle()
+//                                } label: {
+//                                    Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+//                                }
+//                                .tint(Color.theme.orangePeel)
                                 
                                 Button {
                                     // todo: handle click info button

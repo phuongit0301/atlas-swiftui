@@ -9,13 +9,15 @@ import Foundation
 import SwiftUI
     
 struct EnrouteSplit: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     @State var enrouteTags: [ITagStorage] = []
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Enroute Status"
+    var target: String = "enrouteref"
     
     var geoWidth: Double = 0
     
@@ -28,19 +30,22 @@ struct EnrouteSplit: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.enrouteQRArray,
+                    itemList: $viewModel.enrouteRefArray,
                     geoWidth: geoWidth,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
                     .background(Color.white)
                     .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteFormSplit(
                             textNote: $textNote,
-                            tagList: $enrouteTags,
-                            itemList: $viewModel.enrouteQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.enrouteRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).interactiveDismissDisabled(true)
                     }
@@ -51,12 +56,32 @@ struct EnrouteSplit: View {
     }
     
     private func update(_ index: Int) {
-        viewModel.updateEnroute(item: viewModel.enrouteQRArray[index])
-        viewModel.removeEnrouteQR(item: viewModel.enrouteQRArray[index])
+        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.enrouteRefArray[index])
+        } else {
+            viewModel.enrouteRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.enrouteRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.enrouteRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.enrouteTags = []
+        viewModel.enrouteArray = viewModel.read("enroute")
+        viewModel.enrouteRefArray = viewModel.read("enrouteref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

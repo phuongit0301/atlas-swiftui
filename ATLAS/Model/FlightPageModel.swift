@@ -84,8 +84,8 @@ struct ListReferenceModel {
 struct ListUtilitiesModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)", idReference: "1"),
-            ListFlightInformationItem(name: "China RVSM (Eastbound)", date: "XX:XX (UTC+8)", idReference: "2"),
+            ListFlightInformationItem(name: "China RVSM (Westbound)", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.TableScreen, idReference: "1"),
+            ListFlightInformationItem(name: "China RVSM (Eastbound)", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.TableScreen, idReference: "2"),
         ]
         
         return MainItem

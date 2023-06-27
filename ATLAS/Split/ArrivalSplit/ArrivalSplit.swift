@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
     
 struct ArrivalSplit: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
-    @State var arrivalTags: [ITagStorage] = []
+    @EnvironmentObject var viewModel: CoreDataModelState
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Arrival Status"
+    var target: String = "arrivalref"
     
     var geoWidth: Double = 0
     
@@ -28,19 +28,22 @@ struct ArrivalSplit: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.arrivalQRArray,
+                    itemList: $viewModel.arrivalRefArray,
                     geoWidth: geoWidth,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
                     .background(Color.white)
                     .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteFormSplit(
                             textNote: $textNote,
-                            tagList: $arrivalTags,
-                            itemList: $viewModel.arrivalQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.arrivalRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).interactiveDismissDisabled(true)
                     }
@@ -51,12 +54,32 @@ struct ArrivalSplit: View {
     }
     
     private func update(_ index: Int) {
-        viewModel.updateArrival(item: viewModel.arrivalQRArray[index])
-        viewModel.removeArrivalQR(item: viewModel.arrivalQRArray[index])
+        if let found = viewModel.arrivalArray.first(where: {$0.id == viewModel.arrivalRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.arrivalRefArray[index])
+        } else {
+            viewModel.arrivalRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.arrivalRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.arrivalRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.arrivalTags = []
+        viewModel.arrivalArray = viewModel.read("arrival")
+        viewModel.arrivalRefArray = viewModel.read("arrivalref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

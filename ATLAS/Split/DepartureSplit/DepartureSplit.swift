@@ -9,13 +9,14 @@ import Foundation
 import SwiftUI
     
 struct DepartureSplit: View {
-    @EnvironmentObject var viewModel: FlightNoteModelState
-    @State var departureTags: [ITagStorage] = []
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Departure Status"
+    var target: String = "departureref"
     
     var geoWidth: Double = 0
     
@@ -28,19 +29,22 @@ struct DepartureSplit: View {
                     header: header,
                     showSheet: $showSheet,
                     currentIndex: $currentIndex,
-                    itemList: $viewModel.departureQRArray,
+                    itemList: $viewModel.departureRefArray,
                     geoWidth: geoWidth,
-                    update: update
+                    update: update,
+                    updateStatus: updateStatus,
+                    delete: delete
                 ).frame(maxHeight: .infinity)
                     .background(Color.white)
                     .cornerRadius(8)
                     .sheet(isPresented: $showSheet) {
                         NoteFormSplit(
                             textNote: $textNote,
-                            tagList: $departureTags,
-                            itemList: $viewModel.departureQRArray,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.departureRefArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
+                            target: target,
                             resetData: self.resetData
                         ).interactiveDismissDisabled(true)
                     }
@@ -51,12 +55,32 @@ struct DepartureSplit: View {
     }
     
     private func update(_ index: Int) {
-        viewModel.updateDeparture(item: viewModel.departureQRArray[index])
-        viewModel.removeDepartureQR(item: viewModel.departureQRArray[index])
+        if let found = viewModel.departureArray.first(where: {$0.id == viewModel.departureRefArray[index].parentId}) {
+            found.isDefault = false
+            viewModel.delete(viewModel.departureRefArray[index])
+        } else {
+            viewModel.departureRefArray[index].isDefault = false
+        }
+        
+        viewModel.save()
+        resetData()
+    }
+    
+    private func updateStatus(_ index: Int) {
+        viewModel.departureRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
+    
+    private func delete(_ index: Int) {
+        viewModel.delete(viewModel.departureRefArray[index])
+        viewModel.save()
+        resetData()
     }
     
     private func resetData() {
-        self.departureTags = []
+        viewModel.departureArray = viewModel.read("departure")
+        viewModel.departureRefArray = viewModel.read("departureref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
