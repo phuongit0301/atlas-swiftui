@@ -309,7 +309,7 @@ struct FlightPlanEnrView: View {
                     waypointsTable[index].Diff = "-"+NewValueString
                 } else {
                     let NewValueString = formatTime(NewValue)
-                    waypointsTable[index].Diff = NewValueString
+                    waypointsTable[index].Diff = "+"+NewValueString
                 }
             }
             else {
@@ -323,8 +323,13 @@ struct FlightPlanEnrView: View {
                 // Update the value based on the previous row's value in column
                 let afrm = Double(waypointsTable[index].afrm) ?? 0
                 let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
-                let NewValue = afrm - pfrm
-                waypointsTable[index].fDiff = formatFuelNumberDouble(NewValue)
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    waypointsTable[index].fDiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    waypointsTable[index].fDiff = "+"+formatFuelNumberDouble(NewValue)
+                }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
@@ -339,8 +344,13 @@ struct FlightPlanEnrView: View {
                 // Update the value based on the previous row's value in column
                 let afrm = Double(waypointsTable[index].afrm) ?? 0
                 let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
-                let NewValue = afrm - pfrm
-                waypointsTable[index].fDiff = formatFuelNumberDouble(NewValue)
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    waypointsTable[index].fDiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    waypointsTable[index].fDiff = "+"+formatFuelNumberDouble(NewValue)
+                }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
