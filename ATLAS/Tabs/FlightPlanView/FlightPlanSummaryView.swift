@@ -304,7 +304,7 @@ struct FlightPlanSummaryView: View {
         }
 
         // set up ATC flight plan data
-        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
+//        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
 
         VStack(alignment: .leading) {
             // fixed header section, todo clean up design
@@ -815,10 +815,10 @@ struct FlightPlanSummaryView: View {
                 }
                 
                 // ATC flight plan section
-                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
-                    Text("\(atcFlightPlan)")
-                        .padding(.leading, 25)
-                }
+//                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
+//                    Text("\(atcFlightPlan)")
+//                        .padding(.leading, 25)
+//                }
             }
         }
         .navigationTitle("Summary")
