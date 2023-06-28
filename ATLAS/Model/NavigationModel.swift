@@ -24,6 +24,7 @@ enum NavigationEnumeration {
     case ChartScreen
     case WeatherScreen
     case ReportingScreen
+    case ScratchPadScreen
 }
 
 enum NavigationEnumerationToString: CustomStringConvertible {

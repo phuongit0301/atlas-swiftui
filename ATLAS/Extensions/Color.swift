@@ -42,4 +42,5 @@ struct ColorTheme {
     let graniteGray = Color("GraniteGray") //636366
     let orangePeel = Color("OrangePeel") //FF9F0A
     let coralRed = Color("CoralRed") //FF453A
+    let charlestonGreen = Color("CharlestonGreen") //272729
 }

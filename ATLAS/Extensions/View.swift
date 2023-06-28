@@ -266,6 +266,15 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         )
     }
     
+    if item.screenName == NavigationEnumeration.ScratchPadScreen {
+        return AnyView(
+            ScratchPadView()
+                .navigationBarBackButtonHidden()
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
+    }
+    
     return AnyView(
         FlightPlanView()
             .navigationBarBackButtonHidden()
@@ -498,5 +507,7 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Weather"
         case .ReportingScreen:
             return "Reporting"
+        case .ScratchPadScreen:
+            return "Scratch Pad"
     }
 }

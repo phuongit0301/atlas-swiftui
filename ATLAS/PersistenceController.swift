@@ -42,6 +42,13 @@ class PersistenceController: ObservableObject {
     }
 }
 
+struct IScratchPad: Identifiable, Hashable {
+    var id = UUID()
+    var title: String
+    var content: String
+    var createdAt: Date = Date()
+}
+
 class CoreDataModelState: ObservableObject {
     @Published var tagList: [TagList] = []
     @Published var aircraftArray: [NoteList] = []
@@ -52,6 +59,9 @@ class CoreDataModelState: ObservableObject {
     @Published var departureRefArray: [NoteList] = []
     @Published var enrouteRefArray: [NoteList] = []
     @Published var arrivalRefArray: [NoteList] = []
+    
+    @Published var scratchPadArray: [ScratchPadList] = []
+    
     let service = PersistenceController.shared
     
     init() {
@@ -68,6 +78,7 @@ class CoreDataModelState: ObservableObject {
         departureRefArray = read("departureref")
         enrouteRefArray = read("enrouteref")
         arrivalRefArray = read("arrivalref")
+        scratchPadArray = readScratchPad()
     }
     
     func checkAndSyncData() async {
@@ -283,6 +294,23 @@ class CoreDataModelState: ObservableObject {
             data = try service.container.viewContext.fetch(request)
         } catch {
             print("Could not fetch tag from Core Data.")
+        }
+
+        // return results
+        return data
+    }
+    
+    func readScratchPad() -> [ScratchPadList] {
+        // create a temp array to save fetched notes
+        var data: [ScratchPadList] = []
+        // initialize the fetch request
+        let request: NSFetchRequest<ScratchPadList> = ScratchPadList.fetchRequest()
+
+        // fetch with the request
+        do {
+            data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
         }
 
         // return results
