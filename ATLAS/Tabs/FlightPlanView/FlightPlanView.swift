@@ -34,6 +34,12 @@ struct FlightPlanView: View {
 
 struct FlightPlanView_Previews: PreviewProvider {
     static var previews: some View {
-        FlightPlanView()
+        // FlightPlanView()
+        //FlightPlanSummaryView()
+        //FlightPlanDepView()
+        FlightPlanEnrView()
+        //FlightPlanArrView()
+        //FlightPlanNOTAMView()
+        //FlightPlanMETARTAFView()
     }
 }

@@ -15,6 +15,8 @@ struct ScratchPadView: View {
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
+    @State private var showSheetEdit: Bool = false
+    @State var pasteboard = UIPasteboard.general
     var header: String = "Scratchpad"
     
     var body: some View {
@@ -23,17 +25,28 @@ struct ScratchPadView: View {
                 ItemListScratchPad(
                     header: header,
                     showSheet: $showSheet,
+                    showSheetEdit: $showSheetEdit,
                     currentIndex: $currentIndex,
                     itemList: $viewModel.scratchPadArray,
                     geoWidth: proxy.size.width,
-                    delete: delete
-                ).frame(maxHeight: .infinity)
-                    .sheet(isPresented: $showSheet) {
+                    delete: delete,
+                    pasteboard: $pasteboard
+                ).sheet(isPresented: $showSheet) {
                         ScratchPadForm(
                             itemList: $viewModel.scratchPadArray,
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
                             resetData: self.resetData
+                        ).keyboardAdaptive()
+                            .interactiveDismissDisabled(true)
+                    }
+                    .sheet(isPresented: $showSheetEdit) {
+                        ScratchPadEditForm(
+                            itemList: $viewModel.scratchPadArray,
+                            currentIndex: $currentIndex,
+                            showSheetEdit: $showSheetEdit,
+                            resetData: self.resetData,
+                            pasteboard: $pasteboard
                         ).keyboardAdaptive()
                             .interactiveDismissDisabled(true)
                     }

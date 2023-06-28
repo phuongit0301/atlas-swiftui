@@ -13,10 +13,12 @@ struct ItemListScratchPad: View {
     
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
+    @Binding var showSheetEdit: Bool
     @Binding var currentIndex: Int
     @Binding var itemList: [ScratchPadList] // itemList
     var geoWidth: Double
     var delete: (_ index: Int) -> Void
+    @Binding var pasteboard: UIPasteboard
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -25,7 +27,9 @@ struct ItemListScratchPad: View {
                 Spacer()
                 
                 Button(action: {
-//                    cloneItem()
+                    if let clipboardText = pasteboard.string {
+                        cloneItem(clipboardText)
+                    }
                 }) {
                     Text("Paste").foregroundColor(Color.white)
                         .font(.system(size: 17, weight: .regular))
@@ -83,6 +87,10 @@ struct ItemListScratchPad: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
+                            .onTapGesture {
+                                self.currentIndex = index
+                                self.showSheetEdit.toggle()
+                            }
                             .swipeActions(allowsFullSwipe: false) {
                                 Button(role: .destructive) {
                                     delete(index)
@@ -91,8 +99,9 @@ struct ItemListScratchPad: View {
                                 }.tint(Color.theme.coralRed)
                                 
                                 Button {
-                                    self.currentIndex = index
-                                    self.showSheet.toggle()
+//                                    self.currentIndex = index
+                                    pasteboard.string = itemList[index].content
+//                                    self.showSheetEdit.toggle()
                                 } label: {
                                     Text("Copy").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                 }
@@ -115,19 +124,19 @@ struct ItemListScratchPad: View {
         }
     }
     
-//    func cloneItem(_ index: Int) {
-//        let item = ScratchPadList(context: persistenceController.container.viewContext)
-//        item.id = UUID()
-//
-//        if let firstParagraph = $0.content.components(separatedBy: CharacterSet.newlines).first {
-//            item.title = firstParagraph
-//        }
-//
-//        item.content = $0.content
-//
-//        viewModel.save()
-//        self.viewModel.scratchPadArray = viewModel.readScratchPad()
-//    }
+    func cloneItem(_ content: String) {
+        let item = ScratchPadList(context: persistenceController.container.viewContext)
+        item.id = UUID()
+
+        if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+            item.title = firstParagraph
+        }
+
+        item.content = content
+
+        viewModel.save()
+        self.viewModel.scratchPadArray = viewModel.readScratchPad()
+    }
     
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
