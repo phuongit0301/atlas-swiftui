@@ -103,6 +103,8 @@ struct FlightPlanSummaryView: View {
 
 
     var body: some View {
+        @StateObject var viewModel = ViewModelSummary()
+        
         // fetch flight plan data
         let flightPlanData: [String : Any] = fetchFlightPlanData()
         
@@ -305,524 +307,649 @@ struct FlightPlanSummaryView: View {
 
         // set up ATC flight plan data
 //        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
-
-        VStack(alignment: .leading) {
-            // fixed header section, todo clean up design
-            HStack(alignment: .center) {
-                Text("Summary")
-                    .font(.title)
-                    .padding(.leading, 30)
-                Spacer()
-                .frame(maxWidth: .infinity)
-                Button(action: {}) {  // todo add the action here, fix design
-                    Text("Sign-off")
-                }
-                .buttonStyle(.bordered)
-                .padding(.trailing, 30)
-            }
-            .padding(.bottom, 10)
-            Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
-            .padding(.leading, 30)
-            .padding(.bottom, 10)
-            //scrollable outer list section
-            List {
-                // Flight information section
-                Section(header:
-                    HStack(alignment: .center) {
-                        Text("FLIGHT INFORMATION")
-                        .foregroundStyle(Color.black)
-                        Spacer()
-                        .frame(maxWidth: .infinity)  // todo fix spacing
-                        Text("Local")
-                        Toggle(isOn: $showUTC) {}
-                        Text("UTC")
-                    }) {
-                    // table body - todo fix alignment and design
-                    if showUTC {
-                        VStack {
-                            HStack {
-                                Group {
-                                    Text("Flight No.")
-                                    Text("Aircraft")
-                                    Text("DEP / DEST")
-                                    Text("Date")
-                                    Text("STD")
-                                    Text("STA")
-                                    Text("BLK Time")
-                                    Text("FLT Time")
-                                    Text("POB")
-                                }
-                                .foregroundStyle(Color.blue)
-                            }
-                            HStack {
-                                Group {
-                                    Text("\(infoTable.flightNo)")
-                                    Text("\(infoTable.aircraft)")
-                                    Text("\(infoTable.depDest)")
-                                    Text("\(infoTable.date)")
-                                    Text("\(infoTable.stdUTC)")
-                                    Text("\(infoTable.staUTC)")
-                                    Text("\(infoTable.blkTime)")
-                                    Text("\(infoTable.fltTime)")
-                                }
-                                Group {
-                                    // entry here
-                                    TextField(
-                                        "POB",
-                                        text: $pob
-                                    )
-                                    .onSubmit {
-                                        // todo save to core data
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                }
-                            }
-                        }
-//                        Table(infoTable) {
-//                            TableColumn("Flight No.", value: \.flightNo)
-//                            TableColumn("Aircraft", value: \.aircraft)
-//                            TableColumn("DEP / DEST", value: \.depDest)
-//                            TableColumn("Date", value: \.date)
-//                            TableColumn("STD", value: \.stdUTC)
-//                            TableColumn("STA", value: \.staUTC)
-//                        }
-//                        .frame(minHeight: 65)
+        GeometryReader { proxy in
+            VStack(alignment: .leading) {
+                HStack(alignment: .center) {
+                    Text("Summary")
+                        .font(.system(size: 20, weight: .semibold))
+                    
+                    Spacer().frame(maxWidth: .infinity)
+                    
+                    Button(action: {}) {  // todo add the action here, fix design
+                        Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
                     }
-                    else {
-                        VStack {
-                            HStack {
-                                Group {
-                                    Text("Flight No.")
-                                    Text("Aircraft")
-                                    Text("DEP / DEST")
-                                    Text("Date")
-                                    Text("STD")
-                                    Text("STA")
-                                    Text("BLK Time")
-                                    Text("FLT Time")
-                                    Text("POB")
-                                }
-                                .foregroundStyle(Color.blue)
+                    .padding(.vertical, 11)
+                    .padding(.horizontal)
+                    .background(Color.theme.philippineGray3)
+                        .cornerRadius(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(.white, lineWidth: 1)
+                        )
+                    
+                }.padding(.bottom, 10)
+                    .padding(.horizontal, 30)
+                
+                Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+                    .font(.system(size: 15, weight: .semibold))
+                    .padding(.leading, 30)
+                    .padding(.bottom, 10)
+                //scrollable outer list section
+                List {
+                    // Flight information section
+                    Section(header:
+                                HStack(alignment: .center) {
+                        Text("FLIGHT INFORMATION")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Color.black)
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Toggle(isOn: $showUTC) {
+                                Text("Local").font(.system(size: 17, weight: .regular))
+                                    .foregroundStyle(Color.black)
                             }
-                            HStack {
-                                Group {
-                                    Text("\(infoTable.flightNo)")
-                                    Text("\(infoTable.aircraft)")
-                                    Text("\(infoTable.depDest)")
-                                    Text("\(infoTable.date)")
-                                    Text("\(infoTable.stdLocal)")
-                                    Text("\(infoTable.staLocal)")
-                                    Text("\(infoTable.blkTime)")
-                                    Text("\(infoTable.fltTime)")
-                                    // entry here
-                                    TextField(
-                                        "POB",
-                                        text: $pob
-                                    )
-                                    .onSubmit {
-                                        // todo save to core data
+                            Text("UTC").font(.system(size: 17, weight: .regular))
+                                .foregroundStyle(Color.black)
+                        }.fixedSize(horizontal: true, vertical: false)
+                    }) {
+                        if showUTC {
+                            VStack {
+                                HStack {
+                                    Group {
+                                        Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                     }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo change design
+                                    .foregroundStyle(Color.blue)
+                                    .font(.system(size: 15, weight: .medium))
+                                }
+                                HStack {
+                                    Group {
+                                        Text("\(infoTable.flightNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.aircraft)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.depDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.date)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.stdUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.staUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.blkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.fltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                    }.font(.system(size: 17, weight: .regular))
+                                    Group {
+                                        // entry here
+                                        TextField(
+                                            "POB",
+                                            text: $pob
+                                        )
+                                        .onSubmit {
+                                            // todo save to core data
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .font(.system(size: 17, weight: .regular))
+                                    }.frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                 }
                             }
+                            //                        Table(infoTable) {
+                            //                            TableColumn("Flight No.", value: \.flightNo)
+                            //                            TableColumn("Aircraft", value: \.aircraft)
+                            //                            TableColumn("DEP / DEST", value: \.depDest)
+                            //                            TableColumn("Date", value: \.date)
+                            //                            TableColumn("STD", value: \.stdUTC)
+                            //                            TableColumn("STA", value: \.staUTC)
+                            //                        }
+                            //                        .frame(minHeight: 65)
                         }
-//                        Table(infoTable) {
-//                            TableColumn("Flight No.", value: \.flightNo)
-//                            TableColumn("Aircraft", value: \.aircraft)
-//                            TableColumn("DEP / DEST", value: \.depDest)
-//                            TableColumn("Date", value: \.date)
-//                            TableColumn("STD", value: \.stdLocal)
-//                            TableColumn("STA", value: \.staLocal)
-//                        }
-//                        .frame(minHeight: 65)
+                        else {
+                            VStack {
+                                HStack {
+                                    Group {
+                                        Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                    }
+                                    .foregroundStyle(Color.blue)
+                                    .font(.system(size: 15, weight: .medium))
+                                }
+                                HStack {
+                                    Group {
+                                        Text("\(infoTable.flightNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.aircraft)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.depDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.date)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.stdLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.staLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.blkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(infoTable.fltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        // entry here
+                                        TextField(
+                                            "POB",
+                                            text: $pob
+                                        )
+                                        .onSubmit {
+                                            // todo save to core data
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                    }.font(.system(size: 17, weight: .regular))
+                                }
+                            }
+                            //                        Table(infoTable) {
+                            //                            TableColumn("Flight No.", value: \.flightNo)
+                            //                            TableColumn("Aircraft", value: \.aircraft)
+                            //                            TableColumn("DEP / DEST", value: \.depDest)
+                            //                            TableColumn("Date", value: \.date)
+                            //                            TableColumn("STD", value: \.stdLocal)
+                            //                            TableColumn("STA", value: \.staLocal)
+                            //                        }
+                            //                        .frame(minHeight: 65)
+                        }
+                        
                     }
                     
-                }
-                
-                // Route section
-                Section(header: Text("ROUTE").foregroundStyle(Color.black)) {
-                    // grouped row using hstack
-                    VStack(alignment: .leading) {
-                        HStack(alignment: .center) {
-                            Text("Route No.")
-                            .foregroundStyle(Color.blue)
-                            .frame(maxWidth: 144, alignment: .leading)
-                            Text(flightRouteData.routeNo)
-                                .frame(maxWidth: 860, alignment: .leading)
-                        }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
-                        .padding(.leading, 25)
-                        Divider()
-                            .padding(.leading, 25)
-                        HStack(alignment: .center) {
-                            Text("Route")
-                            .foregroundStyle(Color.blue)
-                            .frame(maxWidth: 144, alignment: .leading)
-                            Text(flightRouteData.route)
-                                .frame(maxWidth: 860, alignment: .leading)
-                        }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
-                        .padding(.leading, 25)
-                        Divider()
-                            .padding(.leading, 25)
-                        HStack(alignment: .center) {
-                            Text("Planned Dep Rwy")
-                            .foregroundStyle(Color.blue)
-                            .frame(maxWidth: 144, alignment: .leading)
-                            Text(flightRouteData.depRwy)
-                                .frame(maxWidth: 860, alignment: .leading)
-                        }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
-                        .padding(.leading, 25)
-                        Divider()
-                            .padding(.leading, 25)
-                        HStack(alignment: .center) {
-                            Text("Planned Arr Rwy")
-                            .foregroundStyle(Color.blue)
-                            .frame(maxWidth: 144, alignment: .leading)
-                            Text(flightRouteData.arrRwy)
-                                .frame(maxWidth: 860, alignment: .leading)
-                        }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
-                        .padding(.leading, 25)
-                        Divider()
-                            .padding(.leading, 25)
-                        HStack(alignment: .center) {
-                            Text("Planned levels")
-                            .foregroundStyle(Color.blue)
-                            .frame(maxWidth: 144, alignment: .leading)
-                            Text(flightRouteData.levels)
-                                .frame(maxWidth: 860, alignment: .leading)
-                        }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
-                        .padding(.leading, 25)
-                    }
-                }
-                
-                // Performance section
-                Section(header: Text("PERFORMANCE").foregroundStyle(Color.black)) {
-                    // table body - first row
-                    Table(perfInfoTable) {
-                        TableColumn("FLT Rules", value: \.fltRules)
-                        TableColumn("GND Miles", value: \.gndMiles)
-                        TableColumn("AIR Miles", value: \.airMiles)
-                        TableColumn("CRZ Comp", value: \.crzComp)
-                        TableColumn("APD", value: \.apd)
-                        TableColumn("CI", value: \.ci)
-                    }
-                    .frame(minHeight: 65)
-                    .scrollDisabled(true)
-                    // table body - changes
-                    Table(perfChangesTable) {
-                        TableColumn("ZFW Change", value: \.zfwChange)
-                        TableColumn("FL Change", value: \.lvlChange)
-                    }
-                    .frame(minHeight: 65)
-                    .scrollDisabled(true)
-                    // table body - weights
-                    Table(perfWeightsTable) {
-                        TableColumn("Weight", value: \.weight)
-                        TableColumn("Plan", value: \.plan)
-                        TableColumn("Actual") {_ in
-//                            $weight in TextField("Enter actual weight", text: $weight)
-                            Text("textfield")  // todo make textfield here
-                        }
-                        TableColumn("Max", value: \.max)
-                        TableColumn("Limitation", value: \.limitation)
-                    }
-                    .frame(minHeight: 185)
-                    .scrollDisabled(true)
-                }
-                
-                // Fuel section
-                Section(header: Text("FUEL").foregroundStyle(Color.black)) {
-                    // grouped row using hstack
-                    VStack(alignment: .leading) {
-                        // fuel info table body
-                        Table(fuelTable) {
-                            TableColumn("", value: \.firstColumn)
-                            TableColumn("Time", value: \.time)
-                            TableColumn("Fuel", value: \.fuel)
-                            TableColumn("Policy / Reason", value: \.policy_reason)
-                        }
-                        .frame(minHeight: 300)
-                        .scrollDisabled(true)
-                        
-                        // extra fuel section
-                        // row I
-                        HStack(alignment: .center) {
-                            Text("(I) Pilot Extra Fuel")
-                                .frame(maxWidth: 310, alignment: .leading)
-                            Text("Confirm requirements")  // todo change to dynamic - includedExtraFuelTime
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("Confirm requirements") // todo change to dynamic - includedExtraFuelAmt
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("Confirm requirements") // todo change to dynamic - includedExtraFuelRemarks
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .padding(.leading, 25)
-                        .background(Color.cyan)  // todo correct design
-                        Divider()
-                            .padding(.leading, 25)
-                        // collapsible fuel calculation section -  todo correct design and make collapsible on select row I
-                        Group {
-                            // header row
+                    // Route section
+                    Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        // grouped row using hstack
+                        VStack(alignment: .leading) {
                             HStack(alignment: .center) {
-                                Text("Included")
-                                    .frame(maxWidth: 70, alignment: .leading) // todo correct spacing
-                                Text("Reason")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("Statistical")
-                                Text(" Details")  // todo change to button link to fuel page
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
+                                Text("Route No.")
                                     .foregroundStyle(Color.blue)
-                                Text("Pilot Requirement")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("Calculated Extra Fuel")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("Remarks")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
+                                    .frame(maxWidth: 144, alignment: .leading)
+                                    .font(.system(size: 15, weight: .medium))
+                                Text(flightRouteData.routeNo)
+                                    .frame(maxWidth: 860, alignment: .leading)
+                                    .font(.system(size: 17, weight: .regular))
                             }
-                            .background(Color.cyan)  // todo correct design
-                            Divider()
-                        }
-                        .padding(.leading, 25)
-                        Group {
-                            // delays row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedArrDelays) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Arrival Delays")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("+\(String(projDelay))mins")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Picker("Select", selection: $selectedArrDelays) {
-                                    ForEach(0...120, id: \.self) { number in
-                                        Text("+\(number)mins")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedDelayFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                            // taxi row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedTaxi) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Additional taxi")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("+\(String(aveDiffTaxi))mins")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Picker("Select", selection: $selectedTaxi) {
-                                    ForEach(0...60, id: \.self) { number in
-                                        Text("+\(number)mins")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedTaxiFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                            // flight level row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedFlightLevel) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Flight level deviation")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                if aveDiffLevels < 0 {
-                                    Text("\(String(aveDiffLevels))ft")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                } else {
-                                    Text("+\(String(aveDiffLevels))ft")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                                Picker("Select", selection: $selectedFlightLevel000) {
-                                    ForEach(-10...10, id: \.self) { number in
-                                        Text("\(number)000ft")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Picker("Select", selection: $selectedFlightLevel00) {
-                                    ForEach(-9...9, id: \.self) { number in
-                                        Text("\(number)00ft")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedFlightLevelFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                            // track shortening row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedTrackShortening) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Track shortening savings")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("\(String(sumMINS))mins")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Picker("Select", selection: $selectedTrackShortening) {
-                                    ForEach(-30...0, id: \.self) { number in
-                                        Text("\(number)mins")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedTrackShorteningFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
                             .padding(.leading, 25)
-                            .frame(maxWidth: .infinity)
+                            
+                            Divider().padding(.leading, 25)
+                            
+                            HStack(alignment: .center) {
+                                Text("Route")
+                                    .foregroundStyle(Color.blue)
+                                    .frame(maxWidth: 144, alignment: .leading)
+                                    .font(.system(size: 15, weight: .medium))
+                                Text(flightRouteData.route)
+                                    .frame(maxWidth: 860, alignment: .leading)
+                                    .font(.system(size: 17, weight: .regular))
+                            }
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                            .padding(.leading, 25)
+                            
+                            Divider().padding(.leading, 25)
+                            
+                            HStack(alignment: .center) {
+                                Text("Planned Dep Rwy")
+                                    .foregroundStyle(Color.blue)
+                                    .frame(maxWidth: 144, alignment: .leading)
+                                    .font(.system(size: 15, weight: .medium))
+                                Text(flightRouteData.depRwy)
+                                    .frame(maxWidth: 860, alignment: .leading)
+                                    .font(.system(size: 17, weight: .regular))
+                            }
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                            .padding(.leading, 25)
+                            
+                            Divider().padding(.leading, 25)
+                            
+                            HStack(alignment: .center) {
+                                Text("Planned Arr Rwy")
+                                    .foregroundStyle(Color.blue)
+                                    .frame(maxWidth: 144, alignment: .leading)
+                                    .font(.system(size: 15, weight: .medium))
+                                Text(flightRouteData.arrRwy)
+                                    .frame(maxWidth: 860, alignment: .leading)
+                                    .font(.system(size: 17, weight: .regular))
+                            }
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                            .padding(.leading, 25)
+                            
+                            Divider().padding(.leading, 25)
+                            
+                            HStack(alignment: .center) {
+                                Text("Planned levels")
+                                    .foregroundStyle(Color.blue)
+                                    .frame(maxWidth: 144, alignment: .leading)
+                                    .font(.system(size: 15, weight: .medium))
+                                Text(flightRouteData.levels)
+                                    .frame(maxWidth: 860, alignment: .leading)
+                                    .font(.system(size: 17, weight: .regular))
+                            }
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                            .padding(.leading, 25)
+                        }
+                    }
+                    
+                    // Performance section
+                    Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        // table body - first row
+                        Table(perfInfoTable) {
+                            TableColumn("FLT Rules", value: \.fltRules)
+                            TableColumn("GND Miles", value: \.gndMiles)
+                            TableColumn("AIR Miles", value: \.airMiles)
+                            TableColumn("CRZ Comp", value: \.crzComp)
+                            TableColumn("APD", value: \.apd)
+                            TableColumn("CI", value: \.ci)
+                        }
+                        .frame(minHeight: 65)
+                        .scrollDisabled(true)
+                        // table body - changes
+                        Table(perfChangesTable) {
+                            TableColumn("ZFW Change", value: \.zfwChange)
+                            TableColumn("FL Change", value: \.lvlChange)
+                        }
+                        .frame(minHeight: 65)
+                        .scrollDisabled(true)
+                        // table body - weights
+                        Table(perfWeightsTable) {
+                            TableColumn("Weight", value: \.weight)
+                            TableColumn("Plan", value: \.plan)
+                            TableColumn("Actual") {_ in
+                                //                            $weight in TextField("Enter actual weight", text: $weight)
+                                Text("textfield")  // todo make textfield here
+                            }
+                            TableColumn("Max", value: \.max)
+                            TableColumn("Limitation", value: \.limitation)
+                        }
+                        .frame(minHeight: 185)
+                        .scrollDisabled(true)
+                    }
+                    
+                    // Fuel section
+                    Section(header: Text("FUEL").foregroundStyle(Color.black)) {
+                        // grouped row using hstack
+                        VStack(alignment: .leading, spacing: 0) {
+                            // fuel info table body
+                            Table(fuelTable) {
+                                TableColumn("", value: \.firstColumn)
+                                TableColumn("Time", value: \.time)
+                                TableColumn("Fuel", value: \.fuel)
+                                TableColumn("Policy / Reason", value: \.policy_reason)
+                            }
+                            .frame(minHeight: 300)
+                            .scrollDisabled(true)
+                            
+                            // extra fuel section
+                            // row I
+                            HStack(alignment: .center) {
+                                HStack(alignment: .center) {
+                                    Text("(I) Pilot Extra Fuel")
+                                        .frame(maxWidth: 310, alignment: .leading)
+                                    Text("Confirm requirements")  // todo change to dynamic - includedExtraFuelTime
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("Confirm requirements") // todo change to dynamic - includedExtraFuelAmt
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("Confirm requirements") // todo change to dynamic - includedExtraFuelRemarks
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }.frame(width: proxy.size.width - 50)
+                                .padding()
+                            }.background(Color.theme.azure.opacity(0.12))
+                            .frame(width: proxy.size.width)
+                            
+                            Divider()
+                            // collapsible fuel calculation section -  todo correct design and make collapsible on select row I
+                            Group {
+                                // header row
+                                HStack(alignment: .center) {
+                                    HStack(alignment: .center) {
+                                        Text("Included")
+                                            .frame(width: 100, alignment: .leading)
+                                        Text("Reason")
+                                            .frame(width: 150, alignment: .leading)
+                                        HStack {
+                                            Text("Statistical")
+                                            Text("Details")  // todo change to button link to fuel page
+                                                .foregroundStyle(Color.blue)
+                                        }.frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                        Text("Pilot Requirement")
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("Calculated Extra Fuel")
+                                            .frame(width: 220, alignment: .leading)
+                                        Text("Remarks")
+                                            .frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                    }.frame(width: proxy.size.width - 50)
+                                        .padding()
+                                }.padding()
+                                .background(Color.theme.azure.opacity(0.12))
+                                .frame(width: proxy.size.width)
+                                
+                                Divider()
+                            }
+                            
+                            Group {
+                                // delays row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedArrDelays){}
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Arrival Delays")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("+\(String(projDelay))mins")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedArrDelays) {
+                                            ForEach(0...120, id: \.self) { number in
+                                                Text("+\(number)mins")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                    .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(String(calculatedDelayFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 0).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                        
+                                }.padding(.leading, 25)
+                                    .frame(width: proxy.size.width - 50)
+                                
+                                Divider()
+                                // taxi row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedTaxi) {}  // todo toggle logic flow
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Additional taxi")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("+\(String(aveDiffTaxi))mins")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedTaxi) {
+                                            ForEach(0...60, id: \.self) { number in
+                                                Text("+\(number)mins")
+                                            }
+                                        }
+                                        .pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(String(calculatedTaxiFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 1).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }.padding(.leading, 25)
+                                    .frame(width: proxy.size.width - 50)
+                                Divider().padding(.leading, 25)
+                                // flight level row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedFlightLevel) {}  // todo toggle logic flow
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Flight level deviation")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    if aveDiffLevels < 0 {
+                                        Text("\(String(aveDiffLevels))ft")
+                                            .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    } else {
+                                        Text("+\(String(aveDiffLevels))ft")
+                                            .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    }
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedFlightLevel000) {
+                                            ForEach(-10...10, id: \.self) { number in
+                                                Text("\(number)000ft")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+//                                    Picker("Select", selection: $selectedFlightLevel00) {
+//                                        ForEach(-9...9, id: \.self) { number in
+//                                            Text("\(number)00ft")
+//                                        }
+//                                    }
+//                                    .pickerStyle(.menu)
+                                    Text("\(String(calculatedFlightLevelFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    Field(index: 2).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }.padding(.leading, 25)
+                                    .frame(width: proxy.size.width - 50)
+                                
+                                Divider().padding(.leading, 25)
+                                // track shortening row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedTrackShortening) {}  // todo toggle logic flow
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Track shortening savings")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("\(String(sumMINS))mins")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedTrackShortening) {
+                                            ForEach(-30...0, id: \.self) { number in
+                                                Text("\(number)mins")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(String(calculatedTrackShorteningFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 3).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }.padding(.leading, 25)
+                                    .frame(width: proxy.size.width - 50)
+                                
+                                Divider().padding(.leading, 25)
+                                // enr wx row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedEnrWx) {}
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Enroute weather deviation")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("+\(String(aveDiffEnrWX))mins")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedEnrWx) {
+                                            ForEach(0...30, id: \.self) { number in
+                                                Text("\(number)mins")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(String(calculatedEnrWxFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 4).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }.padding(.leading, 25)
+                                    .frame(width: proxy.size.width - 50)
+                                
+                                Divider()
+                            }
+                            
+                            Group {
+                                // reciprocal rwy row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedReciprocalRwy) {}
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Reciprocal rwy")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("+/-\(String(reciprocalRwy))mins")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedReciprocalRwy) {
+                                            ForEach(-15...15, id: \.self) { number in
+                                                Text("\(number)mins")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(String(calculatedReciprocalRwyFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 5).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }
+                                Divider()
+                                // zfw change row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedZFWchange) {}
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("ZFW Change")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("N.A.").frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("N.A.")
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        
+                                    Text("\(String(calculatedZFWFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 6).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }
+                                Divider()
+                                // others row
+                                HStack(alignment: .center) {
+                                    HStack {
+                                        Toggle(isOn: $includedOthers) {}
+                                        Spacer().frame(maxWidth: .infinity)
+                                    }.frame(width: 100)
+                                    
+                                    Text("Others")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("N.A.")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    HStack {
+                                        Picker("Select", selection: $selectedOthers000) {
+                                            ForEach(0...10, id: \.self) { number in
+                                                Text("\(number)000KG")
+                                            }
+                                        }.pickerStyle(.menu)
+                                    }.fixedSize()
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+//                                    Picker("Select", selection: $selectedOthers00) {
+//                                        ForEach(0...9, id: \.self) { number in
+//                                            Text("\(number)00KG")
+//                                        }
+//                                    }
+//                                    .pickerStyle(.menu)
+                                    
+                                    Text("\(String(calculatedOthersFuel))KG")
+                                        .frame(width: 220, alignment: .leading)
+                                    
+                                    Field(index: 0).frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)
+                                }
+                                Divider()
+                            }.padding(.leading, 25)
+                                .frame(width: proxy.size.width - 50)
+                            
+                            HStack(alignment: .center) {
+                                HStack(alignment: .center) {
+                                    Rectangle().fill(Color.clear).frame(width: 100)
+                                    
+                                    Text("Total Extra Fuel")
+                                        .frame(width: 150, alignment: .leading)
+                                    
+                                    Text("\(includedExtraFuelAmt)KG")
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
+                                    
+                                    Rectangle().fill(Color.clear)
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    
+                                    Text("\(includedExtraFuelTime)mins")
+                                        .frame(width: 220, alignment: .leading)  // remove after testing
+                                    
+                                    Text("\(includedExtraFuelRemarks)")
+                                        .frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)  // remove after testing
+                                    
+                                }.frame(width: proxy.size.width - 50)
+                                    .padding()
+                            }.background(Color.theme.azure.opacity(0.12))
+                            .frame(width: proxy.size.width)
+                            
                             Divider()
                                 .padding(.leading, 25)
-                            // enr wx row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedEnrWx) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Enroute weather deviation")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("+\(String(aveDiffEnrWX))mins")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Picker("Select", selection: $selectedEnrWx) {
-                                    ForEach(0...30, id: \.self) { number in
-                                        Text("\(number)mins")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedEnrWxFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
+                            
                         }
-                        .padding(.leading, 25)
-                        Group {
-                            // reciprocal rwy row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedReciprocalRwy) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Reciprocal rwy")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("+/-\(String(reciprocalRwy))mins")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Picker("Select", selection: $selectedReciprocalRwy) {
-                                    ForEach(-15...15, id: \.self) { number in
-                                        Text("\(number)mins")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedReciprocalRwyFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                            // zfw change row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedZFWchange) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("ZFW Change")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("N.A.")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("N.A.")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("\(String(calculatedZFWFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                            // others row
-                            HStack(alignment: .center) {
-                                Toggle(isOn: $includedOthers) {}  // todo toggle logic flow
-                                    .frame(maxWidth: 65, alignment: .leading)
-                                Text("Others")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Text("N.A.")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo correct spacing
-                                Picker("Select", selection: $selectedOthers000) {
-                                    ForEach(0...10, id: \.self) { number in
-                                        Text("\(number)000KG")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Picker("Select", selection: $selectedOthers00) {
-                                    ForEach(0...9, id: \.self) { number in
-                                        Text("\(number)00KG")
-                                    }
-                                }
-                                .pickerStyle(.wheel) // todo make into modal as per figma design
-                                Text("\(String(calculatedOthersFuel))KG")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Enter remarks (optional)")
-                                    .frame(maxWidth: .infinity, alignment: .leading) // todo make into textfield
-                            }
-                            Divider()
-                        }
-                        .padding(.leading, 25)
-                        HStack(alignment: .center) {
-                            Text("Total Extra Fuel")
-                                .frame(maxWidth: 310, alignment: .leading)
-                            Text("\(includedExtraFuelAmt)KG")
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("\(includedExtraFuelTime)mins")
-                                .frame(maxWidth: .infinity, alignment: .leading)  // remove after testing
-                            Text("\(includedExtraFuelRemarks)")
-                                .frame(maxWidth: .infinity, alignment: .leading)  // remove after testing
-                        }
-                        .padding(.leading, 25)
-                        .background(Color.cyan)  // todo correct design
-                        Divider()
-                            .padding(.leading, 25)
-                        
                     }
-                }
-                
-                // ALTN section
-                Section(header: Text("ALTN").foregroundStyle(Color.black)) {
-                    // todo - correct spacing and wrap text
-                    Table(altnTable) {
-                        TableColumn("ALTN / RWY", value: \.altnRwy)
-                        TableColumn("RTE", value: \.rte)
-                        TableColumn("VIS", value: \.vis)
-                        TableColumn("MINIMA", value: \.minima)
-                        TableColumn("DIST", value: \.dist)
-                        TableColumn("FL", value: \.fl)
-                        TableColumn("COMP", value: \.comp)
-                        TableColumn("TIME", value: \.time)
-                        TableColumn("FUEL", value: \.fuel)
+                    
+                    // ALTN section
+                    Section(header: Text("ALTN").foregroundStyle(Color.black)) {
+                        // todo - correct spacing and wrap text
+                        Table(altnTable) {
+                            TableColumn("ALTN / RWY", value: \.altnRwy)
+                            TableColumn("RTE", value: \.rte)
+                            TableColumn("VIS", value: \.vis)
+                            TableColumn("MINIMA", value: \.minima)
+                            TableColumn("DIST", value: \.dist)
+                            TableColumn("FL", value: \.fl)
+                            TableColumn("COMP", value: \.comp)
+                            TableColumn("TIME", value: \.time)
+                            TableColumn("FUEL", value: \.fuel)
+                        }
+                        .frame(minHeight: 250)
+                        .scrollDisabled(true)
                     }
-                    .frame(minHeight: 250)
-                    .scrollDisabled(true)
+                    
+                    // ATC flight plan section
+                    //                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
+                    //                    Text("\(atcFlightPlan)")
+                    //                        .padding(.leading, 25)
+                    //                }
                 }
-                
-                // ATC flight plan section
-//                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
-//                    Text("\(atcFlightPlan)")
-//                        .padding(.leading, 25)
-//                }
             }
+            .navigationTitle("Summary")
+            .background(Color(.systemGroupedBackground))
         }
-        .navigationTitle("Summary")
-        .background(Color(.systemGroupedBackground))
     }
     func formatFuelNumber(_ number: Int) -> String {
         let formattedString = String(format: "%06d", number)
@@ -840,4 +967,3 @@ struct FlightPlanSummaryView: View {
         return formatter.string(from: date)
     }
 }
-

@@ -9,37 +9,47 @@ import Foundation
 import SwiftUI
 
 struct FlightPlanView: View {
-    
-    @State private var selectedTab: Int = 0
-    @State private var planTab = IFlightPlanTabs().ListItem
+    @State var selectedTab: FlightPlanEnumeration = IFlightPlanTabs.first?.screenName ?? FlightPlanEnumeration.SummaryScreen
+    @State var planTab = IFlightPlanTabs
+    @StateObject var viewModel = ViewModelSummary()
     let screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { proxy in
                 VStack(spacing: 0) {
-                    if selectedTab == 0 {
-                        FlightInformationView()
-                    } else {
-                        ExampleView()
+                    switch selectedTab {
+                        case .SummaryScreen:
+//                        FlightInformationView()
+                            FlightPlanSummaryView().environmentObject(viewModel)
+                        case .DepartureScreen:
+                            FlightPlanDepView()
+                        case .EnrouteScreen:
+                            FlightPlanEnrView()
+                        case .ArrivalScreen:
+                            FlightPlanArrView()
+                        case .NOTAMScreen:
+                            FlightPlanNOTAMView()
+                        case .METARSScreen:
+                            FlightPlanMETARTAFView()
                     }
                     
-                    CustomSegmentedControl(preselectedIndex: $selectedTab, options: planTab, geoWidth: proxy.size.width)
+                    FlightPlanSegmented(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)
                 }.frame(maxHeight: .infinity)
                     
             }
-        }.padding(.top, 50)
+        }
     }
 }
 
 struct FlightPlanView_Previews: PreviewProvider {
     static var previews: some View {
-        // FlightPlanView()
-        //FlightPlanSummaryView()
-        //FlightPlanDepView()
-        FlightPlanEnrView()
-        //FlightPlanArrView()
-        //FlightPlanNOTAMView()
-        //FlightPlanMETARTAFView()
+         FlightPlanView()
+//        //FlightPlanSummaryView()
+//        //FlightPlanDepView()
+//        FlightPlanEnrView()
+//        //FlightPlanArrView()
+//        //FlightPlanNOTAMView()
+//        //FlightPlanMETARTAFView()
     }
 }

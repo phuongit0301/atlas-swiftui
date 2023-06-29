@@ -8,21 +8,61 @@
 import Foundation
 import SwiftUI
 
+enum FlightPlanEnumeration: CustomStringConvertible {
+    case SummaryScreen
+    case DepartureScreen
+    case EnrouteScreen
+    case ArrivalScreen
+    case NOTAMScreen
+    case METARSScreen
+    
+    var description: String {
+        switch self {
+            case .SummaryScreen:
+                return "Summary"
+            case .DepartureScreen:
+                return "Departure"
+            case .EnrouteScreen:
+                return "Enroute"
+            case .ArrivalScreen:
+                return "Arrival"
+            case .NOTAMScreen:
+                return "NOTAM"
+            case .METARSScreen:
+                return "METARS"
+        }
+    }
+}
+
 struct Tab {
     var icon: Image?
     var title: String
+    var screenName: FlightPlanEnumeration
 }
 
-struct IFlightPlanTabs {
-    let ListItem = {
-        let MainItem = [
-            Tab(title: "Flight Information"),
-            Tab(title: "Quick Reference")
-        ]
-        
-        return MainItem
-    }()
-}
+let IFlightPlanTabs = [
+    Tab(title: "Summary", screenName: FlightPlanEnumeration.SummaryScreen),
+    Tab(title: "Departure", screenName: FlightPlanEnumeration.DepartureScreen),
+    Tab(title: "Enroute", screenName: FlightPlanEnumeration.EnrouteScreen),
+    Tab(title: "Arrival", screenName: FlightPlanEnumeration.ArrivalScreen),
+    Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
+    Tab(title: "METARS", screenName: FlightPlanEnumeration.METARSScreen)
+]
+//
+//struct IFlightPlanTabs {
+//    let ListItem = {
+//        let MainItem = [
+//            Tab(title: "Summary", screenName: FlightPlanEnumeration.SummaryScreen),
+//            Tab(title: "Departure", screenName: FlightPlanEnumeration.DepartureScreen),
+//            Tab(title: "Enroute", screenName: FlightPlanEnumeration.EnrouteScreen),
+//            Tab(title: "Arrival", screenName: FlightPlanEnumeration.ArrivalScreen),
+//            Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
+//            Tab(title: "METARS", screenName: FlightPlanEnumeration.METARSScreen)
+//        ]
+//
+//        return MainItem
+//    }()
+//}
 
 struct IFPSplitModel: Identifiable, Encodable, Decodable {
     var id = UUID()
@@ -65,5 +105,41 @@ class FPModelSplitState: ObservableObject {
             return
         }
         fpSplitDataStorage = encodedArray
+    }
+}
+
+func calculateWidth(_ width: CGFloat, _ size: Int) -> CGFloat {
+    return CGFloat((width - CGFloat(100)) / CGFloat(size))
+}
+
+class StepperObject: ObservableObject {
+    @Published var hours: Int = 0
+    @Published var minutes: Int = 0
+    @Published var step: Int = 1
+    @Published var range: ClosedRange<Int> = 0...100
+}
+
+class ViewModelSummary: ObservableObject {
+    @Published var list = [Int: String]()
+}
+
+struct Field: View {
+    
+    // Read the view model, to store the value of the text field
+    @EnvironmentObject var viewModel: ViewModelSummary
+    
+    // Index: where in the dictionary the value will be stored
+    let index: Int
+    
+    // Dedicated state var for each field
+    @State private var field = ""
+    
+    var body: some View {
+        TextField("Enter remarks (optional)", text: $field)
+    }
+    
+    // Store the value in the dictionary
+    private func store() {
+        viewModel.list[index] = field
     }
 }

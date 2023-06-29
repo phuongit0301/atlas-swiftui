@@ -45,159 +45,197 @@ let waypointsTableDefault: [waypoints] = flightPlanData["waypointsData"] as! [wa
 struct FlightPlanEnrView: View {
     // initialise state variables
     @State var waypointsTable: [waypoints] = waypointsTableDefault
+    @State var num11 = "01:15"
     
     var body: some View {
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        return VStack(alignment: .leading) {
-            // fixed header section, todo clean up design
-            HStack(alignment: .center) {
-                Text("Enroute")
-                    .font(.title)
-                    .padding(.leading, 30)
-            }
-            .padding(.bottom, 10)
-            Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
-                .padding(.leading, 30)
-                .padding(.bottom, 10)
-            //scrollable outer list section
-            List {
-                // waypoints section
-                Section(header: Text("WAYPOINTS").foregroundStyle(Color.black)) {
-                    // table
-                    HStack {
-                        Group {
-                            Text("POSN\nCOORD")
-                            Text("ACTM\n")
-                            Text("ZTM\nMSA")
-                            Text("ETA\nDIS")
-                            Text("ATA\nDIFF")
-                            Text("AFL\nPFL")
-                            Text("OAT\nIMT")
-                            Text("ADN\nPDN")
-                            Text("AWIND\nFWIND")
-                            Text("TAS\nGSP")
-                        }
-                        .foregroundStyle(Color.blue)
-                        Group {
-                            Text("VWS\nDRM")
-                            Text("ZFRQ\nPFRM")
-                            Text("AFRM\nDIFF")
-                        }
-                        .foregroundStyle(Color.blue)
-                    }
-                    .listRowSeparator(.visible)
-                    ForEach(waypointsTable.indices, id: \.self) { index in
-                        let row = waypointsTable[index]
-                        VStack {
-                            HStack {
-                                Group {
-                                    Text("\(row.posn)")
-                                    Text("\(row.actm)")
-                                    Text("\(row.ztm)")
-                                    // entry here
-                                    TextField(
-                                        "\(row.eta)",
-                                        text: $waypointsTable[index].eta
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                    // entry here
-                                    TextField(
-                                        "\(row.ata)",
-                                        text: $waypointsTable[index].ata
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                    // entry here
-                                    TextField(
-                                        "\(row.afl)",
-                                        text: $waypointsTable[index].afl
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                    // entry here
-                                    TextField(
-                                        "\(row.oat)",
-                                        text: $waypointsTable[index].oat
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                    Text("\(row.adn)")
-                                    // entry here
-                                    TextField(
-                                        "\(row.aWind)",
-                                        text: $waypointsTable[index].aWind
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                    Text("\(row.tas)")
-                                }
-                                Group {
-                                    Text("\(row.vws)")
-                                        .foregroundColor(textColorVws(for: row.vws))
-                                    Text("\(row.zfrq)")
-                                    // entry here
-                                    TextField(
-                                        "\(row.afrm)",
-                                        text: $waypointsTable[index].afrm
-                                    )
-                                    .onSubmit {
-                                        updateValues(editedIndex: index)
-                                    }
-                                    .textInputAutocapitalization(.never)
-                                    .disableAutocorrection(true)
-                                    .border(.secondary) // todo todo change design
-                                }
-                            }
-                            HStack {
-                                Group {
-                                    Text("\(row.Cord)")
-                                    Text("\(row.Msa)").foregroundColor(textColorMsa(for: row.Msa))
-                                    Text("\(row.Dis)")
-                                    Text("\(row.Diff)")
-                                    Text("\(row.Pfl)")
-                                    Text("\(row.Imt)")
-                                    Text("\(row.Pdn)")
-                                    Text("\(row.fWind)")
-                                    Text("\(row.Gsp)")
-                                }
-                                Group {
-                                    Text("\(row.Drm)")
-                                    Text("\(row.Pfrm)")
-                                    Text("\(row.fDiff)")
-                                }
-                            }
-                        }
-                    }
-                    .listRowSeparator(.hidden)
-                    // todo every two rows different color, fix spacing for each row
-                }
-                // winds section
+        
+        GeometryReader { proxy in
+            VStack(alignment: .leading) {
+                // fixed header section, todo clean up design
+                HStack(alignment: .center) {
+                    Text("Enroute")
+                        .font(.system(size: 20, weight: .semibold))
+                        .padding(.leading, 30)
+                }.padding(.bottom, 10)
                 
+                Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+                    .padding(.leading, 30)
+                    .padding(.bottom, 10)
+                    .font(.system(size: 15, weight: .semibold))
+                //scrollable outer list section
+                List {
+                    // waypoints section
+                    Section(header:Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
+                        // table
+                        HStack {
+                            Group {
+                                Text("POSN\nCOORD")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ACTM\n")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ZTM\nMSA")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ETA\nDIS")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ATA\nDIFF")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("AFL\nPFL")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("OAT\nIMT")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ADN\nPDN")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("AWIND\nFWIND")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("TAS\nGSP")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                            }
+                            .foregroundStyle(Color.blue)
+                            Group {
+                                Text("VWS\nDRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ZFRQ\nPFRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("AFRM\nDIFF").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                            }
+                            .foregroundStyle(Color.blue)
+                        }.listRowSeparator(.visible)
+                        
+                        ForEach(waypointsTable.indices, id: \.self) { index in
+                            let row = waypointsTable[index]
+                            VStack {
+                                HStack {
+                                    Group {
+                                        Text("\(row.posn)")
+                                            .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.actm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.ztm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        // entry here
+                                        TextField(
+                                            "\(row.eta)",
+                                            text: $waypointsTable[index].eta
+                                        )
+                                        .onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        // entry here
+                                        
+                                        TextField(
+                                            "\(row.ata)",
+                                            text: $waypointsTable[index].ata
+                                        ).onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        // entry here
+                                        TextField(
+                                            "\(row.afl)",
+                                            text: $waypointsTable[index].afl
+                                        )
+                                        .onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        
+                                        // entry here
+                                        TextField(
+                                            "\(row.oat)",
+                                            text: $waypointsTable[index].oat
+                                        )
+                                        .onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        
+                                        Text("\(row.adn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        // entry here
+                                        TextField(
+                                            "\(row.aWind)",
+                                            text: $waypointsTable[index].aWind
+                                        )
+                                        .onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        
+                                        Text("\(row.tas)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                    }.font(.system(size: 15, weight: .regular))
+                                    Group {
+                                        Text("\(row.vws)")
+                                            .foregroundColor(textColorVws(for: row.vws)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        
+                                        Text("\(row.zfrq)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        // entry here
+                                        TextField(
+                                            "\(row.afrm)",
+                                            text: $waypointsTable[index].afrm
+                                        )
+                                        .onSubmit {
+                                            updateValues(editedIndex: index)
+                                        }
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
+                                        .border(.secondary) // todo todo change design
+                                        .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                    }.font(.system(size: 15, weight: .regular))
+                                }
+                                HStack {
+                                    Group {
+                                        Text("\(row.Cord)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("-").foregroundColor(textColorMsa(for: row.Msa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Msa)").foregroundColor(textColorMsa(for: row.Msa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Dis)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Diff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Pfl)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Imt)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Pdn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.fWind)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Gsp)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                    }.font(.system(size: 15, weight: .regular))
+                                    Group {
+                                        Text("\(row.Drm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.Pfrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.fDiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                    }.font(.system(size: 15, weight: .regular))
+                                }
+                            }
+                                .listRowBackground((index  % 2 == 0) ? Color.theme.sonicSilver.opacity(0.12) : Color(.white))
+                        }
+                        .listRowSeparator(.hidden)
+                    }.padding()
+                    .frame(width: proxy.size.width - 50)
+                    // winds section
+                    
+                }
             }
+            .navigationTitle("Enroute")
+            .background(Color(.systemGroupedBackground))
         }
-        .navigationTitle("Enroute")
-        .background(Color(.systemGroupedBackground))
     }
     
     private func updateValues(editedIndex: Int) {       
@@ -400,5 +438,11 @@ struct FlightPlanEnrView: View {
         } else {
             return .black
         }
+    }
+}
+
+struct FlightPlanEnrView_Previews: PreviewProvider {
+    static var previews: some View {
+        FlightPlanEnrView()
     }
 }

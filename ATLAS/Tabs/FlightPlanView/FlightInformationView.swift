@@ -32,7 +32,7 @@ struct FlightInformationView: View {
                 Toggle(isOn: $isUTC) {
                     Text("UTC").foregroundColor(Color.black).font(.custom("Inter-SemiBold", size: 17))
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                }
+                }.toggleStyle(ButtonToggleStyle())
             }
             ForEach(viewModel.ListItem, id: \.self) { item in
                 Button(action: {

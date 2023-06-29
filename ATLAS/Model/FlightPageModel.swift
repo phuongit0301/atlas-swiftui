@@ -591,13 +591,18 @@ class FlightNoteModelState: ObservableObject {
     // END Arrival, ArrivalQR
 }
 
+struct STab {
+    var icon: Image?
+    var title: String
+}
+
 struct IFlightNoteTabs {
     let ListItem = {
         let MainItem = [
-            Tab(title: "Aircraft Status"),
-            Tab(title: "Departure"),
-            Tab(title: "Enroute"),
-            Tab(title: "Arrival")
+            STab(title: "Aircraft Status"),
+            STab(title: "Departure"),
+            STab(title: "Enroute"),
+            STab(title: "Arrival")
         ]
         
         return MainItem
