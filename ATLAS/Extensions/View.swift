@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 struct RoundedCorner: Shape {
 
@@ -50,6 +51,13 @@ extension View {
     func breadCrumbRef(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
         ModifiedContent(content: self, modifier: BreadCrumbRef(screenName: screenName))
     }
+    
+    func hideKeyboardWhenTappedAround() -> some View  {
+            return self.onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                      to: nil, from: nil, for: nil)
+            }
+        }
 }
 
 extension String {

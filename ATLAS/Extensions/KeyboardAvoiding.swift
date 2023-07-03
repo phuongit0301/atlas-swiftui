@@ -166,6 +166,31 @@ struct KeyboardAdaptive: ViewModifier {
     }
 }
 
+struct KeyboardAvoidView: ViewModifier {
+    @State private var height: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        GeometryReader { geometry in
+            withAnimation(.easeInOut(duration: 0.16)) {
+                content
+                    .offset(y: -height)
+//                    .padding(.bottom, height)
+                    .onReceive(Publishers.keyboardHeight) { keyboardHeight in
+                        
+                        let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
+                        let focusedTextInputBottom = UIResponder.currentFirstResponder?.globalFrame?.maxY ?? 0
+                        
+                        if focusedTextInputBottom < 380 {
+                            self.height = 0
+                        } else {
+                            self.height = keyboardHeight > 0 ? keyboardTop + geometry.safeAreaInsets.bottom + 220 : 0
+                        }                        
+                    }
+            }
+        }
+    }
+}
+
 public extension View {
     func keyboardAvoiding() -> some View {
         modifier(KeyboardAvoiding())
@@ -173,5 +198,9 @@ public extension View {
     
     func keyboardAdaptive() -> some View {
         modifier(KeyboardAdaptive())
+    }
+    
+    func keyboardAvoidView() -> some View {
+        modifier(KeyboardAvoidView())
     }
 }

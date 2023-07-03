@@ -1012,6 +1012,7 @@ struct FlightPlanDepView: View {
                 }
             }.navigationTitle("Departure")
                 .background(Color(.systemGroupedBackground))
+                .hideKeyboardWhenTappedAround()
         }
     }
 }

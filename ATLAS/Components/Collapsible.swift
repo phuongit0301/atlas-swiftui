@@ -9,53 +9,39 @@ import Foundation
 
 import SwiftUI
 
-struct Collapsible<Content: View, HeaderContent: View>: View {
-    @State var label: () -> Text
+struct Collapsible<HeaderContent: View, Content: View>: View {
+    @State var header: () -> HeaderContent
     @State var content: () -> Content
-    private var headerContent: (() -> HeaderContent)?
     
     @State private var collapsed: Bool = false
+    @State private var isShowIcon: Bool = false
     
-    init(label: @escaping () -> Text, @ViewBuilder content: @escaping () -> Content) {
-        self.label = label
+    init(@ViewBuilder header: @escaping () -> HeaderContent, @ViewBuilder content: @escaping () -> Content) {
+        self.header = header
         self.content = content
-    }
-    
-    init(label: @escaping () -> Text, @ViewBuilder content: @escaping () -> Content, headerContent: (() -> HeaderContent)?) {
-        self.label = label
-        self.content = content
-        self.headerContent = headerContent
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Button(
-                action: { self.collapsed.toggle() },
-                label: {
-                    HStack(alignment: .center) {
-                        self.label()
-                        headerContent?()
-                        Image(self.collapsed ? "icon_arrow_up" : "icon_arrow_down")
-                    }
+            self.header().onTapGesture {
+                withAnimation {
+                    self.collapsed.toggle()
                 }
-            )
-            .buttonStyle(PlainButtonStyle())
-            .padding(.bottom, 8)
+            }.animation(nil)
+                .frame(alignment: .top)
+            
             if collapsed {
                 VStack {
                     self.content()
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .clipped()
-                .animation(.easeOut(duration: 1.0))
-                .transition(.opacity)
+                }.frame(height: collapsed ? nil : 0, alignment: .top)
+                    .clipped()
             }
         }
     }
 }
 
 extension Collapsible {
-  init(label: @escaping () -> Text, @ViewBuilder content: @escaping () -> Content) where HeaderContent == EmptyView{
-    self.init(label: label, content: content, headerContent: nil)
+  init(@ViewBuilder header: @escaping () -> Content, @ViewBuilder content: @escaping () -> Content) {
+    self.init(header: header, content: content)
   }
 }

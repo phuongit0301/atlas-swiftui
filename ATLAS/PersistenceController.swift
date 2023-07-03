@@ -59,6 +59,8 @@ class CoreDataModelState: ObservableObject {
     @Published var departureRefArray: [NoteList] = []
     @Published var enrouteRefArray: [NoteList] = []
     @Published var arrivalRefArray: [NoteList] = []
+    @Published var dataFlightPlan: FlightPlanList = FlightPlanList()
+    @Published var existDataFlightPlan: Bool = false
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
@@ -79,6 +81,7 @@ class CoreDataModelState: ObservableObject {
         enrouteRefArray = read("enrouteref")
         arrivalRefArray = read("arrivalref")
         scratchPadArray = readScratchPad()
+        dataFlightPlan = readFlightPlan()
     }
     
     func checkAndSyncData() async {
@@ -309,6 +312,54 @@ class CoreDataModelState: ObservableObject {
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+
+        // return results
+        return data
+    }
+    
+    func readFlightPlan() -> FlightPlanList {
+        // create a temp array to save fetched notes
+        var data: FlightPlanList = FlightPlanList()
+        // initialize the fetch request
+        let request: NSFetchRequest<FlightPlanList> = FlightPlanList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [FlightPlanList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataFlightPlan = true
+                }
+            } else {
+                let newPlanList = FlightPlanList(context: service.container.viewContext)
+                newPlanList.flightInfoPob = ""
+                newPlanList.perActualZFW = 0
+                newPlanList.perActualTOW = 0
+                newPlanList.perActualLDW = 0
+                newPlanList.fuelArrivalDelayRemark = ""
+                newPlanList.fuelAdditionalTaxiRemark = ""
+                newPlanList.fuelFlightLevelRemark = ""
+                newPlanList.fuelTrackShorteningRemark = ""
+                newPlanList.fuelEnrouteWeatherRemark = ""
+                newPlanList.fuelReciprocalRemark = ""
+                newPlanList.fuelZFWChangeRemark = ""
+                newPlanList.fuelOtherRemark = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }

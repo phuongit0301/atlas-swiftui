@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
+        <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
+        <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelArrivalDelayRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelEnrouteWeatherRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelFlightLevelRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelOtherRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelReciprocalRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelTrackShorteningRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelZFWChangeRemark" optional="YES" attributeType="String"/>
+        <attribute name="perActualLDW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualTOW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualZFW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
         <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
