@@ -1447,8 +1447,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1105"
-            endingLineNumber = "1105"
+            startingLineNumber = "1132"
+            endingLineNumber = "1132"
             landmarkName = "onToggleTrackShortening()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1463,8 +1463,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1089"
-            endingLineNumber = "1089"
+            startingLineNumber = "1114"
+            endingLineNumber = "1114"
             landmarkName = "onToggleArrDelays()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1479,8 +1479,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1097"
-            endingLineNumber = "1097"
+            startingLineNumber = "1123"
+            endingLineNumber = "1123"
             landmarkName = "onToggleIncludedTaxi()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1495,8 +1495,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1041"
-            endingLineNumber = "1041"
+            startingLineNumber = "1034"
+            endingLineNumber = "1034"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1511,8 +1511,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1151"
-            endingLineNumber = "1151"
+            startingLineNumber = "1183"
+            endingLineNumber = "1183"
             landmarkName = "onToggleFlightLevel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1527,8 +1527,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1163"
-            endingLineNumber = "1163"
+            startingLineNumber = "1197"
+            endingLineNumber = "1197"
             landmarkName = "FlightPlanSummaryView"
             landmarkType = "14">
          </BreakpointContent>
@@ -1543,8 +1543,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -1808,7 +1808,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9ED8AF6F-DBD2-4CF3-9116-B3DC38DF5D94"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Extensions/View.swift"
@@ -1848,6 +1848,85 @@
                   startingLineNumber = "57"
                   endingLineNumber = "57"
                   offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BB60356-24A9-40F4-B2EE-2800671328EF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B9D83CB0-7BB6-4F49-9109-E33EB33E914E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "B9D83CB0-7BB6-4F49-9109-E33EB33E914E - 3c7d14c3444ef210"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanSummaryView.body.getter : some"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "337"
+                  endingLineNumber = "337"
+                  offsetFromSymbolStart = "14572">
+               </Location>
+               <Location
+                  uuid = "B9D83CB0-7BB6-4F49-9109-E33EB33E914E - 9d6d4c74714f7cc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of SwiftUI.View.background&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ShapeStyle&gt;(_: &#x3c4;_1_0, ignoresSafeAreaEdges: SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0 in ATLAS.FlightPlanSummaryView.body.getter : some"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "3436">
+               </Location>
+               <Location
+                  uuid = "B9D83CB0-7BB6-4F49-9109-E33EB33E914E - 9d6d4c74714f7cc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of SwiftUI.View.background&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ShapeStyle&gt;(_: &#x3c4;_1_0, ignoresSafeAreaEdges: SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0 in ATLAS.FlightPlanSummaryView.body.getter : some"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "3488">
                </Location>
             </Locations>
          </BreakpointContent>

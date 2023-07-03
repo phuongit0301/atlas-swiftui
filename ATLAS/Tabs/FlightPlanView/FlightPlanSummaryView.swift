@@ -125,6 +125,9 @@ struct FlightPlanSummaryView: View {
     @State private var pob: String = ""
     @State private var perActualZFW: String = ""
     @State private var collapsed = false
+    @State private var selection: Int = 0
+    @State private var selection1: Int = 0
+    @State private var selection2: Int = 0
 
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
@@ -257,9 +260,9 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        var calculatedZFWFuel: Int {
-            return (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
-        }
+//        var calculatedZFWFuel: Int {
+//            return (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
+//        }
         var includedZFWFuel: [String: Any] {
             let fuelBurn = (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
             if (includedZFWchange && fuelBurn > 0) {
@@ -283,35 +286,35 @@ struct FlightPlanSummaryView: View {
             }
         }
 
-        var includedExtraFuelAmt: String {
-            let delayFuel: Int = includedDelayFuel["fuel"] as! Int
-            let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
-            let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
-            let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
-            let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
-            let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
-            let trackShorteningFuel: Int = includedTrackShorteningFuel
-            let othersFuel: Int = includedOthersFuel["fuel"] as! Int
-            let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
-            return formatFuelNumber(result)
-        }
-        var includedExtraFuelTime: String {
-            let delayTime: Int = includedDelayFuel["time"] as! Int
-            let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
-            let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
-            let result = delayTime + enrWxTime + reciprocalRwyTime
-            return formatTime(result)
-        }
-        var includedExtraFuelRemarks: String {
-            let delayRemarks: String = includedDelayFuel["remarks"] as! String
-            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
-            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
-            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
-            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
-            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
-            let othersRemarks: String = includedOthersFuel["remarks"] as! String
-            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
-        }
+//        var includedExtraFuelAmt: String {
+//            let delayFuel: Int = includedDelayFuel["fuel"] as! Int
+//            let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
+//            let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
+//            let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
+//            let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
+//            let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
+//            let trackShorteningFuel: Int = includedTrackShorteningFuel
+//            let othersFuel: Int = includedOthersFuel["fuel"] as! Int
+//            let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
+//            return formatFuelNumber(result)
+//        }
+//        var includedExtraFuelTime: String {
+//            let delayTime: Int = includedDelayFuel["time"] as! Int
+//            let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
+//            let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
+//            let result = delayTime + enrWxTime + reciprocalRwyTime
+//            return formatTime(result)
+//        }
+//        var includedExtraFuelRemarks: String {
+//            let delayRemarks: String = includedDelayFuel["remarks"] as! String
+//            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
+//            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
+//            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
+//            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
+//            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
+//            let othersRemarks: String = includedOthersFuel["remarks"] as! String
+//            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
+//        }
 
         // set up altn table data
         let altnData: [AltnData] = flightPlanData["altnData"] as! [AltnData]
@@ -645,11 +648,11 @@ struct FlightPlanSummaryView: View {
                                     HStack(alignment: .center) {
                                         Text("(I) Pilot Extra Fuel")
                                             .frame(maxWidth: 310, alignment: .leading)
-                                        Text(includedExtraFuelTime)  // todo change to dynamic - includedExtraFuelTime
+                                        Text(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))  // todo change to dynamic - includedExtraFuelTime
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelAmt) // todo change to dynamic - includedExtraFuelAmt
+                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)) // todo change to dynamic - includedExtraFuelAmt
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelRemarks) // todo change to dynamic - includedExtraFuelRemarks
+                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedOthersFuel)) // todo change to dynamic - includedExtraFuelRemarks
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
                                         .padding(.horizontal, 50)
@@ -720,17 +723,7 @@ struct FlightPlanSummaryView: View {
                                             HStack {
                                                 withAnimation(.linear) {
                                                     ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "")
-//                                                    ModalPicker(items: dataArrDelays, selectionOutput: $selectedArrDelays, isShowing: $isShowArrDelays)
                                                 }
-//                                                Picker(selection: $selectedArrDelays) {
-//                                                    ForEach(0...120, id: \.self) { number in
-//                                                        Text("+\(number)mins")
-//                                                    }
-//                                                } label: {
-//                                                    Text("Select").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
-//                                                }.id(UUID())
-//                                                    .pickerStyle(.menu)
-//                                                    .disabled(!includedArrDelays)
                                             }.frame(width: calculateWidth(proxy.size.width, 5), alignment: .leading)
                                             
                                             Text("\(String(calculatedDelayFuel))KG").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
@@ -925,7 +918,7 @@ struct FlightPlanSummaryView: View {
                                             }.fixedSize()
                                                 .frame(width: calculateWidth(proxy.size.width + 50, 5), alignment: .leading)
                                             
-                                            Text("\(String(calculatedZFWFuel))KG")
+                                            Text("\(String(coreDataModel.calculatedZFWFuel(perfData)))KG")
                                                 .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 220, alignment: .leading)
                                             
@@ -970,16 +963,16 @@ struct FlightPlanSummaryView: View {
                                             Text("Total Extra Fuel")
                                                 .frame(width: 160, alignment: .leading)
                                             
-                                            Text("\(includedExtraFuelAmt)KG")
+                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
                                                 .frame(width: calculateWidth(proxy.size.width - 50, 6), alignment: .leading)
                                             
                                             Rectangle().fill(Color.clear)
                                                 .frame(width: calculateWidth(proxy.size.width + 50, 5), alignment: .leading)
                                             
-                                            Text("\(includedExtraFuelTime)mins")
+                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
                                                 .frame(width: 220, alignment: .leading)  // remove after testing
                                             
-                                            Text("\(includedExtraFuelRemarks)")
+                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedOthersFuel))")
                                                 .frame(width: calculateWidth(proxy.size.width - 120, 6), alignment: .leading)  // remove after testing
                                             
                                         }.padding()
@@ -1054,12 +1047,12 @@ struct FlightPlanSummaryView: View {
                 }
             }
             .sheet(isPresented: $isShowModal) {
-                ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, target: $target)
+                ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: selection, target: $target)
                     .presentationDetents([.medium])
                     .interactiveDismissDisabled(true)
             }
             .sheet(isPresented: $isShowModalMultiple) {
-                ModalPickerMultiple(isShowing: $isShowModalMultiple, target: $target, onSelectOutput: onSelectOutput)
+                ModalPickerMultiple(isShowing: $isShowModalMultiple, target: $target, onSelectOutput: onSelectOutput, selection1: selection1, selection2: selection2)
                     .presentationDetents([.medium])
                     .interactiveDismissDisabled(true)
             }
@@ -1067,6 +1060,38 @@ struct FlightPlanSummaryView: View {
             .background(Color(.systemGroupedBackground))
         }
     }
+    
+    func includedExtraFuelTime(_ includedDelayFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any]) -> String {
+        let delayTime: Int = includedDelayFuel["time"] as! Int
+        let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
+        let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
+        let result = delayTime + enrWxTime + reciprocalRwyTime
+        return formatTime(result)
+    }
+    
+    func includedExtraFuelAmt(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedTrackShorteningFuel: Int, _ includedOthersFuel: [String: Any]) -> String {
+        let delayFuel: Int = includedDelayFuel["fuel"] as! Int
+        let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
+        let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
+        let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
+        let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
+        let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
+        let trackShorteningFuel: Int = includedTrackShorteningFuel
+        let othersFuel: Int = includedOthersFuel["fuel"] as! Int
+        let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
+        return formatFuelNumber(result)
+    }
+    
+    func includedExtraFuelRemarks(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedOthersFuel: [String: Any]) -> String {
+            let delayRemarks: String = includedDelayFuel["remarks"] as! String
+            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
+            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
+            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
+            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
+            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
+            let othersRemarks: String = includedOthersFuel["remarks"] as! String
+            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
+        }
     
     func formatFuelNumber(_ number: Int) -> String {
         let formattedString = String(format: "%06d", number)
@@ -1091,6 +1116,7 @@ struct FlightPlanSummaryView: View {
         }
         self.target = "ArrDelays"
         self.isShowModal.toggle()
+        self.selection = self.selectedArrDelays
     }
     
     func onToggleIncludedTaxi() {
@@ -1099,6 +1125,7 @@ struct FlightPlanSummaryView: View {
         }
         self.target = "IncludedTaxi"
         self.isShowModal.toggle()
+        self.selection = self.selectedTaxi
     }
     
     func onToggleTrackShortening() {
@@ -1107,6 +1134,7 @@ struct FlightPlanSummaryView: View {
         }
         self.target = "TrackShortening"
         self.isShowModal.toggle()
+        self.selection = self.selectedTrackShortening
     }
     
     func onToggleEnrWx() {
@@ -1115,6 +1143,7 @@ struct FlightPlanSummaryView: View {
         }
         self.target = "EnrouteWeather"
         self.isShowModal.toggle()
+        self.selection = self.selectedEnrWx
     }
     
     func onToggleReciprocalRwy() {
@@ -1123,6 +1152,7 @@ struct FlightPlanSummaryView: View {
         }
         self.target = "ReciprocalRWY"
         self.isShowModal.toggle()
+        self.selection = self.selectedReciprocalRwy
     }
     
     func onSelectOutput(_ sel1: Int, _ sel2: Int) {
@@ -1145,6 +1175,8 @@ struct FlightPlanSummaryView: View {
         self.selectedOthers000 = sel1
         self.selectedOthers00 = sel2
         self.selectedOtherPrint = "\((sel1 * 10) + sel2)00KG"
+        self.selection1 = sel1
+        self.selection2 = sel2
     }
     
     func onToggleFlightLevel() {
@@ -1159,5 +1191,7 @@ struct FlightPlanSummaryView: View {
         self.selectedFlightLevel000 = sel1
         self.selectedFlightLevel00 = sel2
         self.selectedFlightLevelPrint = "\((sel1 * 10) + sel2)00ft"
+        self.selection1 = sel1
+        self.selection2 = sel2
     }
 }
