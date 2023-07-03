@@ -791,6 +791,8 @@ struct FlightPlanDepView: View {
                             .padding(.bottom, 5)
                             .padding(.leading, 25)
                         }
+                    }.onChange(of: coreDataModel.dataDepartureAts) { _ in
+                        coreDataModel.readDepartureAtis()
                     }
                     
                     // ATC section
@@ -889,6 +891,15 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsAtcRte = true
                                         } else {
+                                            if coreDataModel.existDataDepartureAtc {
+                                                coreDataModel.dataDepartureAtc.atcRte = text
+                                            } else {
+                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                item.atcRte = text
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isShowingAutofillOptionsAtcRte = false
                                         }
                                     }
@@ -943,6 +954,8 @@ struct FlightPlanDepView: View {
                         }.padding(.horizontal, 25)
                         .frame(maxWidth: proxy.size.width - 50)
                         
+                    }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
+                        coreDataModel.readDepartureAtc()
                     }
                     // Entries section
                     Section(header:
@@ -995,6 +1008,7 @@ struct FlightPlanDepView: View {
                                             } else {
                                                 let item = DepartureEntriesList(context: persistenceController.container.viewContext)
                                                 item.entOff = entOff
+                                                coreDataModel.existDataDepartureEntries = true
                                             }
 
                                             coreDataModel.save()
@@ -1018,6 +1032,7 @@ struct FlightPlanDepView: View {
                                             } else {
                                                 let item = DepartureEntriesList(context: persistenceController.container.viewContext)
                                                 item.entFuelInTanks = entFuelInTanks
+                                                coreDataModel.existDataDepartureEntries = true
                                             }
 
                                             coreDataModel.save()
@@ -1040,6 +1055,7 @@ struct FlightPlanDepView: View {
                                             } else {
                                                 let item = DepartureEntriesList(context: persistenceController.container.viewContext)
                                                 item.entTaxi = entTaxi
+                                                coreDataModel.existDataDepartureEntries = true
                                             }
 
                                             coreDataModel.save()
@@ -1062,6 +1078,7 @@ struct FlightPlanDepView: View {
                                             } else {
                                                 let item = DepartureEntriesList(context: persistenceController.container.viewContext)
                                                 item.entTakeoff = entTakeoff
+                                                coreDataModel.existDataDepartureEntries = true
                                             }
 
                                             coreDataModel.save()
@@ -1077,6 +1094,8 @@ struct FlightPlanDepView: View {
                             .padding(.bottom, 5)
                         }.padding(.horizontal, 25)
                             .frame(maxWidth: proxy.size.width - 50)
+                    }.onChange(of: coreDataModel.dataDepartureEntries) { _ in
+                        coreDataModel.readDepartureEntries()
                     }
                 }
                 // custom keyboard view - todo set position properly - like normal ipad keyboard position
@@ -1214,6 +1233,32 @@ struct FlightPlanDepView: View {
                 .hideKeyboardWhenTappedAround()
         }.onAppear {
             coreDataModel.readDepartures()
+            //set data ats
+            self.code = coreDataModel.dataDepartureAts.unwrappedCode
+            self.time = coreDataModel.dataDepartureAts.unwrappedTime
+            self.rwy = coreDataModel.dataDepartureAts.unwrappedRwy
+            self.transLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl
+            self.wind = coreDataModel.dataDepartureAts.unwrappedWind
+            self.vis = coreDataModel.dataDepartureAts.unwrappedVis
+            self.wx = coreDataModel.dataDepartureAts.unwrappedWx
+            self.cloud = coreDataModel.dataDepartureAts.unwrappedCloud
+            self.temp = coreDataModel.dataDepartureAts.unwrappedTemp
+            self.dp = coreDataModel.dataDepartureAts.unwrappedDp
+            self.qnh = coreDataModel.dataDepartureAts.unwrappedQnh
+            self.remarks = coreDataModel.dataDepartureAts.unwrappedRemarks
+            
+            //set data atc
+            self.atcRwy = coreDataModel.dataDepartureAtc.unwrappedAtcRwy
+            self.atcDep = coreDataModel.dataDepartureAtc.unwrappedAtcDep
+            self.atcRte = coreDataModel.dataDepartureAtc.unwrappedAtcRte
+            self.atcFL = coreDataModel.dataDepartureAtc.unwrappedAtcFL
+            self.atcSQ = coreDataModel.dataDepartureAtc.unwrappedAtcSQ
+            
+            //set data entries
+            self.entOff = coreDataModel.dataDepartureEntries.unwrappedEntOff
+            self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
+            self.entTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi
+            self.entTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
         }
     }
 }

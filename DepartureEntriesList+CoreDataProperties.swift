@@ -29,7 +29,7 @@ extension DepartureEntriesList {
         entFuelInTanks ?? ""
     }
     
-    public var unwrappEdentTaxi: String {
+    public var unwrappedEntTaxi: String {
         entTaxi ?? ""
     }
     
