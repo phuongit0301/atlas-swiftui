@@ -61,6 +61,12 @@ class CoreDataModelState: ObservableObject {
     @Published var arrivalRefArray: [NoteList] = []
     @Published var dataFlightPlan: FlightPlanList = FlightPlanList()
     @Published var existDataFlightPlan: Bool = false
+    @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
+    @Published var existDataDepartureAtc: Bool = false
+    @Published var dataDepartureAts: DepartureATISList = DepartureATISList()
+    @Published var existDataDepartureAts: Bool = false
+    @Published var dataDepartureEntries: DepartureEntriesList = DepartureEntriesList()
+    @Published var existDataDepartureEntries: Bool = false
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
@@ -393,12 +399,127 @@ class CoreDataModelState: ObservableObject {
         return results
     }
     
+    func readDepartures() {
+        readDepartureAtc()
+        readDepartureAtis()
+        readDepartureEntries()
+    }
+    
+    func readDepartureAtc() {
+        let request: NSFetchRequest<DepartureATCList> = DepartureATCList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [DepartureATCList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    dataDepartureAtc = item
+                    existDataDepartureAtc = true
+                } else {
+                    let newObj = DepartureATCList(context: service.container.viewContext)
+                    newObj.atcDep = ""
+                    newObj.atcSQ = ""
+                    newObj.atcRte = ""
+                    newObj.atcFL = ""
+                    newObj.atcRwy = ""
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                    existDataDepartureAtc = false
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func readDepartureAtis() {
+        let request: NSFetchRequest<DepartureATISList> = DepartureATISList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [DepartureATISList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    dataDepartureAts = item
+                    existDataDepartureAts = true
+                } else {
+                    let newObj = DepartureATISList(context: service.container.viewContext)
+                    newObj.code = ""
+                    newObj.time = ""
+                    newObj.rwy = ""
+                    newObj.translvl = ""
+                    newObj.wind = ""
+                    newObj.vis = ""
+                    newObj.wx = ""
+                    newObj.cloud = ""
+                    newObj.temp = ""
+                    newObj.dp = ""
+                    newObj.qnh = ""
+                    newObj.remarks = ""
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                    existDataDepartureAts = false
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func readDepartureEntries() {
+        let request: NSFetchRequest<DepartureEntriesList> = DepartureEntriesList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [DepartureEntriesList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    dataDepartureEntries = item
+                    existDataDepartureEntries = true
+                } else {
+                    let newObj = DepartureEntriesList(context: service.container.viewContext)
+                    newObj.entOff = ""
+                    newObj.entFuelInTanks = ""
+                    newObj.entTaxi = ""
+                    newObj.entTakeoff = ""
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                    existDataDepartureEntries = false
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
     func calculatedZFWFuel(_ perfData: PerfData) -> Double {
-        print("calculate111222====\((self.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!))")
-        print("calculate111====\((Int(perfData.zfwChange)!))")
-        print("calculate111====\(Double(557) / Double(1000))")
-        print("calculate====\((self.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (557 / 1000))")
-        
         return Double(Double(self.dataFlightPlan.perActualZFW) - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000)
     }
 }

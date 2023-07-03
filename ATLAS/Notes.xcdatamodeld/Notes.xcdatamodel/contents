@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DepartureATC" representedClassName="DepartureATCList" syncable="YES">
+        <attribute name="atcDep" optional="YES" attributeType="String"/>
+        <attribute name="atcFL" optional="YES" attributeType="String"/>
+        <attribute name="atcRte" optional="YES" attributeType="String"/>
+        <attribute name="atcRwy" optional="YES" attributeType="String"/>
+        <attribute name="atcSQ" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DepartureATIS" representedClassName="DepartureATISList" syncable="YES">
+        <attribute name="cloud" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dp" optional="YES" attributeType="String"/>
+        <attribute name="qnh" optional="YES" attributeType="String"/>
+        <attribute name="remarks" optional="YES" attributeType="String"/>
+        <attribute name="rwy" optional="YES" attributeType="String"/>
+        <attribute name="temp" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="translvl" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+        <attribute name="wind" optional="YES" attributeType="String"/>
+        <attribute name="wx" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DepartureEntries" representedClassName="DepartureEntriesList" syncable="YES">
+        <attribute name="entFuelInTanks" optional="YES" attributeType="String"/>
+        <attribute name="entOff" optional="YES" attributeType="String"/>
+        <attribute name="entTakeoff" optional="YES" attributeType="String"/>
+        <attribute name="entTaxi" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
         <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
         <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>

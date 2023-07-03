@@ -92,6 +92,12 @@
 		3EB99CE12A4FC7060091BC08 /* ButtonStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE02A4FC7060091BC08 /* ButtonStepper.swift */; };
 		3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */; };
 		3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */; };
+		3EB99CF82A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF22A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift */; };
+		3EB99CF92A53194E0091BC08 /* DepartureEntriesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF32A53194E0091BC08 /* DepartureEntriesList+CoreDataProperties.swift */; };
+		3EB99CFA2A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF42A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift */; };
+		3EB99CFB2A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF52A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift */; };
+		3EB99CFC2A53194E0091BC08 /* DepartureATCList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF62A53194E0091BC08 /* DepartureATCList+CoreDataClass.swift */; };
+		3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF72A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -243,6 +249,12 @@
 		3EB99CE02A4FC7060091BC08 /* ButtonStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStepper.swift; sourceTree = "<group>"; };
 		3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalPickerMultiple.swift; sourceTree = "<group>"; };
 		3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStepperMultiple.swift; sourceTree = "<group>"; };
+		3EB99CF22A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureEntriesList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99CF32A53194E0091BC08 /* DepartureEntriesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureEntriesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99CF42A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureATISList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99CF52A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureATISList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99CF62A53194E0091BC08 /* DepartureATCList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureATCList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99CF72A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureATCList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -571,6 +583,12 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EB99CF22A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift */,
+				3EB99CF32A53194E0091BC08 /* DepartureEntriesList+CoreDataProperties.swift */,
+				3EB99CF42A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift */,
+				3EB99CF52A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift */,
+				3EB99CF62A53194E0091BC08 /* DepartureATCList+CoreDataClass.swift */,
+				3EB99CF72A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift */,
 				3EB99CDA2A4DBA9B0091BC08 /* FlightPlanList+CoreDataClass.swift */,
 				3EB99CDB2A4DBA9B0091BC08 /* FlightPlanList+CoreDataProperties.swift */,
 				3EFA5F742A4AC456001ED6CF /* ScratchPadList+CoreDataClass.swift */,
@@ -867,6 +885,7 @@
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
 				3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */,
+				3EB99CFC2A53194E0091BC08 /* DepartureATCList+CoreDataClass.swift in Sources */,
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
@@ -879,12 +898,14 @@
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
 				3EB99CDD2A4DBA9B0091BC08 /* FlightPlanList+CoreDataProperties.swift in Sources */,
+				3EB99CF92A53194E0091BC08 /* DepartureEntriesList+CoreDataProperties.swift in Sources */,
 				C580EA222A481B7D00E3E8D6 /* FlightPlanArrView.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				C580EA242A48251500E3E8D6 /* FlightPlanNOTAMView.swift in Sources */,
 				3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */,
 				3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */,
+				3EB99CF82A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3EFA5EFC2A407204001ED6CF /* NoteForm.swift in Sources */,
 				3EFA5F762A4AC456001ED6CF /* ScratchPadList+CoreDataClass.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
@@ -903,8 +924,10 @@
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
+				3EB99CFA2A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
+				3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
 				3EFA5F6F2A4A8377001ED6CF /* ScratchPadForm.swift in Sources */,
@@ -954,6 +977,7 @@
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
+				3EB99CFB2A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
 				3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */,
 				3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */,

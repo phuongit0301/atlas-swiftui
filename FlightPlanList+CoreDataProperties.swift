@@ -30,52 +30,52 @@ extension FlightPlanList {
     @NSManaged public var fuelOtherRemark: String?
     
     public var unwrappedFuelOtherRemark: String {
-            fuelOtherRemark ?? ""
-        }
-        
-        public var unwrappedFuelZFWChangeRemark: String {
-            fuelZFWChangeRemark ?? ""
-        }
-        
-        public var unwrappedFuelReciprocalRemark: String {
-            fuelReciprocalRemark ?? ""
-        }
+        fuelOtherRemark ?? ""
+    }
+    
+    public var unwrappedFuelZFWChangeRemark: String {
+        fuelZFWChangeRemark ?? ""
+    }
+    
+    public var unwrappedFuelReciprocalRemark: String {
+        fuelReciprocalRemark ?? ""
+    }
 
-        public var unwrappedFuelEnrouteWeatherRemark: String {
-            fuelEnrouteWeatherRemark ?? ""
-        }
+    public var unwrappedFuelEnrouteWeatherRemark: String {
+        fuelEnrouteWeatherRemark ?? ""
+    }
 
-        public var unwrappedFuelTrackShorteningRemark: String {
-            fuelTrackShorteningRemark ?? ""
-        }
+    public var unwrappedFuelTrackShorteningRemark: String {
+        fuelTrackShorteningRemark ?? ""
+    }
 
-        public var unwrappedFuelFlightLevelRemark: String {
-            fuelFlightLevelRemark ?? ""
-        }
+    public var unwrappedFuelFlightLevelRemark: String {
+        fuelFlightLevelRemark ?? ""
+    }
 
-        public var unwrappedFuelAdditionalTaxiRemark: String {
-            fuelAdditionalTaxiRemark ?? ""
-        }
+    public var unwrappedFuelAdditionalTaxiRemark: String {
+        fuelAdditionalTaxiRemark ?? ""
+    }
 
-        public var unwrappedFuelArrivalDelayRemark: String {
-            fuelArrivalDelayRemark ?? ""
-        }
+    public var unwrappedFuelArrivalDelayRemark: String {
+        fuelArrivalDelayRemark ?? ""
+    }
 
-        public var unwrappedPerActualLDW: Int {
-            perActualLDW
-        }
+    public var unwrappedPerActualLDW: Int {
+        perActualLDW
+    }
 
-        public var unwrappedPerActualTOW: Int {
-            perActualTOW
-        }
+    public var unwrappedPerActualTOW: Int {
+        perActualTOW
+    }
 
-        public var unwrappedPerActualZFW: Int {
-            perActualZFW
-        }
+    public var unwrappedPerActualZFW: Int {
+        perActualZFW
+    }
 
-        public var unwrappedFlightInfoPob: String {
-            flightInfoPob ?? ""
-        }
+    public var unwrappedFlightInfoPob: String {
+        flightInfoPob ?? ""
+    }
     
 }
 

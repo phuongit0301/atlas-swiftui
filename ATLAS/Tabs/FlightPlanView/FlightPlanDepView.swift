@@ -10,6 +10,9 @@ import SwiftUI
 import Combine
 
 struct FlightPlanDepView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
     // initialise state variables
     // ATIS variables
     @State var code: String = ""
@@ -145,13 +148,13 @@ struct FlightPlanDepView: View {
                         HStack {
                             Text("ATIS \(flightInfoData.dep)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                             
-                            Spacer()
-                            
-                            Button(action: {
-                                print("Edit")
-                            }) {
-                                Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-                            }
+//                            Spacer()
+//
+//                            Button(action: {
+//                                print("Edit")
+//                            }) {
+//                                Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
+//                            }
                         }
                     ) {
                         // grouped row using hstack
@@ -517,6 +520,16 @@ struct FlightPlanDepView: View {
                                         // Limit the text to a maximum of 1 characters
                                         if newValue.count > 0 {
                                             code = String(newValue.prefix(1))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.code = code
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.code = code
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldCodeFocused = false
                                             isTextFieldTimeFocused = true
                                         }
@@ -528,6 +541,15 @@ struct FlightPlanDepView: View {
                                     .onChange(of: time) { newValue in
                                         if newValue.count > 3 {
                                             time = String(newValue.prefix(4))
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.time = time
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.time = time
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldTimeFocused = false
                                             isTextFieldRwyFocused = true
                                         }
@@ -541,6 +563,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: rwy) { newValue in
                                         if newValue.count > 10 {
                                             rwy = String(newValue.prefix(11))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.rwy = rwy
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.rwy = rwy
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldRwyFocused = false
                                             isTextFieldTransLvlFocused = true
                                         }
@@ -552,6 +584,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: transLvl) { newValue in
                                         if newValue.count > 3 {
                                             transLvl = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.translvl = transLvl
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.translvl = transLvl
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldTransLvlFocused = false
                                             isTextFieldWindFocused = true
                                         }
@@ -565,6 +607,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: wind) { newValue in
                                         if newValue.count > 5 {
                                             wind = String(newValue.prefix(6))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.wind = wind
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.wind = wind
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldWindFocused = false
                                             isTextFieldVisFocused = true
                                         }
@@ -576,6 +628,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: vis) { newValue in
                                         if newValue.count > 3 {
                                             vis = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.vis = vis
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.vis = vis
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldVisFocused = false
                                             isTextFieldWxFocused = true
                                         }
@@ -594,6 +656,15 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsWx = true
                                         } else {
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.wx = text
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.wx = text
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isShowingAutofillOptionsWx = false
                                         }
                                     } // todo hide autofilloptions when submit or when focus on another textfield
@@ -608,9 +679,18 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsCloud = true
                                         } else {
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.cloud = text
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.cloud = text
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isShowingAutofillOptionsCloud = false
                                         }
-                                    } // todo hide autofilloptions when submit or when focus on another textfield
+                                    }// todo hide autofilloptions when submit or when focus on another textfield
                                 }
                                 Group {
                                     TextField("Temp", text: $temp, onEditingChanged: { editing in
@@ -619,6 +699,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: temp) { newValue in
                                         if newValue.count > 1 {
                                             temp = String(newValue.prefix(2))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.temp = temp
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.temp = temp
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldTempFocused = false
                                             isTextFieldDPFocused = true
                                         }
@@ -633,6 +723,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: dp) { newValue in
                                         if newValue.count > 1 {
                                             dp = String(newValue.prefix(2))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.dp = dp
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.dp = dp
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldDPFocused = false
                                             isTextFieldQNHFocused = true
                                         }
@@ -646,6 +746,16 @@ struct FlightPlanDepView: View {
                                     }).onChange(of: qnh) { newValue in
                                         if newValue.count > 3 {
                                             qnh = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.qnh = qnh
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.qnh = qnh
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldQNHFocused = false
                                             isTextFieldRemarksFocused = true
                                         }
@@ -663,6 +773,15 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsRemarks = true
                                         } else {
+                                            if coreDataModel.existDataDepartureAts {
+                                                coreDataModel.dataDepartureAts.remarks = text
+                                            } else {
+                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                item.remarks = text
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isShowingAutofillOptionsRemarks = false
                                         }
                                     }.autocorrectionDisabled(true)
@@ -678,14 +797,14 @@ struct FlightPlanDepView: View {
                     Section(header:
                                 HStack {
                         Text("ATC").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            print("Edit")
-                        }) {
-                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-                        }
+//
+//                        Spacer()
+//
+//                        Button(action: {
+//                            print("Edit")
+//                        }) {
+//                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
+//                        }
                     }
                     ) {
                         // grouped row using hstack
@@ -726,6 +845,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: atcRwy) { newValue in
                                         if newValue.count > 2 {
                                             atcRwy = String(newValue.prefix(3))
+                                            
+                                            if coreDataModel.existDataDepartureAtc {
+                                                coreDataModel.dataDepartureAtc.atcRwy = atcRwy
+                                            } else {
+                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                item.atcRwy = atcRwy
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldAtcRwyFocused = false
                                             isTextFieldAtcDepFocused = true
                                         }
@@ -738,6 +867,16 @@ struct FlightPlanDepView: View {
                                     })
                                     .focused($isTextFieldAtcDepFocused)
                                     .frame(width: calculateWidth(proxy.size.width, 6))
+                                    .onReceive(Just(atcDep)) { text in
+                                        if coreDataModel.existDataDepartureAtc {
+                                            coreDataModel.dataDepartureAtc.atcDep = atcDep
+                                        } else {
+                                            let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                            item.atcDep = atcDep
+                                        }
+
+                                        coreDataModel.save()
+                                    }
                                     
                                     TextField("Rte", text: $atcRte, onEditingChanged: { editing in
                                         isEditingAtcRte = editing
@@ -760,6 +899,16 @@ struct FlightPlanDepView: View {
                                     }).onChange(of: atcFL) { newValue in
                                         if newValue.count > 2 {
                                             atcFL = String(newValue.prefix(3))
+                                            
+                                            if coreDataModel.existDataDepartureAtc {
+                                                coreDataModel.dataDepartureAtc.atcFL = atcFL
+                                            } else {
+                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                item.atcFL = atcFL
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldAtcFLFocused = false
                                             isTextFieldAtcSQFocused = true
                                         }
@@ -771,6 +920,16 @@ struct FlightPlanDepView: View {
                                     }).onChange(of: atcSQ) { newValue in
                                         if newValue.count > 3 {
                                             atcSQ = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureAtc {
+                                                coreDataModel.dataDepartureAtc.atcSQ = atcSQ
+                                            } else {
+                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                item.atcSQ = atcSQ
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldAtcSQFocused = false
                                             isTextFieldAtcRwyFocused = true
                                         }
@@ -790,13 +949,13 @@ struct FlightPlanDepView: View {
                                 HStack {
                         Text("Entries").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                         
-                        Spacer()
-                        
-                        Button(action: {
-                            print("Edit")
-                        }) {
-                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-                        }
+//                        Spacer()
+//                        
+//                        Button(action: {
+//                            print("Edit")
+//                        }) {
+//                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
+//                        }
                     }
                     ) {
                         // grouped row using hstack
@@ -830,6 +989,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: entOff) { newValue in
                                         if newValue.count > 3 {
                                             entOff = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureEntries {
+                                                coreDataModel.dataDepartureEntries.entOff = entOff
+                                            } else {
+                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                item.entOff = entOff
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldEntOffFocused = false
                                             isTextFieldEntFuelInTanksFocused = true
                                         }
@@ -843,6 +1012,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: entFuelInTanks) { newValue in
                                         if newValue.count > 4 {
                                             entFuelInTanks = String(newValue.prefix(5))
+                                            
+                                            if coreDataModel.existDataDepartureEntries {
+                                                coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
+                                            } else {
+                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                item.entFuelInTanks = entFuelInTanks
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldEntFuelInTanksFocused = false
                                             isTextFieldEntTaxiFocused = true
                                         }
@@ -855,6 +1034,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: entTaxi) { newValue in
                                         if newValue.count > 3 {
                                             entTaxi = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureEntries {
+                                                coreDataModel.dataDepartureEntries.entTaxi = entTaxi
+                                            } else {
+                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                item.entTaxi = entTaxi
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldEntTaxiFocused = false
                                             isTextFieldEntTakeoffFocused = true
                                         }
@@ -867,6 +1056,16 @@ struct FlightPlanDepView: View {
                                     .onChange(of: entTakeoff) { newValue in
                                         if newValue.count > 3 {
                                             entTakeoff = String(newValue.prefix(4))
+                                            
+                                            if coreDataModel.existDataDepartureEntries {
+                                                coreDataModel.dataDepartureEntries.entTakeoff = entTakeoff
+                                            } else {
+                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                item.entTakeoff = entTakeoff
+                                            }
+
+                                            coreDataModel.save()
+                                            
                                             isTextFieldEntTakeoffFocused = false
                                             isTextFieldEntOffFocused = true
                                         }
@@ -1013,6 +1212,8 @@ struct FlightPlanDepView: View {
             }.navigationTitle("Departure")
                 .background(Color(.systemGroupedBackground))
                 .hideKeyboardWhenTappedAround()
+        }.onAppear {
+            coreDataModel.readDepartures()
         }
     }
 }
