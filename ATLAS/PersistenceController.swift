@@ -67,6 +67,7 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataDepartureAts: Bool = false
     @Published var dataDepartureEntries: DepartureEntriesList = DepartureEntriesList()
     @Published var existDataDepartureEntries: Bool = false
+    @Published var dataFPEnroute: [EnrouteList] = []
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
@@ -92,10 +93,15 @@ class CoreDataModelState: ObservableObject {
     
     func checkAndSyncData() async {
         let response = read()
+        dataFPEnroute = readEnrouteList()
 
         if response.count == 0 {
 //            initDataTag()
             initData()
+        }
+        
+        if dataFPEnroute.count == 0 {
+            initDataEnroute()
         }
 //        do {
 //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -266,6 +272,132 @@ class CoreDataModelState: ObservableObject {
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
                 initFetchData()
+                print("saved successfully")
+            } catch {
+                // Something went wrong 😭
+                print("Failed to save: \(error)")
+                // Rollback any changes in the managed object context
+                service.container.viewContext.rollback()
+                
+            }
+        }
+    }
+    
+    func initDataEnroute() {
+        let newObject1 = EnrouteList(context: service.container.viewContext)
+        
+        newObject1.id = UUID()
+        newObject1.posn = "A"
+        newObject1.actm = "somestring"
+        newObject1.ztm = "00:05"
+        newObject1.eta = "0130"
+        newObject1.ata =  "0135"
+        newObject1.afl = "220"
+        newObject1.oat = "M59"
+        newObject1.adn = "somestring"
+        newObject1.awind =  "25015"
+        newObject1.tas = "somestring"
+        newObject1.vws = "somestring"
+        newObject1.zfrq = "0.3"
+        newObject1.afrm = "086.9"
+        newObject1.cord = "somestring"
+        newObject1.msa = "somestring"
+        newObject1.dis = "somestring"
+        newObject1.diff = "somestring"
+        newObject1.pfl = "somestring"
+        newObject1.imt = "somestring"
+        newObject1.pdn = "somestring"
+        newObject1.fwind = "somestring"
+        newObject1.gsp = "somestring"
+        newObject1.drm = "somestring"
+        newObject1.pfrm = "086.9"
+        newObject1.fdiff = "somestring"
+        
+        let newObject2 = EnrouteList(context: service.container.viewContext)
+        newObject2.posn = "B"
+        newObject2.actm = "somestring"
+        newObject2.ztm = "00:02"
+        newObject2.eta = "0135"
+        newObject2.ata =  "0140"
+        newObject2.afl = "230"
+        newObject2.oat = "M60"
+        newObject2.adn = "somestring"
+        newObject2.awind =  "26527"
+        newObject2.tas = "somestring"
+        newObject2.vws = "7"
+        newObject2.zfrq = "0.2"
+        newObject2.afrm = "086.6"
+        newObject2.cord = "somestring"
+        newObject2.msa = "100*"
+        newObject2.dis = "somestring"
+        newObject2.diff = "somestring"
+        newObject2.pfl = "somestring"
+        newObject2.imt = "somestring"
+        newObject2.pdn = "somestring"
+        newObject2.fwind = "somestring"
+        newObject2.gsp = "somestring"
+        newObject2.drm = "somestring"
+        newObject2.pfrm = "086.6"
+        newObject2.fdiff = "somestring"
+        
+        let newObject3 = EnrouteList(context: service.container.viewContext)
+        newObject3.posn = "C"
+        newObject3.actm = "somestring"
+        newObject3.ztm = "00:03"
+        newObject3.eta = "0140"
+        newObject3.ata =  "0145"
+        newObject3.afl = "240"
+        newObject3.oat = "M61"
+        newObject3.adn = "somestring"
+        newObject3.awind =  "27018"
+        newObject3.tas = "somestring"
+        newObject3.vws = "somestring"
+        newObject3.zfrq = "0.4"
+        newObject3.afrm = "086.3"
+        newObject3.cord = "somestring"
+        newObject3.msa = "70"
+        newObject3.dis = "somestring"
+        newObject3.diff = "somestring"
+        newObject3.pfl = "somestring"
+        newObject3.imt = "somestring"
+        newObject3.pdn = "somestring"
+        newObject3.fwind = "somestring"
+        newObject3.gsp = "somestring"
+        newObject3.drm = "somestring"
+        newObject3.pfrm = "086.3"
+        newObject3.fdiff = "somestring"
+        
+        let newObject4 = EnrouteList(context: service.container.viewContext)
+        newObject4.posn = "D"
+        newObject4.actm = "somestring"
+        newObject4.ztm = "00:01"
+        newObject4.eta = "0145"
+        newObject4.ata =  "0150"
+        newObject4.afl = "250"
+        newObject4.oat = "M62"
+        newObject4.adn = "somestring"
+        newObject4.awind =  "28019"
+        newObject4.tas = "somestring"
+        newObject4.vws = "3"
+        newObject4.zfrq = "0.5"
+        newObject4.afrm = "086.2"
+        newObject4.cord = "somestring"
+        newObject4.msa = "somestring"
+        newObject4.dis = "somestring"
+        newObject4.diff = "somestring"
+        newObject4.pfl = "somestring"
+        newObject4.imt = "somestring"
+        newObject4.pdn = "somestring"
+        newObject4.fwind = "somestring"
+        newObject4.gsp = "somestring"
+        newObject4.drm = "somestring"
+        newObject4.pfrm = "086.2"
+        newObject4.fdiff = "somestring"
+        
+        service.container.viewContext.performAndWait {
+            do {
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
                 print("saved successfully")
             } catch {
                 // Something went wrong 😭
@@ -517,6 +649,19 @@ class CoreDataModelState: ObservableObject {
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
+    }
+
+    func readEnrouteList() -> [EnrouteList] {
+        var data: [EnrouteList] = []
+        
+        let request: NSFetchRequest<EnrouteList> = EnrouteList.fetchRequest()
+        // fetch with the request
+        do {
+            data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        return data
     }
     
     func calculatedZFWFuel(_ perfData: PerfData) -> Double {

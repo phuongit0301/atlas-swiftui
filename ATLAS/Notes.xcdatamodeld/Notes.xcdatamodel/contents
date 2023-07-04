@@ -27,6 +27,34 @@
         <attribute name="entTakeoff" optional="YES" attributeType="String"/>
         <attribute name="entTaxi" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Enroute" representedClassName="EnrouteList" syncable="YES">
+        <attribute name="actm" optional="YES" attributeType="String"/>
+        <attribute name="adn" optional="YES" attributeType="String"/>
+        <attribute name="afl" optional="YES" attributeType="String"/>
+        <attribute name="afrm" optional="YES" attributeType="String"/>
+        <attribute name="ata" optional="YES" attributeType="String"/>
+        <attribute name="awind" optional="YES" attributeType="String"/>
+        <attribute name="cord" optional="YES" attributeType="String"/>
+        <attribute name="diff" optional="YES" attributeType="String"/>
+        <attribute name="dis" optional="YES" attributeType="String"/>
+        <attribute name="drm" optional="YES" attributeType="String"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="fdiff" optional="YES" attributeType="String"/>
+        <attribute name="fwind" optional="YES" attributeType="String"/>
+        <attribute name="gsp" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imt" optional="YES" attributeType="String"/>
+        <attribute name="msa" optional="YES" attributeType="String"/>
+        <attribute name="oat" optional="YES" attributeType="String"/>
+        <attribute name="pdn" optional="YES" attributeType="String"/>
+        <attribute name="pfl" optional="YES" attributeType="String"/>
+        <attribute name="pfrm" optional="YES" attributeType="String"/>
+        <attribute name="posn" optional="YES" attributeType="String"/>
+        <attribute name="tas" optional="YES" attributeType="String"/>
+        <attribute name="vws" optional="YES" attributeType="String"/>
+        <attribute name="zfrq" optional="YES" attributeType="String"/>
+        <attribute name="ztm" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
         <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
         <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
@@ -55,6 +83,23 @@
         <attribute name="content" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="SummaryInfo" representedClassName="SummaryInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="blkTime" optional="YES" attributeType="String"/>
+        <attribute name="dep" optional="YES" attributeType="String"/>
+        <attribute name="depICAO" optional="YES" attributeType="String"/>
+        <attribute name="dest" optional="YES" attributeType="String"/>
+        <attribute name="destICAO" optional="YES" attributeType="String"/>
+        <attribute name="flightDate" optional="YES" attributeType="String"/>
+        <attribute name="fltNo" optional="YES" attributeType="String"/>
+        <attribute name="fltTime" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="planNo" optional="YES" attributeType="String"/>
+        <attribute name="staLocal" optional="YES" attributeType="String"/>
+        <attribute name="staUTC" optional="YES" attributeType="String"/>
+        <attribute name="stdLocal" optional="YES" attributeType="String"/>
+        <attribute name="stdUTC" optional="YES" attributeType="String"/>
+        <attribute name="tailNo" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Tag" representedClassName="TagList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

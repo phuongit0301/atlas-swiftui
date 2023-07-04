@@ -40,12 +40,24 @@ struct waypoints: Identifiable, Equatable {
 
 // replace with fetch from coredata
 let flightPlanData: [String : Any] = fetchFlightPlanData()
-let waypointsTableDefault: [waypoints] = flightPlanData["waypointsData"] as! [waypoints]
+//let waypointsTableDefault: [waypoints] = flightPlanData["waypointsData"] as! [waypoints]
 
 struct FlightPlanEnrView: View {
     // initialise state variables
-    @State var waypointsTable: [waypoints] = waypointsTableDefault
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
+//    @State var waypointsTableDefault: [waypoints] = waypointsTableDefault
+    @State var waypointsTableDefault: [EnrouteList] = []
+    @State var waypointsTable: [EnrouteList] = []
+    
     @State var num11 = "01:15"
+    @State var eta = ""
+    @State var ata = ""
+    @State var afl = ""
+    @State var oat = ""
+    @State var awind = ""
+    @State var afrm = ""
     
     var body: some View {
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
@@ -112,17 +124,18 @@ struct FlightPlanEnrView: View {
                         
                         ForEach(waypointsTable.indices, id: \.self) { index in
                             let row = waypointsTable[index]
+                            
                             VStack {
                                 HStack {
                                     Group {
-                                        Text("\(row.posn)")
+                                        Text(row.unwrappedPosn)
                                             .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.actm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.ztm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text(row.unwrappedActm).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text(row.unwrappedZtm).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
                                         TextField(
-                                            "\(row.eta)",
-                                            text: $waypointsTable[index].eta
+                                            "\(row.unwrappedEta)",
+                                            text: $eta
                                         )
                                         .onSubmit {
                                             updateValues(editedIndex: index)
@@ -132,10 +145,10 @@ struct FlightPlanEnrView: View {
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-                                        
+
                                         TextField(
-                                            "\(row.ata)",
-                                            text: $waypointsTable[index].ata
+                                            "\(row.unwrappedAta)",
+                                            text: $ata
                                         ).onSubmit {
                                             updateValues(editedIndex: index)
                                         }
@@ -145,8 +158,8 @@ struct FlightPlanEnrView: View {
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
                                         TextField(
-                                            "\(row.afl)",
-                                            text: $waypointsTable[index].afl
+                                            row.unwrappedAfl,
+                                            text: $afl
                                         )
                                         .onSubmit {
                                             updateValues(editedIndex: index)
@@ -155,11 +168,11 @@ struct FlightPlanEnrView: View {
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        
+//
                                         // entry here
                                         TextField(
-                                            "\(row.oat)",
-                                            text: $waypointsTable[index].oat
+                                            row.unwrappedOat,
+                                            text: $oat
                                         )
                                         .onSubmit {
                                             updateValues(editedIndex: index)
@@ -168,12 +181,12 @@ struct FlightPlanEnrView: View {
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        
-                                        Text("\(row.adn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+//
+                                        Text(row.unwrappedAdn).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
                                         TextField(
-                                            "\(row.aWind)",
-                                            text: $waypointsTable[index].aWind
+                                            row.unwrappedAwind,
+                                            text: $awind
                                         )
                                         .onSubmit {
                                             updateValues(editedIndex: index)
@@ -182,18 +195,18 @@ struct FlightPlanEnrView: View {
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        
-                                        Text("\(row.tas)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+
+                                        Text(row.unwrappedTas).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                     }.font(.system(size: 15, weight: .regular))
                                     Group {
-                                        Text("\(row.vws)")
-                                            .foregroundColor(textColorVws(for: row.vws)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        
-                                        Text("\(row.zfrq)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text(row.unwrappedVws)
+                                            .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+
+                                        Text(row.unwrappedZfrq).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
                                         TextField(
-                                            "\(row.afrm)",
-                                            text: $waypointsTable[index].afrm
+                                            row.unwrappedAfrm,
+                                            text: $afrm
                                         )
                                         .onSubmit {
                                             updateValues(editedIndex: index)
@@ -206,21 +219,21 @@ struct FlightPlanEnrView: View {
                                 }
                                 HStack {
                                     Group {
-                                        Text("\(row.Cord)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("-").foregroundColor(textColorMsa(for: row.Msa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Msa)").foregroundColor(textColorMsa(for: row.Msa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Dis)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Diff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Pfl)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Imt)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Pdn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.fWind)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Gsp)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedCord)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("-").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedDis)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedDiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedPfl)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedImt)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedPdn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedFwind)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedGsp)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                     }.font(.system(size: 15, weight: .regular))
                                     Group {
-                                        Text("\(row.Drm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.Pfrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.fDiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedDrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedPfrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedFdiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                     }.font(.system(size: 15, weight: .regular))
                                 }
                             }
@@ -235,166 +248,174 @@ struct FlightPlanEnrView: View {
             }
             .navigationTitle("Enroute")
             .background(Color(.systemGroupedBackground))
+            .onAppear {
+                let data = coreDataModel.readEnrouteList()
+                self.waypointsTableDefault = data
+                self.waypointsTable = data
+            }
         }
     }
     
-    private func updateValues(editedIndex: Int) {       
+    private func updateValues(editedIndex: Int) {
         let dateFormatterTime = DateFormatter()
         dateFormatterTime.dateFormat = "HHmm"
         
         let startIndex = editedIndex + 1
-        for index in startIndex..<waypointsTable.count {
-            //eta
-            let etaDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].eta)!
-            if dateFormatterTime.date(from: waypointsTable[index].eta) != nil {
+        for index in startIndex..<coreDataModel.dataFPEnroute.count {
+            //            //eta
+            let etaDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedEta)!
+            if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].unwrappedEta) != nil {
                 // Update the value based on the previous row's value in column
-                let etaPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].eta)!
-                let ztmString = waypointsTable[index].ztm
+                let etaPreviousRowValue = dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index-1].unwrappedEta)!
+                let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
                 let components = ztmString.components(separatedBy: ":")
                 let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
                 let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
-                waypointsTable[index].eta = dateFormatterTime.string(from: NewValue)
+                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: NewValue)
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: etaDefaultValue)
             }
             
             //ata
-            let ataDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].ata)!
-            if dateFormatterTime.date(from: waypointsTable[index].ata) != nil {
+            let ataDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedAta)!
+            if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].unwrappedAta) != nil {
                 // Update the value based on the previous row's value in column
-                let ataPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].ata)!
-                let ztmString = waypointsTable[index].ztm
+                let ataPreviousRowValue = dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index-1].unwrappedAta)!
+                let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
                 let components = ztmString.components(separatedBy: ":")
                 let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
                 let NewValue = ataPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
-                waypointsTable[index].ata = dateFormatterTime.string(from: NewValue)
+                coreDataModel.dataFPEnroute[index].ata = dateFormatterTime.string(from: NewValue)
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].ata = dateFormatterTime.string(from: ataDefaultValue)
+                coreDataModel.dataFPEnroute[index].ata = dateFormatterTime.string(from: ataDefaultValue)
             }
-
+            
             //afl
-            let aflDefaultValue = waypointsTableDefault[index].afl
-            if waypointsTable[index].afl != nil {
+            let aflDefaultValue = waypointsTableDefault[index].unwrappedAfl
+            if coreDataModel.dataFPEnroute[index].unwrappedAfl != "" {
                 // Update the value based on the previous row's value in column
-                let aflPreviousRowValue = waypointsTable[index-1].afl
+                let aflPreviousRowValue = coreDataModel.dataFPEnroute[index-1].unwrappedAfl
                 let NewValue = aflPreviousRowValue
-                waypointsTable[index].afl = NewValue
+                coreDataModel.dataFPEnroute[index].afl = NewValue
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].afl = aflDefaultValue
+                coreDataModel.dataFPEnroute[index].afl = aflDefaultValue
             }
-
+            
             //oat
-            let oatDefaultValue = waypointsTableDefault[index].oat
-            if waypointsTable[index].oat != nil {
+            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
+            if coreDataModel.dataFPEnroute[index].unwrappedOat != "" {
                 // Update the value based on the previous row's value in column
-                let oatPreviousRowValue = waypointsTable[index-1].oat
+                let oatPreviousRowValue = coreDataModel.dataFPEnroute[index-1].unwrappedOat
                 let NewValue = oatPreviousRowValue
-                waypointsTable[index].oat = NewValue
+                coreDataModel.dataFPEnroute[index].oat = NewValue
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].oat = oatDefaultValue
+                coreDataModel.dataFPEnroute[index].oat = oatDefaultValue
             }
             
             //awind
-            let aWindDefaultValue = waypointsTableDefault[index].aWind
-            if waypointsTable[index].aWind != nil {
+            let aWindDefaultValue = waypointsTableDefault[index].unwrappedAwind
+            if coreDataModel.dataFPEnroute[index].unwrappedAwind != "" {
                 // Update the value based on the previous row's value in column
-                let aWindPreviousRowValue = waypointsTable[index-1].aWind
+                let aWindPreviousRowValue = coreDataModel.dataFPEnroute[index-1].unwrappedAwind
                 let NewValue = aWindPreviousRowValue
-                waypointsTable[index].aWind = NewValue
+                coreDataModel.dataFPEnroute[index].awind = NewValue
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].aWind = aWindDefaultValue
+                coreDataModel.dataFPEnroute[index].awind = aWindDefaultValue
             }
             
             //afrm
-            let afrmDefaultValue = Double(waypointsTableDefault[index].afrm)
-            if Double(waypointsTable[index].afrm) != nil {
+            let afrmDefaultValue = Double(waypointsTableDefault[index].unwrappedAfrm)
+            if Double(coreDataModel.dataFPEnroute[index].unwrappedAfrm) != nil {
                 // Update the value based on the previous row's value in column
-                let afrmPreviousRowValue = Double(waypointsTable[index-1].afrm)
-                let zfrq = Double(waypointsTable[index].zfrq) ?? 0
+                let afrmPreviousRowValue = Double(coreDataModel.dataFPEnroute[index-1].unwrappedAfrm)
+                let zfrq = Double(coreDataModel.dataFPEnroute[index].unwrappedZfrq) ?? 0
                 let NewValue = afrmPreviousRowValue! - zfrq
-                waypointsTable[index].afrm = formatFuelNumberDouble(NewValue)
+                coreDataModel.dataFPEnroute[index].afrm = formatFuelNumberDouble(NewValue)
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
+                coreDataModel.dataFPEnroute[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
             }
+            coreDataModel.save()
         }
         
-        for index in editedIndex..<waypointsTable.count {
+        for index in editedIndex..<coreDataModel.dataFPEnroute.count {
             //diff
-            let diffDefaultValue = waypointsTableDefault[index].Diff
-            if dateFormatterTime.date(from: waypointsTable[index].eta) != nil &&  dateFormatterTime.date(from: waypointsTable[index].ata) != nil {
+            let diffDefaultValue = waypointsTableDefault[index].unwrappedDiff
+            if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].unwrappedEta) != nil &&  dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].unwrappedEta) != nil {
                 // Update the value based on the eta and ata
-                let etaMins = waypointsTable[index].eta.suffix(2)
-                let etaHrs = waypointsTable[index].eta.prefix(2)
+                let etaMins = coreDataModel.dataFPEnroute[index].unwrappedEta.suffix(2)
+                let etaHrs = coreDataModel.dataFPEnroute[index].unwrappedEta.prefix(2)
                 let eta = Int(etaHrs)! * 60 + Int(etaMins)!
-                let ataMins = waypointsTable[index].ata.suffix(2)
-                let ataHrs = waypointsTable[index].ata.prefix(2)
+                let ataMins = coreDataModel.dataFPEnroute[index].unwrappedAta.suffix(2)
+                let ataHrs = coreDataModel.dataFPEnroute[index].unwrappedAta.prefix(2)
                 let ata = Int(ataHrs)! * 60 + Int(ataMins)!
                 var NewValue = ata - eta
                 if NewValue < 0 {
                     NewValue = NewValue * -1
                     let NewValueString = formatTime(NewValue)
-                    waypointsTable[index].Diff = "-"+NewValueString
+                    coreDataModel.dataFPEnroute[index].diff = "-"+NewValueString
                 } else {
                     let NewValueString = formatTime(NewValue)
-                    waypointsTable[index].Diff = "+"+NewValueString
+                    coreDataModel.dataFPEnroute[index].diff = "+"+NewValueString
                 }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].Diff = diffDefaultValue
+                coreDataModel.dataFPEnroute[index].diff = diffDefaultValue
             }
             
             //fDiff
-            let fDiffDefaultValue = Double(waypointsTableDefault[index].fDiff)
-            if Double(waypointsTable[index].fDiff) != nil {
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
+            if Double(coreDataModel.dataFPEnroute[index].unwrappedFdiff) != nil {
                 // Update the value based on the previous row's value in column
-                let afrm = Double(waypointsTable[index].afrm) ?? 0
-                let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
+                let afrm = Double(coreDataModel.dataFPEnroute[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(coreDataModel.dataFPEnroute[index].unwrappedPfrm) ?? 0
                 var NewValue = afrm - pfrm
                 if NewValue < 0 {
                     NewValue = NewValue * -1
-                    waypointsTable[index].fDiff = "-"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
                 } else {
-                    waypointsTable[index].fDiff = "+"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
                 }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].fDiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+                coreDataModel.dataFPEnroute[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
             }
+            coreDataModel.save()
         }
         
-        for index in editedIndex..<waypointsTable.count {
+        for index in editedIndex..<coreDataModel.dataFPEnroute.count {
             //fDiff
-            let fDiffDefaultValue = Double(waypointsTableDefault[index].fDiff)
-            if Double(waypointsTable[index].fDiff) != nil {
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
+            if Double(coreDataModel.dataFPEnroute[index].unwrappedFdiff) != nil {
                 // Update the value based on the previous row's value in column
-                let afrm = Double(waypointsTable[index].afrm) ?? 0
-                let pfrm = Double(waypointsTable[index].Pfrm) ?? 0
+                let afrm = Double(coreDataModel.dataFPEnroute[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(coreDataModel.dataFPEnroute[index].unwrappedPfrm) ?? 0
                 var NewValue = afrm - pfrm
                 if NewValue < 0 {
                     NewValue = NewValue * -1
-                    waypointsTable[index].fDiff = "-"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
                 } else {
-                    waypointsTable[index].fDiff = "+"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
                 }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                waypointsTable[index].fDiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+                coreDataModel.dataFPEnroute[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
             }
+            coreDataModel.save()
         }
     }
     
