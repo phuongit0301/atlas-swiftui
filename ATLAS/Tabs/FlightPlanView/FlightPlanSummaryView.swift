@@ -201,8 +201,9 @@ struct FlightPlanSummaryView: View {
             fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"]!, fuel: fuelData.dispAdd["fuel"]!, policy_reason: fuelData.dispAdd["policy"]!)
         ]
         // MARK: fuel calculations
+        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(fuelData.hold["unit"]!)!
         var calculatedDelayFuel: String {
-            let result = selectedArrDelays * Int(fuelData.hold["unit"]!)!
+            let result = calculatedDelayFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
@@ -210,14 +211,21 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedDelayFuel: [String: Any] {
-            if includedArrDelays {
-                return ["fuel": selectedArrDelays * Int(fuelData.hold["unit"]!)!, "time": selectedArrDelays, "remarks": "Arrival Delays \(coreDataModel.dataFlightPlan.unwrappedFuelArrivalDelayRemark)"]
+            if includedArrDelays && calculatedDelayFuelValue > 0 {
+                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelArrivalDelayRemark
+                if remarks == "" {
+                    return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG, \(remarks));"]
+                }
             } else {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
+        
+        let calculatedTaxiFuelValue = selectedTaxi * Int(fuelData.taxi["unit"]!)!
         var calculatedTaxiFuel: String {
-            let result = selectedTaxi * Int(fuelData.taxi["unit"]!)!
+            let result = calculatedTaxiFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
@@ -225,10 +233,15 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedTaxiFuel: [String: Any] {
-            if includedTaxi {
-                return ["fuel": selectedTaxi * Int(fuelData.taxi["unit"]!)!, "remarks": "Additional Taxi Time \(coreDataModel.dataFlightPlan.unwrappedFuelAdditionalTaxiRemark)"]
+            if includedTaxi && calculatedTaxiFuelValue > 0 {
+                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelAdditionalTaxiRemark
+                if remarks == "" {
+                    return ["fuel": calculatedTaxiFuelValue, "time": selectedTaxi, "remarks": "Additional Taxi Time (\(calculatedTaxiFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedTaxiFuelValue, "time": selectedTaxi, "remarks": "Additional Taxi Time (\(calculatedTaxiFuel)KG, \(remarks));"]
+                }
             } else {
-                return ["fuel": 0, "remarks": ""]
+                return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
         
@@ -249,29 +262,48 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedFlightLevelFuel: [String: Any] {
-            if includedFlightLevel {
-                return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation \(coreDataModel.dataFlightPlan.unwrappedFuelFlightLevelRemark)"]
+            if includedFlightLevel && calculatedFlightLevelFuelValue != 0 {
+                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelFlightLevelRemark
+                if remarks == "" {
+                    return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation (\(calculatedFlightLevelFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation (\(calculatedFlightLevelFuel)KG, \(remarks));"]
+                }
             } else {
                 return ["fuel": 0, "remarks": ""]
             }
         }
+        
+        let calculatedTrackShorteningFuelValue = selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
         var calculatedTrackShorteningFuel: String {
-            let result = selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+            let result = calculatedTrackShorteningFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
                 return "+\(result)"
             }
         }
-        var includedTrackShorteningFuel: Int {
+        var includedTrackShorteningFuel: [String: Any] {
             if includedTrackShortening {
-                return selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelTrackShorteningRemark
+                if calculatedTrackShorteningFuelValue < 0 {
+                    if remarks == "" {
+                        return ["fuel": calculatedTrackShorteningFuelValue, "time": selectedTrackShortening, "remarks": "Track Shortening Savings (\(calculatedTrackShorteningFuel)KG);"]
+                    } else {
+                        return ["fuel": calculatedTrackShorteningFuelValue, "time": selectedTrackShortening, "remarks": "Track Shortening Savings (\(calculatedTrackShorteningFuel)KG, \(remarks));"]
+                    }
+                }
+                else {
+                    return ["fuel": 0, "time": 0, "remarks": ""]
+                }
             } else {
-                return 0
+                return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
+        
+        let calculatedEnrWxFuelValue = selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
         var calculatedEnrWxFuel: String {
-            let result = selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
+            let result = calculatedEnrWxFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
@@ -279,14 +311,21 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedEnrWxFuel: [String: Any] {
-            if includedEnrWx {
-                return ["fuel": selectedEnrWx * Int(fuelData.burnoff["unit"]!)!, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation \(coreDataModel.dataFlightPlan.unwrappedFuelEnrouteWeatherRemark)"]
+            if includedEnrWx && calculatedEnrWxFuelValue > 0{
+                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelEnrouteWeatherRemark
+                if remarks == "" {
+                    return ["fuel": calculatedEnrWxFuelValue, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation (\(calculatedEnrWxFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedEnrWxFuelValue, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation (\(calculatedEnrWxFuel)KG, \(remarks));"]
+                }
             } else {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
+        
+        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
         var calculatedReciprocalRwyFuel: String {
-            let result = selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
+            let result = calculatedReciprocalRwyFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
@@ -294,16 +333,27 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedReciprocalRwyFuel: [String: Any] {
+            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelReciprocalRemark
             if (includedReciprocalRwy && selectedReciprocalRwy > 0) {
-                return ["fuel": selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy \(coreDataModel.dataFlightPlan.unwrappedFuelReciprocalRemark)"]
+                if remarks == "" {
+                    return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy (\(calculatedReciprocalRwyFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy (\(calculatedReciprocalRwyFuel)KG, \(remarks));"]
+                }
             } else if (includedReciprocalRwy && selectedReciprocalRwy < 0) {
-                return ["fuel": selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!, "time": selectedReciprocalRwy, "remarks": ""]
+                if remarks == "" {
+                    return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy Savings (\(calculatedReciprocalRwyFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy Savings (\(calculatedReciprocalRwyFuel)KG, \(remarks);"]
+                }
             } else {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
+         
+        let calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
         var calculatedZFWFuel: String {
-            let result = coreDataModel.calculatedZFWFuel(perfData)
+            let result = calculatedZFWFuelValue
             if result <= 0 {
                 return "\(result)"
             } else {
@@ -311,17 +361,23 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedZFWFuel: [String: Any] {
-            let fuelBurn = coreDataModel.calculatedZFWFuel(perfData)
-            if (includedZFWchange && fuelBurn > 0) {
-                return ["fuel": fuelBurn, "remarks": "ZFW Increase \(coreDataModel.dataFlightPlan.unwrappedFuelZFWChangeRemark)"]
-            } else if (includedZFWchange && fuelBurn < 0) {
-                return ["fuel": fuelBurn, "remarks": ""]
+            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelZFWChangeRemark
+            if (includedZFWchange && calculatedZFWFuelValue > 0) {
+                if remarks == "" {
+                    return ["fuel": calculatedZFWFuelValue, "remarks": "ZFW Increase (\(calculatedZFWFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedZFWFuelValue, "remarks": "ZFW Increase (\(calculatedZFWFuel)KG, \(remarks));"]
+                }
+            } else if (includedZFWchange && calculatedZFWFuelValue < 0) {
+                return ["fuel": calculatedZFWFuelValue, "remarks": ""]
             } else {
                 return ["fuel": 0, "remarks": ""]
             }
         }
+        
+        let calculatedOthersFuelValue = selectedOthers000 * 1000 + selectedOthers00 * 100
         var calculatedOthersFuel: String {
-            let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
+            let selectedOthers = calculatedOthersFuelValue
             let result = selectedOthers
             if result <= 0 {
                 return "\(result)"
@@ -330,9 +386,13 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedOthersFuel: [String: Any] {
-            let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
-            if includedOthers {
-                return ["fuel": selectedOthers, "remarks": "\("")"]
+            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelOtherRemark
+            if includedOthers && calculatedOthersFuelValue > 0 {
+                if remarks == "" {
+                    return ["fuel": calculatedOthersFuelValue, "remarks": "Others (\(calculatedOthersFuel)KG);"]
+                } else {
+                    return ["fuel": calculatedOthersFuelValue, "remarks": "Others (\(calculatedOthersFuel)KG, \(remarks));"]
+                }
             } else {
                 return ["fuel": 0, "remarks": ""]
             }
@@ -677,11 +737,11 @@ struct FlightPlanSummaryView: View {
                                     HStack(alignment: .center) {
                                         Text("(I) Pilot Extra Fuel")
                                             .frame(maxWidth: 310, alignment: .leading)
-                                        Text(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))  // todo change to dynamic - includedExtraFuelTime
+                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)) // todo change to dynamic - includedExtraFuelAmt
+                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedOthersFuel)) // todo change to dynamic - includedExtraFuelRemarks
+                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
                                         .padding(.horizontal, 45)
@@ -1020,7 +1080,7 @@ struct FlightPlanSummaryView: View {
                                                 .frame(width: 210, alignment: .leading)
                                                 .padding(.horizontal)
                                             
-                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
+                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
                                                 .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
                                                 .padding(.horizontal)
                                             
@@ -1030,10 +1090,10 @@ struct FlightPlanSummaryView: View {
                                             
                                             Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
                                                 .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)// remove after testing
+                                                .padding(.horizontal)
                                             
-                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedOthersFuel))")
-                                                .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)  // remove after testing
+                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))")
+                                                .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
                                             
                                         }.padding()
                                             .frame(width: proxy.size.width - 50)
@@ -1121,36 +1181,46 @@ struct FlightPlanSummaryView: View {
         }
     }
     
-    func includedExtraFuelTime(_ includedDelayFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any]) -> String {
+    func includedExtraFuelTime(_ includedDelayFuel: [String: Any], _ includedTrackShorteningFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any]) -> String {
         let delayTime: Int = includedDelayFuel["time"] as! Int
         let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
         let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
-        let result = delayTime + enrWxTime + reciprocalRwyTime
-        return formatTime(result)
+        let trackShorteningTime: Int = includedTrackShorteningFuel["time"] as! Int
+        let result = delayTime + enrWxTime + reciprocalRwyTime + trackShorteningTime
+        if result < 0 {
+            return formatTime(0)
+        } else {
+            return formatTime(result)
+        }
     }
     
-    func includedExtraFuelAmt(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedTrackShorteningFuel: Int, _ includedOthersFuel: [String: Any]) -> String {
+    func includedExtraFuelAmt(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedTrackShorteningFuel: [String: Any], _ includedOthersFuel: [String: Any]) -> String {
         let delayFuel: Int = includedDelayFuel["fuel"] as! Int
         let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
         let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
-        let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
         let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
         let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
-        let trackShorteningFuel: Int = includedTrackShorteningFuel
+        let trackShorteningFuel: Int = includedTrackShorteningFuel["fuel"] as! Int
+        let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
         let othersFuel: Int = includedOthersFuel["fuel"] as! Int
-        let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
-        return formatFuelNumber(result)
+        let result = delayFuel + taxiFuel + flightLevelFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + zfwFuel + othersFuel
+        if result < 0 {
+            return formatFuelNumber(0)
+        } else {
+            return formatFuelNumber(result)
+        }
     }
     
-    func includedExtraFuelRemarks(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedOthersFuel: [String: Any]) -> String {
+    func includedExtraFuelRemarks(_ includedDelayFuel: [String: Any], _ includedTaxiFuel: [String: Any], _ includedFlightLevelFuel: [String: Any], _ includedZFWFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any], _ includedTrackShorteningFuel: [String: Any], _ includedOthersFuel: [String: Any]) -> String {
             let delayRemarks: String = includedDelayFuel["remarks"] as! String
             let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
             let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
-            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
+            let trackShorteningRemarks: String = includedTrackShorteningFuel["remarks"] as! String
             let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
             let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
+            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
             let othersRemarks: String = includedOthersFuel["remarks"] as! String
-            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
+            return "\(delayRemarks) \(taxiRemarks) \(flightLevelRemarks) \(trackShorteningRemarks) \(enrWxRemarks) \(reciprocalRwyRemarks) \(zfwRemarks) \(othersRemarks)"
         }
     
     func formatFuelNumber(_ number: Int) -> String {
