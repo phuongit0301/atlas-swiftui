@@ -247,9 +247,8 @@ struct FlightPlanSummaryView: View {
         
         var calculatedFlightLevelFuelValue: Int {
             let selectedFlightLevel: Int = selectedFlightLevel000 * 1000 + selectedFlightLevel00 * 100
-            let unit: Double = Double(Int(perfData.lvlChange)! / 2000)
-            //let result = Int(Double(selectedFlightLevel) * unit)
-            let result = Int(Double(selectedFlightLevel))
+            let unit = Double(perfData.lvlChange)! / 2000
+            let result = Int(Double(selectedFlightLevel) * unit)
 
             return result
         }
@@ -397,37 +396,7 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "remarks": ""]
             }
         }
-
-//        var includedExtraFuelAmt: String {
-//            let delayFuel: Int = includedDelayFuel["fuel"] as! Int
-//            let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
-//            let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
-//            let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
-//            let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
-//            let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
-//            let trackShorteningFuel: Int = includedTrackShorteningFuel
-//            let othersFuel: Int = includedOthersFuel["fuel"] as! Int
-//            let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
-//            return formatFuelNumber(result)
-//        }
-//        var includedExtraFuelTime: String {
-//            let delayTime: Int = includedDelayFuel["time"] as! Int
-//            let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
-//            let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
-//            let result = delayTime + enrWxTime + reciprocalRwyTime
-//            return formatTime(result)
-//        }
-//        var includedExtraFuelRemarks: String {
-//            let delayRemarks: String = includedDelayFuel["remarks"] as! String
-//            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
-//            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
-//            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
-//            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
-//            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
-//            let othersRemarks: String = includedOthersFuel["remarks"] as! String
-//            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
-//        }
-
+        
         // MARK: set up altn table data
         let altnData: [AltnData] = flightPlanData["altnData"] as! [AltnData]
         @State var altnTable: [altn] = altnData.map { item in
@@ -1072,7 +1041,7 @@ struct FlightPlanSummaryView: View {
                                         Divider()
                                     }.frame(width: proxy.size.width - 50)
                                     
-                                    HStack(alignment: .center) {
+                                    HStack(alignment: .center) { // todo - fix alignment
                                         HStack(alignment: .center) {
                                             Rectangle().fill(Color.clear).frame(width: 70).padding(.horizontal, 24)
                                             
