@@ -201,8 +201,13 @@ struct FlightPlanSummaryView: View {
             fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"]!, fuel: fuelData.dispAdd["fuel"]!, policy_reason: fuelData.dispAdd["policy"]!)
         ]
         // MARK: fuel calculations
-        var calculatedDelayFuel: Int {
-            return selectedArrDelays * Int(fuelData.hold["unit"]!)!
+        var calculatedDelayFuel: String {
+            let result = selectedArrDelays * Int(fuelData.hold["unit"]!)!
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedDelayFuel: [String: Any] {
             if includedArrDelays {
@@ -211,8 +216,13 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        var calculatedTaxiFuel: Int {
-            return selectedTaxi * Int(fuelData.taxi["unit"]!)!
+        var calculatedTaxiFuel: String {
+            let result = selectedTaxi * Int(fuelData.taxi["unit"]!)!
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedTaxiFuel: [String: Any] {
             if includedTaxi {
@@ -222,21 +232,36 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        var calculatedFlightLevelFuel: Int {
+        var calculatedFlightLevelFuelValue: Int {
             let selectedFlightLevel: Int = selectedFlightLevel000 * 1000 + selectedFlightLevel00 * 100
-            let unit: Int = Int(perfData.lvlChange)! / 2000
-            return selectedFlightLevel * unit
+            let unit: Double = Double(Int(perfData.lvlChange)! / 2000)
+            //let result = Int(Double(selectedFlightLevel) * unit)
+            let result = Int(Double(selectedFlightLevel))
+
+            return result
+        }
+        var calculatedFlightLevelFuel: String {
+            let result = calculatedFlightLevelFuelValue
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedFlightLevelFuel: [String: Any] {
-            let selectedFlightLevel = selectedFlightLevel000 * 1000 + selectedFlightLevel00 * 100
             if includedFlightLevel {
-                return ["fuel": selectedFlightLevel * (Int(perfData.lvlChange)! / 2000), "remarks": "Flight Level Deviation \(coreDataModel.dataFlightPlan.unwrappedFuelFlightLevelRemark)"]
+                return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation \(coreDataModel.dataFlightPlan.unwrappedFuelFlightLevelRemark)"]
             } else {
                 return ["fuel": 0, "remarks": ""]
             }
         }
-        var calculatedTrackShorteningFuel: Int {
-            return selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+        var calculatedTrackShorteningFuel: String {
+            let result = selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedTrackShorteningFuel: Int {
             if includedTrackShortening {
@@ -245,8 +270,13 @@ struct FlightPlanSummaryView: View {
                 return 0
             }
         }
-        var calculatedEnrWxFuel: Int {
-            return selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
+        var calculatedEnrWxFuel: String {
+            let result = selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedEnrWxFuel: [String: Any] {
             if includedEnrWx {
@@ -255,8 +285,13 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        var calculatedReciprocalRwyFuel: Int {
-            return selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
+        var calculatedReciprocalRwyFuel: String {
+            let result = selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedReciprocalRwyFuel: [String: Any] {
             if (includedReciprocalRwy && selectedReciprocalRwy > 0) {
@@ -267,12 +302,16 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        var calculatedZFWFuel: Int {
-            return coreDataModel.calculatedZFWFuel(perfData)
+        var calculatedZFWFuel: String {
+            let result = coreDataModel.calculatedZFWFuel(perfData)
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedZFWFuel: [String: Any] {
-//            let fuelBurn = (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
-            let fuelBurn = calculatedZFWFuel
+            let fuelBurn = coreDataModel.calculatedZFWFuel(perfData)
             if (includedZFWchange && fuelBurn > 0) {
                 return ["fuel": fuelBurn, "remarks": "ZFW Increase \(coreDataModel.dataFlightPlan.unwrappedFuelZFWChangeRemark)"]
             } else if (includedZFWchange && fuelBurn < 0) {
@@ -281,9 +320,14 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "remarks": ""]
             }
         }
-        var calculatedOthersFuel: Int {
+        var calculatedOthersFuel: String {
             let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
-            return selectedOthers
+            let result = selectedOthers
+            if result <= 0 {
+                return "\(result)"
+            } else {
+                return "+\(result)"
+            }
         }
         var includedOthersFuel: [String: Any] {
             let selectedOthers = selectedOthers000 * 1000 + selectedOthers00 * 100
@@ -640,11 +684,10 @@ struct FlightPlanSummaryView: View {
                                         Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedOthersFuel)) // todo change to dynamic - includedExtraFuelRemarks
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
-                                        .padding(.horizontal, 50)
+                                        .padding(.horizontal, 45)
                                     .frame(width: proxy.size.width - 25)
                                 }.background(Color.theme.azure.opacity(0.12))
                                 .frame(width: proxy.size.width)
-                                
                                 Divider()
                             }.onTapGesture {
                                 withAnimation {
@@ -714,12 +757,12 @@ struct FlightPlanSummaryView: View {
                                             
                                             HStack {
                                                 withAnimation(.linear) {
-                                                    ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "")
+                                                    ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "mins")
                                                 }
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedDelayFuel))KG").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                            Text("\(calculatedDelayFuel)KG").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
                                             
@@ -751,7 +794,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedTaxiFuel))KG")
+                                            Text("\(calculatedTaxiFuel)KG")
                                                 .foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -806,7 +849,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedFlightLevelFuel))KG")
+                                            Text("\(calculatedFlightLevelFuel)KG")
                                                 .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -839,7 +882,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedTrackShorteningFuel))KG")
+                                            Text("\(calculatedTrackShorteningFuel)KG")
                                                 .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -873,7 +916,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedEnrWxFuel))KG")
+                                            Text("\(calculatedEnrWxFuel)KG")
                                                 .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -910,7 +953,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedReciprocalRwyFuel))KG")
+                                            Text("\(calculatedReciprocalRwyFuel)KG")
                                                 .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -941,8 +984,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedZFWFuel))KG")
-//                                                ("\(String(coreDataModel.calculatedZFWFuel(perfData)))KG")
+                                            Text("\(calculatedZFWFuel)KG")
                                                 .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
@@ -975,7 +1017,7 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(calculatedOthersFuel))KG")
+                                            Text("\(calculatedOthersFuel)KG")
                                                 .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
