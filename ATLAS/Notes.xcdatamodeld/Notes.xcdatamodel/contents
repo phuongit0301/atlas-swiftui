@@ -79,6 +79,15 @@
         <attribute name="target" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
+    <entity name="PerfInfo" representedClassName="PerfInfoList" syncable="YES">
+        <attribute name="airMiles" optional="YES" attributeType="String"/>
+        <attribute name="apd" optional="YES" attributeType="String"/>
+        <attribute name="ci" optional="YES" attributeType="String"/>
+        <attribute name="crzComp" optional="YES" attributeType="String"/>
+        <attribute name="fltRules" optional="YES" attributeType="String"/>
+        <attribute name="gndMiles" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

@@ -176,9 +176,9 @@ struct FlightPlanSummaryView: View {
         
         // MARK: set up perf tables data
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
-        @State var perfInfoTable = [
-            perfInfo(fltRules: perfData.fltRules, gndMiles: perfData.gndMiles, airMiles: perfData.airMiles, crzComp: perfData.crzComp, apd: perfData.apd, ci: perfData.ci)
-        ]
+//        @State var perfInfoTable = [
+//            perfInfo(fltRules: perfData.fltRules, gndMiles: perfData.gndMiles, airMiles: perfData.airMiles, crzComp: perfData.crzComp, apd: perfData.apd, ci: perfData.ci)
+//        ]
         @State var perfChangesTable = [
             perfChanges(zfwChange: "M1000KG BURN LESS \(perfData.zfwChange)KG", lvlChange: "P2000FT BURN LESS \(perfData.lvlChange)KG")
         ]
@@ -646,13 +646,13 @@ struct FlightPlanSummaryView: View {
                     // MARK: Performance section
                     Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                         // table body - first row
-                        Table(perfInfoTable) {
-                            TableColumn("FLT Rules", value: \.fltRules)
-                            TableColumn("GND Miles", value: \.gndMiles)
-                            TableColumn("AIR Miles", value: \.airMiles)
-                            TableColumn("CRZ Comp", value: \.crzComp)
-                            TableColumn("APD", value: \.apd)
-                            TableColumn("CI", value: \.ci)
+                        Table(coreDataModel.dataPerfInfo) {
+                            TableColumn("FLT Rules", value: \.unwrappedFltRules)
+                            TableColumn("GND Miles", value: \.unwrappedGndMiles)
+                            TableColumn("AIR Miles", value: \.unwrappedAirMiles)
+                            TableColumn("CRZ Comp", value: \.unwrappedCrzComp)
+                            TableColumn("APD", value: \.unwrappedApd)
+                            TableColumn("CI", value: \.unwrappedCi)
                         }
                         .frame(minHeight: 65)
                         .scrollDisabled(true)

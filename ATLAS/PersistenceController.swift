@@ -69,6 +69,10 @@ class CoreDataModelState: ObservableObject {
     @Published var dataSummaryRoute: SummaryRouteList = SummaryRouteList()
     @Published var existDataSummaryRoute: Bool = false
     
+    // For Perf Info
+    @Published var dataPerfInfo: [PerfInfoList] = []
+    @Published var existDataPerfInfo: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -100,6 +104,7 @@ class CoreDataModelState: ObservableObject {
         dataFlightPlan = readFlightPlan()
         dataSummaryInfo = readSummaryInfo()
         dataSummaryRoute = readSummaryRoute()
+        dataPerfInfo = readPerfInfo()
     }
     
     func checkAndSyncData() async {
@@ -107,6 +112,7 @@ class CoreDataModelState: ObservableObject {
         dataFPEnroute = readEnrouteList()
         readSummaryInfo()
         readSummaryRoute()
+        readPerfInfo()
         
         if response.count == 0 {
             //            initDataTag()
@@ -123,6 +129,10 @@ class CoreDataModelState: ObservableObject {
         
         if !existDataSummaryRoute {
             initDataSummaryRoute()
+        }
+        
+        if !existDataPerfInfo {
+            initDataPerfInfo()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -483,6 +493,29 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataPerfInfo() {
+        let newObj = PerfInfoList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.fltRules = "RVSM"
+        newObj.gndMiles = "6385"
+        newObj.airMiles = "7004"
+        newObj.crzComp = "M42"
+        newObj.apd = "1.4"
+        newObj.ci = "100"
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved summary route successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
     func save() {
         if service.container.viewContext.hasChanges {
             do {
@@ -768,6 +801,23 @@ class CoreDataModelState: ObservableObject {
                     data = item
                     existDataSummaryRoute = true
                 }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readPerfInfo() -> [PerfInfoList] {
+        var data: [PerfInfoList] = []
+        
+        let request: NSFetchRequest<PerfInfoList> = PerfInfoList.fetchRequest()
+        do {
+            let response: [PerfInfoList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+                existDataPerfInfo = true
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
