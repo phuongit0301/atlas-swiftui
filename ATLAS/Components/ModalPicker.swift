@@ -41,8 +41,13 @@ struct ModalPicker: View {
             VStack {
                 Picker(selection: $selection, label: Text("")) {
                     ForEach(items, id: \.self) {
-                        Text("\($0)")
-                            .tag("\($0)")
+                        if $0 <= 0 {
+                            Text("\($0) mins")
+                                .tag("\($0)")
+                        } else {
+                            Text("+\($0) mins")
+                                .tag("+\($0)")
+                        }
                     }
                 }.pickerStyle(.wheel)
                 .labelsHidden()
@@ -53,10 +58,10 @@ struct ModalPicker: View {
         }.background(Color.black.opacity(0.3))
             .onAppear {
                 switch self.target {
-                    case "IncludedTaxi":
+                    case "ArrDelays":
                         self.header = "Arrival Delays"
                         self.items = 0...120
-                    case "ArrDelays":
+                    case "IncludedTaxi":
                         self.header = "Additional Taxi"
                         self.items = 0...60
                     case "TrackShortening":

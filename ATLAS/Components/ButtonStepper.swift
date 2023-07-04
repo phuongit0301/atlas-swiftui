@@ -15,8 +15,13 @@ struct ButtonStepper: View {
     var body: some View {
         Button(action: { onToggle() }, label: {
             HStack {
-                Text("\(value)\(suffix ?? "")").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                    .padding(.trailing, 16)
+                if value <= 0 {
+                    Text("\(value)\(suffix ?? "")").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        .padding(.trailing, 16)
+                } else {
+                    Text("+\(value)\(suffix ?? "")").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        .padding(.trailing, 16)
+                }
                 
                 Spacer()
                 
