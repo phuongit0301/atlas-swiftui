@@ -60,6 +60,11 @@ class CoreDataModelState: ObservableObject {
     @Published var enrouteRefArray: [NoteList] = []
     @Published var arrivalRefArray: [NoteList] = []
     @Published var dataFlightPlan: FlightPlanList = FlightPlanList()
+    
+    // For summary info
+    @Published var dataSummaryInfo: SummaryInfoList = SummaryInfoList()
+    @Published var existDataSummaryInfo: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -89,60 +94,66 @@ class CoreDataModelState: ObservableObject {
         arrivalRefArray = read("arrivalref")
         scratchPadArray = readScratchPad()
         dataFlightPlan = readFlightPlan()
+        coreDataModel.readSummaryInfo()
     }
     
     func checkAndSyncData() async {
         let response = read()
         dataFPEnroute = readEnrouteList()
-
+        readSummaryInfo()
+        
         if response.count == 0 {
-//            initDataTag()
+            //            initDataTag()
             initData()
         }
         
         if dataFPEnroute.count == 0 {
             initDataEnroute()
         }
-//        do {
-//            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
-//            let result = try container.viewContext.fetch(request)
-//            if result.isEmpty {
-//                initData()
-//            }
-//        } catch {
-//            fatalError("Unable to fetch data: \(error.localizedDescription)")
-//        }
+        
+        if !existDataSummaryInfo {
+            initDataSummaryInfo()
+        }
+        //        do {
+        //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
+        //            let result = try container.viewContext.fetch(request)
+        //            if result.isEmpty {
+        //                initData()
+        //            }
+        //        } catch {
+        //            fatalError("Unable to fetch data: \(error.localizedDescription)")
+        //        }
     }
     
     func initDataTag() {
         let newTags1 = TagList(context: service.container.viewContext)
         newTags1.id = UUID()
         newTags1.name = "Dispatch"
-
+        
         let newTags2 = TagList(context: service.container.viewContext)
         newTags2.id = UUID()
         newTags2.name = "Terrain"
-
+        
         let newTags3 = TagList(context: service.container.viewContext)
         newTags3.id = UUID()
         newTags3.name = "Weather"
-
+        
         let newTags4 = TagList(context: service.container.viewContext)
         newTags4.id = UUID()
         newTags4.name = "Approach"
-
+        
         let newTags5 = TagList(context: service.container.viewContext)
         newTags5.id = UUID()
         newTags5.name = "Airport"
-
+        
         let newTags6 = TagList(context: service.container.viewContext)
         newTags6.id = UUID()
         newTags6.name = "ATC"
-
+        
         let newTags7 = TagList(context: service.container.viewContext)
         newTags7.id = UUID()
         newTags7.name = "Aircraft"
-
+        
         let newTags8 = TagList(context: service.container.viewContext)
         newTags8.id = UUID()
         newTags8.name = "Environment"
@@ -166,31 +177,31 @@ class CoreDataModelState: ObservableObject {
         let newTags1 = TagList(context: service.container.viewContext)
         newTags1.id = UUID()
         newTags1.name = "Dispatch"
-
+        
         let newTags2 = TagList(context: service.container.viewContext)
         newTags2.id = UUID()
         newTags2.name = "Terrain"
-
+        
         let newTags3 = TagList(context: service.container.viewContext)
         newTags3.id = UUID()
         newTags3.name = "Weather"
-
+        
         let newTags4 = TagList(context: service.container.viewContext)
         newTags4.id = UUID()
         newTags4.name = "Approach"
-
+        
         let newTags5 = TagList(context: service.container.viewContext)
         newTags5.id = UUID()
         newTags5.name = "Airport"
-
+        
         let newTags6 = TagList(context: service.container.viewContext)
         newTags6.id = UUID()
         newTags6.name = "ATC"
-
+        
         let newTags7 = TagList(context: service.container.viewContext)
         newTags7.id = UUID()
         newTags7.name = "Aircraft"
-
+        
         let newTags8 = TagList(context: service.container.viewContext)
         newTags8.id = UUID()
         newTags8.name = "Environment"
@@ -203,7 +214,7 @@ class CoreDataModelState: ObservableObject {
         newDep1.fromParent = false
         newDep1.target = "departure"
         newDep1.tags = NSSet(array: [newTags1])
-
+        
         let newDep2 = NoteList(context: service.container.viewContext)
         newDep2.id = UUID()
         newDep2.name = "Note digital clearance requirements 10mins before pushback"
@@ -212,7 +223,7 @@ class CoreDataModelState: ObservableObject {
         newDep2.fromParent = false
         newDep2.target = "departure"
         newDep2.tags = NSSet(array: [newTags5])
-
+        
         let newDep3 = NoteList(context: service.container.viewContext)
         newDep3.id = UUID()
         newDep3.name = "Reduce ZFW by 1 ton for preliminary fuel"
@@ -406,6 +417,37 @@ class CoreDataModelState: ObservableObject {
                 service.container.viewContext.rollback()
                 
             }
+        }
+    }
+    
+    func initDataSummaryInfo() {
+        let newObj = SummaryInfoList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.planNo = "20"
+        newObj.fltNo = "SQ123"
+        newObj.tailNo = "9VSHM"
+        newObj.dep = "SIN"
+        newObj.dest = "BER"
+        newObj.depICAO = "WSSS"
+        newObj.destICAO = "EDDB"
+        newObj.flightDate = "040723"
+        newObj.stdUTC = "04 08:00"
+        newObj.staUTC = "04 17:00"
+        newObj.stdLocal = "04 10:00"
+        newObj.staLocal = "04 21:00"
+        newObj.blkTime = "09:00"
+        newObj.fltTime = "08:45"
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
     
@@ -662,6 +704,21 @@ class CoreDataModelState: ObservableObject {
             print("Could not fetch scratch pad from Core Data.")
         }
         return data
+    }
+    
+    func readSummaryInfo() {
+        let request: NSFetchRequest<SummaryInfoList> = SummaryInfoList.fetchRequest()
+        do {
+            let response: [SummaryInfoList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    dataSummaryInfo = item
+                    existDataSummaryInfo = true
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
     }
     
     func calculatedZFWFuel(_ perfData: PerfData) -> Double {

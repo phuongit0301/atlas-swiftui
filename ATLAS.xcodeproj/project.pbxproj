@@ -100,6 +100,8 @@
 		3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CF72A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift */; };
 		3EB99D002A53900F0091BC08 /* EnrouteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CFE2A53900F0091BC08 /* EnrouteList+CoreDataClass.swift */; };
 		3EB99D012A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CFF2A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift */; };
+		3EB99D042A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */; };
+		3EB99D052A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -259,6 +261,8 @@
 		3EB99CF72A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DepartureATCList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99CFE2A53900F0091BC08 /* EnrouteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnrouteList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB99CFF2A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnrouteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryInfoList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryInfoList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -587,6 +591,8 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */,
+				3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */,
 				3EB99CFE2A53900F0091BC08 /* EnrouteList+CoreDataClass.swift */,
 				3EB99CFF2A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift */,
 				3EB99CF22A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift */,
@@ -958,6 +964,7 @@
 				3EFA5F772A4AC456001ED6CF /* ScratchPadList+CoreDataProperties.swift in Sources */,
 				3EFA5F672A497815001ED6CF /* NoteList+CoreDataClass.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
+				3EB99D052A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift in Sources */,
 				3EFA5F682A497815001ED6CF /* NoteList+CoreDataProperties.swift in Sources */,
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
@@ -1005,6 +1012,7 @@
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
+				3EB99D042A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,

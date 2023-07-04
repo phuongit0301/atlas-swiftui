@@ -161,8 +161,8 @@ struct FlightPlanSummaryView: View {
         
         // set up flight info table data
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        @State var infoTable =
-            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
+//        @State var infoTable =
+//            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
         
         // set up route data
         let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
@@ -260,9 +260,7 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-//        var calculatedZFWFuel: Int {
-//            return (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
-//        }
+
         var includedZFWFuel: [String: Any] {
             let fuelBurn = (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
             if (includedZFWchange && fuelBurn > 0) {
@@ -286,36 +284,6 @@ struct FlightPlanSummaryView: View {
             }
         }
 
-//        var includedExtraFuelAmt: String {
-//            let delayFuel: Int = includedDelayFuel["fuel"] as! Int
-//            let taxiFuel: Int = includedTaxiFuel["fuel"] as! Int
-//            let flightLevelFuel: Int = includedFlightLevelFuel["fuel"] as! Int
-//            let zfwFuel: Int = includedZFWFuel["fuel"] as! Int
-//            let enrWxFuel: Int = includedEnrWxFuel["fuel"] as! Int
-//            let reciprocalRwyFuel: Int = includedReciprocalRwyFuel["fuel"] as! Int
-//            let trackShorteningFuel: Int = includedTrackShorteningFuel
-//            let othersFuel: Int = includedOthersFuel["fuel"] as! Int
-//            let result = delayFuel + taxiFuel + flightLevelFuel + zfwFuel + enrWxFuel + reciprocalRwyFuel + trackShorteningFuel + othersFuel
-//            return formatFuelNumber(result)
-//        }
-//        var includedExtraFuelTime: String {
-//            let delayTime: Int = includedDelayFuel["time"] as! Int
-//            let enrWxTime: Int = includedEnrWxFuel["time"] as! Int
-//            let reciprocalRwyTime: Int = includedReciprocalRwyFuel["time"] as! Int
-//            let result = delayTime + enrWxTime + reciprocalRwyTime
-//            return formatTime(result)
-//        }
-//        var includedExtraFuelRemarks: String {
-//            let delayRemarks: String = includedDelayFuel["remarks"] as! String
-//            let taxiRemarks: String = includedTaxiFuel["remarks"] as! String
-//            let flightLevelRemarks: String = includedFlightLevelFuel["remarks"] as! String
-//            let zfwRemarks: String = includedZFWFuel["remarks"] as! String
-//            let enrWxRemarks: String = includedEnrWxFuel["remarks"] as! String
-//            let reciprocalRwyRemarks: String = includedReciprocalRwyFuel["remarks"] as! String
-//            let othersRemarks: String = includedOthersFuel["remarks"] as! String
-//            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
-//        }
-
         // set up altn table data
         let altnData: [AltnData] = flightPlanData["altnData"] as! [AltnData]
         @State var altnTable: [altn] = altnData.map { item in
@@ -333,7 +301,6 @@ struct FlightPlanSummaryView: View {
         }
 
         // set up ATC flight plan data
-//        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
         GeometryReader { proxy in
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
@@ -357,7 +324,7 @@ struct FlightPlanSummaryView: View {
                 }.padding(.bottom, 10)
                     .padding(.horizontal, 30)
                 
-                Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+                Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
                     .font(.system(size: 15, weight: .semibold))
                     .padding(.leading, 30)
                     .padding(.bottom, 10)
@@ -400,14 +367,14 @@ struct FlightPlanSummaryView: View {
                                 }
                                 HStack {
                                     Group {
-                                        Text("\(infoTable.flightNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.aircraft)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.depDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.date)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.stdUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.staUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.blkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.fltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStdUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStaUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                     }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         // entry here
@@ -462,14 +429,14 @@ struct FlightPlanSummaryView: View {
                                 }
                                 HStack {
                                     Group {
-                                        Text("\(infoTable.flightNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.aircraft)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.depDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.date)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.stdLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.staLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.blkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(infoTable.fltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStdLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStaLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                         // entry here
                                         TextField(
                                             "POB",
