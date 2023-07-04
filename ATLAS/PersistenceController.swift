@@ -73,6 +73,8 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPerfInfo: [PerfInfoList] = []
     @Published var existDataPerfInfo: Bool = false
     
+    @Published var perfChangesTable: [perfChanges] = []
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -107,7 +109,7 @@ class CoreDataModelState: ObservableObject {
         dataPerfInfo = readPerfInfo()
     }
     
-    func checkAndSyncData() async {
+    func checkAndSyncData() {
         let response = read()
         dataFPEnroute = readEnrouteList()
         readSummaryInfo()
@@ -502,6 +504,8 @@ class CoreDataModelState: ObservableObject {
         newObj.crzComp = "M42"
         newObj.apd = "1.4"
         newObj.ci = "100"
+        newObj.zfwChange = "557"
+        newObj.lvlChange = "500"
         
         do {
             // Persist the data in this managed object context to the underlying store
@@ -818,6 +822,11 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 data = response
                 existDataPerfInfo = true
+                
+                // Init data performance change table
+                if let item = response.first {
+                    perfChangesTable = [perfChanges(zfwChange: "M1000KG BURN LESS \(item.unwrappedZfwChange)KG", lvlChange: "P2000FT BURN LESS \(item.unwrappedLvlChange)KG")]
+                }
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")

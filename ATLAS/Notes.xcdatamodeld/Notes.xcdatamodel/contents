@@ -87,6 +87,8 @@
         <attribute name="fltRules" optional="YES" attributeType="String"/>
         <attribute name="gndMiles" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lvlChange" optional="YES" attributeType="String"/>
+        <attribute name="zfwChange" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>

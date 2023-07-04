@@ -23,6 +23,8 @@ extension PerfInfoList {
     @NSManaged public var crzComp: String?
     @NSManaged public var apd: String?
     @NSManaged public var ci: String?
+    @NSManaged public var zfwChange: String?
+    @NSManaged public var lvlChange: String?
     
     public var unwrappedFltRules: String {
         fltRules ?? ""
@@ -46,6 +48,14 @@ extension PerfInfoList {
     
     public var unwrappedCi: String {
         ci ?? ""
+    }
+    
+    public var unwrappedZfwChange: String {
+        zfwChange ?? ""
+    }
+    
+    public var unwrappedLvlChange: String {
+        lvlChange ?? ""
     }
 }
 

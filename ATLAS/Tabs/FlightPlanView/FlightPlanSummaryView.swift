@@ -176,12 +176,7 @@ struct FlightPlanSummaryView: View {
         
         // MARK: set up perf tables data
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
-//        @State var perfInfoTable = [
-//            perfInfo(fltRules: perfData.fltRules, gndMiles: perfData.gndMiles, airMiles: perfData.airMiles, crzComp: perfData.crzComp, apd: perfData.apd, ci: perfData.ci)
-//        ]
-        @State var perfChangesTable = [
-            perfChanges(zfwChange: "M1000KG BURN LESS \(perfData.zfwChange)KG", lvlChange: "P2000FT BURN LESS \(perfData.lvlChange)KG")
-        ]
+        
         @State var perfWeightsTable = [
             perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "perActualZFW", max: perfData.maxZFW, limitation: perfData.limZFW),
             perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "perActualTOW", max: perfData.maxTOW, limitation: perfData.limTOW),
@@ -657,7 +652,7 @@ struct FlightPlanSummaryView: View {
                         .frame(minHeight: 65)
                         .scrollDisabled(true)
                         // table body - changes
-                        Table(perfChangesTable) {
+                        Table(coreDataModel.perfChangesTable) {
                             TableColumn("ZFW Change", value: \.zfwChange)
                             TableColumn("FL Change", value: \.lvlChange)
                         }
