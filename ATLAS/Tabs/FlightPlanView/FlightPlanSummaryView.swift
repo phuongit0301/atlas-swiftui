@@ -177,11 +177,11 @@ struct FlightPlanSummaryView: View {
         // MARK: set up perf tables data
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
         
-        @State var perfWeightsTable = [
-            perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "perActualZFW", max: perfData.maxZFW, limitation: perfData.limZFW),
-            perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "perActualTOW", max: perfData.maxTOW, limitation: perfData.limTOW),
-            perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "perActualLDW", max: perfData.maxLDW, limitation: perfData.limLDW),
-        ]
+//        @State var perfWeightsTable = [
+//            perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "perActualZFW", max: perfData.maxZFW, limitation: perfData.limZFW),
+//            perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "perActualTOW", max: perfData.maxTOW, limitation: perfData.limTOW),
+//            perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "perActualLDW", max: perfData.maxLDW, limitation: perfData.limLDW),
+//        ]
         
         // MARK: set up fuel info table data
         let fuelData: FuelData = flightPlanData["fuelData"] as! FuelData
@@ -659,20 +659,26 @@ struct FlightPlanSummaryView: View {
                         .frame(minHeight: 65)
                         .scrollDisabled(true)
                         // table body - weights
-                        Table(perfWeightsTable) {
-                            TableColumn("Weight", value: \.weight)
-                            TableColumn("Plan", value: \.plan)
+                        Table(coreDataModel.dataPerfWeight) {
+                            TableColumn("Weight", value: \.unwrappedWeight)
+                            TableColumn("Plan", value: \.unwrappedPlan)
                             TableColumn("Actual") {
-                                if $0.actual == "perActualZFW" {
-                                    FieldString(name: $0.actual).id("perActualZFW").keyboardType(.numberPad)
-                                } else if $0.actual == "perActualTOW" {
-                                    FieldString(name: $0.actual).id("perActualTOW").keyboardType(.numberPad)
-                                } else {
-                                    FieldString(name: $0.actual).id("perActualLDW").keyboardType(.numberPad)
-                                }
+                                CustomField(item: $0)
+//                                TextField("Enter remarks (optional)", text: $itemWeight.unwrappedActual)
+//                                    .onSubmit {
+//                                      print("$item====\($0)")
+//                                    }
+                                
+//                                if $0.actual == "perActualZFW" {
+//                                    FieldString(name: $0.actual).id("perActualZFW").keyboardType(.numberPad)
+//                                } else if $0.actual == "perActualTOW" {
+//                                    FieldString(name: $0.actual).id("perActualTOW").keyboardType(.numberPad)
+//                                } else {
+//                                    FieldString(name: $0.actual).id("perActualLDW").keyboardType(.numberPad)
+//                                }
                             }
-                            TableColumn("Max", value: \.max)
-                            TableColumn("Limitation", value: \.limitation)
+                            TableColumn("Max", value: \.unwrappedMax)
+                            TableColumn("Limitation", value: \.unwrappedLimitation)
                         }
                         .frame(minHeight: 185)
                         .scrollDisabled(true)

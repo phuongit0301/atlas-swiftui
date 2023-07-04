@@ -90,6 +90,14 @@
         <attribute name="lvlChange" optional="YES" attributeType="String"/>
         <attribute name="zfwChange" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="PerfWeight" representedClassName="PerfWeightList" syncable="YES">
+        <attribute name="actual" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limitation" optional="YES" attributeType="String"/>
+        <attribute name="max" optional="YES" attributeType="String"/>
+        <attribute name="plan" optional="YES" attributeType="String"/>
+        <attribute name="weight" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

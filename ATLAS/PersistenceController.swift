@@ -75,6 +75,10 @@ class CoreDataModelState: ObservableObject {
     
     @Published var perfChangesTable: [perfChanges] = []
     
+    // For Perf Weight
+    @Published var dataPerfWeight: [PerfWeightList] = []
+    @Published var existDataPerfWeight: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -107,6 +111,7 @@ class CoreDataModelState: ObservableObject {
         dataSummaryInfo = readSummaryInfo()
         dataSummaryRoute = readSummaryRoute()
         dataPerfInfo = readPerfInfo()
+        dataPerfWeight = readPerfWeight()
     }
     
     func checkAndSyncData() {
@@ -115,6 +120,7 @@ class CoreDataModelState: ObservableObject {
         readSummaryInfo()
         readSummaryRoute()
         readPerfInfo()
+        readPerfWeight()
         
         if response.count == 0 {
             //            initDataTag()
@@ -135,6 +141,10 @@ class CoreDataModelState: ObservableObject {
         
         if !existDataPerfInfo {
             initDataPerfInfo()
+        }
+        
+        if !existDataPerfWeight {
+            initDataPerfWeight()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -510,7 +520,45 @@ class CoreDataModelState: ObservableObject {
         do {
             // Persist the data in this managed object context to the underlying store
             try service.container.viewContext.save()
-            print("saved summary route successfully")
+            print("saved perf info successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataPerfWeight() {
+        let newObj1 = PerfWeightList(context: service.container.viewContext)
+        newObj1.id = UUID()
+        newObj1.weight = "ZFW"
+        newObj1.plan = "143416"
+        newObj1.actual = ""
+        newObj1.max = "161025"
+        newObj1.limitation = "Structural"
+        
+        let newObj2 = PerfWeightList(context: service.container.viewContext)
+        newObj2.id = UUID()
+        newObj2.weight = "TOW"
+        newObj2.plan = "227883"
+        newObj2.actual = ""
+        newObj2.max = "227930"
+        newObj2.limitation = "Perf - Obstacle"
+        
+        let newObj3 = PerfWeightList(context: service.container.viewContext)
+        newObj3.id = UUID()
+        newObj3.weight = "LDW"
+        newObj3.plan = "151726"
+        newObj3.actual = ""
+        newObj3.max = "172365"
+        newObj3.limitation = "Structural"
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved perf weight successfully")
         } catch {
             // Something went wrong 😭
             print("Failed to save: \(error)")
@@ -827,6 +875,23 @@ class CoreDataModelState: ObservableObject {
                 if let item = response.first {
                     perfChangesTable = [perfChanges(zfwChange: "M1000KG BURN LESS \(item.unwrappedZfwChange)KG", lvlChange: "P2000FT BURN LESS \(item.unwrappedLvlChange)KG")]
                 }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readPerfWeight() -> [PerfWeightList] {
+        var data: [PerfWeightList] = []
+        
+        let request: NSFetchRequest<PerfWeightList> = PerfWeightList.fetchRequest()
+        do {
+            let response: [PerfWeightList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+                existDataPerfWeight = true
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")

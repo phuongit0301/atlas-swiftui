@@ -1447,8 +1447,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1140"
-            endingLineNumber = "1140"
+            startingLineNumber = "1146"
+            endingLineNumber = "1146"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1463,8 +1463,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1122"
-            endingLineNumber = "1122"
+            startingLineNumber = "1128"
+            endingLineNumber = "1128"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1479,8 +1479,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1131"
-            endingLineNumber = "1131"
+            startingLineNumber = "1137"
+            endingLineNumber = "1137"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1495,8 +1495,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1042"
-            endingLineNumber = "1042"
+            startingLineNumber = "1048"
+            endingLineNumber = "1048"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1511,8 +1511,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1191"
-            endingLineNumber = "1191"
+            startingLineNumber = "1197"
+            endingLineNumber = "1197"
             landmarkName = "formatFuelNumber(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1527,8 +1527,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1205"
-            endingLineNumber = "1205"
+            startingLineNumber = "1211"
+            endingLineNumber = "1211"
             landmarkName = "formatTime(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1925,8 +1925,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "822"
+            endingLineNumber = "822"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -2226,13 +2226,13 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "736"
-            endingLineNumber = "736"
+            startingLineNumber = "784"
+            endingLineNumber = "784"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - 63edaf7390f4a06f"
+                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - 63edaf7390eb5e3f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2242,12 +2242,12 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "736"
-                  endingLineNumber = "736"
-                  offsetFromSymbolStart = "132">
+                  startingLineNumber = "784"
+                  endingLineNumber = "784"
+                  offsetFromSymbolStart = "432">
                </Location>
                <Location
-                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - 63edaf7390f4a06f"
+                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - 63edaf7390eb5e3f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2257,8 +2257,8 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "736"
-                  endingLineNumber = "736"
+                  startingLineNumber = "784"
+                  endingLineNumber = "784"
                   offsetFromSymbolStart = "304">
                </Location>
             </Locations>
@@ -2274,8 +2274,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "735"
-            endingLineNumber = "735"
+            startingLineNumber = "783"
+            endingLineNumber = "783"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
          </BreakpointContent>

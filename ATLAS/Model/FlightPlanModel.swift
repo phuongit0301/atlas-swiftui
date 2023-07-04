@@ -233,3 +233,29 @@ struct FieldString: View {
             }
     }
 }
+
+struct CustomField: View {
+    // Read the view model, to store the value of the text field
+    @EnvironmentObject var viewModel: ViewModelSummary
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
+    // Index: where in the dictionary the value will be stored
+//    let name: String
+    
+    // Dedicated state var for each field
+    @State var item: PerfWeightList = PerfWeightList()
+    @State var field = ""
+    
+    var body: some View {
+        TextField("Enter remarks (optional)", text: $field)
+            .onSubmit {
+                item.actual = field
+                coreDataModel.save()
+            }
+            .onAppear {
+                field = item.unwrappedActual
+            }
+    }
+}
+                
