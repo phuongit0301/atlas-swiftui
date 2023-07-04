@@ -69,6 +69,24 @@
         <attribute name="perActualTOW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="perActualZFW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="FuelData" representedClassName="FuelDataList" syncable="YES">
+        <attribute name="altn" optional="YES" attributeType="Binary"/>
+        <attribute name="burnoff" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="cont" optional="YES" attributeType="Binary"/>
+        <attribute name="dispAdd" optional="YES" attributeType="Binary"/>
+        <attribute name="hold" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="planReq" optional="YES" attributeType="Binary"/>
+        <attribute name="taxi" optional="YES" attributeType="Binary"/>
+        <attribute name="topup60" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="FuelTable" representedClassName="FuelTableList" syncable="YES">
+        <attribute name="firstColumn" optional="YES" attributeType="String"/>
+        <attribute name="fuel" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="policyReason" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
         <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

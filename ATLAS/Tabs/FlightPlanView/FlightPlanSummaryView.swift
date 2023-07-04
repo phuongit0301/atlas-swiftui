@@ -664,18 +664,6 @@ struct FlightPlanSummaryView: View {
                             TableColumn("Plan", value: \.unwrappedPlan)
                             TableColumn("Actual") {
                                 CustomField(item: $0)
-//                                TextField("Enter remarks (optional)", text: $itemWeight.unwrappedActual)
-//                                    .onSubmit {
-//                                      print("$item====\($0)")
-//                                    }
-                                
-//                                if $0.actual == "perActualZFW" {
-//                                    FieldString(name: $0.actual).id("perActualZFW").keyboardType(.numberPad)
-//                                } else if $0.actual == "perActualTOW" {
-//                                    FieldString(name: $0.actual).id("perActualTOW").keyboardType(.numberPad)
-//                                } else {
-//                                    FieldString(name: $0.actual).id("perActualLDW").keyboardType(.numberPad)
-//                                }
                             }
                             TableColumn("Max", value: \.unwrappedMax)
                             TableColumn("Limitation", value: \.unwrappedLimitation)
@@ -689,11 +677,11 @@ struct FlightPlanSummaryView: View {
                         // grouped row using hstack
                         VStack(alignment: .leading, spacing: 0) {
                              //fuel info table body
-                            Table(fuelTable) {
-                                TableColumn("", value: \.firstColumn)
-                                TableColumn("Time", value: \.time)
-                                TableColumn("Fuel", value: \.fuel)
-                                TableColumn("Policy / Reason", value: \.policy_reason)
+                            Table(coreDataModel.dataFuelList) {
+                                TableColumn("", value: \.unwrappedFirstColumn)
+                                TableColumn("Time", value: \.unwrappedTime).width(150)
+                                TableColumn("Fuel", value: \.unwrappedFuel)
+                                TableColumn("Policy / Reason", value: \.unwrappedPolicyReason)
                             }
                             .frame(minHeight: 380)
                             .scrollDisabled(true)
@@ -707,11 +695,14 @@ struct FlightPlanSummaryView: View {
                                     HStack(alignment: .center) {
                                         Text("(I) Pilot Extra Fuel")
                                             .frame(maxWidth: 310, alignment: .leading)
-                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
+//                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
+                                        Text("Confirm requirements")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+//                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+                                        Text("Confirm requirements")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+//                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+                                        Text("Confirm requirements")
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
                                         .padding(.horizontal, 45)

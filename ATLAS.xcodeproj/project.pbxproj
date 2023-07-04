@@ -108,6 +108,10 @@
 		3EB99D0D2A541B390091BC08 /* PerfInfoList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D0B2A541B390091BC08 /* PerfInfoList+CoreDataProperties.swift */; };
 		3EB99D102A5432810091BC08 /* PerfWeightList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D0E2A5432810091BC08 /* PerfWeightList+CoreDataClass.swift */; };
 		3EB99D112A5432810091BC08 /* PerfWeightList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D0F2A5432810091BC08 /* PerfWeightList+CoreDataProperties.swift */; };
+		3EB99D1C2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D1A2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift */; };
+		3EB99D1D2A5451F90091BC08 /* FuelDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D1B2A5451F90091BC08 /* FuelDataList+CoreDataProperties.swift */; };
+		3EB99D202A5453880091BC08 /* FuelTableList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D1E2A5453880091BC08 /* FuelTableList+CoreDataClass.swift */; };
+		3EB99D212A5453880091BC08 /* FuelTableList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D1F2A5453880091BC08 /* FuelTableList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -275,6 +279,10 @@
 		3EB99D0B2A541B390091BC08 /* PerfInfoList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PerfInfoList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99D0E2A5432810091BC08 /* PerfWeightList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PerfWeightList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB99D0F2A5432810091BC08 /* PerfWeightList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PerfWeightList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99D1A2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99D1B2A5451F90091BC08 /* FuelDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99D1E2A5453880091BC08 /* FuelTableList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTableList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99D1F2A5453880091BC08 /* FuelTableList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTableList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -603,6 +611,10 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EB99D1E2A5453880091BC08 /* FuelTableList+CoreDataClass.swift */,
+				3EB99D1F2A5453880091BC08 /* FuelTableList+CoreDataProperties.swift */,
+				3EB99D1A2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift */,
+				3EB99D1B2A5451F90091BC08 /* FuelDataList+CoreDataProperties.swift */,
 				3EB99D0E2A5432810091BC08 /* PerfWeightList+CoreDataClass.swift */,
 				3EB99D0F2A5432810091BC08 /* PerfWeightList+CoreDataProperties.swift */,
 				3EB99D0A2A541B390091BC08 /* PerfInfoList+CoreDataClass.swift */,
@@ -958,9 +970,11 @@
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
+				3EB99D202A5453880091BC08 /* FuelTableList+CoreDataClass.swift in Sources */,
 				3EB99CFA2A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
+				3EB99D1C2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
@@ -998,6 +1012,7 @@
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
 				3EB99D012A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift in Sources */,
+				3EB99D1D2A5451F90091BC08 /* FuelDataList+CoreDataProperties.swift in Sources */,
 				3EB99CDC2A4DBA9B0091BC08 /* FlightPlanList+CoreDataClass.swift in Sources */,
 				3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */,
 				3EB99D0D2A541B390091BC08 /* PerfInfoList+CoreDataProperties.swift in Sources */,
@@ -1037,6 +1052,7 @@
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
 				3EB99D042A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift in Sources */,
+				3EB99D212A5453880091BC08 /* FuelTableList+CoreDataProperties.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,

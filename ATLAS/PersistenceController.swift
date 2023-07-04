@@ -79,6 +79,10 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPerfWeight: [PerfWeightList] = []
     @Published var existDataPerfWeight: Bool = false
     
+    // For Perf Weight
+    @Published var dataFuelList: [FuelTableList] = []
+    @Published var existDataFuelList: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -114,13 +118,14 @@ class CoreDataModelState: ObservableObject {
         dataPerfWeight = readPerfWeight()
     }
     
-    func checkAndSyncData() {
+    func checkAndSyncData() async {
         let response = read()
         dataFPEnroute = readEnrouteList()
         readSummaryInfo()
         readSummaryRoute()
         readPerfInfo()
         readPerfWeight()
+        dataFuelList = readFuelList()
         
         if response.count == 0 {
             //            initDataTag()
@@ -145,6 +150,11 @@ class CoreDataModelState: ObservableObject {
         
         if !existDataPerfWeight {
             initDataPerfWeight()
+        }
+        
+        if dataFuelList.count == 0 {
+            initDataFuelList()
+            initDataFuelList()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -568,6 +578,102 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataFuelList() {
+        let fuelData = FuelData(burnoff: ["time": "14:21", "fuel": "076157", "unit": "100"], cont: ["time": "00:34", "fuel": "003000", "policy": "5%"], altn: ["time": "00:42", "fuel": "003279", "unit": "100"], hold: ["time": "00:30", "fuel": "002031", "unit": "100"], topup60: ["time": "00:00", "fuel": "000000"], taxi: ["time": "N.A", "fuel": "000500", "policy": "7mins std taxi time", "unit": "100"], planReq: ["time": "16:07", "fuel": "084967"], dispAdd: ["time": "00:10", "fuel": "000600", "policy": "PER COMPANY POLICY FOR SINBER FLIGHTS"])
+        
+        do {
+            let newFuelData = FuelDataList(context: service.container.viewContext)
+            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
+            
+            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
+            
+            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
+            
+            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
+            
+            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
+            
+            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
+            
+            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
+            
+            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
+        } catch {
+          print("failed to archive array with error: \(error)")
+        }
+       
+        
+        let newObj1 = FuelTableList(context: service.container.viewContext)
+        newObj1.id = UUID()
+        newObj1.firstColumn = "(A) Burnoff"
+        newObj1.time = fuelData.burnoff["time"]!
+        newObj1.fuel = fuelData.burnoff["fuel"]!
+        newObj1.policyReason = ""
+        
+        let newObj2 = FuelTableList(context: service.container.viewContext)
+        newObj2.id = UUID()
+        newObj2.firstColumn = "(B) Contingency Fuel"
+        newObj2.time = fuelData.cont["time"]!
+        newObj2.fuel = fuelData.cont["fuel"]!
+        newObj2.policyReason = fuelData.cont["policy"]!
+        
+        let newObj3 = FuelTableList(context: service.container.viewContext)
+        newObj3.id = UUID()
+        newObj3.firstColumn = "(C) Altn Fuel"
+        newObj3.time = fuelData.altn["time"]!
+        newObj3.fuel = fuelData.altn["fuel"]!
+        newObj3.policyReason = ""
+        
+        let newObj4 = FuelTableList(context: service.container.viewContext)
+        newObj4.id = UUID()
+        newObj4.firstColumn = "(D) Altn Hold"
+        newObj4.time = fuelData.hold["time"]!
+        newObj4.fuel = fuelData.hold["fuel"]!
+        newObj4.policyReason = ""
+        
+        let newObj5 = FuelTableList(context: service.container.viewContext)
+        newObj5.id = UUID()
+        newObj5.firstColumn = "(E) 60min Topup Fuel"
+        newObj5.time = fuelData.topup60["time"]!
+        newObj5.fuel = fuelData.topup60["fuel"]!
+        newObj5.policyReason = ""
+        
+        let newObj6 = FuelTableList(context: service.container.viewContext)
+        newObj6.id = UUID()
+        newObj6.firstColumn = "(F) Taxi Fuel"
+        newObj6.time = fuelData.taxi["time"]!
+        newObj6.fuel = fuelData.taxi["fuel"]!
+        newObj6.policyReason = fuelData.taxi["policy"]!
+        
+        let newObj7 = FuelTableList(context: service.container.viewContext)
+        newObj7.id = UUID()
+        newObj7.firstColumn = "(G) Flight Plan Requirement (A + B + C + D + E + F)"
+        newObj7.time = fuelData.planReq["time"]!
+        newObj7.fuel = fuelData.planReq["fuel"]!
+        newObj7.policyReason = ""
+        
+        let newObj8 = FuelTableList(context: service.container.viewContext)
+        newObj8.id = UUID()
+        newObj8.firstColumn = "(H) Dispatch Additional Fuel"
+        newObj8.time = fuelData.dispAdd["time"]!
+        newObj8.fuel = fuelData.dispAdd["fuel"]!
+        newObj8.policyReason = fuelData.dispAdd["policy"]!
+
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved perf weight successfully")
+            
+            dataFuelList = readFuelList()
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
+    }
+    
     func save() {
         if service.container.viewContext.hasChanges {
             do {
@@ -892,6 +998,23 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 data = response
                 existDataPerfWeight = true
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readFuelList() -> [FuelTableList] {
+        var data: [FuelTableList] = []
+        
+        let request: NSFetchRequest<FuelTableList> = FuelTableList.fetchRequest()
+        do {
+            let response: [FuelTableList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+                existDataFuelList = true
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
