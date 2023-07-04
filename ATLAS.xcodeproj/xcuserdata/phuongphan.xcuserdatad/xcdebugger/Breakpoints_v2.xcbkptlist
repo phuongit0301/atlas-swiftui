@@ -1449,8 +1449,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1145"
             endingLineNumber = "1145"
-            landmarkName = "onToggleTrackShortening()"
-            landmarkType = "7">
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1465,8 +1465,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1127"
             endingLineNumber = "1127"
-            landmarkName = "onToggleArrDelays()"
-            landmarkType = "7">
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1481,8 +1481,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1136"
             endingLineNumber = "1136"
-            landmarkName = "onToggleIncludedTaxi()"
-            landmarkType = "7">
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1513,7 +1513,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1196"
             endingLineNumber = "1196"
-            landmarkName = "onToggleFlightLevel()"
+            landmarkName = "formatFuelNumber(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1529,8 +1529,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1210"
             endingLineNumber = "1210"
-            landmarkName = "FlightPlanSummaryView"
-            landmarkType = "14">
+            landmarkName = "formatTime(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
