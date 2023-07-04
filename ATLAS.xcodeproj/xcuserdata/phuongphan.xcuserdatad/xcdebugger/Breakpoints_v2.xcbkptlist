@@ -1447,8 +1447,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1147"
-            endingLineNumber = "1147"
+            startingLineNumber = "1145"
+            endingLineNumber = "1145"
             landmarkName = "onToggleTrackShortening()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1463,8 +1463,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1129"
-            endingLineNumber = "1129"
+            startingLineNumber = "1127"
+            endingLineNumber = "1127"
             landmarkName = "onToggleArrDelays()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1479,8 +1479,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1138"
-            endingLineNumber = "1138"
+            startingLineNumber = "1136"
+            endingLineNumber = "1136"
             landmarkName = "onToggleIncludedTaxi()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1495,8 +1495,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1049"
-            endingLineNumber = "1049"
+            startingLineNumber = "1047"
+            endingLineNumber = "1047"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1511,8 +1511,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1198"
-            endingLineNumber = "1198"
+            startingLineNumber = "1196"
+            endingLineNumber = "1196"
             landmarkName = "onToggleFlightLevel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1527,8 +1527,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1212"
-            endingLineNumber = "1212"
+            startingLineNumber = "1210"
+            endingLineNumber = "1210"
             landmarkName = "FlightPlanSummaryView"
             landmarkType = "14">
          </BreakpointContent>
@@ -1925,8 +1925,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "823"
-            endingLineNumber = "823"
+            startingLineNumber = "821"
+            endingLineNumber = "821"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -2226,10 +2226,42 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
+            startingLineNumber = "699"
+            endingLineNumber = "699"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - bc9c3272e096aa7b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.CoreDataModelState.readEnrouteList() -&gt; Swift.Array&lt;ATLAS.EnrouteList&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "701"
+                  endingLineNumber = "701"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  uuid = "FA37398D-FFAF-4FEF-8E12-51E24F26E128 - 63edaf7390f4a52a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.CoreDataModelState.readDepartureEntries() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "699"
+                  endingLineNumber = "699"
+                  offsetFromSymbolStart = "304">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2242,8 +2274,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "666"
-            endingLineNumber = "666"
+            startingLineNumber = "698"
+            endingLineNumber = "698"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
          </BreakpointContent>

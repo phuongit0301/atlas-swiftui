@@ -160,12 +160,12 @@ struct FlightPlanSummaryView: View {
         let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
         
         // set up flight info table data
-        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
+//        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
 //        @State var infoTable =
 //            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
         
         // set up route data
-        let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
+//        let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
         
         // set up perf tables data
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
@@ -383,11 +383,11 @@ struct FlightPlanSummaryView: View {
                                             text: $pob
                                         )
                                         .onSubmit {
-                                            if coreDataModel.existDataFlightPlan {
-                                                coreDataModel.dataFlightPlan.flightInfoPob = pob
+                                            if coreDataModel.existDataSummaryInfo {
+                                                coreDataModel.dataSummaryInfo.pob = pob
                                             } else {
-                                                let item = FlightPlanList(context: persistenceController.container.viewContext)
-                                                item.flightInfoPob = pob
+                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                item.pob = pob
                                             }
 
                                             coreDataModel.save()
@@ -443,17 +443,15 @@ struct FlightPlanSummaryView: View {
                                             text: $pob
                                         )
                                         .onSubmit {
-                                            if coreDataModel.existDataFlightPlan {
-                                                coreDataModel.dataFlightPlan.flightInfoPob = pob
+                                            if coreDataModel.existDataSummaryInfo {
+                                                coreDataModel.dataSummaryInfo.pob = pob
                                             } else {
-                                                let item = FlightPlanList(context: persistenceController.container.viewContext)
-                                                item.flightInfoPob = pob
+                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                item.pob = pob
                                             }
 
                                             coreDataModel.save()
                                         }
-//                                        .textInputAutocapitalization(.never)
-//                                        .disableAutocorrection(true)
                                         .border(.secondary)
                                         
                                     }.font(.system(size: 17, weight: .regular))
@@ -482,7 +480,7 @@ struct FlightPlanSummaryView: View {
                                     .foregroundStyle(Color.blue)
                                     .frame(maxWidth: 144, alignment: .leading)
                                     .font(.system(size: 15, weight: .medium))
-                                Text(flightRouteData.routeNo)
+                                Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
                                     .frame(maxWidth: 860, alignment: .leading)
                                     .font(.system(size: 17, weight: .regular))
                             }
@@ -497,7 +495,7 @@ struct FlightPlanSummaryView: View {
                                     .foregroundStyle(Color.blue)
                                     .frame(maxWidth: 144, alignment: .leading)
                                     .font(.system(size: 15, weight: .medium))
-                                Text(flightRouteData.route)
+                                Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
                                     .frame(maxWidth: 860, alignment: .leading)
                                     .font(.system(size: 17, weight: .regular))
                             }
@@ -512,7 +510,7 @@ struct FlightPlanSummaryView: View {
                                     .foregroundStyle(Color.blue)
                                     .frame(maxWidth: 144, alignment: .leading)
                                     .font(.system(size: 15, weight: .medium))
-                                Text(flightRouteData.depRwy)
+                                Text(coreDataModel.dataSummaryRoute.unwrappedDepRwy)
                                     .frame(maxWidth: 860, alignment: .leading)
                                     .font(.system(size: 17, weight: .regular))
                             }
@@ -527,7 +525,7 @@ struct FlightPlanSummaryView: View {
                                     .foregroundStyle(Color.blue)
                                     .frame(maxWidth: 144, alignment: .leading)
                                     .font(.system(size: 15, weight: .medium))
-                                Text(flightRouteData.arrRwy)
+                                Text(coreDataModel.dataSummaryRoute.unwrappedArrRwy)
                                     .frame(maxWidth: 860, alignment: .leading)
                                     .font(.system(size: 17, weight: .regular))
                             }
@@ -542,7 +540,7 @@ struct FlightPlanSummaryView: View {
                                     .foregroundStyle(Color.blue)
                                     .frame(maxWidth: 144, alignment: .leading)
                                     .font(.system(size: 15, weight: .medium))
-                                Text(flightRouteData.levels)
+                                Text(coreDataModel.dataSummaryRoute.unwrappedLevels)
                                     .frame(maxWidth: 860, alignment: .leading)
                                     .font(.system(size: 17, weight: .regular))
                             }
@@ -1043,7 +1041,7 @@ struct FlightPlanSummaryView: View {
                 }.keyboardAvoidView()
             }
             .onAppear {
-                self.pob = coreDataModel.dataFlightPlan.unwrappedFlightInfoPob
+                self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
             }
             .onChange(of: selectionOutput) { newValue in
                 switch self.target {

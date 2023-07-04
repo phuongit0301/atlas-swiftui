@@ -102,6 +102,8 @@
 		3EB99D012A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CFF2A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift */; };
 		3EB99D042A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */; };
 		3EB99D052A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */; };
+		3EB99D082A5411910091BC08 /* SummaryRouteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D062A5411910091BC08 /* SummaryRouteList+CoreDataClass.swift */; };
+		3EB99D092A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D072A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -263,6 +265,8 @@
 		3EB99CFF2A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnrouteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryInfoList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryInfoList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99D062A5411910091BC08 /* SummaryRouteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryRouteList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99D072A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryRouteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -591,6 +595,8 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EB99D062A5411910091BC08 /* SummaryRouteList+CoreDataClass.swift */,
+				3EB99D072A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift */,
 				3EB99D022A54096B0091BC08 /* SummaryInfoList+CoreDataClass.swift */,
 				3EB99D032A54096B0091BC08 /* SummaryInfoList+CoreDataProperties.swift */,
 				3EB99CFE2A53900F0091BC08 /* EnrouteList+CoreDataClass.swift */,
@@ -902,6 +908,7 @@
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
+				3EB99D082A5411910091BC08 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */,
 				C52063F72A43D3240041580E /* FlightPlanEnrView.swift in Sources */,
 				C52063F52A4356290041580E /* FlightPlanDepView.swift in Sources */,
@@ -1009,6 +1016,7 @@
 				3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */,
 				3EFA5F2E2A458F25001ED6CF /* TableDetail.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
+				3EB99D092A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,

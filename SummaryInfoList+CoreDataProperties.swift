@@ -31,6 +31,7 @@ extension SummaryInfoList {
     @NSManaged public var stdLocal: String?
     @NSManaged public var stdUTC: String?
     @NSManaged public var tailNo: String?
+    @NSManaged public var pob: String?
     
     public var unwrappedBlkTime: String {
         blkTime ?? ""
@@ -86,6 +87,10 @@ extension SummaryInfoList {
     
     public var unwrappedTailNo: String {
         tailNo ?? ""
+    }
+    
+    public var unwrappedPob: String {
+        pob ?? ""
     }
 }
 

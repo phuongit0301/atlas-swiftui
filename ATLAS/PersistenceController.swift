@@ -65,6 +65,10 @@ class CoreDataModelState: ObservableObject {
     @Published var dataSummaryInfo: SummaryInfoList = SummaryInfoList()
     @Published var existDataSummaryInfo: Bool = false
     
+    // For summary route
+    @Published var dataSummaryRoute: SummaryRouteList = SummaryRouteList()
+    @Published var existDataSummaryRoute: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -94,13 +98,15 @@ class CoreDataModelState: ObservableObject {
         arrivalRefArray = read("arrivalref")
         scratchPadArray = readScratchPad()
         dataFlightPlan = readFlightPlan()
-        coreDataModel.readSummaryInfo()
+        dataSummaryInfo = readSummaryInfo()
+        dataSummaryRoute = readSummaryRoute()
     }
     
     func checkAndSyncData() async {
         let response = read()
         dataFPEnroute = readEnrouteList()
         readSummaryInfo()
+        readSummaryRoute()
         
         if response.count == 0 {
             //            initDataTag()
@@ -113,6 +119,10 @@ class CoreDataModelState: ObservableObject {
         
         if !existDataSummaryInfo {
             initDataSummaryInfo()
+        }
+        
+        if !existDataSummaryRoute {
+            initDataSummaryRoute()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -451,6 +461,28 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataSummaryRoute() {
+        let newObj = SummaryRouteList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.routeNo = "SINBER91"
+        newObj.route = "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO  Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L"
+        newObj.depRwy = "WSSS/20L"
+        newObj.arrRwy = "EDDB/25L"
+        newObj.levels = "SIN/360/UDULO/380/PEKEM/390/MIGMA/400/KEA/410/KOROS/430/TEXTI/380"
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved summary route successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
     func save() {
         if service.container.viewContext.hasChanges {
             do {
@@ -706,19 +738,42 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readSummaryInfo() {
+    func readSummaryInfo() -> SummaryInfoList {
+        var data: SummaryInfoList = SummaryInfoList()
+        
         let request: NSFetchRequest<SummaryInfoList> = SummaryInfoList.fetchRequest()
         do {
             let response: [SummaryInfoList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    dataSummaryInfo = item
+                    data = item
                     existDataSummaryInfo = true
                 }
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
+        
+        return data
+    }
+    
+    func readSummaryRoute() -> SummaryRouteList {
+        var data: SummaryRouteList = SummaryRouteList()
+        
+        let request: NSFetchRequest<SummaryRouteList> = SummaryRouteList.fetchRequest()
+        do {
+            let response: [SummaryRouteList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataSummaryRoute = true
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
     }
     
     func calculatedZFWFuel(_ perfData: PerfData) -> Double {

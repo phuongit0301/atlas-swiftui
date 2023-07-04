@@ -95,11 +95,20 @@
         <attribute name="fltTime" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="planNo" optional="YES" attributeType="String"/>
+        <attribute name="pob" optional="YES" attributeType="String"/>
         <attribute name="staLocal" optional="YES" attributeType="String"/>
         <attribute name="staUTC" optional="YES" attributeType="String"/>
         <attribute name="stdLocal" optional="YES" attributeType="String"/>
         <attribute name="stdUTC" optional="YES" attributeType="String"/>
         <attribute name="tailNo" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="SummaryRoute" representedClassName="SummaryRouteList" syncable="YES">
+        <attribute name="arrRwy" optional="YES" attributeType="String"/>
+        <attribute name="depRwy" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="levels" optional="YES" attributeType="String"/>
+        <attribute name="route" optional="YES" attributeType="String"/>
+        <attribute name="routeNo" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Tag" representedClassName="TagList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
