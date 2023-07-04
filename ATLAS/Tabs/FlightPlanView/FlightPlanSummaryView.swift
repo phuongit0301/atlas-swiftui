@@ -830,22 +830,6 @@ struct FlightPlanSummaryView: View {
                                             
                                             HStack {
                                                 ButtonStepperMultiple(onToggle: onToggleFlightLevel, value: $selectedFlightLevelPrint, suffix: "")
-                                                
-//                                                Picker("Select", selection: $selectedFlightLevel000) {
-//                                                    ForEach(-10...10, id: \.self) { number in
-//                                                        Text("\(number)000ft")
-//                                                    }
-//                                                }.pickerStyle(.wheel)
-//                                                    .frame(width: calculateWidth((proxy.size.width / 2) + 50, 5), alignment: .leading)
-//                                                    .disabled(!includedFlightLevel)
-//
-//                                                Picker("Select", selection: $selectedFlightLevel00) {
-//                                                    ForEach(-9...9, id: \.self) { number in
-//                                                        Text("\(number)00ft")
-//                                                    }
-//                                                }.pickerStyle(.wheel)
-//                                                    .frame(width: calculateWidth((proxy.size.width / 2) + 50, 5), alignment: .leading)
-//                                                    .disabled(!includedFlightLevel)
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
@@ -1036,7 +1020,7 @@ struct FlightPlanSummaryView: View {
                                                 .frame(width: 210, alignment: .leading)
                                                 .padding(.horizontal)
                                             
-                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
+                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
                                                 .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
                                                 .padding(.horizontal)
                                             
@@ -1044,7 +1028,7 @@ struct FlightPlanSummaryView: View {
                                                 .frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal)
                                             
-                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
+                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)// remove after testing
                                             
