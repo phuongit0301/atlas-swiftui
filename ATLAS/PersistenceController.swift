@@ -519,7 +519,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func calculatedZFWFuel(_ perfData: PerfData) -> Double {
-        return Double(Double(self.dataFlightPlan.perActualZFW) - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000)
+    func calculatedZFWFuel(_ perfData: PerfData) -> Int {
+        return Int(Double(Double(self.dataFlightPlan.perActualZFW) - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000))
     }
 }

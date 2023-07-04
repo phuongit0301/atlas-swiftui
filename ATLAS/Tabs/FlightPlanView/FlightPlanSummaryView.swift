@@ -76,23 +76,15 @@ struct altn: Identifiable {
 
 
 struct FlightPlanSummaryView: View {
-    // initialise state variables
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var viewModelSummary: ViewModelSummary
     @EnvironmentObject var persistenceController: PersistenceController
     
     @ObservedObject var globalResponse = GlobalResponse.shared
-    @State private var showUTC = true
-    @State private var includedArrDelays = true
-    @State private var includedTaxi = true
-    @State private var includedFlightLevel = true
-    @State private var includedTrackShortening = true
-    @State private var includedEnrWx = true
-    @State private var includedReciprocalRwy = true
-    @State private var includedZFWchange = true
-    @State private var includedOthers = true
     
-    // for these variables: todo save/fetch all to/from core data
+    // initialise state variables
+    @State private var showUTC = true
+    
     @State private var isShowModal: Bool = false
     @State private var isShowModalMultiple: Bool = false
     @State private var target: String = "ArrDelays"
@@ -101,14 +93,31 @@ struct FlightPlanSummaryView: View {
     @State private var selectionOutput: Int = 0
     @State private var selectionOutputMultiple: String = ""
     
-    @State private var selectedArrDelays: Int = 0
     @State private var isShowArrDelays: Bool = false
     @State private var dataArrDelays: ClosedRange<Int> = 0...120
     
     @State private var dataIncludedTaxi: ClosedRange<Int> = 0...60
+    @State private var dataTrackShortening: ClosedRange<Int> = -30...0
+
+    @State private var collapsed = false
+    @State private var selection: Int = 0
+    @State private var selection1: Int = 0
+    @State private var selection2: Int = 0
+    
+    // for these variables: todo save/fetch all to/from core data
+    @State private var includedArrDelays = false
+    @State private var includedTaxi = false
+    @State private var includedFlightLevel = false
+    @State private var includedTrackShortening = false
+    @State private var includedEnrWx = false
+    @State private var includedReciprocalRwy = false
+    @State private var includedZFWchange = false
+    @State private var includedOthers = false
+    
+    @State private var selectedArrDelays: Int = 0
+    
     @State private var selectedTaxi: Int = 0
     
-    @State private var dataTrackShortening: ClosedRange<Int> = -30...0
     @State private var selectedTrackShortening: Int = 0
     
     @State private var selectedFlightLevel000: Int = 0
@@ -116,7 +125,9 @@ struct FlightPlanSummaryView: View {
     @State private var selectedFlightLevelPrint: String = "0ft"
     
     @State private var selectedEnrWx: Int = 0
+    
     @State private var selectedReciprocalRwy: Int = 0
+    
     @State private var selectedOtherPrint: String = "0KG"
     
     @State private var selectedOthers000: Int = 0
@@ -124,18 +135,14 @@ struct FlightPlanSummaryView: View {
     @State private var actualZFW: Int = 0
     @State private var pob: String = ""
     @State private var perActualZFW: String = ""
-    @State private var collapsed = false
-    @State private var selection: Int = 0
-    @State private var selection1: Int = 0
-    @State private var selection2: Int = 0
 
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
         
-        // fetch flight plan data
+        // MARK: fetch flight plan data - todo move to core data
         let flightPlanData: [String : Any] = fetchFlightPlanData()
         
-        // fetch fuel data - todo move to core data
+        // MARK: fetch fuel data - todo move to core data
         let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
         let fetchedDelays = allAPIresponse["projDelays"] as! [String : Any]
         let fetchedLevels = allAPIresponse["flightLevel"] as! [String : [String : Any]]
@@ -159,15 +166,15 @@ struct FlightPlanSummaryView: View {
         // reciprocal rwy
         let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
         
-        // set up flight info table data
+        // MARK: set up flight info table data
         let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
         @State var infoTable =
             flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
         
-        // set up route data
+        // MARK: set up route data
         let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
         
-        // set up perf tables data
+        // MARK: set up perf tables data
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
         @State var perfInfoTable = [
             perfInfo(fltRules: perfData.fltRules, gndMiles: perfData.gndMiles, airMiles: perfData.airMiles, crzComp: perfData.crzComp, apd: perfData.apd, ci: perfData.ci)
@@ -181,7 +188,7 @@ struct FlightPlanSummaryView: View {
             perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "perActualLDW", max: perfData.maxLDW, limitation: perfData.limLDW),
         ]
         
-        // set up fuel info table data
+        // MARK: set up fuel info table data
         let fuelData: FuelData = flightPlanData["fuelData"] as! FuelData
         @State var fuelTable = [
             fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"]!, fuel: fuelData.burnoff["fuel"]!, policy_reason: ""),
@@ -193,7 +200,7 @@ struct FlightPlanSummaryView: View {
             fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"]!, fuel: fuelData.planReq["fuel"]!, policy_reason: ""),
             fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"]!, fuel: fuelData.dispAdd["fuel"]!, policy_reason: fuelData.dispAdd["policy"]!)
         ]
-        // fuel calculations
+        // MARK: fuel calculations
         var calculatedDelayFuel: Int {
             return selectedArrDelays * Int(fuelData.hold["unit"]!)!
         }
@@ -260,11 +267,12 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-//        var calculatedZFWFuel: Int {
-//            return (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
-//        }
+        var calculatedZFWFuel: Int {
+            return coreDataModel.calculatedZFWFuel(perfData)
+        }
         var includedZFWFuel: [String: Any] {
-            let fuelBurn = (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
+//            let fuelBurn = (coreDataModel.dataFlightPlan.perActualZFW - Int(perfData.planZFW)!)  * (Int(perfData.zfwChange)! / 1000)
+            let fuelBurn = calculatedZFWFuel
             if (includedZFWchange && fuelBurn > 0) {
                 return ["fuel": fuelBurn, "remarks": "ZFW Increase \(coreDataModel.dataFlightPlan.unwrappedFuelZFWChangeRemark)"]
             } else if (includedZFWchange && fuelBurn < 0) {
@@ -316,7 +324,7 @@ struct FlightPlanSummaryView: View {
 //            return "\(delayRemarks); \(taxiRemarks); \(flightLevelRemarks); \(zfwRemarks); \(enrWxRemarks); \(reciprocalRwyRemarks); \(othersRemarks)"
 //        }
 
-        // set up altn table data
+        // MARK: set up altn table data
         let altnData: [AltnData] = flightPlanData["altnData"] as! [AltnData]
         @State var altnTable: [altn] = altnData.map { item in
             return altn(
@@ -332,8 +340,9 @@ struct FlightPlanSummaryView: View {
             )
         }
 
-        // set up ATC flight plan data
 //        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
+        
+        // MARK: main body
         GeometryReader { proxy in
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
@@ -363,7 +372,7 @@ struct FlightPlanSummaryView: View {
                     .padding(.bottom, 10)
                 //scrollable outer list section
                 List {
-                    // Flight information section
+                    // MARK: Flight information section
                     Section(header:
                                 HStack(alignment: .center) {
                         Text("FLIGHT INFORMATION")
@@ -422,26 +431,13 @@ struct FlightPlanSummaryView: View {
                                                 let item = FlightPlanList(context: persistenceController.container.viewContext)
                                                 item.flightInfoPob = pob
                                             }
-
                                             coreDataModel.save()
                                         }
-//                                        .textInputAutocapitalization(.never)
-//                                        .disableAutocorrection(true)
                                         .border(.secondary)
-//
                                     }.font(.system(size: 17, weight: .regular))
                                     .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                 }
                             }
-                            //                        Table(infoTable) {
-                            //                            TableColumn("Flight No.", value: \.flightNo)
-                            //                            TableColumn("Aircraft", value: \.aircraft)
-                            //                            TableColumn("DEP / DEST", value: \.depDest)
-                            //                            TableColumn("Date", value: \.date)
-                            //                            TableColumn("STD", value: \.stdUTC)
-                            //                            TableColumn("STA", value: \.staUTC)
-                            //                        }
-                            //                        .frame(minHeight: 65)
                         }
                         else {
                             VStack {
@@ -485,28 +481,17 @@ struct FlightPlanSummaryView: View {
 
                                             coreDataModel.save()
                                         }
-//                                        .textInputAutocapitalization(.never)
-//                                        .disableAutocorrection(true)
                                         .border(.secondary)
                                         
                                     }.font(.system(size: 17, weight: .regular))
                                         .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                 }
                             }
-                            //                        Table(infoTable) {
-                            //                            TableColumn("Flight No.", value: \.flightNo)
-                            //                            TableColumn("Aircraft", value: \.aircraft)
-                            //                            TableColumn("DEP / DEST", value: \.depDest)
-                            //                            TableColumn("Date", value: \.date)
-                            //                            TableColumn("STD", value: \.stdLocal)
-                            //                            TableColumn("STA", value: \.staLocal)
-                            //                        }
-                            //                        .frame(minHeight: 65)
                         }
                         
                     }
                     
-                    // Route section
+                    // MARK: Route section
                     Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                         // grouped row using hstack
                         VStack(alignment: .leading) {
@@ -585,7 +570,7 @@ struct FlightPlanSummaryView: View {
                         }
                     }
                     
-                    // Performance section
+                    // MARK: Performance section
                     Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                         // table body - first row
                         Table(perfInfoTable) {
@@ -625,7 +610,7 @@ struct FlightPlanSummaryView: View {
                         .scrollDisabled(true)
                     }
                     
-                    // Fuel section
+                    // MARK: Fuel section
                     Section(header: Text("FUEL").foregroundStyle(Color.black)) {
                         // grouped row using hstack
                         VStack(alignment: .leading, spacing: 0) {
@@ -956,7 +941,8 @@ struct FlightPlanSummaryView: View {
                                             }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                 .padding(.horizontal, 32)
                                             
-                                            Text("\(String(coreDataModel.calculatedZFWFuel(perfData)))KG")
+                                            Text("\(String(calculatedZFWFuel))KG")
+//                                                ("\(String(coreDataModel.calculatedZFWFuel(perfData)))KG")
                                                 .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
                                                 .frame(width: 190, alignment: .leading)
                                                 .padding(.horizontal)
