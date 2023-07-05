@@ -161,71 +161,55 @@ struct FieldString: View {
     var body: some View {
         TextField("Enter remarks (optional)", text: $field)
             .onAppear {
-                let item = coreDataModel.dataFlightPlan
+                let item = coreDataModel.dataFuelExtra
                 
                 switch name {
-                    case "POB":
-                        field = item.unwrappedFlightInfoPob
-                    case "perActualZFW":
-                        field = "\(item.unwrappedPerActualZFW)"
-                    case "perActualTOW":
-                        field = "\(item.unwrappedPerActualTOW)"
-                    case "perActualLDW":
-                        field = "\(item.unwrappedPerActualLDW)"
-                    case "fuelArrivalDelayRemark":
-                        field = item.unwrappedFuelArrivalDelayRemark
-                    case "fuelAdditionalTaxiRemark":
-                        field = item.unwrappedFuelAdditionalTaxiRemark
-                    case "fuelFlightLevelRemark":
-                        field = item.unwrappedFuelFlightLevelRemark
-                    case "fuelTrackShorteningRemark":
-                        field = item.unwrappedFuelTrackShorteningRemark
-                    case "fuelEnrouteWeatherRemark":
-                        field = item.unwrappedFuelEnrouteWeatherRemark
-                    case "fuelReciprocalRemark":
-                        field = item.unwrappedFuelReciprocalRemark
-                    case "fuelZFWChangeRemark":
-                        field = item.unwrappedFuelZFWChangeRemark
-                    case "fuelOtherRemark":
-                        field = item.unwrappedFuelOtherRemark
+                    case "remarkArrDelays":
+                        field = item.unwrappedRemarkArrDelays
+                    case "remarkTaxi":
+                        field = item.unwrappedRemarkTaxi
+                    case "remarkFlightLevel":
+                        field = item.unwrappedRemarkFlightLevel
+                    case "remarkTrackShortening":
+                        field = item.unwrappedRemarkTrackShortening
+                    case "remarkEnrWx":
+                        field = item.unwrappedRemarkEnrWx
+                    case "remarkReciprocalRwy":
+                        field = item.unwrappedRemarkReciprocalRwy
+                    case "remarkZFWChange":
+                        field = item.unwrappedRemarkZFWChange
+                    case "remarkOthers":
+                        field = item.unwrappedRemarkOthers
                     default:
                         field = ""
                 }
             }
             .onSubmit {
-                var item = coreDataModel.dataFlightPlan
+                var item = coreDataModel.dataFuelExtra
                 
-                if !coreDataModel.existDataFlightPlan {
-                    item = FlightPlanList(context: persistenceController.container.viewContext)
+                if !coreDataModel.existDataFuelExtra {
+                    item = FuelExtraList(context: persistenceController.container.viewContext)
                 }
                 
                 switch name {
-                case "POB":
-                    item.flightInfoPob = field
-                case "perActualZFW":
-                    item.perActualZFW = Int(field) ?? 0
-                case "perActualTOW":
-                    item.perActualTOW = Int(field) ?? 0
-                case "perActualLDW":
-                    item.perActualLDW = Int(field) ?? 0
-                case "fuelArrivalDelayRemark":
-                    item.fuelArrivalDelayRemark = field
-                case "fuelAdditionalTaxiRemark":
-                    item.fuelAdditionalTaxiRemark = field
-                case "fuelFlightLevelRemark":
-                    item.fuelFlightLevelRemark = field
-                case "fuelTrackShorteningRemark":
-                    item.fuelTrackShorteningRemark = field
-                case "fuelEnrouteWeatherRemark":
-                    item.fuelEnrouteWeatherRemark = field
-                case "fuelReciprocalRemark":
-                    item.fuelReciprocalRemark = field
-                case "fuelZFWChangeRemark":
-                    item.fuelZFWChangeRemark = field
-                case "fuelOtherRemark":
-                    item.fuelOtherRemark = field
+                case "remarkArrDelays":
+                    item.remarkArrDelays = field
+                case "remarkTaxi":
+                    item.remarkTaxi = field
+                case "remarkFlightLevel":
+                    item.remarkFlightLevel = field
+                case "remarkTrackShortening":
+                    item.remarkTrackShortening = field
+                case "remarkEnrWx":
+                    item.remarkEnrWx = field
+                case "remarkReciprocalRwy":
+                    item.remarkReciprocalRwy = field
+                case "remarkZFWChange":
+                    item.remarkZFWChange = field
+                case "remarkOthers":
+                    item.remarkOthers = field
                 default:
-                    item.perActualZFW = Int(field) ?? 0
+                    item.remarkArrDelays = field
                 }
                 
                 coreDataModel.save()

@@ -83,6 +83,10 @@ class CoreDataModelState: ObservableObject {
     @Published var dataFuelList: [FuelTableList] = []
     @Published var existDataFuelList: Bool = false
     
+    // For Fuel Extra
+    @Published var dataFuelExtra: FuelExtraList = FuelExtraList()
+    @Published var existDataFuelExtra: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -116,6 +120,7 @@ class CoreDataModelState: ObservableObject {
         dataSummaryRoute = readSummaryRoute()
         dataPerfInfo = readPerfInfo()
         dataPerfWeight = readPerfWeight()
+        dataFuelExtra = readFuelExtra()
     }
     
     func checkAndSyncData() async {
@@ -126,6 +131,7 @@ class CoreDataModelState: ObservableObject {
         readPerfInfo()
         readPerfWeight()
         dataFuelList = readFuelList()
+        dataFuelExtra = readFuelExtra()
         
         if response.count == 0 {
             //            initDataTag()
@@ -1015,6 +1021,81 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 data = response
                 existDataFuelList = true
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readFuelExtraList() -> [FuelExtraList] {
+        var data: [FuelExtraList] = []
+        
+        let request: NSFetchRequest<FuelExtraList> = FuelExtraList.fetchRequest()
+        do {
+            let response: [FuelExtraList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch fuel extra from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readFuelExtra() -> FuelExtraList {
+        var data: FuelExtraList = FuelExtraList()
+        
+        let request: NSFetchRequest<FuelExtraList> = FuelExtraList.fetchRequest()
+        do {
+            let response: [FuelExtraList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataFuelExtra = true
+                }
+            }  else {
+                let newObj = FuelExtraList(context: service.container.viewContext)
+                newObj.includedArrDelays = false
+                newObj.includedFlightLevel = false
+                newObj.includedEnrWx = false
+                newObj.includedReciprocalRwy = false
+                newObj.includedTaxi = false
+                newObj.includedTrackShortening = false
+                newObj.includedZFWchange = false
+                newObj.includedOthers = false
+                newObj.selectedArrDelays = 0
+                newObj.selectedTaxi = 0
+                newObj.selectedTrackShortening = 0
+                newObj.selectedFlightLevel000 = 0
+                newObj.selectedFlightLevel00 = 0
+                newObj.selectedEnrWx = 0
+                newObj.selectedReciprocalRwy = 0
+                newObj.selectedOthers000 = 0
+                newObj.selectedOthers00 = 0
+                newObj.remarkArrDelays = ""
+                newObj.remarkTaxi = ""
+                newObj.remarkFlightLevel = ""
+                newObj.remarkTrackShortening = ""
+                newObj.remarkEnrWx = ""
+                newObj.remarkReciprocalRwy = ""
+                newObj.remarkZFWChange = ""
+                newObj.remarkOthers = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+                existDataFuelExtra = false
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
