@@ -124,6 +124,8 @@
 		3EB99D392A546A330091BC08 /* TrackMilesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D2D2A546A330091BC08 /* TrackMilesList+CoreDataProperties.swift */; };
 		3EB99D402A547BA40091BC08 /* FuelExtraList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D3E2A547BA40091BC08 /* FuelExtraList+CoreDataClass.swift */; };
 		3EB99D412A547BA40091BC08 /* FuelExtraList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D3F2A547BA40091BC08 /* FuelExtraList+CoreDataProperties.swift */; };
+		3EB99D442A55404B0091BC08 /* AltnDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D422A55404B0091BC08 /* AltnDataList+CoreDataClass.swift */; };
+		3EB99D452A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99D432A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -307,6 +309,8 @@
 		3EB99D2D2A546A330091BC08 /* TrackMilesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrackMilesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99D3E2A547BA40091BC08 /* FuelExtraList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelExtraList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB99D3F2A547BA40091BC08 /* FuelExtraList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelExtraList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB99D422A55404B0091BC08 /* AltnDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AltnDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB99D432A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AltnDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -635,6 +639,8 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EB99D422A55404B0091BC08 /* AltnDataList+CoreDataClass.swift */,
+				3EB99D432A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift */,
 				3EB99D3E2A547BA40091BC08 /* FuelExtraList+CoreDataClass.swift */,
 				3EB99D3F2A547BA40091BC08 /* FuelExtraList+CoreDataProperties.swift */,
 				3EB99D222A546A330091BC08 /* EnrWXTrackMilesList+CoreDataClass.swift */,
@@ -999,6 +1005,7 @@
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
 				C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */,
+				3EB99D442A55404B0091BC08 /* AltnDataList+CoreDataClass.swift in Sources */,
 				3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */,
 				3EFA5F032A41DB82001ED6CF /* OverviewSplitView.swift in Sources */,
 				3EFA5EF22A3DFC6E001ED6CF /* FlightInformationView.swift in Sources */,
@@ -1015,6 +1022,7 @@
 				3EB99CFA2A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
+				3EB99D452A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift in Sources */,
 				3EB99D1C2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,

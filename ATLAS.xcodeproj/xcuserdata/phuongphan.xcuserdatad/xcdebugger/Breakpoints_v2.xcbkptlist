@@ -2003,8 +2003,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "896"
-            endingLineNumber = "896"
+            startingLineNumber = "959"
+            endingLineNumber = "959"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
             <Locations>
@@ -2051,8 +2051,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "895"
-            endingLineNumber = "895"
+            startingLineNumber = "958"
+            endingLineNumber = "958"
             landmarkName = "readDepartureEntries()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2083,8 +2083,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1108"
-            endingLineNumber = "1108"
+            startingLineNumber = "1187"
+            endingLineNumber = "1187"
             landmarkName = "calculatedZFWFuel(_:)"
             landmarkType = "7">
             <Locations>
@@ -2161,8 +2161,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1107"
-            endingLineNumber = "1107"
+            startingLineNumber = "1186"
+            endingLineNumber = "1186"
             landmarkName = "calculatedZFWFuel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2177,8 +2177,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1109"
-            endingLineNumber = "1109"
+            startingLineNumber = "1188"
+            endingLineNumber = "1188"
             landmarkName = "calculatedZFWFuel(_:)"
             landmarkType = "7">
          </BreakpointContent>

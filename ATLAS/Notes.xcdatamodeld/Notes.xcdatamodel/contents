@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AltnData" representedClassName="AltnDataList" syncable="YES">
+        <attribute name="altnRwy" optional="YES" attributeType="String"/>
+        <attribute name="comp" optional="YES" attributeType="String"/>
+        <attribute name="dist" optional="YES" attributeType="String"/>
+        <attribute name="fl" optional="YES" attributeType="String"/>
+        <attribute name="fuel" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="minima" optional="YES" attributeType="String"/>
+        <attribute name="rte" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DepartureATC" representedClassName="DepartureATCList" syncable="YES">
         <attribute name="atcDep" optional="YES" attributeType="String"/>
         <attribute name="atcFL" optional="YES" attributeType="String"/>

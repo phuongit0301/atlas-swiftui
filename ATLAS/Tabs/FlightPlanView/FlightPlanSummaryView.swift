@@ -686,9 +686,10 @@ struct FlightPlanSummaryView: View {
                                 TableColumn("Fuel", value: \.unwrappedFuel)
                                 TableColumn("Policy / Reason", value: \.unwrappedPolicyReason)
                             }
-                            .frame(minHeight: 380)
+                            .frame(minHeight: 390)
                             .scrollDisabled(true)
                         }.listRowSeparator(.hidden)
+                            
                         
                         VStack(alignment: .leading, spacing: 0) {
                             // extra fuel section
@@ -708,11 +709,9 @@ struct FlightPlanSummaryView: View {
                                         Text("Confirm requirements")
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
-                                        .padding(.horizontal, 45)
-                                    .frame(width: proxy.size.width - 25)
+                                        .padding(.horizontal, 58)
                                 }.background(Color.theme.azure.opacity(0.12))
                                 .frame(width: proxy.size.width)
-                                Divider()
                             }.onTapGesture {
                                 withAnimation {
                                     self.collapsed.toggle()
@@ -1125,59 +1124,60 @@ struct FlightPlanSummaryView: View {
                                         .frame(width: proxy.size.width)
                                 } // end VStack
                             }// end collapsible
-                            
-                            VStack(alignment: .leading, spacing: 0) {
-                                HStack(alignment: .center) {
-                                    HStack(alignment: .center) {
-                                        Text("Fuel in Tanks (G+H+I+)")
-                                            .frame(width: 420, alignment: .leading)
-                                        Text("14:21")
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("076157")
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("-")
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                    }.padding(.vertical)
-                                        .padding(.horizontal, 45)
-                                    .frame(width: proxy.size.width - 25)
-                                }.background(Color.theme.sonicSilver.opacity(0.12))
-                                .frame(width: proxy.size.width)
-                            }
                         }
-                    }
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack(alignment: .center) {
+                                HStack(alignment: .center) {
+                                    Text("Fuel in Tanks (G+H+I+)")
+                                        .frame(width: 420, alignment: .leading)
+                                    Text("14:21")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("076157")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("-")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }.padding(.vertical)
+                                    .padding(.horizontal, 45)
+                                .frame(width: proxy.size.width - 25)
+                            }
+                            .frame(width: proxy.size.width)
+                        }.listRowBackground(Color.theme.sonicSilver.opacity(0.12))
+                    }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
                     
                     // ALTN section
                     Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
-                        Table(altnTable) {
+                        Table(coreDataModel.dataAltnList) {
                             TableColumn("ALTN / RWY") {
-                                Text($0.altnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("RTE") {
-                                Text($0.rte).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
+                                Text($0.unwrappedRte).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                    .lineLimit(nil)
+                            }.width(200)
                             TableColumn("VIS") {
-                                Text($0.vis).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedVis).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("MINIMA") {
-                                Text($0.minima).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedMinima).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("DIST") {
-                                Text($0.dist).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedDist).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("FL") {
-                                Text($0.fl).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedFl).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("COMP") {
-                                Text($0.comp).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedComp).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("TIME") {
-                                Text($0.time).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedTime).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                             TableColumn("FUEL") {
-                                Text($0.fuel).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                Text($0.unwrappedFuel).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                             }
                         }
-                        .frame(minHeight: 250)
+                        .frame(minHeight: 420)
                         .scrollDisabled(true)
                     }
                     
@@ -1187,6 +1187,7 @@ struct FlightPlanSummaryView: View {
                     //                        .padding(.leading, 25)
                     //                }
                 }.keyboardAvoidView()
+                    .edgesIgnoringSafeArea([.bottom])
             }
             .onAppear {
                 self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
@@ -1238,7 +1239,6 @@ struct FlightPlanSummaryView: View {
             }
             .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
                 self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
-//                            calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
             }
             .sheet(isPresented: $isShowModal) {
                 ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: selection, target: $target)
