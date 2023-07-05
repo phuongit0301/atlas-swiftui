@@ -169,35 +169,13 @@ struct FlightPlanSummaryView: View {
         // reciprocal rwy
         let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
         
-        // set up flight info table data
-//        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-//        @State var infoTable =
-//            flightInfo(flightNo: flightInfoData.fltNo, aircraft: flightInfoData.tailNo, depDest: flightInfoData.dep+" / "+flightInfoData.dest, date: flightInfoData.flightDate, stdUTC: flightInfoData.STDUTC, staUTC: flightInfoData.STAUTC, stdLocal: flightInfoData.STDLocal, staLocal: flightInfoData.STALocal, blkTime: flightInfoData.BLKTime, fltTime: flightInfoData.FLTTime)
-        
-        // set up route data
-//        let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
-        
-        // MARK: set up perf tables data
+      
+        // MARK: set up perf tables data todo phuong - remove this, only use coredata entity
         let perfData: PerfData = flightPlanData["perfData"] as! PerfData
-        
-//        @State var perfWeightsTable = [
-//            perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "perActualZFW", max: perfData.maxZFW, limitation: perfData.limZFW),
-//            perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "perActualTOW", max: perfData.maxTOW, limitation: perfData.limTOW),
-//            perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "perActualLDW", max: perfData.maxLDW, limitation: perfData.limLDW),
-//        ]
-        
-        // MARK: set up fuel info table data
+           
+        // MARK: set up fuel info table data todo phuong - remove this, only use coredata entity
         let fuelData: FuelData = flightPlanData["fuelData"] as! FuelData
-        @State var fuelTable = [
-            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"]!, fuel: fuelData.burnoff["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"]!, fuel: fuelData.cont["fuel"]!, policy_reason: fuelData.cont["policy"]!),
-            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"]!, fuel: fuelData.altn["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"]!, fuel: fuelData.hold["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"]!, fuel: fuelData.topup60["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"]!, fuel: fuelData.taxi["fuel"]!, policy_reason: fuelData.taxi["policy"]!),
-            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"]!, fuel: fuelData.planReq["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"]!, fuel: fuelData.dispAdd["fuel"]!, policy_reason: fuelData.dispAdd["policy"]!)
-        ]
+
         // MARK: fuel calculations
         let calculatedDelayFuelValue: Int = selectedArrDelays * Int(fuelData.hold["unit"]!)!
         var calculatedDelayFuel: String {
@@ -393,6 +371,38 @@ struct FlightPlanSummaryView: View {
             } else {
                 return ["fuel": 0, "remarks": ""]
             }
+        }
+        
+        var fuelInTanksFuel: String {
+            let extraFuelAmt = Int(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))!
+            var flightPlanReqmt: Int = 0
+            var addDispatchFuel: Int = 0
+            for fuelList in coreDataModel.dataFuelList {
+                if fuelList.unwrappedFirstColumn == "(G) Flight Plan Requirement (A + B + C + D + E + F)" {
+                    flightPlanReqmt = Int(fuelList.unwrappedFuel)!
+                }
+                if fuelList.unwrappedFirstColumn == "(H) Dispatch Additional Fuel" {
+                    addDispatchFuel = Int(fuelList.unwrappedFuel)!
+                }
+            }
+            let result = flightPlanReqmt + addDispatchFuel + extraFuelAmt
+            return formatFuelNumber(result)
+        }
+        
+        var fuelInTanksTime: String {
+            let extraFuelTime = includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel)
+            var flightPlanReqmtTime: String = ""
+            var addDispatchFuelTime: String = ""
+            for fuelList in coreDataModel.dataFuelList {
+                if fuelList.unwrappedFirstColumn == "(G) Flight Plan Requirement (A + B + C + D + E + F)" {
+                    flightPlanReqmtTime = fuelList.unwrappedTime
+                }
+                if fuelList.unwrappedFirstColumn == "(H) Dispatch Additional Fuel" {
+                    addDispatchFuelTime = fuelList.unwrappedTime
+                }
+            }
+            let result = timeStringToMins(extraFuelTime) + timeStringToMins(flightPlanReqmtTime) + timeStringToMins(addDispatchFuelTime)
+            return formatTime(result)
         }
         
         // MARK: set up altn table data
@@ -1129,13 +1139,13 @@ struct FlightPlanSummaryView: View {
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .center) {
                                     HStack(alignment: .center) {
-                                        Text("Fuel in Tanks (G+H+I+)")
+                                        Text("Fuel in Tanks (G + H + I)")
                                             .frame(width: 420, alignment: .leading)
-                                        Text("14:21")
+                                        Text("\(fuelInTanksTime)")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("076157")
+                                        Text("\(fuelInTanksFuel)")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("-")
+                                        Text("")
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
                                         .padding(.horizontal, 45)
@@ -1312,6 +1322,17 @@ struct FlightPlanSummaryView: View {
         let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
         
         return formatter.string(from: date)
+    }
+    
+    func timeStringToMins(_ time: String) -> Int {
+        let hoursString = time.prefix(2) as Substring
+        let minsString = time.suffix(2) as Substring
+        let hours = Int(hoursString)!
+        let mins = Int(minsString)!
+        
+        let duration = (hours * 60) + mins
+                
+        return duration
     }
     
     func onToggleArrDelays() {

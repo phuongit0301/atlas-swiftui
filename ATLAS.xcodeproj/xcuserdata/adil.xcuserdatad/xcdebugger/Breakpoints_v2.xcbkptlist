@@ -62,8 +62,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
