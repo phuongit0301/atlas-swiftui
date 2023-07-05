@@ -88,8 +88,12 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataPerfWeight: Bool = false
     
     // For Fuel List
-    @Published var dataFuelList: [FuelTableList] = []
-    @Published var existDataFuelList: Bool = false
+    @Published var dataFuelDataList: FuelDataList = FuelDataList()
+    @Published var existDataFuelDataList: Bool = false
+    
+    // For Fuel Table List
+    @Published var dataFuelTableList: [FuelTableList] = []
+    @Published var existDataFuelTableList: Bool = false
     
     // For Fuel Extra
     @Published var dataFuelExtra: FuelExtraList = FuelExtraList()
@@ -132,6 +136,8 @@ class CoreDataModelState: ObservableObject {
         dataPerfData = readPerfData()
         dataPerfInfo = readPerfInfo()
         dataPerfWeight = readPerfWeight()
+        dataFuelDataList = readFuelDataList()
+        dataFuelTableList = readFuelTableList()
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
     }
@@ -144,7 +150,7 @@ class CoreDataModelState: ObservableObject {
         dataPerfData = readPerfData()
         dataPerfInfo = readPerfInfo()
         dataPerfWeight = readPerfWeight()
-        dataFuelList = readFuelList()
+        dataFuelTableList = readFuelTableList()
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
         
@@ -183,9 +189,9 @@ class CoreDataModelState: ObservableObject {
             dataPerfWeight = readPerfWeight()
         }
         
-        if dataFuelList.count == 0 {
+        if dataFuelTableList.count == 0 {
             initDataFuelList()
-            dataFuelList = readFuelList()
+            dataFuelTableList = readFuelTableList()
         }
         
         if dataAltnList.count == 0 {
@@ -698,7 +704,7 @@ class CoreDataModelState: ObservableObject {
             }
         }
         
-        dataFuelList = readFuelList()
+        dataFuelTableList = readFuelTableList()
 //        let newObj1 = FuelTableList(context: service.container.viewContext)
 //        newObj1.id = UUID()
 //        newObj1.firstColumn = "(A) Burnoff"
@@ -1097,7 +1103,26 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readFuelList() -> [FuelTableList] {
+    func readFuelDataList() -> FuelDataList {
+        var data: FuelDataList = FuelDataList()
+        
+        let request: NSFetchRequest<FuelDataList> = FuelDataList.fetchRequest()
+        do {
+            let response: [FuelDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataFuelDataList = true
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readFuelTableList() -> [FuelTableList] {
         var data: [FuelTableList] = []
         
         let request: NSFetchRequest<FuelTableList> = FuelTableList.fetchRequest()
@@ -1105,7 +1130,7 @@ class CoreDataModelState: ObservableObject {
             let response: [FuelTableList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 data = response
-                existDataFuelList = true
+                existDataFuelTableList = true
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")

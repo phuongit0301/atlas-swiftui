@@ -177,14 +177,17 @@ struct KeyboardAvoidView: ViewModifier {
 //                    .padding(.bottom, height)
                     .onReceive(Publishers.keyboardHeight) { keyboardHeight in
                         
+//                        let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
+//                        let focusedTextInputBottom = UIResponder.currentFirstResponder?.globalFrame?.maxY ?? 0
+//
+//                        if focusedTextInputBottom < 380 {
+//                            self.height = 0
+//                        } else {
+//                            self.height = keyboardHeight > 0 ? keyboardTop + geometry.safeAreaInsets.bottom + 220 : 0
+//                        }
                         let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
                         let focusedTextInputBottom = UIResponder.currentFirstResponder?.globalFrame?.maxY ?? 0
-                        
-                        if focusedTextInputBottom < 380 {
-                            self.height = 0
-                        } else {
-                            self.height = keyboardHeight > 0 ? keyboardTop + geometry.safeAreaInsets.bottom + 220 : 0
-                        }                        
+                        self.height = max(0, focusedTextInputBottom - keyboardTop - geometry.safeAreaInsets.bottom - 250)
                     }
             }
         }

@@ -89,8 +89,7 @@ struct FlightPlanSummaryView: View {
     @State private var isShowModal: Bool = false
     @State private var isShowModalMultiple: Bool = false
     @State private var target: String = "ArrDelays"
-    @State private var header: String = "Arrival Delays"
-    @State private var items: ClosedRange<Int> = 0...120
+    
     @State private var selectionOutput: Int = 0
     @State private var selectionOutputMultiple: String = ""
     
@@ -141,9 +140,6 @@ struct FlightPlanSummaryView: View {
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
         
-        // MARK: fetch flight plan data - todo move to core data
-        let flightPlanData: [String : Any] = fetchFlightPlanData()
-        
         // MARK: fetch fuel data - todo move to core data
         let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
         let fetchedDelays = allAPIresponse["projDelays"] as! [String : Any]
@@ -168,11 +164,9 @@ struct FlightPlanSummaryView: View {
         // reciprocal rwy
         let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
         
-        // MARK: set up fuel info table data todo phuong - remove this, only use coredata entity
-        let fuelData: FuelData = flightPlanData["fuelData"] as! FuelData
        
         // MARK: fuel calculations
-        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(fuelData.hold["unit"]!)!
+        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"]!)!
         var calculatedDelayFuel: String {
             let result = calculatedDelayFuelValue
             if result <= 0 {
@@ -194,7 +188,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedTaxiFuelValue = selectedTaxi * Int(fuelData.taxi["unit"]!)!
+        let calculatedTaxiFuelValue = selectedTaxi * Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"]!)!
         var calculatedTaxiFuel: String {
             let result = calculatedTaxiFuelValue
             if result <= 0 {
@@ -244,7 +238,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedTrackShorteningFuelValue = selectedTrackShortening * Int(fuelData.burnoff["unit"]!)!
+        let calculatedTrackShorteningFuelValue = selectedTrackShortening * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
         var calculatedTrackShorteningFuel: String {
             let result = calculatedTrackShorteningFuelValue
             if result <= 0 {
@@ -271,7 +265,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedEnrWxFuelValue = selectedEnrWx * Int(fuelData.burnoff["unit"]!)!
+        let calculatedEnrWxFuelValue = selectedEnrWx * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
         var calculatedEnrWxFuel: String {
             let result = calculatedEnrWxFuelValue
             if result <= 0 {
@@ -293,7 +287,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(fuelData.altn["unit"]!)!
+        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"]!)!
         var calculatedReciprocalRwyFuel: String {
             let result = calculatedReciprocalRwyFuelValue
             if result <= 0 {
@@ -371,7 +365,7 @@ struct FlightPlanSummaryView: View {
             let extraFuelAmt = Int(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))!
             var flightPlanReqmt: Int = 0
             var addDispatchFuel: Int = 0
-            for fuelList in coreDataModel.dataFuelList {
+            for fuelList in coreDataModel.dataFuelTableList {
                 if fuelList.unwrappedFirstColumn == "(G) Flight Plan Requirement (A + B + C + D + E + F)" {
                     flightPlanReqmt = Int(fuelList.unwrappedFuel)!
                 }
@@ -387,7 +381,7 @@ struct FlightPlanSummaryView: View {
             let extraFuelTime = includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel)
             var flightPlanReqmtTime: String = ""
             var addDispatchFuelTime: String = ""
-            for fuelList in coreDataModel.dataFuelList {
+            for fuelList in coreDataModel.dataFuelTableList {
                 if fuelList.unwrappedFirstColumn == "(G) Flight Plan Requirement (A + B + C + D + E + F)" {
                     flightPlanReqmtTime = fuelList.unwrappedTime
                 }
@@ -398,25 +392,6 @@ struct FlightPlanSummaryView: View {
             let result = timeStringToMins(extraFuelTime) + timeStringToMins(flightPlanReqmtTime) + timeStringToMins(addDispatchFuelTime)
             return formatTime(result)
         }
-
-        
-        // MARK: set up altn table data
-        let altnData: [AltnData] = flightPlanData["altnData"] as! [AltnData]
-        @State var altnTable: [altn] = altnData.map { item in
-            return altn(
-                altnRwy: item.altnRwy,
-                rte: item.rte,
-                vis: item.vis,
-                minima: item.minima,
-                dist: item.dist,
-                fl: item.fl,
-                comp: item.comp,
-                time: item.time,
-                fuel: item.fuel
-            )
-        }
-
-//        let atcFlightPlan: String = flightPlanData["atcFlightPlanData"] as! String
         
         // MARK: main body
         GeometryReader { proxy in
@@ -685,7 +660,7 @@ struct FlightPlanSummaryView: View {
                         // grouped row using hstack
                         VStack(alignment: .leading, spacing: 0) {
                              //fuel info table body
-                            Table(coreDataModel.dataFuelList) {
+                            Table(coreDataModel.dataFuelTableList) {
                                 TableColumn("", value: \.unwrappedFirstColumn).width(420)
                                 TableColumn("Time", value: \.unwrappedTime)
                                 TableColumn("Fuel", value: \.unwrappedFuel)
@@ -695,7 +670,6 @@ struct FlightPlanSummaryView: View {
                             .scrollDisabled(true)
                         }.listRowSeparator(.hidden)
                             
-                        
                         VStack(alignment: .leading, spacing: 0) {
                             // extra fuel section
                             // row I
@@ -1192,7 +1166,6 @@ struct FlightPlanSummaryView: View {
                     //                        .padding(.leading, 25)
                     //                }
                 }.keyboardAvoidView()
-                    .edgesIgnoringSafeArea([.bottom])
             }
             .onAppear {
                 self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
