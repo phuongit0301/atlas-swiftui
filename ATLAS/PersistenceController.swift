@@ -49,7 +49,11 @@ struct IScratchPad: Identifiable, Hashable {
     var createdAt: Date = Date()
 }
 
+
+let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "500", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
+
 class CoreDataModelState: ObservableObject {
+    @Published var loading: Bool = true
     @Published var tagList: [TagList] = []
     @Published var aircraftArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []
@@ -75,11 +79,15 @@ class CoreDataModelState: ObservableObject {
     
     @Published var perfChangesTable: [perfChanges] = []
     
+    // For Perf Data
+    @Published var dataPerfData: PerfDataList = PerfDataList()
+    @Published var existDataPerfData: Bool = false
+    
     // For Perf Weight
     @Published var dataPerfWeight: [PerfWeightList] = []
     @Published var existDataPerfWeight: Bool = false
     
-    // For Perf Weight
+    // For Fuel List
     @Published var dataFuelList: [FuelTableList] = []
     @Published var existDataFuelList: Bool = false
     
@@ -121,6 +129,7 @@ class CoreDataModelState: ObservableObject {
         dataFlightPlan = readFlightPlan()
         dataSummaryInfo = readSummaryInfo()
         dataSummaryRoute = readSummaryRoute()
+        dataPerfData = readPerfData()
         dataPerfInfo = readPerfInfo()
         dataPerfWeight = readPerfWeight()
         dataFuelExtra = readFuelExtra()
@@ -130,10 +139,11 @@ class CoreDataModelState: ObservableObject {
     func checkAndSyncData() async {
         let response = read()
         dataFPEnroute = readEnrouteList()
-        readSummaryInfo()
-        readSummaryRoute()
-        readPerfInfo()
-        readPerfWeight()
+        dataSummaryInfo = readSummaryInfo()
+        dataSummaryRoute = readSummaryRoute()
+        dataPerfData = readPerfData()
+        dataPerfInfo = readPerfInfo()
+        dataPerfWeight = readPerfWeight()
         dataFuelList = readFuelList()
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
@@ -145,30 +155,42 @@ class CoreDataModelState: ObservableObject {
         
         if dataFPEnroute.count == 0 {
             initDataEnroute()
+            dataFPEnroute = readEnrouteList()
         }
         
         if !existDataSummaryInfo {
             initDataSummaryInfo()
+            dataSummaryInfo = readSummaryInfo()
         }
         
         if !existDataSummaryRoute {
             initDataSummaryRoute()
+            dataSummaryRoute = readSummaryRoute()
+        }
+        
+        if !existDataPerfData {
+            initDataPerfData()
+            dataPerfData = readPerfData()
         }
         
         if !existDataPerfInfo {
             initDataPerfInfo()
+            dataPerfInfo = readPerfInfo()
         }
         
         if !existDataPerfWeight {
             initDataPerfWeight()
+            dataPerfWeight = readPerfWeight()
         }
         
         if dataFuelList.count == 0 {
             initDataFuelList()
+            dataFuelList = readFuelList()
         }
         
         if dataAltnList.count == 0 {
             initDataAltn()
+            dataAltnList = readAltnList()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -529,17 +551,51 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataPerfData() {
+        let newObj = PerfDataList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.fltRules = perfData.fltRules
+        newObj.gndMiles = perfData.gndMiles
+        newObj.airMiles = perfData.airMiles
+        newObj.crzComp = perfData.crzComp
+        newObj.apd = perfData.apd
+        newObj.ci = perfData.ci
+        newObj.zfwChange = perfData.zfwChange
+        newObj.lvlChange = perfData.lvlChange
+        newObj.planZFW = perfData.planZFW
+        newObj.maxZFW = perfData.maxZFW
+        newObj.limZFW = perfData.limZFW
+        newObj.planTOW = perfData.planTOW
+        newObj.maxTOW = perfData.maxTOW
+        newObj.limTOW = perfData.limTOW
+        newObj.planLDW = perfData.planLDW
+        newObj.maxLDW = perfData.maxLDW
+        newObj.limLDW = perfData.limLDW
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved perf info successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
     func initDataPerfInfo() {
         let newObj = PerfInfoList(context: service.container.viewContext)
         newObj.id = UUID()
-        newObj.fltRules = "RVSM"
-        newObj.gndMiles = "6385"
-        newObj.airMiles = "7004"
-        newObj.crzComp = "M42"
-        newObj.apd = "1.4"
-        newObj.ci = "100"
-        newObj.zfwChange = "557"
-        newObj.lvlChange = "500"
+        newObj.fltRules = perfData.fltRules
+        newObj.gndMiles = perfData.gndMiles
+        newObj.airMiles = perfData.airMiles
+        newObj.crzComp = perfData.crzComp
+        newObj.apd = perfData.apd
+        newObj.ci = perfData.ci
+        newObj.zfwChange = "M1000KG BURN LESS \(perfData.zfwChange)KG"
+        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange)KG"
         
         do {
             // Persist the data in this managed object context to the underlying store
@@ -555,40 +611,32 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataPerfWeight() {
-        let newObj1 = PerfWeightList(context: service.container.viewContext)
-        newObj1.id = UUID()
-        newObj1.weight = "ZFW"
-        newObj1.plan = "143416"
-        newObj1.actual = ""
-        newObj1.max = "161025"
-        newObj1.limitation = "Structural"
+        let perfWeightsTable = [
+            perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "", max: perfData.maxZFW, limitation: perfData.limZFW),
+            perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "", max: perfData.maxTOW, limitation: perfData.limTOW),
+            perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "", max: perfData.maxLDW, limitation: perfData.limLDW),
+        ]
         
-        let newObj2 = PerfWeightList(context: service.container.viewContext)
-        newObj2.id = UUID()
-        newObj2.weight = "TOW"
-        newObj2.plan = "227883"
-        newObj2.actual = ""
-        newObj2.max = "227930"
-        newObj2.limitation = "Perf - Obstacle"
-        
-        let newObj3 = PerfWeightList(context: service.container.viewContext)
-        newObj3.id = UUID()
-        newObj3.weight = "LDW"
-        newObj3.plan = "151726"
-        newObj3.actual = ""
-        newObj3.max = "172365"
-        newObj3.limitation = "Structural"
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved perf weight successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
+        perfWeightsTable.forEach { item in
+            let newObj = PerfWeightList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.weight = item.weight
+            newObj.plan = item.plan
+            newObj.actual = ""
+            newObj.max = item.max
+            newObj.limitation = item.limitation
             
+            service.container.viewContext.performAndWait {
+                do {
+                    try service.container.viewContext.save()
+                    print("saved perf weight successfully")
+                } catch {
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
         }
     }
     
@@ -916,33 +964,6 @@ class CoreDataModelState: ObservableObject {
                 if let item = response.first {
                     dataDepartureAts = item
                     existDataDepartureAts = true
-                } else {
-                    let newObj = DepartureATISList(context: service.container.viewContext)
-                    newObj.code = ""
-                    newObj.time = ""
-                    newObj.rwy = ""
-                    newObj.translvl = ""
-                    newObj.wind = ""
-                    newObj.vis = ""
-                    newObj.wx = ""
-                    newObj.cloud = ""
-                    newObj.temp = ""
-                    newObj.dp = ""
-                    newObj.qnh = ""
-                    newObj.remarks = ""
-                    
-                    do {
-                        // Persist the data in this managed object context to the underlying store
-                        try service.container.viewContext.save()
-                        print("saved successfully")
-                    } catch {
-                        // Something went wrong 😭
-                        print("Failed to save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
-                    }
-                    existDataDepartureAts = false
                 }
             }
         } catch {
@@ -959,25 +980,6 @@ class CoreDataModelState: ObservableObject {
                 if let item = response.first {
                     dataDepartureEntries = item
                     existDataDepartureEntries = true
-                } else {
-                    let newObj = DepartureEntriesList(context: service.container.viewContext)
-                    newObj.entOff = ""
-                    newObj.entFuelInTanks = ""
-                    newObj.entTaxi = ""
-                    newObj.entTakeoff = ""
-                    
-                    do {
-                        // Persist the data in this managed object context to the underlying store
-                        try service.container.viewContext.save()
-                        print("saved successfully")
-                    } catch {
-                        // Something went wrong 😭
-                        print("Failed to save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
-                    }
-                    existDataDepartureEntries = false
                 }
             }
         } catch {
@@ -1031,6 +1033,26 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readPerfData() -> PerfDataList {
+        var data: PerfDataList = PerfDataList()
+        
+        let request: NSFetchRequest<PerfDataList> = PerfDataList.fetchRequest()
+        do {
+            let response: [PerfDataList] = try service.container.viewContext.fetch(request)
+            
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataPerfData = true
+                }
+            }
+        } catch {
+            print("Could not fetch perf data from Core Data.")
         }
         
         return data
@@ -1183,10 +1205,10 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func calculatedZFWFuel(_ perfData: PerfData) -> Int {
+    func calculatedZFWFuel() -> Int {
         if let item = self.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
             let actual = Double(item.unwrappedActual) ?? Double(0)
-            return Int(Double(actual - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000))
+            return Int(Double(actual - Double(dataPerfData.unwrappedPlanZFW)!) * Double(Double(dataPerfData.unwrappedZfwChange)! / 1000))
         }
         return 0
     }

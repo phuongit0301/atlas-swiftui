@@ -83,6 +83,8 @@
 		3E8250662A1BAE0A008F616D /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E82505D2A1BAE0A008F616D /* Inter-ExtraLight.ttf */; };
 		3E8250672A1BAE0A008F616D /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E82505E2A1BAE0A008F616D /* Inter-ExtraBold.ttf */; };
 		3E8250772A1E1FB6008F616D /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8250762A1E1FB6008F616D /* View.swift */; };
+		3EA961832A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA961812A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift */; };
+		3EA961842A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA961822A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift */; };
 		3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD02A4BD52A0091BC08 /* ScratchPadEditForm.swift */; };
 		3EB99CD32A4C16F00091BC08 /* FlightPlanSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */; };
 		3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD42A4C56770091BC08 /* CustomStepper.swift */; };
@@ -268,6 +270,8 @@
 		3E82505D2A1BAE0A008F616D /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		3E82505E2A1BAE0A008F616D /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 		3E8250762A1E1FB6008F616D /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		3EA961812A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PerfDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EA961822A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PerfDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99CD02A4BD52A0091BC08 /* ScratchPadEditForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadEditForm.swift; sourceTree = "<group>"; };
 		3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanSegmented.swift; sourceTree = "<group>"; };
 		3EB99CD42A4C56770091BC08 /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
@@ -639,6 +643,8 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3EA961812A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift */,
+				3EA961822A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift */,
 				3EB99D422A55404B0091BC08 /* AltnDataList+CoreDataClass.swift */,
 				3EB99D432A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift */,
 				3EB99D3E2A547BA40091BC08 /* FuelExtraList+CoreDataClass.swift */,
@@ -1064,6 +1070,7 @@
 				3EB99CD32A4C16F00091BC08 /* FlightPlanSegmented.swift in Sources */,
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
 				3EB99D362A546A330091BC08 /* FlightLevelList+CoreDataClass.swift in Sources */,
+				3EA961842A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift in Sources */,
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
 				3E3FCC022A243A77008017FA /* TableDetailSplit.swift in Sources */,
 				3EB99D012A53900F0091BC08 /* EnrouteList+CoreDataProperties.swift in Sources */,
@@ -1089,6 +1096,7 @@
 				3EB99CFB2A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
 				3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */,
+				3EA961832A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift in Sources */,
 				3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */,
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,

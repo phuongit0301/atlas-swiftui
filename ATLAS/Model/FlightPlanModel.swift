@@ -213,7 +213,7 @@ struct FieldString: View {
                 }
                 
                 coreDataModel.save()
-                coreDataModel.readFlightPlan()
+                coreDataModel.dataFlightPlan = coreDataModel.readFlightPlan()
             }
     }
 }

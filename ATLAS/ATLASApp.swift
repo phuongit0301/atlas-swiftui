@@ -25,8 +25,13 @@ struct ATLASApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(network)
+            VStack {
+                if coreDataModel.loading {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+                } else {
+                    ContentView()
+                }
+            }.environmentObject(network)
                 .environmentObject(tabModelState)
                 .environmentObject(sideMenuModelState)
                 .environmentObject(mainNavModelState)
@@ -37,11 +42,14 @@ struct ATLASApp: App {
                 .environmentObject(persistenceController)
                 .onAppear {
                     Task {
+                        coreDataModel.loading = true
                         await apiManager.makePostRequest()
                         await coreDataModel.checkAndSyncData()
+                        coreDataModel.loading = false
                     }
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                
         }.handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )

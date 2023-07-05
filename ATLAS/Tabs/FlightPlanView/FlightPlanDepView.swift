@@ -139,14 +139,14 @@ struct FlightPlanDepView: View {
                 }
                 .padding(.bottom, 10)
                 
-                Text("Plan \(flightInfoData.planNo) | Last updated 0820LT").padding(.leading, 30).padding(.bottom, 10)
+                Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT").padding(.leading, 30).padding(.bottom, 10)
                     .font(.system(size: 15, weight: .semibold))
                 //scrollable outer list section
                 List {
                     // ATIS section
                     Section(header:
                         HStack {
-                            Text("ATIS \(flightInfoData.dep)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
+                            Text("ATIS \(coreDataModel.dataSummaryInfo.unwrappedDep)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                             
 //                            Spacer()
 //
@@ -1234,31 +1234,37 @@ struct FlightPlanDepView: View {
         }.onAppear {
             coreDataModel.readDepartures()
             //set data ats
-            self.code = coreDataModel.dataDepartureAts.unwrappedCode
-            self.time = coreDataModel.dataDepartureAts.unwrappedTime
-            self.rwy = coreDataModel.dataDepartureAts.unwrappedRwy
-            self.transLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl
-            self.wind = coreDataModel.dataDepartureAts.unwrappedWind
-            self.vis = coreDataModel.dataDepartureAts.unwrappedVis
-            self.wx = coreDataModel.dataDepartureAts.unwrappedWx
-            self.cloud = coreDataModel.dataDepartureAts.unwrappedCloud
-            self.temp = coreDataModel.dataDepartureAts.unwrappedTemp
-            self.dp = coreDataModel.dataDepartureAts.unwrappedDp
-            self.qnh = coreDataModel.dataDepartureAts.unwrappedQnh
-            self.remarks = coreDataModel.dataDepartureAts.unwrappedRemarks
+            if coreDataModel.existDataDepartureAts {
+                self.code = coreDataModel.dataDepartureAts.unwrappedCode
+                self.time = coreDataModel.dataDepartureAts.unwrappedTime
+                self.rwy = coreDataModel.dataDepartureAts.unwrappedRwy
+                self.transLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl
+                self.wind = coreDataModel.dataDepartureAts.unwrappedWind
+                self.vis = coreDataModel.dataDepartureAts.unwrappedVis
+                self.wx = coreDataModel.dataDepartureAts.unwrappedWx
+                self.cloud = coreDataModel.dataDepartureAts.unwrappedCloud
+                self.temp = coreDataModel.dataDepartureAts.unwrappedTemp
+                self.dp = coreDataModel.dataDepartureAts.unwrappedDp
+                self.qnh = coreDataModel.dataDepartureAts.unwrappedQnh
+                self.remarks = coreDataModel.dataDepartureAts.unwrappedRemarks
+            }
             
             //set data atc
-            self.atcRwy = coreDataModel.dataDepartureAtc.unwrappedAtcRwy
-            self.atcDep = coreDataModel.dataDepartureAtc.unwrappedAtcDep
-            self.atcRte = coreDataModel.dataDepartureAtc.unwrappedAtcRte
-            self.atcFL = coreDataModel.dataDepartureAtc.unwrappedAtcFL
-            self.atcSQ = coreDataModel.dataDepartureAtc.unwrappedAtcSQ
+            if coreDataModel.existDataDepartureAtc {
+                self.atcRwy = coreDataModel.dataDepartureAtc.unwrappedAtcRwy
+                self.atcDep = coreDataModel.dataDepartureAtc.unwrappedAtcDep
+                self.atcRte = coreDataModel.dataDepartureAtc.unwrappedAtcRte
+                self.atcFL = coreDataModel.dataDepartureAtc.unwrappedAtcFL
+                self.atcSQ = coreDataModel.dataDepartureAtc.unwrappedAtcSQ
+            }
             
             //set data entries
-            self.entOff = coreDataModel.dataDepartureEntries.unwrappedEntOff
-            self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
-            self.entTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi
-            self.entTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
+            if coreDataModel.existDataDepartureEntries {
+                self.entOff = coreDataModel.dataDepartureEntries.unwrappedEntOff
+                self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
+                self.entTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi
+                self.entTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
+            }
         }
     }
 }

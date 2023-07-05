@@ -149,6 +149,26 @@
         <attribute name="target" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
+    <entity name="PerfData" representedClassName="PerfDataList" syncable="YES">
+        <attribute name="airMiles" optional="YES" attributeType="String"/>
+        <attribute name="apd" optional="YES" attributeType="String"/>
+        <attribute name="ci" optional="YES" attributeType="String"/>
+        <attribute name="crzComp" optional="YES" attributeType="String"/>
+        <attribute name="fltRules" optional="YES" attributeType="String"/>
+        <attribute name="gndMiles" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limLDW" optional="YES" attributeType="String"/>
+        <attribute name="limTOW" optional="YES" attributeType="String"/>
+        <attribute name="limZFW" optional="YES" attributeType="String"/>
+        <attribute name="lvlChange" optional="YES" attributeType="String"/>
+        <attribute name="maxLDW" optional="YES" attributeType="String"/>
+        <attribute name="maxTOW" optional="YES" attributeType="String"/>
+        <attribute name="maxZFW" optional="YES" attributeType="String"/>
+        <attribute name="planLDW" optional="YES" attributeType="String"/>
+        <attribute name="planTOW" optional="YES" attributeType="String"/>
+        <attribute name="planZFW" optional="YES" attributeType="String"/>
+        <attribute name="zfwChange" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="PerfInfo" representedClassName="PerfInfoList" syncable="YES">
         <attribute name="airMiles" optional="YES" attributeType="String"/>
         <attribute name="apd" optional="YES" attributeType="String"/>
