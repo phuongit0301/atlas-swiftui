@@ -32,7 +32,7 @@ extension PerfWeightList {
     }
     
     public var unwrappedActual: String {
-        actual ?? ""
+        actual ?? "0"
     }
     
     public var unwrappedMax: String {

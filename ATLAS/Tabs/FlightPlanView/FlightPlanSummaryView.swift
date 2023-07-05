@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 // creating flight info table structure
 struct flightInfo: Identifiable, Equatable {
@@ -135,6 +136,8 @@ struct FlightPlanSummaryView: View {
     @State private var actualZFW: Int = 0
     @State private var pob: String = ""
     @State private var perActualZFW: String = ""
+//    @State private var calculatedZFWFuel = ""
+    @State private var calculatedZFWFuelValue = 0
 
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
@@ -345,7 +348,7 @@ struct FlightPlanSummaryView: View {
             }
         }
          
-        let calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
+//        @State var calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
         var calculatedZFWFuel: String {
             let result = calculatedZFWFuelValue
             if result <= 0 {
@@ -694,7 +697,7 @@ struct FlightPlanSummaryView: View {
                                 HStack(alignment: .center) {
                                     HStack(alignment: .center) {
                                         Text("(I) Pilot Extra Fuel")
-                                            .frame(maxWidth: 310, alignment: .leading)
+                                            .frame(width: 420, alignment: .leading)
 //                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                         Text("Confirm requirements")
                                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -1091,9 +1094,10 @@ struct FlightPlanSummaryView: View {
                                         Divider()
                                     }.frame(width: proxy.size.width - 50)
                                     
-                                    HStack(alignment: .center) { // todo - fix alignment
+                                    HStack(alignment: .center) {
                                         HStack(alignment: .center) {
-                                            Rectangle().fill(Color.clear).frame(width: 70).padding(.horizontal, 12)
+                                            Text("").frame(width: 70)
+                                                .padding(.horizontal, 24)
                                             
                                             Text("Total Extra Fuel")
                                                 .frame(width: 210, alignment: .leading)
@@ -1104,27 +1108,41 @@ struct FlightPlanSummaryView: View {
                                                 .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
                                                 .padding(.horizontal)
                                             
-                                            Rectangle().fill(Color.clear)
-                                                .frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal)
+                                            Text("").frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                .padding(.horizontal, 32)
                                             
 //                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
                                             Text("Confirm requirements")
                                                 .frame(width: 190, alignment: .leading)
-                                                .padding(.leading, 50)
+                                                .padding(.horizontal)
                                             
 //                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))")
                                             Text("Confirm requirements")
                                                 .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .padding(.leading, 50)
                                             
                                         }.padding()
-                                            .frame(width: proxy.size.width - 50)
                                     }.background(Color.theme.azure.opacity(0.12))
                                         .frame(width: proxy.size.width)
                                 } // end VStack
                             }// end collapsible
                             
+                            VStack(alignment: .leading, spacing: 0) {
+                                HStack(alignment: .center) {
+                                    HStack(alignment: .center) {
+                                        Text("Fuel in Tanks (G+H+I+)")
+                                            .frame(width: 420, alignment: .leading)
+                                        Text("14:21")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("076157")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("-")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }.padding(.vertical)
+                                        .padding(.horizontal, 45)
+                                    .frame(width: proxy.size.width - 25)
+                                }.background(Color.theme.sonicSilver.opacity(0.12))
+                                .frame(width: proxy.size.width)
+                            }
                         }
                     }
                     
@@ -1191,6 +1209,9 @@ struct FlightPlanSummaryView: View {
                 self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
                 self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
                 
+                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
+                
+//                self.onCalculatedZFWFuel()
             }
             .onChange(of: selectionOutput) { newValue in
                 switch self.target {
@@ -1214,6 +1235,10 @@ struct FlightPlanSummaryView: View {
                         coreDataModel.dataFuelExtra.selectedArrDelays = newValue
                 }
                 coreDataModel.save()
+            }
+            .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
+                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
+//                            calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel(perfData)
             }
             .sheet(isPresented: $isShowModal) {
                 ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: selection, target: $target)

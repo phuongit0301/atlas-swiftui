@@ -2,7 +2,7 @@
 //  DepartureATISList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 03/07/2023.
+//  Created by phuong phan on 05/07/2023.
 //
 //
 
@@ -16,18 +16,18 @@ extension DepartureATISList {
         return NSFetchRequest<DepartureATISList>(entityName: "DepartureATIS")
     }
 
-    @NSManaged public var code: String?
-    @NSManaged public var time: String?
-    @NSManaged public var rwy: String?
-    @NSManaged public var translvl: String?
-    @NSManaged public var wind: String?
-    @NSManaged public var vis: String?
-    @NSManaged public var wx: String?
     @NSManaged public var cloud: String?
-    @NSManaged public var temp: String?
+    @NSManaged public var code: String?
     @NSManaged public var dp: String?
     @NSManaged public var qnh: String?
     @NSManaged public var remarks: String?
+    @NSManaged public var rwy: String?
+    @NSManaged public var temp: String?
+    @NSManaged public var time: String?
+    @NSManaged public var translvl: String?
+    @NSManaged public var vis: String?
+    @NSManaged public var wind: String?
+    @NSManaged public var wx: String?
     
     public var unwrappedCode: String {
         code ?? ""

@@ -1105,6 +1105,10 @@ class CoreDataModelState: ObservableObject {
     }
     
     func calculatedZFWFuel(_ perfData: PerfData) -> Int {
-        return Int(Double(Double(self.dataFlightPlan.perActualZFW) - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000))
+        if let item = self.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
+            let actual = Double(item.unwrappedActual) ?? Double(0)
+            return Int(Double(actual - Double(perfData.planZFW)!) * Double(Double(perfData.zfwChange)! / 1000))
+        }
+        return 0
     }
 }

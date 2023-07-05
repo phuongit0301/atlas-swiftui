@@ -1918,7 +1918,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EA42C111-0F46-4FBE-AA74-435D526E71E8"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -1934,7 +1934,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "75B0E3CE-03A1-4785-A81C-26BF131C542F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -2071,6 +2071,116 @@
             endingLineNumber = "100"
             landmarkName = "InfoData"
             landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D2724CB-8D47-4D14-BDB5-46C6DD79D062"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/PersistenceController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1108"
+            endingLineNumber = "1108"
+            landmarkName = "calculatedZFWFuel(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D2724CB-8D47-4D14-BDB5-46C6DD79D062 - a9e80227c7ca2ec0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.CoreDataModelState.calculatedZFWFuel(ATLAS.PerfData) -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1109"
+                  endingLineNumber = "1109"
+                  offsetFromSymbolStart = "156">
+               </Location>
+               <Location
+                  uuid = "8D2724CB-8D47-4D14-BDB5-46C6DD79D062 - 1a077bc5735182ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (ATLAS.PerfWeightList) -&gt; Swift.Bool in ATLAS.CoreDataModelState.calculatedZFWFuel(ATLAS.PerfData) -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1109"
+                  endingLineNumber = "1109"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "8D2724CB-8D47-4D14-BDB5-46C6DD79D062 - a9e80227c7ca2ea7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.CoreDataModelState.calculatedZFWFuel(ATLAS.PerfData) -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1108"
+                  endingLineNumber = "1108"
+                  offsetFromSymbolStart = "156">
+               </Location>
+               <Location
+                  uuid = "8D2724CB-8D47-4D14-BDB5-46C6DD79D062 - 1a077bc5735182dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (ATLAS.PerfWeightList) -&gt; Swift.Bool in ATLAS.CoreDataModelState.calculatedZFWFuel(ATLAS.PerfData) -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1108"
+                  endingLineNumber = "1108"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A476AC2F-5831-412B-93C5-C8F6CF7306D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/PersistenceController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1107"
+            endingLineNumber = "1107"
+            landmarkName = "calculatedZFWFuel(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E89D94ED-A9DE-4E88-938A-9A712907E7CA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/PersistenceController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1109"
+            endingLineNumber = "1109"
+            landmarkName = "calculatedZFWFuel(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

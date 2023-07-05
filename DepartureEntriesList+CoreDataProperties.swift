@@ -2,7 +2,7 @@
 //  DepartureEntriesList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 03/07/2023.
+//  Created by phuong phan on 05/07/2023.
 //
 //
 
@@ -16,18 +16,10 @@ extension DepartureEntriesList {
         return NSFetchRequest<DepartureEntriesList>(entityName: "DepartureEntries")
     }
 
-    @NSManaged public var entOff: String?
     @NSManaged public var entFuelInTanks: String?
-    @NSManaged public var entTaxi: String?
+    @NSManaged public var entOff: String?
     @NSManaged public var entTakeoff: String?
-    
-    public var unwrappedEntOff: String {
-        entOff ?? ""
-    }
-    
-    public var unwrappedEntFuelInTanks: String {
-        entFuelInTanks ?? ""
-    }
+    @NSManaged public var entTaxi: String?
     
     public var unwrappedEntTaxi: String {
         entTaxi ?? ""
@@ -35,6 +27,14 @@ extension DepartureEntriesList {
     
     public var unwrappedEntTakeoff: String {
         entTakeoff ?? ""
+    }
+    
+    public var unwrappedEntOff: String {
+        entOff ?? ""
+    }
+    
+    public var unwrappedEntFuelInTanks: String {
+        entFuelInTanks ?? ""
     }
 }
 

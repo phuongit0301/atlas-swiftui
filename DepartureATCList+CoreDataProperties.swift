@@ -2,7 +2,7 @@
 //  DepartureATCList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 03/07/2023.
+//  Created by phuong phan on 05/07/2023.
 //
 //
 
@@ -17,10 +17,10 @@ extension DepartureATCList {
     }
 
     @NSManaged public var atcDep: String?
-    @NSManaged public var atcSQ: String?
-    @NSManaged public var atcRte: String?
     @NSManaged public var atcFL: String?
+    @NSManaged public var atcRte: String?
     @NSManaged public var atcRwy: String?
+    @NSManaged public var atcSQ: String?
     
     public var unwrappedAtcDep: String {
         atcDep ?? ""

@@ -236,6 +236,7 @@ struct CustomField: View {
             .onSubmit {
                 item.actual = field
                 coreDataModel.save()
+                coreDataModel.dataPerfWeight = coreDataModel.readPerfWeight()
             }
             .onAppear {
                 field = item.unwrappedActual
