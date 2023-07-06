@@ -119,15 +119,12 @@ struct FlightPlanDepView: View {
     @State private var isShowingAutofillOptionsRemarks = false
     @State private var isShowingAutofillOptionsAtcRte = false
 
-    @State private var autofillOptionsATIS: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // Replace with your own autofill options
+    @State private var autofillOptionsATIS: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // todo Replace with your own autofill options
     @State private var autofillText = ""
     @State private var isShowingCustomKeyboard = false
     
     var body: some View {
-        let flightPlanData: [String : Any] = fetchFlightPlanData()
-        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        let routeData: RouteData = flightPlanData["routeData"] as! RouteData
-        let route = routeData.route
+        let route = coreDataModel.dataSummaryRoute.unwrappedRoute
         let routeList: [String] = route.components(separatedBy: " ")
         
         GeometryReader { proxy in
@@ -603,7 +600,7 @@ struct FlightPlanDepView: View {
                             Divider()
 
                             HStack(alignment: .center) {
-                                Text("\(flightInfoData.dest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                Text("\(coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                 Group {
                                     TextField("Rwy", text: $atcRwy)
                                         .focused($isTextFieldAtcRwyFocused)
