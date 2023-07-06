@@ -599,9 +599,9 @@ struct FlightPlanDepView: View {
                                 }
                             }.padding(.top, 5)
                                 .padding(.bottom, 5)
-                            
+
                             Divider()
-                            
+
                             HStack(alignment: .center) {
                                 Text("\(flightInfoData.dest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                 Group {
@@ -625,15 +625,15 @@ struct FlightPlanDepView: View {
                                                     let item = DepartureATCList(context: persistenceController.container.viewContext)
                                                     item.atcRwy = atcRwy
                                                 }
-                                                
+
                                                 coreDataModel.save()
-                                                
+
                                                 isEditingAtcRwy = false
                                                 isTextFieldAtcDepFocused = true
                                             }
                                         }
                                         .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    
+
                                     TextField("Dep", text: $atcDep)
                                         .frame(width: calculateWidth(proxy.size.width, 6))
                                         .focused($isTextFieldAtcDepFocused)
@@ -652,7 +652,7 @@ struct FlightPlanDepView: View {
                                                 let item = DepartureATCList(context: persistenceController.container.viewContext)
                                                 item.atcDep = atcDep
                                             }
-                                            
+
                                             coreDataModel.save()
                                         }
                                 }
@@ -680,9 +680,9 @@ struct FlightPlanDepView: View {
                                                     let item = DepartureATCList(context: persistenceController.container.viewContext)
                                                     item.atcRte = text
                                                 }
-                                                
+
                                                 coreDataModel.save()
-                                                
+
                                                 isShowingAutofillOptionsAtcRte = false
                                             }
                                         }
@@ -692,7 +692,7 @@ struct FlightPlanDepView: View {
                                             }
                                         }
                                         .frame(width: calculateWidth(proxy.size.width, 6))
-                                    
+
                                     TextField( "FL", text: $atcFL)
                                         .focused($isTextFieldAtcFLFocused)
                                         .onReceive(Just(isTextFieldAtcFLFocused)) { focused in
@@ -713,9 +713,9 @@ struct FlightPlanDepView: View {
                                                     let item = DepartureATCList(context: persistenceController.container.viewContext)
                                                     item.atcFL = atcFL
                                                 }
-                                                
+
                                                 coreDataModel.save()
-                                                
+
                                                 isEditingAtcFL = false
                                                 isTextFieldAtcSQFocused = true
                                             }
@@ -745,7 +745,7 @@ struct FlightPlanDepView: View {
                                         }
 
                                         coreDataModel.save()
-                                        
+
                                         isEditingAtcSQ = false
                                         isTextFieldAtcRwyFocused = true
                                     }
@@ -754,10 +754,10 @@ struct FlightPlanDepView: View {
                                 }
                             .padding(.top, 5)
                             .padding(.bottom, 5)
-                            
+
                         }.padding(.horizontal, 25)
                         .frame(maxWidth: proxy.size.width - 50)
-                        
+
                     }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
                         coreDataModel.readDepartureAtc()
                     }
@@ -787,9 +787,9 @@ struct FlightPlanDepView: View {
                             }
                             .padding(.top, 5)
                             .padding(.bottom, 5)
-                            
+
                             Divider()
-                            
+
                             HStack(alignment: .center) {
                                 Group {
                                     TextField("Chocks Off", text: $entOff)
@@ -813,15 +813,15 @@ struct FlightPlanDepView: View {
                                                     item.entOff = entOff
                                                     coreDataModel.existDataDepartureEntries = true
                                                 }
-                                                
+
                                                 coreDataModel.save()
-                                                
+
                                                 isEditingEntOff = false
                                                 isTextFieldEntFuelInTanksFocused = true
                                             }
                                         }
                                         .frame(width: calculateWidth(proxy.size.width, 4))
-                                    
+
                                     TextField("Fuel in Tanks", text: $entFuelInTanks)
                                         .focused($isTextFieldEntFuelInTanksFocused)
                                         .onReceive(Just(isTextFieldEntFuelInTanksFocused)) { focused in
@@ -843,9 +843,9 @@ struct FlightPlanDepView: View {
                                                     item.entFuelInTanks = entFuelInTanks
                                                     coreDataModel.existDataDepartureEntries = true
                                                 }
-                                                
+
                                                 coreDataModel.save()
-                                                
+
                                                 isEditingEntFuelInTanks = false
                                                 isTextFieldEntTaxiFocused = true
                                             }
@@ -876,13 +876,13 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
-                                            
+
                                             isEditingEntTaxi = false
                                             isTextFieldEntTakeoffFocused = true
                                         }
                                     }
                                     .frame(width: calculateWidth(proxy.size.width, 4))
-                                    
+
                                     TextField( "Takeoff", text: $entTakeoff)
                                     .focused($isTextFieldEntTakeoffFocused)
                                     .onReceive(Just(isTextFieldEntTakeoffFocused)) { focused in
@@ -906,7 +906,7 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
-                                            
+
                                             isEditingEntTakeoff = false
                                             isTextFieldEntOffFocused = true
                                         }
@@ -966,33 +966,33 @@ struct FlightPlanDepView: View {
                 }
                 Group {
                     if isEditingAtcRwy {
-                        CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: isEditingAtcRwy, nextFocus: isEditingAtcDep, prevFocus: isEditingAtcSQ)
+                        CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: $isEditingAtcRwy, nextFocus: $isEditingAtcDep, prevFocus: $isEditingAtcSQ)
                     }
                     if isEditingAtcDep {
-                        CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: isEditingAtcDep, nextFocus: isEditingAtcRte, prevFocus: isEditingAtcRwy)
+                        CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: $isEditingAtcDep, nextFocus: $isEditingAtcRte, prevFocus: $isEditingAtcRwy)
                     }
                     if isEditingAtcRte {
-                        CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: isEditingAtcRte, nextFocus: isEditingAtcFL, prevFocus: isEditingAtcDep)
+                        CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: $isEditingAtcRte, nextFocus: $isEditingAtcFL, prevFocus: $isEditingAtcDep)
                     }
                     if isEditingAtcFL {
-                        CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: isEditingAtcFL, nextFocus: isEditingAtcSQ, prevFocus: isEditingAtcRte)
+                        CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: $isEditingAtcFL, nextFocus: $isEditingAtcSQ, prevFocus: $isEditingAtcRte)
                     }
                     if isEditingAtcSQ {
-                        CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: isEditingAtcSQ, nextFocus: isEditingAtcRwy, prevFocus: isEditingAtcRte)
+                        CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: $isEditingAtcSQ, nextFocus: $isEditingAtcRwy, prevFocus: $isEditingAtcRte)
                     }
                 }
                 Group {
                     if isEditingEntOff {
-                        CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: isEditingEntOff, nextFocus: isEditingEntFuelInTanks, prevFocus: isEditingEntTakeoff)
+                        CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: $isEditingEntOff, nextFocus: $isEditingEntFuelInTanks, prevFocus: $isEditingEntTakeoff)
                     }
                     if isEditingEntFuelInTanks {
-                        CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: isEditingEntFuelInTanks, nextFocus: isEditingEntTaxi, prevFocus: isEditingEntOff)
+                        CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: $isEditingEntFuelInTanks, nextFocus: $isEditingEntTaxi, prevFocus: $isEditingEntOff)
                     }
                     if isEditingEntTaxi {
-                        CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: isEditingEntTaxi, nextFocus: isEditingEntTakeoff, prevFocus: isEditingEntFuelInTanks)
+                        CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: $isEditingEntTaxi, nextFocus: $isEditingEntTakeoff, prevFocus: $isEditingEntFuelInTanks)
                     }
                     if isEditingEntTakeoff {
-                        CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: isEditingEntTakeoff, nextFocus: isEditingEntOff, prevFocus: isEditingEntTaxi)
+                        CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: $isEditingEntTakeoff, nextFocus: $isEditingEntOff, prevFocus: $isEditingEntTaxi)
                     }
                 }
                 Group {
@@ -1055,7 +1055,7 @@ struct FlightPlanDepView: View {
                 }
             }.navigationTitle("Departure")
                 .background(Color(.systemGroupedBackground))
-                .hideKeyboardWhenTappedAround()
+                //.hideKeyboardWhenTappedAround()
         }.onAppear {
             coreDataModel.readDepartures()
             //set data ats
@@ -1132,7 +1132,7 @@ struct FlightPlanDepView: View {
         isEditingAtcRte = false
         isEditingAtcFL = false
         isEditingAtcSQ = false
-        
+
         isEditingEntOff = false
         isEditingEntFuelInTanks = false
         isEditingEntTaxi = false
