@@ -556,12 +556,12 @@
 			children = (
 				3EFA5F6B2A4A82EB001ED6CF /* ScratchPad */,
 				3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */,
+				C56AF5132A56640300BD07A1 /* FuelView */,
 				C52063F12A43552A0041580E /* FlightPlanView */,
 				3E7F68472A217B9500EC2CA3 /* AtlasSearchView */,
 				3E5AF6552A1A55F200A97ECF /* FlightNoteView */,
 				3E5AF6332A187E3500A97ECF /* HomeView.swift */,
 				3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */,
-				3E5AF6452A18FF0500A97ECF /* FuelView.swift */,
 				3E5AF64C2A18FFDD00A97ECF /* ChartView.swift */,
 				3E5AF64E2A18FFF100A97ECF /* WeatherView.swift */,
 				3E5AF64A2A18FF7600A97ECF /* ReportingView.swift */,
@@ -670,7 +670,6 @@
 			children = (
 				3E3FCC532A2C198A008017FA /* MultipleScene */,
 				3E3FCC4E2A2881FC008017FA /* Model */,
-				3E3FCC2A2A270851008017FA /* FuelChartsResources */,
 				3E3FCC052A24B59C008017FA /* Split */,
 				3E3FCBFB2A236E55008017FA /* ExampleView.swift */,
 				3E8250552A1BADF0008F616D /* Fonts */,
@@ -858,6 +857,15 @@
 				3EFA5F642A497815001ED6CF /* NoteList+CoreDataProperties.swift */,
 			);
 			path = FlightNotes_Reference;
+			sourceTree = "<group>";
+		};
+		C56AF5132A56640300BD07A1 /* FuelView */ = {
+			isa = PBXGroup;
+			children = (
+				3E5AF6452A18FF0500A97ECF /* FuelView.swift */,
+				3E3FCC2A2A270851008017FA /* FuelChartsResources */,
+			);
+			path = FuelView;
 			sourceTree = "<group>";
 		};
 		C5A8DDFF2A4E8C580045EB32 /* Pages */ = {
