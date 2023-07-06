@@ -51,7 +51,6 @@ struct FlightPlanEnrView: View {
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
     
-    @State var num11 = "01:15"
     @State var eta = ""
     @State var ata = ""
     @State var afl = ""
@@ -60,8 +59,6 @@ struct FlightPlanEnrView: View {
     @State var afrm = ""
     
     var body: some View {
-        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        
         GeometryReader { proxy in
             VStack(alignment: .leading) {
                 // fixed header section, todo clean up design
@@ -71,7 +68,7 @@ struct FlightPlanEnrView: View {
                         .padding(.leading, 30)
                 }.padding(.bottom, 10)
                 
-                Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+                Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
                     .padding(.leading, 30)
                     .padding(.bottom, 10)
                     .font(.system(size: 15, weight: .semibold))
@@ -133,13 +130,14 @@ struct FlightPlanEnrView: View {
                                         Text(row.unwrappedActm).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text(row.unwrappedZtm).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-                                        TextField(
-                                            "\(row.unwrappedEta)",
-                                            text: $eta
-                                        )
-                                        .onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+//                                        TextField(
+//                                            "\(row.unwrappedEta)",
+//                                            text: $eta
+//                                        )
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, field: row.unwrappedEta, index: index)
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -149,9 +147,10 @@ struct FlightPlanEnrView: View {
                                         TextField(
                                             "\(row.unwrappedAta)",
                                             text: $ata
-                                        ).onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+                                        )
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -161,9 +160,9 @@ struct FlightPlanEnrView: View {
                                             row.unwrappedAfl,
                                             text: $afl
                                         )
-                                        .onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -174,9 +173,9 @@ struct FlightPlanEnrView: View {
                                             row.unwrappedOat,
                                             text: $oat
                                         )
-                                        .onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -188,9 +187,9 @@ struct FlightPlanEnrView: View {
                                             row.unwrappedAwind,
                                             text: $awind
                                         )
-                                        .onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -208,9 +207,9 @@ struct FlightPlanEnrView: View {
                                             row.unwrappedAfrm,
                                             text: $afrm
                                         )
-                                        .onSubmit {
-                                            updateValues(editedIndex: index)
-                                        }
+//                                        .onSubmit {
+//                                            updateValues(editedIndex: index)
+//                                        }
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -249,10 +248,59 @@ struct FlightPlanEnrView: View {
             .navigationTitle("Enroute")
             .background(Color(.systemGroupedBackground))
             .onAppear {
-                let data = coreDataModel.readEnrouteList()
-                self.waypointsTableDefault = data
-                self.waypointsTable = data
+                self.waypointsTableDefault = coreDataModel.dataFPEnroute
+                self.waypointsTable = coreDataModel.dataFPEnroute
+                
             }
+        }
+    }
+    
+    func textColorMsa(for value: String) -> Color {
+        if let value1: Int = Int(value) {
+            if value1 > 80 {
+                    return .red
+            } else {
+                return .black
+            }
+        } else {
+            if value.contains("*") {
+                return .red
+            } else {
+                return .black
+            }
+        }
+    }
+    func textColorVws(for value: String) -> Color {
+        if let value1: Int = Int(value) {
+            if value1 > 4 {
+                    return .red
+            } else {
+                return .black
+            }
+        } else {
+            return .black
+        }
+    }
+}
+
+struct EnrouteCustomField: View {
+    // Read the view model, to store the value of the text field
+//    @EnvironmentObject var viewModel: ViewModelSummary
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
+    @Binding var waypointsTableDefault: [EnrouteList]
+    @Binding var waypointsTable: [EnrouteList]
+    
+    // Dedicated state var for each field
+//    @State var item: PerfWeightList = PerfWeightList()
+    @State var field = ""
+    @State var index: Int = 0
+    
+    var body: some View {
+        TextField("Enter", text: $field).onSubmit {
+            
+            updateValues(editedIndex: index)
         }
     }
     
@@ -434,33 +482,8 @@ struct FlightPlanEnrView: View {
         
         return formatter.string(from: date)
     }
-    func textColorMsa(for value: String) -> Color {
-        if let value1: Int = Int(value) {
-            if value1 > 80 {
-                    return .red
-            } else {
-                return .black
-            }
-        } else {
-            if value.contains("*") {
-                return .red
-            } else {
-                return .black
-            }
-        }
-    }
-    func textColorVws(for value: String) -> Color {
-        if let value1: Int = Int(value) {
-            if value1 > 4 {
-                    return .red
-            } else {
-                return .black
-            }
-        } else {
-            return .black
-        }
-    }
 }
+       
 
 struct FlightPlanEnrView_Previews: PreviewProvider {
     static var previews: some View {

@@ -10,6 +10,9 @@ import SwiftUI
 import Combine
 
 struct FlightPlanArrView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
     // initialise state variables
     // ATIS variables
     @State var dest: String = ""
@@ -116,8 +119,6 @@ struct FlightPlanArrView: View {
     @State private var autofillText = ""
     
     var body: some View {
-        let flightPlanData: [String : Any] = fetchFlightPlanData()
-        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
         
         VStack(alignment: .leading) {
             // fixed header section, todo clean up design
@@ -127,7 +128,7 @@ struct FlightPlanArrView: View {
                     .padding(.leading, 30)
             }
             .padding(.bottom, 10)
-            Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+            Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)) | Last updated 0820LT")
             .padding(.leading, 30)
             .padding(.bottom, 10)
             //scrollable outer list section
@@ -136,7 +137,7 @@ struct FlightPlanArrView: View {
                 Section(header:
                     HStack {
                         Text("ATIS").foregroundStyle(Color.black)
-                        TextField(" \(flightInfoData.dest)", text: $dest, onEditingChanged: { editing in
+                        TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $dest, onEditingChanged: { editing in
                             isEditingDest = editing
                         })
                         .focused($isTextFieldDestFocused)
@@ -197,6 +198,16 @@ struct FlightPlanArrView: View {
                                     // Limit the text to a maximum of 1 characters
                                     if newValue.count > 0 {
                                         code = String(newValue.prefix(1))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.code = code
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.code = code
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldCodeFocused = false
                                         isTextFieldTimeFocused = true
                                     }
@@ -208,6 +219,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: time) { newValue in
                                     if newValue.count > 3 {
                                         time = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.time = time
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.time = time
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldTimeFocused = false
                                         isTextFieldRwyFocused = true
                                     }
@@ -221,6 +242,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: rwy) { newValue in
                                     if newValue.count > 10 {
                                         rwy = String(newValue.prefix(11))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.rwy = rwy
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.rwy = rwy
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldRwyFocused = false
                                         isTextFieldTransLvlFocused = true
                                     }
@@ -232,6 +263,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: transLvl) { newValue in
                                     if newValue.count > 3 {
                                         transLvl = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.transLvl = transLvl
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.transLvl = transLvl
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldTransLvlFocused = false
                                         isTextFieldWindFocused = true
                                     }
@@ -245,6 +286,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: wind) { newValue in
                                     if newValue.count > 5 {
                                         wind = String(newValue.prefix(6))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.wind = wind
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.wind = wind
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldWindFocused = false
                                         isTextFieldVisFocused = true
                                     }
@@ -256,6 +307,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: vis) { newValue in
                                     if newValue.count > 3 {
                                         vis = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.vis = vis
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.vis = vis
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldVisFocused = false
                                         isTextFieldWxFocused = true
                                     }
@@ -274,6 +335,15 @@ struct FlightPlanArrView: View {
                                         autofillText = searchTerm
                                         isShowingAutofillOptionsWx = true
                                     } else {
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.wx = text
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.wx = text
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isShowingAutofillOptionsWx = false
                                     }
                                 } // todo hide autofilloptions when submit or when focus on another textfield
@@ -288,6 +358,15 @@ struct FlightPlanArrView: View {
                                         autofillText = searchTerm
                                         isShowingAutofillOptionsCloud = true
                                     } else {
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.cloud = text
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.cloud = text
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isShowingAutofillOptionsCloud = false
                                     }
                                 } // todo hide autofilloptions when submit or when focus on another textfield
@@ -299,6 +378,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: temp) { newValue in
                                     if newValue.count > 1 {
                                         temp = String(newValue.prefix(2))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.temp = temp
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.temp = temp
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldTempFocused = false
                                         isTextFieldDPFocused = true
                                     }
@@ -312,6 +401,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: dp) { newValue in
                                     if newValue.count > 1 {
                                         dp = String(newValue.prefix(2))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.dp = dp
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.dp = dp
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldDPFocused = false
                                         isTextFieldQNHFocused = true
                                     }
@@ -325,6 +424,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: qnh) { newValue in
                                     if newValue.count > 3 {
                                         qnh = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.qnh = qnh
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.qnh = qnh
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldQNHFocused = false
                                         isTextFieldRemarksFocused = true
                                     }
@@ -341,6 +450,15 @@ struct FlightPlanArrView: View {
                                         autofillText = searchTerm
                                         isShowingAutofillOptionsRemarks = true
                                     } else {
+                                        if coreDataModel.existDataArrivalAtis {
+                                            coreDataModel.dataArrivalAtis.remarks = text ?? ""
+                                        } else {
+                                            let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                            item.remarks = text
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isShowingAutofillOptionsRemarks = false
                                     }
                                 } // todo hide autofilloptions when submit or when focus on another textfield
@@ -379,12 +497,22 @@ struct FlightPlanArrView: View {
                             .padding(.leading, 25)
                         HStack(alignment: .center) {
                             Group {
-                                TextField(" \(flightInfoData.dest)", text: $atcDest, onEditingChanged: { editing in
+                                TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $atcDest, onEditingChanged: { editing in
                                     isEditingAtcDest = editing
                                 })
                                 .onChange(of: atcDest) { newValue in
                                     if newValue.count > 2 {
                                         atcDest = String(newValue.prefix(3))
+                                        
+                                        if coreDataModel.existDataArrivalAtc {
+                                            coreDataModel.dataArrivalAtc.atcDest = atcDest
+                                        } else {
+                                            let item = ArrivalATCList(context: persistenceController.container.viewContext)
+                                            item.atcDest = atcDest
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldAtcDestFocused = false
                                         isTextFieldAtcRwyFocused = true
                                     }
@@ -396,6 +524,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: atcRwy) { newValue in
                                     if newValue.count > 2 {
                                         atcRwy = String(newValue.prefix(3))
+                                        
+                                        if coreDataModel.existDataArrivalAtc {
+                                            coreDataModel.dataArrivalAtc.atcRwy = atcRwy
+                                        } else {
+                                            let item = ArrivalATCList(context: persistenceController.container.viewContext)
+                                            item.atcRwy = atcRwy
+                                        }
+
+                                        coreDataModel.save()
+                                        
                                         isTextFieldAtcRwyFocused = false
                                         isTextFieldAtcArrFocused = true
                                     }
@@ -407,12 +545,33 @@ struct FlightPlanArrView: View {
                                         isEditingAtcArr = editing
                                     })
                                 .focused($isTextFieldAtcArrFocused)
+                                .onChange(of: atcArr) { newValue in
+                                    if coreDataModel.existDataArrivalAtc {
+                                        coreDataModel.dataArrivalAtc.atcArr = newValue
+                                    } else {
+                                        let item = ArrivalATCList(context: persistenceController.container.viewContext)
+                                        item.atcArr = newValue
+                                    }
+                                    
+                                    coreDataModel.save()
+                                }
+                                
                                 TextField("Trans Lvl", text: $atcTransLvl, onEditingChanged: { editing in
                                         isEditingAtcTransLvl = editing
                                     })
                                 .onChange(of: atcTransLvl) { newValue in
                                     if newValue.count > 3 {
-                                        atcRwy = String(newValue.prefix(4))
+                                        atcTransLvl = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalAtc {
+                                            coreDataModel.dataArrivalAtc.atcTransLvl = atcTransLvl
+                                        } else {
+                                            let item = ArrivalATCList(context: persistenceController.container.viewContext)
+                                            item.atcTransLvl = atcTransLvl
+                                        }
+                                        
+                                        coreDataModel.save()
+                                        
                                         isTextFieldAtcTransLvlFocused = false
                                         isTextFieldAtcDestFocused = true
                                     }
@@ -455,6 +614,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entLdg) { newValue in
                                     if newValue.count > 3 {
                                         entLdg = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalEntries {
+                                            coreDataModel.dataArrivalEntries.entLdg = entLdg
+                                        } else {
+                                            let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
+                                            item.entLdg = entLdg
+                                        }
+                                        
+                                        coreDataModel.save()
+                                        
                                         isTextFieldEntLdgFocused = false
                                         isTextFieldEntOnFocused = true
                                     }
@@ -468,6 +637,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entOn) { newValue in
                                     if newValue.count > 3 {
                                         entOn = String(newValue.prefix(4))
+                                        
+                                        if coreDataModel.existDataArrivalEntries {
+                                            coreDataModel.dataArrivalEntries.entOn = entOn
+                                        } else {
+                                            let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
+                                            item.entOn = entOn
+                                        }
+                                        
+                                        coreDataModel.save()
+                                        
                                         isTextFieldEntOnFocused = false
                                         isTextFieldEntFuelOnChocksFocused = true
                                     }
@@ -481,6 +660,16 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entFuelOnChocks) { newValue in
                                     if newValue.count > 4 {
                                         entFuelOnChocks = String(newValue.prefix(5))
+                                        
+                                        if coreDataModel.existDataArrivalEntries {
+                                            coreDataModel.dataArrivalEntries.entFuelOnChocks = entFuelOnChocks
+                                        } else {
+                                            let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
+                                            item.entFuelOnChocks = entFuelOnChocks
+                                        }
+                                        
+                                        coreDataModel.save()
+                                        
                                         isTextFieldEntFuelOnChocksFocused = false
                                         isTextFieldEntLdgFocused = true
                                     }

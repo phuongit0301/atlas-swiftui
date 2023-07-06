@@ -53,6 +53,13 @@
 		3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC542A2C199C008017FA /* SceneSessionKey.swift */; };
 		3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC562A2C19C0008017FA /* SceneTwoDelegate.swift */; };
 		3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC5A2A2D6284008017FA /* Storage.swift */; };
+		3E4A36432A55D55700027C61 /* CustomTFKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */; };
+		3E4A364A2A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36442A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift */; };
+		3E4A364B2A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36452A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift */; };
+		3E4A364C2A566ACE00027C61 /* ArrivalATISList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36462A566ACE00027C61 /* ArrivalATISList+CoreDataClass.swift */; };
+		3E4A364D2A566ACE00027C61 /* ArrivalATISList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36472A566ACE00027C61 /* ArrivalATISList+CoreDataProperties.swift */; };
+		3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36482A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift */; };
+		3E4A364F2A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36492A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
@@ -239,6 +246,13 @@
 		3E3FCC542A2C199C008017FA /* SceneSessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSessionKey.swift; sourceTree = "<group>"; };
 		3E3FCC562A2C19C0008017FA /* SceneTwoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTwoDelegate.swift; sourceTree = "<group>"; };
 		3E3FCC5A2A2D6284008017FA /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTFKeyboard.swift; sourceTree = "<group>"; };
+		3E4A36442A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalATCList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A36452A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalATCList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E4A36462A566ACE00027C61 /* ArrivalATISList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalATISList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A36472A566ACE00027C61 /* ArrivalATISList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalATISList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E4A36482A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalEntriesList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A36492A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrivalEntriesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -397,6 +411,7 @@
 				3E03C64C2A15D4D80099ACA3 /* Color.swift */,
 				3E8250762A1E1FB6008F616D /* View.swift */,
 				3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */,
+				3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -643,6 +658,12 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
+				3E4A36442A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift */,
+				3E4A36452A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift */,
+				3E4A36462A566ACE00027C61 /* ArrivalATISList+CoreDataClass.swift */,
+				3E4A36472A566ACE00027C61 /* ArrivalATISList+CoreDataProperties.swift */,
+				3E4A36482A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift */,
+				3E4A36492A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift */,
 				3EA961812A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift */,
 				3EA961822A557D5700C6B4A7 /* PerfDataList+CoreDataProperties.swift */,
 				3EB99D422A55404B0091BC08 /* AltnDataList+CoreDataClass.swift */,
@@ -996,11 +1017,13 @@
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3EB99D102A5432810091BC08 /* PerfWeightList+CoreDataClass.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
+				3E4A364C2A566ACE00027C61 /* ArrivalATISList+CoreDataClass.swift in Sources */,
 				3EB99D302A546A330091BC08 /* TaxiTimesList+CoreDataClass.swift in Sources */,
 				C580EA242A48251500E3E8D6 /* FlightPlanNOTAMView.swift in Sources */,
 				3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */,
 				3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */,
 				3EB99D342A546A330091BC08 /* ProjArrivalDelaysList+CoreDataClass.swift in Sources */,
+				3E4A364B2A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift in Sources */,
 				3EB99CF82A53194E0091BC08 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3EFA5EFC2A407204001ED6CF /* NoteForm.swift in Sources */,
 				3EFA5F762A4AC456001ED6CF /* ScratchPadList+CoreDataClass.swift in Sources */,
@@ -1017,6 +1040,7 @@
 				3EFA5EF22A3DFC6E001ED6CF /* FlightInformationView.swift in Sources */,
 				3EB99D0C2A541B390091BC08 /* PerfInfoList+CoreDataClass.swift in Sources */,
 				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
+				3E4A364F2A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift in Sources */,
 				3EB99D412A547BA40091BC08 /* FuelExtraList+CoreDataProperties.swift in Sources */,
 				3EB99D392A546A330091BC08 /* TrackMilesList+CoreDataProperties.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
@@ -1028,6 +1052,7 @@
 				3EB99CFA2A53194E0091BC08 /* DepartureATISList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
+				3E4A364D2A566ACE00027C61 /* ArrivalATISList+CoreDataProperties.swift in Sources */,
 				3EB99D452A55404B0091BC08 /* AltnDataList+CoreDataProperties.swift in Sources */,
 				3EB99D1C2A5451F90091BC08 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3EB99CFD2A53194E0091BC08 /* DepartureATCList+CoreDataProperties.swift in Sources */,
@@ -1041,6 +1066,7 @@
 				3EB99D382A546A330091BC08 /* TrackMilesList+CoreDataClass.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */,
 				3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */,
+				3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */,
 				3EB99D372A546A330091BC08 /* FlightLevelList+CoreDataProperties.swift in Sources */,
 				C580EA282A482F8800E3E8D6 /* FlightPlanMetarTafView.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
@@ -1054,6 +1080,7 @@
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3EB99D002A53900F0091BC08 /* EnrouteList+CoreDataClass.swift in Sources */,
 				3EB99D352A546A330091BC08 /* ProjArrivalDelaysList+CoreDataProperties.swift in Sources */,
+				3E4A364A2A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
@@ -1112,6 +1139,7 @@
 				3EFA5F2E2A458F25001ED6CF /* TableDetail.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
 				3EB99D092A5411910091BC08 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
+				3E4A36432A55D55700027C61 /* CustomTFKeyboard.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,

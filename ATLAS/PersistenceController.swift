@@ -111,6 +111,13 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataDepartureEntries: Bool = false
     @Published var dataFPEnroute: [EnrouteList] = []
     
+    @Published var dataArrivalAtc: ArrivalATCList = ArrivalATCList()
+    @Published var existDataArrivalAtc: Bool = false
+    @Published var dataArrivalAtis: ArrivalATISList = ArrivalATISList()
+    @Published var existDataArrivalAtis: Bool = false
+    @Published var dataArrivalEntries: ArrivalEntriesList = ArrivalEntriesList()
+    @Published var existDataArrivalEntries: Bool = false
+    
     @Published var scratchPadArray: [ScratchPadList] = []
     
     let service = PersistenceController.shared
@@ -140,6 +147,8 @@ class CoreDataModelState: ObservableObject {
         dataFuelTableList = readFuelTableList()
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
+        readDepartures()
+        readArrivals()
     }
     
     func checkAndSyncData() async {
@@ -990,6 +999,121 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func readArrivals() {
+        readArrivalAtc()
+        readArrivalAtis()
+        readArrivalEntries()
+    }
+    
+    func readArrivalAtc() {
+        let request: NSFetchRequest<ArrivalATCList> = ArrivalATCList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [ArrivalATCList] = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                if let item = response.first {
+                    dataArrivalAtc = item
+                }
+            } else {
+                let newObject = ArrivalATCList(context: service.container.viewContext)
+                newObject.id = UUID()
+                newObject.atcDest = ""
+                newObject.atcArr = ""
+                newObject.atcRwy = ""
+                newObject.atcTransLvl = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+            existDataArrivalAtc = true
+        } catch {
+            print("Could not fetch Arrival ATC from Core Data.")
+        }
+    }
+    
+    func readArrivalAtis() {
+        let request: NSFetchRequest<ArrivalATISList> = ArrivalATISList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [ArrivalATISList] = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                if let item = response.first {
+                    dataArrivalAtis = item
+                }
+            } else {
+                let newObject = ArrivalATISList(context: service.container.viewContext)
+                newObject.id = UUID()
+                newObject.code = ""
+                newObject.time = ""
+                newObject.rwy = ""
+                newObject.transLvl = ""
+                newObject.wind = ""
+                newObject.vis = ""
+                newObject.wx = ""
+                newObject.cloud = ""
+                newObject.temp = ""
+                newObject.dp = ""
+                newObject.qnh = ""
+                newObject.remarks = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+            existDataArrivalAtis = true
+        } catch {
+            print("Could not fetch Arrival Atis from Core Data.")
+        }
+    }
+    
+    func readArrivalEntries() {
+        let request: NSFetchRequest<ArrivalEntriesList> = ArrivalEntriesList.fetchRequest()
+        // fetch with the request
+        do {
+            let response: [ArrivalEntriesList] = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                if let item = response.first {
+                    dataArrivalEntries = item
+                }
+            } else {
+                let newObject = ArrivalEntriesList(context: service.container.viewContext)
+                newObject.id = UUID()
+                newObject.entLdg = ""
+                newObject.entOn = ""
+                newObject.entFuelOnChocks = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+            existDataArrivalEntries = true
+        } catch {
+            print("Could not fetch Arrival Entries from Core Data.")
         }
     }
 

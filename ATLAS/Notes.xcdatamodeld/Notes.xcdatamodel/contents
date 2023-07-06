@@ -12,6 +12,34 @@
         <attribute name="time" optional="YES" attributeType="String"/>
         <attribute name="vis" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="ArrivalATC" representedClassName="ArrivalATCList" syncable="YES">
+        <attribute name="atcArr" optional="YES" attributeType="String"/>
+        <attribute name="atcDest" optional="YES" attributeType="String"/>
+        <attribute name="atcRwy" optional="YES" attributeType="String"/>
+        <attribute name="atcTransLvl" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="ArrivalATIS" representedClassName="ArrivalATISList" syncable="YES">
+        <attribute name="cloud" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dp" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="qnh" optional="YES" attributeType="String"/>
+        <attribute name="remarks" optional="YES" attributeType="String"/>
+        <attribute name="rwy" optional="YES" attributeType="String"/>
+        <attribute name="temp" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="transLvl" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+        <attribute name="wind" optional="YES" attributeType="String"/>
+        <attribute name="wx" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ArrivalEntries" representedClassName="ArrivalEntriesList" syncable="YES">
+        <attribute name="entFuelOnChocks" optional="YES" attributeType="String"/>
+        <attribute name="entLdg" optional="YES" attributeType="String"/>
+        <attribute name="entOn" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <entity name="DepartureATC" representedClassName="DepartureATCList" syncable="YES">
         <attribute name="atcDep" optional="YES" attributeType="String"/>
         <attribute name="atcFL" optional="YES" attributeType="String"/>
