@@ -796,9 +796,38 @@ struct FlightPlanArrView: View {
                     .listStyle(GroupedListStyle())
                 }
             }
-        }
-        .navigationTitle("Arrival")
+        }.navigationTitle("Arrival")
         .background(Color(.systemGroupedBackground))
+        .onAppear {
+            //set data ats
+            if coreDataModel.existDataArrivalAtis {
+                self.code = coreDataModel.dataArrivalAtis.unwrappedCode
+                self.time = coreDataModel.dataArrivalAtis.unwrappedTime
+                self.rwy = coreDataModel.dataArrivalAtis.unwrappedRwy
+                self.transLvl = coreDataModel.dataArrivalAtis.unwrappedTransLvl
+                self.wind = coreDataModel.dataArrivalAtis.unwrappedWind
+                self.vis = coreDataModel.dataArrivalAtis.unwrappedVis
+                self.wx = coreDataModel.dataArrivalAtis.unwrappedWx
+                self.cloud = coreDataModel.dataArrivalAtis.unwrappedCloud
+                self.temp = coreDataModel.dataArrivalAtis.unwrappedTemp
+                self.dp = coreDataModel.dataArrivalAtis.unwrappedDp
+                self.qnh = coreDataModel.dataArrivalAtis.unwrappedQnh
+                self.remarks = coreDataModel.dataArrivalAtis.unwrappedRemarks
+            }
+            
+            if coreDataModel.existDataArrivalAtc {
+                self.atcDest = coreDataModel.dataArrivalAtc.unwrappedAtcDest
+                self.atcRwy = coreDataModel.dataArrivalAtc.unwrappedAtcRwy
+                self.atcArr = coreDataModel.dataArrivalAtc.unwrappedAtcArr
+                self.atcTransLvl = coreDataModel.dataArrivalAtc.unwrappedAtcTransLvl
+            }
+            
+            if coreDataModel.existDataArrivalEntries {
+                self.entLdg = coreDataModel.dataArrivalEntries.unwrappedEntLdg
+                self.entFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks
+                self.entOn = coreDataModel.dataArrivalEntries.unwrappedEntOn
+            }
+        }
     }
 }
 

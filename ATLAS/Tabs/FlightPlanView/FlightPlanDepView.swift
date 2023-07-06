@@ -217,8 +217,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 0 {
                                             code = String(newValue.prefix(1))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.code = code
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.code = code
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.code = code
@@ -237,8 +237,8 @@ struct FlightPlanDepView: View {
                                     .onChange(of: time) { newValue in
                                         if newValue.count > 3 {
                                             time = String(newValue.prefix(4))
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.time = time
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.time = time
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.time = time
@@ -260,8 +260,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 10 {
                                             rwy = String(newValue.prefix(11))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.rwy = rwy
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.rwy = rwy
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.rwy = rwy
@@ -281,8 +281,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 3 {
                                             transLvl = String(newValue.prefix(4))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.translvl = transLvl
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.translvl = transLvl
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.translvl = transLvl
@@ -304,8 +304,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 5 {
                                             wind = String(newValue.prefix(6))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.wind = wind
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.wind = wind
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.wind = wind
@@ -325,8 +325,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 3 {
                                             vis = String(newValue.prefix(4))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.vis = vis
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.vis = vis
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.vis = vis
@@ -352,8 +352,8 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsWx = true
                                         } else {
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.wx = text
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.wx = text
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.wx = text
@@ -375,8 +375,8 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsCloud = true
                                         } else {
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.cloud = text
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.cloud = text
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.cloud = text
@@ -396,8 +396,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 1 {
                                             temp = String(newValue.prefix(2))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.temp = temp
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.temp = temp
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.temp = temp
@@ -420,8 +420,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 1 {
                                             dp = String(newValue.prefix(2))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.dp = dp
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.dp = dp
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.dp = dp
@@ -443,8 +443,8 @@ struct FlightPlanDepView: View {
                                         if newValue.count > 3 {
                                             qnh = String(newValue.prefix(4))
                                             
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.qnh = qnh
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.qnh = qnh
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.qnh = qnh
@@ -469,8 +469,8 @@ struct FlightPlanDepView: View {
                                             autofillText = searchTerm
                                             isShowingAutofillOptionsRemarks = true
                                         } else {
-                                            if coreDataModel.existDataDepartureAts {
-                                                coreDataModel.dataDepartureAts.remarks = text
+                                            if coreDataModel.existDataDepartureAtis {
+                                                coreDataModel.dataDepartureAtis.remarks = text
                                             } else {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.remarks = text
@@ -487,7 +487,7 @@ struct FlightPlanDepView: View {
                             .padding(.bottom, 5)
                             .padding(.leading, 25)
                         }
-                    }.onChange(of: coreDataModel.dataDepartureAts) { _ in
+                    }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
                         coreDataModel.readDepartureAtis()
                     }
                     
@@ -930,19 +930,19 @@ struct FlightPlanDepView: View {
         }.onAppear {
             coreDataModel.readDepartures()
             //set data ats
-            if coreDataModel.existDataDepartureAts {
-                self.code = coreDataModel.dataDepartureAts.unwrappedCode
-                self.time = coreDataModel.dataDepartureAts.unwrappedTime
-                self.rwy = coreDataModel.dataDepartureAts.unwrappedRwy
-                self.transLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl
-                self.wind = coreDataModel.dataDepartureAts.unwrappedWind
-                self.vis = coreDataModel.dataDepartureAts.unwrappedVis
-                self.wx = coreDataModel.dataDepartureAts.unwrappedWx
-                self.cloud = coreDataModel.dataDepartureAts.unwrappedCloud
-                self.temp = coreDataModel.dataDepartureAts.unwrappedTemp
-                self.dp = coreDataModel.dataDepartureAts.unwrappedDp
-                self.qnh = coreDataModel.dataDepartureAts.unwrappedQnh
-                self.remarks = coreDataModel.dataDepartureAts.unwrappedRemarks
+            if coreDataModel.existDataDepartureAtis {
+                self.code = coreDataModel.dataDepartureAtis.unwrappedCode
+                self.time = coreDataModel.dataDepartureAtis.unwrappedTime
+                self.rwy = coreDataModel.dataDepartureAtis.unwrappedRwy
+                self.transLvl = coreDataModel.dataDepartureAtis.unwrappedRranslvl
+                self.wind = coreDataModel.dataDepartureAtis.unwrappedWind
+                self.vis = coreDataModel.dataDepartureAtis.unwrappedVis
+                self.wx = coreDataModel.dataDepartureAtis.unwrappedWx
+                self.cloud = coreDataModel.dataDepartureAtis.unwrappedCloud
+                self.temp = coreDataModel.dataDepartureAtis.unwrappedTemp
+                self.dp = coreDataModel.dataDepartureAtis.unwrappedDp
+                self.qnh = coreDataModel.dataDepartureAtis.unwrappedQnh
+                self.remarks = coreDataModel.dataDepartureAtis.unwrappedRemarks
             }
             
             //set data atc

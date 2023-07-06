@@ -17,6 +17,8 @@ struct altnTaf: Identifiable {
 }
 
 struct FlightPlanMETARTAFView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     // initialise state variables
     let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
 
@@ -56,10 +58,10 @@ struct FlightPlanMETARTAFView: View {
             //scrollable outer list section
             List {
                 // Dep METAR section
-                Section(header: Text("DEP METAR | PLAN DEP \(flightInfoData.depICAO)  \(flightRouteData.depRwy)").foregroundStyle(Color.black)) {
+                Section(header: Text("DEP METAR | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(depMetar.components(separatedBy: " "), id: \.self) { word in
+                            ForEach(coreDataModel.dataMetarTaf.unwrappedDepMetar.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
                                         .foregroundColor(.red)
@@ -82,10 +84,10 @@ struct FlightPlanMETARTAFView: View {
                 }
                 
                 // Dep TAF section
-                Section(header: Text("DEP TAF | PLAN DEP \(flightInfoData.depICAO)  \(flightRouteData.depRwy)").foregroundStyle(Color.black)) {
+                Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(depTaf.components(separatedBy: " "), id: \.self) { word in
+                            ForEach(coreDataModel.dataMetarTaf.unwrappedDepTaf.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
                                         .foregroundColor(.red)
@@ -104,13 +106,13 @@ struct FlightPlanMETARTAFView: View {
                             }
                         }
                         .padding(.leading, 25)
-                    } // todo make fit to content without scrollview
+                    }
                 }
                 // Arr METAR section
-                Section(header: Text("ARR METAR | PLAN ARR \(flightInfoData.destICAO)  \(flightRouteData.arrRwy)").foregroundStyle(Color.black)) {
+                Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(arrMetar.components(separatedBy: " "), id: \.self) { word in
+                            ForEach(coreDataModel.dataMetarTaf.unwrappedArrMetar.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
                                         .foregroundColor(.red)
@@ -132,10 +134,10 @@ struct FlightPlanMETARTAFView: View {
                     } // todo make fit to content without scrollview
                 }
                 // Arr TAF section
-                Section(header: Text("ARR TAF | PLAN ARR \(flightInfoData.destICAO)  \(flightRouteData.arrRwy)").foregroundStyle(Color.black)) {
+                Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(arrTaf.components(separatedBy: " "), id: \.self) { word in
+                            ForEach(coreDataModel.dataMetarTaf.unwrappedArrTaf.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
                                         .foregroundColor(.red)
@@ -154,19 +156,18 @@ struct FlightPlanMETARTAFView: View {
                             }
                         }
                         .padding(.leading, 25)
-                    } // todo make fit to content without scrollview
+                    }
                 }
                 // ALTN TAF section
                 Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
-                    // todo - correct spacing and wrap text
-                    Table(altnTafTable) {
-                        TableColumn("ALTN / RWY", value: \.altnRwy)
-                        TableColumn("ETA", value: \.eta)
-                        TableColumn("TAF", value: \.taf)
+                    Table(coreDataModel.dataAltnTaf) {
+                        TableColumn("ALTN / RWY", value: \.unwrappedAltnRwy)
+                        TableColumn("ETA", value: \.unwrappedEta)
+                        TableColumn("TAF", value: \.unwrappedTaf)
                     }
                     .frame(minHeight: 250)
                     .scrollDisabled(true)
-                } // todo fix spacing, make color selection like above (no need to use table if not required)
+                }
             }
         }
         .navigationTitle("METAR / TAF")

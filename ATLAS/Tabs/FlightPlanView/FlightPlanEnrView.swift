@@ -134,48 +134,49 @@ struct FlightPlanEnrView: View {
 //                                            "\(row.unwrappedEta)",
 //                                            text: $eta
 //                                        )
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, field: row.unwrappedEta, index: index)
-//                                        .onSubmit {
-//                                            updateValues(editedIndex: index)
-//                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-
-                                        TextField(
-                                            "\(row.unwrappedAta)",
-                                            text: $ata
-                                        )
+                                        
+//                                        TextField(
+//                                            "\(row.unwrappedAta)",
+//                                            text: $ata
+//                                        )
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index
+                                        )
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-                                        TextField(
-                                            row.unwrappedAfl,
-                                            text: $afl
-                                        )
+//                                        TextField(
+//                                            row.unwrappedAfl,
+//                                            text: $afl
+//                                        )
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
 //
                                         // entry here
-                                        TextField(
-                                            row.unwrappedOat,
-                                            text: $oat
-                                        )
+//                                        TextField(
+//                                            row.unwrappedOat,
+//                                            text: $oat
+//                                        )
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -183,13 +184,14 @@ struct FlightPlanEnrView: View {
 //
                                         Text(row.unwrappedAdn).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-                                        TextField(
-                                            row.unwrappedAwind,
-                                            text: $awind
-                                        )
+//                                        TextField(
+//                                            row.unwrappedAwind,
+//                                            text: $awind
+//                                        )
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -203,13 +205,14 @@ struct FlightPlanEnrView: View {
 
                                         Text(row.unwrappedZfrq).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         // entry here
-                                        TextField(
-                                            row.unwrappedAfrm,
-                                            text: $afrm
-                                        )
+//                                        TextField(
+//                                            row.unwrappedAfrm,
+//                                            text: $afrm
+//                                        )
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
+                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -243,7 +246,7 @@ struct FlightPlanEnrView: View {
                     .frame(width: proxy.size.width - 50)
                     // winds section
                     
-                }
+                }.keyboardAvoidView()
             }
             .navigationTitle("Enroute")
             .background(Color(.systemGroupedBackground))
@@ -294,11 +297,30 @@ struct EnrouteCustomField: View {
     
     // Dedicated state var for each field
 //    @State var item: PerfWeightList = PerfWeightList()
+    @State var name: String = ""
     @State var field = ""
     @State var index: Int = 0
     
     var body: some View {
         TextField("Enter", text: $field).onSubmit {
+            switch name {
+                case "eta":
+                    coreDataModel.dataFPEnroute[index].eta = field
+                case "ata":
+                    coreDataModel.dataFPEnroute[index].ata = field
+                case "afl":
+                    coreDataModel.dataFPEnroute[index].afl = field
+                case "oat":
+                    coreDataModel.dataFPEnroute[index].oat = field
+                case "awind":
+                    coreDataModel.dataFPEnroute[index].awind = field
+                case "afrm":
+                    coreDataModel.dataFPEnroute[index].afrm = field
+                default:
+                    coreDataModel.dataFPEnroute[index].eta = field
+            }
+            coreDataModel.save()
+            coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
             
             updateValues(editedIndex: index)
         }

@@ -12,6 +12,12 @@
         <attribute name="time" optional="YES" attributeType="String"/>
         <attribute name="vis" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="AltnTafData" representedClassName="AltnTafDataList" syncable="YES">
+        <attribute name="altnRwy" optional="YES" attributeType="String"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="taf" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="ArrivalATC" representedClassName="ArrivalATCList" syncable="YES">
         <attribute name="atcArr" optional="YES" attributeType="String"/>
         <attribute name="atcDest" optional="YES" attributeType="String"/>
@@ -166,6 +172,13 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="policyReason" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
+        <attribute name="arrMetar" optional="YES" attributeType="String"/>
+        <attribute name="arrTaf" optional="YES" attributeType="String"/>
+        <attribute name="depMetar" optional="YES" attributeType="String"/>
+        <attribute name="depTaf" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
         <attribute name="arrNotams" optional="YES" attributeType="Binary"/>

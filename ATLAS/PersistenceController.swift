@@ -99,18 +99,26 @@ class CoreDataModelState: ObservableObject {
     @Published var dataFuelExtra: FuelExtraList = FuelExtraList()
     @Published var existDataFuelExtra: Bool = false
     
-    // For Fuel Extra
+    // For Altn
     @Published var dataAltnList: [AltnDataList] = []
     
-    // For Fuel Extra
+    // For NoTams
     @Published var dataNotams: NotamsDataList = NotamsDataList()
     @Published var existDataNotams: Bool = false
+    
+    // For Metar Taf
+    @Published var dataMetarTaf: MetarTafDataList = MetarTafDataList()
+    @Published var existDataMetarTaf: Bool = false
+    
+    // For Metar Taf
+    @Published var dataAltnTaf: [AltnTafDataList] = []
+    @Published var existDataAltnTaf: Bool = false
     
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
-    @Published var dataDepartureAts: DepartureATISList = DepartureATISList()
-    @Published var existDataDepartureAts: Bool = false
+    @Published var dataDepartureAtis: DepartureATISList = DepartureATISList()
+    @Published var existDataDepartureAtis: Bool = false
     @Published var dataDepartureEntries: DepartureEntriesList = DepartureEntriesList()
     @Published var existDataDepartureEntries: Bool = false
     @Published var dataFPEnroute: [EnrouteList] = []
@@ -154,6 +162,8 @@ class CoreDataModelState: ObservableObject {
         readDepartures()
         readArrivals()
         readDataNotamsList()
+        dataMetarTaf = readDataMetarTafList()
+        dataAltnTaf = readDataAltnTafList()
     }
     
     func checkAndSyncData() async {
@@ -168,6 +178,8 @@ class CoreDataModelState: ObservableObject {
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
         dataNotams = readDataNotamsList()
+        dataMetarTaf = readDataMetarTafList()
+        dataAltnTaf = readDataAltnTafList()
         
         if response.count == 0 {
             //            initDataTag()
@@ -217,6 +229,12 @@ class CoreDataModelState: ObservableObject {
         if !existDataNotams {
             initDataNotams()
             dataNotams = readDataNotamsList()
+        }
+        
+        if !existDataMetarTaf || dataAltnTaf.count == 0 {
+            initDataTaf()
+            readDataMetarTafList()
+            readDataAltnTafList()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -847,6 +865,52 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataTaf() {
+        let metarTafData = MetarTafData(depMetar: "METAR WSSS 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", depTaf: "TAF WSSS 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", arrMetar: "METAR EDDB 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", arrTaf: "TAF EDDB 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", altnTaf: [
+            AltnTafData(altnRwy: "EDDH/15", eta: "1742", taf: "TAF EDDH 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+            AltnTafData(altnRwy: "EDDK/32R", eta: "1755", taf: "TAF EDDK 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+            AltnTafData(altnRwy: "EDDL/05L", eta: "1757", taf: "TAF EDDL 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
+            AltnTafData(altnRwy: "EDDF/25L", eta: "1749", taf: "TAF EDDF 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015")
+        ])
+        
+        do {
+            let newObj = MetarTafDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.depMetar = metarTafData.depMetar
+            newObj.depTaf = metarTafData.depTaf
+            newObj.arrMetar = metarTafData.arrMetar
+            newObj.arrTaf = metarTafData.arrTaf
+            try service.container.viewContext.save()
+            
+            print("saved Metar Taf successfully")
+        } catch {
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+        
+        
+        service.container.viewContext.performAndWait {
+            metarTafData.altnTaf.forEach { item in
+                do {
+                    let newObj1 = AltnTafDataList(context: service.container.viewContext)
+                    newObj1.id = UUID()
+                    newObj1.altnRwy = item.altnRwy
+                    newObj1.eta = item.eta
+                    newObj1.taf = item.taf
+                    try service.container.viewContext.save()
+                    print("saved altn taf successfully")
+                } catch {
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+        }
+    }
+    
     func readScratchPad() -> [ScratchPadList] {
         // create a temp array to save fetched notes
         var data: [ScratchPadList] = []
@@ -951,29 +1015,28 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 if let item = response.first {
                     dataDepartureAtc = item
-                    existDataDepartureAtc = true
-                } else {
-                    let newObj = DepartureATCList(context: service.container.viewContext)
-                    newObj.atcDep = ""
-                    newObj.atcSQ = ""
-                    newObj.atcRte = ""
-                    newObj.atcFL = ""
-                    newObj.atcRwy = ""
+                }
+            } else {
+                let newObj = DepartureATCList(context: service.container.viewContext)
+                newObj.atcDep = ""
+                newObj.atcSQ = ""
+                newObj.atcRte = ""
+                newObj.atcFL = ""
+                newObj.atcRwy = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
                     
-                    do {
-                        // Persist the data in this managed object context to the underlying store
-                        try service.container.viewContext.save()
-                        print("saved successfully")
-                    } catch {
-                        // Something went wrong 😭
-                        print("Failed to save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
-                    }
-                    existDataDepartureAtc = false
                 }
             }
+            existDataDepartureAtc = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
@@ -986,10 +1049,35 @@ class CoreDataModelState: ObservableObject {
             let response: [DepartureATISList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    dataDepartureAts = item
-                    existDataDepartureAts = true
+                    dataDepartureAtis = item
+                }
+            } else {
+                let newObj = DepartureATISList(context: service.container.viewContext)
+                newObj.cloud = ""
+                newObj.code = ""
+                newObj.dp = ""
+                newObj.qnh = ""
+                newObj.remarks = ""
+                newObj.rwy = ""
+                newObj.temp = ""
+                newObj.time = ""
+                newObj.translvl = ""
+                newObj.vis = ""
+                newObj.wx = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
                 }
             }
+            existDataDepartureAtis = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
@@ -1003,9 +1091,27 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 if let item = response.first {
                     dataDepartureEntries = item
-                    existDataDepartureEntries = true
+                }
+            } else {
+                let newObj = DepartureEntriesList(context: service.container.viewContext)
+                newObj.entTaxi = ""
+                newObj.entTakeoff = ""
+                newObj.entOff = ""
+                newObj.entFuelInTanks = ""
+                
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
                 }
             }
+            existDataDepartureEntries = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
@@ -1374,6 +1480,42 @@ class CoreDataModelState: ObservableObject {
                     data = item
                     existDataNotams = true
                 }
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataMetarTafList() -> MetarTafDataList {
+        var data: MetarTafDataList = MetarTafDataList()
+        
+        let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
+        do {
+            let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataMetarTaf = true
+                }
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataAltnTafList() -> [AltnTafDataList] {
+        var data: [AltnTafDataList] = []
+        
+        let request: NSFetchRequest<AltnTafDataList> = AltnTafDataList.fetchRequest()
+        do {
+            let response: [AltnTafDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+                existDataAltnTaf = true
             }
         } catch {
             print("Could not fetch notams from Core Data.")
