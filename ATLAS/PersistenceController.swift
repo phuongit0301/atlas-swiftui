@@ -102,6 +102,10 @@ class CoreDataModelState: ObservableObject {
     // For Fuel Extra
     @Published var dataAltnList: [AltnDataList] = []
     
+    // For Fuel Extra
+    @Published var dataNotams: NotamsDataList = NotamsDataList()
+    @Published var existDataNotams: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -149,6 +153,7 @@ class CoreDataModelState: ObservableObject {
         dataAltnList = readAltnList()
         readDepartures()
         readArrivals()
+        readDataNotamsList()
     }
     
     func checkAndSyncData() async {
@@ -162,6 +167,7 @@ class CoreDataModelState: ObservableObject {
         dataFuelTableList = readFuelTableList()
         dataFuelExtra = readFuelExtra()
         dataAltnList = readAltnList()
+        dataNotams = readDataNotamsList()
         
         if response.count == 0 {
             //            initDataTag()
@@ -206,6 +212,11 @@ class CoreDataModelState: ObservableObject {
         if dataAltnList.count == 0 {
             initDataAltn()
             dataAltnList = readAltnList()
+        }
+        
+        if !existDataNotams {
+            initDataNotams()
+            dataNotams = readDataNotamsList()
         }
         //        do {
         //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
@@ -714,61 +725,6 @@ class CoreDataModelState: ObservableObject {
         }
         
         dataFuelTableList = readFuelTableList()
-//        let newObj1 = FuelTableList(context: service.container.viewContext)
-//        newObj1.id = UUID()
-//        newObj1.firstColumn = "(A) Burnoff"
-//        newObj1.time = fuelData.burnoff["time"]!
-//        newObj1.fuel = fuelData.burnoff["fuel"]!
-//        newObj1.policyReason = ""
-//
-//        let newObj2 = FuelTableList(context: service.container.viewContext)
-//        newObj2.id = UUID()
-//        newObj2.firstColumn = "(B) Contingency Fuel"
-//        newObj2.time = fuelData.cont["time"]!
-//        newObj2.fuel = fuelData.cont["fuel"]!
-//        newObj2.policyReason = fuelData.cont["policy"]!
-//
-//        let newObj3 = FuelTableList(context: service.container.viewContext)
-//        newObj3.id = UUID()
-//        newObj3.firstColumn = "(C) Altn Fuel"
-//        newObj3.time = fuelData.altn["time"]!
-//        newObj3.fuel = fuelData.altn["fuel"]!
-//        newObj3.policyReason = ""
-//
-//        let newObj4 = FuelTableList(context: service.container.viewContext)
-//        newObj4.id = UUID()
-//        newObj4.firstColumn = "(D) Altn Hold"
-//        newObj4.time = fuelData.hold["time"]!
-//        newObj4.fuel = fuelData.hold["fuel"]!
-//        newObj4.policyReason = ""
-//
-//        let newObj5 = FuelTableList(context: service.container.viewContext)
-//        newObj5.id = UUID()
-//        newObj5.firstColumn = "(E) 60min Topup Fuel"
-//        newObj5.time = fuelData.topup60["time"]!
-//        newObj5.fuel = fuelData.topup60["fuel"]!
-//        newObj5.policyReason = ""
-//
-//        let newObj6 = FuelTableList(context: service.container.viewContext)
-//        newObj6.id = UUID()
-//        newObj6.firstColumn = "(F) Taxi Fuel"
-//        newObj6.time = fuelData.taxi["time"]!
-//        newObj6.fuel = fuelData.taxi["fuel"]!
-//        newObj6.policyReason = fuelData.taxi["policy"]!
-//
-//        let newObj7 = FuelTableList(context: service.container.viewContext)
-//        newObj7.id = UUID()
-//        newObj7.firstColumn = "(G) Flight Plan Requirement (A + B + C + D + E + F)"
-//        newObj7.time = fuelData.planReq["time"]!
-//        newObj7.fuel = fuelData.planReq["fuel"]!
-//        newObj7.policyReason = ""
-//
-//        let newObj8 = FuelTableList(context: service.container.viewContext)
-//        newObj8.id = UUID()
-//        newObj8.firstColumn = "(H) Dispatch Additional Fuel"
-//        newObj8.time = fuelData.dispAdd["time"]!
-//        newObj8.fuel = fuelData.dispAdd["fuel"]!
-//        newObj8.policyReason = fuelData.dispAdd["policy"]!
     }
     
     func save() {
@@ -831,6 +787,59 @@ class CoreDataModelState: ObservableObject {
             print("saved perf weight successfully")
         } catch {
             // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataNotams() {
+        let notamsData = NotamsData(depNotams: ["""
+            A1333/23 NOTAMN
+            Q) WSJC/QMXLC/IV/BO/A/000/999/0122N10359E005
+            A) WSSS B) 2306161700 C) 2306292100
+            D) JUN 16 17 20 22 23 24 27 29 1700-2100
+            E) FLW TWY CLSD DUE TO WIP:
+            1) TWY J BTN TWY T AND TWY J12, INCLUDING JUNCTION OF TWY J/TWY J12
+            AND JUNCTION OF TWY J/TWY B
+            2) TWY K BTN TWY T AND TWY J12, INCLUDING JUNCTION OF TWY K/TWY J12
+            AND JUNCTION OF TWY K/TWY B
+            3) TWY K1, TWY K2 AND TWY K3
+            """], enrNotams: ["""
+            B0157/23
+            Q) EDXX/QAFXX/IV/NBO/E/000/999/5123N01019E262
+            A) EDWW  A) EDGG  A) EDMM  B) FROM: 23/02/28 14:29  TO: 23/05/25 23:59 EST
+            E) MILITARY INVASION OF UKRAINE BY RUSSIAN FEDERATION:
+
+            NOTE 1: ALL AIRCRAFT OWNED, CHARTERED OR OPERATED BY CITIZENS OF THE
+            RUSSIAN FEDERATION OR OTHERWISE CONTROLLED BY NATURAL OR LEGAL
+            PERSONS OR ENTITY FROM THE RUSSIAN FEDERATION AND OPERATORS HOLDING
+            AIR OPERATOR CERTIFICATE (AOC) ISSUED BY THE RUSSIAN FEDERATION
+            AUTHORITIES ARE PROHIBITED TO ENTER, EXIT OR OVERFLY GERMAN AIRSPACE
+            EXCEPT HUMANITARIAN FLIGHTS WITH THE PERMISSION OF THE GERMAN
+            MINISTRY FOR DIGITAL AND TRANSPORT AND IN CASE OF EMERGENCY LANDING
+            OR EMERGENCY OVERFLIGHT. REQUESTS FOR HUMANITARIAN FLIGHTS SHALL BE
+            SENT TO HUM-FLIGHTS(AT)DFS.DE WITH DATE, EOBT, ADEP AND ADES.
+            END PART 1 OF 2
+            """], arrNotams: ["""
+            A2143/23
+            Q) EDWW/QNVAS/IV/BO/AE/000/999/5225N01408E025
+            A) EDDB  B) FROM: 23/05/09 10:21  TO: 23/05/11 15:00 EST
+            E) FUERSTENWALDE VOR/DME FWE 113.30MHZ/CH80X, VOR PART OUT OF
+            SERVICE
+            """])
+        
+        do {
+            let newObj = NotamsDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.depNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.depNotams, requiringSecureCoding: true)
+            newObj.enrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.enrNotams, requiringSecureCoding: true)
+            newObj.arrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.arrNotams, requiringSecureCoding: true)
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved notams successfully")
+        } catch {
             print("Failed to save: \(error)")
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
@@ -1349,6 +1358,25 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch altn from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataNotamsList() -> NotamsDataList {
+        var data: NotamsDataList = NotamsDataList()
+        
+        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
+        do {
+            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    data = item
+                    existDataNotams = true
+                }
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
         }
         
         return data

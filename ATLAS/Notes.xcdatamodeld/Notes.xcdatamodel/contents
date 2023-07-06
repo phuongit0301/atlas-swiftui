@@ -167,6 +167,15 @@
         <attribute name="policyReason" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
+        <attribute name="arrNotams" optional="YES" attributeType="Binary"/>
+        <attribute name="depNotams" optional="YES" attributeType="Binary"/>
+        <attribute name="enrNotams" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isArrReference" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isDepReference" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="isEnrReference" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
         <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
