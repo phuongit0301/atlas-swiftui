@@ -147,325 +147,10 @@ struct FlightPlanDepView: View {
                     Section(header:
                         HStack {
                             Text("ATIS \(coreDataModel.dataSummaryInfo.unwrappedDep)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
-                            
-//                            Spacer()
-//
-//                            Button(action: {
-//                                print("Edit")
-//                            }) {
-//                                Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-//                            }
                         }
                     ) {
                         // grouped row using hstack
                         VStack(alignment: .leading) {
-                            //                        Group {
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Code")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Code",
-                            //                                    text: $code
-                            //                                )
-                            //                                .onChange(of: code) { newValue in
-                            //                                    // Limit the text to a maximum of 1 characters
-                            //                                    if newValue.count > 0 {
-                            //                                        code = String(newValue.prefix(1))
-                            //                                        isTextFieldCodeFocused = false
-                            //                                        isTextFieldTimeFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldCodeFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Time")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Time",
-                            //                                    text: $time
-                            //                                )
-                            //                                .onChange(of: time) { newValue in
-                            //                                    if newValue.count > 3 {
-                            //                                        time = String(newValue.prefix(4))
-                            //                                        isTextFieldTimeFocused = false
-                            //                                        isTextFieldRwyFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldTimeFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Rwy")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Rwy",
-                            //                                    text: $rwy
-                            //                                )
-                            //                                .onChange(of: rwy) { newValue in
-                            //                                    if newValue.count > 10 {
-                            //                                        rwy = String(newValue.prefix(11))
-                            //                                        isTextFieldRwyFocused = false
-                            //                                        isTextFieldTransLvlFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldRwyFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Trans Lvl")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Trans Lvl",
-                            //                                    text: $transLvl
-                            //                                )
-                            //                                .onChange(of: transLvl) { newValue in
-                            //                                    if newValue.count > 3 {
-                            //                                        transLvl = String(newValue.prefix(4))
-                            //                                        isTextFieldTransLvlFocused = false
-                            //                                        isTextFieldWindFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldTransLvlFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Wind")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Wind",
-                            //                                    text: $wind
-                            //                                )
-                            //                                .onChange(of: wind) { newValue in
-                            //                                    if newValue.count > 5 {
-                            //                                        wind = String(newValue.prefix(6))
-                            //                                        isTextFieldWindFocused = false
-                            //                                        isTextFieldVisFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldWindFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                        }
-                            //                        Group {
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Vis")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Vis",
-                            //                                    text: $vis
-                            //                                )
-                            //                                .onChange(of: vis) { newValue in
-                            //                                    if newValue.count > 3 {
-                            //                                        vis = String(newValue.prefix(4))
-                            //                                        isTextFieldVisFocused = false
-                            //                                        isTextFieldWxFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldVisFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Wx")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Wx",
-                            //                                    text: $wx
-                            //                                )
-                            //    //                                .onChange(of: wx) { newValue in
-                            //    //                                    if newValue.count > 5 {
-                            //    //                                        wx = String(newValue.prefix(6))
-                            //    //                                        isTextFieldWxFocused = false
-                            //    //                                        isTextFieldCloudFocused = true
-                            //    //                                    }
-                            //    //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldWxFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Cloud")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Cloud",
-                            //                                    text: $cloud
-                            //                                )
-                            //    //                                .onChange(of: cloud) { newValue in
-                            //    //                                    if newValue.count > 5 {
-                            //    //                                        cloud = String(newValue.prefix(6))
-                            //    //                                        isTextFieldCloudFocused = false
-                            //    //                                        isTextFieldTempFocused = true
-                            //    //                                    }
-                            //    //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldCloudFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Temp")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Temp",
-                            //                                    text: $temp
-                            //                                )
-                            //                                .onChange(of: temp) { newValue in
-                            //                                    if newValue.count > 1 {
-                            //                                        temp = String(newValue.prefix(2))
-                            //                                        isTextFieldTempFocused = false
-                            //                                        isTextFieldDPFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldTempFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("DP")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "DP",
-                            //                                    text: $dp
-                            //                                )
-                            //                                .onChange(of: dp) { newValue in
-                            //                                    if newValue.count > 1 {
-                            //                                        dp = String(newValue.prefix(2))
-                            //                                        isTextFieldDPFocused = false
-                            //                                        isTextFieldQNHFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldDPFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                        }
-                            //                        Group {
-                            //                            HStack(alignment: .center) {
-                            //                                Text("QNH")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "QNH",
-                            //                                    text: $qnh
-                            //                                )
-                            //                                .onChange(of: qnh) { newValue in
-                            //                                    if newValue.count > 3 {
-                            //                                        qnh = String(newValue.prefix(4))
-                            //                                        isTextFieldQNHFocused = false
-                            //                                        isTextFieldRemarksFocused = true
-                            //                                    }
-                            //                                }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldQNHFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                            HStack(alignment: .center) {
-                            //                                Text("Remarks")
-                            //                                .foregroundStyle(Color.blue)
-                            //                                .frame(maxWidth: 144, alignment: .leading)
-                            //                                TextField(
-                            //                                    "Remarks",
-                            //                                    text: $remarks
-                            //                                )
-                            //    //                            .onChange(of: remarks) { newValue in
-                            //    //                                if newValue.count > 1 {
-                            //    //                                    remarks = String(newValue.prefix(2))
-                            //    //                                    isTextFieldRemarksFocused = false
-                            //    //                                }
-                            //    //                            }
-                            //                                .textInputAutocapitalization(.words)
-                            //                                .disableAutocorrection(true)
-                            //                                .focused($isTextFieldRemarksFocused)
-                            //                                .frame(maxWidth: 860, alignment: .leading)
-                            //                            }
-                            //                            .padding(.top, 5)
-                            //                            .padding(.bottom, 5)
-                            //                            .padding(.leading, 25)
-                            //                            Divider()
-                            //                                .padding(.leading, 25)
-                            //                        }
-                            
                             HStack(alignment: .center) {
                                 Group {
                                     Text("Code")
@@ -513,13 +198,21 @@ struct FlightPlanDepView: View {
                                 .padding(.leading, 25)
                             HStack(alignment: .center) {
                                 Group {
-                                    TextField("Code", text: $code, onEditingChanged: { editing in
-                                        isEditingCode = editing
-                                    })
+                                    TextField("Code", text: $code)
+                                    .focused($isTextFieldCodeFocused)
+                                    .onReceive(Just(isTextFieldCodeFocused)) { focused in
+                                        if focused {
+                                            isTextFieldCodeFocused = false
+                                            setFocusToFalse()
+                                            isEditingCode = true
+                                        }
+                                    }
+                                    .overlay(isEditingCode ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: code) { newValue in
                                         // Limit the text to a maximum of 1 characters
                                         if newValue.count > 0 {
                                             code = String(newValue.prefix(1))
+                                            cursorPositionCode = 1
                                             
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.code = code
@@ -527,20 +220,28 @@ struct FlightPlanDepView: View {
                                                 let item = DepartureATISList(context: persistenceController.container.viewContext)
                                                 item.code = code
                                             }
-
+                                            
                                             coreDataModel.save()
                                             
-                                            isTextFieldCodeFocused = false
+                                            isEditingCode = false
                                             isTextFieldTimeFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldCodeFocused)
-                                    TextField("Time", text: $time, onEditingChanged: { editing in
-                                        isEditingTime = editing
-                                    })
+
+                                    TextField("Time", text: $time)
+                                    .focused($isTextFieldTimeFocused)
+                                    .onReceive(Just(isTextFieldTimeFocused)) { focused in
+                                        if focused {
+                                            isTextFieldTimeFocused = false
+                                            setFocusToFalse()
+                                            isEditingTime = true
+                                        }
+                                    }
+                                    .overlay(isEditingTime ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: time) { newValue in
                                         if newValue.count > 3 {
                                             time = String(newValue.prefix(4))
+                                            cursorPositionTime = 4
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.time = time
                                             } else {
@@ -550,20 +251,26 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldTimeFocused = false
+                                            isEditingTime = false
                                             isTextFieldRwyFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldTimeFocused)
                                 }
                                 Group {
-                                    TextField("Rwy", text: $rwy, onEditingChanged: { editing in
-                                        isEditingRwy = editing
-                                    })
+                                    TextField("Rwy", text: $rwy)
+                                    .focused($isTextFieldRwyFocused)
+                                    .onReceive(Just(isTextFieldRwyFocused)) { focused in
+                                        if focused {
+                                            isTextFieldRwyFocused = false
+                                            setFocusToFalse()
+                                            isEditingRwy = true
+                                        }
+                                    }
+                                    .overlay(isEditingRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: rwy) { newValue in
                                         if newValue.count > 10 {
                                             rwy = String(newValue.prefix(11))
-                                            
+                                            cursorPositionRwy = 11
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.rwy = rwy
                                             } else {
@@ -573,18 +280,25 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldRwyFocused = false
+                                            isEditingRwy = false
                                             isTextFieldTransLvlFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldRwyFocused)
-                                    TextField( "Trans Lvl", text: $transLvl, onEditingChanged: { editing in
-                                        isEditingTransLvl = editing
-                                    })
+
+                                    TextField( "Trans Lvl", text: $transLvl)
+                                    .focused($isTextFieldTransLvlFocused)
+                                    .onReceive(Just(isTextFieldTransLvlFocused)) { focused in
+                                        if focused {
+                                            isTextFieldTransLvlFocused = false
+                                            setFocusToFalse()
+                                            isEditingTransLvl = true
+                                        }
+                                    }
+                                    .overlay(isEditingTransLvl ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: transLvl) { newValue in
                                         if newValue.count > 3 {
                                             transLvl = String(newValue.prefix(4))
-                                            
+                                            cursorPositionTransLvl = 4
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.translvl = transLvl
                                             } else {
@@ -594,20 +308,26 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldTransLvlFocused = false
+                                            isEditingTransLvl = false
                                             isTextFieldWindFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldTransLvlFocused)
                                 }
                                 Group {
-                                    TextField( "Wind", text: $wind, onEditingChanged: { editing in
-                                        isEditingWind = editing
-                                    })
+                                    TextField( "Wind", text: $wind)
+                                    .focused($isTextFieldWindFocused)
+                                    .onReceive(Just(isTextFieldWindFocused)) { focused in
+                                        if focused {
+                                            isTextFieldWindFocused = false
+                                            setFocusToFalse()
+                                            isEditingWind = true
+                                        }
+                                    }
+                                    .overlay(isEditingWind ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: wind) { newValue in
                                         if newValue.count > 5 {
                                             wind = String(newValue.prefix(6))
-                                            
+                                            cursorPositionWind = 6
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.wind = wind
                                             } else {
@@ -617,18 +337,25 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldWindFocused = false
+                                            isEditingWind = false
                                             isTextFieldVisFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldWindFocused)
-                                    TextField("Vis", text: $vis, onEditingChanged: { editing in
-                                        isEditingVis = editing
-                                    })
+                                    
+                                    TextField("Vis", text: $vis)
+                                    .focused($isTextFieldVisFocused)
+                                    .onReceive(Just(isTextFieldVisFocused)) { focused in
+                                        if focused {
+                                            isTextFieldVisFocused = false
+                                            setFocusToFalse()
+                                            isEditingVis = true
+                                        }
+                                    }
+                                    .overlay(isEditingVis ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: vis) { newValue in
                                         if newValue.count > 3 {
                                             vis = String(newValue.prefix(4))
-                                            
+                                            cursorPositionVis = 4
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.vis = vis
                                             } else {
@@ -638,17 +365,22 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldVisFocused = false
+                                            isEditingVis = false
                                             isTextFieldWxFocused = true
                                         }
                                     }
-                                    .focused($isTextFieldVisFocused)
                                 }
                                 Group {
-                                    TextField("Wx", text: $wx, onEditingChanged: { editing in
-                                        isEditingWx = editing
-                                    })
+                                    TextField("Wx", text: $wx)
                                     .focused($isTextFieldWxFocused)
+                                    .onReceive(Just(isTextFieldWxFocused)) { focused in
+                                        if focused {
+                                            isTextFieldWxFocused = false
+                                            setFocusToFalse()
+                                            isEditingWx = true
+                                        }
+                                    }
+                                    .overlay(isEditingWx ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onReceive(Just(wx)) { text in
                                         let components = text.components(separatedBy: " ")
                                         if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
@@ -664,14 +396,25 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
-                                            
                                             isShowingAutofillOptionsWx = false
                                         }
-                                    } // todo hide autofilloptions when submit or when focus on another textfield
-                                    TextField("Cloud", text: $cloud, onEditingChanged: { editing in
-                                        isEditingCloud = editing
-                                    })
+                                    }
+                                    .onReceive(Just(isEditingWx)) { focused in
+                                        if !focused {
+                                            isShowingAutofillOptionsWx = false
+                                        }
+                                    }
+                                    
+                                    TextField("Cloud", text: $cloud)
                                     .focused($isTextFieldCloudFocused)
+                                    .onReceive(Just(isTextFieldCloudFocused)) { focused in
+                                        if focused {
+                                            isTextFieldCloudFocused = false
+                                            setFocusToFalse()
+                                            isEditingCloud = true
+                                        }
+                                    }
+                                    .overlay(isEditingCloud ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onReceive(Just(cloud)) { text in
                                         let components = text.components(separatedBy: " ")
                                         if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
@@ -687,19 +430,30 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
-                                            
                                             isShowingAutofillOptionsCloud = false
                                         }
-                                    }// todo hide autofilloptions when submit or when focus on another textfield
+                                    }
+                                    .onReceive(Just(isEditingCloud)) { focused in
+                                        if !focused {
+                                            isShowingAutofillOptionsCloud = false
+                                        }
+                                    }
                                 }
                                 Group {
-                                    TextField("Temp", text: $temp, onEditingChanged: { editing in
-                                        isEditingTemp = editing
-                                    })
+                                    TextField("Temp", text: $temp)
+                                    .focused($isTextFieldTempFocused)
+                                    .onReceive(Just(isTextFieldTempFocused)) { focused in
+                                        if focused {
+                                            isTextFieldTempFocused = false
+                                            setFocusToFalse()
+                                            isEditingTemp = true
+                                        }
+                                    }
+                                    .overlay(isEditingTemp ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: temp) { newValue in
                                         if newValue.count > 1 {
                                             temp = String(newValue.prefix(2))
-                                            
+                                            cursorPositionTemp = 2
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.temp = temp
                                             } else {
@@ -709,21 +463,25 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldTempFocused = false
+                                            isEditingTemp = false
                                             isTextFieldDPFocused = true
                                         }
-                                    }.focused($isTextFieldTempFocused)
-                                    .autocorrectionDisabled(true)
+                                    }
                                     
-                                    TextField(
-                                        "DP",
-                                        text: $dp, onEditingChanged: { editing in
-                                            isEditingDP = editing
-                                        })
+                                    TextField("DP", text: $dp)
+                                    .focused($isTextFieldDPFocused)
+                                    .onReceive(Just(isTextFieldDPFocused)) { focused in
+                                        if focused {
+                                            isTextFieldDPFocused = false
+                                            setFocusToFalse()
+                                            isEditingDP = true
+                                        }
+                                    }
+                                    .overlay(isEditingDP ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: dp) { newValue in
                                         if newValue.count > 1 {
                                             dp = String(newValue.prefix(2))
-                                            
+                                            cursorPositionDP = 2
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.dp = dp
                                             } else {
@@ -733,20 +491,26 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldDPFocused = false
+                                            isEditingDP = false
                                             isTextFieldQNHFocused = true
                                         }
-                                    }.focused($isTextFieldDPFocused)
-                                        .autocorrectionDisabled(true)
+                                    }
                                 }
-                                
                                 Group {
-                                    TextField("QNH", text: $qnh, onEditingChanged: { editing in
-                                        isEditingQNH = editing
-                                    }).onChange(of: qnh) { newValue in
+                                    TextField("QNH", text: $qnh)
+                                    .focused($isTextFieldQNHFocused)
+                                    .onReceive(Just(isTextFieldQNHFocused)) { focused in
+                                        if focused {
+                                            isTextFieldQNHFocused = false
+                                            setFocusToFalse()
+                                            isEditingQNH = true
+                                        }
+                                    }
+                                    .overlay(isEditingQNH ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                    .onChange(of: qnh) { newValue in
                                         if newValue.count > 3 {
                                             qnh = String(newValue.prefix(4))
-                                            
+                                            cursorPositionQNH = 4
                                             if coreDataModel.existDataDepartureAts {
                                                 coreDataModel.dataDepartureAts.qnh = qnh
                                             } else {
@@ -756,16 +520,21 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldQNHFocused = false
+                                            isEditingQNH = false
                                             isTextFieldRemarksFocused = true
                                         }
-                                    }.focused($isTextFieldQNHFocused)
-                                        .autocorrectionDisabled(true)
+                                    }
                                     
-                                    TextField("Remarks", text: $remarks, onEditingChanged: { editing in
-                                        isEditingRemarks = editing
-                                    })
+                                    TextField("Remarks", text: $remarks)
                                     .focused($isTextFieldRemarksFocused)
+                                    .onReceive(Just(isTextFieldRemarksFocused)) { focused in
+                                        if focused {
+                                            isTextFieldRemarksFocused = false
+                                            setFocusToFalse()
+                                            isEditingRemarks = true
+                                        }
+                                    }
+                                    .overlay(isEditingRemarks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onReceive(Just(remarks)) { text in
                                         let components = text.components(separatedBy: " ")
                                         if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
@@ -781,10 +550,14 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
-                                            
                                             isShowingAutofillOptionsRemarks = false
                                         }
-                                    }.autocorrectionDisabled(true)
+                                    }
+                                    .onReceive(Just(isEditingRemarks)) { focused in
+                                        if !focused {
+                                            isShowingAutofillOptionsRemarks = false
+                                        }
+                                    }
                                 }
                             }
                             .padding(.top, 5)
@@ -797,17 +570,9 @@ struct FlightPlanDepView: View {
                     
                     // ATC section
                     Section(header:
-                                HStack {
-                        Text("ATC").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
-//
-//                        Spacer()
-//
-//                        Button(action: {
-//                            print("Edit")
-//                        }) {
-//                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-//                        }
-                    }
+                        HStack {
+                            Text("ATC").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
+                        }
                     ) {
                         // grouped row using hstack
                         VStack(alignment: .center) {
@@ -838,116 +603,155 @@ struct FlightPlanDepView: View {
                             Divider()
                             
                             HStack(alignment: .center) {
+                                Text("\(flightInfoData.dest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                 Group {
-                                    Text("\(flightInfoData.dest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    TextField("Rwy", text: $atcRwy)
+                                        .focused($isTextFieldAtcRwyFocused)
+                                        .onReceive(Just(isTextFieldAtcRwyFocused)) { focused in
+                                            if focused {
+                                                isTextFieldAtcRwyFocused = false
+                                                setFocusToFalse()
+                                                isEditingAtcRwy = true
+                                            }
+                                        }
+                                        .overlay(isEditingAtcRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onChange(of: atcRwy) { newValue in
+                                            if newValue.count > 2 {
+                                                atcRwy = String(newValue.prefix(3))
+                                                cursorPositionAtcRwy = 3
+                                                if coreDataModel.existDataDepartureAtc {
+                                                    coreDataModel.dataDepartureAtc.atcRwy = atcRwy
+                                                } else {
+                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                    item.atcRwy = atcRwy
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isEditingAtcRwy = false
+                                                isTextFieldAtcDepFocused = true
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                     
-                                    TextField("Rwy", text: $atcRwy, onEditingChanged: { editing in
-                                        isEditingAtcRwy = editing
-                                    })
-                                    .onChange(of: atcRwy) { newValue in
-                                        if newValue.count > 2 {
-                                            atcRwy = String(newValue.prefix(3))
-                                            
+                                    TextField("Dep", text: $atcDep)
+                                        .frame(width: calculateWidth(proxy.size.width, 6))
+                                        .focused($isTextFieldAtcDepFocused)
+                                        .onReceive(Just(isTextFieldAtcDepFocused)) { focused in
+                                            if focused {
+                                                isTextFieldAtcDepFocused = false
+                                                setFocusToFalse()
+                                                isEditingAtcDep = true
+                                            }
+                                        }
+                                        .overlay(isEditingAtcDep ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onReceive(Just(atcDep)) { text in
                                             if coreDataModel.existDataDepartureAtc {
-                                                coreDataModel.dataDepartureAtc.atcRwy = atcRwy
+                                                coreDataModel.dataDepartureAtc.atcDep = atcDep
                                             } else {
                                                 let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                item.atcRwy = atcRwy
+                                                item.atcDep = atcDep
                                             }
-
-                                            coreDataModel.save()
                                             
-                                            isTextFieldAtcRwyFocused = false
-                                            isTextFieldAtcDepFocused = true
+                                            coreDataModel.save()
                                         }
+                                }
+                                Group {
+                                    TextField("Rte", text: $atcRte)
+                                        .focused($isTextFieldAtcRteFocused)
+                                        .onReceive(Just(isTextFieldAtcRteFocused)) { focused in
+                                            if focused {
+                                                isTextFieldAtcRteFocused = false
+                                                setFocusToFalse()
+                                                isEditingAtcRte = true
+                                            }
+                                        }
+                                        .overlay(isEditingAtcRte ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onReceive(Just(atcRte)) { text in
+                                            let components = text.components(separatedBy: " ")
+                                            if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                                let searchTerm = String(lastComponent.dropFirst())
+                                                autofillText = searchTerm
+                                                isShowingAutofillOptionsAtcRte = true
+                                            } else {
+                                                if coreDataModel.existDataDepartureAtc {
+                                                    coreDataModel.dataDepartureAtc.atcRte = text
+                                                } else {
+                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                    item.atcRte = text
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isShowingAutofillOptionsAtcRte = false
+                                            }
+                                        }
+                                        .onReceive(Just(isEditingAtcRte)) { focused in
+                                            if !focused {
+                                                isShowingAutofillOptionsAtcRte = false
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 6))
+                                    
+                                    TextField( "FL", text: $atcFL)
+                                        .focused($isTextFieldAtcFLFocused)
+                                        .onReceive(Just(isTextFieldAtcFLFocused)) { focused in
+                                            if focused {
+                                                isTextFieldAtcFLFocused = false
+                                                setFocusToFalse()
+                                                isEditingAtcFL = true
+                                            }
+                                        }
+                                        .overlay(isEditingAtcFL ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onChange(of: atcFL) { newValue in
+                                            if newValue.count > 2 {
+                                                atcFL = String(newValue.prefix(3))
+                                                cursorPositionAtcFL = 3
+                                                if coreDataModel.existDataDepartureAtc {
+                                                    coreDataModel.dataDepartureAtc.atcFL = atcFL
+                                                } else {
+                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                    item.atcFL = atcFL
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isEditingAtcFL = false
+                                                isTextFieldAtcSQFocused = true
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 6))
+                                }
+                                TextField("SQ", text: $atcSQ)
+                                .focused($isTextFieldAtcSQFocused)
+                                .onReceive(Just(isTextFieldAtcSQFocused)) { focused in
+                                    if focused {
+                                        isTextFieldAtcSQFocused = false
+                                        setFocusToFalse()
+                                        isEditingAtcSQ = true
                                     }
-                                    .focused($isTextFieldAtcRwyFocused)
-                                    .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                
-                                    TextField("Dep", text: $atcDep, onEditingChanged: { editing in
-                                        isEditingAtcDep = editing
-                                    })
-                                    .focused($isTextFieldAtcDepFocused)
-                                    .frame(width: calculateWidth(proxy.size.width, 6))
-                                    .onReceive(Just(atcDep)) { text in
+                                }
+                                .overlay(isEditingAtcSQ ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                .onChange(of: atcSQ) { newValue in
+                                    if newValue.count > 3 {
+                                        atcSQ = String(newValue.prefix(4))
+                                        cursorPositionAtcSQ = 4
+
                                         if coreDataModel.existDataDepartureAtc {
-                                            coreDataModel.dataDepartureAtc.atcDep = atcDep
+                                            coreDataModel.dataDepartureAtc.atcSQ = atcSQ
                                         } else {
                                             let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                            item.atcDep = atcDep
+                                            item.atcSQ = atcSQ
                                         }
 
                                         coreDataModel.save()
+                                        
+                                        isEditingAtcSQ = false
+                                        isTextFieldAtcRwyFocused = true
                                     }
-                                    
-                                    TextField("Rte", text: $atcRte, onEditingChanged: { editing in
-                                        isEditingAtcRte = editing
-                                    })
-                                    .focused($isTextFieldAtcRteFocused)
-                                    .onReceive(Just(atcRte)) { text in
-                                        let components = text.components(separatedBy: " ")
-                                        if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
-                                            let searchTerm = String(lastComponent.dropFirst())
-                                            autofillText = searchTerm
-                                            isShowingAutofillOptionsAtcRte = true
-                                        } else {
-                                            if coreDataModel.existDataDepartureAtc {
-                                                coreDataModel.dataDepartureAtc.atcRte = text
-                                            } else {
-                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                item.atcRte = text
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isShowingAutofillOptionsAtcRte = false
-                                        }
-                                    }
-                                    .frame(width: calculateWidth(proxy.size.width, 6))
-                                
-                                    TextField( "FL", text: $atcFL, onEditingChanged: { editing in
-                                        isEditingAtcFL = editing
-                                    }).onChange(of: atcFL) { newValue in
-                                        if newValue.count > 2 {
-                                            atcFL = String(newValue.prefix(3))
-                                            
-                                            if coreDataModel.existDataDepartureAtc {
-                                                coreDataModel.dataDepartureAtc.atcFL = atcFL
-                                            } else {
-                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                item.atcFL = atcFL
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isTextFieldAtcFLFocused = false
-                                            isTextFieldAtcSQFocused = true
-                                        }
-                                    }.focused($isTextFieldAtcFLFocused)
-                                        .frame(width: calculateWidth(proxy.size.width, 6))
-                                    
-                                    TextField("SQ", text: $atcSQ, onEditingChanged: { editing in
-                                        isEditingAtcSQ = editing
-                                    }).onChange(of: atcSQ) { newValue in
-                                        if newValue.count > 3 {
-                                            atcSQ = String(newValue.prefix(4))
-                                            
-                                            if coreDataModel.existDataDepartureAtc {
-                                                coreDataModel.dataDepartureAtc.atcSQ = atcSQ
-                                            } else {
-                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                item.atcSQ = atcSQ
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isTextFieldAtcSQFocused = false
-                                            isTextFieldAtcRwyFocused = true
-                                        }
-                                    }.focused($isTextFieldAtcSQFocused)
-                                        .frame(width: calculateWidth(proxy.size.width, 6))
                                 }
-                            }
+                                .frame(width: calculateWidth(proxy.size.width, 6))
+                                }
                             .padding(.top, 5)
                             .padding(.bottom, 5)
                             
@@ -959,17 +763,9 @@ struct FlightPlanDepView: View {
                     }
                     // Entries section
                     Section(header:
-                                HStack {
-                        Text("Entries").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
-                        
-//                        Spacer()
-//                        
-//                        Button(action: {
-//                            print("Edit")
-//                        }) {
-//                            Text("Edit").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-//                        }
-                    }
+                        HStack {
+                            Text("Entries").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
+                        }
                     ) {
                         // grouped row using hstack
                         VStack(alignment: .center) {
@@ -996,60 +792,81 @@ struct FlightPlanDepView: View {
                             
                             HStack(alignment: .center) {
                                 Group {
-                                    TextField("Chocks Off", text: $entOff, onEditingChanged: { editing in
-                                        isEditingEntOff = editing
-                                    })
-                                    .onChange(of: entOff) { newValue in
-                                        if newValue.count > 3 {
-                                            entOff = String(newValue.prefix(4))
-                                            
-                                            if coreDataModel.existDataDepartureEntries {
-                                                coreDataModel.dataDepartureEntries.entOff = entOff
-                                            } else {
-                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                item.entOff = entOff
-                                                coreDataModel.existDataDepartureEntries = true
+                                    TextField("Chocks Off", text: $entOff)
+                                        .focused($isTextFieldEntOffFocused)
+                                        .onReceive(Just(isTextFieldEntOffFocused)) { focused in
+                                            if focused {
+                                                isTextFieldEntOffFocused = false
+                                                setFocusToFalse()
+                                                isEditingEntOff = true
                                             }
-
-                                            coreDataModel.save()
-                                            
-                                            isTextFieldEntOffFocused = false
-                                            isTextFieldEntFuelInTanksFocused = true
+                                        }
+                                        .overlay(isEditingEntOff ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onChange(of: entOff) { newValue in
+                                            if newValue.count > 3 {
+                                                entOff = String(newValue.prefix(4))
+                                                cursorPositionEntOff = 4
+                                                if coreDataModel.existDataDepartureEntries {
+                                                    coreDataModel.dataDepartureEntries.entOff = entOff
+                                                } else {
+                                                    let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                    item.entOff = entOff
+                                                    coreDataModel.existDataDepartureEntries = true
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isEditingEntOff = false
+                                                isTextFieldEntFuelInTanksFocused = true
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                    
+                                    TextField("Fuel in Tanks", text: $entFuelInTanks)
+                                        .focused($isTextFieldEntFuelInTanksFocused)
+                                        .onReceive(Just(isTextFieldEntFuelInTanksFocused)) { focused in
+                                            if focused {
+                                                isTextFieldEntFuelInTanksFocused = false
+                                                setFocusToFalse()
+                                                isEditingEntFuelInTanks = true
+                                            }
+                                        }
+                                        .overlay(isEditingEntFuelInTanks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onChange(of: entFuelInTanks) { newValue in
+                                            if newValue.count > 4 {
+                                                entFuelInTanks = String(newValue.prefix(5))
+                                                cursorPositionEntFuelInTanks = 5
+                                                if coreDataModel.existDataDepartureEntries {
+                                                    coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
+                                                } else {
+                                                    let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                    item.entFuelInTanks = entFuelInTanks
+                                                    coreDataModel.existDataDepartureEntries = true
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isEditingEntFuelInTanks = false
+                                                isTextFieldEntTaxiFocused = true
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                }
+                                Group {
+                                    TextField("Taxi", text: $entTaxi)
+                                    .focused($isTextFieldEntTaxiFocused)
+                                    .onReceive(Just(isTextFieldEntTaxiFocused)) { focused in
+                                        if focused {
+                                            isTextFieldEntTaxiFocused = false
+                                            setFocusToFalse()
+                                            isEditingEntTaxi = true
                                         }
                                     }
-                                    .focused($isTextFieldEntOffFocused)
-                                    .frame(width: calculateWidth(proxy.size.width, 4))
-                                           
-                                    TextField("Fuel in Tanks", text: $entFuelInTanks, onEditingChanged: { editing in
-                                        isEditingEntFuelInTanks = editing
-                                    })
-                                    .onChange(of: entFuelInTanks) { newValue in
-                                        if newValue.count > 4 {
-                                            entFuelInTanks = String(newValue.prefix(5))
-                                            
-                                            if coreDataModel.existDataDepartureEntries {
-                                                coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
-                                            } else {
-                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                item.entFuelInTanks = entFuelInTanks
-                                                coreDataModel.existDataDepartureEntries = true
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isTextFieldEntFuelInTanksFocused = false
-                                            isTextFieldEntTaxiFocused = true
-                                        }
-                                    }.focused($isTextFieldEntFuelInTanksFocused)
-                                    .frame(width: calculateWidth(proxy.size.width, 4))
-
-                                    TextField("Taxi", text: $entTaxi, onEditingChanged: { editing in
-                                        isEditingEntTaxi = editing
-                                    })
+                                    .overlay(isEditingEntTaxi ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: entTaxi) { newValue in
                                         if newValue.count > 3 {
                                             entTaxi = String(newValue.prefix(4))
-                                            
+                                            cursorPositionEntTaxi = 4
                                             if coreDataModel.existDataDepartureEntries {
                                                 coreDataModel.dataDepartureEntries.entTaxi = entTaxi
                                             } else {
@@ -1060,19 +877,26 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldEntTaxiFocused = false
+                                            isEditingEntTaxi = false
                                             isTextFieldEntTakeoffFocused = true
                                         }
-                                    }.focused($isTextFieldEntTaxiFocused)
-                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                    }
+                                    .frame(width: calculateWidth(proxy.size.width, 4))
                                     
-                                    TextField( "Takeoff", text: $entTakeoff, onEditingChanged: { editing in
-                                        isEditingEntTakeoff = editing
-                                    })
+                                    TextField( "Takeoff", text: $entTakeoff)
+                                    .focused($isTextFieldEntTakeoffFocused)
+                                    .onReceive(Just(isTextFieldEntTakeoffFocused)) { focused in
+                                        if focused {
+                                            isTextFieldEntTakeoffFocused = false
+                                            setFocusToFalse()
+                                            isEditingEntTakeoff = true
+                                        }
+                                    }
+                                    .overlay(isEditingEntTakeoff ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                     .onChange(of: entTakeoff) { newValue in
                                         if newValue.count > 3 {
                                             entTakeoff = String(newValue.prefix(4))
-                                            
+                                            cursorPositionEntTakeoff = 4
                                             if coreDataModel.existDataDepartureEntries {
                                                 coreDataModel.dataDepartureEntries.entTakeoff = entTakeoff
                                             } else {
@@ -1083,11 +907,11 @@ struct FlightPlanDepView: View {
 
                                             coreDataModel.save()
                                             
-                                            isTextFieldEntTakeoffFocused = false
+                                            isEditingEntTakeoff = false
                                             isTextFieldEntOffFocused = true
                                         }
-                                    }.focused($isTextFieldEntTakeoffFocused)
-                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                    }
+                                    .frame(width: calculateWidth(proxy.size.width, 4))
                                 }
                             }
                             .padding(.top, 5)
@@ -1098,76 +922,77 @@ struct FlightPlanDepView: View {
                         coreDataModel.readDepartureEntries()
                     }
                 }
+                
                 // custom keyboard view - todo set position properly - like normal ipad keyboard position
                 Group {
                     if isEditingCode {
-                        CustomKeyboardView(text: $code, cursorPosition: $cursorPositionCode, currentFocus: _isTextFieldCodeFocused, nextFocus: _isTextFieldTimeFocused, prevFocus: _isTextFieldRemarksFocused)
+                        CustomKeyboardView1(text: $code, cursorPosition: $cursorPositionCode, currentFocus: $isEditingCode, nextFocus: $isEditingTime, prevFocus: $isEditingRemarks)
                     }
                     if isEditingTime {
-                        CustomKeyboardView(text: $time, cursorPosition: $cursorPositionTime, currentFocus: _isTextFieldTimeFocused, nextFocus: _isTextFieldRwyFocused, prevFocus: _isTextFieldCodeFocused)
+                        CustomKeyboardView1(text: $time, cursorPosition: $cursorPositionTime, currentFocus: $isEditingTime, nextFocus: $isEditingRwy, prevFocus: $isEditingCode)
                     }
                     if isEditingRwy {
-                        CustomKeyboardView(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: _isTextFieldRwyFocused, nextFocus: _isTextFieldTransLvlFocused, prevFocus: _isTextFieldTimeFocused)
+                        CustomKeyboardView1(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: $isEditingRwy, nextFocus: $isEditingTransLvl, prevFocus: $isEditingTime)
                     }
                     if isEditingTransLvl {
-                        CustomKeyboardView(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: _isTextFieldTransLvlFocused, nextFocus: _isTextFieldWindFocused, prevFocus: _isTextFieldRwyFocused)
+                        CustomKeyboardView1(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: $isEditingTransLvl, nextFocus: $isEditingWind, prevFocus: $isEditingRwy)
                     }
                     if isEditingWind {
-                        CustomKeyboardView(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: _isTextFieldWindFocused, nextFocus: _isTextFieldVisFocused, prevFocus: _isTextFieldTransLvlFocused)
+                        CustomKeyboardView1(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: $isEditingWind, nextFocus: $isEditingVis, prevFocus: $isEditingTransLvl)
                     }
                     if isEditingVis {
-                        CustomKeyboardView(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: _isTextFieldVisFocused, nextFocus: _isTextFieldWxFocused, prevFocus: _isTextFieldWindFocused)
+                        CustomKeyboardView1(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: $isEditingVis, nextFocus: $isEditingWx, prevFocus: $isEditingWind)
                     }
                     if isEditingWx {
-                        CustomKeyboardView(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: _isTextFieldWxFocused, nextFocus: _isTextFieldCloudFocused, prevFocus: _isTextFieldVisFocused)
+                        CustomKeyboardView1(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: $isEditingWx, nextFocus: $isEditingCloud, prevFocus: $isEditingVis)
                     }
                     if isEditingCloud {
-                        CustomKeyboardView(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: _isTextFieldCloudFocused, nextFocus: _isTextFieldTempFocused, prevFocus: _isTextFieldWxFocused)
+                        CustomKeyboardView1(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: $isEditingCloud, nextFocus: $isEditingTemp, prevFocus: $isEditingWx)
                     }
                     if isEditingTemp {
-                        CustomKeyboardView(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: _isTextFieldTempFocused, nextFocus: _isTextFieldDPFocused, prevFocus: _isTextFieldCloudFocused)
+                        CustomKeyboardView1(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: $isEditingTemp, nextFocus: $isEditingDP, prevFocus: $isEditingCloud)
                     }
                     if isEditingDP {
-                        CustomKeyboardView(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: _isTextFieldDPFocused, nextFocus: _isTextFieldQNHFocused, prevFocus: _isTextFieldTempFocused)
+                        CustomKeyboardView1(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: $isEditingDP, nextFocus: $isEditingQNH, prevFocus: $isEditingTemp)
                     }
                 }
                 Group {
                     if isEditingQNH {
-                        CustomKeyboardView(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: _isTextFieldQNHFocused, nextFocus: _isTextFieldRemarksFocused, prevFocus: _isTextFieldDPFocused)
+                        CustomKeyboardView1(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: $isEditingQNH, nextFocus: $isEditingRemarks, prevFocus: $isEditingDP)
                     }
                     if isEditingRemarks {
-                        CustomKeyboardView(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: _isTextFieldRemarksFocused, nextFocus: _isTextFieldCodeFocused, prevFocus: _isTextFieldQNHFocused)
+                        CustomKeyboardView1(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: $isEditingRemarks, nextFocus: $isEditingCode, prevFocus: $isEditingQNH)
                     }
                 }
                 Group {
                     if isEditingAtcRwy {
-                        CustomKeyboardView(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: _isTextFieldAtcRwyFocused, nextFocus: _isTextFieldAtcDepFocused, prevFocus: _isTextFieldAtcSQFocused)
+                        CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: isEditingAtcRwy, nextFocus: isEditingAtcDep, prevFocus: isEditingAtcSQ)
                     }
                     if isEditingAtcDep {
-                        CustomKeyboardView(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: _isTextFieldAtcDepFocused, nextFocus: _isTextFieldAtcRteFocused, prevFocus: _isTextFieldAtcRwyFocused)
+                        CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: isEditingAtcDep, nextFocus: isEditingAtcRte, prevFocus: isEditingAtcRwy)
                     }
                     if isEditingAtcRte {
-                        CustomKeyboardView(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: _isTextFieldAtcRteFocused, nextFocus: _isTextFieldAtcFLFocused, prevFocus: _isTextFieldAtcDepFocused)
+                        CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: isEditingAtcRte, nextFocus: isEditingAtcFL, prevFocus: isEditingAtcDep)
                     }
                     if isEditingAtcFL {
-                        CustomKeyboardView(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: _isTextFieldAtcFLFocused, nextFocus: _isTextFieldAtcSQFocused, prevFocus: _isTextFieldAtcRteFocused)
+                        CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: isEditingAtcFL, nextFocus: isEditingAtcSQ, prevFocus: isEditingAtcRte)
                     }
                     if isEditingAtcSQ {
-                        CustomKeyboardView(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: _isTextFieldAtcSQFocused, nextFocus: _isTextFieldAtcRwyFocused, prevFocus: _isTextFieldAtcFLFocused)
+                        CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: isEditingAtcSQ, nextFocus: isEditingAtcRwy, prevFocus: isEditingAtcRte)
                     }
                 }
                 Group {
                     if isEditingEntOff {
-                        CustomKeyboardView(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: _isTextFieldEntOffFocused, nextFocus: _isTextFieldEntFuelInTanksFocused, prevFocus: _isTextFieldEntTakeoffFocused)
+                        CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: isEditingEntOff, nextFocus: isEditingEntFuelInTanks, prevFocus: isEditingEntTakeoff)
                     }
                     if isEditingEntFuelInTanks {
-                        CustomKeyboardView(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: _isTextFieldEntFuelInTanksFocused, nextFocus: _isTextFieldEntTaxiFocused, prevFocus: _isTextFieldEntOffFocused)
+                        CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: isEditingEntFuelInTanks, nextFocus: isEditingEntTaxi, prevFocus: isEditingEntOff)
                     }
                     if isEditingEntTaxi {
-                        CustomKeyboardView(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: _isTextFieldEntTaxiFocused, nextFocus: _isTextFieldEntTakeoffFocused, prevFocus: _isTextFieldEntFuelInTanksFocused)
+                        CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: isEditingEntTaxi, nextFocus: isEditingEntTakeoff, prevFocus: isEditingEntFuelInTanks)
                     }
                     if isEditingEntTakeoff {
-                        CustomKeyboardView(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: _isTextFieldEntTakeoffFocused, nextFocus: _isTextFieldEntOffFocused, prevFocus: _isTextFieldEntTaxiFocused)
+                        CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: isEditingEntTakeoff, nextFocus: isEditingEntOff, prevFocus: isEditingEntTaxi)
                     }
                 }
                 Group {
@@ -1236,36 +1061,82 @@ struct FlightPlanDepView: View {
             //set data ats
             if coreDataModel.existDataDepartureAts {
                 self.code = coreDataModel.dataDepartureAts.unwrappedCode
+                self.cursorPositionCode = coreDataModel.dataDepartureAts.unwrappedCode.count
                 self.time = coreDataModel.dataDepartureAts.unwrappedTime
+                self.cursorPositionTime = coreDataModel.dataDepartureAts.unwrappedTime.count
                 self.rwy = coreDataModel.dataDepartureAts.unwrappedRwy
+                self.cursorPositionRwy = coreDataModel.dataDepartureAts.unwrappedRwy.count
                 self.transLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl
+                self.cursorPositionTransLvl = coreDataModel.dataDepartureAts.unwrappedRranslvl.count
                 self.wind = coreDataModel.dataDepartureAts.unwrappedWind
+                self.cursorPositionWind = coreDataModel.dataDepartureAts.unwrappedWind.count
                 self.vis = coreDataModel.dataDepartureAts.unwrappedVis
+                self.cursorPositionVis = coreDataModel.dataDepartureAts.unwrappedVis.count
                 self.wx = coreDataModel.dataDepartureAts.unwrappedWx
+                self.cursorPositionWx = coreDataModel.dataDepartureAts.unwrappedWx.count
                 self.cloud = coreDataModel.dataDepartureAts.unwrappedCloud
+                self.cursorPositionCloud = coreDataModel.dataDepartureAts.unwrappedCloud.count
                 self.temp = coreDataModel.dataDepartureAts.unwrappedTemp
+                self.cursorPositionTemp = coreDataModel.dataDepartureAts.unwrappedTemp.count
                 self.dp = coreDataModel.dataDepartureAts.unwrappedDp
+                self.cursorPositionDP = coreDataModel.dataDepartureAts.unwrappedDp.count
                 self.qnh = coreDataModel.dataDepartureAts.unwrappedQnh
+                self.cursorPositionQNH = coreDataModel.dataDepartureAts.unwrappedQnh.count
                 self.remarks = coreDataModel.dataDepartureAts.unwrappedRemarks
+                self.cursorPositionRemarks = coreDataModel.dataDepartureAts.unwrappedRemarks.count
             }
             
             //set data atc
             if coreDataModel.existDataDepartureAtc {
                 self.atcRwy = coreDataModel.dataDepartureAtc.unwrappedAtcRwy
+                self.cursorPositionAtcRwy = coreDataModel.dataDepartureAtc.unwrappedAtcRwy.count
                 self.atcDep = coreDataModel.dataDepartureAtc.unwrappedAtcDep
+                self.cursorPositionAtcDep = coreDataModel.dataDepartureAtc.unwrappedAtcDep.count
                 self.atcRte = coreDataModel.dataDepartureAtc.unwrappedAtcRte
+                self.cursorPositionAtcRte = coreDataModel.dataDepartureAtc.unwrappedAtcRte.count
                 self.atcFL = coreDataModel.dataDepartureAtc.unwrappedAtcFL
+                self.cursorPositionAtcFL = coreDataModel.dataDepartureAtc.unwrappedAtcFL.count
                 self.atcSQ = coreDataModel.dataDepartureAtc.unwrappedAtcSQ
+                self.cursorPositionAtcSQ = coreDataModel.dataDepartureAtc.unwrappedAtcSQ.count
             }
             
             //set data entries
             if coreDataModel.existDataDepartureEntries {
                 self.entOff = coreDataModel.dataDepartureEntries.unwrappedEntOff
+                self.cursorPositionEntOff = coreDataModel.dataDepartureEntries.unwrappedEntOff.count
                 self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
+                self.cursorPositionEntFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks.count
                 self.entTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi
+                self.cursorPositionEntTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi.count
                 self.entTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
+                self.cursorPositionEntTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.count
             }
         }
+    }
+    func setFocusToFalse() {
+        isEditingCode = false
+        isEditingTime = false
+        isEditingRwy = false
+        isEditingTransLvl = false
+        isEditingWind = false
+        isEditingVis = false
+        isEditingWx = false
+        isEditingCloud = false
+        isEditingTemp = false
+        isEditingDP = false
+        isEditingQNH = false
+        isEditingRemarks = false
+        
+        isEditingAtcRwy = false
+        isEditingAtcDep = false
+        isEditingAtcRte = false
+        isEditingAtcFL = false
+        isEditingAtcSQ = false
+        
+        isEditingEntOff = false
+        isEditingEntFuelInTanks = false
+        isEditingEntTaxi = false
+        isEditingEntTakeoff = false
     }
 }
 
