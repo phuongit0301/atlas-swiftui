@@ -171,6 +171,15 @@
 		C580EA282A482F8800E3E8D6 /* FlightPlanMetarTafView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580EA272A482F8800E3E8D6 /* FlightPlanMetarTafView.swift */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A496492A4715F700653983 /* customKeyboard.swift */; };
+		C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DDF92A4E89F40045EB32 /* ArrivalDelayView.swift */; };
+		C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DDFB2A4E8BA50045EB32 /* fetchFuelData.swift */; };
+		C5A8DDFE2A4E8C420045EB32 /* TaxiTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DDFD2A4E8C420045EB32 /* TaxiTimeView.swift */; };
+		C5A8DE022A4E8D7F0045EB32 /* TrackMilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE012A4E8D7F0045EB32 /* TrackMilesView.swift */; };
+		C5A8DE042A4E92730045EB32 /* FlightLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE032A4E92730045EB32 /* FlightLevelView.swift */; };
+		C5A8DE062A4E930F0045EB32 /* reciprocalRwyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE052A4E930F0045EB32 /* reciprocalRwyView.swift */; };
+		C5A8DE082A4E931D0045EB32 /* reciprocalRwyChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE072A4E931D0045EB32 /* reciprocalRwyChart.swift */; };
+		C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE092A4EB3830045EB32 /* EnrouteWeatherView.swift */; };
+		C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DE0B2A4EB38F0045EB32 /* ReciprocalRwyView.swift */; };
 		C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C8192A1487870076396F /* ATLASApp.swift */; };
 		C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F9C81B2A14878D0076396F /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -362,6 +371,15 @@
 		C580EA272A482F8800E3E8D6 /* FlightPlanMetarTafView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPlanMetarTafView.swift; sourceTree = "<group>"; };
 		C59C714C2A38AB130063D16B /* FuelViewSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewSplit.swift; sourceTree = "<group>"; };
 		C5A496492A4715F700653983 /* customKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customKeyboard.swift; sourceTree = "<group>"; };
+		C5A8DDF92A4E89F40045EB32 /* ArrivalDelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalDelayView.swift; sourceTree = "<group>"; };
+		C5A8DDFB2A4E8BA50045EB32 /* fetchFuelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchFuelData.swift; sourceTree = "<group>"; };
+		C5A8DDFD2A4E8C420045EB32 /* TaxiTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiTimeView.swift; sourceTree = "<group>"; };
+		C5A8DE012A4E8D7F0045EB32 /* TrackMilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMilesView.swift; sourceTree = "<group>"; };
+		C5A8DE032A4E92730045EB32 /* FlightLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightLevelView.swift; sourceTree = "<group>"; };
+		C5A8DE052A4E930F0045EB32 /* reciprocalRwyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reciprocalRwyView.swift; sourceTree = "<group>"; };
+		C5A8DE072A4E931D0045EB32 /* reciprocalRwyChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reciprocalRwyChart.swift; sourceTree = "<group>"; };
+		C5A8DE092A4EB3830045EB32 /* EnrouteWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteWeatherView.swift; sourceTree = "<group>"; };
+		C5A8DE0B2A4EB38F0045EB32 /* ReciprocalRwyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReciprocalRwyView.swift; sourceTree = "<group>"; };
 		C5F9C8192A1487870076396F /* ATLASApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASApp.swift; sourceTree = "<group>"; };
 		C5F9C81B2A14878D0076396F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -506,22 +524,8 @@
 		3E3FCC2A2A270851008017FA /* FuelChartsResources */ = {
 			isa = PBXGroup;
 			children = (
-				3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */,
-				3E3FCC2B2A270851008017FA /* taxiChart.swift */,
-				3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */,
-				3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */,
-				3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */,
-				3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */,
-				3E3FCC302A270851008017FA /* enrWXView.swift */,
-				3E3FCC312A270851008017FA /* flightLevelView.swift */,
-				3E3FCC322A270851008017FA /* historicalDelaysView.swift */,
-				3E3FCC332A270851008017FA /* flightLevelChart.swift */,
-				3E3FCC342A270851008017FA /* enrWXChart.swift */,
-				3E3FCC352A270851008017FA /* trackMilesChart.swift */,
-				3E3FCC362A270851008017FA /* taxiView.swift */,
-				3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */,
-				3E3FCC372A270851008017FA /* projArrDelaysChart.swift */,
-				3E3FCC382A270851008017FA /* trackMilesView.swift */,
+				C5A8DE002A4E8C700045EB32 /* ChartViews */,
+				C5A8DDFF2A4E8C580045EB32 /* Pages */,
 			);
 			path = FuelChartsResources;
 			sourceTree = "<group>";
@@ -824,6 +828,45 @@
 			path = FlightPlanView;
 			sourceTree = "<group>";
 		};
+		C5A8DDFF2A4E8C580045EB32 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				C5A8DDFB2A4E8BA50045EB32 /* fetchFuelData.swift */,
+				3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */,
+				C5A8DDF92A4E89F40045EB32 /* ArrivalDelayView.swift */,
+				C5A8DDFD2A4E8C420045EB32 /* TaxiTimeView.swift */,
+				C5A8DE012A4E8D7F0045EB32 /* TrackMilesView.swift */,
+				C5A8DE032A4E92730045EB32 /* FlightLevelView.swift */,
+				C5A8DE092A4EB3830045EB32 /* EnrouteWeatherView.swift */,
+				C5A8DE0B2A4EB38F0045EB32 /* ReciprocalRwyView.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		C5A8DE002A4E8C700045EB32 /* ChartViews */ = {
+			isa = PBXGroup;
+			children = (
+				3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */,
+				3E3FCC2B2A270851008017FA /* taxiChart.swift */,
+				3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */,
+				3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */,
+				3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */,
+				3E3FCC302A270851008017FA /* enrWXView.swift */,
+				3E3FCC312A270851008017FA /* flightLevelView.swift */,
+				3E3FCC322A270851008017FA /* historicalDelaysView.swift */,
+				3E3FCC332A270851008017FA /* flightLevelChart.swift */,
+				3E3FCC342A270851008017FA /* enrWXChart.swift */,
+				3E3FCC352A270851008017FA /* trackMilesChart.swift */,
+				3E3FCC362A270851008017FA /* taxiView.swift */,
+				3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */,
+				3E3FCC372A270851008017FA /* projArrDelaysChart.swift */,
+				3E3FCC382A270851008017FA /* trackMilesView.swift */,
+				C5A8DE052A4E930F0045EB32 /* reciprocalRwyView.swift */,
+				C5A8DE072A4E931D0045EB32 /* reciprocalRwyChart.swift */,
+			);
+			path = ChartViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -970,6 +1013,7 @@
 			files = (
 				3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */,
 				3EFA5EF42A3EBE31001ED6CF /* SearchBar.swift in Sources */,
+				C5A8DE042A4E92730045EB32 /* FlightLevelView.swift in Sources */,
 				3E3FCC472A270851008017FA /* taxiView.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
@@ -1022,6 +1066,7 @@
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
 				3E3FCC1C2A2500CA008017FA /* ArrivalSplit.swift in Sources */,
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
+				C5A8DDFE2A4E8C420045EB32 /* TaxiTimeView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3EB99D202A5453880091BC08 /* FuelTableList+CoreDataClass.swift in Sources */,
@@ -1034,6 +1079,8 @@
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
 				3EFA5F6F2A4A8377001ED6CF /* ScratchPadForm.swift in Sources */,
+				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
+				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
 				3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */,
 				3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */,
@@ -1054,6 +1101,7 @@
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
 				3EB99D002A53900F0091BC08 /* EnrouteList+CoreDataClass.swift in Sources */,
 				3EB99D352A546A330091BC08 /* ProjArrivalDelaysList+CoreDataProperties.swift in Sources */,
+				C5A8DE022A4E8D7F0045EB32 /* TrackMilesView.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AtlasSearchView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
@@ -1086,7 +1134,9 @@
 				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3EFA5EEF2A3D5D8C001ED6CF /* FlightPlanModel.swift in Sources */,
 				3EFA5EFF2A408B2E001ED6CF /* ItemList.swift in Sources */,
+				C5A8DE062A4E930F0045EB32 /* reciprocalRwyView.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
+				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
 				3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */,
 				3E3FCC452A270851008017FA /* enrWXChart.swift in Sources */,
@@ -1095,6 +1145,7 @@
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
 				3EB99CFB2A53194E0091BC08 /* DepartureATISList+CoreDataProperties.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
+				C5A8DE082A4E931D0045EB32 /* reciprocalRwyChart.swift in Sources */,
 				3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */,
 				3EA961832A557D5700C6B4A7 /* PerfDataList+CoreDataClass.swift in Sources */,
 				3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */,
@@ -1119,6 +1170,7 @@
 				3EB99D212A5453880091BC08 /* FuelTableList+CoreDataProperties.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
+				C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
