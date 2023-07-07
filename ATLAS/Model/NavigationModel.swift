@@ -14,6 +14,8 @@ enum NavigationEnumeration {
     case OverviewScreen
     case NoteScreen
     case FlightPlanScreen
+    case FlightInformationDetailScreen
+    case NotamDetailScreen
     case AirCraftScreen
     case DepartureScreen
     case EnrouteScreen

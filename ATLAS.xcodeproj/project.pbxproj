@@ -110,6 +110,8 @@
 		3E4A36B92A570BB600027C61 /* TaxiTimesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36AF2A570BB600027C61 /* TaxiTimesList+CoreDataProperties.swift */; };
 		3E4A36BA2A570BB600027C61 /* EnrWXTrackMilesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36B02A570BB600027C61 /* EnrWXTrackMilesList+CoreDataClass.swift */; };
 		3E4A36BB2A570BB600027C61 /* TrackMilesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36B12A570BB600027C61 /* TrackMilesList+CoreDataClass.swift */; };
+		3E4A36BD2A571A2500027C61 /* FlightInformationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36BC2A571A2500027C61 /* FlightInformationDetailView.swift */; };
+		3E4A36BF2A571C7500027C61 /* NotamDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A36BE2A571C7500027C61 /* NotamDetailView.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
@@ -318,6 +320,8 @@
 		3E4A36AF2A570BB600027C61 /* TaxiTimesList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TaxiTimesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A36B02A570BB600027C61 /* EnrWXTrackMilesList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnrWXTrackMilesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A36B12A570BB600027C61 /* TrackMilesList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackMilesList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A36BC2A571A2500027C61 /* FlightInformationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightInformationDetailView.swift; sourceTree = "<group>"; };
+		3E4A36BE2A571C7500027C61 /* NotamDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamDetailView.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -594,6 +598,8 @@
 				3E5AF64A2A18FF7600A97ECF /* ReportingView.swift */,
 				3E5AF65A2A1A5AEE00A97ECF /* Form.swift */,
 				3EFA5F2D2A458F25001ED6CF /* TableDetail.swift */,
+				3E4A36BC2A571A2500027C61 /* FlightInformationDetailView.swift */,
+				3E4A36BE2A571C7500027C61 /* NotamDetailView.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -1097,11 +1103,13 @@
 				3E4A36A52A570BA800027C61 /* PerfWeightList+CoreDataProperties.swift in Sources */,
 				3E4A369A2A570BA800027C61 /* FlightPlanList+CoreDataClass.swift in Sources */,
 				3E3FCC472A270851008017FA /* taxiView.swift in Sources */,
+				3E4A36BD2A571A2500027C61 /* FlightInformationDetailView.swift in Sources */,
 				3E4A36902A570BA800027C61 /* FuelTableList+CoreDataClass.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
 				3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */,
+				3E4A36BF2A571C7500027C61 /* NotamDetailView.swift in Sources */,
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,

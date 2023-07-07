@@ -274,6 +274,24 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         )
     }
     
+    if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
+        return AnyView(
+            FlightInformationDetailView()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
+    }
+    
+    if item.screenName == NavigationEnumeration.NotamDetailScreen {
+        return AnyView(
+            NotamDetailView()
+                .navigationBarBackButtonHidden()
+                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .ignoresSafeArea()
+        )
+    }
+    
     if item.screenName == NavigationEnumeration.ScratchPadScreen {
         return AnyView(
             ScratchPadView()
@@ -495,6 +513,10 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Note"
         case .FlightPlanScreen:
             return "Flight Plan"
+        case .FlightInformationDetailScreen:
+            return "Flight Information"
+        case .NotamDetailScreen:
+            return "NOTAMs"
         case .AirCraftScreen:
             return "Aircraft Status"
         case .DepartureScreen:
