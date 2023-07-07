@@ -205,10 +205,19 @@ struct FlightPlanArrView: View {
                             }
                             .overlay(isEditingDest ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                             .onChange(of: dest) { newValue in
-                                // Limit the text to a maximum of 1 characters
+                                // Limit the text to a maximum of 3 characters
                                 if newValue.count > 2 {
                                     code = String(newValue.prefix(3))
                                     cursorPositionDest = 3
+                                    
+//                                    if coreDataModel.existDataArrivalAtis {
+//                                        coreDataModel.dataArrivalAtis.dest = dest
+//                                    } else {
+//                                        let item = ArrivalATISList(context: persistenceController.container.viewContext)
+//                                        item.dest = dest
+//                                    }
+//
+//                                    coreDataModel.save()
                                     
                                     isEditingDest = false
                                     isTextFieldCodeFocused = true
@@ -229,7 +238,8 @@ struct FlightPlanArrView: View {
                                     // Limit the text to a maximum of 1 characters
                                     if newValue.count > 0 {
                                         code = String(newValue.prefix(1))
-                                        
+                                        cursorPositionCode = 1
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.code = code
                                         } else {
@@ -239,7 +249,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionCode = 1
                                         isEditingCode = false
                                         isTextFieldTimeFocused = true
                                     }
@@ -258,7 +267,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: time) { newValue in
                                     if newValue.count > 3 {
                                         time = String(newValue.prefix(4))
-                                        
+                                        cursorPositionTime = 4
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.time = time
                                         } else {
@@ -268,7 +278,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionTime = 4
                                         isEditingTime = false
                                         isTextFieldRwyFocused = true
                                     }
@@ -288,7 +297,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: rwy) { newValue in
                                     if newValue.count > 10 {
                                         rwy = String(newValue.prefix(11))
-                                        
+                                        cursorPositionRwy = 11
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.rwy = rwy
                                         } else {
@@ -298,7 +308,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionRwy = 11
                                         isEditingRwy = false
                                         isTextFieldTransLvlFocused = true
                                     }
@@ -317,7 +326,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: transLvl) { newValue in
                                     if newValue.count > 3 {
                                         transLvl = String(newValue.prefix(4))
-                                        
+                                        cursorPositionTransLvl = 4
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.transLvl = transLvl
                                         } else {
@@ -327,7 +337,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionTransLvl = 4
                                         isEditingTransLvl = false
                                         isTextFieldWindFocused = true
                                     }
@@ -347,7 +356,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: wind) { newValue in
                                     if newValue.count > 5 {
                                         wind = String(newValue.prefix(6))
-                                        
+                                        cursorPositionWind = 6
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.wind = wind
                                         } else {
@@ -357,7 +367,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionWind = 6
                                         isEditingWind = false
                                         isTextFieldVisFocused = true
                                     }
@@ -376,7 +385,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: vis) { newValue in
                                     if newValue.count > 3 {
                                         vis = String(newValue.prefix(4))
-                                        
+                                        cursorPositionVis = 4
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.vis = vis
                                         } else {
@@ -386,7 +396,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionVis = 4
                                         isEditingVis = false
                                         isTextFieldWxFocused = true
                                     }
@@ -477,7 +486,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: temp) { newValue in
                                     if newValue.count > 1 {
                                         temp = String(newValue.prefix(2))
-                                        
+                                        cursorPositionTemp = 2
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.temp = temp
                                         } else {
@@ -487,7 +497,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionTemp = 2
                                         isEditingTemp = false
                                         isTextFieldDPFocused = true
                                     }
@@ -506,7 +515,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: dp) { newValue in
                                     if newValue.count > 1 {
                                         dp = String(newValue.prefix(2))
-                                        
+                                        cursorPositionDP = 2
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.dp = dp
                                         } else {
@@ -516,7 +526,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionDP = 2
                                         isEditingDP = false
                                         isTextFieldQNHFocused = true
                                     }
@@ -536,7 +545,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: qnh) { newValue in
                                     if newValue.count > 3 {
                                         qnh = String(newValue.prefix(4))
-                                        
+                                        cursorPositionQNH = 4
+
                                         if coreDataModel.existDataArrivalAtis {
                                             coreDataModel.dataArrivalAtis.qnh = qnh
                                         } else {
@@ -546,7 +556,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionQNH = 4
                                         isEditingQNH = false
                                         isTextFieldRemarksFocused = true
                                     }
@@ -570,7 +579,7 @@ struct FlightPlanArrView: View {
                                         isShowingAutofillOptionsRemarks = true
                                     } else {
                                         if coreDataModel.existDataArrivalAtis {
-                                            coreDataModel.dataArrivalAtis.remarks = text ?? ""
+                                            coreDataModel.dataArrivalAtis.remarks = text
                                         } else {
                                             let item = ArrivalATISList(context: persistenceController.container.viewContext)
                                             item.remarks = text
@@ -634,7 +643,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: atcDest) { newValue in
                                     if newValue.count > 2 {
                                         atcDest = String(newValue.prefix(3))
-                                        
+                                        cursorPositionAtcDest = 3
+
                                         if coreDataModel.existDataArrivalAtc {
                                             coreDataModel.dataArrivalAtc.atcDest = atcDest
                                         } else {
@@ -644,7 +654,6 @@ struct FlightPlanArrView: View {
 
                                         coreDataModel.save()
                                         
-                                        cursorPositionAtcDest = 3
                                         isEditingAtcDest = false
                                         isTextFieldAtcRwyFocused = true
                                     }
@@ -663,7 +672,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: atcRwy) { newValue in
                                     if newValue.count > 2 {
                                         atcRwy = String(newValue.prefix(3))
-                                        
+                                        cursorPositionAtcRwy = 3
+
                                         if coreDataModel.existDataArrivalAtc {
                                             coreDataModel.dataArrivalAtc.atcRwy = atcRwy
                                         } else {
@@ -674,7 +684,6 @@ struct FlightPlanArrView: View {
                                         coreDataModel.save()
                                         
                                         isEditingAtcRwy = false
-                                        cursorPositionAtcRwy = 3
                                         isTextFieldAtcArrFocused = true
                                     }
                                 }
@@ -714,7 +723,8 @@ struct FlightPlanArrView: View {
                                 .onChange(of: atcTransLvl) { newValue in
                                     if newValue.count > 2 {
                                         atcTransLvl = String(newValue.prefix(3))
-                                        
+                                        cursorPositionAtcTransLvl = 3
+
                                         if coreDataModel.existDataArrivalAtc {
                                             coreDataModel.dataArrivalAtc.atcTransLvl = atcTransLvl
                                         } else {
@@ -724,7 +734,6 @@ struct FlightPlanArrView: View {
                                         
                                         coreDataModel.save()
                                         
-                                        cursorPositionAtcTransLvl = 3
                                         isEditingAtcTransLvl = false
                                         isTextFieldAtcDestFocused = true
                                     }
@@ -773,7 +782,7 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entLdg) { newValue in
                                     if newValue.count > 3 {
                                         entLdg = String(newValue.prefix(4))
-                                        
+                                        cursorPositionEntLdg = 4
                                         if coreDataModel.existDataArrivalEntries {
                                             coreDataModel.dataArrivalEntries.entLdg = entLdg
                                         } else {
@@ -783,7 +792,6 @@ struct FlightPlanArrView: View {
                                         
                                         coreDataModel.save()
                                         
-                                        cursorPositionEntLdg = 4
                                         isEditingEntLdg = false
                                         isTextFieldEntOnFocused = true
                                     }
@@ -803,7 +811,7 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entOn) { newValue in
                                     if newValue.count > 3 {
                                         entOn = String(newValue.prefix(4))
-                                        
+                                        cursorPositionEntOn = 4
                                         if coreDataModel.existDataArrivalEntries {
                                             coreDataModel.dataArrivalEntries.entOn = entOn
                                         } else {
@@ -813,7 +821,6 @@ struct FlightPlanArrView: View {
                                         
                                         coreDataModel.save()
                                         
-                                        cursorPositionEntOn = 4
                                         isEditingEntOn = false
                                         isTextFieldEntFuelOnChocksFocused = true
                                     }
@@ -833,7 +840,7 @@ struct FlightPlanArrView: View {
                                 .onChange(of: entFuelOnChocks) { newValue in
                                     if newValue.count > 4 {
                                         entFuelOnChocks = String(newValue.prefix(5))
-                                        
+                                        cursorPositionEntFuelOnChocks = 5
                                         if coreDataModel.existDataArrivalEntries {
                                             coreDataModel.dataArrivalEntries.entFuelOnChocks = entFuelOnChocks
                                         } else {
@@ -843,7 +850,6 @@ struct FlightPlanArrView: View {
                                         
                                         coreDataModel.save()
                                         
-                                        cursorPositionEntFuelOnChocks = 5
                                         isEditingEntFuelOnChocks = false
                                         isTextFieldEntLdgFocused = true
                                     }
@@ -974,34 +980,54 @@ struct FlightPlanArrView: View {
         .onAppear {
             //set data ats
             if coreDataModel.existDataArrivalAtis {
+//                self.dest = coreDataModel.dataArrivalAtis.unwrappedDest
+//                self.cursorPositionDest = coreDataModel.dataArrivalAtis.unwrappedDest.count
                 self.code = coreDataModel.dataArrivalAtis.unwrappedCode
+                self.cursorPositionCode = coreDataModel.dataArrivalAtis.unwrappedCode.count
                 self.time = coreDataModel.dataArrivalAtis.unwrappedTime
+                self.cursorPositionTime = coreDataModel.dataArrivalAtis.unwrappedTime.count
                 self.rwy = coreDataModel.dataArrivalAtis.unwrappedRwy
+                self.cursorPositionRwy = coreDataModel.dataArrivalAtis.unwrappedRwy.count
                 self.transLvl = coreDataModel.dataArrivalAtis.unwrappedTransLvl
+                self.cursorPositionTransLvl = coreDataModel.dataArrivalAtis.unwrappedTransLvl.count
                 self.wind = coreDataModel.dataArrivalAtis.unwrappedWind
+                self.cursorPositionWind = coreDataModel.dataArrivalAtis.unwrappedWind.count
                 self.vis = coreDataModel.dataArrivalAtis.unwrappedVis
+                self.cursorPositionVis = coreDataModel.dataArrivalAtis.unwrappedVis.count
                 self.wx = coreDataModel.dataArrivalAtis.unwrappedWx
+                self.cursorPositionWx = coreDataModel.dataArrivalAtis.unwrappedWx.count
                 self.cloud = coreDataModel.dataArrivalAtis.unwrappedCloud
+                self.cursorPositionCloud = coreDataModel.dataArrivalAtis.unwrappedCloud.count
                 self.temp = coreDataModel.dataArrivalAtis.unwrappedTemp
+                self.cursorPositionTemp = coreDataModel.dataArrivalAtis.unwrappedTemp.count
                 self.dp = coreDataModel.dataArrivalAtis.unwrappedDp
+                self.cursorPositionDP = coreDataModel.dataArrivalAtis.unwrappedDp.count
                 self.qnh = coreDataModel.dataArrivalAtis.unwrappedQnh
+                self.cursorPositionQNH = coreDataModel.dataArrivalAtis.unwrappedQnh.count
                 self.remarks = coreDataModel.dataArrivalAtis.unwrappedRemarks
+                self.cursorPositionRemarks = coreDataModel.dataArrivalAtis.unwrappedRemarks.count
             }
             
             if coreDataModel.existDataArrivalAtc {
                 self.atcDest = coreDataModel.dataArrivalAtc.unwrappedAtcDest
+                self.cursorPositionAtcDest = coreDataModel.dataArrivalAtc.unwrappedAtcDest.count
                 self.atcRwy = coreDataModel.dataArrivalAtc.unwrappedAtcRwy
+                self.cursorPositionAtcRwy = coreDataModel.dataArrivalAtc.unwrappedAtcRwy.count
                 self.atcArr = coreDataModel.dataArrivalAtc.unwrappedAtcArr
+                self.cursorPositionAtcArr = coreDataModel.dataArrivalAtc.unwrappedAtcArr.count
                 self.atcTransLvl = coreDataModel.dataArrivalAtc.unwrappedAtcTransLvl
+                self.cursorPositionAtcTransLvl = coreDataModel.dataArrivalAtc.unwrappedAtcTransLvl.count
             }
             
             if coreDataModel.existDataArrivalEntries {
                 self.entLdg = coreDataModel.dataArrivalEntries.unwrappedEntLdg
+                self.cursorPositionEntLdg = coreDataModel.dataArrivalEntries.unwrappedEntLdg.count
                 self.entFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks
+                self.cursorPositionEntFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks.count
                 self.entOn = coreDataModel.dataArrivalEntries.unwrappedEntOn
+                self.cursorPositionEntOn = coreDataModel.dataArrivalEntries.unwrappedEntOn.count
             }
         }
-        // todo add onAppear CoreData init
     }
     
     func setFocusToFalse() {
