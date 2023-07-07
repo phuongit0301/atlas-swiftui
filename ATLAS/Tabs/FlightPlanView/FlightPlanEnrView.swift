@@ -38,16 +38,11 @@ struct waypoints: Identifiable, Equatable {
     let id = UUID()
 }
 
-// replace with fetch from coredata
-let flightPlanData: [String : Any] = fetchFlightPlanData()
-//let waypointsTableDefault: [waypoints] = flightPlanData["waypointsData"] as! [waypoints]
-
 struct FlightPlanEnrView: View {
     // initialise state variables
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
-//    @State var waypointsTableDefault: [waypoints] = waypointsTableDefault
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
     
@@ -133,8 +128,10 @@ struct FlightPlanEnrView: View {
 //                                        TextField(
 //                                            "\(row.unwrappedEta)",
 //                                            text: $eta
-//                                        )
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
+//                                        ).onSubmit {
+//                                            updateValues1(editedIndex: index)
+//                                        }
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -148,7 +145,7 @@ struct FlightPlanEnrView: View {
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index
                                         )
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
@@ -162,7 +159,7 @@ struct FlightPlanEnrView: View {
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -176,7 +173,7 @@ struct FlightPlanEnrView: View {
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -191,7 +188,7 @@ struct FlightPlanEnrView: View {
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -212,7 +209,7 @@ struct FlightPlanEnrView: View {
 //                                        .onSubmit {
 //                                            updateValues(editedIndex: index)
 //                                        }
-                                        EnrouteCustomField(waypointsTableDefault: $waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
+                                        EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
                                         .textInputAutocapitalization(.never)
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
@@ -292,37 +289,43 @@ struct EnrouteCustomField: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
-    @Binding var waypointsTableDefault: [EnrouteList]
+    let waypointsTableDefault: [EnrouteList]
     @Binding var waypointsTable: [EnrouteList]
     
     // Dedicated state var for each field
 //    @State var item: PerfWeightList = PerfWeightList()
-    @State var name: String = ""
-    @State var field = ""
-    @State var index: Int = 0
+    var name: String
+    @State var field: String
+    var index: Int
     
     var body: some View {
-        TextField("Enter", text: $field).onSubmit {
+        TextField("\(name)", text: $field).onSubmit {
             switch name {
                 case "eta":
-                    coreDataModel.dataFPEnroute[index].eta = field
+                    //coreDataModel.dataFPEnroute[index].eta = field
+                    waypointsTable[index].eta = field
                 case "ata":
-                    coreDataModel.dataFPEnroute[index].ata = field
+                    //coreDataModel.dataFPEnroute[index].ata = field
+                    waypointsTable[index].ata = field
                 case "afl":
-                    coreDataModel.dataFPEnroute[index].afl = field
+                    //coreDataModel.dataFPEnroute[index].afl = field
+                    waypointsTable[index].afl = field
                 case "oat":
-                    coreDataModel.dataFPEnroute[index].oat = field
+                    //coreDataModel.dataFPEnroute[index].oat = field
+                    waypointsTable[index].oat = field
                 case "awind":
-                    coreDataModel.dataFPEnroute[index].awind = field
+                    //coreDataModel.dataFPEnroute[index].awind = field
+                    waypointsTable[index].awind = field
                 case "afrm":
-                    coreDataModel.dataFPEnroute[index].afrm = field
+                    //coreDataModel.dataFPEnroute[index].afrm = field
+                    waypointsTable[index].afrm = field
                 default:
-                    coreDataModel.dataFPEnroute[index].eta = field
+                    //coreDataModel.dataFPEnroute[index].eta = field
+                    waypointsTable[index].afrm = field
             }
-            coreDataModel.save()
-            coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
-            
             updateValues(editedIndex: index)
+            //coreDataModel.save()
+            //coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
         }
     }
     
@@ -331,21 +334,28 @@ struct EnrouteCustomField: View {
         dateFormatterTime.dateFormat = "HHmm"
         
         let startIndex = editedIndex + 1
-        for index in startIndex..<coreDataModel.dataFPEnroute.count {
-            //            //eta
+        //for index in startIndex..<coreDataModel.dataFPEnroute.count
+        for index in startIndex..<waypointsTable.count {
+            //eta
             let etaDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedEta)!
-            if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].unwrappedEta) != nil {
+            if dateFormatterTime.date(from: //coreDataModel.dataFPEnroute[index].unwrappedEta) != nil
+                    waypointsTable[index].eta!) != nil {
                 // Update the value based on the previous row's value in column
-                let etaPreviousRowValue = dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index-1].unwrappedEta)!
-                let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
-                let components = ztmString.components(separatedBy: ":")
+                let etaPreviousRowValue = dateFormatterTime.date(from: //coreDataModel.dataFPEnroute[index-1].unwrappedEta)!
+                    waypointsTable[index-1].eta!)!
+                //let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
+                let ztmString = waypointsTable[index].ztm
+                let components = ztmString!.components(separatedBy: ":")
                 let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
                 let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
-                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: NewValue)
+//                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: NewValue)
+                waypointsTable[index].eta = dateFormatterTime.string(from: NewValue)
+                print("waypointsTable[\(index)].eta = \(waypointsTable[index].eta)")
             }
             else {
                 // Set the default value if it exists and currentValue is nil
-                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+//                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+                waypointsTable[index].eta = dateFormatterTime.string(from: etaDefaultValue)
             }
             
             //ata
