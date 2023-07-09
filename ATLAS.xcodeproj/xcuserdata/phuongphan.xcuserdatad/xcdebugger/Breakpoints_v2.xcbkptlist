@@ -2568,8 +2568,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1877"
-            endingLineNumber = "1877"
+            startingLineNumber = "1875"
+            endingLineNumber = "1875"
             landmarkName = "readDataNotamsList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2648,10 +2648,10 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1537"
-            endingLineNumber = "1537"
-            landmarkName = "CoreDataModelState"
-            landmarkType = "3">
+            startingLineNumber = "1535"
+            endingLineNumber = "1535"
+            landmarkName = "readDepartureEntries()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -1176,8 +1176,6 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
-        print("fuelData.burnoff=======>\(fuelData.burnoff)")
-
         let fuelTable = [
             fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"] ?? "", fuel: fuelData.burnoff["fuel"] ?? "", policy_reason: ""),
             fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"] ?? "", fuel: fuelData.cont["fuel"] ?? "", policy_reason: fuelData.cont["policy"]!),
@@ -1920,9 +1918,18 @@ class CoreDataModelState: ObservableObject {
     func calculatedZFWFuel() -> Int {
         if let item = self.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
             let actual = Double(item.unwrappedActual) ?? Double(0)
-            if let zfw = Double(dataPerfData.unwrappedPlanZFW) {
-                return 1
+            var unwrappedPlanZFW: Double = 0
+            var unwrappedZfwChange: Double = 0
+            
+            if let temp = Double(dataPerfData.unwrappedPlanZFW) {
+                unwrappedPlanZFW = temp
             }
+            
+            if let temp = Double(dataPerfData.unwrappedZfwChange) {
+                unwrappedZfwChange = temp
+            }
+            
+            return Int(Double(actual - unwrappedPlanZFW) * Double(unwrappedZfwChange / 1000))
         }
         return 0
     }
