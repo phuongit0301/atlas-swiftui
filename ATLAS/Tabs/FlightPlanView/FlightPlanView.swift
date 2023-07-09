@@ -18,33 +18,28 @@ struct FlightPlanView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if globalResponse.response != "" {
-                GeometryReader { proxy in
-                    VStack(spacing: 0) {
-                        switch selectedTab {
-                            case .SummaryScreen:
-    //                        FlightInformationView()
-                                FlightPlanSummaryView().environmentObject(viewModel)
-                            case .DepartureScreen:
-                                FlightPlanDepView()
-                            case .EnrouteScreen:
-                                FlightPlanEnrView()
-                            case .ArrivalScreen:
-                                FlightPlanArrView()
-                            case .NOTAMScreen:
-                                FlightPlanNOTAMView()
-                            case .METARSScreen:
-                                FlightPlanMETARTAFView()
-                        }
-                        
-                        FlightPlanSegmented(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)
-                    }.frame(maxHeight: .infinity)
-                        
-                }
-            } else {
-                ActivityIndicator(shouldAnimate: .constant(true))
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    switch selectedTab {
+                        case .SummaryScreen:
+//                        FlightInformationView()
+                            FlightPlanSummaryView().environmentObject(viewModel)
+                        case .DepartureScreen:
+                            FlightPlanDepView()
+                        case .EnrouteScreen:
+                            FlightPlanEnrView()
+                        case .ArrivalScreen:
+                            FlightPlanArrView()
+                        case .NOTAMScreen:
+                            FlightPlanNOTAMView()
+                        case .METARSScreen:
+                            FlightPlanMETARTAFView()
+                    }
+                    
+                    FlightPlanSegmented(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)
+                }.frame(maxHeight: .infinity)
+                    
             }
-            
         }
     }
 }

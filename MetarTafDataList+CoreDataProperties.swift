@@ -2,7 +2,7 @@
 //  MetarTafDataList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/07/2023.
+//  Created by phuong phan on 07/07/2023.
 //
 //
 
@@ -16,11 +16,13 @@ extension MetarTafDataList {
         return NSFetchRequest<MetarTafDataList>(entityName: "MetarTafData")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var depMetar: String?
-    @NSManaged public var depTaf: String?
     @NSManaged public var arrMetar: String?
     @NSManaged public var arrTaf: String?
+    @NSManaged public var depMetar: String?
+    @NSManaged public var depTaf: String?
+    @NSManaged public var id: UUID?
+    @NSManaged public var arrAirport: String?
+    @NSManaged public var depAirport: String?
     
     public var unwrappedDepMetar: String {
         depMetar ?? ""
@@ -36,6 +38,14 @@ extension MetarTafDataList {
     
     public var unwrappedArrTaf: String {
         arrTaf ?? ""
+    }
+    
+    public var unwrappedArrAirport: String {
+        arrAirport ?? ""
+    }
+    
+    public var unwrappedDepAirport: String {
+        depAirport ?? ""
     }
 }
 

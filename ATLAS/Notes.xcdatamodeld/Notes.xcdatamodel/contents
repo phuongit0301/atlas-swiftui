@@ -28,6 +28,7 @@
     <entity name="ArrivalATIS" representedClassName="ArrivalATISList" syncable="YES">
         <attribute name="cloud" optional="YES" attributeType="String"/>
         <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dest" optional="YES" attributeType="String"/>
         <attribute name="dp" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="qnh" optional="YES" attributeType="String"/>
@@ -123,9 +124,10 @@
         <attribute name="fuelReciprocalRemark" optional="YES" attributeType="String"/>
         <attribute name="fuelTrackShorteningRemark" optional="YES" attributeType="String"/>
         <attribute name="fuelZFWChangeRemark" optional="YES" attributeType="String"/>
-        <attribute name="perActualLDW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="perActualTOW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="perActualZFW" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="perActualLDW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualTOW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualZFW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="FuelData" representedClassName="FuelDataList" syncable="YES">
         <attribute name="altn" optional="YES" attributeType="Binary"/>
@@ -174,8 +176,10 @@
         <attribute name="time" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
+        <attribute name="arrAirport" optional="YES" attributeType="String"/>
         <attribute name="arrMetar" optional="YES" attributeType="String"/>
         <attribute name="arrTaf" optional="YES" attributeType="String"/>
+        <attribute name="depAirport" optional="YES" attributeType="String"/>
         <attribute name="depMetar" optional="YES" attributeType="String"/>
         <attribute name="depTaf" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

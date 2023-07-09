@@ -1,0 +1,1478 @@
+
+{
+    "altnData": [
+        {
+            "altnRwy": "WSAP/20",
+            "comp": "4",
+            "dist": "95",
+            "fl": "90",
+            "fuel": "00:25",
+            "minima": "355",
+            "rte": "SAMKO DCT NYLON DCT KK DCT PU",
+            "time": "1887",
+            "vis": "1600"
+        },
+        {
+            "altnRwy": "WMKJ/34",
+            "comp": "4",
+            "dist": "91",
+            "fl": "120",
+            "fuel": "00:22",
+            "minima": "965",
+            "rte": "SAMKO DCT SJ G579 VJB DCT",
+            "time": "1832",
+            "vis": "4600"
+        },
+        {
+            "altnRwy": "WMKK/14L",
+            "comp": "-2",
+            "dist": "254",
+            "fl": "260",
+            "fuel": "00:51",
+            "minima": "446",
+            "rte": "AKOMA DCT SABKA DCT MASBO A457 GUPTA GUPTA1G",
+            "time": "3922",
+            "vis": "1400"
+        }
+    ],
+    "fuelData": {
+        "altn": {
+            "fuel": "001887",
+            "time": "00:25",
+            "unit": 74.8
+        },
+        "burnoff": {
+            "fuel": "008401",
+            "time": "01:52",
+            "unit": 74.8
+        },
+        "cont": {
+            "fuel": "000600",
+            "policy": "5%",
+            "time": "00:08"
+        },
+        "dispAdd": {
+            "fuel": 900,
+            "policy": "MinimumReserve, DispatchDefined",
+            "time": "00:10"
+        },
+        "hold": {
+            "fuel": "1929",
+            "time": "00:30",
+            "unit": 65.6
+        },
+        "planReq": {
+            "fuel": "014217",
+            "time": "03:07"
+        },
+        "taxi": {
+            "fuel": "000500",
+            "policy": "10mins taxi time",
+            "time": "00:10",
+            "unit": 50
+        },
+        "topup60": {
+            "fuel": "000000",
+            "time": "00:00"
+        }
+    },
+    "infoData": {
+        "STALocal": "05 20:25",
+        "STAUTC": "05 13:30",
+        "STDLocal": "05 17:52",
+        "STDUTC": "05 11:10",
+        "blkTime": "02:12",
+        "dep": "BKK",
+        "depICAO": "VTBS",
+        "dest": "SIN",
+        "destICAO": "WSSS",
+        "flightDate": "2023-07-04",
+        "fltNo": "TR753",
+        "fltTime": "01:52",
+        "planNo": "OFP1",
+        "tailNo": "9VOFH"
+    },
+    "metarTafData": {
+        "altnTaf": [
+            {
+                "airport": "WSAP",
+                "altnRwy": "WSAP/19L",
+                "eta": "2023-07-04 13:55",
+                "taf": "TAF AMD WSAP 040800Z 0408/0512 11008KT 9999 FEW015 SCT020"
+            },
+            {
+                "airport": "WMKJ",
+                "altnRwy": "WMKJ/02L",
+                "eta": "2023-07-04 13:52",
+                "taf": "TAF WMKJ 040500Z 0406/0506 VRB03KT 9999 FEW018 TEMPO 0407/0411 4000 TSRA FEW017CB"
+            },
+            {
+                "airport": "WMKK",
+                "altnRwy": "WMKK/20",
+                "eta": "2023-07-04 14:21",
+                "taf": "TAF WMKK 040500Z 0406/0512 VRB03KT 9999 FEW024 PROB30 TEMPO 0407/0411 5000 TSRA FEW017CB TEMPO 0420/0500 3000 +TSRA FEW015CB SCT018"
+            }
+        ],
+        "arrAirport": "WSSS",
+        "arrMetar": "WSSS 040900Z 09009KT 9999 FEW020CB BKN300 32/24 Q1006 NOSIG",
+        "arrTaf": "TAF AMD WSSS 040800Z 0408/0512 11008KT 9999 FEW015 SCT020",
+        "depAirport": "VTBS",
+        "depMetar": "VTBS 040900Z 20005KT 9999 -RA FEW020 BKN080 30/24 Q1007 NOSIG",
+        "depTaf": "TAF VTBS 040500Z 0406/0512 21008KT 9000 FEW020 SCT080 TEMPO 0406/0412 VRB15KT 4000 TSRA FEW018CB SCT035 BKN080"
+    },
+    "notamsData": {
+        "arrNotams": [
+            {
+                "date": "2307021700",
+                "notam": "TWY V12 BEHIND ACFT STANDS A9 TO A11 CLSD DUE WIP. RMK: ACFT ON TWY\nV SOUTHBOUND NOT ALLOWED TO TURN RIGHT ONTO TWY V8",
+                "rank": 1
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY J BTN TWY J12 AND TWY B, INCLUDING JUNCTION OF TWY J/TWY J12\nAND JUNCTION OF TWY J/TWY B\n2) TWY K BTN TWY J12 AND TWY B, INCLUDING JUNCTION OF TWY K/TWY J12\nAND JUNCTION OF TWY K/TWY B",
+                "rank": 2
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY J8, TWY J9, TWY J10, TWY J11 AND TWY J12\n2) TWY A\n3) TWY A1 TO TWY A12\n4) TWY B\n5) TWY B1 TO TWY B14\n6) TWY E\n7) TWY F\n8) TWY G\n9) TWY H",
+                "rank": 3
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY T BTN TWY P AND TWY J, INCLUDING JUNCTION OF TWY T/TWY J/TWY K\n2) TWY J BTN TWY T AND TWY J12\n3) TWY K BTN TWY T AND TWY J12\n4) TWY K1, TWY K2 AND TWY K3",
+                "rank": 4
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY P1 BTN TWY N AND TXL N5, INCLUDING JUNCTION OF TWY P1/TXL\nN5/TWY K\n2) TXL N5 BTN JUNCTION OF TWY P1/TXL N5/TWY K AND INTERMEDIATE\nHOLDING POSITION STOPBAR LINE\n3) JUNCTION OF TWY P1/TWY N",
+                "rank": 5
+            },
+            {
+                "date": "2306021830",
+                "notam": "RWY 02L/20R CLOSURE BTN 1830-1900 ON 02 09 10 16 17 23 24 30 JUN\nAND 01 04 06 07 08 11 13 14 15 18 20 21 22 25 27 28 29 JUL CNL. REF\nAIP SINGAPORE, WSSS AD 2.12 ITEM 14, PARA 6B - I. RWY 02L/20R -II",
+                "rank": 6
+            },
+            {
+                "date": "2306022000",
+                "notam": "RWY 02R/20L CLOSURE BTN 2000-2100  ON 02 09 10 16 17 23 24 30 JUN\nAND\n01 04 06 07 08 11 13 14 15 18 20 21 22 25 27 28 29 JUL CNL. REF AIP\nSINGAPORE, WSSS AD 2.12 ITEM 14, PARA 6B, RWY 02R/20L, III",
+                "rank": 7
+            },
+            {
+                "date": "2305311600",
+                "notam": "TXL N1 BEHIND ACFT STAND 517L CLSD",
+                "rank": 8
+            },
+            {
+                "date": "2307040100",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY T BTN TWY P4 AND TWY Q, INCLUDING JUNCTION OF TWY P3/TWY T/TWY\nT3 AND JUNCTION OF TWY P2/TWY T/TWY T2\n2) TWY P2 BTN TWY P1 AND TXL P7",
+                "rank": 9
+            },
+            {
+                "date": "2307030200",
+                "notam": "TWY B BTN TWY B4 AND TWY B6, INCLUDING JUNCTION OF TWY B/TWY G,\nJUNCTION OF TWY B/TWY H AND JUNCTION OF TWY B/TWY B5 CLSD",
+                "rank": 10
+            },
+            {
+                "date": "2307030900",
+                "notam": "TWY J BTN TWY T AND TWY K1 CLSD",
+                "rank": 11
+            },
+            {
+                "date": "2307021046",
+                "notam": "SINGAPORE AP AND CTR CLSD DUE TO REPUBLIC OF SINGAPORE AIR FORCE\n(RSAF) OPERATIONAL REQUIREMENTS",
+                "rank": 12
+            },
+            {
+                "date": "2306021700",
+                "notam": "RWY 02R/20L CLSD DUE WIP",
+                "rank": 13
+            },
+            {
+                "date": "2305311600",
+                "notam": "TWY S2 AND TWY S7 CLSD",
+                "rank": 14
+            },
+            {
+                "date": "2305311600",
+                "notam": "TWY N BTN TXL N4 AND TWY P1 CLSD",
+                "rank": 15
+            },
+            {
+                "date": "2306291600",
+                "notam": "ONE LUFFER TOWER CRANE, HGT 276FT AMSL, ERECTED AT 012128N1035250E\n(BRG 275.3DEG, DIST 1.34NM FM WSAP ARP-WI WSAP CTR). CRANE MARKED AND\nLGTD AT NGT",
+                "rank": 16
+            },
+            {
+                "date": "2306061600",
+                "notam": "ONE MOBILE CRANE, HGT 275.6FT AMSL, ERECTED AT 012101N1035348E (BRG\n227.3DEG, DIST 0.49NM FM WSAP ARP-WI WSAP CTR). CRANES MARKED AND\nLGTD AT NGT",
+                "rank": 17
+            },
+            {
+                "date": "2305261600",
+                "notam": "ONE MOBILE CRANE, HGT 276FT AMSL, ERECTED AT 011959N1035254E (BRG\n223.1DEG, DIST 1.84NM FM WSAP ARP-WI WSAP CTR). CRANE MARKED AND\nLGTD AT NGT",
+                "rank": 18
+            },
+            {
+                "date": "2304191600",
+                "notam": "ONE MOBILE CRANE, HGT 276FT AMSL, ERECTED AT 012213N1035602E (BRG\n065DEG, DIST 2.05NM FM WSAP ARP-WI WSAP CTR). CRANE MARKED AND LGTD\nAT NGT",
+                "rank": 19
+            },
+            {
+                "date": "2306301600",
+                "notam": "ONE CRAWLER CRANE, HGT 328FT AMSL, ERECTED AT 012028N1035323E (BRG\n221.8DEG, DIST 1.18NM FM WSAP ARP-WI WSAP CTR). CRANE MARKED AND\nLGTD AT NGT",
+                "rank": 20
+            },
+            {
+                "date": "2306251600",
+                "notam": "TWO LUFFING TOWER CRANE AND THREE TOPLESS TOWER CRANE, HGT 236FT\nAMSL, ERECTED AT 011827N1035307E (BRG 199.0DEG, DIST 3.06NM FM WSAP\nARP-WI WSAP CTR). CRANES MARKED AND LGTD AT NGT",
+                "rank": 21
+            },
+            {
+                "date": "2306211356",
+                "notam": "FOUR MOBILE CRANES AND FOUR CRAWLER CRANES, HGT 262.5FT AMSL,\nERECTED AT 012223N1035514E (BRG 045.8DEG, DIST 1.49NM FM WSAP ARP-WI\nWSAP CTR). CRANES MARKED AND LGTD AT NGT",
+                "rank": 22
+            },
+            {
+                "date": "2306061600",
+                "notam": "TWO MOBILE CRANES, HGT 341.2FT AMSL, ERECTED AT 012013N1035229E\n(BRG\n236DEG, DIST 2.03NM FM WSAP ARP-WI WSAP CTR). CRANES MARKED AND LGTD\nAT NGT",
+                "rank": 23
+            },
+            {
+                "date": "2306061600",
+                "notam": "ONE CRAWLER CRANE AND ONE ROUGH TERRAIN CRANE, HGT 265.75FT AMSL,\nERECTED AT 012040N1035341E (BRG 215DEG, DIST 0.83NM FM WSAP ARP-WI\nWSAP CTR). CRANES MARKED AND LGTD AT NGT",
+                "rank": 24
+            },
+            {
+                "date": "2304291440",
+                "notam": "ONE MOBILE CRANE, ONE HYDRAULIC CRAWLER CRANE, ONE ROTARY DRILLING\nRIG, ONE SERVICE CRANE, ONE TRENCH CUTTER AND ONE HYDRAULIC GRAB\nCARRIER HGT 147FT AMSL, ERECTED AT 012147N1035429E\n(BRG 28.8DEG, DIST 0.52NM FM WSAP ARP-WI WSAP CTR).\nCRANES MARKED AND LGTD AT NGT.",
+                "rank": 25
+            },
+            {
+                "date": "2301311600",
+                "notam": "TWO LUFFING CRANES, HGT 345FT AMSL, ERECTED AT 012101N1035226E (BRG\n259.4DEG, DIST 1.77NM FM WSAP ARP-WI WSAP CTR). CRANES MARKED AND\nLGTD AT NGT",
+                "rank": 26
+            },
+            {
+                "date": "2306261600",
+                "notam": "ONE LUFFER TOWER CRANE, HGT 329FT AMSL, ERECTED AT 011935N1035320E\n(BRG 205.3DEG, DIST 1.95NM FM WSAP ARP-WI WSAP CTR)  CRANES MARKED\nAND LGTD AT NGT",
+                "rank": 27
+            },
+            {
+                "date": "2306231600",
+                "notam": "ONE MOBILE CRANE, HGT 364.2FT AMSL, ERECTED AT 012452N1035442E\n(BRG 8.6DEG, DIST 3.56NM FM WSAP ARP-WI WSAP CTR).\nCRANE MARKED AND LGTD AT NGT.",
+                "rank": 28
+            },
+            {
+                "date": "2306181600",
+                "notam": "ONE MOBILE CRANE, HGT 193.6FT AMSL, ERECTED AT 011928N1035334E\n(BRG 197.7DEG, DIST 1.98NM FM WSAP ARP-WI WSAP CTR).\nCRANE MARKED AND LGTD AT NGT.",
+                "rank": 29
+            },
+            {
+                "date": "2306171600",
+                "notam": "ONE TOWER CRANE, HGT 377.3FT AMSL, ERECTED AT 012027N1035322E\n(BRG 221.6DEG, DIST 1.20NM FM WSAP ARP-WI WSAP CTR).\nCRANE MARKED AND LGTD AT NGT.",
+                "rank": 30
+            },
+            {
+                "date": "2304301600",
+                "notam": "ONE TOPLESS TOWER CRANE, HGT 276FT AMSL, ERECTED AT 012026N1035612E\n(BRG 113.7DEG, DIST 2.23NM FM WSAP ARP-WI WSAP CTR). CRANES MARKED\nAND LGTD AT NGT",
+                "rank": 31
+            },
+            {
+                "date": "2304231600",
+                "notam": "ONE MOBILE CRANE, HGT 194FT AMSL, ERECTED AT 011925N1035333E\n(BRG 198 DEG, DIST 2.02NM FM WSAP ARP-WI WSAP CTR).\nCRANE MARKED AND LGTD AT NGT.",
+                "rank": 32
+            },
+            {
+                "date": "2212311600",
+                "notam": "SIX TOPLESS TOWER CRANES HGT 214FT AMSL, ERECTED AT\n012231N1035655E (BRG 70.3DEG, DIST 2.94NM FM WSAP ARP-WI WSAP CTR).\nCRANES MARKED AND LGTD AT NGT.",
+                "rank": 33
+            },
+            {
+                "date": "2306260500",
+                "notam": "CRANE OPS WI 150NM RADIUS OF 013746.6N 1034003.4E HGT 190 AMSL.\nCRANE MARKED WITH CHEQUERED FLAG AND ROTATING BEARING.",
+                "rank": 34
+            },
+            {
+                "date": "2305150100",
+                "notam": "UA ACT WILL TAKE PLACE WI THE FLW COORD:\n013629.12N 1034118.83E - 013636.88N 1034129.39E -\n013629.18N 1034137.71E - 013620.00N 1034126.13E\n(SENAI,JOHOR)\nRMK/ ACT SUBJ ATC\nF) SFC                             G) 250FT AMSL",
+                "rank": 35
+            },
+            {
+                "date": "2304180000",
+                "notam": "UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n013342.45N 1034923.93E - 013430.32N 1034727.66E\n(PETRONAS GAS BERHAD PIPELINE ULU TIRAM)\nRMK : 1. ACT SUBJ ATC\n2. 50 METER BUFFER LEFT AND RIGHT OF THE ROUTE\nF) SFC                             G) 300FT AGL",
+                "rank": 36
+            },
+            {
+                "date": "2306200000",
+                "notam": "UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n014105.88N 1033418.72E - 012944.80N 1034817.92E\n(SKUDAI, JOHOR)\nRMK: 1. 50 METER BUFFER ON LEFT AND RIGHT OF THE CENTRE LINE\n2. ACT SUBJ ATC.\nF) SFC                             G) 500FT AMSL",
+                "rank": 37
+            },
+            {
+                "date": "2305311306",
+                "notam": "NDB JR 245KHZ U/S",
+                "rank": 38
+            },
+            {
+                "date": "2305281515",
+                "notam": "AD RFFS DOWNGRADED TO CAT 7",
+                "rank": 39
+            },
+            {
+                "date": "2307011700",
+                "notam": "RWY 14R/32L CLSD.",
+                "rank": 40
+            },
+            {
+                "date": "2307011113",
+                "notam": "RWY 14L/32R CL LIGHTS U/S.",
+                "rank": 41
+            },
+            {
+                "date": "2307040500",
+                "notam": "PORTION OF TWY U4 BTN INT U3A AND TWY Q CLSD",
+                "rank": 42
+            },
+            {
+                "date": "2307040200",
+                "notam": "PORTION OF TWY T7 BTN T6 AND TWY D CLSD",
+                "rank": 43
+            },
+            {
+                "date": "2307030200",
+                "notam": "TWY U5 BTN STAND Q12 AND TWY Z CLSD",
+                "rank": 44
+            },
+            {
+                "date": "2307011121",
+                "notam": "RWY 14R/32L CL LIGHTS U/S.",
+                "rank": 45
+            },
+            {
+                "date": "2306300000",
+                "notam": "TWY E4 FM INT D12 TIL SAE HANGAR LTD TO CODE C ACFT ONLY",
+                "rank": 46
+            },
+            {
+                "date": "2307011700",
+                "notam": "RWY 15/33 CLSD,",
+                "rank": 47
+            },
+            {
+                "date": "2307040300",
+                "notam": "RWY 14R/32L CLSD.",
+                "rank": 48
+            },
+            {
+                "date": "2307021700",
+                "notam": " RWY 14L/32R CLSD.",
+                "rank": 49
+            },
+            {
+                "date": "2307030300",
+                "notam": "RWY 14L/32R CLSD.",
+                "rank": 50
+            },
+            {
+                "date": "2306281000",
+                "notam": "RWY 15/33 CL LGT WITHDRAWN FOR MAINT",
+                "rank": 51
+            },
+            {
+                "date": "2305312300",
+                "notam": "STOPBAR AND LEAD IN LGT FM Y1 TIL Y9 U/S",
+                "rank": 52
+            },
+            {
+                "date": "2306231100",
+                "notam": "CRANE ERECTED FOR ACFT REMOVAL AT COORD:\n1. 024331.1N 1014255.6E\n2. 024329.3N 1014252.9E\n3. 024326.9N 1014254.4E\n4. 024328.8N 1014257.1E\nMAX HGT 38M/125FT AGL",
+                "rank": 53
+            },
+            {
+                "date": "2306301600",
+                "notam": "CRANE ERECTED AT COORD:\n024331N 1014323E\n024329N 1014320E\n024337N 1014315E\n024339N 1014318E\n024335N 1014321E\n024333N 1014321E\n024332N 1014322E\nGDC AREA(BESIDE MAB BUILDING) HGT 138FT AGL",
+                "rank": 54
+            },
+            {
+                "date": "2306190800",
+                "notam": "HAZARDOUS WEATHER WARNING SYSTEM(HWWS) WITHDRAWN FOR MAINT.\nMICROBURST AND WIND SHEAR INFORMATION ONLY FM PILOT REPORTS.",
+                "rank": 55
+            },
+            {
+                "date": "2304070000",
+                "notam": "CRANE ERACTED FOR AIRASIA HANGAR:\n1.024323N1014314E\n2.024323N1014316E\n3.024317N1014320E\n4.024309N1014309E\n5.024316N1014304E\nMAX HGT 53.65M/176FT",
+                "rank": 56
+            },
+            {
+                "date": "2307040000",
+                "notam": "DVOR/DME VSP 114.40MHZ/CH91X NOT AVBL DUE MAINT",
+                "rank": 57
+            },
+            {
+                "date": "2304190723",
+                "notam": "OBSTACLE LIGHTS U/S ON CHIMNEY AT\nTUANKU MUHRIZ POWER PLANT (JIMAH POWER PLANT)\nAT COORD 023526N 1014351E\nHEIGHT 525FT AGL",
+                "rank": 58
+            }
+        ],
+        "depNotams": [
+            {
+                "date": "2306130950",
+                "notam": "THE CLOSURE OF TAXIWAY AND TAXILANE FOR PAVEMENT RECONSTRUCTION\nPHASE 1 AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS) AMD AS FLW:\nITEM 2 THE TEMPORARY CLOSURE AREAS AND PERIODS\nCONSTRUCTION AREA : 2\nCLOSURE AREA :\n-TAXILANE T16\n-TAXILANE T17 BEHIND AIRCRAFT STANDS: G4, G5, 501, 503, 504, 505\nPERIOD : 3 JULY 2023, 0200 UTC TO 15 SEPTEMBER 2023, 0900 UTC\nREF NON-AIRAC AIP SUP A21/23",
+                "rank": 1
+            },
+            {
+                "date": "2305090214",
+                "notam": "GROUP OF 6 OBST HIGH-MAST LGT PENETRATE TKOF CLIMB SFC RWY 01L\nELEV 73.82FT (22.50M) AMSL ERECTED AT FLW LCA:\n-PSN 1: 134255.49N1004449.89E DIST 1366.90M, N OF THR RWY 19R\n-PSN 2: 134257.47N1004448.34E DIST 1414.42M, N OF THR RWY 19R\n-PSN 3: 134301.29N1004449.86E DIST 1539.60M, N OF THR RWY 19R\n-PSN 4: 134300.31N1004446.99E DIST 1489.43M, N OF THR RWY 19R\n-PSN 5: 134301.49N1004444.20E DIST 1503.68M, N OF THR RWY 19R\n-PSN 6: 134303.74N1004447.00E DIST 1591.43M, N OF THR RWY 19R",
+                "rank": 2
+            },
+            {
+                "date": "2306300835",
+                "notam": "THE CLOSURE OF TAXIWAY AND TAXILANE FOR PAVEMENT RECONSTRUCTION\nPHASE 1 AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS) AMD AS FLW:\nITEM 2 THE TEMPORARY CLOSURE AREAS AND PERIODS\nCONSTRUCTION AREA : 3\nCLOSURE AREA :\n-TWY B BTN TWY C3 AND TWY C5, TWY B2 AND TWY C4\nPERIOD : 31 JULY 2023, 2300 UTC TO 8 NOVEMBER 2023, 0900 UTC\nREF NON-AIRAC AIP SUP A21/23",
+                "rank": 3
+            },
+            {
+                "date": "2306300815",
+                "notam": "THE CLOSURE OF TAXIWAY AND TAXILANE FOR PAVEMENT RECONSTRUCTION\nPHASE 1 AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS) AMD AS FLW:\nITEM 2 THE TEMPORARY CLOSURE AREAS AND PERIODS\nCONSTRUCTION AREA : 1\nCLOSURE AREA :\n-TAXILANE T6 BEHIND AIRCRAFT STANDS: B2, B4, B6\n-TAXILANE T7 BEHIND AIRCRAFT STANDS: C1, C3, C5, 201, 202\nPERIOD : 6 JUNE 2023, 0100 UTC TO 24 AUGUST 2023, 0900 UTC\nREF NON-AIRAC AIP SUP A21/23",
+                "rank": 4
+            },
+            {
+                "date": "2306300215",
+                "notam": "COVID-19 : IMPLEMENTATION OF CONTINGENCY ARRANGEMENTS TO REDUCE\nTHE RISKS OF THE SPREAD OF COVID-19\nTEMPORARY AIS BRIEFING OFFICE AND ATS REPORTING OFFICE OF\nVTBS-BANGKOK/SUVARNABHUMI INTL AP MOVE TO VTBD-BANGKOK/DON MUEANG\nINTL AP AS FLW LCA:\n2ND FLOOR CENTRAL BLOCK BLDG, DON MUEANG INTL AP\nAIS BRIEFING OFFICE : H24\nTEL : +662-1313901, FAX : +662-1313904, AFTN : VTBSZPZX\nARO : H24\nTEL : +662-1313901, FAX : +662-1313904, AFTN : VTBSZPZX\nTHIS SERVICE IS PROVIDED IN ACCORDANCE WITH THE PROVISION\nCONTAINED IN ICAO ANNEX15, ANNEX11 AND DOC4444\nREF AIP VTBS AD2.3",
+                "rank": 5
+            },
+            {
+                "date": "2306190718",
+                "notam": "LOCATION OF VOR CHECKPOINTS (DVOR/DME SVB: FREQ 111.4 MHZ)\nARE ESTABLISHED ON TRIAL BASIS DETAILS AS FLW:\n-AT TWY B1  (RDL040/2.6NM)\n-AT TWY B13 (RDL096/1.1NM)\n-AT TWY E1  (RDL016/2.7NM)\n-AT TWY E21 (RDL021/0.8NM",
+                "rank": 6
+            },
+            {
+                "date": "2306260947",
+                "notam": "TEMPORARY INSTALLATION OF GROUND-BASED AUGMENTATION SYSTEM (GBAS)\nPROOF OF CONCEPT EQUIPMENT AT SUVARNABHUMI INTL AIRPORT ITEM 5\nVALIDITY THIS AIP SUP WILL REMAIN CURRENT UNTIL 30 JUNE 2024\nREF NON-AIRAC AIP SUP A10/22",
+                "rank": 7
+            },
+            {
+                "date": "2305040100",
+                "notam": "MULTIPLE OBST MOBILE CRANES MAX HGT 23.5M (77.1FT) AGL\nOR 24.5M (80.38FT) AMSL OPR WI AREA BOUNDED BY THE FLW POINT:\n133934.36N1004337.59E-134208.02N1004417.47E-134205.31N100442742E-\n133931.64N1004348.28E-133934.36N1004337.59E\nRMK/CRANES MARKED AND LGTD",
+                "rank": 8
+            },
+            {
+                "date": "2304180500",
+                "notam": "VISUAL DOCKING GUIDANCE SYSTEM (VDGS)\nACFT STAND NR 101-129, 201-203, 301-308, 401-403, 501-525,\nA1-A6, B1-B6, C1-C10, D1-D8, E1-E10, F1-F6 AND G1-G5\nU/S DUE TO MAINT\nRMK: ACFT HAVE TO FLW MARSHALLING SIGNALS STRICTLY",
+                "rank": 9
+            }
+        ],
+        "enrNotams": [
+            {
+                "date": "2307010237",
+                "notam": "CHECKLIST\nSERIES A\n2021: 1976/21 2494/21\n2022: 2462/22 2816/22 3444/22 4577/22 4578/22 4657/22 4751/22\n2023: 0222 0371 0725 0803 0807 0835 0838 1012 1022 1096 1098 1099\n1100 1177 1203 1207 1275 1276 1277 1288 1313 1336 1351 1352\n1353 1388 1389 1425 1426 1427 1440 1442 1485 1490 1508 1567\n1568 1569 1570 1571 1572 1584 1585 1604 1615 1616 1628 1634\n1659 1660 1692 1698 1703 1704 1712 1713 1725 1726 1730 1731\n1733 1741 1742 1758 1759 1760 1766 1767 1770 1774 1775 1779\n1781 1782 1803 1811 1826 1830 1835 1836 1837 1838 1839 1840\n1841 1842 1845 1850 1854 1862 1872 1874 1885 1892 1896 1904\n1907 1908 1914 1917 1926 1927 1931 1932 1933 1940 1941 1942\n1943 1949 1989 1996 1997 1998 1999 2006 2007 2014 2027 2028\n2029 2030 2031 2032 2037 2040 2047 2051 2052 2053 2054 2055\n2056 2057 2061 2062 2081 2082 2083 2084 2089 2090 2094 2095\n2096 2097 2098 2099 2100 2102 2107 2108 2109 2110 2111 2112\n2114 2115 2117 2122 2123 2125 2126 2127",
+                "rank": 1
+            },
+            {
+                "date": "2307040100",
+                "notam": "UA ACT WILL TAKE PLACE WI FLW COORD:\n032204.85N 1013304.51E - 032200.44N 1013333.81E -\n032008.79N 1013343.61E - 031959.45N 1013325.79E\n(RAWANG-SERENDAH BRIDGE,SELANGOR)\nRMK/ACT SUBJ ATC\nF) SFC                             G) 400FT AGL",
+                "rank": 2
+            },
+            {
+                "date": "2307040100",
+                "notam": "UA ACT WILL TAKE PLACE WI THE FLW COORD:\n030817.71N 1014059.60E - 030835.70N 1014040.89E -\n030845.65N 1014052.56E - 030825.26N 1014108.76E\n(ZONE 1 HILLY AREA KUALA LUMPUR)\nAND WI FLW COORD:\n030906.24N 1014201.75E - 030915.64N 1014156.41E -\n030927.11N 1014216.26E - 030917.36N 1014221.54E\n(ZONE 2 HILLY AREA KUALA LUMPUR)\nAND WI FLW COORD:\n030809.36N 1014159.38E - 030834.91N 1014147.38E -\n030837.35N 1014155.43E - 030812.27N 1014206.12E\n(ZONE 3 HILLY AREA KUALA LUMPUR)\nAND WI FLW COORD:\n030904.36N 1013845.07E - 030925.07N 1013905.09E -\n030907.24N 1013921.25E - 030853.22N 1013901.06E\n(ZONE 4 HILLY AREA KUALA LUMPUR)\nAND WI FLW COORD:\n030813.35N 1013923.43E - 030827.56N 1013909.81E -\n030841.92N 1013921.32E - 030834.26N 1013937.21E\n(ZONE 5 HILLY AREA KUALA LUMPUR)\nAND WI FLW COORD:\n031338.91N 1013846.76E - 031415.19N 1013923.38E -\n031409.60N 1013928.65E - 031332.83N 1013853.87E\n(ZONE 6 HILLY AREA KUALA LUMPUR)\nRMK:ACT SUBJ TO ATC\nF) SFC                             G) 330FT AGL",
+                "rank": 3
+            },
+            {
+                "date": "2307040500",
+                "notam": "MIL ACT WILL TAKE PLACE WI 02 NM RADIUS OF 024921.27N1012713.57E\n(JUGRA, SELANGOR)\nF) SFC                             G) 1000FT AMSL",
+                "rank": 4
+            },
+            {
+                "date": "2307030001",
+                "notam": "LOW FLYING MIL EXER WILL TAKE PLACE WI LATERAL LIMIT OF WMR109\nEXC IPOH CTR.\nRMK: ACT SUBJ ATC.\nF) SFC                             G) 3000FT AMSL",
+                "rank": 5
+            },
+            {
+                "date": "2307030000",
+                "notam": "WMD8 ACT\nF) SFC                             G) 40000FT AMSL",
+                "rank": 6
+            },
+            {
+                "date": "2307030030",
+                "notam": "WMD421 ACT\nF) SFC                             G) 17000FT AMSL",
+                "rank": 7
+            },
+            {
+                "date": "2307030000",
+                "notam": "WMD12 ACT\nF) SFC                             G) 40000FT AMSL",
+                "rank": 8
+            },
+            {
+                "date": "2307030000",
+                "notam": "UA ACT WILL TAKE PLACE WI THE FLW COORD:\n025406.51N 1013906.20E - 025401.98N 1013914.19E\n025358.55N 1013909.82E - 025404.93N 1013902.89E\n(AERODYNE CAMPUS, CYBERJAYA, SELANGOR)\nF) SFC                             G) 200FT AMSL",
+                "rank": 9
+            },
+            {
+                "date": "2307040100",
+                "notam": "UA ACT WILL TAKE PLACE WI THE FLW COORD:\n042028.78N 1010719.05E - 041950.26N 1010744.83E\n042005.92N 1010753.79E - 041955.84N 1010825.76E\n042015.00N 1010846.75E - 042108.35N 1010846.21E\n042133.73N 1010910.76E - 042136.07N 1010846.17E\n(KAMPAR,PERAK)\nRMK: ACT SUBJ ATC\nF) SFC                             G) 330FT AGL",
+                "rank": 10
+            },
+            {
+                "date": "2307030001",
+                "notam": "MIL EXER WILL TAKE PLACE WI 10 NM RADIUS OF 054832N 1023134E\n(DROP ZONE NANGKA, PASIR PUTEH, KELANTAN)\nF) SFC                             G) 3000FT AMSL",
+                "rank": 11
+            },
+            {
+                "date": "2306200000",
+                "notam": "UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM:\n012908.19N 1035347.95E - 012920.76N 1035413.05E -\n012853.62N 1035416.03E - 012827.26N 1035520.57E -\n012813.76N 1035624.12E - 012706.72N 1035632.61E -\n012739.65N 1035732.13E - 012718.94N 1035756.49E -\n012718.92N 1035817.68E - 012755.79N 1035818.06E -\n(PASIR GUDANG PATH 2,JOHOR)\nRMK:1. 50M BUFFER ON LEFT AND RIGHT OF THE CENTRE LINE\n2. ACT SUBJ ATC\n'A'SERIES\nF) SFC                             G) 500FT AMSL",
+                "rank": 12
+            },
+            {
+                "date": "2306200000",
+                "notam": "UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM:\n013032.85N 1035018.04E - 012958.01N 1035224.53E -\n012946.13N 1035231.18E - 012953.77N 1035249.52E -\n012947.65N 1035319.68E - 012907.34N 1035346.59E -\n012834.97N 1035312.80E - 012758.06N 1035301.76E -\n012742.41N 1035312.65E - 012705.34N 1035306.37E\n(PASIR GUDANG PATH 1,JOHOR)\nRMK:1. 50M BUFFER ON LEFT AND RIGHT OF THE CENTRE LINE\n2. ACT SUBJ ATC\n'A'SERIES\nF) SFC                             G) 500FT AMSL",
+                "rank": 13
+            },
+            {
+                "date": "2307030000",
+                "notam": "WMD21 ACT\nF) SFC                             G) 2000FT AMSL",
+                "rank": 14
+            },
+            {
+                "date": "2307030749",
+                "notam": "ACT COMPLETED",
+                "rank": 15
+            },
+            {
+                "date": "2307020100",
+                "notam": "AERIAL ACTIVITY BY UAS WILL TAKE PLACE AT 011719N1034724E\n(WI WSAP CTR)\nF) GND G) 700FT AMSL",
+                "rank": 16
+            },
+            {
+                "date": "2307020100",
+                "notam": "AERIAL ACTIVITY BY UAS WILL TAKE PLACE AT 011711N1035027E\n(WI WSAP CTR)\nF) GND G) 700FT AMSL",
+                "rank": 17
+            },
+            {
+                "date": "2307020930",
+                "notam": "PYROTECHNIC DISPLAY WILL TAKE PLACE SAFETY RADIUS 657FT CENTRE\n011724N1035112E (WI WSAP CTR)\nF) SFC G) 493FT AMSL",
+                "rank": 18
+            },
+            {
+                "date": "2307030001",
+                "notam": "DANGER AREA WSD13 ACTIVE\nF) SFC G) FL400",
+                "rank": 19
+            },
+            {
+                "date": "2307031500",
+                "notam": "AERIAL ACTIVITY BY UNMANNED ACFT SYSTEMS WILL TAKE PLACE AT\n011644N1035224E (WI WSAP CTR)\nF) GND G) 650FT AMSL",
+                "rank": 20
+            },
+            {
+                "date": "2307020100",
+                "notam": "AERIAL ACTIVITY BY UAS WILL TAKE PLACE AT 011622N1035032E (WI WSAP\nCTR)\nF) GND G) 700FT AMSL",
+                "rank": 21
+            },
+            {
+                "date": "2307031500",
+                "notam": "AERIAL ACTIVITY BY UNMANNED ACFT SYSTEMS WILL TAKE PLACE AT\n011648N1035151E (WI WSAP CTR)\nF) GND G) 660FT AMSL",
+                "rank": 22
+            },
+            {
+                "date": "2307020930",
+                "notam": "PYROTECHNIC DISPLAY WILL TAKE PLACE SAFETY RADIUS 657FT CENTRE\n011706N1035122E (WI WSAP CTR)\nF) SFC G) 493FT AMSL",
+                "rank": 23
+            },
+            {
+                "date": "2307012300",
+                "notam": "AERIAL ACTIVITY BY UNMANNED ACFT SYSTEMS WILL TAKE PLACE AT\n011547N1035144E (WI WSAP CTR).\nF) GND G) 700FT AMSL",
+                "rank": 24
+            },
+            {
+                "date": "2307011130",
+                "notam": "LASER LIGHT DISPLAY WILL TAKE PLACE RADIUS 99FT CENTRE\n011505N1034901E (WI WSAP CTR)\nF) SFC G) 99FT AMSL",
+                "rank": 25
+            },
+            {
+                "date": "2306021830",
+                "notam": "RWY 02L/20R CLOSURE BTN 1830-1900 ON 02 09 10 16 17 23 24 30 JUN\nAND 01 04 06 07 08 11 13 14 15 18 20 21 22 25 27 28 29 JUL CNL. REF\nAIP SINGAPORE, WSSS AD 2.12 ITEM 14, PARA 6B - I. RWY 02L/20R -II",
+                "rank": 26
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY T BTN TWY P AND TWY J, INCLUDING JUNCTION OF TWY T/TWY J/TWY K\n2) TWY J BTN TWY T AND TWY J12\n3) TWY K BTN TWY T AND TWY J12\n4) TWY K1, TWY K2 AND TWY K3",
+                "rank": 27
+            },
+            {
+                "date": "2306022000",
+                "notam": "RWY 02R/20L CLOSURE BTN 2000-2100  ON 02 09 10 16 17 23 24 30 JUN\nAND\n01 04 06 07 08 11 13 14 15 18 20 21 22 25 27 28 29 JUL CNL. REF AIP\nSINGAPORE, WSSS AD 2.12 ITEM 14, PARA 6B, RWY 02R/20L, III",
+                "rank": 28
+            },
+            {
+                "date": "2305311600",
+                "notam": "TWY S2 AND TWY S7 CLSD",
+                "rank": 29
+            },
+            {
+                "date": "2307040100",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY T BTN TWY P4 AND TWY Q, INCLUDING JUNCTION OF TWY P3/TWY T/TWY\nT3 AND JUNCTION OF TWY P2/TWY T/TWY T2\n2) TWY P2 BTN TWY P1 AND TXL P7",
+                "rank": 30
+            },
+            {
+                "date": "2307030200",
+                "notam": "TWY B BTN TWY B4 AND TWY B6, INCLUDING JUNCTION OF TWY B/TWY G,\nJUNCTION OF TWY B/TWY H AND JUNCTION OF TWY B/TWY B5 CLSD",
+                "rank": 31
+            },
+            {
+                "date": "2307030900",
+                "notam": "TWY J BTN TWY T AND TWY K1 CLSD",
+                "rank": 32
+            },
+            {
+                "date": "2307021046",
+                "notam": "SINGAPORE AP AND CTR CLSD DUE TO REPUBLIC OF SINGAPORE AIR FORCE\n(RSAF) OPERATIONAL REQUIREMENTS",
+                "rank": 33
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY J BTN TWY J12 AND TWY B, INCLUDING JUNCTION OF TWY J/TWY J12\nAND JUNCTION OF TWY J/TWY B\n2) TWY K BTN TWY J12 AND TWY B, INCLUDING JUNCTION OF TWY K/TWY J12\nAND JUNCTION OF TWY K/TWY B",
+                "rank": 34
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY J8, TWY J9, TWY J10, TWY J11 AND TWY J12\n2) TWY A\n3) TWY A1 TO TWY A12\n4) TWY B\n5) TWY B1 TO TWY B14\n6) TWY E\n7) TWY F\n8) TWY G\n9) TWY H",
+                "rank": 35
+            },
+            {
+                "date": "2306051700",
+                "notam": "FLW TWY CLSD DUE WIP:\n1) TWY P1 BTN TWY N AND TXL N5, INCLUDING JUNCTION OF TWY P1/TXL\nN5/TWY K\n2) TXL N5 BTN JUNCTION OF TWY P1/TXL N5/TWY K AND INTERMEDIATE\nHOLDING POSITION STOPBAR LINE\n3) JUNCTION OF TWY P1/TWY N",
+                "rank": 36
+            },
+            {
+                "date": "2307021700",
+                "notam": "TWY V12 BEHIND ACFT STANDS A9 TO A11 CLSD DUE WIP. RMK: ACFT ON TWY\nV SOUTHBOUND NOT ALLOWED TO TURN RIGHT ONTO TWY V8",
+                "rank": 37
+            },
+            {
+                "date": "2306021700",
+                "notam": "RWY 02R/20L CLSD DUE WIP",
+                "rank": 38
+            },
+            {
+                "date": "2305311600",
+                "notam": "TXL N1 BEHIND ACFT STAND 517L CLSD",
+                "rank": 39
+            },
+            {
+                "date": "2305311600",
+                "notam": "TWY N BTN TXL N4 AND TWY P1 CLSD",
+                "rank": 40
+            }
+        ]
+    },
+    "perfData": {
+        "airMiles": "818",
+        "apd": "1.016",
+        "ci": "70",
+        "crzComp": "5",
+        "fltRules": "RVSM",
+        "gndMiles": "826",
+        "limLDW": "Structural",
+        "limTOW": "TakeOffPerformance",
+        "limZFW": "Structural",
+        "lvlChange": "+41",
+        "maxLDW": 172365,
+        "maxTOW": 227883,
+        "maxZFW": "161025",
+        "minus_zfwChange": "+74",
+        "planLDW": "132716",
+        "planTOW": "141117",
+        "planZFW": "127400",
+        "plus_zfwChange": "+142"
+    },
+    "routeData": {
+        "arrRwy": "WSSS/02L",
+        "depRwy": "VTBS/19L",
+        "levels": "RILVI/410",
+        "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L",
+        "routeNo": "BKKSIN01"
+    },
+    "waypointsData": [
+        {
+            "Cord": "N1341.2 E10044.9",
+            "Diff": "",
+            "Dis": "",
+            "Drm": "0826",
+            "Gsp": "",
+            "Imt": "188",
+            "Msa": "",
+            "Pdn": "",
+            "Pfl": "",
+            "Pfrm": "012.9",
+            "aWind": "",
+            "actm": "00:00",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "015006",
+            "oat": "",
+            "posn": "VTBS",
+            "tas": "",
+            "vws": "",
+            "zfrq": "",
+            "ztm": ""
+        },
+        {
+            "Cord": "N1336.0 E10044.2",
+            "Diff": "",
+            "Dis": "0005",
+            "Drm": "0821",
+            "Gsp": "163",
+            "Imt": "196",
+            "Msa": "031",
+            "Pdn": "",
+            "Pfl": "040",
+            "Pfrm": "012.4",
+            "aWind": "",
+            "actm": "00:01",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "015006",
+            "oat": "",
+            "posn": "LOUIS",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.5",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1328.8 E10042.2",
+            "Diff": "",
+            "Dis": "0007",
+            "Drm": "0813",
+            "Gsp": "287",
+            "Imt": "194",
+            "Msa": "031",
+            "Pdn": "+13",
+            "Pfl": "080",
+            "Pfrm": "012.2",
+            "aWind": "",
+            "actm": "00:03",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "005007",
+            "oat": "",
+            "posn": "BS903",
+            "tas": "",
+            "vws": "1",
+            "zfrq": "000.2",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1323.0 E10040.8",
+            "Diff": "",
+            "Dis": "0006",
+            "Drm": "0807",
+            "Gsp": "295",
+            "Imt": "149",
+            "Msa": "037",
+            "Pdn": "+14",
+            "Pfl": "080",
+            "Pfrm": "012.1",
+            "aWind": "",
+            "actm": "00:04",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "001008",
+            "oat": "",
+            "posn": "SAMBA",
+            "tas": "288",
+            "vws": "1",
+            "zfrq": "000.0",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1316.1 E10045.2",
+            "Diff": "",
+            "Dis": "0008",
+            "Drm": "0799",
+            "Gsp": "299",
+            "Imt": "149",
+            "Msa": "046",
+            "Pdn": "+14",
+            "Pfl": "090",
+            "Pfrm": "012.0",
+            "aWind": "",
+            "actm": "00:06",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "358008",
+            "oat": "",
+            "posn": "BS904",
+            "tas": "292",
+            "vws": "1",
+            "zfrq": "000.2",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1306.8 E10051.1",
+            "Diff": "",
+            "Dis": "0011",
+            "Drm": "0788",
+            "Gsp": "362",
+            "Imt": "163",
+            "Msa": "046",
+            "Pdn": "+14",
+            "Pfl": "135",
+            "Pfrm": "011.5",
+            "aWind": "",
+            "actm": "00:08",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "330007",
+            "oat": "",
+            "posn": "KIGOB",
+            "tas": "484",
+            "vws": "2",
+            "zfrq": "000.4",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1240.0 E10100.0",
+            "Diff": "",
+            "Dis": "0028",
+            "Drm": "0760",
+            "Gsp": "440",
+            "Imt": "165",
+            "Msa": "046",
+            "Pdn": "+14",
+            "Pfl": "244",
+            "Pfrm": "010.8",
+            "aWind": "",
+            "actm": "00:12",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "269030",
+            "oat": "",
+            "posn": "BUT",
+            "tas": "484",
+            "vws": "2",
+            "zfrq": "000.7",
+            "ztm": "00:03"
+        },
+        {
+            "Cord": "N1221.7 E10105.2",
+            "Diff": "",
+            "Dis": "0019",
+            "Drm": "0741",
+            "Gsp": "483",
+            "Imt": "181",
+            "Msa": "034",
+            "Pdn": "+14",
+            "Pfl": "293",
+            "Pfrm": "010.4",
+            "aWind": "",
+            "actm": "00:14",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "250043",
+            "oat": "",
+            "posn": "PIDEL",
+            "tas": "484",
+            "vws": "3",
+            "zfrq": "000.4",
+            "ztm": "00:02"
+        },
+        {
+            "Cord": "N1138.5 E10104.9",
+            "Diff": "",
+            "Dis": "0043",
+            "Drm": "0697",
+            "Gsp": "495",
+            "Imt": "168",
+            "Msa": "028",
+            "Pdn": "+11",
+            "Pfl": "395",
+            "Pfrm": "009.7",
+            "aWind": "",
+            "actm": "00:19",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "262044",
+            "oat": "",
+            "posn": "NOMEP",
+            "tas": "484",
+            "vws": "4",
+            "zfrq": "000.7",
+            "ztm": "00:05"
+        },
+        {
+            "Cord": "N1129.0 E10107.1",
+            "Diff": "",
+            "Dis": "0010",
+            "Drm": "0688",
+            "Gsp": "497",
+            "Imt": "168",
+            "Msa": "023",
+            "Pdn": "-1",
+            "Pfl": "410",
+            "Pfrm": "009.6",
+            "aWind": "",
+            "actm": "00:20",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "280037",
+            "oat": "",
+            "posn": "T_O_C",
+            "tas": "484",
+            "vws": "4",
+            "zfrq": "000.1",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N1023.6 E10121.7",
+            "Diff": "",
+            "Dis": "0067",
+            "Drm": "0621",
+            "Gsp": "503",
+            "Imt": "168",
+            "Msa": "023",
+            "Pdn": "-4",
+            "Pfl": "410",
+            "Pfrm": "009.1",
+            "aWind": "",
+            "actm": "00:28",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "289036",
+            "oat": "",
+            "posn": "RILVI",
+            "tas": "484",
+            "vws": "5",
+            "zfrq": "000.5",
+            "ztm": "00:08"
+        },
+        {
+            "Cord": "N0902.5 E10139.8",
+            "Diff": "",
+            "Dis": "0083",
+            "Drm": "0537",
+            "Gsp": "498",
+            "Imt": "172",
+            "Msa": "023",
+            "Pdn": "-4",
+            "Pfl": "410",
+            "Pfrm": "008.4",
+            "aWind": "",
+            "actm": "00:38",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "287029",
+            "oat": "",
+            "posn": "TENUM",
+            "tas": "484",
+            "vws": "4",
+            "zfrq": "000.7",
+            "ztm": "00:10"
+        },
+        {
+            "Cord": "N0615.5 E10204.5",
+            "Diff": "",
+            "Dis": "0169",
+            "Drm": "0368",
+            "Gsp": "496",
+            "Imt": "162",
+            "Msa": "059",
+            "Pdn": "-4",
+            "Pfl": "410",
+            "Pfrm": "007.1",
+            "aWind": "",
+            "actm": "00:59",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "304016",
+            "oat": "",
+            "posn": "PASVA",
+            "tas": "484",
+            "vws": "4",
+            "zfrq": "001.3",
+            "ztm": "00:20"
+        },
+        {
+            "Cord": "N0612.2 E10205.6",
+            "Diff": "",
+            "Dis": "0004",
+            "Drm": "0364",
+            "Gsp": "494",
+            "Imt": "162",
+            "Msa": "061",
+            "Pdn": "-3",
+            "Pfl": "410",
+            "Pfrm": "007.0",
+            "aWind": "",
+            "actm": "00:59",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "343011",
+            "oat": "",
+            "posn": "WMFC",
+            "tas": "484",
+            "vws": "5",
+            "zfrq": "000.0",
+            "ztm": "00:00"
+        },
+        {
+            "Cord": "N0544.8 E10214.6",
+            "Diff": "",
+            "Dis": "0029",
+            "Drm": "0336",
+            "Gsp": "495",
+            "Imt": "159",
+            "Msa": "061",
+            "Pdn": "-3",
+            "Pfl": "410",
+            "Pfrm": "006.8",
+            "aWind": "",
+            "actm": "01:03",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "343011",
+            "oat": "",
+            "posn": "EMPUR",
+            "tas": "484",
+            "vws": "7",
+            "zfrq": "000.2",
+            "ztm": "00:03"
+        },
+        {
+            "Cord": "N0509.5 E10228.7",
+            "Diff": "",
+            "Dis": "0038",
+            "Drm": "0297",
+            "Gsp": "494",
+            "Imt": "158",
+            "Msa": "070",
+            "Pdn": "-3",
+            "Pfl": "410",
+            "Pfrm": "006.5",
+            "aWind": "",
+            "actm": "01:07",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "007010",
+            "oat": "",
+            "posn": "LERKA",
+            "tas": "484",
+            "vws": "7",
+            "zfrq": "000.3",
+            "ztm": "00:04"
+        },
+        {
+            "Cord": "N0456.8 E10233.8",
+            "Diff": "",
+            "Dis": "0014",
+            "Drm": "0284",
+            "Gsp": "492",
+            "Imt": "158",
+            "Msa": "070",
+            "Pdn": "-3",
+            "Pfl": "410",
+            "Pfrm": "006.4",
+            "aWind": "",
+            "actm": "01:09",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "027012",
+            "oat": "",
+            "posn": "LATER",
+            "tas": "484",
+            "vws": "8",
+            "zfrq": "000.1",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N0436.1 E10242.0",
+            "Diff": "",
+            "Dis": "0022",
+            "Drm": "0261",
+            "Gsp": "492",
+            "Imt": "158",
+            "Msa": "071",
+            "Pdn": "-3",
+            "Pfl": "410",
+            "Pfrm": "006.2",
+            "aWind": "",
+            "actm": "01:12",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "035013",
+            "oat": "",
+            "posn": "GUPAR",
+            "tas": "484",
+            "vws": "8",
+            "zfrq": "000.2",
+            "ztm": "00:02"
+        },
+        {
+            "Cord": "N0346.9 E10301.6",
+            "Diff": "",
+            "Dis": "0053",
+            "Drm": "0208",
+            "Gsp": "488",
+            "Imt": "158",
+            "Msa": "071",
+            "Pdn": "-2",
+            "Pfl": "410",
+            "Pfrm": "005.8",
+            "aWind": "",
+            "actm": "01:18",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "052015",
+            "oat": "",
+            "posn": "BEKSO",
+            "tas": "484",
+            "vws": "8",
+            "zfrq": "000.4",
+            "ztm": "00:06"
+        },
+        {
+            "Cord": "N0317.5 E10313.3",
+            "Diff": "",
+            "Dis": "0032",
+            "Drm": "0177",
+            "Gsp": "485",
+            "Imt": "133",
+            "Msa": "069",
+            "Pdn": "-2",
+            "Pfl": "410",
+            "Pfrm": "005.5",
+            "aWind": "",
+            "actm": "01:22",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "070017",
+            "oat": "",
+            "posn": "VIRID",
+            "tas": "484",
+            "vws": "7",
+            "zfrq": "000.3",
+            "ztm": "00:03"
+        },
+        {
+            "Cord": "N0253.7 E10338.5",
+            "Diff": "",
+            "Dis": "0035",
+            "Drm": "0142",
+            "Gsp": "472",
+            "Imt": "130",
+            "Msa": "038",
+            "Pdn": "-2",
+            "Pfl": "410",
+            "Pfrm": "005.2",
+            "aWind": "",
+            "actm": "01:27",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "083019",
+            "oat": "",
+            "posn": "NUFFA",
+            "tas": "484",
+            "vws": "7",
+            "zfrq": "000.3",
+            "ztm": "00:04"
+        },
+        {
+            "Cord": "N0242.4 E10352.0",
+            "Diff": "",
+            "Dis": "0018",
+            "Drm": "0124",
+            "Gsp": "470",
+            "Imt": "130",
+            "Msa": "054",
+            "Pdn": "-2",
+            "Pfl": "410",
+            "Pfrm": "005.1",
+            "aWind": "",
+            "actm": "01:29",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "093021",
+            "oat": "",
+            "posn": "T_O_D",
+            "tas": "486",
+            "vws": "",
+            "zfrq": "000.1",
+            "ztm": "00:02"
+        },
+        {
+            "Cord": "N0230.4 E10406.3",
+            "Diff": "",
+            "Dis": "0019",
+            "Drm": "0105",
+            "Gsp": "478",
+            "Imt": "180",
+            "Msa": "054",
+            "Pdn": "+8",
+            "Pfl": "332",
+            "Pfrm": "005.1",
+            "aWind": "",
+            "actm": "01:31",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "138019",
+            "oat": "",
+            "posn": "PIBAP",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.0",
+            "ztm": "00:02"
+        },
+        {
+            "Cord": "N0159.3 E10406.3",
+            "Diff": "",
+            "Dis": "0031",
+            "Drm": "0074",
+            "Gsp": "483",
+            "Imt": "180",
+            "Msa": "054",
+            "Pdn": "+16",
+            "Pfl": "204",
+            "Pfrm": "005.0",
+            "aWind": "",
+            "actm": "01:35",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "220012",
+            "oat": "",
+            "posn": "PASPU",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.1",
+            "ztm": "00:03"
+        },
+        {
+            "Cord": "N0136.9 E10406.4",
+            "Diff": "",
+            "Dis": "0022",
+            "Drm": "0052",
+            "Gsp": "419",
+            "Imt": "171",
+            "Msa": "041",
+            "Pdn": "+15",
+            "Pfl": "115",
+            "Pfrm": "005.0",
+            "aWind": "",
+            "actm": "01:38",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "268007",
+            "oat": "",
+            "posn": "NYLON",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.1",
+            "ztm": "00:03"
+        },
+        {
+            "Cord": "N0127.4 E10407.8",
+            "Diff": "",
+            "Dis": "0010",
+            "Drm": "0042",
+            "Gsp": "338",
+            "Imt": "203",
+            "Msa": "038",
+            "Pdn": "+15",
+            "Pfl": "098",
+            "Pfrm": "004.9",
+            "aWind": "",
+            "actm": "01:40",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "308008",
+            "oat": "",
+            "posn": "POSUB",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.0",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N0120.0 E10404.7",
+            "Diff": "",
+            "Dis": "0008",
+            "Drm": "0034",
+            "Gsp": "291",
+            "Imt": "203",
+            "Msa": "030",
+            "Pdn": "+14",
+            "Pfl": "074",
+            "Pfrm": "004.9",
+            "aWind": "",
+            "actm": "01:42",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "330013",
+            "oat": "",
+            "posn": "WSJC",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.0",
+            "ztm": "00:01"
+        },
+        {
+            "Cord": "N0107.8 E10359.5",
+            "Diff": "",
+            "Dis": "0013",
+            "Drm": "0021",
+            "Gsp": "289",
+            "Imt": "359",
+            "Msa": "030",
+            "Pdn": "+14",
+            "Pfl": "034",
+            "Pfrm": "004.9",
+            "aWind": "",
+            "actm": "01:45",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "330013",
+            "oat": "",
+            "posn": "SANAT",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.0",
+            "ztm": "00:02"
+        },
+        {
+            "Cord": "N0121.6 E10359.4",
+            "Diff": "",
+            "Dis": "0021",
+            "Drm": "0000",
+            "Gsp": "171",
+            "Imt": "359",
+            "Msa": "030",
+            "Pdn": "+13",
+            "Pfl": "000",
+            "Pfrm": "004.5",
+            "aWind": "",
+            "actm": "01:52",
+            "adn": "",
+            "afl": "",
+            "afrm": "",
+            "ata": "",
+            "eta": "",
+            "fDiff": "",
+            "fWind": "335013",
+            "oat": "",
+            "posn": "WSSS",
+            "tas": "",
+            "vws": "",
+            "zfrq": "000.3",
+            "ztm": "00:07"
+        }
+    ]
+}

@@ -2,7 +2,7 @@
 //  MetarTafDataList+CoreDataClass.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/07/2023.
+//  Created by phuong phan on 07/07/2023.
 //
 //
 

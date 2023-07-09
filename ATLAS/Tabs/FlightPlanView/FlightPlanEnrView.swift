@@ -338,24 +338,40 @@ struct EnrouteCustomField: View {
         for index in startIndex..<waypointsTable.count {
             //eta
             let etaDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedEta)!
-            if dateFormatterTime.date(from: //coreDataModel.dataFPEnroute[index].unwrappedEta) != nil
-                    waypointsTable[index].eta!) != nil {
+            print("etaDefaultValue========\(etaDefaultValue)")
+            print("waypointsTable.count========\(waypointsTable.count)")
+            print("index\(index)")
+            if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index].eta!) != nil {
                 // Update the value based on the previous row's value in column
-                let etaPreviousRowValue = dateFormatterTime.date(from: //coreDataModel.dataFPEnroute[index-1].unwrappedEta)!
-                    waypointsTable[index-1].eta!)!
-                //let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
-                let ztmString = waypointsTable[index].ztm
-                let components = ztmString!.components(separatedBy: ":")
-                let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
-                let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
-//                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: NewValue)
-                waypointsTable[index].eta = dateFormatterTime.string(from: NewValue)
-                print("waypointsTable[\(index)].eta = \(waypointsTable[index].eta)")
+                
+                print("coreDataModel.dataFPEnroute[index-1]========\(coreDataModel.dataFPEnroute[index-1])")
+                print("coreDataModel.dataFPEnroute[index-1]========\(coreDataModel.dataFPEnroute[index-1].unwrappedEta)")
+                
+                if dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index-1].unwrappedEta) != nil {
+                    let etaPreviousRowValue = dateFormatterTime.date(from: coreDataModel.dataFPEnroute[index-1].unwrappedEta)!
+                    //let ztmString = coreDataModel.dataFPEnroute[index].unwrappedZtm
+                    let ztmString = coreDataModel.dataFPEnroute[index].ztm
+                    let components = ztmString!.components(separatedBy: ":")
+
+                    let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                    print("ztm========\(ztm)")
+                    let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                    print("waypointsTable[index].eta old========\(coreDataModel.dataFPEnroute[index].eta)")
+                    print("NewValue========\(NewValue)")
+                    
+                    coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: NewValue)
+    //                    waypointsTable[index].eta = dateFormatterTime.string(from: NewValue)
+                    //                    waypointsTable[index-1].eta!)!
+                    print("waypointsTable[index].eta========\(coreDataModel.dataFPEnroute[index].eta)")
+                    print("waypointsTable========\(coreDataModel.dataFPEnroute)")
+                    coreDataModel.save()
+                }
             }
             else {
                 // Set the default value if it exists and currentValue is nil
 //                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: etaDefaultValue)
-                waypointsTable[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+                coreDataModel.dataFPEnroute[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+                coreDataModel.save()
             }
             
             //ata
@@ -426,7 +442,6 @@ struct EnrouteCustomField: View {
                 // Set the default value if it exists and currentValue is nil
                 coreDataModel.dataFPEnroute[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
             }
-            coreDataModel.save()
         }
         
         for index in editedIndex..<coreDataModel.dataFPEnroute.count {

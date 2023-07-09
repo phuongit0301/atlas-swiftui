@@ -53,7 +53,10 @@ struct IScratchPad: Identifiable, Hashable {
 let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "500", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
 
 class CoreDataModelState: ObservableObject {
-    @Published var loading: Bool = true
+    var remoteService = RemoteService.shared
+    let service = PersistenceController.shared
+    
+    @Published var loading: Bool = false
     @Published var tagList: [TagList] = []
     @Published var aircraftArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []
@@ -114,6 +117,8 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAltnTaf: [AltnTafDataList] = []
     @Published var existDataAltnTaf: Bool = false
     
+    @Published var existDataAltn: Bool = false
+    
     @Published var existDataFlightPlan: Bool = false
     @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
     @Published var existDataDepartureAtc: Bool = false
@@ -121,7 +126,9 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataDepartureAtis: Bool = false
     @Published var dataDepartureEntries: DepartureEntriesList = DepartureEntriesList()
     @Published var existDataDepartureEntries: Bool = false
+    
     @Published var dataFPEnroute: [EnrouteList] = []
+    @Published var existDataFPEnroute: Bool = false
     
     @Published var dataArrivalAtc: ArrivalATCList = ArrivalATCList()
     @Published var existDataArrivalAtc: Bool = false
@@ -132,10 +139,73 @@ class CoreDataModelState: ObservableObject {
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
-    let service = PersistenceController.shared
-    
     init() {
-        initFetchData()
+        Task {
+            await remoteService.getFlightPlanWX(completion: { data in
+
+                if let waypointsData = data?.waypointsData {
+                    if !self.existDataFPEnroute {
+                        self.initDataEnroute(waypointsData)
+                    }
+                }
+//
+                if let infoData = data?.infoData {
+                    if !self.existDataSummaryInfo {
+                        self.initDataSummaryInfo(infoData)
+                    }
+                }
+
+                if let routeData = data?.routeData {
+                    if !self.existDataSummaryRoute {
+                        self.initDataSummaryRoute(routeData)
+                    }
+                }
+
+                if let perfData = data?.perfData {
+                    if !self.existDataPerfData {
+                        self.initDataPerfData(perfData)
+                    }
+                    
+                    if !self.existDataPerfInfo {
+                        self.initDataPerfInfo(perfData)
+                    }
+                    
+                    if !self.existDataPerfWeight {
+                        self.initDataPerfWeight(perfData)
+                    }
+                }
+
+                if let fuelData = data?.fuelData {
+                    if !self.existDataFuelDataList {
+                        self.initDataFuelList(fuelData)
+                    }
+                }
+
+                if let altnData = data?.altnData {
+                    if !self.existDataAltn {
+                        self.initDataAltn(altnData)
+                    }
+                }
+
+                if let notamsData = data?.notamsData {
+                    if !self.existDataNotams {
+                        self.initDataNotams(notamsData)
+                    }
+                }
+
+                if let metarTafData = data?.metarTafData {
+                    if !self.existDataMetarTaf {
+                        self.initDataTaf(metarTafData)
+                    }
+                }
+
+                print("Fetch data")
+            })
+            
+//            DispatchQueue.main.async {
+//                self.initFetchData()
+//            }
+        }
     }
     
     func initFetchData() {
@@ -149,102 +219,97 @@ class CoreDataModelState: ObservableObject {
         enrouteRefArray = read("enrouteref")
         arrivalRefArray = read("arrivalref")
         scratchPadArray = readScratchPad()
-        dataFlightPlan = readFlightPlan()
-        dataSummaryInfo = readSummaryInfo()
-        dataSummaryRoute = readSummaryRoute()
-        dataPerfData = readPerfData()
+        readFlightPlan()
+        readSummaryInfo()
+        readSummaryRoute()
+        readPerfData()
         dataPerfInfo = readPerfInfo()
         dataPerfWeight = readPerfWeight()
-        dataFuelDataList = readFuelDataList()
+        readFuelDataList()
         dataFuelTableList = readFuelTableList()
-        dataFuelExtra = readFuelExtra()
+        readFuelExtra()
         dataAltnList = readAltnList()
-        readDepartures()
-        readArrivals()
+        readDepartureAtc()
+        readDepartureAtis()
+        readDepartureEntries()
+        readArrivalAtc()
+        readArrivalAtis()
+        readArrivalEntries()
         readDataNotamsList()
-        dataMetarTaf = readDataMetarTafList()
+        readDataMetarTafList()
         dataAltnTaf = readDataAltnTafList()
     }
     
     func checkAndSyncData() async {
         let response = read()
-        dataFPEnroute = readEnrouteList()
-        dataSummaryInfo = readSummaryInfo()
-        dataSummaryRoute = readSummaryRoute()
-        dataPerfData = readPerfData()
-        dataPerfInfo = readPerfInfo()
-        dataPerfWeight = readPerfWeight()
-        dataFuelTableList = readFuelTableList()
-        dataFuelExtra = readFuelExtra()
-        dataAltnList = readAltnList()
-        dataNotams = readDataNotamsList()
-        dataMetarTaf = readDataMetarTafList()
-        dataAltnTaf = readDataAltnTafList()
+//        dataFPEnroute = readEnrouteList()
+//        dataSummaryInfo = readSummaryInfo()
+//        dataSummaryRoute = readSummaryRoute()
+//        dataPerfData = readPerfData()
+//        dataPerfInfo = readPerfInfo()
+//        dataPerfWeight = readPerfWeight()
+//        dataFuelTableList = readFuelTableList()
+//        dataFuelExtra = readFuelExtra()
+//        dataAltnList = readAltnList()
+//        dataNotams = readDataNotamsList()
+//        dataMetarTaf = readDataMetarTafList()
+//        dataAltnTaf = readDataAltnTafList()
         
         if response.count == 0 {
             //            initDataTag()
             initData()
         }
         
-        if dataFPEnroute.count == 0 {
-            initDataEnroute()
-            dataFPEnroute = readEnrouteList()
-        }
-        
-        if !existDataSummaryInfo {
-            initDataSummaryInfo()
-            dataSummaryInfo = readSummaryInfo()
-        }
-        
-        if !existDataSummaryRoute {
-            initDataSummaryRoute()
-            dataSummaryRoute = readSummaryRoute()
-        }
-        
-        if !existDataPerfData {
-            initDataPerfData()
-            dataPerfData = readPerfData()
-        }
-        
-        if !existDataPerfInfo {
-            initDataPerfInfo()
-            dataPerfInfo = readPerfInfo()
-        }
-        
-        if !existDataPerfWeight {
-            initDataPerfWeight()
-            dataPerfWeight = readPerfWeight()
-        }
-        
-        if dataFuelTableList.count == 0 {
-            initDataFuelList()
-            dataFuelTableList = readFuelTableList()
-        }
-        
-        if dataAltnList.count == 0 {
-            initDataAltn()
-            dataAltnList = readAltnList()
-        }
-        
-        if !existDataNotams {
-            initDataNotams()
-            dataNotams = readDataNotamsList()
-        }
-        
-        if !existDataMetarTaf || dataAltnTaf.count == 0 {
-            initDataTaf()
-            readDataMetarTafList()
-            readDataAltnTafList()
-        }
-        //        do {
-        //            let request: NSFetchRequest<NSFetchRequestResult> = NoteList.fetchRequest()
-        //            let result = try container.viewContext.fetch(request)
-        //            if result.isEmpty {
-        //                initData()
-        //            }
-        //        } catch {
-        //            fatalError("Unable to fetch data: \(error.localizedDescription)")
-        //        }
+//        if dataFPEnroute.count == 0 {
+//            initDataEnrouteLocal()
+//            dataFPEnroute = readEnrouteList()
+//        }
+//
+//        if !existDataSummaryInfo {
+//            initDataSummaryInfoLocal()
+//            dataSummaryInfo = readSummaryInfo()
+//        }
+//
+//        if !existDataSummaryRoute {
+//            initDataSummaryRouteLocal()
+//            dataSummaryRoute = readSummaryRoute()
+//        }
+//
+//        if !existDataPerfData {
+//            initDataPerfDataLocal()
+//            dataPerfData = readPerfData()
+//        }
+//
+//        if !existDataPerfInfo {
+//            initDataPerfInfoLocal()
+//            dataPerfInfo = readPerfInfo()
+//        }
+//
+//        if !existDataPerfWeight {
+//            initDataPerfWeightLocal()
+//            dataPerfWeight = readPerfWeight()
+//        }
+//
+//        if dataFuelTableList.count == 0 {
+//            initDataFuelListLocal()
+//            dataFuelTableList = readFuelTableList()
+//        }
+//
+//        if dataAltnList.count == 0 {
+//            initDataAltnLocal()
+//            dataAltnList = readAltnList()
+//        }
+//
+//        if !existDataNotams {
+//            initDataNotamsLocal()
+//            dataNotams = readDataNotamsList()
+//        }
+//
+//        if !existDataMetarTaf || dataAltnTaf.count == 0 {
+//            initDataTafLocal()
+//            readDataMetarTafList()
+//            readDataAltnTafList()
+//        }
     }
     
     func initDataTag() {
@@ -404,7 +469,6 @@ class CoreDataModelState: ObservableObject {
             do {
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
-                initFetchData()
                 print("saved successfully")
             } catch {
                 // Something went wrong 😭
@@ -416,7 +480,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataEnroute() {
+    func initDataEnrouteLocal() {
         let newObject1 = EnrouteList(context: service.container.viewContext)
         
         newObject1.id = UUID()
@@ -542,7 +606,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataSummaryInfo() {
+    func initDataSummaryInfoLocal() {
         let newObj = SummaryInfoList(context: service.container.viewContext)
         newObj.id = UUID()
         newObj.planNo = "20"
@@ -573,7 +637,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataSummaryRoute() {
+    func initDataSummaryRouteLocal() {
         let newObj = SummaryRouteList(context: service.container.viewContext)
         newObj.id = UUID()
         newObj.routeNo = "SINBER91"
@@ -595,7 +659,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataPerfData() {
+    func initDataPerfDataLocal() {
         let newObj = PerfDataList(context: service.container.viewContext)
         newObj.id = UUID()
         newObj.fltRules = perfData.fltRules
@@ -629,7 +693,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataPerfInfo() {
+    func initDataPerfInfoLocal() {
         let newObj = PerfInfoList(context: service.container.viewContext)
         newObj.id = UUID()
         newObj.fltRules = perfData.fltRules
@@ -654,7 +718,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataPerfWeight() {
+    func initDataPerfWeightLocal() {
         let perfWeightsTable = [
             perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "", max: perfData.maxZFW, limitation: perfData.limZFW),
             perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "", max: perfData.maxTOW, limitation: perfData.limTOW),
@@ -684,7 +748,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataFuelList() {
+    func initDataFuelListLocal() {
         let fuelData = FuelData(burnoff: ["time": "14:21", "fuel": "076157", "unit": "100"], cont: ["time": "00:34", "fuel": "003000", "policy": "5%"], altn: ["time": "00:42", "fuel": "003279", "unit": "100"], hold: ["time": "00:30", "fuel": "002031", "unit": "100"], topup60: ["time": "00:00", "fuel": "000000"], taxi: ["time": "N.A", "fuel": "000500", "policy": "7mins std taxi time", "unit": "100"], planReq: ["time": "16:07", "fuel": "084967"], dispAdd: ["time": "00:10", "fuel": "000600", "policy": "PER COMPANY POLICY FOR SINBER FLIGHTS"])
         
         let fuelTable = [
@@ -716,9 +780,9 @@ class CoreDataModelState: ObservableObject {
             
             newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
         } catch {
-          print("failed to archive array with error: \(error)")
+            print("failed to archive array with error: \(error)")
         }
-       
+        
         fuelTable.forEach { item in
             let newObj = FuelTableList(context: service.container.viewContext)
             newObj.id = UUID()
@@ -755,7 +819,7 @@ class CoreDataModelState: ObservableObject {
             }
         }
     }
-
+    
     func delete(_ object: NSManagedObject) {
         service.container.viewContext.delete(object)
     }
@@ -765,25 +829,25 @@ class CoreDataModelState: ObservableObject {
         var data: [TagList] = []
         // initialize the fetch request
         let request: NSFetchRequest<TagList> = TagList.fetchRequest()
-
+        
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)
         } catch {
             print("Could not fetch tag from Core Data.")
         }
-
+        
         // return results
         return data
     }
     
-    func initDataAltn() {
+    func initDataAltnLocal() {
         let altnData = [
             AltnData(altnRwy: "EDDH/15", rte: "EDDB SOGMA1N SOGMA M748 RARUP T909 HAM DCT", vis: "1600", minima: "670", dist: "0190", fl: "220", comp: "M015", time: "0042", fuel: "03279"),
             AltnData(altnRwy: "EDDK/32R", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y221 EBANA T841 ERNEP ERNEP1C", vis: "1600", minima: "800", dist: "0270", fl: "280", comp: "M017", time: "0055", fuel: "04269"),
             AltnData(altnRwy: "EDDL/05L", rte: "EDDB POVEL1N POVEL DCT EXOBA DCT HMM T851 HALME HALME1X", vis: "1600", minima: "550", dist: "0301", fl: "320", comp: "M018", time: "0057", fuel: "04512"),
             AltnData(altnRwy: "EDDF/25L", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y222 FUL T152 KERAX KERAX3A", vis: "1600", minima: "940", dist: "0246", fl: "280", comp: "M014", time: "0049", fuel: "03914")
-            ]
+        ]
         
         altnData.forEach { item in
             let newObj = AltnDataList(context: service.container.viewContext)
@@ -812,7 +876,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataNotams() {
+    func initDataNotamsLocal() {
         let notamsData = NotamsData(depNotams: ["""
             A1333/23 NOTAMN
             Q) WSJC/QMXLC/IV/BO/A/000/999/0122N10359E005
@@ -829,7 +893,7 @@ class CoreDataModelState: ObservableObject {
             Q) EDXX/QAFXX/IV/NBO/E/000/999/5123N01019E262
             A) EDWW  A) EDGG  A) EDMM  B) FROM: 23/02/28 14:29  TO: 23/05/25 23:59 EST
             E) MILITARY INVASION OF UKRAINE BY RUSSIAN FEDERATION:
-
+            
             NOTE 1: ALL AIRCRAFT OWNED, CHARTERED OR OPERATED BY CITIZENS OF THE
             RUSSIAN FEDERATION OR OTHERWISE CONTROLLED BY NATURAL OR LEGAL
             PERSONS OR ENTITY FROM THE RUSSIAN FEDERATION AND OPERATORS HOLDING
@@ -865,7 +929,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataTaf() {
+    func initDataTafLocal() {
         let metarTafData = MetarTafData(depMetar: "METAR WSSS 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", depTaf: "TAF WSSS 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", arrMetar: "METAR EDDB 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", arrTaf: "TAF EDDB 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", altnTaf: [
             AltnTafData(altnRwy: "EDDH/15", eta: "1742", taf: "TAF EDDH 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
             AltnTafData(altnRwy: "EDDK/32R", eta: "1755", taf: "TAF EDDK 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
@@ -911,26 +975,383 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataEnroute(_ initDataEnroute: [IEnrouteDataResponseModel]) {
+        initDataEnroute.forEach { item in
+            let newObject = EnrouteList(context: service.container.viewContext)
+            
+            newObject.id = UUID()
+            newObject.posn = item.posn ?? ""
+            newObject.actm = item.actm
+            newObject.ztm = item.ztm
+            newObject.eta = item.eta
+            newObject.ata = item.ata
+            newObject.afl = item.afl
+            newObject.oat = item.oat
+            newObject.adn = item.adn
+            newObject.awind = item.awind
+            newObject.tas = item.tas
+            newObject.vws = item.vws
+            newObject.zfrq = item.zfrq
+            newObject.afrm = item.afrm
+            newObject.cord = item.cord
+            newObject.msa = item.msa
+            newObject.dis = item.dis
+            newObject.diff = item.diff
+            newObject.pfl = item.pfl
+            newObject.imt = item.imt
+            newObject.pdn = item.pdn
+            newObject.fwind = item.fwind
+            newObject.gsp = item.gsp
+            newObject.drm = item.drm
+            newObject.pfrm = item.pfrm
+            newObject.fdiff = item.fdiff
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to data route save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+        }
+        
+        self.existDataFPEnroute = true
+    }
+    
+    func initDataSummaryInfo(_ infoData: IInfoDataResponseModel) {
+        let newObj = SummaryInfoList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.planNo = infoData.planNo
+        newObj.fltNo = infoData.fltNo
+        newObj.tailNo = infoData.tailNo
+        newObj.dep = infoData.dep
+        newObj.dest = infoData.dest
+        newObj.depICAO = infoData.depICAO
+        newObj.destICAO = infoData.destICAO
+        newObj.flightDate = infoData.flightDate
+        newObj.stdUTC = infoData.stdUTC
+        newObj.staUTC = infoData.staUTC
+        newObj.stdLocal = infoData.stdLocal
+        newObj.staLocal = infoData.staLocal
+        newObj.blkTime = infoData.blkTime
+        newObj.fltTime = infoData.fltTime
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            existDataSummaryInfo = true
+            print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to summary info save: \(error)")
+            // Rollback any changes in the managed object context
+            existDataSummaryInfo = false
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataSummaryRoute(_ routeData: ISummaryDataResponseModel) {
+        let newObj = SummaryRouteList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.routeNo = routeData.routeNo
+        newObj.route = routeData.route
+        newObj.depRwy = routeData.depRwy
+        newObj.arrRwy = routeData.arrRwy
+        newObj.levels = routeData.levels
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            existDataSummaryRoute = true
+            print("saved summary route successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to summary route save: \(error)")
+            existDataSummaryRoute = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataPerfData(_ perfData: IPerfDataResponseModel) {
+        let newObj = PerfDataList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.fltRules = perfData.fltRules
+        newObj.gndMiles = perfData.gndMiles
+        newObj.airMiles = perfData.airMiles
+        newObj.crzComp = perfData.crzComp
+        newObj.apd = perfData.apd
+        newObj.ci = perfData.ci
+        newObj.zfwChange = perfData.zfwChange
+        newObj.lvlChange = perfData.lvlChange
+        newObj.planZFW = perfData.planZFW
+        newObj.maxZFW = perfData.maxZFW
+        newObj.limZFW = perfData.limZFW
+        newObj.planTOW = perfData.planTOW
+        newObj.maxTOW = perfData.maxTOW
+        newObj.limTOW = perfData.limTOW
+        newObj.planLDW = perfData.planLDW
+        newObj.maxLDW = perfData.maxLDW
+        newObj.limLDW = perfData.limLDW
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            existDataPerfData = true
+            print("saved perf info successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to perf data save: \(error)")
+            existDataPerfData = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataPerfInfo(_ perfData: IPerfDataResponseModel) {
+        let newObj = PerfInfoList(context: service.container.viewContext)
+        newObj.id = UUID()
+        newObj.fltRules = perfData.fltRules
+        newObj.gndMiles = perfData.gndMiles
+        newObj.airMiles = perfData.airMiles
+        newObj.crzComp = perfData.crzComp
+        newObj.apd = perfData.apd
+        newObj.ci = perfData.ci
+        newObj.zfwChange = "M1000KG BURN LESS \(perfData.zfwChange)KG"
+        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange)KG"
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            existDataPerfInfo = true
+            print("saved perf info successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to perf info save: \(error)")
+            existDataPerfInfo = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataPerfWeight(_ perfData: IPerfDataResponseModel) {
+        let perfWeightsTable = [
+            perfWeights(weight: "ZFW", plan: "\(perfData.planZFW)", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
+            perfWeights(weight: "TOW", plan: "\(perfData.planTOW)", actual: "", max: "\(perfData.maxTOW)", limitation: perfData.limTOW ?? ""),
+            perfWeights(weight: "LDW", plan: "\(perfData.planLDW)", actual: "", max: "\(perfData.maxLDW)", limitation: perfData.limLDW ?? ""),
+        ]
+        
+        perfWeightsTable.forEach { item in
+            let newObj = PerfWeightList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.weight = item.weight
+            newObj.plan = item.plan
+            newObj.actual = ""
+            newObj.max = item.max
+            newObj.limitation = item.limitation
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    try service.container.viewContext.save()
+                    print("saved perf weight successfully")
+                } catch {
+                    print("Failed to perf weight save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+        }
+        existDataPerfWeight = true
+    }
+    
+    func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
+        print("fuelData.burnoff=======>\(fuelData.burnoff)")
+
+        let fuelTable = [
+            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"] ?? "", fuel: fuelData.burnoff["fuel"] ?? "", policy_reason: ""),
+            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"] ?? "", fuel: fuelData.cont["fuel"] ?? "", policy_reason: fuelData.cont["policy"]!),
+            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"] ?? "", fuel: fuelData.altn["fuel"] ?? "", policy_reason: ""),
+            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"] ?? "", fuel: fuelData.hold["fuel"] ?? "", policy_reason: ""),
+            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"] ?? "", fuel: fuelData.topup60["fuel"] ?? "", policy_reason: ""),
+            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"] ?? "", fuel: fuelData.taxi["fuel"] ?? "", policy_reason: fuelData.taxi["policy"]!),
+            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"] ?? "", fuel: fuelData.planReq["fuel"] ?? "", policy_reason: ""),
+            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"] ?? "", fuel: fuelData.dispAdd["fuel"] ?? "", policy_reason: fuelData.dispAdd["policy"]!)
+        ]
+        
+        do {
+            let newFuelData = FuelDataList(context: service.container.viewContext)
+            newFuelData.id = UUID()
+            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
+            
+            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
+            
+            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
+            
+            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
+            
+            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
+            
+            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
+            
+            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
+            
+            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
+            
+            try service.container.viewContext.save()
+            existDataFuelDataList = true
+        } catch {
+            existDataFuelDataList = false
+            print("failed to fuel data save: \(error)")
+        }
+        
+        fuelTable.forEach { item in
+            let newObj = FuelTableList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.firstColumn = item.firstColumn
+            newObj.time = item.time
+            newObj.fuel = item.fuel
+            newObj.policyReason = item.policy_reason
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved perf weight successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to fuel table list save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+        }
+        
+        dataFuelTableList = readFuelTableList()
+    }
+    
+    func initDataAltn(_ altnData: [IAltnDataResponseModel]) {
+        altnData.forEach { item in
+            let newObj = AltnDataList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.altnRwy = item.altnRwy
+            newObj.rte = item.rte
+            newObj.vis = item.vis
+            newObj.minima = item.minima
+            newObj.dist = item.dist
+            newObj.fl = item.fl
+            newObj.comp = item.comp
+            newObj.time = item.time
+            newObj.fuel = item.fuel
+            
+            do {
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+                existDataAltn = true
+                print("saved data altn successfully")
+            } catch {
+                // Something went wrong 😭
+                print("Failed to data altn save: \(error)")
+                existDataAltn = false
+                // Rollback any changes in the managed object context
+                service.container.viewContext.rollback()
+                
+            }
+        }
+    }
+    
+    func initDataNotams(_ notamsData: INotamsDataResponseModel) {
+        do {
+            print("notamsData.depNotams=====\(notamsData.depNotams)")
+            print("notamsData.enrNotams=====\(notamsData.enrNotams)")
+            print("notamsData.arrNotams=====\(notamsData.arrNotams)")
+            let newObj = NotamsDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.depNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.depNotams, requiringSecureCoding: true)
+            newObj.enrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.enrNotams, requiringSecureCoding: true)
+            newObj.arrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.arrNotams, requiringSecureCoding: true)
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            existDataNotams = true
+            print("saved notams successfully")
+        } catch {
+            print("Failed to Notams save: \(error)")
+            existDataNotams = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initDataTaf(_ metarTafData: IFlightPlanWXResponseModel) {
+        do {
+            let newObj = MetarTafDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.depMetar = metarTafData.depMetar
+            newObj.depTaf = metarTafData.depTaf
+            newObj.arrMetar = metarTafData.arrMetar
+            newObj.arrTaf = metarTafData.arrTaf
+            try service.container.viewContext.save()
+            existDataMetarTaf = true
+            print("saved Metar Taf successfully")
+        } catch {
+            print("Failed to Metar Taf save: \(error)")
+            existDataMetarTaf = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+        
+        
+        service.container.viewContext.performAndWait {
+            metarTafData.altnTaf.forEach { item in
+                do {
+                    let newObj1 = AltnTafDataList(context: service.container.viewContext)
+                    newObj1.id = UUID()
+                    newObj1.altnRwy = item.altnRwy
+                    newObj1.eta = item.eta
+                    newObj1.taf = item.taf
+                    try service.container.viewContext.save()
+                    print("saved altn taf successfully")
+                } catch {
+                    print("Failed to Altn Taf save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
+            }
+        }
+    }
+    
     func readScratchPad() -> [ScratchPadList] {
         // create a temp array to save fetched notes
         var data: [ScratchPadList] = []
         // initialize the fetch request
         let request: NSFetchRequest<ScratchPadList> = ScratchPadList.fetchRequest()
-
+        
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-
+        
         // return results
         return data
     }
     
-    func readFlightPlan() -> FlightPlanList {
-        // create a temp array to save fetched notes
-        var data: FlightPlanList = FlightPlanList()
+    func readFlightPlan() {
         // initialize the fetch request
         let request: NSFetchRequest<FlightPlanList> = FlightPlanList.fetchRequest()
         // fetch with the request
@@ -938,8 +1359,7 @@ class CoreDataModelState: ObservableObject {
             let response: [FlightPlanList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
-                    existDataFlightPlan = true
+                    dataFlightPlan = item
                 }
             } else {
                 let newPlanList = FlightPlanList(context: service.container.viewContext)
@@ -968,12 +1388,10 @@ class CoreDataModelState: ObservableObject {
                     
                 }
             }
+            existDataFlightPlan = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-
-        // return results
-        return data
     }
     
     func read(_ target: String = "departure", predicateFormat: String? = "target = %@", fetchLimit: Int? = nil) -> [NoteList] {
@@ -989,14 +1407,14 @@ class CoreDataModelState: ObservableObject {
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }
-
+        
         // fetch with the request
         do {
             results = try service.container.viewContext.fetch(request)
         } catch {
             print("Could not fetch notes from Core Data.")
         }
-
+        
         // return results
         return results
     }
@@ -1245,26 +1663,23 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readSummaryInfo() -> SummaryInfoList {
-        var data: SummaryInfoList = SummaryInfoList()
-        
+    func readSummaryInfo() {
         let request: NSFetchRequest<SummaryInfoList> = SummaryInfoList.fetchRequest()
         do {
             let response: [SummaryInfoList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    print("read summary info success: \(item.planNo)")
+                    dataSummaryInfo = item
                     existDataSummaryInfo = true
                 }
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-        
-        return data
     }
     
-    func readSummaryRoute() -> SummaryRouteList {
+    func readSummaryRoute() {
         var data: SummaryRouteList = SummaryRouteList()
         
         let request: NSFetchRequest<SummaryRouteList> = SummaryRouteList.fetchRequest()
@@ -1272,35 +1687,29 @@ class CoreDataModelState: ObservableObject {
             let response: [SummaryRouteList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataSummaryRoute = item
                     existDataSummaryRoute = true
                 }
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-        
-        return data
     }
     
-    func readPerfData() -> PerfDataList {
-        var data: PerfDataList = PerfDataList()
-        
+    func readPerfData() {
         let request: NSFetchRequest<PerfDataList> = PerfDataList.fetchRequest()
         do {
             let response: [PerfDataList] = try service.container.viewContext.fetch(request)
             
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataPerfData = item
                     existDataPerfData = true
                 }
             }
         } catch {
             print("Could not fetch perf data from Core Data.")
         }
-        
-        return data
     }
     
     func readPerfInfo() -> [PerfInfoList] {
@@ -1342,23 +1751,19 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readFuelDataList() -> FuelDataList {
-        var data: FuelDataList = FuelDataList()
-        
+    func readFuelDataList() {
         let request: NSFetchRequest<FuelDataList> = FuelDataList.fetchRequest()
         do {
             let response: [FuelDataList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataFuelDataList = item
                     existDataFuelDataList = true
                 }
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-        
-        return data
     }
     
     func readFuelTableList() -> [FuelTableList] {
@@ -1394,15 +1799,13 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readFuelExtra() -> FuelExtraList {
-        var data: FuelExtraList = FuelExtraList()
-        
+    func readFuelExtra() {
         let request: NSFetchRequest<FuelExtraList> = FuelExtraList.fetchRequest()
         do {
             let response: [FuelExtraList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataFuelExtra = item
                     existDataFuelExtra = true
                 }
             }  else {
@@ -1449,8 +1852,6 @@ class CoreDataModelState: ObservableObject {
         } catch {
             print("Could not fetch scratch pad from Core Data.")
         }
-        
-        return data
     }
     
     func readAltnList() -> [AltnDataList] {
@@ -1469,42 +1870,34 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readDataNotamsList() -> NotamsDataList {
-        var data: NotamsDataList = NotamsDataList()
-        
+    func readDataNotamsList() {
         let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
         do {
             let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataNotams = item
                     existDataNotams = true
                 }
             }
         } catch {
             print("Could not fetch notams from Core Data.")
         }
-        
-        return data
     }
     
-    func readDataMetarTafList() -> MetarTafDataList {
-        var data: MetarTafDataList = MetarTafDataList()
-        
+    func readDataMetarTafList() {
         let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
         do {
             let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    data = item
+                    dataMetarTaf = item
                     existDataMetarTaf = true
                 }
             }
         } catch {
             print("Could not fetch notams from Core Data.")
         }
-        
-        return data
     }
     
     func readDataAltnTafList() -> [AltnTafDataList] {
@@ -1527,7 +1920,9 @@ class CoreDataModelState: ObservableObject {
     func calculatedZFWFuel() -> Int {
         if let item = self.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
             let actual = Double(item.unwrappedActual) ?? Double(0)
-            return Int(Double(actual - Double(dataPerfData.unwrappedPlanZFW)!) * Double(Double(dataPerfData.unwrappedZfwChange)! / 1000))
+            if let zfw = Double(dataPerfData.unwrappedPlanZFW) {
+                return 1
+            }
         }
         return 0
     }

@@ -37,7 +37,7 @@ struct FlightPlanNOTAMView: View {
                             coreDataModel.dataNotams.isDepReference.toggle()
                             coreDataModel.save()
                             
-                            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                            coreDataModel.readDataNotamsList()
                         }) {
                             if coreDataModel.dataNotams.isDepReference {
                                 Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -48,7 +48,7 @@ struct FlightPlanNOTAMView: View {
                     }
                 ) {
                     ForEach(coreDataModel.dataNotams.unwrappedDepNotams, id: \.self) { notam in
-                        Text(notam)
+                        Text(notam["notam"] ?? "")
                             .padding(.leading, 25)
                     }
                 }
@@ -61,7 +61,7 @@ struct FlightPlanNOTAMView: View {
                                 coreDataModel.dataNotams.isEnrReference.toggle()
                                 coreDataModel.save()
                                 
-                                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                coreDataModel.readDataNotamsList()
                             }) {
                                 if coreDataModel.dataNotams.isEnrReference {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -72,7 +72,7 @@ struct FlightPlanNOTAMView: View {
                         }
                     ) {
                     ForEach(coreDataModel.dataNotams.unwrappedEnrNotams, id: \.self) { notam in
-                        Text(notam)
+                        Text(notam["notam"] ?? "")
                             .padding(.leading, 25)
                     }
                 }
@@ -85,7 +85,7 @@ struct FlightPlanNOTAMView: View {
                                 coreDataModel.dataNotams.isArrReference.toggle()
                                 coreDataModel.save()
                                 
-                                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                coreDataModel.readDataNotamsList()
                             }) {
                                 if coreDataModel.dataNotams.isArrReference {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -96,7 +96,7 @@ struct FlightPlanNOTAMView: View {
                         }
                     ) {
                     ForEach(coreDataModel.dataNotams.unwrappedArrNotams, id: \.self) { notam in
-                        Text(notam)
+                        Text(notam["notam"] ?? "")
                             .padding(.leading, 25)
                     }
                 }

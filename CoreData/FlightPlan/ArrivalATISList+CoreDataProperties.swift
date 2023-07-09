@@ -2,7 +2,7 @@
 //  ArrivalATISList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/07/2023.
+//  Created by phuong phan on 09/07/2023.
 //
 //
 
@@ -16,19 +16,20 @@ extension ArrivalATISList {
         return NSFetchRequest<ArrivalATISList>(entityName: "ArrivalATIS")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var code: String?
-    @NSManaged public var time: String?
-    @NSManaged public var rwy: String?
-    @NSManaged public var transLvl: String?
-    @NSManaged public var wind: String?
-    @NSManaged public var vis: String?
-    @NSManaged public var wx: String?
     @NSManaged public var cloud: String?
-    @NSManaged public var temp: String?
+    @NSManaged public var code: String?
     @NSManaged public var dp: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var qnh: String?
     @NSManaged public var remarks: String?
+    @NSManaged public var rwy: String?
+    @NSManaged public var temp: String?
+    @NSManaged public var time: String?
+    @NSManaged public var transLvl: String?
+    @NSManaged public var vis: String?
+    @NSManaged public var wind: String?
+    @NSManaged public var wx: String?
+    @NSManaged public var dest: String?
     
     public var unwrappedCode: String {
         code ?? ""
@@ -78,6 +79,9 @@ extension ArrivalATISList {
         remarks ?? ""
     }
     
+    public var unwrappedDest: String {
+        dest ?? ""
+    }
 }
 
 extension ArrivalATISList : Identifiable {

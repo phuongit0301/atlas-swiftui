@@ -210,14 +210,14 @@ struct FlightPlanArrView: View {
                                     code = String(newValue.prefix(3))
                                     cursorPositionDest = 3
                                     
-//                                    if coreDataModel.existDataArrivalAtis {
-//                                        coreDataModel.dataArrivalAtis.dest = dest
-//                                    } else {
-//                                        let item = ArrivalATISList(context: persistenceController.container.viewContext)
-//                                        item.dest = dest
-//                                    }
-//
-//                                    coreDataModel.save()
+                                    if coreDataModel.existDataArrivalAtis {
+                                        coreDataModel.dataArrivalAtis.dest = dest
+                                    } else {
+                                        let item = ArrivalATISList(context: persistenceController.container.viewContext)
+                                        item.dest = dest
+                                    }
+
+                                    coreDataModel.save()
                                     
                                     isEditingDest = false
                                     isTextFieldCodeFocused = true

@@ -48,8 +48,8 @@ extension View {
         ModifiedContent(content: self, modifier: BreadCrumb(screenName: screenName))
     }
     
-    func breadCrumbRef(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
-        ModifiedContent(content: self, modifier: BreadCrumbRef(screenName: screenName))
+    func breadCrumbRef(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen, _ parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen) -> some View {
+        ModifiedContent(content: self, modifier: BreadCrumbRef(screenName: screenName, parentScreenName: parentScreenName))
     }
     
     func hideKeyboardWhenTappedAround() -> some View  {
@@ -443,6 +443,7 @@ public struct HasTabbar: ViewModifier {
 public struct BreadCrumbRef: ViewModifier {
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
+    var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
     
     public func body(content: Content) -> some View {
         VStack (alignment: .leading, spacing: 0) {
@@ -453,7 +454,9 @@ public struct BreadCrumbRef: ViewModifier {
                         dismiss()
                     } label: {
                         HStack {
-                            Text("Reference").font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                            if let parentScreenName = parentScreenName {
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                            }
                         }
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)

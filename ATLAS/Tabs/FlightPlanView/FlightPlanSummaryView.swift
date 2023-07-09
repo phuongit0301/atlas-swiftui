@@ -136,6 +136,8 @@ struct FlightPlanSummaryView: View {
     @State private var pob: String = ""
     @State private var perActualZFW: String = ""
     @State private var calculatedZFWFuelValue = 0
+    
+    @State private var isActive: Bool = false
 
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
@@ -166,7 +168,15 @@ struct FlightPlanSummaryView: View {
         
        
         // MARK: fuel calculations
-        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"]!)!
+//        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"]!)!
+        var calculatedDelayFuelValue: Int {
+            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"] ?? "0") {
+                return selectedArrDelays * temp
+            }
+            
+            return 0
+        }
+        
         var calculatedDelayFuel: String {
             let result = calculatedDelayFuelValue
             if result <= 0 {
@@ -175,6 +185,7 @@ struct FlightPlanSummaryView: View {
                 return "+\(result)"
             }
         }
+        
         var includedDelayFuel: [String: Any] {
             if includedArrDelays && calculatedDelayFuelValue > 0 {
                 let remarks = coreDataModel.dataFlightPlan.unwrappedFuelArrivalDelayRemark
@@ -188,7 +199,16 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedTaxiFuelValue = selectedTaxi * Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"]!)!
+//        let calculatedTaxiFuelValue = selectedTaxi * Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"]!)!
+        
+        var calculatedTaxiFuelValue: Int {
+            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
+                return calculatedTaxiFuelValue * temp
+            }
+            
+            return 0
+        }
+        
         var calculatedTaxiFuel: String {
             let result = calculatedTaxiFuelValue
             if result <= 0 {
@@ -238,7 +258,13 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedTrackShorteningFuelValue = selectedTrackShortening * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
+        var calculatedTrackShorteningFuelValue: Int {
+            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"] ?? "0") {
+                return selectedTrackShortening * temp
+            }
+            return 0
+        }
+        
         var calculatedTrackShorteningFuel: String {
             let result = calculatedTrackShorteningFuelValue
             if result <= 0 {
@@ -265,7 +291,15 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedEnrWxFuelValue = selectedEnrWx * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
+//        let calculatedEnrWxFuelValue = selectedEnrWx * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
+        var calculatedEnrWxFuelValue: Int {
+            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"] ?? "0") {
+                return selectedEnrWx * temp
+            }
+            
+            return 0
+        }
+
         var calculatedEnrWxFuel: String {
             let result = calculatedEnrWxFuelValue
             if result <= 0 {
@@ -287,7 +321,15 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"]!)!
+//        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"]!)!
+        
+        var calculatedReciprocalRwyFuelValue: Int {
+            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"] ?? "0") {
+                return selectedReciprocalRwy * temp
+            }
+            return 0
+        }
+        
         var calculatedReciprocalRwyFuel: String {
             let result = calculatedReciprocalRwyFuelValue
             if result <= 0 {
@@ -395,778 +437,794 @@ struct FlightPlanSummaryView: View {
         
         // MARK: main body
         GeometryReader { proxy in
-            VStack(alignment: .leading) {
-                HStack(alignment: .center) {
-                    Text("Summary")
-                        .font(.system(size: 20, weight: .semibold))
-                    
-                    Spacer().frame(maxWidth: .infinity)
-                    
-                    Button(action: {}) {  // todo add the action here, fix design
-                        Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
-                    }
-                    .padding(.vertical, 11)
-                    .padding(.horizontal)
-                    .background(Color.theme.philippineGray3)
+            NavigationView {
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        Text("Summary")
+                            .font(.system(size: 20, weight: .semibold))
+                        
+                        Spacer().frame(maxWidth: .infinity)
+                        
+                        Button(action: {}) {  // todo add the action here, fix design
+                            Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
+                        }
+                        .padding(.vertical, 11)
+                        .padding(.horizontal)
+                        .background(Color.theme.philippineGray3)
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(.white, lineWidth: 1)
                         )
+                        
+                    }.padding(.bottom, 10)
+                        .padding(.horizontal, 30)
                     
-                }.padding(.bottom, 10)
-                    .padding(.horizontal, 30)
-                
-                Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
-                    .font(.system(size: 15, weight: .semibold))
-                    .padding(.leading, 30)
-                    .padding(.bottom, 10)
-                //scrollable outer list section
-                List {
-                    // MARK: Flight information section
-                    Section(header:
-                                HStack(alignment: .center) {
-                        Text("FLIGHT INFORMATION")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(Color.black)
-                        
-                        Spacer()
-                        
-                        HStack {
-                            Toggle(isOn: $showUTC) {
-                                Text("Local").font(.system(size: 17, weight: .regular))
-                                    .foregroundStyle(Color.black)
-                            }
-                            Text("UTC").font(.system(size: 17, weight: .regular))
+                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
+                        .font(.system(size: 15, weight: .semibold))
+                        .padding(.leading, 30)
+                        .padding(.bottom, 10)
+                        .Print("coreDataModel.dataSummaryInfo========>\(coreDataModel.dataSummaryInfo)")
+                    //scrollable outer list section
+                    List {
+                        // MARK: Flight information section
+                        Section(header:
+                                    HStack(alignment: .center) {
+                            Text("FLIGHT INFORMATION")
+                                .font(.system(size: 15, weight: .semibold))
                                 .foregroundStyle(Color.black)
-                        }.fixedSize(horizontal: true, vertical: false)
-                    }) {
-                        if showUTC {
-                            VStack {
-                                HStack {
-                                    Group {
-                                        Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                    }
-                                    .foregroundStyle(Color.blue)
-                                    .font(.system(size: 15, weight: .medium))
+                            
+                            Spacer()
+                            
+                            HStack {
+                                Toggle(isOn: $showUTC) {
+                                    Text("Local").font(.system(size: 17, weight: .regular))
+                                        .foregroundStyle(Color.black)
                                 }
-                                HStack {
-                                    Group {
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStdUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStaUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                    }.font(.system(size: 17, weight: .regular))
-                                    Group {
-                                        // entry here
-                                        TextField(
-                                            "POB",
-                                            text: $pob
-                                        )
-                                        .onSubmit {
-                                            if coreDataModel.existDataSummaryInfo {
-                                                coreDataModel.dataSummaryInfo.pob = pob
-                                            } else {
-                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
-                                                item.pob = pob
-                                            }
-                                            coreDataModel.save()
+                                Text("UTC").font(.system(size: 17, weight: .regular))
+                                    .foregroundStyle(Color.black)
+                            }.fixedSize(horizontal: true, vertical: false)
+                        }) {
+                            if showUTC {
+                                VStack {
+                                    HStack {
+                                        Group {
+                                            Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                         }
-                                        .border(.secondary)
-                                    }.font(.system(size: 17, weight: .regular))
-                                    .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        .foregroundStyle(Color.blue)
+                                        .font(.system(size: 15, weight: .medium))
+                                    }
+                                    HStack {
+                                        Group {
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedStdUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedStaUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        }.font(.system(size: 17, weight: .regular))
+                                        Group {
+                                            // entry here
+                                            TextField(
+                                                "POB",
+                                                text: $pob
+                                            )
+                                            .onSubmit {
+                                                if coreDataModel.existDataSummaryInfo {
+                                                    coreDataModel.dataSummaryInfo.pob = pob
+                                                } else {
+                                                    let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                    item.pob = pob
+                                                }
+                                                coreDataModel.save()
+                                            }
+                                            .border(.secondary)
+                                        }.font(.system(size: 17, weight: .regular))
+                                            .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                    }
                                 }
                             }
-                        }
-                        else {
-                            VStack {
-                                HStack {
-                                    Group {
-                                        Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                    }
-                                    .foregroundStyle(Color.blue)
-                                    .font(.system(size: 15, weight: .medium))
-                                }
-                                HStack {
-                                    Group {
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStdLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedStaLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        // entry here
-                                        TextField(
-                                            "POB",
-                                            text: $pob
-                                        )
-                                        .onSubmit {
-                                            if coreDataModel.existDataSummaryInfo {
-                                                coreDataModel.dataSummaryInfo.pob = pob
-                                            } else {
-                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
-                                                item.pob = pob
-                                            }
-
-                                            coreDataModel.save()
+                            else {
+                                VStack {
+                                    HStack {
+                                        Group {
+                                            Text("Flight No.").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("DEP / DEST").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("Date").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("BLK Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("FLT Time").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                         }
-                                        .border(.secondary)
-                                        
-                                    }.font(.system(size: 17, weight: .regular))
-                                        .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                        .foregroundStyle(Color.blue)
+                                        .font(.system(size: 15, weight: .medium))
+                                    }
+                                    HStack {
+                                        Group {
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFltNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedTailNo)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFlightDate)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedStdLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedStaLocal)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                            // entry here
+                                            TextField(
+                                                "POB",
+                                                text: $pob
+                                            )
+                                            .onSubmit {
+                                                if coreDataModel.existDataSummaryInfo {
+                                                    coreDataModel.dataSummaryInfo.pob = pob
+                                                } else {
+                                                    let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                    item.pob = pob
+                                                }
+                                                
+                                                coreDataModel.save()
+                                            }
+                                            .border(.secondary)
+                                            
+                                        }.font(.system(size: 17, weight: .regular))
+                                            .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
+                                    }
                                 }
+                            }
+                            
+                        }
+                        
+                        // MARK: Route section
+                        Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Text("Route No.")
+                                        .foregroundStyle(Color.blue)
+                                        .frame(maxWidth: 144, alignment: .leading)
+                                        .font(.system(size: 15, weight: .medium))
+                                    Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
+                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
+                                
+                                Divider().padding(.leading, 25)
+                                
+                                HStack(alignment: .center) {
+                                    Text("Route")
+                                        .foregroundStyle(Color.blue)
+                                        .frame(maxWidth: 144, alignment: .leading)
+                                        .font(.system(size: 15, weight: .medium))
+                                    Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
+                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
+                                
+                                Divider().padding(.leading, 25)
+                                
+                                HStack(alignment: .center) {
+                                    Text("Planned Dep Rwy")
+                                        .foregroundStyle(Color.blue)
+                                        .frame(maxWidth: 144, alignment: .leading)
+                                        .font(.system(size: 15, weight: .medium))
+                                    Text(coreDataModel.dataSummaryRoute.unwrappedDepRwy)
+                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
+                                
+                                Divider().padding(.leading, 25)
+                                
+                                HStack(alignment: .center) {
+                                    Text("Planned Arr Rwy")
+                                        .foregroundStyle(Color.blue)
+                                        .frame(maxWidth: 144, alignment: .leading)
+                                        .font(.system(size: 15, weight: .medium))
+                                    Text(coreDataModel.dataSummaryRoute.unwrappedArrRwy)
+                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
+                                
+                                Divider().padding(.leading, 25)
+                                
+                                HStack(alignment: .center) {
+                                    Text("Planned levels")
+                                        .foregroundStyle(Color.blue)
+                                        .frame(maxWidth: 144, alignment: .leading)
+                                        .font(.system(size: 15, weight: .medium))
+                                    Text(coreDataModel.dataSummaryRoute.unwrappedLevels)
+                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
                             }
                         }
                         
-                    }
-                    
-                    // MARK: Route section
-                    Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Text("Route No.")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: 144, alignment: .leading)
-                                    .font(.system(size: 15, weight: .medium))
-                                Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
-                                    .frame(maxWidth: 860, alignment: .leading)
-                                    .font(.system(size: 17, weight: .regular))
+                        // MARK: Performance section
+                        Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                            // table body - first row
+                            Table(coreDataModel.dataPerfInfo) {
+                                TableColumn("FLT Rules", value: \.unwrappedFltRules)
+                                TableColumn("GND Miles", value: \.unwrappedGndMiles)
+                                TableColumn("AIR Miles", value: \.unwrappedAirMiles)
+                                TableColumn("CRZ Comp", value: \.unwrappedCrzComp)
+                                TableColumn("APD", value: \.unwrappedApd)
+                                TableColumn("CI", value: \.unwrappedCi)
                             }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                            
-                            Divider().padding(.leading, 25)
-                            
-                            HStack(alignment: .center) {
-                                Text("Route")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: 144, alignment: .leading)
-                                    .font(.system(size: 15, weight: .medium))
-                                Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
-                                    .frame(maxWidth: 860, alignment: .leading)
-                                    .font(.system(size: 17, weight: .regular))
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                            
-                            Divider().padding(.leading, 25)
-                            
-                            HStack(alignment: .center) {
-                                Text("Planned Dep Rwy")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: 144, alignment: .leading)
-                                    .font(.system(size: 15, weight: .medium))
-                                Text(coreDataModel.dataSummaryRoute.unwrappedDepRwy)
-                                    .frame(maxWidth: 860, alignment: .leading)
-                                    .font(.system(size: 17, weight: .regular))
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                            
-                            Divider().padding(.leading, 25)
-                            
-                            HStack(alignment: .center) {
-                                Text("Planned Arr Rwy")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: 144, alignment: .leading)
-                                    .font(.system(size: 15, weight: .medium))
-                                Text(coreDataModel.dataSummaryRoute.unwrappedArrRwy)
-                                    .frame(maxWidth: 860, alignment: .leading)
-                                    .font(.system(size: 17, weight: .regular))
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                            
-                            Divider().padding(.leading, 25)
-                            
-                            HStack(alignment: .center) {
-                                Text("Planned levels")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: 144, alignment: .leading)
-                                    .font(.system(size: 15, weight: .medium))
-                                Text(coreDataModel.dataSummaryRoute.unwrappedLevels)
-                                    .frame(maxWidth: 860, alignment: .leading)
-                                    .font(.system(size: 17, weight: .regular))
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                        }
-                    }
-                    
-                    // MARK: Performance section
-                    Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
-                        // table body - first row
-                        Table(coreDataModel.dataPerfInfo) {
-                            TableColumn("FLT Rules", value: \.unwrappedFltRules)
-                            TableColumn("GND Miles", value: \.unwrappedGndMiles)
-                            TableColumn("AIR Miles", value: \.unwrappedAirMiles)
-                            TableColumn("CRZ Comp", value: \.unwrappedCrzComp)
-                            TableColumn("APD", value: \.unwrappedApd)
-                            TableColumn("CI", value: \.unwrappedCi)
-                        }
-                        .frame(minHeight: 65)
-                        .scrollDisabled(true)
-                        // table body - changes
-                        Table(coreDataModel.perfChangesTable) {
-                            TableColumn("ZFW Change", value: \.zfwChange)
-                            TableColumn("FL Change", value: \.lvlChange)
-                        }
-                        .frame(minHeight: 65)
-                        .scrollDisabled(true)
-                        // table body - weights
-                        Table(coreDataModel.dataPerfWeight) {
-                            TableColumn("Weight", value: \.unwrappedWeight)
-                            TableColumn("Plan", value: \.unwrappedPlan)
-                            TableColumn("Actual") {
-                                CustomField(item: $0)
-                            }
-                            TableColumn("Max", value: \.unwrappedMax)
-                            TableColumn("Limitation", value: \.unwrappedLimitation)
-                        }
-                        .frame(minHeight: 185)
-                        .scrollDisabled(true)
-                    }
-                    
-                    // MARK: Fuel section
-                    Section(header: Text("FUEL").foregroundStyle(Color.black)) {
-                        // grouped row using hstack
-                        VStack(alignment: .leading, spacing: 0) {
-                             //fuel info table body
-                            Table(coreDataModel.dataFuelTableList) {
-                                TableColumn("", value: \.unwrappedFirstColumn).width(420)
-                                TableColumn("Time", value: \.unwrappedTime)
-                                TableColumn("Fuel", value: \.unwrappedFuel)
-                                TableColumn("Policy / Reason", value: \.unwrappedPolicyReason)
-                            }
-                            .frame(minHeight: 390)
+                            .frame(minHeight: 65)
                             .scrollDisabled(true)
-                        }.listRowSeparator(.hidden)
+                            // table body - changes
+                            Table(coreDataModel.perfChangesTable) {
+                                TableColumn("ZFW Change", value: \.zfwChange)
+                                TableColumn("FL Change", value: \.lvlChange)
+                            }
+                            .frame(minHeight: 65)
+                            .scrollDisabled(true)
+                            // table body - weights
+                            Table(coreDataModel.dataPerfWeight) {
+                                TableColumn("Weight", value: \.unwrappedWeight)
+                                TableColumn("Plan", value: \.unwrappedPlan)
+                                TableColumn("Actual") {
+                                    CustomField(item: $0)
+                                }
+                                TableColumn("Max", value: \.unwrappedMax)
+                                TableColumn("Limitation", value: \.unwrappedLimitation)
+                            }
+                            .frame(minHeight: 185)
+                            .scrollDisabled(true)
+                        }
+                        
+                        // MARK: Fuel section
+                        Section(header: Text("FUEL").foregroundStyle(Color.black)) {
+                            // grouped row using hstack
+                            VStack(alignment: .leading, spacing: 0) {
+                                //fuel info table body
+                                Table(coreDataModel.dataFuelTableList) {
+                                    TableColumn("", value: \.unwrappedFirstColumn).width(420)
+                                    TableColumn("Time", value: \.unwrappedTime)
+                                    TableColumn("Fuel", value: \.unwrappedFuel)
+                                    TableColumn("Policy / Reason", value: \.unwrappedPolicyReason)
+                                }
+                                .frame(minHeight: 390)
+                                .scrollDisabled(true)
+                            }.listRowSeparator(.hidden)
                             
-                        VStack(alignment: .leading, spacing: 0) {
-                            // extra fuel section
-                            // row I
+                            VStack(alignment: .leading, spacing: 0) {
+                                // extra fuel section
+                                // row I
+                                VStack(alignment: .leading, spacing: 0) {
+                                    HStack(alignment: .center) {
+                                        HStack(alignment: .center) {
+                                            Text("(I) Pilot Extra Fuel")
+                                                .frame(width: 420, alignment: .leading)
+                                            //                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
+                                            Text("Confirm requirements")
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            //                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+                                            Text("Confirm requirements")
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            //                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+                                            Text("Confirm requirements")
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }.padding(.vertical)
+                                            .padding(.horizontal, 58)
+                                    }.background(Color.theme.azure.opacity(0.12))
+                                        .frame(width: proxy.size.width)
+                                }.onTapGesture {
+                                    withAnimation {
+                                        self.collapsed.toggle()
+                                    }
+                                }.animation(nil)
+                                    .frame(alignment: .top)
+                                
+                                if collapsed {
+                                    VStack(spacing: 0) {
+                                        Group {
+                                            // header row
+                                            HStack(alignment: .center) {
+                                                HStack(alignment: .center) {
+                                                    Text("Included")
+                                                        .frame(width: 70, alignment: .leading)
+                                                        .padding(.horizontal, 24)
+                                                    Text("Reason")
+                                                        .frame(width: 210, alignment: .leading)
+                                                        .padding(.horizontal)
+                                                    HStack {
+                                                        Text("Statistical")
+                                                        
+                                                        //                                                    NavigationLink(destination: FuelView()) {
+                                                        //                                                        Text("Details").foregroundStyle(Color.blue)
+                                                        //                                                    }.navigationBarBackButtonHidden()
+                                                        //                                                    .navigationBarHidden(true)
+                                                        //                                                    .buttonStyle(.plain)
+                                                        Text("Details").foregroundStyle(Color.blue)
+                                                            .onTapGesture {
+                                                                isActive = true
+                                                            }
+                                                        
+                                                        
+                                                    }.frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                        .padding(.horizontal)
+                                                    Text("Pilot Requirement")
+                                                        .frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                        .padding(.horizontal, 32)
+                                                    Text("Calculated Extra Fuel")
+                                                        .frame(width: 190, alignment: .leading)
+                                                        .padding(.horizontal)
+                                                    Text("Remarks")
+                                                        .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                }.frame(width: proxy.size.width - 50)
+                                                    .padding()
+                                            }.padding()
+                                                .background(Color.theme.azure.opacity(0.12))
+                                                .frame(width: proxy.size.width)
+                                            
+                                            Divider()
+                                        }
+                                        
+                                        Group {
+                                            // delays row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedArrDelays},
+                                                        set: {
+                                                            self.includedArrDelays = $0
+                                                            coreDataModel.dataFuelExtra.includedArrDelays = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Arrival Delays").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("+\(String(projDelay))mins").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    withAnimation(.linear) {
+                                                        ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "mins")
+                                                    }
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedDelayFuel)KG").foregroundColor(coreDataModel.dataFuelExtra.includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkArrDelays", field: coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedArrDelays)
+                                                
+                                            }.padding()
+                                                .frame(width: proxy.size.width - 50)
+                                            
+                                            Divider()
+                                            // taxi row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedTaxi},
+                                                        set: {
+                                                            self.includedTaxi = $0
+                                                            coreDataModel.dataFuelExtra.includedTaxi = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70, alignment: .leading)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Additional taxi").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("+\(String(aveDiffTaxi))mins").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    ButtonStepper(onToggle: onToggleIncludedTaxi, value: $selectedTaxi, suffix: "mins")
+                                                    
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedTaxiFuel)KG")
+                                                    .foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkTaxi", field: coreDataModel.dataFuelExtra.unwrappedRemarkTaxi).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedTaxi)
+                                            }.padding()
+                                                .frame(width: proxy.size.width - 50)
+                                            Divider()
+                                            
+                                            // flight level row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedFlightLevel},
+                                                        set: {
+                                                            self.includedFlightLevel = $0
+                                                            coreDataModel.dataFuelExtra.includedFlightLevel = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Flight level deviation").foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                if aveDiffLevels < 0 {
+                                                    Text("\(String(aveDiffLevels))ft")
+                                                        .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                        .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                        .padding(.horizontal)
+                                                } else {
+                                                    Text("+\(String(aveDiffLevels))ft")
+                                                        .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                        .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                        .padding(.horizontal)
+                                                }
+                                                
+                                                HStack {
+                                                    ButtonStepperMultiple(onToggle: onToggleFlightLevel, value: $selectedFlightLevelPrint, suffix: "")
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedFlightLevelFuel)KG")
+                                                    .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                    .disabled(!includedFlightLevel)
+                                            }.padding()
+                                                .frame(width: proxy.size.width - 50)
+                                            
+                                            Divider()
+                                            // track shortening row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedTrackShortening},
+                                                        set: {
+                                                            self.includedTrackShortening = $0
+                                                            coreDataModel.dataFuelExtra.includedTrackShortening = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Track shortening savings")
+                                                    .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("\(String(sumMINS))mins")
+                                                    .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    ButtonStepper(onToggle: onToggleTrackShortening, value: $selectedTrackShortening, suffix: "mins")
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedTrackShorteningFuel)KG")
+                                                    .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkTrackShortening", field: coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                    .disabled(!includedTrackShortening)
+                                            }.padding()
+                                                .frame(width: proxy.size.width - 50)
+                                            
+                                            Divider()
+                                            // enr wx row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedEnrWx},
+                                                        set: {
+                                                            self.includedEnrWx = $0
+                                                            coreDataModel.dataFuelExtra.includedEnrWx = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Enroute weather deviation")
+                                                    .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("+\(String(aveDiffEnrWX))mins")
+                                                    .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    ButtonStepper(onToggle: onToggleEnrWx, value: $selectedEnrWx, suffix: "mins")
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedEnrWxFuel)KG")
+                                                    .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkEnrWx", field: coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                    .disabled(!includedEnrWx)
+                                            }.padding()
+                                                .frame(width: proxy.size.width - 50)
+                                            
+                                            Divider()
+                                        }.font(.system(size: 17, weight: .medium))
+                                        
+                                        Group {
+                                            // reciprocal rwy row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedReciprocalRwy},
+                                                        set: {
+                                                            self.includedReciprocalRwy = $0
+                                                            coreDataModel.dataFuelExtra.includedReciprocalRwy = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Reciprocal rwy")
+                                                    .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("+/-\(String(reciprocalRwy))mins")
+                                                    .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    ButtonStepper(onToggle: onToggleReciprocalRwy, value: $selectedReciprocalRwy, suffix: "mins")
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedReciprocalRwyFuel)KG")
+                                                    .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedReciprocalRwy)
+                                            }.padding()
+                                            Divider()
+                                            // zfw change row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedZFWchange},
+                                                        set: {
+                                                            self.includedZFWchange = $0
+                                                            coreDataModel.dataFuelExtra.includedZFWchange = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("ZFW Change")
+                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("N.A.")
+                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    Text("N.A.").foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedZFWFuel)KG")
+                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                    .disabled(!includedZFWchange)
+                                            }.padding()
+                                            Divider()
+                                            // others row
+                                            HStack(alignment: .center) {
+                                                HStack {
+                                                    Toggle(isOn: Binding<Bool>(
+                                                        get: {coreDataModel.dataFuelExtra.includedOthers},
+                                                        set: {
+                                                            self.includedOthers = $0
+                                                            coreDataModel.dataFuelExtra.includedOthers = $0
+                                                            coreDataModel.save()
+                                                        }
+                                                    )){}
+                                                    Spacer().frame(maxWidth: .infinity)
+                                                }.frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Others")
+                                                    .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("N.A.")
+                                                    .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                HStack {
+                                                    ButtonStepperMultiple(onToggle: onToggleOthers, value: $selectedOtherPrint, suffix: "")
+                                                    
+                                                }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                Text("\(calculatedOthersFuel)KG")
+                                                    .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                    .disabled(!includedOthers)
+                                            }.padding()
+                                            Divider()
+                                        }.frame(width: proxy.size.width - 50)
+                                        
+                                        HStack(alignment: .center) {
+                                            HStack(alignment: .center) {
+                                                Text("").frame(width: 70)
+                                                    .padding(.horizontal, 24)
+                                                
+                                                Text("Total Extra Fuel")
+                                                    .frame(width: 210, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                //                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
+                                                Text("Confirm requirements")
+                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                Text("").frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
+                                                    .padding(.horizontal, 32)
+                                                
+                                                //                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
+                                                Text("Confirm requirements")
+                                                    .frame(width: 190, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                
+                                                //                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))")
+                                                Text("Confirm requirements")
+                                                    .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
+                                                
+                                            }.padding()
+                                        }.background(Color.theme.azure.opacity(0.12))
+                                            .frame(width: proxy.size.width)
+                                    } // end VStack
+                                }// end collapsible
+                            }
+                            
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .center) {
                                     HStack(alignment: .center) {
-                                        Text("(I) Pilot Extra Fuel")
+                                        Text("Fuel in Tanks (G + H + I)")
                                             .frame(width: 420, alignment: .leading)
-//                                        Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
-                                        Text("Confirm requirements")
+                                        Text("\(fuelInTanksTime)")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-//                                        Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
-                                        Text("Confirm requirements")
+                                        Text("\(fuelInTanksFuel)")
                                             .frame(maxWidth: .infinity, alignment: .leading)
-//                                        Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
-                                        Text("Confirm requirements")
+                                        Text("")
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.vertical)
-                                        .padding(.horizontal, 58)
-                                }.background(Color.theme.azure.opacity(0.12))
-                                .frame(width: proxy.size.width)
-                            }.onTapGesture {
-                                withAnimation {
-                                    self.collapsed.toggle()
+                                        .padding(.horizontal, 45)
+                                        .frame(width: proxy.size.width - 25)
                                 }
-                            }.animation(nil)
-                                .frame(alignment: .top)
-                            
-                            if collapsed {
-                                VStack(spacing: 0) {
-                                    Group {
-                                        // header row
-                                        HStack(alignment: .center) {
-                                            HStack(alignment: .center) {
-                                                Text("Included")
-                                                    .frame(width: 70, alignment: .leading)
-                                                    .padding(.horizontal, 24)
-                                                Text("Reason")
-                                                    .frame(width: 210, alignment: .leading)
-                                                    .padding(.horizontal)
-                                                HStack {
-                                                    Text("Statistical")
-                                                    
-//                                                    NavigationLink(destination: FuelView()) {
-//                                                        Text("Details").foregroundStyle(Color.blue)
-//                                                    }.navigationBarBackButtonHidden()
-//                                                    .navigationBarHidden(true)
-//                                                    .buttonStyle(.plain)
-                                                    Text("Details").foregroundStyle(Color.blue)
-                                                   
-                                                        
-                                                }.frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                    .padding(.horizontal)
-                                                Text("Pilot Requirement")
-                                                    .frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                    .padding(.horizontal, 32)
-                                                Text("Calculated Extra Fuel")
-                                                    .frame(width: 190, alignment: .leading)
-                                                    .padding(.horizontal)
-                                                Text("Remarks")
-                                                    .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                            }.frame(width: proxy.size.width - 50)
-                                                .padding()
-                                        }.padding()
-                                            .background(Color.theme.azure.opacity(0.12))
-                                            .frame(width: proxy.size.width)
-                                        
-                                        Divider()
-                                    }
-                                    
-                                    Group {
-                                        // delays row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedArrDelays},
-                                                    set: {
-                                                        self.includedArrDelays = $0
-                                                        coreDataModel.dataFuelExtra.includedArrDelays = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Arrival Delays").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("+\(String(projDelay))mins").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                withAnimation(.linear) {
-                                                    ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "mins")
-                                                }
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedDelayFuel)KG").foregroundColor(coreDataModel.dataFuelExtra.includedArrDelays ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkArrDelays", field: coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedArrDelays)
-                                            
-                                        }.padding()
-                                            .frame(width: proxy.size.width - 50)
-                                        
-                                        Divider()
-                                        // taxi row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedTaxi},
-                                                    set: {
-                                                        self.includedTaxi = $0
-                                                        coreDataModel.dataFuelExtra.includedTaxi = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70, alignment: .leading)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Additional taxi").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("+\(String(aveDiffTaxi))mins").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                ButtonStepper(onToggle: onToggleIncludedTaxi, value: $selectedTaxi, suffix: "mins")
-
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedTaxiFuel)KG")
-                                                .foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkTaxi", field: coreDataModel.dataFuelExtra.unwrappedRemarkTaxi).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedTaxi)
-                                        }.padding()
-                                            .frame(width: proxy.size.width - 50)
-                                        Divider()
-                                        
-                                        // flight level row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedFlightLevel},
-                                                    set: {
-                                                        self.includedFlightLevel = $0
-                                                        coreDataModel.dataFuelExtra.includedFlightLevel = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Flight level deviation").foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            if aveDiffLevels < 0 {
-                                                Text("\(String(aveDiffLevels))ft")
-                                                    .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
-                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                    .padding(.horizontal)
-                                            } else {
-                                                Text("+\(String(aveDiffLevels))ft")
-                                                    .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
-                                                    .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                    .padding(.horizontal)
-                                            }
-                                            
-                                            HStack {
-                                                ButtonStepperMultiple(onToggle: onToggleFlightLevel, value: $selectedFlightLevelPrint, suffix: "")
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedFlightLevelFuel)KG")
-                                                .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .disabled(!includedFlightLevel)
-                                        }.padding()
-                                            .frame(width: proxy.size.width - 50)
-                                        
-                                        Divider()
-                                        // track shortening row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedTrackShortening},
-                                                    set: {
-                                                        self.includedTrackShortening = $0
-                                                        coreDataModel.dataFuelExtra.includedTrackShortening = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Track shortening savings")
-                                                .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("\(String(sumMINS))mins")
-                                                .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                ButtonStepper(onToggle: onToggleTrackShortening, value: $selectedTrackShortening, suffix: "mins")
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedTrackShorteningFuel)KG")
-                                                .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkTrackShortening", field: coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .disabled(!includedTrackShortening)
-                                        }.padding()
-                                            .frame(width: proxy.size.width - 50)
-                                        
-                                        Divider()
-                                        // enr wx row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedEnrWx},
-                                                    set: {
-                                                        self.includedEnrWx = $0
-                                                        coreDataModel.dataFuelExtra.includedEnrWx = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Enroute weather deviation")
-                                                .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("+\(String(aveDiffEnrWX))mins")
-                                                .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                ButtonStepper(onToggle: onToggleEnrWx, value: $selectedEnrWx, suffix: "mins")
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedEnrWxFuel)KG")
-                                                .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkEnrWx", field: coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .disabled(!includedEnrWx)
-                                        }.padding()
-                                            .frame(width: proxy.size.width - 50)
-                                        
-                                        Divider()
-                                    }.font(.system(size: 17, weight: .medium))
-                                    
-                                    Group {
-                                        // reciprocal rwy row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedReciprocalRwy},
-                                                    set: {
-                                                        self.includedReciprocalRwy = $0
-                                                        coreDataModel.dataFuelExtra.includedReciprocalRwy = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Reciprocal rwy")
-                                                .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("+/-\(String(reciprocalRwy))mins")
-                                                .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                ButtonStepper(onToggle: onToggleReciprocalRwy, value: $selectedReciprocalRwy, suffix: "mins")
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedReciprocalRwyFuel)KG")
-                                                .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading).disabled(!includedReciprocalRwy)
-                                        }.padding()
-                                        Divider()
-                                        // zfw change row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedZFWchange},
-                                                    set: {
-                                                        self.includedZFWchange = $0
-                                                        coreDataModel.dataFuelExtra.includedZFWchange = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("ZFW Change")
-                                                .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("N.A.")
-                                                .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                Text("N.A.").foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedZFWFuel)KG")
-                                                .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .disabled(!includedZFWchange)
-                                        }.padding()
-                                        Divider()
-                                        // others row
-                                        HStack(alignment: .center) {
-                                            HStack {
-                                                Toggle(isOn: Binding<Bool>(
-                                                    get: {coreDataModel.dataFuelExtra.includedOthers},
-                                                    set: {
-                                                        self.includedOthers = $0
-                                                        coreDataModel.dataFuelExtra.includedOthers = $0
-                                                        coreDataModel.save()
-                                                    }
-                                                )){}
-                                                Spacer().frame(maxWidth: .infinity)
-                                            }.frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Others")
-                                                .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("N.A.")
-                                                .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            HStack {
-                                                ButtonStepperMultiple(onToggle: onToggleOthers, value: $selectedOtherPrint, suffix: "")
-                                                
-                                            }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-                                            Text("\(calculatedOthersFuel)KG")
-                                                .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                                .disabled(!includedOthers)
-                                        }.padding()
-                                        Divider()
-                                    }.frame(width: proxy.size.width - 50)
-                                    
-                                    HStack(alignment: .center) {
-                                        HStack(alignment: .center) {
-                                            Text("").frame(width: 70)
-                                                .padding(.horizontal, 24)
-                                            
-                                            Text("Total Extra Fuel")
-                                                .frame(width: 210, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-//                                            Text("\(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
-                                            Text("Confirm requirements")
-                                                .frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-                                            Text("").frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
-                                                .padding(.horizontal, 32)
-                                            
-//                                            Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
-                                            Text("Confirm requirements")
-                                                .frame(width: 190, alignment: .leading)
-                                                .padding(.horizontal)
-                                            
-//                                            Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))")
-                                            Text("Confirm requirements")
-                                                .frame(width: calculateWidth(proxy.size.width - 604, 3), alignment: .leading)
-                                            
-                                        }.padding()
-                                    }.background(Color.theme.azure.opacity(0.12))
-                                        .frame(width: proxy.size.width)
-                                } // end VStack
-                            }// end collapsible
+                                .frame(width: proxy.size.width)
+                            }.listRowBackground(Color.theme.sonicSilver.opacity(0.12))
+                        }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
+                        
+                        // ALTN section
+                        Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                            Table(coreDataModel.dataAltnList) {
+                                TableColumn("ALTN / RWY") {
+                                    Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("RTE") {
+                                    Text($0.unwrappedRte).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                        .lineLimit(nil)
+                                }.width(200)
+                                TableColumn("VIS") {
+                                    Text($0.unwrappedVis).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("MINIMA") {
+                                    Text($0.unwrappedMinima).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("DIST") {
+                                    Text($0.unwrappedDist).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("FL") {
+                                    Text($0.unwrappedFl).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("COMP") {
+                                    Text($0.unwrappedComp).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("TIME") {
+                                    Text($0.unwrappedTime).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                                TableColumn("FUEL") {
+                                    Text($0.unwrappedFuel).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
+                                }
+                            }
+                            .frame(minHeight: 420)
+                            .scrollDisabled(true)
                         }
                         
-                        VStack(alignment: .leading, spacing: 0) {
-                            HStack(alignment: .center) {
-                                HStack(alignment: .center) {
-                                    Text("Fuel in Tanks (G + H + I)")
-                                        .frame(width: 420, alignment: .leading)
-                                    Text("\(fuelInTanksTime)")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("\(fuelInTanksFuel)")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }.padding(.vertical)
-                                    .padding(.horizontal, 45)
-                                .frame(width: proxy.size.width - 25)
-                            }
-                            .frame(width: proxy.size.width)
-                        }.listRowBackground(Color.theme.sonicSilver.opacity(0.12))
-                    }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
-                    
-                    // ALTN section
-                    Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
-                        Table(coreDataModel.dataAltnList) {
-                            TableColumn("ALTN / RWY") {
-                                Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("RTE") {
-                                Text($0.unwrappedRte).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                                    .lineLimit(nil)
-                            }.width(200)
-                            TableColumn("VIS") {
-                                Text($0.unwrappedVis).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("MINIMA") {
-                                Text($0.unwrappedMinima).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("DIST") {
-                                Text($0.unwrappedDist).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("FL") {
-                                Text($0.unwrappedFl).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("COMP") {
-                                Text($0.unwrappedComp).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("TIME") {
-                                Text($0.unwrappedTime).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                            TableColumn("FUEL") {
-                                Text($0.unwrappedFuel).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
-                            }
-                        }
-                        .frame(minHeight: 420)
-                        .scrollDisabled(true)
-                    }
-                    
-                    // ATC flight plan section
-                    //                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
-                    //                    Text("\(atcFlightPlan)")
-                    //                        .padding(.leading, 25)
-                    //                }
-                }.keyboardAvoidView()
-            }
+                        // ATC flight plan section
+                        //                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
+                        //                    Text("\(atcFlightPlan)")
+                        //                        .padding(.leading, 25)
+                        //                }
+                    }.keyboardAvoidView()
+                        .background(
+                            NavigationLink(destination:
+                                            FuelView()
+                                                .breadCrumbRef(NavigationEnumeration.FuelScreen, NavigationEnumeration.FlightPlanScreen)
+                                                .navigationBarBackButtonHidden()
+                                                .navigationBarHidden(true)
+                                                .ignoresSafeArea()
+                                           , isActive: $isActive
+                                          ) { EmptyView() }
+                        )
+                }
+            }.navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
                 self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays

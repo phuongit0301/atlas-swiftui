@@ -213,7 +213,7 @@ struct FieldString: View {
                 }
                 
                 coreDataModel.save()
-                coreDataModel.dataFlightPlan = coreDataModel.readFlightPlan()
+                coreDataModel.readFlightPlan()
             }
     }
 }
@@ -243,4 +243,198 @@ struct CustomField: View {
             }
     }
 }
-                
+
+struct IAltnDataResponseModel: Codable {
+    var altnRwy: String?
+    var rte: String?
+    var vis: String?
+    var minima: String?
+    var dist: String?
+    var fl: String?
+    var comp: String?
+    var time: String?
+    var fuel: String?
+}
+
+struct IFuelDataChildResponseModel: Decodable {
+    var fuel: String?
+    var time: String?
+    var unit: String?
+    
+//    enum CodingKeys: String, CodingKey {
+//        case fuel
+//        case time
+//        case unit
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        let str = try values.decode(String.self, forKey: .fuel)
+//        self.fuel = "\(str)"
+//    }
+}
+
+struct IFuelDataChild2ResponseModel: Decodable {
+    var fuel: String?
+    var policy: String?
+    var time: String?
+    
+//    enum CodingKeys: String, CodingKey {
+//        case fuel
+//        case policy
+//        case time
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        let str = try values.decode(String.self, forKey: .fuel)
+//        self.fuel = "\(str)"
+//    }
+}
+
+struct IFuelDataChild3ResponseModel: Decodable {
+    var fuel: String?
+    var time: String?
+}
+
+struct IFuelDataChild4ResponseModel: Decodable {
+    var fuel: String?
+    var policy: String?
+    var time: String?
+    var unit: String?
+}
+
+struct IFuelDataResponseModel: Decodable {
+//    var burnoff: IFuelDataChildResponseModel
+//    var cont: IFuelDataChild2ResponseModel
+//    var altn: IFuelDataChildResponseModel
+//    var hold: IFuelDataChildResponseModel
+//    var topup60: IFuelDataChild3ResponseModel
+//    var taxi: IFuelDataChild4ResponseModel
+//    var planReq: IFuelDataChild3ResponseModel
+//    var dispAdd: IFuelDataChild2ResponseModel
+    var burnoff: [String: String]
+    var cont: [String: String]
+    var altn: [String: String]
+    var hold: [String: String]
+    var topup60: [String: String]
+    var taxi: [String: String]
+    var planReq: [String: String]
+    var dispAdd: [String: String]
+}
+
+struct IInfoDataResponseModel: Decodable {
+    var blkTime: String?
+    var dep: String?
+    var depICAO: String?
+    var dest: String?
+    var destICAO: String?
+    var flightDate: String?
+    var fltNo: String?
+    var fltTime: String?
+    var planNo: String?
+    var staLocal: String?
+    var staUTC: String?
+    var stdLocal: String?
+    var stdUTC: String?
+    var tailNo: String?
+    var pob: String?
+}
+
+struct IAltnDataTafResponseModel: Decodable {
+    var altnRwy: String?
+    var eta: String?
+    var taf: String?
+}
+
+struct IFlightPlanWXResponseModel: Decodable {
+    var depAirport: String // For entity MetarTafDataList
+    var arrAirport: String // For entity MetarTafDataList
+    var depMetar: String // For entity MetarTafDataList
+    var depTaf: String // For entity MetarTafDataList
+    var arrMetar: String // For entity MetarTafDataList
+    var arrTaf: String // For entity MetarTafDataList
+    var altnTaf: [IAltnDataTafResponseModel] // For entity AltnTafDataList
+}
+
+struct INotamsDataChildResponseModel: Decodable {
+    var date: String?
+    var notam: String?
+    var rank: String?
+}
+
+struct INotamsDataResponseModel: Decodable {
+//    var depNotams: [INotamsDataChildResponseModel]
+//    var enrNotams: [INotamsDataChildResponseModel]
+//    var arrNotams: [INotamsDataChildResponseModel]
+    var depNotams: [[String: String]]
+    var enrNotams: [[String: String]]
+    var arrNotams: [[String: String]]
+}
+
+struct IPerfDataResponseModel: Decodable {
+    var fltRules: String?
+    var gndMiles: String?
+    var airMiles: String?
+    var crzComp: String?
+    var apd: String?
+    var ci: String?
+    var zfwChange: String?
+    var lvlChange: String?
+    var planZFW: String?
+    var maxZFW: String?
+    var limZFW: String?
+    var planTOW: String?
+    var maxTOW: String?
+    var limTOW: String?
+    var planLDW: String?
+    var maxLDW: String?
+    var limLDW: String?
+}
+
+struct ISummaryDataResponseModel: Decodable {
+    var routeNo: String?
+    var route: String?
+    var depRwy: String?
+    var arrRwy: String?
+    var levels: String?
+}
+
+struct IEnrouteDataResponseModel: Decodable {
+    var posn: String?
+    var actm: String?
+    var ztm: String?
+    var eta: String?
+    var ata: String?
+    var afl: String?
+    var oat: String?
+    var adn: String?
+    var awind: String?
+    var tas: String?
+    var vws: String?
+    var zfrq: String?
+    var afrm: String?
+    var cord: String?
+    var msa: String?
+    var dis: String?
+    var diff: String?
+    var pfl: String?
+    var imt: String?
+    var pdn: String?
+    var fwind: String?
+    var gsp: String?
+    var drm: String?
+    var pfrm: String?
+    var fdiff: String?
+}
+
+struct IFlightPlanDataModel: Decodable {
+    var altnData: [IAltnDataResponseModel] // For entity AltnDataList
+    var fuelData: IFuelDataResponseModel // For entity FuelDataList
+    var infoData: IInfoDataResponseModel // For entity SummaryInfoList
+    var metarTafData: IFlightPlanWXResponseModel
+    var notamsData: INotamsDataResponseModel // For entity NotamsDataList
+    var perfData: IPerfDataResponseModel // For entity PerfDataList
+    var routeData: ISummaryDataResponseModel // For entity SummaryRouteList
+    var waypointsData: [IEnrouteDataResponseModel] // For entity EnrouteList
+}

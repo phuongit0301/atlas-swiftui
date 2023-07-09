@@ -24,43 +24,44 @@ extension NotamsDataList {
     @NSManaged public var isDepReference: Bool
     @NSManaged public var isEnrReference: Bool
     
-    public var unwrappedDepNotams: [String] {
+    public var unwrappedDepNotams: [[String: String]] {
         if let depNotams = depNotams {
             do {
-              if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(depNotams) as? [String] {
+                if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(depNotams) as? [[String: String]] {
+                  print("arr=====>\(arr)")
                 return arr
               }
           } catch {
             print("could not unarchive array: \(error)")
           }
         }
-        return [""]
+        return [["date": "", "notam": "", "rank": ""]]
     }
     
-    public var unwrappedEnrNotams: [String] {
+    public var unwrappedEnrNotams: [[String: String]] {
         if let enrNotams = enrNotams {
             do {
-              if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(enrNotams) as? [String] {
+                if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(enrNotams) as? [[String: String]] {
                 return arr
               }
           } catch {
             print("could not unarchive array: \(error)")
           }
         }
-        return [""]
+        return [["date": "", "notam": "", "rank": ""]]
     }
     
-    public var unwrappedArrNotams: [String] {
+    public var unwrappedArrNotams: [[String: String]] {
         if let arrNotams = arrNotams {
             do {
-              if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(arrNotams) as? [String] {
+                if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(arrNotams) as? [[String: String]] {
                 return arr
               }
           } catch {
             print("could not unarchive array: \(error)")
           }
         }
-        return [""]
+        return [["date": "", "notam": "", "rank": ""]]
     }
 }
 

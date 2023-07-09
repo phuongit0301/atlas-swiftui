@@ -2,7 +2,7 @@
 //  FlightPlanList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 03/07/2023.
+//  Created by phuong phan on 08/07/2023.
 //
 //
 
@@ -17,17 +17,18 @@ extension FlightPlanList {
     }
 
     @NSManaged public var flightInfoPob: String?
-    @NSManaged public var perActualZFW: Int
-    @NSManaged public var perActualTOW: Int
-    @NSManaged public var perActualLDW: Int
-    @NSManaged public var fuelArrivalDelayRemark: String?
     @NSManaged public var fuelAdditionalTaxiRemark: String?
-    @NSManaged public var fuelFlightLevelRemark: String?
-    @NSManaged public var fuelTrackShorteningRemark: String?
+    @NSManaged public var fuelArrivalDelayRemark: String?
     @NSManaged public var fuelEnrouteWeatherRemark: String?
-    @NSManaged public var fuelReciprocalRemark: String?
-    @NSManaged public var fuelZFWChangeRemark: String?
+    @NSManaged public var fuelFlightLevelRemark: String?
     @NSManaged public var fuelOtherRemark: String?
+    @NSManaged public var fuelReciprocalRemark: String?
+    @NSManaged public var fuelTrackShorteningRemark: String?
+    @NSManaged public var fuelZFWChangeRemark: String?
+    @NSManaged public var perActualLDW: Int
+    @NSManaged public var perActualTOW: Int
+    @NSManaged public var perActualZFW: Int
+    @NSManaged public var id: UUID?
     
     public var unwrappedFuelOtherRemark: String {
         fuelOtherRemark ?? ""
