@@ -1937,12 +1937,20 @@ class FuelCoreDataModelState: ObservableObject {
     func checkAndSyncData() async {
         await remoteService.getFuelData(completion: { response in
             DispatchQueue.main.async {
-//                if let historicalDelays = response?.historicalDelays {
-//                    self.initHistoricalDelays(historicalDelays)
-//                }
-                
+                if let historicalDelays = response?.historicalDelays {
+                    self.initHistoricalDelays(historicalDelays)
+                }
+
                 if let projDelays = response?.projDelays {
-                    
+                    self.initProjDelays(projDelays)
+                }
+                
+                if let taxi = response?.taxi {
+                    self.initProjTaxi(taxi)
+                }
+                
+                if let trackMiles = response?.trackMiles {
+                    self.initTrackMiles(trackMiles)
                 }
             }
         })
@@ -2125,23 +2133,23 @@ class FuelCoreDataModelState: ObservableObject {
         }
     }
     
-    func initProjTaxi(_ taxi: ITaxiModel) {
+    func initProjTaxi(_ data: ITaxiModel) {
         do {
                 let newObject = FuelTaxiList(context: self.service.container.viewContext)
                 newObject.id = UUID()
                 var arr = [FuelTaxiRefList]()
                 
-                taxi.flights3.times.forEach { item in
-                    let newObjDelay = FuelTaxiRefList(context: self.service.container.viewContext)
-                    newObjDelay.id = UUID()
-                    newObjDelay.date = item.date
-                    newObjDelay.condition = item.condition
-                    newObjDelay.taxiTime = item.taxiTime
+                data.flights3.times.forEach { item in
+                    let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.date = item.date
+                    newObjRef.condition = item.condition
+                    newObjRef.taxiTime = item.taxiTime
                     
                     do {
                         // Persist the data in this managed object context to the underlying store
                         try service.container.viewContext.save()
-                        arr.append(newObjDelay)
+                        arr.append(newObjRef)
                         print("saved successfully")
                     } catch {
                         // Something went wrong 😭
@@ -2153,9 +2161,9 @@ class FuelCoreDataModelState: ObservableObject {
                 }
             
                 newObject.times = NSSet(array: arr)
-                newObject.aveTime = taxi.flights3.aveTime
-                newObject.aveDiff = taxi.flights3.aveDiff
-                newObject.ymax = taxi.flights3.ymax
+                newObject.aveTime = data.flights3.aveTime
+                newObject.aveDiff = data.flights3.aveDiff
+                newObject.ymax = data.flights3.ymax
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
             
@@ -2164,17 +2172,17 @@ class FuelCoreDataModelState: ObservableObject {
                 newObject1.id = UUID()
                 var arr1 = [FuelTaxiRefList]()
                 
-                taxi.week1.times.forEach { item in
-                    let newObjDelay = FuelTaxiRefList(context: self.service.container.viewContext)
-                    newObjDelay.id = UUID()
-                    newObjDelay.date = item.date
-                    newObjDelay.condition = item.condition
-                    newObjDelay.taxiTime = item.taxiTime
+                data.week1.times.forEach { item in
+                    let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.date = item.date
+                    newObjRef.condition = item.condition
+                    newObjRef.taxiTime = item.taxiTime
                     
                     do {
                         // Persist the data in this managed object context to the underlying store
                         try service.container.viewContext.save()
-                        arr.append(newObjDelay)
+                        arr1.append(newObjRef)
                         print("saved successfully")
                     } catch {
                         // Something went wrong 😭
@@ -2185,10 +2193,10 @@ class FuelCoreDataModelState: ObservableObject {
                     }
                 }
             
-                newObject.times = NSSet(array: arr1)
-                newObject.aveTime = taxi.week1.aveTime
-                newObject.aveDiff = taxi.week1.aveDiff
-                newObject.ymax = taxi.week1.ymax
+                newObject1.times = NSSet(array: arr1)
+                newObject1.aveTime = data.week1.aveTime
+                newObject1.aveDiff = data.week1.aveDiff
+                newObject1.ymax = data.week1.ymax
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
             
@@ -2198,21 +2206,21 @@ class FuelCoreDataModelState: ObservableObject {
                 newObject2.id = UUID()
                 var arr2 = [FuelTaxiRefList]()
                 
-                taxi.months3.times.forEach { item in
-                    let newObjDelay = FuelTaxiRefList(context: self.service.container.viewContext)
-                    newObjDelay.id = UUID()
-                    newObjDelay.date = item.date
-                    newObjDelay.condition = item.condition
-                    newObjDelay.taxiTime = item.taxiTime
+                data.months3.times.forEach { item in
+                    let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.date = item.date
+                    newObjRef.condition = item.condition
+                    newObjRef.taxiTime = item.taxiTime
                     
                     do {
                         // Persist the data in this managed object context to the underlying store
                         try service.container.viewContext.save()
-                        arr.append(newObjDelay)
+                        arr2.append(newObjRef)
                         print("saved successfully")
                     } catch {
                         // Something went wrong 😭
-                        print("Failed to save: \(error)")
+                        print("Failed to save Taxi Month3: \(error)")
                         // Rollback any changes in the managed object context
                         service.container.viewContext.rollback()
                         
@@ -2220,9 +2228,9 @@ class FuelCoreDataModelState: ObservableObject {
                 }
             
                 newObject.times = NSSet(array: arr2)
-                newObject.aveTime = taxi.months3.aveTime
-                newObject.aveDiff = taxi.months3.aveDiff
-                newObject.ymax = taxi.months3.ymax
+                newObject.aveTime = data.months3.aveTime
+                newObject.aveDiff = data.months3.aveDiff
+                newObject.ymax = data.months3.ymax
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
 
@@ -2230,6 +2238,117 @@ class FuelCoreDataModelState: ObservableObject {
         } catch {
             // Something went wrong 😭
             print("Failed to save Taxi: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
+    }
+    
+    func initTrackMiles(_ data: ITrackMilesModel) {
+        do {
+                let newObject = FuelTrackMilesList(context: self.service.container.viewContext)
+                newObject.id = UUID()
+                var arr = [FuelTrackMilesRefList]()
+
+                data.flights3.trackMiles.forEach { item in
+                    let newObjDelay = FuelTrackMilesRefList(context: self.service.container.viewContext)
+                    newObjDelay.id = UUID()
+                    newObjDelay.phase = item.phase
+                    newObjDelay.condition = item.condition
+                    newObjDelay.trackMilesDiff = item.trackMilesDiff
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr.append(newObjDelay)
+                        print("saved Track Miles Flight3 successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save Track Miles Flight3: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject.trackMiles = NSSet(array: arr)
+                newObject.sumNM = data.flights3.sumNM
+                newObject.sumMINS = data.flights3.sumMINS
+                newObject.type = "flights3"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                // For week1
+                let newObject1 = FuelTrackMilesList(context: self.service.container.viewContext)
+                newObject1.id = UUID()
+                var arr1 = [FuelTrackMilesRefList]()
+
+                data.week1.trackMiles.forEach { item in
+                    let newObjRef = FuelTrackMilesRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.phase = item.phase
+                    newObjRef.condition = item.condition
+                    newObjRef.trackMilesDiff = item.trackMilesDiff
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr1.append(newObjRef)
+                        print("saved successfully Track Mile Week1 Ref")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save Track Mile Week1 Ref: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject1.trackMiles = NSSet(array: arr1)
+                newObject1.sumNM = data.week1.sumNM
+                newObject1.sumMINS = data.week1.sumMINS
+                newObject1.type = "week1"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+
+                // For Month3
+                let newObject2 = FuelTrackMilesList(context: self.service.container.viewContext)
+                newObject2.id = UUID()
+                var arr2 = [FuelTrackMilesRefList]()
+
+                data.months3.trackMiles.forEach { item in
+                    let newObjRef = FuelTrackMilesRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.phase = item.phase
+                    newObjRef.condition = item.condition
+                    newObjRef.trackMilesDiff = item.trackMilesDiff
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr2.append(newObjRef)
+                        print("saved Track Mile Ref Month1 successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save Track Mile Ref Month1: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject2.trackMiles = NSSet(array: arr2)
+                newObject2.sumNM = data.months3.sumNM
+                newObject2.sumMINS = data.months3.sumMINS
+                newObject1.type = "months3"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                print("saved Track Miles Month3 successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to Track Miles: \(error)")
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
 

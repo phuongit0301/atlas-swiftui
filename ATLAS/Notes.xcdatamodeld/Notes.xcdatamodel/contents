@@ -102,12 +102,6 @@
         <attribute name="zfrq" optional="YES" attributeType="String"/>
         <attribute name="ztm" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="EnrWXTrackMiles" representedClassName="EnrWXTrackMilesList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-    </entity>
     <entity name="FlightLevel" representedClassName="FlightLevelList" syncable="YES">
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="flightLevel" optional="YES" attributeType="String"/>
@@ -139,6 +133,12 @@
         <attribute name="planReq" optional="YES" attributeType="Binary"/>
         <attribute name="taxi" optional="YES" attributeType="Binary"/>
         <attribute name="topup60" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="FuelEnrWX" representedClassName="EnrWXTrackMilesList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="FuelExtra" representedClassName="FuelExtraList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -189,6 +189,20 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="taxiTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="timesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTaxi" inverseName="times" inverseEntity="FuelTaxi"/>
+    </entity>
+    <entity name="FuelTrackMiles" representedClassName="FuelTrackMilesList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sumMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sumNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelTrackMilesRef" inverseName="trackMilesRef" inverseEntity="FuelTrackMilesRef"/>
+    </entity>
+    <entity name="FuelTrackMilesRef" representedClassName="FuelTrackMilesRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="phase" optional="YES" attributeType="String"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTrackMiles" inverseName="trackMiles" inverseEntity="FuelTrackMiles"/>
     </entity>
     <entity name="HistoricalDelays" representedClassName="HistoricalDelaysList" syncable="YES">
         <attribute name="arrTimeDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -335,12 +349,5 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="months3" optional="YES" attributeType="Binary"/>
         <attribute name="week1" optional="YES" attributeType="Binary"/>
-    </entity>
-    <entity name="TrackMiles" representedClassName="TrackMilesList" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="sumMINS" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="sumNM" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="trackMiles" optional="YES" attributeType="Binary"/>
-        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
 </model>
