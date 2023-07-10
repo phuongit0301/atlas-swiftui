@@ -46,7 +46,7 @@ struct ATLASApp: App {
                     Task {
                         coreDataModel.loading = true
                         await apiManager.makePostRequest()
-//                        await fuelCoreDataModel.checkAndSyncData()
+                        await fuelCoreDataModel.checkAndSyncData()
                         await coreDataModel.checkAndSyncData()
                         await coreDataModel.initFetchData()
                         coreDataModel.loading = false

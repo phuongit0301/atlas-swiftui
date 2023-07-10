@@ -178,11 +178,18 @@
     <entity name="HistoricalDelays" representedClassName="HistoricalDelaysList" syncable="YES">
         <attribute name="arrTimeDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="arrTimeDelayWX" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="delays" optional="YES" attributeType="Binary"/>
         <attribute name="eta" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="ymax" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="delays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistorycalDelaysRef" inverseName="delaysRef" inverseEntity="HistorycalDelaysRef"/>
+    </entity>
+    <entity name="HistorycalDelaysRef" representedClassName="HistorycalDelaysRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
@@ -256,6 +263,20 @@
         <attribute name="eta" optional="YES" attributeType="String"/>
         <attribute name="expectedDelay" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="ProjDelays" representedClassName="ProjDelaysList" syncable="YES">
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="expectedDelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="delays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProjDelaysRef" inverseName="delayRef" inverseEntity="ProjDelaysRef"/>
+    </entity>
+    <entity name="ProjDelaysRef" representedClassName="ProjDelaysListRef" syncable="YES">
+        <attribute name="delay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="maxdelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="mindelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
     </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>

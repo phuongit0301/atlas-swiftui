@@ -140,81 +140,56 @@ class CoreDataModelState: ObservableObject {
     @Published var scratchPadArray: [ScratchPadList] = []
     
     init() {
-        Task {
-            await remoteService.getFlightPlanWX(completion: { data in
-                DispatchQueue.main.async {
-                    if let waypointsData = data?.waypointsData {
-                        self.dataFPEnroute = self.readEnrouteList()
-                        if self.dataFPEnroute.count == 0 {
+        dataFPEnroute = readEnrouteList()
+        
+        if dataFPEnroute.count == 0 {
+            Task {
+                await remoteService.getFlightPlanWX(completion: { data in
+                    DispatchQueue.main.async {
+                        if let waypointsData = data?.waypointsData {
                             self.initDataEnroute(waypointsData)
                         }
-                    }
-                    //
-                    if let infoData = data?.infoData {
-                        if !self.existDataSummaryInfo {
+                        //
+                        if let infoData = data?.infoData {
                             self.initDataSummaryInfo(infoData)
                         }
-                    }
-                    
-                    if let routeData = data?.routeData {
-                        if !self.existDataSummaryRoute {
+                        
+                        if let routeData = data?.routeData {
                             self.initDataSummaryRoute(routeData)
                         }
-                    }
-                    
-                    if let perfData = data?.perfData {
-                        if !self.existDataPerfData {
+                        
+                        if let perfData = data?.perfData {
                             self.initDataPerfData(perfData)
-                        }
-                        
-                        if !self.existDataPerfInfo {
+                            
                             self.initDataPerfInfo(perfData)
-                        }
-                        
-                        self.dataPerfWeight = self.readPerfWeight()
-                        
-                        if self.dataPerfWeight.count == 0 {
+                            
+                            self.dataPerfWeight = self.readPerfWeight()
+                            
                             self.initDataPerfWeight(perfData)
                         }
-                    }
-                    
-                    if let fuelData = data?.fuelData {
-                        if !self.existDataFuelDataList {
+                        
+                        if let fuelData = data?.fuelData {
                             self.initDataFuelList(fuelData)
                         }
-                    }
-                    
-                    if let altnData = data?.altnData {
-                        self.dataAltnList = self.readAltnList()
-                        if self.dataAltnList.count == 0 {
+                        
+                        if let altnData = data?.altnData {
+                            self.dataAltnList = self.readAltnList()
                             self.initDataAltn(altnData)
                         }
-                    }
-                    
-                    if let notamsData = data?.notamsData {
-                        if !self.existDataNotams {
+                        
+                        if let notamsData = data?.notamsData {
                             self.initDataNotams(notamsData)
                         }
-                    }
-                    
-                    if let metarTafData = data?.metarTafData {
-                        if !self.existDataMetarTaf {
-                            self.initDataTaf(metarTafData)
-                        }
                         
-                        self.dataAltnTaf = self.readDataAltnTafList()
-                        if self.dataAltnTaf.count == 0 {
+                        if let metarTafData = data?.metarTafData {
+                            self.initDataTaf(metarTafData)
                             self.initDataAltnTaf(metarTafData)
                         }
+                        
+                        print("Fetch data")
                     }
-                    
-                    print("Fetch data")
-                }
-            })
-            
-//            DispatchQueue.main.async {
-//                self.initFetchData()
-//            }
+                })
+            }
         }
     }
     
@@ -1961,9 +1936,13 @@ class FuelCoreDataModelState: ObservableObject {
     
     func checkAndSyncData() async {
         await remoteService.getFuelData(completion: { response in
-            if let historicalDelays = response?.historicalDelays {
-                DispatchQueue.main.async {
-                    self.initHistoricalDelays(historicalDelays)
+            DispatchQueue.main.async {
+//                if let historicalDelays = response?.historicalDelays {
+//                    self.initHistoricalDelays(historicalDelays)
+//                }
+                
+                if let projDelays = response?.projDelays {
+                    
                 }
             }
         })
@@ -1971,44 +1950,175 @@ class FuelCoreDataModelState: ObservableObject {
         
     }
     
+    func readHistoricalDelays() {
+        do {
+            let request: NSFetchRequest<HistoricalDelaysList> = HistoricalDelaysList.fetchRequest()
+            let results = try service.container.viewContext.fetch(request)
+            print("results=======\(results.count)")
+            
+            if let result = results.first {
+                print("resultdelays=======\(result.delays?.allObjects ?? [])")
+                print("resultdelays=======\((result.delays?.allObjects ?? []).count)")
+            }
+        } catch {
+            print("Could not fetch notes from Core Data.")
+        }
+        
+    }
+    
     func initHistoricalDelays(_ historicalDelays: IHistoricalDelaysModel) {
         do {
                 let newObject = HistoricalDelaysList(context: self.service.container.viewContext)
                 newObject.id = UUID()
-                newObject.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.days3.delays, requiringSecureCoding: true)
+                var arr = [HistorycalDelaysRefList]()
+            
+                historicalDelays.days3.delays.forEach { item in
+                    let newObjDelay = HistorycalDelaysRefList(context: self.service.container.viewContext)
+                    newObjDelay.id = UUID()
+                    newObjDelay.condition = item.condition
+                    newObjDelay.time = item.time
+                    newObjDelay.delay = item.delay
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr.append(newObjDelay)
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+                
+                newObject.delays = NSSet(array: arr)
                 newObject.arrTimeDelay = historicalDelays.days3.arrTimeDelay
                 newObject.arrTimeDelayWX = historicalDelays.days3.arrTimeDelayWX
                 newObject.eta = historicalDelays.days3.eta
                 newObject.ymax = historicalDelays.days3.ymax
                 newObject.type = "days3"
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-
+            
+            
+                // For Week1
                 let newObject1 = HistoricalDelaysList(context: self.service.container.viewContext)
                 newObject1.id = UUID()
-                newObject1.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.week1.delays, requiringSecureCoding: true)
+                var arr1 = [HistorycalDelaysRefList]()
+            
+                historicalDelays.week1.delays.forEach { item in
+                    let newObjDelay = HistorycalDelaysRefList(context: self.service.container.viewContext)
+                    newObjDelay.id = UUID()
+                    newObjDelay.condition = item.condition
+                    newObjDelay.time = item.time
+                    newObjDelay.delay = item.delay
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr1.append(newObjDelay)
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+                
+                newObject1.delays = NSSet(array: arr)
                 newObject1.arrTimeDelay = historicalDelays.week1.arrTimeDelay
                 newObject1.arrTimeDelayWX = historicalDelays.week1.arrTimeDelayWX
                 newObject1.eta = historicalDelays.week1.eta
                 newObject1.ymax = historicalDelays.week1.ymax
+                newObject1.type = "week1"
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
-
+            
+                // For Months3
                 let newObject2 = HistoricalDelaysList(context: self.service.container.viewContext)
                 newObject2.id = UUID()
-                newObject2.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.months3.delays, requiringSecureCoding: true)
-                newObject2.arrTimeDelay = historicalDelays.months3.arrTimeDelay
-                newObject2.arrTimeDelayWX = historicalDelays.months3.arrTimeDelayWX
-                newObject2.eta = historicalDelays.months3.eta
-                newObject2.ymax = historicalDelays.months3.ymax
+                var arr2 = [HistorycalDelaysRefList]()
+            
+                historicalDelays.months3.delays.forEach { item in
+                    let newObjDelay = HistorycalDelaysRefList(context: self.service.container.viewContext)
+                    newObjDelay.id = UUID()
+                    newObjDelay.condition = item.condition
+                    newObjDelay.time = item.time
+                    newObjDelay.delay = item.delay
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr2.append(newObjDelay)
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+                
+                newObject2.delays = NSSet(array: arr)
+                newObject2.arrTimeDelay = historicalDelays.week1.arrTimeDelay
+                newObject2.arrTimeDelayWX = historicalDelays.week1.arrTimeDelayWX
+                newObject2.eta = historicalDelays.week1.eta
+                newObject2.ymax = historicalDelays.week1.ymax
+                newObject2.type = "months3"
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
 
+                print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save Historical Delays: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
+    }
+    
+    func initProjDelays(_ projDelays: IProjDelaysModel) {
+        do {
+                let newObject = ProjDelaysList(context: self.service.container.viewContext)
+                newObject.id = UUID()
+                var arr = [ProjDelaysListRef]()
+                
+                projDelays.delays.forEach { item in
+                    let newObjDelay = ProjDelaysListRef(context: self.service.container.viewContext)
+                    newObjDelay.id = UUID()
+                    newObjDelay.time = item.time
+                    newObjDelay.delay = item.delay
+                    newObjDelay.mindelay = item.mindelay
+                    newObjDelay.maxdelay = item.maxdelay
+                    
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr.append(newObjDelay)
+                        print("saved successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            
+                newObject.delays = NSSet(array: arr)
+                newObject.expectedDelay = projDelays.expectedDelay
+                newObject.eta = projDelays.eta
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
 
             print("saved successfully")
         } catch {
             // Something went wrong 😭
-            print("Failed to save Track Miles: \(error)")
+            print("Failed to save Historical Delays: \(error)")
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
 

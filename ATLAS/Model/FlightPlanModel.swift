@@ -439,20 +439,20 @@ struct IFlightPlanDataModel: Decodable {
     var waypointsData: [IEnrouteDataResponseModel] // For entity EnrouteList
 }
 
-struct ISubDelaysModel: Decodable {
+struct ISubDelaysModel: Codable {
     var condition: String
     var time: String
     var delay: Int
 }
 
 struct IDelaysModel: Decodable {
-    var delays: [String]
+    var delays: [ISubDelaysModel]
     var arrTimeDelay: Int
     var arrTimeDelayWX: Int
     var eta: String
     var ymax: Int
 }
-    
+
 struct IHistoricalDelaysModel: Decodable {
     var days3: IDelaysModel
     var week1: IDelaysModel

@@ -2,7 +2,7 @@
 //  HistoricalDelaysList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 09/07/2023.
+//  Created by phuong phan on 10/07/2023.
 //
 //
 
@@ -16,27 +16,13 @@ extension HistoricalDelaysList {
         return NSFetchRequest<HistoricalDelaysList>(entityName: "HistoricalDelays")
     }
 
-    @NSManaged public var delays: Data?
     @NSManaged public var arrTimeDelayWX: Int
     @NSManaged public var arrTimeDelay: Int
     @NSManaged public var id: UUID?
     @NSManaged public var ymax: Int
     @NSManaged public var type: String?
     @NSManaged public var eta: String?
-    
-    public var unwrappedDelays: [String: Any] {
-        if let delays = delays {
-            do {
-                if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(delays) as? [String: Any] {
-                  print("arr=====>\(arr)")
-                return arr
-              }
-          } catch {
-            print("could not unarchive array: \(error)")
-          }
-        }
-        return ["condition": "", "time": "", "delay": 0]
-    }
+    @NSManaged public var delays: NSSet?
     
     public var unwrappedType: String {
         type ?? "" // flight3, week1, months3
@@ -45,6 +31,23 @@ extension HistoricalDelaysList {
     public var unwrappedEta: String {
         eta ?? ""
     }
+}
+
+// MARK: Generated accessors for delays
+extension HistoricalDelaysList {
+
+    @objc(addDelaysObject:)
+    @NSManaged public func addToDelays(_ value: HistorycalDelaysRefList)
+
+    @objc(removeDelaysObject:)
+    @NSManaged public func removeFromDelays(_ value: HistorycalDelaysRefList)
+
+    @objc(addDelays:)
+    @NSManaged public func addToDelays(_ values: NSSet)
+
+    @objc(removeDelays:)
+    @NSManaged public func removeFromDelays(_ values: NSSet)
+
 }
 
 extension HistoricalDelaysList : Identifiable {
