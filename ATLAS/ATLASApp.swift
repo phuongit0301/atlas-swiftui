@@ -19,6 +19,7 @@ struct ATLASApp: App {
     @StateObject var searchModelSplitState = SearchModelSplitState()
     @StateObject var fpModelSplitState = FPModelSplitState()
     @StateObject var coreDataModel = CoreDataModelState()
+    @StateObject var fuelCoreDataModel = FuelCoreDataModelState()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -40,10 +41,12 @@ struct ATLASApp: App {
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)
+                .environmentObject(fuelCoreDataModel)
                 .onAppear {
                     Task {
                         coreDataModel.loading = true
                         await apiManager.makePostRequest()
+//                        await fuelCoreDataModel.checkAndSyncData()
                         await coreDataModel.checkAndSyncData()
                         await coreDataModel.initFetchData()
                         coreDataModel.loading = false

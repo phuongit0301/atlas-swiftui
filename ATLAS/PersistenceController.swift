@@ -66,14 +66,14 @@ class CoreDataModelState: ObservableObject {
     @Published var departureRefArray: [NoteList] = []
     @Published var enrouteRefArray: [NoteList] = []
     @Published var arrivalRefArray: [NoteList] = []
-    @Published var dataFlightPlan: FlightPlanList = FlightPlanList()
+    @Published var dataFlightPlan: FlightPlanList?
     
     // For summary info
-    @Published var dataSummaryInfo: SummaryInfoList = SummaryInfoList()
+    @Published var dataSummaryInfo: SummaryInfoList!
     @Published var existDataSummaryInfo: Bool = false
     
     // For summary route
-    @Published var dataSummaryRoute: SummaryRouteList = SummaryRouteList()
+    @Published var dataSummaryRoute: SummaryRouteList!
     @Published var existDataSummaryRoute: Bool = false
     
     // For Perf Info
@@ -83,7 +83,7 @@ class CoreDataModelState: ObservableObject {
     @Published var perfChangesTable: [perfChanges] = []
     
     // For Perf Data
-    @Published var dataPerfData: PerfDataList = PerfDataList()
+    @Published var dataPerfData: PerfDataList!
     @Published var existDataPerfData: Bool = false
     
     // For Perf Weight
@@ -91,7 +91,7 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataPerfWeight: Bool = false
     
     // For Fuel List
-    @Published var dataFuelDataList: FuelDataList = FuelDataList()
+    @Published var dataFuelDataList: FuelDataList!
     @Published var existDataFuelDataList: Bool = false
     
     // For Fuel Table List
@@ -99,18 +99,18 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataFuelTableList: Bool = false
     
     // For Fuel Extra
-    @Published var dataFuelExtra: FuelExtraList = FuelExtraList()
+    @Published var dataFuelExtra: FuelExtraList!
     @Published var existDataFuelExtra: Bool = false
     
     // For Altn
     @Published var dataAltnList: [AltnDataList] = []
     
     // For NoTams
-    @Published var dataNotams: NotamsDataList = NotamsDataList()
+    @Published var dataNotams: NotamsDataList!
     @Published var existDataNotams: Bool = false
     
     // For Metar Taf
-    @Published var dataMetarTaf: MetarTafDataList = MetarTafDataList()
+    @Published var dataMetarTaf: MetarTafDataList!
     @Published var existDataMetarTaf: Bool = false
     
     // For Metar Taf
@@ -120,21 +120,21 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataAltn: Bool = false
     
     @Published var existDataFlightPlan: Bool = false
-    @Published var dataDepartureAtc: DepartureATCList = DepartureATCList()
+    @Published var dataDepartureAtc: DepartureATCList!
     @Published var existDataDepartureAtc: Bool = false
-    @Published var dataDepartureAtis: DepartureATISList = DepartureATISList()
+    @Published var dataDepartureAtis: DepartureATISList!
     @Published var existDataDepartureAtis: Bool = false
-    @Published var dataDepartureEntries: DepartureEntriesList = DepartureEntriesList()
+    @Published var dataDepartureEntries: DepartureEntriesList!
     @Published var existDataDepartureEntries: Bool = false
     
     @Published var dataFPEnroute: [EnrouteList] = []
     @Published var existDataFPEnroute: Bool = false
     
-    @Published var dataArrivalAtc: ArrivalATCList = ArrivalATCList()
+    @Published var dataArrivalAtc: ArrivalATCList!
     @Published var existDataArrivalAtc: Bool = false
-    @Published var dataArrivalAtis: ArrivalATISList = ArrivalATISList()
+    @Published var dataArrivalAtis: ArrivalATISList!
     @Published var existDataArrivalAtis: Bool = false
-    @Published var dataArrivalEntries: ArrivalEntriesList = ArrivalEntriesList()
+    @Published var dataArrivalEntries: ArrivalEntriesList!
     @Published var existDataArrivalEntries: Bool = false
     
     @Published var scratchPadArray: [ScratchPadList] = []
@@ -142,64 +142,74 @@ class CoreDataModelState: ObservableObject {
     init() {
         Task {
             await remoteService.getFlightPlanWX(completion: { data in
-
-                if let waypointsData = data?.waypointsData {
-                    if !self.existDataFPEnroute {
-                        self.initDataEnroute(waypointsData)
+                DispatchQueue.main.async {
+                    if let waypointsData = data?.waypointsData {
+                        self.dataFPEnroute = self.readEnrouteList()
+                        if self.dataFPEnroute.count == 0 {
+                            self.initDataEnroute(waypointsData)
+                        }
                     }
-                }
-//
-                if let infoData = data?.infoData {
-                    if !self.existDataSummaryInfo {
-                        self.initDataSummaryInfo(infoData)
-                    }
-                }
-
-                if let routeData = data?.routeData {
-                    if !self.existDataSummaryRoute {
-                        self.initDataSummaryRoute(routeData)
-                    }
-                }
-
-                if let perfData = data?.perfData {
-                    if !self.existDataPerfData {
-                        self.initDataPerfData(perfData)
+                    //
+                    if let infoData = data?.infoData {
+                        if !self.existDataSummaryInfo {
+                            self.initDataSummaryInfo(infoData)
+                        }
                     }
                     
-                    if !self.existDataPerfInfo {
-                        self.initDataPerfInfo(perfData)
+                    if let routeData = data?.routeData {
+                        if !self.existDataSummaryRoute {
+                            self.initDataSummaryRoute(routeData)
+                        }
                     }
                     
-                    if !self.existDataPerfWeight {
-                        self.initDataPerfWeight(perfData)
+                    if let perfData = data?.perfData {
+                        if !self.existDataPerfData {
+                            self.initDataPerfData(perfData)
+                        }
+                        
+                        if !self.existDataPerfInfo {
+                            self.initDataPerfInfo(perfData)
+                        }
+                        
+                        self.dataPerfWeight = self.readPerfWeight()
+                        
+                        if self.dataPerfWeight.count == 0 {
+                            self.initDataPerfWeight(perfData)
+                        }
                     }
-                }
-
-                if let fuelData = data?.fuelData {
-                    if !self.existDataFuelDataList {
-                        self.initDataFuelList(fuelData)
+                    
+                    if let fuelData = data?.fuelData {
+                        if !self.existDataFuelDataList {
+                            self.initDataFuelList(fuelData)
+                        }
                     }
-                }
-
-                if let altnData = data?.altnData {
-                    if !self.existDataAltn {
-                        self.initDataAltn(altnData)
+                    
+                    if let altnData = data?.altnData {
+                        self.dataAltnList = self.readAltnList()
+                        if self.dataAltnList.count == 0 {
+                            self.initDataAltn(altnData)
+                        }
                     }
-                }
-
-                if let notamsData = data?.notamsData {
-                    if !self.existDataNotams {
-                        self.initDataNotams(notamsData)
+                    
+                    if let notamsData = data?.notamsData {
+                        if !self.existDataNotams {
+                            self.initDataNotams(notamsData)
+                        }
                     }
-                }
-
-                if let metarTafData = data?.metarTafData {
-                    if !self.existDataMetarTaf {
-                        self.initDataTaf(metarTafData)
+                    
+                    if let metarTafData = data?.metarTafData {
+                        if !self.existDataMetarTaf {
+                            self.initDataTaf(metarTafData)
+                        }
+                        
+                        self.dataAltnTaf = self.readDataAltnTafList()
+                        if self.dataAltnTaf.count == 0 {
+                            self.initDataAltnTaf(metarTafData)
+                        }
                     }
+                    
+                    print("Fetch data")
                 }
-
-                print("Fetch data")
             })
             
 //            DispatchQueue.main.async {
@@ -208,7 +218,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initFetchData() {
+    func initFetchData() async {
         tagList = readTag()
         aircraftArray = read("aircraft")
         departureArray = read("departure")
@@ -219,7 +229,8 @@ class CoreDataModelState: ObservableObject {
         enrouteRefArray = read("enrouteref")
         arrivalRefArray = read("arrivalref")
         scratchPadArray = readScratchPad()
-        readFlightPlan()
+        dataFPEnroute = readEnrouteList()
+//        readFlightPlan()
         readSummaryInfo()
         readSummaryRoute()
         readPerfData()
@@ -1271,9 +1282,6 @@ class CoreDataModelState: ObservableObject {
     
     func initDataNotams(_ notamsData: INotamsDataResponseModel) {
         do {
-            print("notamsData.depNotams=====\(notamsData.depNotams)")
-            print("notamsData.enrNotams=====\(notamsData.enrNotams)")
-            print("notamsData.arrNotams=====\(notamsData.arrNotams)")
             let newObj = NotamsDataList(context: service.container.viewContext)
             newObj.id = UUID()
             newObj.depNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.depNotams, requiringSecureCoding: true)
@@ -1312,6 +1320,10 @@ class CoreDataModelState: ObservableObject {
         }
         
         
+        
+    }
+    
+    func initDataAltnTaf(_ metarTafData: IFlightPlanWXResponseModel) {
         service.container.viewContext.performAndWait {
             metarTafData.altnTaf.forEach { item in
                 do {
@@ -1326,9 +1338,9 @@ class CoreDataModelState: ObservableObject {
                     print("Failed to Altn Taf save: \(error)")
                     // Rollback any changes in the managed object context
                     service.container.viewContext.rollback()
-                    
                 }
             }
+            existDataAltnTaf = true
         }
     }
     
@@ -1667,7 +1679,6 @@ class CoreDataModelState: ObservableObject {
             let response: [SummaryInfoList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    print("read summary info success: \(item.planNo)")
                     dataSummaryInfo = item
                     existDataSummaryInfo = true
                 }
@@ -1678,7 +1689,7 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readSummaryRoute() {
-        var data: SummaryRouteList = SummaryRouteList()
+        var data: SummaryRouteList!
         
         let request: NSFetchRequest<SummaryRouteList> = SummaryRouteList.fetchRequest()
         do {
@@ -1837,6 +1848,14 @@ class CoreDataModelState: ObservableObject {
                 do {
                     // Persist the data in this managed object context to the underlying store
                     try service.container.viewContext.save()
+                    
+                    let response1: [FuelExtraList] = try service.container.viewContext.fetch(request)
+                    if(response1.count > 0) {
+                        if let item = response1.first {
+                            dataFuelExtra = item
+                            existDataFuelExtra = true
+                        }
+                    }
                     print("saved successfully")
                 } catch {
                     // Something went wrong 😭
@@ -1932,5 +1951,67 @@ class CoreDataModelState: ObservableObject {
             return Int(Double(actual - unwrappedPlanZFW) * Double(unwrappedZfwChange / 1000))
         }
         return 0
+    }
+}
+
+class FuelCoreDataModelState: ObservableObject {
+    var remoteService = RemoteService.shared
+    let service = PersistenceController.shared
+    var globalResponse = GlobalResponse.shared
+    
+    func checkAndSyncData() async {
+        await remoteService.getFuelData(completion: { response in
+            if let historicalDelays = response?.historicalDelays {
+                DispatchQueue.main.async {
+                    self.initHistoricalDelays(historicalDelays)
+                }
+            }
+        })
+        
+        
+    }
+    
+    func initHistoricalDelays(_ historicalDelays: IHistoricalDelaysModel) {
+        do {
+                let newObject = HistoricalDelaysList(context: self.service.container.viewContext)
+                newObject.id = UUID()
+                newObject.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.days3.delays, requiringSecureCoding: true)
+                newObject.arrTimeDelay = historicalDelays.days3.arrTimeDelay
+                newObject.arrTimeDelayWX = historicalDelays.days3.arrTimeDelayWX
+                newObject.eta = historicalDelays.days3.eta
+                newObject.ymax = historicalDelays.days3.ymax
+                newObject.type = "days3"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                let newObject1 = HistoricalDelaysList(context: self.service.container.viewContext)
+                newObject1.id = UUID()
+                newObject1.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.week1.delays, requiringSecureCoding: true)
+                newObject1.arrTimeDelay = historicalDelays.week1.arrTimeDelay
+                newObject1.arrTimeDelayWX = historicalDelays.week1.arrTimeDelayWX
+                newObject1.eta = historicalDelays.week1.eta
+                newObject1.ymax = historicalDelays.week1.ymax
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                let newObject2 = HistoricalDelaysList(context: self.service.container.viewContext)
+                newObject2.id = UUID()
+                newObject2.delays = try NSKeyedArchiver.archivedData(withRootObject: historicalDelays.months3.delays, requiringSecureCoding: true)
+                newObject2.arrTimeDelay = historicalDelays.months3.arrTimeDelay
+                newObject2.arrTimeDelayWX = historicalDelays.months3.arrTimeDelayWX
+                newObject2.eta = historicalDelays.months3.eta
+                newObject2.ymax = historicalDelays.months3.ymax
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+
+            print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save Track Miles: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
     }
 }

@@ -66,6 +66,56 @@ class RemoteService: ObservableObject {
             }
     }
     
+    func getFuelData(completion: @escaping (IFuelDataModel?) -> Void) async  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_fuel_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "airline": "accumulus air",
+                "fltno": "EK352",
+                "eta": "18:00",
+                "arr": "SIN",
+                "dep": "DXB"
+            ]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let error = error {
+                        print("Request error: ", error)
+                        return
+                    }
+
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        guard let jsonObject = data else { return }
+                        
+                        do {
+                            let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: jsonObject)
+                            completion(decodedSearch)
+                        } catch let error {
+                            print("Error decoding: ", error)
+                        }
+                    }
+                }
+                
+                dataTask.resume()
+            } catch {
+                print("Error: \(error)")
+            }
+    }
+    
     func load<T: Decodable>(_ filename: String) -> T {
         let data: Data
 

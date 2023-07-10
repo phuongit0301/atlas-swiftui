@@ -30,40 +30,40 @@ struct SummaryView: View {
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
                 VStack(spacing: 16) {
-                    SummaryCardView(fetchedDelays: projDelaysResponse as! [String : Any], fetchedTimes: taxiResponse as! [String : [String : Any]], fetchedMiles: trackMilesResponse as! [String : [String : Any]], fetchedEnrWX: enrWXResponse as! [String : [String : Any]], fetchedLevels: flightLevelResponse as! [String : [String : Any]])
-                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding([.horizontal, .top], 12)
-                        .frame(maxWidth: .infinity)
-                    
-                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-                        if proxy.isCompact {
-                            projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
-                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
-                            taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
-                            trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
-                            enrWXView(convertedJSON: enrWXResponse as! [String : [String : Any]])
-                            flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
-
-                        } else {
-                            GridRow {
-                                projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
-                                historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
-                            }
-                            GridRow {
-                                taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
-                                trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
-                            }
-                            GridRow {
-                                enrWXView(convertedJSON: enrWXResponse as! [String : [String : Any]])
-                                flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
-                            }
-                            .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding([.horizontal, .bottom], 16)
-                            .frame(maxWidth: .infinity)
-                        }
-                    }
+//                    SummaryCardView(fetchedDelays: projDelaysResponse as! [String : Any], fetchedTimes: taxiResponse as! [String : [String : Any]], fetchedMiles: trackMilesResponse as! [String : [String : Any]], fetchedEnrWX: enrWXResponse as! [String : [String : Any]], fetchedLevels: flightLevelResponse as! [String : [String : Any]])
+//                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+//                        .fixedSize(horizontal: false, vertical: true)
+//                        .padding([.horizontal, .top], 12)
+//                        .frame(maxWidth: .infinity)
+//
+//                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+//                        if proxy.isCompact {
+//                            projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
+//                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
+//                            taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
+//                            trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
+//                            enrWXView(convertedJSON: enrWXResponse as! [String : [String : Any]])
+//                            flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
+//
+//                        } else {
+//                            GridRow {
+////                                projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
+//                                historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
+//                            }
+//                            GridRow {
+//                                taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
+//                                trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
+//                            }
+//                            GridRow {
+//                                enrWXView(convertedJSON: enrWXResponse as! [String : [String : Any]])
+//                                flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
+//                            }
+//                            .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+//                            .fixedSize(horizontal: false, vertical: true)
+//                            .padding([.horizontal, .bottom], 16)
+//                            .frame(maxWidth: .infinity)
+//                        }
+//                    }
                 }
             }.padding(.vertical, 32)
         }

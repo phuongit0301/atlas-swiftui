@@ -175,6 +175,15 @@
         <attribute name="policyReason" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="HistoricalDelays" representedClassName="HistoricalDelaysList" syncable="YES">
+        <attribute name="arrTimeDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="arrTimeDelayWX" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="delays" optional="YES" attributeType="Binary"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="ymax" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
         <attribute name="arrMetar" optional="YES" attributeType="String"/>
@@ -243,11 +252,10 @@
         <attribute name="weight" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ProjArrivalDelays" representedClassName="ProjArrivalDelaysList" syncable="YES">
-        <attribute name="delay" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="maxdelay" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="mindelay" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="delays" optional="YES" attributeType="Binary"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="expectedDelay" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>
@@ -287,15 +295,16 @@
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="tags" inverseEntity="Note"/>
     </entity>
     <entity name="TaxiTimes" representedClassName="TaxiTimesList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="flights3" optional="YES" attributeType="Binary"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="taxiTime" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="months3" optional="YES" attributeType="Binary"/>
+        <attribute name="week1" optional="YES" attributeType="Binary"/>
     </entity>
     <entity name="TrackMiles" representedClassName="TrackMilesList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="phase" optional="YES" attributeType="String"/>
-        <attribute name="trackMilesDiff" optional="YES" attributeType="String"/>
+        <attribute name="sumMINS" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sumNM" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trackMiles" optional="YES" attributeType="Binary"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
 </model>

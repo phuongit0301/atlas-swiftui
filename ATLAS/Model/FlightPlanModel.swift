@@ -161,7 +161,7 @@ struct FieldString: View {
     var body: some View {
         TextField("Enter remarks (optional)", text: $field)
             .onAppear {
-                let item = coreDataModel.dataFuelExtra
+                let item = coreDataModel.dataFuelExtra!
                 
                 switch name {
                     case "remarkArrDelays":
@@ -185,7 +185,7 @@ struct FieldString: View {
                 }
             }
             .onSubmit {
-                var item = coreDataModel.dataFuelExtra
+                var item = coreDataModel.dataFuelExtra!
                 
                 if !coreDataModel.existDataFuelExtra {
                     item = FuelExtraList(context: persistenceController.container.viewContext)
@@ -437,4 +437,130 @@ struct IFlightPlanDataModel: Decodable {
     var perfData: IPerfDataResponseModel // For entity PerfDataList
     var routeData: ISummaryDataResponseModel // For entity SummaryRouteList
     var waypointsData: [IEnrouteDataResponseModel] // For entity EnrouteList
+}
+
+struct ISubDelaysModel: Decodable {
+    var condition: String
+    var time: String
+    var delay: Int
+}
+
+struct IDelaysModel: Decodable {
+    var delays: [String]
+    var arrTimeDelay: Int
+    var arrTimeDelayWX: Int
+    var eta: String
+    var ymax: Int
+}
+    
+struct IHistoricalDelaysModel: Decodable {
+    var days3: IDelaysModel
+    var week1: IDelaysModel
+    var months3: IDelaysModel
+}
+
+// For Proj Delay
+struct IDelays2Model: Decodable {
+    var time: String
+    var delay: Double
+    var mindelay: Double
+    var maxdelay: Double
+}
+
+struct IProjDelaysModel: Decodable {
+    var delays: [IDelays2Model]
+    var expectedDelay: Double
+    var eta: String
+}
+
+// For Taxi
+struct ITimesModel: Decodable {
+    var date: String
+    var condition: String
+    var taxiTime: Int
+}
+
+struct IFlight3Model: Decodable {
+    var times: [ITimesModel]
+    var aveTime: Int
+    var aveDiff: Int
+    var ymax: Int
+}
+
+struct ITaxiModel: Decodable {
+    var flights3: IFlight3Model
+    var week1: IFlight3Model
+    var months3: IFlight3Model
+}
+
+struct IFlights3TrackMile: Decodable {
+    var phase: String
+    var condition: String
+    var trackMilesDiff: Int
+}
+
+struct ITrackMileFlightModel: Decodable {
+    var trackMiles: [IFlights3TrackMile]
+    var sumNM: Int
+    var sumMINS: Int
+}
+
+struct ITrackMilesModel: Decodable {
+    var flights3: ITrackMileFlightModel
+    var week1: ITrackMileFlightModel
+    var months3: ITrackMileFlightModel
+}
+
+// EnrWX
+struct ITrackMileEnrWXSubModel: Decodable {
+    var date: String
+    var condition: String
+    var trackMilesDiff: Int
+}
+
+struct ITrackMileEnrWXModel: Decodable {
+    var trackMiles: [ITrackMileEnrWXSubModel]
+    var aveNM: Int
+    var aveMINS: Int
+}
+
+struct IEnrWXModel: Decodable {
+    var flights3: ITrackMileEnrWXModel
+    var week1: ITrackMileEnrWXModel
+    var months3: ITrackMileEnrWXModel
+}
+
+// Flight Level
+struct IFlvlFlight3SubModel: Decodable {
+    var waypoint: String
+    var condition: String
+    var flightLevel: Int
+}
+
+struct IFlvlFlight3Model: Decodable {
+    var flightLevels: [IFlvlFlight3SubModel]
+    var aveDiff: Int
+}
+
+struct IFlightLevelModel: Decodable {
+    var flights3: IFlvlFlight3Model
+    var week1: IFlvlFlight3Model
+    var months3: IFlvlFlight3Model
+}
+
+//Reciprocal RWY
+struct IReciprocalRwyModel: Decodable {
+    var trackMiles: [ITrackMileEnrWXSubModel]
+    var aveNM: Int
+    var aveMINS: Int
+}
+
+struct IFuelDataModel: Decodable {
+    let historicalDelays: IHistoricalDelaysModel
+    let projDelays: IProjDelaysModel
+    let taxi: ITaxiModel
+    let trackMiles: ITrackMilesModel
+    let enrWX: IEnrWXModel
+    let flightLevel: IFlightLevelModel
+    let reciprocalRwy: IReciprocalRwyModel
 }

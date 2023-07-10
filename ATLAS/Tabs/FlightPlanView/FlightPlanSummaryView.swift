@@ -188,7 +188,7 @@ struct FlightPlanSummaryView: View {
         
         var includedDelayFuel: [String: Any] {
             if includedArrDelays && calculatedDelayFuelValue > 0 {
-                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelArrivalDelayRemark
+                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelArrivalDelayRemark
                 if remarks == "" {
                     return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG);"]
                 } else {
@@ -219,7 +219,7 @@ struct FlightPlanSummaryView: View {
         }
         var includedTaxiFuel: [String: Any] {
             if includedTaxi && calculatedTaxiFuelValue > 0 {
-                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelAdditionalTaxiRemark
+                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelAdditionalTaxiRemark
                 if remarks == "" {
                     return ["fuel": calculatedTaxiFuelValue, "time": selectedTaxi, "remarks": "Additional Taxi Time (\(calculatedTaxiFuel)KG);"]
                 } else {
@@ -247,7 +247,7 @@ struct FlightPlanSummaryView: View {
         }
         var includedFlightLevelFuel: [String: Any] {
             if includedFlightLevel && calculatedFlightLevelFuelValue != 0 {
-                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelFlightLevelRemark
+                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelFlightLevelRemark
                 if remarks == "" {
                     return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation (\(calculatedFlightLevelFuel)KG);"]
                 } else {
@@ -275,7 +275,7 @@ struct FlightPlanSummaryView: View {
         }
         var includedTrackShorteningFuel: [String: Any] {
             if includedTrackShortening {
-                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelTrackShorteningRemark
+                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelTrackShorteningRemark
                 if calculatedTrackShorteningFuelValue < 0 {
                     if remarks == "" {
                         return ["fuel": calculatedTrackShorteningFuelValue, "time": selectedTrackShortening, "remarks": "Track Shortening Savings (\(calculatedTrackShorteningFuel)KG);"]
@@ -310,7 +310,7 @@ struct FlightPlanSummaryView: View {
         }
         var includedEnrWxFuel: [String: Any] {
             if includedEnrWx && calculatedEnrWxFuelValue > 0{
-                let remarks = coreDataModel.dataFlightPlan.unwrappedFuelEnrouteWeatherRemark
+                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelEnrouteWeatherRemark
                 if remarks == "" {
                     return ["fuel": calculatedEnrWxFuelValue, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation (\(calculatedEnrWxFuel)KG);"]
                 } else {
@@ -339,7 +339,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedReciprocalRwyFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelReciprocalRemark
+            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelReciprocalRemark
             if (includedReciprocalRwy && selectedReciprocalRwy > 0) {
                 if remarks == "" {
                     return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy (\(calculatedReciprocalRwyFuel)KG);"]
@@ -366,7 +366,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedZFWFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelZFWChangeRemark
+            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelZFWChangeRemark
             if (includedZFWchange && calculatedZFWFuelValue > 0) {
                 if remarks == "" {
                     return ["fuel": calculatedZFWFuelValue, "remarks": "ZFW Increase (\(calculatedZFWFuel)KG);"]
@@ -391,7 +391,7 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedOthersFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan.unwrappedFuelOtherRemark
+            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelOtherRemark
             if includedOthers && calculatedOthersFuelValue > 0 {
                 if remarks == "" {
                     return ["fuel": calculatedOthersFuelValue, "remarks": "Others (\(calculatedOthersFuel)KG);"]
@@ -464,7 +464,6 @@ struct FlightPlanSummaryView: View {
                         .font(.system(size: 15, weight: .semibold))
                         .padding(.leading, 30)
                         .padding(.bottom, 10)
-                        .Print("coreDataModel.dataSummaryInfo========>\(coreDataModel.dataSummaryInfo)")
                     //scrollable outer list section
                     List {
                         // MARK: Flight information section
@@ -1235,7 +1234,7 @@ struct FlightPlanSummaryView: View {
                 self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
                 self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
                 self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
-                
+
                 self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
                 self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
                 self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening

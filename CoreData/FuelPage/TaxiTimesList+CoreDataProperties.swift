@@ -2,7 +2,7 @@
 //  TaxiTimesList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 04/07/2023.
+//  Created by phuong phan on 09/07/2023.
 //
 //
 
@@ -16,10 +16,10 @@ extension TaxiTimesList {
         return NSFetchRequest<TaxiTimesList>(entityName: "TaxiTimes")
     }
 
+    @NSManaged public var months3: Data?
+    @NSManaged public var week1: Data?
     @NSManaged public var id: UUID?
-    @NSManaged public var date: Date?
-    @NSManaged public var condition: String?
-    @NSManaged public var taxiTime: Int64
+    @NSManaged public var flights3: Data?
 
 }
 
