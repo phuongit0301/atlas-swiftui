@@ -126,6 +126,10 @@
 		3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */; };
 		3E4A375D2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */; };
 		3E4A375E2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A375A2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift */; };
+		3E4A37632A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */; };
+		3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */; };
+		3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */; };
+		3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
@@ -350,6 +354,10 @@
 		3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A375A2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -915,6 +923,10 @@
 		C56AF5112A565FC900BD07A1 /* FuelPage */ = {
 			isa = PBXGroup;
 			children = (
+				3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */,
+				3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */,
+				3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */,
+				3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */,
 				3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */,
 				3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */,
 				3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */,
@@ -1171,6 +1183,7 @@
 				3E4A36A72A570BA800027C61 /* FuelExtraList+CoreDataClass.swift in Sources */,
 				C52063F72A43D3240041580E /* FlightPlanEnrView.swift in Sources */,
 				3E4A368C2A570BA800027C61 /* SummaryInfoList+CoreDataClass.swift in Sources */,
+				3E4A37632A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
 				3E4A36A22A570BA800027C61 /* EnrouteList+CoreDataClass.swift in Sources */,
 				3E4A366E2A570B9A00027C61 /* ScratchPadList+CoreDataClass.swift in Sources */,
 				C52063F52A4356290041580E /* FlightPlanDepView.swift in Sources */,
@@ -1226,10 +1239,12 @@
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
 				3EFA5F6F2A4A8377001ED6CF /* ScratchPadForm.swift in Sources */,
 				3E4A36612A56EAE800027C61 /* AltnTafDataList+CoreDataProperties.swift in Sources */,
+				3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */,
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3E4A37212A5C361500027C61 /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
+				3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3E4A36A42A570BA800027C61 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E4A37222A5C361500027C61 /* HistorycalDelaysRefList+CoreDataProperties.swift in Sources */,
 				3E4A369D2A570BA800027C61 /* SummaryInfoList+CoreDataProperties.swift in Sources */,
@@ -1293,6 +1308,7 @@
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
 				3E4A37322A5C674500027C61 /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E4A375E2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
+				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3E4A374D2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,

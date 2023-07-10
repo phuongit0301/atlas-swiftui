@@ -134,11 +134,19 @@
         <attribute name="taxi" optional="YES" attributeType="Binary"/>
         <attribute name="topup60" optional="YES" attributeType="Binary"/>
     </entity>
-    <entity name="FuelEnrWX" representedClassName="EnrWXTrackMilesList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="FuelEnrWX" representedClassName="FuelEnrWXList" syncable="YES">
+        <attribute name="aveMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="aveNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelEnrWXRef" inverseName="trackMilesRef" inverseEntity="FuelEnrWXRef"/>
+    </entity>
+    <entity name="FuelEnrWXRef" representedClassName="FuelEnrWXRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelEnrWX" inverseName="trackMiles" inverseEntity="FuelEnrWX"/>
     </entity>
     <entity name="FuelExtra" representedClassName="FuelExtraList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
