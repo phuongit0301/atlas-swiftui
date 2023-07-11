@@ -16,40 +16,41 @@ struct SummaryView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 //    @ObservedObject var apiManager = APIManager.shared
     @ObservedObject var globalResponse = GlobalResponse.shared
+    @EnvironmentObject var coreDataModel: CoreDataModelState
 #endif
     var body: some View {
         // decode, split into charts and assign to variables
-        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
-        let projDelaysResponse = allAPIresponse["projDelays"]
-        let historicalDelaysResponse = allAPIresponse["historicalDelays"]
-        let flightLevelResponse = allAPIresponse["flightLevel"]
-        let trackMilesResponse = allAPIresponse["trackMiles"]
-        let taxiResponse = allAPIresponse["taxi"]
-        let enrWXResponse = allAPIresponse["enrWX"]
+//        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
+//        let projDelaysResponse = allAPIresponse["projDelays"]
+//        let historicalDelaysResponse = allAPIresponse["historicalDelays"]
+//        let flightLevelResponse = allAPIresponse["flightLevel"]
+//        let trackMilesResponse = allAPIresponse["trackMiles"]
+//        let taxiResponse = allAPIresponse["taxi"]
+//        let enrWXResponse = allAPIresponse["enrWX"]
         
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
                 VStack(spacing: 16) {
-//                    SummaryCardView(fetchedDelays: projDelaysResponse as! [String : Any], fetchedTimes: taxiResponse as! [String : [String : Any]], fetchedMiles: trackMilesResponse as! [String : [String : Any]], fetchedEnrWX: enrWXResponse as! [String : [String : Any]], fetchedLevels: flightLevelResponse as! [String : [String : Any]])
+//                    SummaryCardView(fetchedDelays: coreDataModel.dataProjDelays as! [String : Any], fetchedTimes: taxiResponse as! [String : [String : Any]], fetchedMiles: trackMilesResponse as! [String : [String : Any]], fetchedEnrWX: enrWXResponse as! [String : [String : Any]], fetchedLevels: flightLevelResponse as! [String : [String : Any]])
 //                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 //                        .fixedSize(horizontal: false, vertical: true)
 //                        .padding([.horizontal, .top], 12)
 //                        .frame(maxWidth: .infinity)
 //
-//                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-//                        if proxy.isCompact {
-//                            projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
+                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+                        if proxy.isCompact {
+                            projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
 //                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
 //                            taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
 //                            trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
 //                            enrWXView(convertedJSON: enrWXResponse as! [String : [String : Any]])
 //                            flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
 //
-//                        } else {
-//                            GridRow {
-////                                projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
-//                                historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
-//                            }
+                        } else {
+                            GridRow {
+                                projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+//                                historicalDelaysView(convertedJSON: coreDataModel.dataProjDelays as! [String : [String : Any]])
+                            }
 //                            GridRow {
 //                                taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
 //                                trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
@@ -62,8 +63,8 @@ struct SummaryView: View {
 //                            .fixedSize(horizontal: false, vertical: true)
 //                            .padding([.horizontal, .bottom], 16)
 //                            .frame(maxWidth: .infinity)
-//                        }
-//                    }
+                        }
+                    }
                 }
             }.padding(.vertical, 32)
         }

@@ -102,12 +102,6 @@
         <attribute name="zfrq" optional="YES" attributeType="String"/>
         <attribute name="ztm" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="FlightLevel" representedClassName="FlightLevelList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="flightLevel" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="waypoint" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
         <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
         <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
@@ -175,6 +169,33 @@
         <attribute name="selectedReciprocalRwy" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="selectedTaxi" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="selectedTrackShortening" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FuelFlightLevel" representedClassName="FuelFlightLevelList" syncable="YES">
+        <attribute name="aveDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="flightLevels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelFlightLevelRef" inverseName="flightLevelsRef" inverseEntity="FuelFlightLevelRef"/>
+    </entity>
+    <entity name="FuelFlightLevelRef" representedClassName="FuelFlightLevelRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="flightLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="waypoint" optional="YES" attributeType="String"/>
+        <relationship name="flightLevelsRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelFlightLevel" inverseName="flightLevels" inverseEntity="FuelFlightLevel"/>
+    </entity>
+    <entity name="FuelReciprocalRwy" representedClassName="FuelReciprocalRwyList" syncable="YES">
+        <attribute name="aveMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="aveNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelReciprocalRwyRef" inverseName="trackMilesRef" inverseEntity="FuelReciprocalRwyRef"/>
+    </entity>
+    <entity name="FuelReciprocalRwyRef" representedClassName="FuelReciprocalRwyRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelReciprocalRwy" inverseName="trackMiles" inverseEntity="FuelReciprocalRwy"/>
     </entity>
     <entity name="FuelTable" representedClassName="FuelTableList" syncable="YES">
         <attribute name="firstColumn" optional="YES" attributeType="String"/>
@@ -303,15 +324,15 @@
     </entity>
     <entity name="ProjDelays" representedClassName="ProjDelaysList" syncable="YES">
         <attribute name="eta" optional="YES" attributeType="String"/>
-        <attribute name="expectedDelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="expectedDelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="delays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProjDelaysRef" inverseName="delayRef" inverseEntity="ProjDelaysRef"/>
     </entity>
     <entity name="ProjDelaysRef" representedClassName="ProjDelaysListRef" syncable="YES">
-        <attribute name="delay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="maxdelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="mindelay" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="maxdelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="mindelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
         <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
     </entity>

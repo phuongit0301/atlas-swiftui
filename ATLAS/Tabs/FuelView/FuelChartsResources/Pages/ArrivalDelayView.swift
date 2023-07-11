@@ -24,32 +24,32 @@ struct ArrivalDelayView: View {
         let historicalDelaysResponse = allAPIresponse["historicalDelays"]
         
         WidthThresholdReader(widthThreshold: 520) { proxy in
-            ScrollView(.vertical) {
-                VStack(spacing: 16) {
-                    Text("Arrival Delay") // TODO adjust font and size and add fuel selector sync with flight plan fuel table
-                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding([.horizontal, .top], 12)
-                        .frame(maxWidth: .infinity)
-                    
-                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-                        if proxy.isCompact {
-                            projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
-                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
-
-                        } else {
-                            GridRow {
-                                projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
-                                historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
-                            }
-                            .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding([.horizontal, .bottom], 16)
-                            .frame(maxWidth: .infinity)
-                        }
-                    }
-                }
-            }.padding(.vertical, 32)
+//            ScrollView(.vertical) {
+//                VStack(spacing: 16) {
+//                    Text("Arrival Delay") // TODO adjust font and size and add fuel selector sync with flight plan fuel table
+//                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+//                        .fixedSize(horizontal: false, vertical: true)
+//                        .padding([.horizontal, .top], 12)
+//                        .frame(maxWidth: .infinity)
+//                    
+//                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+//                        if proxy.isCompact {
+//                            projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
+//                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
+//
+//                        } else {
+//                            GridRow {
+//                                projArrivalDelaysView(convertedJSON: projDelaysResponse as! [String : Any])
+//                                historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
+//                            }
+//                            .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+//                            .fixedSize(horizontal: false, vertical: true)
+//                            .padding([.horizontal, .bottom], 16)
+//                            .frame(maxWidth: .infinity)
+//                        }
+//                    }
+//                }
+//            }.padding(.vertical, 32)
         }
 #if os(iOS)
         .background(Color(uiColor: .systemGroupedBackground))

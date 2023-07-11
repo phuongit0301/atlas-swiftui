@@ -100,7 +100,6 @@ class RemoteService: ObservableObject {
                     guard let response = response as? HTTPURLResponse else { return }
                     if response.statusCode == 200 {
                         guard let jsonObject = data else { return }
-                        
                         do {
                             let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: jsonObject)
                             completion(decodedSearch)

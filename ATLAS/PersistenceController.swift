@@ -139,58 +139,97 @@ class CoreDataModelState: ObservableObject {
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
+    // For Fuel Chart
+    @Published var dataProjDelays: ProjDelaysList!
+    
     init() {
         dataFPEnroute = readEnrouteList()
         
-        if dataFPEnroute.count == 0 {
-            Task {
-                await remoteService.getFlightPlanWX(completion: { data in
-                    DispatchQueue.main.async {
-                        if let waypointsData = data?.waypointsData {
-                            self.initDataEnroute(waypointsData)
-                        }
-                        //
-                        if let infoData = data?.infoData {
-                            self.initDataSummaryInfo(infoData)
-                        }
-                        
-                        if let routeData = data?.routeData {
-                            self.initDataSummaryRoute(routeData)
-                        }
-                        
-                        if let perfData = data?.perfData {
-                            self.initDataPerfData(perfData)
-                            
-                            self.initDataPerfInfo(perfData)
-                            
-                            self.dataPerfWeight = self.readPerfWeight()
-                            
-                            self.initDataPerfWeight(perfData)
-                        }
-                        
-                        if let fuelData = data?.fuelData {
-                            self.initDataFuelList(fuelData)
-                        }
-                        
-                        if let altnData = data?.altnData {
-                            self.dataAltnList = self.readAltnList()
-                            self.initDataAltn(altnData)
-                        }
-                        
-                        if let notamsData = data?.notamsData {
-                            self.initDataNotams(notamsData)
-                        }
-                        
-                        if let metarTafData = data?.metarTafData {
-                            self.initDataTaf(metarTafData)
-                            self.initDataAltnTaf(metarTafData)
-                        }
-                        
-                        print("Fetch data")
-                    }
-                })
-            }
-        }
+//        if dataFPEnroute.count == 0 {
+//            Task {
+//                await remoteService.getFlightPlanWX(completion: { data in
+//                    DispatchQueue.main.async {
+//                        if let waypointsData = data?.waypointsData {
+//                            self.initDataEnroute(waypointsData)
+//                        }
+//                        //
+//                        if let infoData = data?.infoData {
+//                            self.initDataSummaryInfo(infoData)
+//                        }
+//
+//                        if let routeData = data?.routeData {
+//                            self.initDataSummaryRoute(routeData)
+//                        }
+//
+//                        if let perfData = data?.perfData {
+//                            self.initDataPerfData(perfData)
+//
+//                            self.initDataPerfInfo(perfData)
+//
+//                            self.dataPerfWeight = self.readPerfWeight()
+//
+//                            self.initDataPerfWeight(perfData)
+//                        }
+//
+//                        if let fuelData = data?.fuelData {
+//                            self.initDataFuelList(fuelData)
+//                        }
+//
+//                        if let altnData = data?.altnData {
+//                            self.dataAltnList = self.readAltnList()
+//                            self.initDataAltn(altnData)
+//                        }
+//
+//                        if let notamsData = data?.notamsData {
+//                            self.initDataNotams(notamsData)
+//                        }
+//
+//                        if let metarTafData = data?.metarTafData {
+//                            self.initDataTaf(metarTafData)
+//                            self.initDataAltnTaf(metarTafData)
+//                        }
+//
+//                        print("Fetch data")
+//                    }
+//                })
+//            }
+//        }
+        
+//        Task {
+//            await remoteService.getFuelData(completion: { response in
+//                print("Sync=====\(response)")
+//                DispatchQueue.main.async {
+    //                if let historicalDelays = response?.historicalDelays {
+    //                    self.initHistoricalDelays(historicalDelays)
+    //                }
+
+//                    if let projDelays = response?.projDelays {
+//                        self.initProjDelays(projDelays)
+//                    }
+
+    //                if let taxi = response?.taxi {
+    //                    self.initProjTaxi(taxi)
+    //                }
+    //
+    //                if let trackMiles = response?.trackMiles {
+    //                    self.initTrackMiles(trackMiles)
+    //                }
+    //
+    //                if let enrWX = response?.enrWX {
+    //                    self.initEnrWX(enrWX)
+    //                }
+    //
+    //                if let flightLevel = response?.flightLevel {
+    //                    self.initFlightLevel(flightLevel)
+    //                }
+    //
+    //                if let reciprocalRwy = response?.reciprocalRwy {
+    //                    self.initReciprocalRwy(reciprocalRwy)
+    //                }
+//                }
+//            })
+//        }
+        readProjDelays()
     }
     
     func initFetchData() async {
@@ -1927,40 +1966,44 @@ class CoreDataModelState: ObservableObject {
         }
         return 0
     }
-}
-
-class FuelCoreDataModelState: ObservableObject {
-    var remoteService = RemoteService.shared
-    let service = PersistenceController.shared
-    var globalResponse = GlobalResponse.shared
     
-    func checkAndSyncData() async {
-        await remoteService.getFuelData(completion: { response in
-            DispatchQueue.main.async {
-//                if let historicalDelays = response?.historicalDelays {
-//                    self.initHistoricalDelays(historicalDelays)
-//                }
+//    func checkAndSyncDataFuel() async {
+//        print("Sync")
+//        await remoteService.getFuelData(completion: { response in
+//            print("Sync=====\(response)")
+//            DispatchQueue.main.async {
+////                if let historicalDelays = response?.historicalDelays {
+////                    self.initHistoricalDelays(historicalDelays)
+////                }
 //
 //                if let projDelays = response?.projDelays {
 //                    self.initProjDelays(projDelays)
 //                }
 //
-//                if let taxi = response?.taxi {
-//                    self.initProjTaxi(taxi)
-//                }
+////                if let taxi = response?.taxi {
+////                    self.initProjTaxi(taxi)
+////                }
+////
+////                if let trackMiles = response?.trackMiles {
+////                    self.initTrackMiles(trackMiles)
+////                }
+////
+////                if let enrWX = response?.enrWX {
+////                    self.initEnrWX(enrWX)
+////                }
+////
+////                if let flightLevel = response?.flightLevel {
+////                    self.initFlightLevel(flightLevel)
+////                }
+////
+////                if let reciprocalRwy = response?.reciprocalRwy {
+////                    self.initReciprocalRwy(reciprocalRwy)
+////                }
+//            }
+//        })
 //
-//                if let trackMiles = response?.trackMiles {
-//                    self.initTrackMiles(trackMiles)
-//                }
-                
-                if let enrWX = response?.enrWX {
-                    self.initEnrWX(enrWX)
-                }
-            }
-        })
-        
-        
-    }
+//
+//    }
     
     func readHistoricalDelays() {
         do {
@@ -2093,6 +2136,21 @@ class FuelCoreDataModelState: ObservableObject {
         }
     }
     
+    func readProjDelays() {
+        let request: NSFetchRequest<ProjDelaysList> = ProjDelaysList.fetchRequest()
+        do {
+            let response: [ProjDelaysList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                if let item = response.first {
+                    print("read ProjDelays ===== \(item)")
+                    dataProjDelays = item
+                }
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
     func initProjDelays(_ projDelays: IProjDelaysModel) {
         do {
                 let newObject = ProjDelaysList(context: self.service.container.viewContext)
@@ -2103,18 +2161,18 @@ class FuelCoreDataModelState: ObservableObject {
                     let newObjDelay = ProjDelaysListRef(context: self.service.container.viewContext)
                     newObjDelay.id = UUID()
                     newObjDelay.time = item.time
-                    newObjDelay.delay = item.delay
-                    newObjDelay.mindelay = item.mindelay
-                    newObjDelay.maxdelay = item.maxdelay
+                    newObjDelay.delay = Int(item.delay)
+                    newObjDelay.mindelay = Int(item.mindelay)
+                    newObjDelay.maxdelay = Int(item.maxdelay)
                     
                     do {
                         // Persist the data in this managed object context to the underlying store
                         try service.container.viewContext.save()
                         arr.append(newObjDelay)
-                        print("saved successfully")
+                        print("saved Proj Delays successfully")
                     } catch {
                         // Something went wrong 😭
-                        print("Failed to save: \(error)")
+                        print("Failed to save Proj Delays: \(error)")
                         // Rollback any changes in the managed object context
                         service.container.viewContext.rollback()
                         
@@ -2122,15 +2180,15 @@ class FuelCoreDataModelState: ObservableObject {
                 }
             
                 newObject.delays = NSSet(array: arr)
-                newObject.expectedDelay = projDelays.expectedDelay
+                newObject.expectedDelay = Int(projDelays.expectedDelay)
                 newObject.eta = projDelays.eta
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
 
-            print("saved successfully")
+            print("saved Proj Delays successfully")
         } catch {
             // Something went wrong 😭
-            print("Failed to save Historical Delays: \(error)")
+            print("Failed to save Proj Delays: \(error)")
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
 
@@ -2464,6 +2522,151 @@ class FuelCoreDataModelState: ObservableObject {
         } catch {
             // Something went wrong 😭
             print("Failed to Track Miles: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
+    }
+    
+    func initFlightLevel(_ data: IFlightLevelModel) {
+        do {
+                let newObject = FuelFlightLevelList(context: self.service.container.viewContext)
+                newObject.id = UUID()
+                var arr = [FuelFlightLevelRefList]()
+
+                data.flights3.flightLevels.forEach { item in
+                    let newObjRef = FuelFlightLevelRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.waypoint = item.waypoint
+                    newObjRef.condition = item.condition
+                    newObjRef.flightLevel = item.flightLevel
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr.append(newObjRef)
+                        print("saved Flight Level flight3 successfully")
+                    } catch {
+                        print("Failed to save Flight Level flight3: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject.flightLevels = NSSet(array: arr)
+                newObject.aveDiff = data.flights3.aveDiff
+                newObject.type = "flights3"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                // For week1
+                let newObject1 = FuelFlightLevelList(context: self.service.container.viewContext)
+                newObject1.id = UUID()
+                var arr1 = [FuelFlightLevelRefList]()
+
+                data.week1.flightLevels.forEach { item in
+                    let newObjRef = FuelFlightLevelRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.waypoint = item.waypoint
+                    newObjRef.condition = item.condition
+                    newObjRef.flightLevel = item.flightLevel
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr1.append(newObjRef)
+                        print("saved Flight Level flight3 successfully")
+                    } catch {
+                        print("Failed to save Flight Week1 flight3: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject1.flightLevels = NSSet(array: arr1)
+                newObject1.aveDiff = data.week1.aveDiff
+                newObject1.type = "week1"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+
+                // For Month3
+                let newObject2 = FuelFlightLevelList(context: self.service.container.viewContext)
+                newObject2.id = UUID()
+                var arr2 = [FuelFlightLevelRefList]()
+
+                data.months3.flightLevels.forEach { item in
+                    let newObjRef = FuelFlightLevelRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.waypoint = item.waypoint
+                    newObjRef.condition = item.condition
+                    newObjRef.flightLevel = item.flightLevel
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr2.append(newObjRef)
+                        print("saved Flight Level flight3 successfully")
+                    } catch {
+                        print("Failed to save Flight Month1: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject2.flightLevels = NSSet(array: arr2)
+                newObject2.aveDiff = data.months3.aveDiff
+                newObject2.type = "months3"
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                print("saved Flight Level Month3 successfully")
+        } catch {
+            print("Failed to Flight Level: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+
+        }
+    }
+    
+    func initReciprocalRwy(_ data: IReciprocalRwyModel) {
+        do {
+                let newObject = FuelReciprocalRwyList(context: self.service.container.viewContext)
+                newObject.id = UUID()
+                var arr = [FuelReciprocalRwyRefList]()
+
+                data.trackMiles.forEach { item in
+                    let newObjRef = FuelReciprocalRwyRefList(context: self.service.container.viewContext)
+                    newObjRef.id = UUID()
+                    newObjRef.date = item.date
+                    newObjRef.condition = item.condition
+                    newObjRef.trackMilesDiff = item.trackMilesDiff
+
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        arr.append(newObjRef)
+                        print("saved Reciprocal Rwy Ref flight3 successfully")
+                    } catch {
+                        print("Failed to save Reciprocal Rwy flight3: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+
+                newObject.trackMiles = NSSet(array: arr)
+                newObject.aveNM = data.aveNM
+                newObject.aveMINS = data.aveMINS
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+
+                print("saved Reciprocal Rwy successfully")
+        } catch {
+            print("Failed to Flight Level: \(error)")
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
 

@@ -304,15 +304,15 @@ func convertAllResponseJSONToObject(json: allAPIresponseNestedJSON) -> [String: 
         }
         else if let nestedJSON = value as? allAPIresponseNestedJSON.projArrivalDelaysNestedJSON {
             var delays: [ProjArrivalDelays] = []
-            for delayJSON in nestedJSON.delays {
-                let projArrivalDelay = ProjArrivalDelays(
-                    time: parseTimeString(delayJSON.time)!,
-                    delay: Int(delayJSON.delay),
-                    mindelay: Int(delayJSON.mindelay),
-                    maxdelay: Int(delayJSON.maxdelay)
-                )
-                delays.append(projArrivalDelay)
-            }
+//            for delayJSON in nestedJSON.delays {
+//                let projArrivalDelay = ProjArrivalDelays(
+//                    time: parseTimeString(delayJSON.time)!,
+//                    delay: Int(delayJSON.delay),
+//                    mindelay: Int(delayJSON.mindelay),
+//                    maxdelay: Int(delayJSON.maxdelay)
+//                )
+//                delays.append(projArrivalDelay)
+//            }
             let nestedObject: [String: Any] = [
                 "expectedDelay": Int(nestedJSON.expectedDelay),
                 "eta": parseTimeString(nestedJSON.eta)!,
