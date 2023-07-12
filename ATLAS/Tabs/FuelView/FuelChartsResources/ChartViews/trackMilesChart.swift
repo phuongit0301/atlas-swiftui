@@ -31,7 +31,7 @@ struct trackMilesChart: View {
     }
 }
 
-struct TrackMiles: Identifiable {
+struct TrackMiles: Identifiable, Codable {
     let phase: String
     let condition: String
     let trackMilesDiff: Int

@@ -14,7 +14,7 @@ struct FuelView: View {
     var body: some View {
         Group {
             if globalResponse.response != "" {
-                SummaryView()
+                ArrivalDelayView()
             } else {
                 Text("Loading...")
             }

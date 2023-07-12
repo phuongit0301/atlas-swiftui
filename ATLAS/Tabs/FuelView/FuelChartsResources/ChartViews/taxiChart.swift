@@ -48,7 +48,7 @@ struct taxiChartBar: View {
     }
 }
 
-struct TaxiTimes: Identifiable {
+struct TaxiTimes: Identifiable, Codable {
     let date: Date
     let condition: String
     let taxiTime: Int

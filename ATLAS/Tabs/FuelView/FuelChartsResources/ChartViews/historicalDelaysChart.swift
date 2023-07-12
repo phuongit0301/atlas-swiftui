@@ -46,7 +46,7 @@ struct historicalDelaysChart: View {
     }
 }
 
-struct ArrivalDelays: Identifiable {
+struct ArrivalDelays: Identifiable, Codable {
     let condition: String
     let time: Date
     let delay: Int

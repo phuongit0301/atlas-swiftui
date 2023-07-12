@@ -114,65 +114,6 @@ struct trackMilesView: View {
     }
 }
 
-// replace with API call
-func fetchTrackMiles() -> [String : [String : Any]] {
-
-    let entry1 = TrackMiles(phase: "dep", condition: "nm", trackMilesDiff: 5)
-    let entry2 = TrackMiles(phase: "clb", condition: "nm", trackMilesDiff: -3)
-    let entry3 = TrackMiles(phase: "crz", condition: "nm", trackMilesDiff: -12)
-    let entry4 = TrackMiles(phase: "des", condition: "nm", trackMilesDiff: 8)
-    let entry5 = TrackMiles(phase: "arr", condition: "nm", trackMilesDiff: -10)
-    
-    let entry1x = TrackMiles(phase: "dep", condition: "mins", trackMilesDiff: 2)
-    let entry2x = TrackMiles(phase: "clb", condition: "mins", trackMilesDiff: -1)
-    let entry3x = TrackMiles(phase: "crz", condition: "mins", trackMilesDiff: -4)
-    let entry4x = TrackMiles(phase: "des", condition: "mins", trackMilesDiff: 2)
-    let entry5x = TrackMiles(phase: "arr", condition: "mins", trackMilesDiff: -3)
-    
-    let entry1w = TrackMiles(phase: "dep", condition: "nm", trackMilesDiff: 0)
-    let entry2w = TrackMiles(phase: "clb", condition: "nm", trackMilesDiff: 2)
-    let entry3w = TrackMiles(phase: "crz", condition: "nm", trackMilesDiff: -10)
-    let entry4w = TrackMiles(phase: "des", condition: "nm", trackMilesDiff: 5)
-    let entry5w = TrackMiles(phase: "arr", condition: "nm", trackMilesDiff: -7)
-    
-    let entry1xw = TrackMiles(phase: "dep", condition: "mins", trackMilesDiff: 0)
-    let entry2xw = TrackMiles(phase: "clb", condition: "mins", trackMilesDiff: 1)
-    let entry3xw = TrackMiles(phase: "crz", condition: "mins", trackMilesDiff: -3)
-    let entry4xw = TrackMiles(phase: "des", condition: "mins", trackMilesDiff: 2)
-    let entry5xw = TrackMiles(phase: "arr", condition: "mins", trackMilesDiff: -2)
-    
-    let entry1m = TrackMiles(phase: "dep", condition: "nm", trackMilesDiff: 3)
-    let entry2m = TrackMiles(phase: "clb", condition: "nm", trackMilesDiff: -5)
-    let entry3m = TrackMiles(phase: "crz", condition: "nm", trackMilesDiff: -11)
-    let entry4m = TrackMiles(phase: "des", condition: "nm", trackMilesDiff: 7)
-    let entry5m = TrackMiles(phase: "arr", condition: "nm", trackMilesDiff: -12)
-    
-    let entry1xm = TrackMiles(phase: "dep", condition: "mins", trackMilesDiff: 1)
-    let entry2xm = TrackMiles(phase: "clb", condition: "mins", trackMilesDiff: -2)
-    let entry3xm = TrackMiles(phase: "crz", condition: "mins", trackMilesDiff: -3)
-    let entry4xm = TrackMiles(phase: "des", condition: "mins", trackMilesDiff: 2)
-    let entry5xm = TrackMiles(phase: "arr", condition: "mins", trackMilesDiff: -4)
-
-    let trackMilesDays: [TrackMiles] = [entry1, entry2, entry3, entry4, entry5, entry1x, entry2x, entry3x, entry4x, entry5x]
-    let trackMilesWeek: [TrackMiles] = [entry1w, entry2w, entry3w, entry4w, entry5w, entry1xw, entry2xw, entry3xw, entry4xw, entry5xw]
-    let trackMilesMonths: [TrackMiles] = [entry1m, entry2m, entry3m, entry4m, entry5m, entry1xm, entry2xm, entry3xm, entry4xm, entry5xm]
-    
-    let aveMINSDays = -7
-    let aveNMDays = -21
-    let aveMINSWeek = -5
-    let aveNMWeek = -15
-    let aveMINSMonths = -4
-    let aveNMMonths = -12
-        
-    let days = ["trackMiles": trackMilesDays, "sumNM": aveNMDays, "sumMINS": aveMINSDays] as [String : Any]
-    let week = ["trackMiles": trackMilesWeek, "sumNM": aveNMWeek, "sumMINS": aveMINSWeek] as [String : Any]
-    let months = ["trackMiles": trackMilesMonths, "sumNM": aveNMMonths, "sumMINS": aveMINSMonths] as [String : Any]
-
-    let trackMilesAll = ["flights3": days, "week1": week, "months3": months]
-
-    return trackMilesAll
-}
-
 struct TrackMilesJSON: Codable {
         let phase: String
         let condition: String

@@ -52,7 +52,7 @@ struct projArrivalDelaysChart: View {
     }
 }
 
-struct ProjArrivalDelays: Identifiable {
+struct ProjArrivalDelays: Identifiable, Codable {
     let time: Date
     let delay: Int
     let mindelay: Int

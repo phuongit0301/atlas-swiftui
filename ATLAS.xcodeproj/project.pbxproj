@@ -177,7 +177,6 @@
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
-		3EF93D882A3090940043E91E /* fuelSummaryCardSlideOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
 		3EFA5EEF2A3D5D8C001ED6CF /* FlightPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEE2A3D5D8C001ED6CF /* FlightPlanModel.swift */; };
@@ -413,7 +412,6 @@
 		3ED754862A11E1BD003072A1 /* ATLASUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITests.swift; sourceTree = "<group>"; };
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
-		3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryCardSlideOver.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		3EFA5EEC2A3C49AC001ED6CF /* MenuTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTop.swift; sourceTree = "<group>"; };
@@ -1017,7 +1015,6 @@
 				3E3FCC342A270851008017FA /* enrWXChart.swift */,
 				3E3FCC352A270851008017FA /* trackMilesChart.swift */,
 				3E3FCC362A270851008017FA /* taxiView.swift */,
-				3EF93D872A3090940043E91E /* fuelSummaryCardSlideOver.swift */,
 				3E3FCC372A270851008017FA /* projArrDelaysChart.swift */,
 				3E3FCC382A270851008017FA /* trackMilesView.swift */,
 				C5A8DE052A4E930F0045EB32 /* reciprocalRwyView.swift */,
@@ -1282,7 +1279,6 @@
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3E4A36D02A5A4A6400027C61 /* ArrivalATISList+CoreDataProperties.swift in Sources */,
 				C580EA262A4829CB00E3E8D6 /* fetchFlightPlanData.swift in Sources */,
-				3EF93D882A3090940043E91E /* fuelSummaryCardSlideOver.swift in Sources */,
 				3E3FCC502A28822A008017FA /* NavigationModel.swift in Sources */,
 				3E4A375B2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift in Sources */,
 				3E3FCBF62A23676A008017FA /* NavViewSplit.swift in Sources */,
@@ -1539,7 +1535,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1577,7 +1573,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

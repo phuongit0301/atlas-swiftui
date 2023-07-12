@@ -39,7 +39,7 @@ struct SummaryView: View {
 //
                     Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                         if proxy.isCompact {
-                            projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+//                            projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
 //                            historicalDelaysView(convertedJSON: historicalDelaysResponse as! [String : [String : Any]])
 //                            taxiView(convertedJSON: taxiResponse as! [String : [String : Any]])
 //                            trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
@@ -48,7 +48,7 @@ struct SummaryView: View {
 //
                         } else {
                             GridRow {
-                                projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+//                                projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
 //                                historicalDelaysView(convertedJSON: coreDataModel.dataProjDelays as! [String : [String : Any]])
                             }
 //                            GridRow {

@@ -58,9 +58,9 @@ struct BottomTabs: View {
             return AnyView(AircraftSplit())
         }
         
-        if item.screenName == NavigationEnumeration.FuelScreen {
-            return AnyView(FuelViewSplit())
-        }
+//        if item.screenName == NavigationEnumeration.FuelScreen {
+//            return AnyView(FuelViewSplit())
+//        }
         
         if item.screenName == NavigationEnumeration.DepartureScreen {
             return AnyView(DepartureSplit())

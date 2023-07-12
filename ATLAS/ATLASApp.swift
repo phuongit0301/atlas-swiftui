@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ATLASApp: App {
@@ -31,7 +32,8 @@ struct ATLASApp: App {
                 } else {
                     ContentView()
                 }
-            }.environmentObject(network)
+            }
+            .environmentObject(network)
                 .environmentObject(tabModelState)
                 .environmentObject(sideMenuModelState)
                 .environmentObject(mainNavModelState)
@@ -43,7 +45,7 @@ struct ATLASApp: App {
                 .onAppear {
                     Task {
                         coreDataModel.loading = true
-                        await apiManager.makePostRequest()
+                        //await apiManager.makePostRequest()
                         await coreDataModel.checkAndSyncData()
                         await coreDataModel.initFetchData()
                         coreDataModel.loading = false
@@ -51,7 +53,9 @@ struct ATLASApp: App {
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
-        }.handlesExternalEvents(
+        }
+        .modelContainer(for: FuelPageData.self)
+        .handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )
         
