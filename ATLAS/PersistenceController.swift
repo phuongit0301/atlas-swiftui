@@ -145,91 +145,55 @@ class CoreDataModelState: ObservableObject {
     init() {
         dataFPEnroute = readEnrouteList()
         
-//        if dataFPEnroute.count == 0 {
-//            Task {
-//                await remoteService.getFlightPlanWX(completion: { data in
-//                    DispatchQueue.main.async {
-//                        if let waypointsData = data?.waypointsData {
-//                            self.initDataEnroute(waypointsData)
-//                        }
-//                        //
-//                        if let infoData = data?.infoData {
-//                            self.initDataSummaryInfo(infoData)
-//                        }
-//
-//                        if let routeData = data?.routeData {
-//                            self.initDataSummaryRoute(routeData)
-//                        }
-//
-//                        if let perfData = data?.perfData {
-//                            self.initDataPerfData(perfData)
-//
-//                            self.initDataPerfInfo(perfData)
-//
-//                            self.dataPerfWeight = self.readPerfWeight()
-//
-//                            self.initDataPerfWeight(perfData)
-//                        }
-//
-//                        if let fuelData = data?.fuelData {
-//                            self.initDataFuelList(fuelData)
-//                        }
-//
-//                        if let altnData = data?.altnData {
-//                            self.dataAltnList = self.readAltnList()
-//                            self.initDataAltn(altnData)
-//                        }
-//
-//                        if let notamsData = data?.notamsData {
-//                            self.initDataNotams(notamsData)
-//                        }
-//
-//                        if let metarTafData = data?.metarTafData {
-//                            self.initDataTaf(metarTafData)
-//                            self.initDataAltnTaf(metarTafData)
-//                        }
-//
-//                        print("Fetch data")
-//                    }
-//                })
-//            }
-//        }
-        
-//        Task {
-//            await remoteService.getFuelData(completion: { response in
-//                print("Sync=====\(response)")
-//                DispatchQueue.main.async {
-    //                if let historicalDelays = response?.historicalDelays {
-    //                    self.initHistoricalDelays(historicalDelays)
-    //                }
+        if dataFPEnroute.count == 0 {
+            Task {
+                await remoteService.getFlightPlanWX(completion: { data in
+                    DispatchQueue.main.async {
+                        if let waypointsData = data?.waypointsData {
+                            self.initDataEnroute(waypointsData)
+                        }
+                        //
+                        if let infoData = data?.infoData {
+                            self.initDataSummaryInfo(infoData)
+                        }
 
-//                    if let projDelays = response?.projDelays {
-//                        self.initProjDelays(projDelays)
-//                    }
+                        if let routeData = data?.routeData {
+                            self.initDataSummaryRoute(routeData)
+                        }
 
-    //                if let taxi = response?.taxi {
-    //                    self.initProjTaxi(taxi)
-    //                }
-    //
-    //                if let trackMiles = response?.trackMiles {
-    //                    self.initTrackMiles(trackMiles)
-    //                }
-    //
-    //                if let enrWX = response?.enrWX {
-    //                    self.initEnrWX(enrWX)
-    //                }
-    //
-    //                if let flightLevel = response?.flightLevel {
-    //                    self.initFlightLevel(flightLevel)
-    //                }
-    //
-    //                if let reciprocalRwy = response?.reciprocalRwy {
-    //                    self.initReciprocalRwy(reciprocalRwy)
-    //                }
-//                }
-//            })
-//        }
-        readProjDelays()
+                        if let perfData = data?.perfData {
+                            self.initDataPerfData(perfData)
+
+                            self.initDataPerfInfo(perfData)
+
+                            self.dataPerfWeight = self.readPerfWeight()
+
+                            self.initDataPerfWeight(perfData)
+                        }
+
+                        if let fuelData = data?.fuelData {
+                            self.initDataFuelList(fuelData)
+                        }
+
+                        if let altnData = data?.altnData {
+                            self.dataAltnList = self.readAltnList()
+                            self.initDataAltn(altnData)
+                        }
+
+                        if let notamsData = data?.notamsData {
+                            self.initDataNotams(notamsData)
+                        }
+
+                        if let metarTafData = data?.metarTafData {
+                            self.initDataTaf(metarTafData)
+                            self.initDataAltnTaf(metarTafData)
+                        }
+
+                        print("Fetch data")
+                    }
+                })
+            }
+        }
     }
     
     func initFetchData() async {

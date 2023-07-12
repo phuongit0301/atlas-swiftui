@@ -980,9 +980,9 @@ struct FlightPlanArrView: View {
         .onAppear {
             //set data ats
             if coreDataModel.existDataArrivalAtis {
-//                self.dest = coreDataModel.dataArrivalAtis.unwrappedDest
-//                self.cursorPositionDest = coreDataModel.dataArrivalAtis.unwrappedDest.count
-                self.code = coreDataModel.dataArrivalAtis.unwrappedCode
+                self.dest = coreDataModel.dataArrivalAtis.unwrappedDest
+//                self.cursorPositionDest = coreDataModel.dataArrivalAtis!.unwrappedDest.count
+                self.code = coreDataModel.dataArrivalAtis!.unwrappedCode
                 self.cursorPositionCode = coreDataModel.dataArrivalAtis.unwrappedCode.count
                 self.time = coreDataModel.dataArrivalAtis.unwrappedTime
                 self.cursorPositionTime = coreDataModel.dataArrivalAtis.unwrappedTime.count
