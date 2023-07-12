@@ -278,7 +278,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             FlightInformationDetailView()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -469,7 +470,7 @@ public struct BreadCrumbRef: ViewModifier {
                 .background(Color.white)
                 .cornerRadius(8)
         }.padding()
-            .background(Color.theme.antiFlashWhite)
+            .background(screenName == NavigationEnumeration.FlightInformationDetailScreen ? Color.white : Color.theme.antiFlashWhite)
             
     }
 }

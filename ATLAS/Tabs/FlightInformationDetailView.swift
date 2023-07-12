@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct FlightInformationDetailView: View {
+    @State private var showUTC = true
+    
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .center) {
+                Text("FLIGHT INFORMATION")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(Color.black)
+                
+                Spacer()
+                
+                HStack {
+                    Toggle(isOn: $showUTC) {
+                        Text("Local").font(.system(size: 17, weight: .regular))
+                            .foregroundStyle(Color.black)
+                    }
+                    Text("UTC").font(.system(size: 17, weight: .regular))
+                        .foregroundStyle(Color.black)
+                }.fixedSize(horizontal: true, vertical: false)
+            }
+            
             List {
                 Section {
                     // grouped row using hstack
@@ -157,7 +176,10 @@ struct FlightInformationDetailView: View {
                         }
                     }
                 }.listRowBackground(Color.theme.arsenic.opacity(0.33))
-            }
+            }.listStyle(.insetGrouped)
+                .scrollContentBackground(.hidden)
+                .padding(.leading, -16)
+                .padding(.trailing, -16)
         }.padding(.top, 32)
     }
 }
