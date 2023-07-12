@@ -29,7 +29,7 @@ struct flightLevelChart: View {
     }
 }
 
-struct FlightLevel: Identifiable {
+struct FlightLevel: Identifiable, Codable {
     let waypoint: String
     let condition: String
     let flightLevel: Int

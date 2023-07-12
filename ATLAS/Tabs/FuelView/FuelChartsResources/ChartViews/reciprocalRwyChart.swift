@@ -31,7 +31,7 @@ struct reciprocalRwyChart: View {
     }
 }
 
-struct ReciprocalRwyTrackMiles: Identifiable {
+struct ReciprocalRwyTrackMiles: Identifiable, Codable {
     let date: Date
     let condition: String
     let trackMilesDiff: Int

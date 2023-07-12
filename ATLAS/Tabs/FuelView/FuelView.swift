@@ -7,14 +7,23 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct FuelView: View {
-    @ObservedObject var globalResponse = GlobalResponse.shared
+    // fuel page swift data initialise
+    @Environment(\.modelContext) private var context
+    @Query var fuelPageData: [FuelPageData]
     
     var body: some View {
         Group {
-            if globalResponse.response != "" {
-                SummaryView()
+            if fuelPageData.first?.projDelays != nil {
+                // todo wrap in bottom navigation
+                //ArrivalDelayView()
+                //TaxiTimeView()
+                //TrackMilesView()
+                //FlightLevelView()
+                //EnrouteWeatherView()
+                ReciprocalRunwayView()
             } else {
                 Text("Loading...")
             }
@@ -25,7 +34,7 @@ struct FuelView: View {
     }
     
     func waitForResponse() async {
-        while globalResponse.response == "" {
+        while fuelPageData.first?.projDelays == nil {
             do {
                 try await Task.sleep(nanoseconds: 500000000) // Sleep for 0.5 seconds
             }

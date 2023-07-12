@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct projArrivalDelaysView: View {
-    @Binding var dataProjDelays: ProjDelaysList
+    var convertedJSON: processedFuelDataModel.projArrivalDelaysNestedJSON
     
     var body: some View {
-        let fetchedDelays: [String: Any] = fetchProjArrivalDelays(dataProjDelays)
-        let delays: [ProjArrivalDelays] = fetchedDelays["delays"] as! [ProjArrivalDelays]
-        let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
-        let eta: Date = fetchedDelays["eta"] as! Date
+        let fetchedDelays: processedFuelDataModel.projArrivalDelaysNestedJSON = convertedJSON
+        let delays: [ProjArrivalDelays] = fetchedDelays.delays 
+        let projDelay: Int = fetchedDelays.expectedDelay
+        let eta: Date = fetchedDelays.eta
         
         ScrollView {
             VStack {
@@ -40,19 +40,6 @@ struct projArrivalDelaysView: View {
         .navigationTitle("")
         .background()
     }
-}
-
-// replace with API call
-func fetchProjArrivalDelays(_ dataProjDelays: ProjDelaysList) -> [String: Any] {
-    var projArrivalDelays = [ProjArrivalDelays]()
-    
-    (dataProjDelays.delays?.allObjects as! [ProjDelaysListRef]).forEach { item in
-        let entry = ProjArrivalDelays(time: item.unwrappedTime!, delay: item.delay, mindelay: item.mindelay, maxdelay: item.maxdelay)
-        projArrivalDelays.append(entry)
-    }
-
-    let object = ["delays": projArrivalDelays, "expectedDelay": dataProjDelays.expectedDelay, "eta": dataProjDelays.unwrappedEta] as [String : Any]
-    return object
 }
 
 struct ProjArrivalDelaysJSON: Codable {

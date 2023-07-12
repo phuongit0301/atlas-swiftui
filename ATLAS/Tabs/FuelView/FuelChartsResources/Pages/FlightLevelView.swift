@@ -10,17 +10,19 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
+import SwiftData
 
 struct FlightLevelView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
-//    @ObservedObject var apiManager = APIManager.shared
-    @ObservedObject var globalResponse = GlobalResponse.shared
 #endif
+    // fuel page swift data initialise
+    @Environment(\.modelContext) private var context
+    @Query var fuelPageData: [FuelPageData]
+    
     var body: some View {
-        // decode, split into charts and assign to variables
-        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
-        let flightLevelResponse = allAPIresponse["flightLevel"]
+        // fetch SwiftData model
+        let flightLevelResponse = fuelPageData.first!.flightLevel
         
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
@@ -33,11 +35,11 @@ struct FlightLevelView: View {
                     
                     Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                         if proxy.isCompact {
-                            flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
+                            flightLevelView(convertedJSON: flightLevelResponse)
 
                         } else {
                             GridRow {
-                                flightLevelView(convertedJSON: flightLevelResponse as! [String : [String : Any]])
+                                flightLevelView(convertedJSON: flightLevelResponse)
                             }
                             .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .fixedSize(horizontal: false, vertical: true)

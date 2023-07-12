@@ -10,17 +10,19 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
+import SwiftData
 
 struct ReciprocalRunwayView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
-//    @ObservedObject var apiManager = APIManager.shared
-    @ObservedObject var globalResponse = GlobalResponse.shared
 #endif
+    // fuel page swift data initialise
+    @Environment(\.modelContext) private var context
+    @Query var fuelPageData: [FuelPageData]
+    
     var body: some View {
-        // decode, split into charts and assign to variables
-        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
-        let reciprocalRwyResponse = allAPIresponse["reciprocalRwy"]
+        // fetch SwiftData model
+        let reciprocalRwyResponse = fuelPageData.first!.reciprocalRwy
 
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
@@ -33,10 +35,10 @@ struct ReciprocalRunwayView: View {
                     
                     Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                         if proxy.isCompact {
-                            reciprocalRwyView(convertedJSON: reciprocalRwyResponse as! [String : [String : Any]])
+                            reciprocalRwyView(convertedJSON: reciprocalRwyResponse)
                         } else {
                             GridRow {
-                                reciprocalRwyView(convertedJSON: reciprocalRwyResponse as! [String : [String : Any]])
+                                reciprocalRwyView(convertedJSON: reciprocalRwyResponse)
                             }
                             .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .fixedSize(horizontal: false, vertical: true)

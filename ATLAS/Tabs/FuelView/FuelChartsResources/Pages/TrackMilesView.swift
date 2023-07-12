@@ -10,17 +10,19 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
+import SwiftData
 
 struct TrackMilesView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
-//    @ObservedObject var apiManager = APIManager.shared
-    @ObservedObject var globalResponse = GlobalResponse.shared
 #endif
+    // fuel page swift data initialise
+    @Environment(\.modelContext) private var context
+    @Query var fuelPageData: [FuelPageData]
+    
     var body: some View {
-        // decode, split into charts and assign to variables
-        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
-        let trackMilesResponse = allAPIresponse["trackMiles"]
+        // fetch SwiftData model
+        let trackMilesResponse = fuelPageData.first!.trackMiles
         
         WidthThresholdReader(widthThreshold: 520) { proxy in
             ScrollView(.vertical) {
@@ -33,11 +35,11 @@ struct TrackMilesView: View {
                     
                     Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                         if proxy.isCompact {
-                            trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
+                            trackMilesView(convertedJSON: trackMilesResponse)
 
                         } else {
                             GridRow {
-                                trackMilesView(convertedJSON: trackMilesResponse as! [String : [String : Any]])
+                                trackMilesView(convertedJSON: trackMilesResponse)
                             }
                             .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .fixedSize(horizontal: false, vertical: true)

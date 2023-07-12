@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import SwiftData
 
 // creating flight info table structure
 struct flightInfo: Identifiable, Equatable {
@@ -139,36 +140,38 @@ struct FlightPlanSummaryView: View {
     
     @State private var isActive: Bool = false
 
+    @Environment(\.modelContext) private var context
+    @Query var fuelPageData: [FuelPageData]
+    
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
         
         // MARK: fetch fuel data - todo move to core data
-        let allAPIresponse = convertAllresponseFromAPI(jsonString: globalResponse.response)
-        let fetchedDelays = allAPIresponse["projDelays"] as! [String : Any]
-        let fetchedLevels = allAPIresponse["flightLevel"] as! [String : [String : Any]]
-        let fetchedMiles = allAPIresponse["trackMiles"] as! [String : [String : Any]]
-        let fetchedTimes = allAPIresponse["taxi"] as! [String : [String : Any]]
-        let fetchedEnrWX = allAPIresponse["enrWX"] as! [String : [String : Any]]
+        let fetchedDelays = fuelPageData.first?.projDelays
+        let fetchedLevels = fuelPageData.first?.flightLevel
+        let fetchedMiles = fuelPageData.first?.trackMiles
+        let fetchedTimes = fuelPageData.first?.taxi
+        let fetchedEnrWX = fuelPageData.first?.enrWX
+        let fetchedReciprocalRwy = fuelPageData.first?.reciprocalRwy
         // arrival delays
-        let projDelay: Int = fetchedDelays["expectedDelay"] as! Int
+        let projDelay: Int = fetchedDelays!.expectedDelay
         // taxi
-        let threeFlightsTaxi = fetchedTimes["flights3"]
-        let aveDiffTaxi: Int = threeFlightsTaxi!["aveDiff"] as! Int
+        let threeFlightsTaxi = fetchedTimes?.flights3
+        let aveDiffTaxi: Int = threeFlightsTaxi!.aveDiff
         // track miles
-        let threeFlightsMiles = fetchedMiles["flights3"]!
-        let sumMINS: Int = threeFlightsMiles["sumMINS"] as! Int
+        let threeFlightsMiles = fetchedMiles?.flights3
+        let sumMINS: Int = threeFlightsMiles!.sumMINS
         // enroute weather
-        let threeFlightsEnrWX = fetchedEnrWX["flights3"]!
-        let aveDiffEnrWX: Int = threeFlightsEnrWX["aveMINS"] as! Int
+        let threeFlightsEnrWX = fetchedEnrWX?.flights3
+        let aveDiffEnrWX: Int = threeFlightsEnrWX!.aveMINS
         // flight level
-        let threeFlightsLevels = fetchedLevels["flights3"]!
-        let aveDiffLevels: Int = threeFlightsLevels["aveDiff"] as! Int
+        let threeFlightsLevels = fetchedLevels?.flights3
+        let aveDiffLevels: Int = threeFlightsLevels!.aveDiff
         // reciprocal rwy
-        let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
+        let reciprocalRwy: Int = fetchedReciprocalRwy!.aveMINS
         
        
         // MARK: fuel calculations
-//        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"]!)!
         var calculatedDelayFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"] ?? "0") {
                 return selectedArrDelays * temp
@@ -198,9 +201,7 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        
-//        let calculatedTaxiFuelValue = selectedTaxi * Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"]!)!
-        
+               
         var calculatedTaxiFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
                 return calculatedTaxiFuelValue * temp
@@ -291,7 +292,6 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-//        let calculatedEnrWxFuelValue = selectedEnrWx * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
         var calculatedEnrWxFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"] ?? "0") {
                 return selectedEnrWx * temp
@@ -321,7 +321,6 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-//        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"]!)!
         
         var calculatedReciprocalRwyFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"] ?? "0") {

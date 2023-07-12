@@ -315,9 +315,9 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(AircraftSplit())
     }
     
-    if item.screenName == NavigationEnumeration.FuelScreen {
-        return AnyView(FuelViewSplit())
-    }
+//    if item.screenName == NavigationEnumeration.FuelScreen {
+//        return AnyView(FuelViewSplit())
+//    }
     
     if item.screenName == NavigationEnumeration.NoteScreen {
         return AnyView(FlightPlanSplit())

@@ -31,7 +31,7 @@ struct enrWXChart: View {
     }
 }
 
-struct EnrWXTrackMiles: Identifiable {
+struct EnrWXTrackMiles: Identifiable, Codable {
     let date: Date
     let condition: String
     let trackMilesDiff: Int
