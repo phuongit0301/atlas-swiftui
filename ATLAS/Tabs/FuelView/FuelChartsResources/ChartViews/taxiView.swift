@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct taxiView: View {
-    var convertedJSON: [String : [String : Any]]
+    var convertedJSON: processedFuelDataModel.taxiNestedJSON
     @SceneStorage("historyTimeframe") private var timeframe: taxiTimeframe = .threeFlights
 
     var body: some View {
@@ -71,67 +71,63 @@ struct taxiView: View {
     }
     
     var taxiTimes: [TaxiTimes] {
-        let fetchedTimes: [String : [String : Any]] = convertedJSON
+        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
 
-        //let fetchedTimes: [String : [String : Any]] = fetchTaxi()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTimes["flights3"]!
-            return threeFlights["times"] as! [TaxiTimes]
+            let threeFlights = fetchedTimes.flights3
+            return threeFlights!.times
         case .week:
-            let week = fetchedTimes["week1"]!
-            return week["times"] as! [TaxiTimes]
+            let week = fetchedTimes.week1
+            return week!.times
         case .months:
-            let months = fetchedTimes["months3"]!
-            return months["times"] as! [TaxiTimes]
+            let months = fetchedTimes.months3
+            return months!.times
         }
     }
     var aveTime: Int {
-        let fetchedTimes: [String : [String : Any]] = convertedJSON
+        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
 
-        //let fetchedTimes: [String : [String : Any]] = fetchTaxi()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTimes["flights3"]!
-            return threeFlights["aveTime"] as! Int
+            let threeFlights = fetchedTimes.flights3
+            return threeFlights!.aveTime
         case .week:
-            let week = fetchedTimes["week1"]!
-            return week["aveTime"] as! Int
+            let week = fetchedTimes.week1
+            return week!.aveTime
         case .months:
-            let months = fetchedTimes["months3"]!
-            return months["aveTime"] as! Int
+            let months = fetchedTimes.months3
+            return months!.aveTime
         }
     }
     var aveDiff: Int{
-        let fetchedTimes: [String : [String : Any]] = convertedJSON
+        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
 
-        //let fetchedTimes: [String : [String : Any]] = fetchTaxi()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTimes["flights3"]!
-            return threeFlights["aveDiff"] as! Int
+            let threeFlights = fetchedTimes.flights3
+            return threeFlights!.aveDiff
         case .week:
-            let week = fetchedTimes["week1"]!
-            return week["aveDiff"] as! Int
+            let week = fetchedTimes.week1
+            return week!.aveDiff
         case .months:
-            let months = fetchedTimes["months3"]!
-            return months["aveDiff"] as! Int
+            let months = fetchedTimes.months3
+            return months!.aveDiff
         }
     }
     var ymax: Int{
-        let fetchedTimes: [String : [String : Any]] = convertedJSON
+        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
 
-        //let fetchedTimes: [String : [String : Any]] = fetchTaxi()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTimes["flights3"]!
-            return threeFlights["ymax"] as! Int
+            let threeFlights = fetchedTimes.flights3
+            return threeFlights!.ymax
         case .week:
-            let week = fetchedTimes["week1"]!
-            return week["ymax"] as! Int
+            let week = fetchedTimes.week1
+            return week!.ymax
         case .months:
-            let months = fetchedTimes["months3"]!
-            return months["ymax"] as! Int
+            let months = fetchedTimes.months3
+            return months!.ymax
         }
     }
 }

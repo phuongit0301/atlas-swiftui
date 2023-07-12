@@ -45,7 +45,6 @@ struct ATLASApp: App {
                 .onAppear {
                     Task {
                         coreDataModel.loading = true
-                        //await apiManager.makePostRequest()
                         await coreDataModel.checkAndSyncData()
                         await coreDataModel.initFetchData()
                         coreDataModel.loading = false

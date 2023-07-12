@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct flightLevelView: View {
-    var convertedJSON: [String : [String : Any]]
+    var convertedJSON: processedFuelDataModel.flightLevelNestedJSON
     @SceneStorage("historyTimeframe") private var timeframe: flightLevelTimeframe = .threeFlights
 
     var body: some View {
@@ -56,36 +56,34 @@ struct flightLevelView: View {
     }
     // switcher by period
     var FlightLevel: [FlightLevel] {
-        let fetchedData: [String : [String : Any]] = convertedJSON
+        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
 
-        //let fetchedData: [String : [String : Any]] = fetchFlightLevel()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedData["flights3"]!
-            return threeFlights["flightLevels"] as! [FlightLevel]
+            let threeFlights = fetchedData.flights3
+            return threeFlights!.flightLevels
         case .week:
-            let week = fetchedData["week1"]!
-            return week["flightLevels"] as! [FlightLevel]
+            let week = fetchedData.week1
+            return week!.flightLevels
         case .months:
-            let months = fetchedData["months3"]!
-            return months["flightLevels"] as! [FlightLevel]
+            let months = fetchedData.months3
+            return months!.flightLevels
         }
     }
 
     var aveDiff: Int{
-        let fetchedData: [String : [String : Any]] = convertedJSON
+        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
 
-        //let fetchedData: [String : [String : Any]] = fetchFlightLevel()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedData["flights3"]!
-            return threeFlights["aveDiff"] as! Int
+            let threeFlights = fetchedData.flights3
+            return threeFlights!.aveDiff
         case .week:
-            let week = fetchedData["week1"]!
-            return week["aveDiff"] as! Int
+            let week = fetchedData.week1
+            return week!.aveDiff
         case .months:
-            let months = fetchedData["months3"]!
-            return months["aveDiff"] as! Int
+            let months = fetchedData.months3
+            return months!.aveDiff
         }
     }
 }

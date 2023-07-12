@@ -68,7 +68,7 @@ class APIManager: ObservableObject {
 }
 
 
-// class that defines the nested JSON structure - do we convert this to SwiftData class? or write a new SwiftData class that copies this structure to store the SwiftData model?
+// struct that defines the nested JSON structure
 struct allAPIresponseNestedJSON: Codable {
        
     struct projArrivalDelaysNestedJSON: Codable {
@@ -172,6 +172,17 @@ struct allAPIresponseNestedJSON: Codable {
             case months3 = "months3"
         }
     }
+    
+    struct reciprocalRwyNestedJSON: Codable {
+              
+        let trackMiles: [ReciprocalRwyTrackMilesJSON]
+        let aveNM: Int
+        let aveMINS: Int
+
+        private enum CodingKeys: String, CodingKey {
+            case trackMiles, aveNM, aveMINS
+        }
+    }
        
     let projDelays: projArrivalDelaysNestedJSON
     let historicalDelays: arrivalDelaysNestedJSON
@@ -179,6 +190,7 @@ struct allAPIresponseNestedJSON: Codable {
     let trackMiles: trackMilesNestedJSON
     let enrWX: enrWXTrackMilesNestedJSON
     let flightLevel: flightLevelNestedJSON
+    let reciprocalRwy: reciprocalRwyNestedJSON
     
     private enum CodingKeys: String, CodingKey {
         case projDelays = "projDelays"
@@ -187,10 +199,12 @@ struct allAPIresponseNestedJSON: Codable {
         case trackMiles = "trackMiles"
         case enrWX = "enrWX"
         case flightLevel = "flightLevel"
+        case reciprocalRwy = "reciprocalRwy"
     }
 
 }
 
+// struct that defines the processed data model structure for Swift Data
 struct processedFuelDataModel: Codable {
        
     struct projArrivalDelaysNestedJSON: Codable {
@@ -294,6 +308,17 @@ struct processedFuelDataModel: Codable {
             case months3 = "months3"
         }
     }
+    
+    struct reciprocalRwyNestedJSON: Codable {
+              
+        let trackMiles: [ReciprocalRwyTrackMiles]
+        let aveNM: Int
+        let aveMINS: Int
+
+        private enum CodingKeys: String, CodingKey {
+            case trackMiles, aveNM, aveMINS
+        }
+    }
        
     var projDelays: projArrivalDelaysNestedJSON?
     var historicalDelays: arrivalDelaysNestedJSON?
@@ -301,6 +326,7 @@ struct processedFuelDataModel: Codable {
     var trackMiles: trackMilesNestedJSON?
     var enrWX: enrWXTrackMilesNestedJSON?
     var flightLevel: flightLevelNestedJSON?
+    var reciprocalRwy: reciprocalRwyNestedJSON?
     
     private enum CodingKeys: String, CodingKey {
         case projDelays = "projDelays"
@@ -309,158 +335,21 @@ struct processedFuelDataModel: Codable {
         case trackMiles = "trackMiles"
         case enrWX = "enrWX"
         case flightLevel = "flightLevel"
+        case reciprocalRwy = "reciprocalRwy"
     }
 
 }
 
 // inner function to convert from JSON to swift data structure
-func convertAllResponseJSONToObject1(json: allAPIresponseNestedJSON) -> [String: Any] {
-    var object: [String: Any] = [:]
-
-    for (key, value) in Mirror(reflecting: json).children {
-        var nestedObject: [String: Any] = [:]
-        if let nestedJSON = value as? allAPIresponseNestedJSON.trackMilesNestedJSON {
-            for (key, value) in Mirror(reflecting: nestedJSON).children {
-                if let nestedNestedJSON = value as? allAPIresponseNestedJSON.trackMilesNestedJSON.trackMilesInfo {
-                    var trackMiles: [TrackMiles] = []
-                    for trackMilesJSON in nestedNestedJSON.trackMiles {
-                        let trackmile = TrackMiles(
-                            phase: trackMilesJSON.phase,
-                            condition: trackMilesJSON.condition,
-                            trackMilesDiff: trackMilesJSON.trackMilesDiff
-                        )
-                        trackMiles.append(trackmile)
-                    }
-                    let nestedNestedObject: [String: Any] = [
-                        "sumNM": nestedNestedJSON.sumNM,
-                        "sumMINS": nestedNestedJSON.sumMINS,
-                        "trackMiles": trackMiles
-                    ]
-                    nestedObject[key!] = nestedNestedObject
-                }
-            }
-            object[key!] = nestedObject
-        }
-        else if let nestedJSON = value as? allAPIresponseNestedJSON.arrivalDelaysNestedJSON {
-            for (key, value) in Mirror(reflecting: nestedJSON).children {
-                if let nestedNestedJSON = value as? allAPIresponseNestedJSON.arrivalDelaysNestedJSON.DelayInfo {
-                    var delays: [ArrivalDelays] = []
-                    for delayJSON in nestedNestedJSON.delays {
-                        let arrivalDelay = ArrivalDelays(
-                            condition: delayJSON.condition,
-                            time: parseTimeString(delayJSON.time)!,
-                            delay: delayJSON.delay
-                        )
-                        delays.append(arrivalDelay)
-                    }
-                    let nestedNestedObject: [String: Any] = [
-                        "arrTimeDelay": nestedNestedJSON.arrTimeDelay,
-                        "arrTimeDelayWX": nestedNestedJSON.arrTimeDelayWX,
-                        "delays": delays,
-                        "eta": parseTimeString(nestedNestedJSON.eta)!,
-                        "ymax": nestedNestedJSON.ymax
-                    ]
-                    nestedObject[key!] = nestedNestedObject
-                }
-            }
-            object[key!] = nestedObject
-        }
-        else if let nestedJSON = value as? allAPIresponseNestedJSON.taxiNestedJSON {
-            for (key, value) in Mirror(reflecting: nestedJSON).children {
-                if let nestedNestedJSON = value as? allAPIresponseNestedJSON.taxiNestedJSON.TimeInfo {
-                    var times: [TaxiTimes] = []
-                    for timesJSON in nestedNestedJSON.times {
-                        let time = TaxiTimes(
-                            date: parseDateString(timesJSON.date)!,
-                            condition: timesJSON.condition,
-                            taxiTime: timesJSON.taxiTime
-                        )
-                        times.append(time)
-                    }
-                    let nestedNestedObject: [String: Any] = [
-                        "aveTime": nestedNestedJSON.aveTime,
-                        "aveDiff": nestedNestedJSON.aveDiff,
-                        "times": times,
-                        "ymax": nestedNestedJSON.ymax
-                    ]
-                    nestedObject[key!] = nestedNestedObject
-                }
-            }
-            object[key!] = nestedObject
-        }
-        else if let nestedJSON = value as? allAPIresponseNestedJSON.enrWXTrackMilesNestedJSON {
-            for (key, value) in Mirror(reflecting: nestedJSON).children {
-                if let nestedNestedJSON = value as? allAPIresponseNestedJSON.enrWXTrackMilesNestedJSON.trackMilesInfo {
-                    var trackMiles: [EnrWXTrackMiles] = []
-                    for trackMilesJSON in nestedNestedJSON.trackMiles {
-                        let trackmile = EnrWXTrackMiles(
-                            date: parseDateString(trackMilesJSON.date)!,
-                            condition: trackMilesJSON.condition,
-                            trackMilesDiff: trackMilesJSON.trackMilesDiff
-                        )
-                        trackMiles.append(trackmile)
-                    }
-                    let nestedNestedObject: [String: Any] = [
-                        "aveNM": nestedNestedJSON.aveNM,
-                        "aveMINS": nestedNestedJSON.aveMINS,
-                        "trackMiles": trackMiles
-                    ]
-                    nestedObject[key!] = nestedNestedObject
-                }
-            }
-            object[key!] = nestedObject
-        }
-        else if let nestedJSON = value as? allAPIresponseNestedJSON.flightLevelNestedJSON {
-            for (key, value) in Mirror(reflecting: nestedJSON).children {
-                if let nestedNestedJSON = value as? allAPIresponseNestedJSON.flightLevelNestedJSON.flightLevelInfo {
-                    var flightLevels: [FlightLevel] = []
-                    for flightLevelsJSON in nestedNestedJSON.flightLevels {
-                        let level = FlightLevel(
-                            waypoint: flightLevelsJSON.waypoint,
-                            condition: flightLevelsJSON.condition,
-                            flightLevel: flightLevelsJSON.flightLevel
-                        )
-                        flightLevels.append(level)
-                    }
-                    let nestedNestedObject: [String: Any] = [
-                        "aveDiff": nestedNestedJSON.aveDiff,
-                        "flightLevels": flightLevels
-                    ]
-                    nestedObject[key!] = nestedNestedObject
-                }
-            }
-            object[key!] = nestedObject
-        }
-        else if let nestedJSON = value as? allAPIresponseNestedJSON.projArrivalDelaysNestedJSON {
-            var delays: [ProjArrivalDelays] = []
-            for delayJSON in nestedJSON.delays {
-                let projArrivalDelay = ProjArrivalDelays(
-                    time: parseTimeString(delayJSON.time)!,
-                    delay: Int(delayJSON.delay),
-                    mindelay: Int(delayJSON.mindelay),
-                    maxdelay: Int(delayJSON.maxdelay)
-                )
-                delays.append(projArrivalDelay)
-            }
-            let nestedObject: [String: Any] = [
-                "expectedDelay": Int(nestedJSON.expectedDelay),
-                "eta": parseTimeString(nestedJSON.eta)!,
-                "delays": delays
-            ]
-            object[key!] = nestedObject
-        }
-    }
-    return object
-}
-
 func convertAllResponseJSONToObject(json: allAPIresponseNestedJSON) -> processedFuelDataModel {
-    var object: processedFuelDataModel = processedFuelDataModel(projDelays: nil, historicalDelays: nil, taxi: nil, trackMiles: nil, enrWX: nil, flightLevel: nil)
+    var object: processedFuelDataModel = processedFuelDataModel(projDelays: nil, historicalDelays: nil, taxi: nil, trackMiles: nil, enrWX: nil, flightLevel: nil, reciprocalRwy: nil)
     
     var trackMilesObject: processedFuelDataModel.trackMilesNestedJSON = processedFuelDataModel.trackMilesNestedJSON(flights3: nil, week1: nil, months3: nil)
     var arrivalDelaysObject: processedFuelDataModel.arrivalDelaysNestedJSON = processedFuelDataModel.arrivalDelaysNestedJSON(days3: nil, week1: nil, months3: nil)
     var taxiObject: processedFuelDataModel.taxiNestedJSON = processedFuelDataModel.taxiNestedJSON(flights3: nil, week1: nil, months3: nil)
     var enrWxObject: processedFuelDataModel.enrWXTrackMilesNestedJSON = processedFuelDataModel.enrWXTrackMilesNestedJSON(flights3: nil, week1: nil, months3: nil)
     var flightLevelObject: processedFuelDataModel.flightLevelNestedJSON = processedFuelDataModel.flightLevelNestedJSON(flights3: nil, week1: nil, months3: nil)
+    var reciprocalRwyObject: processedFuelDataModel.reciprocalRwyNestedJSON? = nil
     var projDelaysObject: processedFuelDataModel.projArrivalDelaysNestedJSON? = nil
 
     for (_, value) in Mirror(reflecting: json).children {
@@ -585,6 +474,18 @@ func convertAllResponseJSONToObject(json: allAPIresponseNestedJSON) -> processed
             }
             object.flightLevel = flightLevelObject
         }
+        else if let nestedJSON = value as? allAPIresponseNestedJSON.reciprocalRwyNestedJSON {
+            var trackMiles: [ReciprocalRwyTrackMiles] = []
+            for trackMilesJSON in nestedJSON.trackMiles {
+                let trackMile = ReciprocalRwyTrackMiles(date: parseDateString(trackMilesJSON.date)!, condition: trackMilesJSON.condition, trackMilesDiff: trackMilesJSON.trackMilesDiff)
+                trackMiles.append(trackMile)
+            }
+            
+            let nestedReciprocalRwyObject: processedFuelDataModel.reciprocalRwyNestedJSON = processedFuelDataModel.reciprocalRwyNestedJSON(trackMiles: trackMiles, aveNM: nestedJSON.aveNM, aveMINS: nestedJSON.aveMINS)
+            
+            reciprocalRwyObject = nestedReciprocalRwyObject
+            object.reciprocalRwy = reciprocalRwyObject
+        }
         else if let nestedJSON = value as? allAPIresponseNestedJSON.projArrivalDelaysNestedJSON {
             var delays: [ProjArrivalDelays] = []
             for delayJSON in nestedJSON.delays {
@@ -617,17 +518,17 @@ func convertAllresponseFromAPI(jsonString: String) -> processedFuelDataModel {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         // convert from string to JSON
         let nestedJSON = try decoder.decode(allAPIresponseNestedJSON.self, from: jsonData)
-        print("nestedJSON: \(nestedJSON)")
+        //print("nestedJSON: \(nestedJSON)")
         // convert from JSON to swift data structure
         objectStruct = convertAllResponseJSONToObject(json: nestedJSON)
-        print("objectStruct: ", objectStruct)
+        //print("objectStruct: ", objectStruct)
     } catch {
         print("Error decoding JSON: \(error)")
     }
     return objectStruct
 }
 
-// SwiftData class
+// SwiftData class which relies on the processedFuelDataModel struct
 @Model
 class FuelPageData {
     var projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON
@@ -636,13 +537,15 @@ class FuelPageData {
     var trackMiles: processedFuelDataModel.trackMilesNestedJSON
     var enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON
     var flightLevel: processedFuelDataModel.flightLevelNestedJSON
+    var reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON
     
-    init(projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON, historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON, taxi: processedFuelDataModel.taxiNestedJSON, trackMiles: processedFuelDataModel.trackMilesNestedJSON, enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON, flightLevel: processedFuelDataModel.flightLevelNestedJSON) {
+    init(projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON, historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON, taxi: processedFuelDataModel.taxiNestedJSON, trackMiles: processedFuelDataModel.trackMilesNestedJSON, enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON, flightLevel: processedFuelDataModel.flightLevelNestedJSON, reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON) {
         self.projDelays = projDelays
         self.historicalDelays = historicalDelays
         self.taxi = taxi
         self.trackMiles = trackMiles
         self.enrWX = enrWX
         self.flightLevel = flightLevel
+        self.reciprocalRwy = reciprocalRwy
     }
 }

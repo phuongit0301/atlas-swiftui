@@ -82,7 +82,7 @@ struct ContentView: View {
                     await apiManager.makePostRequest()
                     let allAPIresponse: processedFuelDataModel = convertAllresponseFromAPI(jsonString: globalResponse.response)
                     // map response to FuelPageData model class
-                    let fetchedFuelPageData = FuelPageData(projDelays: allAPIresponse.projDelays!, historicalDelays: allAPIresponse.historicalDelays!, taxi: allAPIresponse.taxi!, trackMiles: allAPIresponse.trackMiles!, enrWX: allAPIresponse.enrWX!, flightLevel: allAPIresponse.flightLevel!)
+                    let fetchedFuelPageData = FuelPageData(projDelays: allAPIresponse.projDelays!, historicalDelays: allAPIresponse.historicalDelays!, taxi: allAPIresponse.taxi!, trackMiles: allAPIresponse.trackMiles!, enrWX: allAPIresponse.enrWX!, flightLevel: allAPIresponse.flightLevel!, reciprocalRwy: allAPIresponse.reciprocalRwy!)
                     // insert into context and save
                     context.insert(fetchedFuelPageData)
                     try? context.save()

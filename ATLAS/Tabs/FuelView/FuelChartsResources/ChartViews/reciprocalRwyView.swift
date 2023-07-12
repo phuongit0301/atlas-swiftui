@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct reciprocalRwyView: View {
-    var convertedJSON: [String : [String : Any]]
+    var convertedJSON: processedFuelDataModel.reciprocalRwyNestedJSON
     @State private var showMiles = false
     var body: some View {
         ScrollView {
@@ -54,16 +54,16 @@ struct reciprocalRwyView: View {
         .background()
     }
     var trackMiles: [ReciprocalRwyTrackMiles] {
-        let fetchedTrackMiles: [String : Any] = convertedJSON
-        return fetchedTrackMiles["trackMiles"] as! [ReciprocalRwyTrackMiles]
+        let fetchedTrackMiles: processedFuelDataModel.reciprocalRwyNestedJSON = convertedJSON
+        return fetchedTrackMiles.trackMiles
     }
     var aveMINS: Int {
-        let fetchedTrackMiles: [String : Any] = convertedJSON
-        return fetchedTrackMiles["aveMINS"] as! Int
+        let fetchedTrackMiles: processedFuelDataModel.reciprocalRwyNestedJSON = convertedJSON
+        return fetchedTrackMiles.aveMINS
     }
     var aveNM: Int{
-        let fetchedTrackMiles: [String : Any] = convertedJSON
-        return fetchedTrackMiles["aveNM"] as! Int
+        let fetchedTrackMiles: processedFuelDataModel.reciprocalRwyNestedJSON = convertedJSON
+        return fetchedTrackMiles.aveNM
     }
 }
 

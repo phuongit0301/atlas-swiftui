@@ -13,7 +13,7 @@ struct projArrivalDelaysView: View {
     
     var body: some View {
         let fetchedDelays: processedFuelDataModel.projArrivalDelaysNestedJSON = convertedJSON
-        let delays: [ProjArrivalDelays] = fetchedDelays.delays as! [ProjArrivalDelays]
+        let delays: [ProjArrivalDelays] = fetchedDelays.delays 
         let projDelay: Int = fetchedDelays.expectedDelay
         let eta: Date = fetchedDelays.eta
         

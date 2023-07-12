@@ -15,8 +15,6 @@ import SwiftData
 struct ArrivalDelayView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
-//    @ObservedObject var apiManager = APIManager.shared
-    @ObservedObject var globalResponse = GlobalResponse.shared
 #endif
     // fuel page swift data initialise
     @Environment(\.modelContext) private var context

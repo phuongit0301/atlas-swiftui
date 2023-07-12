@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct enrWXView: View {
-    var convertedJSON: [String : [String : Any]]
+    var convertedJSON: processedFuelDataModel.enrWXTrackMilesNestedJSON
     @SceneStorage("historyTimeframe") private var timeframe: enrWXTimeframe = .threeFlights
     @State private var showMiles = false
     var body: some View {
@@ -68,51 +68,48 @@ struct enrWXView: View {
     }
     // switcher by period
     var trackMiles: [EnrWXTrackMiles] {
-        let fetchedTrackMiles: [String : [String : Any]] = convertedJSON
+        let fetchedTrackMiles: processedFuelDataModel.enrWXTrackMilesNestedJSON = convertedJSON
 
-        //let fetchedTrackMiles: [String : [String : Any]] = fetchTrackMiles()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTrackMiles["flights3"]!
-            return threeFlights["trackMiles"] as! [EnrWXTrackMiles]
+            let threeFlights = fetchedTrackMiles.flights3
+            return threeFlights!.trackMiles
         case .week:
-            let week = fetchedTrackMiles["week1"]!
-            return week["trackMiles"] as! [EnrWXTrackMiles]
+            let week = fetchedTrackMiles.week1
+            return week!.trackMiles
         case .months:
-            let months = fetchedTrackMiles["months3"]!
-            return months["trackMiles"] as! [EnrWXTrackMiles]
+            let months = fetchedTrackMiles.months3
+            return months!.trackMiles
         }
     }
     var aveMINS: Int {
-        let fetchedTrackMiles: [String : [String : Any]] = convertedJSON
+        let fetchedTrackMiles: processedFuelDataModel.enrWXTrackMilesNestedJSON = convertedJSON
 
-        //let fetchedTrackMiles: [String : [String : Any]] = fetchTrackMiles()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTrackMiles["flights3"]!
-            return threeFlights["aveMINS"] as! Int
+            let threeFlights = fetchedTrackMiles.flights3
+            return threeFlights!.aveMINS
         case .week:
-            let week = fetchedTrackMiles["week1"]!
-            return week["aveMINS"] as! Int
+            let week = fetchedTrackMiles.week1
+            return week!.aveMINS
         case .months:
-            let months = fetchedTrackMiles["months3"]!
-            return months["aveMINS"] as! Int
+            let months = fetchedTrackMiles.months3
+            return months!.aveMINS
         }
     }
     var aveNM: Int{
-        let fetchedTrackMiles: [String : [String : Any]] = convertedJSON
+        let fetchedTrackMiles: processedFuelDataModel.enrWXTrackMilesNestedJSON = convertedJSON
 
-        //let fetchedTrackMiles: [String : [String : Any]] = fetchTrackMiles()
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTrackMiles["flights3"]!
-            return threeFlights["aveNM"] as! Int
+            let threeFlights = fetchedTrackMiles.flights3
+            return threeFlights!.aveNM
         case .week:
-            let week = fetchedTrackMiles["week1"]!
-            return week["aveNM"] as! Int
+            let week = fetchedTrackMiles.week1
+            return week!.aveNM
         case .months:
-            let months = fetchedTrackMiles["months3"]!
-            return months["aveNM"] as! Int
+            let months = fetchedTrackMiles.months3
+            return months!.aveNM
         }
     }
 }
