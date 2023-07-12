@@ -152,6 +152,7 @@ struct FlightPlanSummaryView: View {
         let fetchedMiles = fuelPageData.first?.trackMiles
         let fetchedTimes = fuelPageData.first?.taxi
         let fetchedEnrWX = fuelPageData.first?.enrWX
+        let fetchedReciprocalRwy = fuelPageData.first?.reciprocalRwy
         // arrival delays
         let projDelay: Int = fetchedDelays!.expectedDelay
         // taxi
@@ -167,11 +168,10 @@ struct FlightPlanSummaryView: View {
         let threeFlightsLevels = fetchedLevels?.flights3
         let aveDiffLevels: Int = threeFlightsLevels!.aveDiff
         // reciprocal rwy
-        let reciprocalRwy: Int = 5  // todo adil add reciprocal rwy fuel data
+        let reciprocalRwy: Int = fetchedReciprocalRwy!.aveMINS
         
        
         // MARK: fuel calculations
-//        let calculatedDelayFuelValue: Int = selectedArrDelays * Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"]!)!
         var calculatedDelayFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"] ?? "0") {
                 return selectedArrDelays * temp
@@ -201,9 +201,7 @@ struct FlightPlanSummaryView: View {
                 return ["fuel": 0, "time": 0, "remarks": ""]
             }
         }
-        
-//        let calculatedTaxiFuelValue = selectedTaxi * Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"]!)!
-        
+               
         var calculatedTaxiFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
                 return calculatedTaxiFuelValue * temp
@@ -294,7 +292,6 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-//        let calculatedEnrWxFuelValue = selectedEnrWx * Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"]!)!
         var calculatedEnrWxFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedBurnoff["unit"] ?? "0") {
                 return selectedEnrWx * temp
@@ -324,7 +321,6 @@ struct FlightPlanSummaryView: View {
             }
         }
         
-//        let calculatedReciprocalRwyFuelValue = selectedReciprocalRwy * Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"]!)!
         
         var calculatedReciprocalRwyFuelValue: Int {
             if let temp = Int(coreDataModel.dataFuelDataList.unwrappedAltn["unit"] ?? "0") {
