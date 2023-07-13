@@ -154,7 +154,12 @@ struct FlightPlanSummaryView: View {
         let fetchedEnrWX = fuelPageData.first?.enrWX
         let fetchedReciprocalRwy = fuelPageData.first?.reciprocalRwy
         // arrival delays
-        let projDelay: Int = fetchedDelays!.expectedDelay
+        var projDelay: Int {
+            if fetchedDelays!.expectedDelay != nil {
+                return fetchedDelays!.expectedDelay
+            }
+            return 0
+        }
         // taxi
         let threeFlightsTaxi = fetchedTimes?.flights3
         let aveDiffTaxi: Int = threeFlightsTaxi!.aveDiff

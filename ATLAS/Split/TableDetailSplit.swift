@@ -18,6 +18,8 @@ struct TableDetailSplit: View {
             GeometryReader { geo in
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
+                        HeaderViewSplit(isMenu: true, isNext: true)
+                        
                         Text(dataTable.name).foregroundColor(Color.theme.eerieBlack).font(.custom("Inter-SemiBold", size: 22))
                             .background(Color.white)
                             .padding(8)
@@ -77,9 +79,9 @@ struct TableDetailSplit: View {
                         }
                         .border(Color.theme.chineseSilver2, width: 1)
                         .cornerRadius(4)
-                        .frame(maxWidth: .infinity)                        
+                        .frame(maxWidth: .infinity)
                     }
-                }.padding()
+                }
             }
         }
     }

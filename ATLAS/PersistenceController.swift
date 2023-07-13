@@ -113,7 +113,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataMetarTaf: MetarTafDataList!
     @Published var existDataMetarTaf: Bool = false
     
-    // For Metar Taf
+    // For Altn Taf
     @Published var dataAltnTaf: [AltnTafDataList] = []
     @Published var existDataAltnTaf: Bool = false
     
@@ -152,7 +152,7 @@ class CoreDataModelState: ObservableObject {
                         if let waypointsData = data?.waypointsData {
                             self.initDataEnroute(waypointsData)
                         }
-                        //
+                        
                         if let infoData = data?.infoData {
                             self.initDataSummaryInfo(infoData)
                         }
@@ -185,7 +185,7 @@ class CoreDataModelState: ObservableObject {
                         }
 
                         if let metarTafData = data?.metarTafData {
-                            self.initDataTaf(metarTafData)
+                            self.initDataMetarTaf(metarTafData)
                             self.initDataAltnTaf(metarTafData)
                         }
 
@@ -193,6 +193,17 @@ class CoreDataModelState: ObservableObject {
                     }
                 })
             }
+        }
+    }
+    
+    func syncDataMetarTaf() async {
+        Task {
+            await remoteService.getFlightPlanWX(completion: { data in
+                if let metarTafData = data?.metarTafData {
+                    self.updateDataMetarTaf(metarTafData)
+                    self.updateDataAltnTaf(metarTafData)
+                }
+            })
         }
     }
     
@@ -1278,7 +1289,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataTaf(_ metarTafData: IFlightPlanWXResponseModel) {
+    func initDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
         do {
             let newObj = MetarTafDataList(context: service.container.viewContext)
             newObj.id = UUID()
@@ -1296,9 +1307,34 @@ class CoreDataModelState: ObservableObject {
             service.container.viewContext.rollback()
             
         }
-        
-        
-        
+    }
+    
+    func updateDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
+        do {
+            readDataMetarTafList()
+            if self.dataMetarTaf!.id != nil {
+                self.dataMetarTaf.depMetar = metarTafData.depMetar
+                self.dataMetarTaf.depTaf = metarTafData.depTaf
+                self.dataMetarTaf.arrMetar = metarTafData.arrMetar
+                self.dataMetarTaf.arrTaf = metarTafData.arrTaf
+            } else {
+                let newObj = MetarTafDataList(context: service.container.viewContext)
+                newObj.id = UUID()
+                newObj.depMetar = metarTafData.depMetar
+                newObj.depTaf = metarTafData.depTaf
+                newObj.arrMetar = metarTafData.arrMetar
+                newObj.arrTaf = metarTafData.arrTaf
+            }
+            try service.container.viewContext.save()
+            existDataMetarTaf = true
+            readDataMetarTafList()
+            print("saved Metar Taf successfully")
+        } catch {
+            print("Failed to Metar Taf save: \(error)")
+            existDataMetarTaf = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+        }
     }
     
     func initDataAltnTaf(_ metarTafData: IFlightPlanWXResponseModel) {
@@ -1319,6 +1355,52 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             existDataAltnTaf = true
+        }
+    }
+    
+    func updateDataAltnTaf(_ metarTafData: IFlightPlanWXResponseModel) {
+        let fetchRequest: NSFetchRequest<AltnTafDataList>
+        fetchRequest = AltnTafDataList.fetchRequest()
+        fetchRequest.includesPropertyValues = false
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                metarTafData.altnTaf.forEach { item in
+                    do {
+                        let newObj1 = AltnTafDataList(context: service.container.viewContext)
+                        newObj1.id = UUID()
+                        newObj1.altnRwy = item.altnRwy
+                        newObj1.eta = item.eta
+                        newObj1.taf = item.taf
+                        try service.container.viewContext.save()
+                        print("saved altn taf successfully")
+                    } catch {
+                        print("Failed to Altn Taf save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                    }
+                }
+                
+                do {
+                    // Delete the objects
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+                existDataAltnTaf = true
+            }
+            
+            dataAltnTaf = readDataAltnTafList()
+            print("Delete to Altn Taf successfully")
+        } catch {
+            print("Failed to Altn Taf update: \(error)")
         }
     }
     

@@ -99,6 +99,49 @@ struct TypeWriterText: View, Animatable {
         }.frame(maxWidth: .infinity, maxHeight: 300)
     }
 }
+
+struct TypingText: View {
+    @State private var text = ""
+    let fullText: String
+    let typingIntervalRange: ClosedRange<Double>
+
+    init(text: String, typingIntervalRange: ClosedRange<Double> = 0.05...0.15) {
+        self.fullText = text
+        self.typingIntervalRange = typingIntervalRange
+    }
+
+    var body: some View {
+        ScrollView {
+            Text(text)
+                .font(.custom("Inter-Regular", size: 16))
+                    .foregroundColor(Color.theme.eerieBlack)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                .onAppear {
+                    self.typeText()
+                }
+        }.frame(maxWidth: .infinity)
+    }
+
+    func typeText() {
+        var currentIndex = text.endIndex
+        Timer.scheduledTimer(withTimeInterval: randomTypingInterval(), repeats: true) { timer in
+            if currentIndex < self.fullText.endIndex {
+                currentIndex = self.fullText.index(after: currentIndex)
+                self.text = String(self.fullText[..<currentIndex])
+                timer.invalidate()
+                self.typeText()
+            } else {
+                timer.invalidate()
+            }
+        }
+    }
+
+    func randomTypingInterval() -> Double {
+        let interval = Double.random(in: typingIntervalRange)
+        return interval
+    }
+}
 //
 //class Paragrapher: ObservableObject {
 //    //what is the full text when we are done?
@@ -258,7 +301,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
         return AnyView(
-            AtlasSearchView()
+            AISearchView()
                 .navigationBarBackButtonHidden()
                 .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
@@ -288,7 +331,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             NotamDetailView()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -319,6 +363,10 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
 //        return AnyView(FuelViewSplit())
 //    }
     
+    if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
+        return AnyView(FlightInformationDetailSplitView())
+    }
+    
     if item.screenName == NavigationEnumeration.NoteScreen {
         return AnyView(FlightPlanSplit())
     }
@@ -346,7 +394,17 @@ func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(
         TableDetail(row: item)
             .navigationBarBackButtonHidden()
-            .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+            .navigationBarHidden(true)
+            .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+            .ignoresSafeArea()
+    )
+}
+
+func getDestinationSplitTable(_ item: ListFlightInformationItem) -> AnyView {
+    return AnyView(
+        TableDetailSplit(row: item)
+            .navigationBarBackButtonHidden()
+            .navigationBarHidden(true)
             .ignoresSafeArea()
     )
 }

@@ -61,7 +61,7 @@ struct HomeView: View {
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
                         case NavigationEnumeration.AtlasSearchScreen:
-                            AtlasSearchView()
+                            AISearchContainerView()
                                 .tag(NavigationEnumeration.AtlasSearchScreen)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)

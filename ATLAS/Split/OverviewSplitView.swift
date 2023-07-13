@@ -42,7 +42,7 @@ struct OverviewSplitView: View {
                     }
                 }.padding(.vertical, 10)
                 ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
-                    NavigationLink(destination: getDestinationTable(item)) {
+                    NavigationLink(destination: getDestinationSplitTable(item)) {
                         HStack {
                             Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
                         }

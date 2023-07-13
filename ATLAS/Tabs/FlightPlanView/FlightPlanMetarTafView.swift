@@ -19,6 +19,7 @@ struct altnTaf: Identifiable {
 struct FlightPlanMETARTAFView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @State var showLoading = false
     // initialise state variables
     let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
 
@@ -49,8 +50,32 @@ struct FlightPlanMETARTAFView: View {
                 Text("METAR / TAF")
                     .font(.title)
                     .padding(.leading, 30)
+                Spacer()
+                Button(action: {
+                    onSyncData()
+                }, label: {
+                    HStack {
+                        if showLoading {
+                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
+                        }
+                        Text("Refresh").font(.system(size: 17))
+                            .foregroundColor(Color.white)
+                            .padding(.horizontal)
+                            .padding(.vertical, 8)
+                    }
+                }).background(Color.theme.azure)
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(.white, lineWidth: 0)
+                    )
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    
             }
             .padding(.bottom, 10)
+            .padding(.trailing)
+            
             Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
             .padding(.leading, 30)
             .padding(.bottom, 10)
@@ -59,8 +84,8 @@ struct FlightPlanMETARTAFView: View {
             List {
                 // Dep METAR section
                 Section(header: Text("DEP METAR | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
+                    HStack(spacing: 10) {
+                        NewFlowLayout(alignment: .leading) {
                             ForEach(coreDataModel.dataMetarTaf.unwrappedDepMetar.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
@@ -79,14 +104,13 @@ struct FlightPlanMETARTAFView: View {
                                 }
                             }
                         }
-                        .padding(.leading, 25)
-                    } // todo make fit to content without scrollview
+                    }.padding(.leading, 25)
                 }
                 
                 // Dep TAF section
                 Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
+                    HStack(spacing: 10) {
+                        NewFlowLayout(alignment: .leading) {
                             ForEach(coreDataModel.dataMetarTaf.unwrappedDepTaf.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
@@ -110,8 +134,8 @@ struct FlightPlanMETARTAFView: View {
                 }
                 // Arr METAR section
                 Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
+                    HStack(spacing: 10) {
+                        NewFlowLayout(alignment: .leading) {
                             ForEach(coreDataModel.dataMetarTaf.unwrappedArrMetar.components(separatedBy: " "), id: \.self) { word in
                                 if redWords.contains(word) {
                                     Text(word)
@@ -130,48 +154,58 @@ struct FlightPlanMETARTAFView: View {
                                 }
                             }
                         }
-                        .padding(.leading, 25)
-                    } // todo make fit to content without scrollview
+                    }.padding(.leading, 25)
                 }
                 // Arr TAF section
                 Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
-                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(coreDataModel.dataMetarTaf.unwrappedArrTaf.components(separatedBy: " "), id: \.self) { word in
-                                if redWords.contains(word) {
-                                    Text(word)
-                                        .foregroundColor(.red)
-                                } else if let number = Int(word), number < 3000 {
-                                    Text(word)
-                                        .foregroundColor(.red)
-                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
-                                    Text(word)
-                                        .foregroundColor(.green)
-                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
-                                    Text(word)
-                                        .foregroundColor(.green)
-                                } else {
-                                    Text(word)
+                            NewFlowLayout(alignment: .leading) {
+                                ForEach(coreDataModel.dataMetarTaf.unwrappedArrTaf.components(separatedBy: " "), id: \.self) { word in
+                                    if redWords.contains(word) {
+                                        Text(word)
+                                            .foregroundColor(.red)
+                                    } else if let number = Int(word), number < 3000 {
+                                        Text(word)
+                                            .foregroundColor(.red)
+                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                        Text(word)
+                                            .foregroundColor(.green)
+                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                        Text(word)
+                                            .foregroundColor(.green)
+                                    } else {
+                                        Text(word)
+                                    }
                                 }
                             }
-                        }
-                        .padding(.leading, 25)
-                    }
+                        }.padding(.leading, 25)
                 }
                 // ALTN TAF section
                 Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
                     Table(coreDataModel.dataAltnTaf) {
                         TableColumn("ALTN / RWY", value: \.unwrappedAltnRwy)
-                        TableColumn("ETA", value: \.unwrappedEta)
-                        TableColumn("TAF", value: \.unwrappedTaf)
+                        TableColumn("ETA") {
+                            Text($0.unwrappedEta).font(.system(size: 17, weight: .regular))
+                        }
+                        TableColumn("TAF") {
+                            Text($0.unwrappedTaf).font(.system(size: 17, weight: .regular)).lineLimit(nil)
+                        }.width(800)
                     }
-                    .frame(minHeight: 250)
+                    .frame(minHeight: 350)
                     .scrollDisabled(true)
                 }
             }
         }
         .navigationTitle("METAR / TAF")
         .background(Color(.systemGroupedBackground))
+    }
+    
+    func onSyncData() {
+        Task {
+            showLoading = true
+            await coreDataModel.syncDataMetarTaf()
+            showLoading = false
+        }
     }
 }
 

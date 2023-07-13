@@ -79,8 +79,7 @@ struct TableDetail: View {
                         .cornerRadius(4)
                         .frame(maxWidth: .infinity)                        
                     }
-                }.padding(.horizontal, 32)
-                    .padding(.vertical, 50)
+                }
             }
         }
     }

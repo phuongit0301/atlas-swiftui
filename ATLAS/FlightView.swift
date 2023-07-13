@@ -54,7 +54,7 @@ struct FlightView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
                             .ignoresSafeArea()
-                        AtlasSearchView()
+                        AISearchView()
                             .tag(NavigationEnumeration.AtlasSearchScreen)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .toolbar(.hidden, for: .tabBar)
