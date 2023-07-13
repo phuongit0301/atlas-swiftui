@@ -23,25 +23,6 @@ struct FlightPlanMETARTAFView: View {
     let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
 
     var body: some View {
-        // fetch flight plan data
-        let flightPlanData: [String : Any] = fetchFlightPlanData()
-        let flightInfoData: InfoData = flightPlanData["infoData"] as! InfoData
-        let flightRouteData: RouteData = flightPlanData["routeData"] as! RouteData
-        let metarTafData: MetarTafData = flightPlanData["metarTafData"] as! MetarTafData
-        let depMetar = metarTafData.depMetar
-        let depTaf = metarTafData.depTaf
-        let arrMetar = metarTafData.arrMetar
-        let arrTaf = metarTafData.arrTaf
-        
-        // set up altn table data
-        let altnTafData: [AltnTafData] = metarTafData.altnTaf
-        @State var altnTafTable: [altnTaf] = altnTafData.map { item in
-            return altnTaf(
-                altnRwy: item.altnRwy,
-                eta: item.eta,
-                taf: item.taf
-            )
-        }
 
         VStack(alignment: .leading) {
             // fixed header section, todo clean up design
@@ -51,7 +32,7 @@ struct FlightPlanMETARTAFView: View {
                     .padding(.leading, 30)
             }
             .padding(.bottom, 10)
-            Text("Plan \(flightInfoData.planNo) | Last updated 0820LT")
+            Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
             .padding(.leading, 30)
             .padding(.bottom, 10)
             
