@@ -173,8 +173,8 @@ struct FlightPlanSummaryView: View {
        
         // MARK: fuel calculations
         var calculatedDelayFuelValue: Int {
-            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"] ?? "0") {
-                return selectedArrDelays * temp
+            if let unit = Int(coreDataModel.dataFuelDataList.unwrappedHold["unit"] ?? "0") {
+                return selectedArrDelays * unit
             }
             
             return 0
@@ -203,8 +203,8 @@ struct FlightPlanSummaryView: View {
         }
                
         var calculatedTaxiFuelValue: Int {
-            if let temp = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
-                return calculatedTaxiFuelValue * temp
+            if let unit = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
+                return selectedTaxi * unit
             }
             
             return 0
