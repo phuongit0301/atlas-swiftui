@@ -995,7 +995,7 @@ class CoreDataModelState: ObservableObject {
             newObject.vws = item.vws
             newObject.zfrq = item.zfrq
             newObject.afrm = item.afrm
-            newObject.cord = item.cord
+            newObject.cord = item.Cord
             newObject.msa = item.Msa
             newObject.dis = item.Dis
             newObject.diff = item.Diff

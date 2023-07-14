@@ -123,6 +123,7 @@ class ViewModelSummary: ObservableObject {
     @Published var list = [Int: String]()
     @Published var listString = [String: String]()
     @Published var field: String = ""
+    @Published var showSheet: Bool = false
 }
 
 struct Field: View {
@@ -414,7 +415,7 @@ struct IEnrouteDataResponseModel: Decodable {
     var vws: String?
     var zfrq: String?
     var afrm: String?
-    var cord: String?
+    var Cord: String?
     var Msa: String?
     var Dis: String?
     var Diff: String?

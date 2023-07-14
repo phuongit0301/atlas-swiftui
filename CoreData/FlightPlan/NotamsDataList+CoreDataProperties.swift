@@ -28,7 +28,6 @@ extension NotamsDataList {
         if let depNotams = depNotams {
             do {
                 if let arr = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(depNotams) as? [[String: String]] {
-                  print("arr=====>\(arr)")
                 return arr
               }
           } catch {

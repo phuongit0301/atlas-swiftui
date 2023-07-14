@@ -20,6 +20,7 @@ struct ATLASApp: App {
     @StateObject var searchModelSplitState = SearchModelSplitState()
     @StateObject var fpModelSplitState = FPModelSplitState()
     @StateObject var coreDataModel = CoreDataModelState()
+    @StateObject var viewModelSummary = ViewModelSummary()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -42,6 +43,7 @@ struct ATLASApp: App {
                 .environmentObject(mainNavModelState)
                 .environmentObject(flightNoteModelState)
                 .environmentObject(searchModelSplitState)
+                .environmentObject(viewModelSummary)
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)

@@ -10,7 +10,7 @@ import SwiftUI
 struct ModalPicker: View {
     @Binding var selectionOutput: Int
     @Binding var isShowing: Bool
-    @State var selection: Int = 0
+    @Binding var selection: Int
     @Binding var target: String
     @State var items: ClosedRange<Int> = 0...120
     @State var header = ""

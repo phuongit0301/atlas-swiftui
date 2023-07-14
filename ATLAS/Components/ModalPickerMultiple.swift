@@ -13,8 +13,8 @@ struct ModalPickerMultiple: View {
     @Binding var target: String
     @State var onSelectOutput: (_ selection1: Int, _ selection2: Int) -> Void
     
-    @State var selection1: Int = 0
-    @State var selection2: Int = 0
+    @Binding var selection1: Int
+    @Binding var selection2: Int
     
     @State var header = ""
     @State var items1: ClosedRange<Int> = 0...120

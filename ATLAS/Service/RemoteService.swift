@@ -120,7 +120,6 @@ class RemoteService: ObservableObject {
             //make request
             var request = URLRequest(url: url)
             let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-            let strParam = String(data: postData ?? Data(), encoding: .utf8)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             request.httpBody = postData
@@ -134,11 +133,8 @@ class RemoteService: ObservableObject {
                     DispatchQueue.main.async {
                         guard let response = response as? HTTPURLResponse else { return }
                         if response.statusCode == 200 {
-                            do {
-                                completion(true)
-                            } catch let error {
-                                print("Error decoding: ", error)
-                            }
+                            print("Update successfully")
+                            completion(true)
                         }
                     }
                 }

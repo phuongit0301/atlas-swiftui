@@ -36,7 +36,6 @@
 		3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2B2A270851008017FA /* taxiChart.swift */; };
 		3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */; };
 		3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */; };
-		3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */; };
 		3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */; };
 		3E3FCC412A270851008017FA /* enrWXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC302A270851008017FA /* enrWXView.swift */; };
 		3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC312A270851008017FA /* flightLevelView.swift */; };
@@ -47,7 +46,6 @@
 		3E3FCC472A270851008017FA /* taxiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC362A270851008017FA /* taxiView.swift */; };
 		3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC372A270851008017FA /* projArrDelaysChart.swift */; };
 		3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC382A270851008017FA /* trackMilesView.swift */; };
-		3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */; };
 		3E3FCC502A28822A008017FA /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC4F2A28822A008017FA /* NavigationModel.swift */; };
 		3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC512A2C1954008017FA /* AppDelegate.swift */; };
 		3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCC542A2C199C008017FA /* SceneSessionKey.swift */; };
@@ -274,7 +272,6 @@
 		3E3FCC2B2A270851008017FA /* taxiChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiChart.swift; sourceTree = "<group>"; };
 		3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = historicalDelaysChart.swift; sourceTree = "<group>"; };
 		3E3FCC2D2A270851008017FA /* fuelCustomClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelCustomClasses.swift; sourceTree = "<group>"; };
-		3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryCard.swift; sourceTree = "<group>"; };
 		3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = projArrDelaysView.swift; sourceTree = "<group>"; };
 		3E3FCC302A270851008017FA /* enrWXView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enrWXView.swift; sourceTree = "<group>"; };
 		3E3FCC312A270851008017FA /* flightLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flightLevelView.swift; sourceTree = "<group>"; };
@@ -285,7 +282,6 @@
 		3E3FCC362A270851008017FA /* taxiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taxiView.swift; sourceTree = "<group>"; };
 		3E3FCC372A270851008017FA /* projArrDelaysChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = projArrDelaysChart.swift; sourceTree = "<group>"; };
 		3E3FCC382A270851008017FA /* trackMilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = trackMilesView.swift; sourceTree = "<group>"; };
-		3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fuelSummaryView.swift; sourceTree = "<group>"; };
 		3E3FCC4F2A28822A008017FA /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
 		3E3FCC512A2C1954008017FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E3FCC542A2C199C008017FA /* SceneSessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSessionKey.swift; sourceTree = "<group>"; };
@@ -1024,10 +1020,8 @@
 		C5A8DE002A4E8C700045EB32 /* ChartViews */ = {
 			isa = PBXGroup;
 			children = (
-				3E3FCC3A2A270851008017FA /* fuelSummaryView.swift */,
 				3E3FCC2B2A270851008017FA /* taxiChart.swift */,
 				3E3FCC2C2A270851008017FA /* historicalDelaysChart.swift */,
-				3E3FCC2E2A270851008017FA /* fuelSummaryCard.swift */,
 				3E3FCC2F2A270851008017FA /* projArrDelaysView.swift */,
 				3E3FCC302A270851008017FA /* enrWXView.swift */,
 				3E3FCC312A270851008017FA /* flightLevelView.swift */,
@@ -1236,7 +1230,6 @@
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				C580EA242A48251500E3E8D6 /* FlightPlanNOTAMView.swift in Sources */,
-				3E3FCC3F2A270851008017FA /* fuelSummaryCard.swift in Sources */,
 				3E766FA72A5F914200B11616 /* AISearchSegmented.swift in Sources */,
 				3E4A36A12A570BA800027C61 /* AltnDataList+CoreDataClass.swift in Sources */,
 				3E4A36D62A5AA04400027C61 /* TaxiTimesList+CoreDataProperties.swift in Sources */,
@@ -1259,7 +1252,6 @@
 				C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */,
 				3E4A36A02A570BA800027C61 /* PerfInfoList+CoreDataClass.swift in Sources */,
 				3E4A37732A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift in Sources */,
-				3E3FCC4B2A270851008017FA /* fuelSummaryView.swift in Sources */,
 				3EFA5F032A41DB82001ED6CF /* OverviewSplitView.swift in Sources */,
 				3EFA5EF22A3DFC6E001ED6CF /* FlightInformationView.swift in Sources */,
 				3E4A36602A56EAE800027C61 /* AltnTafDataList+CoreDataClass.swift in Sources */,
