@@ -115,6 +115,41 @@ class RemoteService: ObservableObject {
             }
     }
     
+    func updateFuelData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_update_flightPlan_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+            let strParam = String(data: postData ?? Data(), encoding: .utf8)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            request.httpBody = postData
+            
+            do {
+                let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let error = error {
+                        print("Request error: ", error)
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        guard let response = response as? HTTPURLResponse else { return }
+                        if response.statusCode == 200 {
+                            do {
+                                completion(true)
+                            } catch let error {
+                                print("Error decoding: ", error)
+                            }
+                        }
+                    }
+                }
+                
+                dataTask.resume()
+            } catch {
+                completion(false)
+                print("Error: \(error)")
+            }
+    }
+    
     func load<T: Decodable>(_ filename: String) -> T {
         let data: Data
 

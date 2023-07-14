@@ -142,6 +142,7 @@ struct FlightPlanSummaryView: View {
 
     @Environment(\.modelContext) private var context
     @Query var fuelPageData: [FuelPageData]
+    @State var showSheet = false
     
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
@@ -765,11 +766,11 @@ struct FlightPlanSummaryView: View {
                                                         //                                                    }.navigationBarBackButtonHidden()
                                                         //                                                    .navigationBarHidden(true)
                                                         //                                                    .buttonStyle(.plain)
-                                                        Text("Details").foregroundStyle(Color.blue)
-                                                            .onTapGesture {
-                                                                isActive = true
-                                                            }
-                                                        
+                                                        Button(action: {
+                                                            showSheet = true
+                                                        }, label: {
+                                                            Text("Details").foregroundStyle(Color.blue)
+                                                        })
                                                         
                                                     }.frame(width: calculateWidth(proxy.size.width - 598, 3), alignment: .leading)
                                                         .padding(.horizontal)
@@ -1228,6 +1229,14 @@ struct FlightPlanSummaryView: View {
                         )
                 }
             }.navigationViewStyle(StackNavigationViewStyle())
+                .fullScreenCover(isPresented: $showSheet) {
+                    FuelView()
+                        .breadCrumbRef(NavigationEnumeration.FuelScreen, NavigationEnumeration.FlightPlanScreen)
+                        .navigationBarBackButtonHidden()
+                        .navigationBarHidden(true)
+                        .ignoresSafeArea()
+                    .interactiveDismissDisabled(true)
+                }
             .onAppear {
                 self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
                 self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays

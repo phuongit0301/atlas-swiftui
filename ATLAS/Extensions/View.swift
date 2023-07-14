@@ -58,6 +58,12 @@ extension View {
                       to: nil, from: nil, for: nil)
             }
         }
+    
+    func onAppWentToBackground(perform action: @escaping () -> Void) -> some View {
+        self.onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+          action()
+        }
+      }
 }
 
 extension String {

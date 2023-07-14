@@ -409,23 +409,23 @@ struct IEnrouteDataResponseModel: Decodable {
     var afl: String?
     var oat: String?
     var adn: String?
-    var awind: String?
+    var aWind: String?
     var tas: String?
     var vws: String?
     var zfrq: String?
     var afrm: String?
     var cord: String?
-    var msa: String?
-    var dis: String?
-    var diff: String?
-    var pfl: String?
-    var imt: String?
-    var pdn: String?
-    var fwind: String?
-    var gsp: String?
-    var drm: String?
-    var pfrm: String?
-    var fdiff: String?
+    var Msa: String?
+    var Dis: String?
+    var Diff: String?
+    var Pfl: String?
+    var Imt: String?
+    var Pdn: String?
+    var fWind: String?
+    var Gsp: String?
+    var Drm: String?
+    var Pfrm: String?
+    var fDiff: String?
 }
 
 struct IFlightPlanDataModel: Decodable {

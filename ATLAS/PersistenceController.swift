@@ -142,6 +142,8 @@ class CoreDataModelState: ObservableObject {
     // For Fuel Chart
     @Published var dataProjDelays: ProjDelaysList!
     
+    @Published var isUpdating: Bool = false
+    
     init() {
         dataFPEnroute = readEnrouteList()
         
@@ -975,8 +977,8 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataEnroute(_ initDataEnroute: [IEnrouteDataResponseModel]) {
-        initDataEnroute.forEach { item in
+    func initDataEnroute(_ dataEnroute: [IEnrouteDataResponseModel]) {
+        dataEnroute.forEach { item in
             let newObject = EnrouteList(context: service.container.viewContext)
             
             newObject.id = UUID()
@@ -988,23 +990,23 @@ class CoreDataModelState: ObservableObject {
             newObject.afl = item.afl
             newObject.oat = item.oat
             newObject.adn = item.adn
-            newObject.awind = item.awind
+            newObject.awind = item.aWind
             newObject.tas = item.tas
             newObject.vws = item.vws
             newObject.zfrq = item.zfrq
             newObject.afrm = item.afrm
             newObject.cord = item.cord
-            newObject.msa = item.msa
-            newObject.dis = item.dis
-            newObject.diff = item.diff
-            newObject.pfl = item.pfl
-            newObject.imt = item.imt
-            newObject.pdn = item.pdn
-            newObject.fwind = item.fwind
-            newObject.gsp = item.gsp
-            newObject.drm = item.drm
-            newObject.pfrm = item.pfrm
-            newObject.fdiff = item.fdiff
+            newObject.msa = item.Msa
+            newObject.dis = item.Dis
+            newObject.diff = item.Diff
+            newObject.pfl = item.Pfl
+            newObject.imt = item.Imt
+            newObject.pdn = item.Pdn
+            newObject.fwind = item.fWind
+            newObject.gsp = item.Gsp
+            newObject.drm = item.Drm
+            newObject.pfrm = item.Pfrm
+            newObject.fdiff = item.fDiff
             
             service.container.viewContext.performAndWait {
                 do {
@@ -2716,6 +2718,152 @@ class CoreDataModelState: ObservableObject {
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
 
+        }
+    }
+    
+    func updateFlightPlan() {
+        Task {
+            // do your job here
+            
+            let summaryPageData = [
+                "pob": dataSummaryInfo.pob,
+                "perActualZFW": dataFlightPlan?.perActualZFW,
+                "perActualTOW": dataFlightPlan?.perActualTOW,
+                "perActualLDW": dataFlightPlan?.perActualLDW,
+                "includedArrDelays": dataFuelExtra.includedArrDelays,
+                "includedFlightLevel": dataFuelExtra.includedFlightLevel,
+                "includedEnrWx": dataFuelExtra.includedEnrWx,
+                "includedReciprocalRwy": dataFuelExtra.includedReciprocalRwy,
+                "includedTaxi": dataFuelExtra.includedTaxi,
+                "includedTrackShortening": dataFuelExtra.includedTrackShortening,
+                "includedZFWchange": dataFuelExtra.includedZFWchange,
+                "includedOthers": dataFuelExtra.includedOthers,
+                "selectedArrDelays": dataFuelExtra.selectedArrDelays,
+                "selectedTaxi": dataFuelExtra.selectedTaxi,
+                "selectedTrackShortening": dataFuelExtra.selectedTrackShortening,
+                "selectedFlightLevel000": dataFuelExtra.selectedFlightLevel000,
+                "selectedFlightLevel00": dataFuelExtra.selectedFlightLevel00,
+                "selectedEnrWx": dataFuelExtra.selectedEnrWx,
+                "selectedReciprocalRwy": dataFuelExtra.selectedReciprocalRwy,
+                "selectedOthers000": dataFuelExtra.selectedOthers000,
+                "selectedOthers00": dataFuelExtra.selectedOthers00,
+                "remarkArrDelays": dataFuelExtra.remarkArrDelays,
+                "remarkTaxi": dataFuelExtra.remarkTaxi,
+                "remarkFlightLevel": dataFuelExtra.remarkFlightLevel,
+                "remarkTrackShortening": dataFuelExtra.remarkTrackShortening,
+                "remarkEnrWx": dataFuelExtra.remarkEnrWx,
+                "remarkReciprocalRwy": dataFuelExtra.remarkReciprocalRwy,
+                "remarkZFWChange": dataFuelExtra.remarkZFWChange,
+                "remarkOthers": dataFuelExtra.remarkOthers
+            ]
+            
+            let departurePageData = [
+                "atis": [
+                    "code": dataDepartureAtis.unwrappedCode,
+                    "time": dataDepartureAtis.unwrappedTime,
+                    "rwy": dataDepartureAtis.unwrappedRwy,
+                    "translvl": dataDepartureAtis.unwrappedRranslvl,
+                    "wind": dataDepartureAtis.unwrappedWind,
+                    "vis": dataDepartureAtis.unwrappedVis,
+                    "wx": dataDepartureAtis.unwrappedWx,
+                    "cloud": dataDepartureAtis.unwrappedCloud,
+                    "temp": dataDepartureAtis.unwrappedTemp,
+                    "dp": dataDepartureAtis.unwrappedDp,
+                    "qnh": dataDepartureAtis.unwrappedQnh,
+                    "remarks": dataDepartureAtis.unwrappedRemarks
+                ],
+                "atc": [
+                    "atcDep": dataDepartureAtc.unwrappedAtcDep,
+                    "atcSQ": dataDepartureAtc.unwrappedAtcSQ,
+                    "atcRte": dataDepartureAtc.unwrappedAtcRte,
+                    "atcFL": dataDepartureAtc.unwrappedAtcFL,
+                    "atcRwy": dataDepartureAtc.unwrappedAtcRwy
+                ],
+                "entries": [
+                    "entOff": dataDepartureEntries.unwrappedEntOff,
+                    "entFuelInTanks": dataDepartureEntries.unwrappedEntFuelInTanks,
+                    "entTaxi": dataDepartureEntries.unwrappedEntTaxi,
+                    "entTakeoff": dataDepartureEntries.unwrappedEntTakeoff
+                ]
+            ]
+            
+            var enroutePageData = []
+            
+            dataFPEnroute.forEach { item in
+                enroutePageData.append([
+                    "Cord": item.unwrappedCord,
+//                    "Cord": "N1341.2 E10044.99999",
+                    "Diff": item.unwrappedDiff,
+                    "Dis": item.unwrappedDis,
+                    "Drm": item.unwrappedDrm,
+                    "Gsp": item.unwrappedGsp,
+                    "Imt": item.unwrappedImt,
+                    "Msa": item.unwrappedMsa,
+                    "Pdn": item.unwrappedPdn,
+                    "Pfl": item.unwrappedPfl,
+                    "Pfrm": item.unwrappedPfrm,
+                    "aWind": item.unwrappedAwind,
+                    "actm": item.unwrappedActm,
+                    "adn": item.unwrappedAdn,
+                    "afl": item.unwrappedAfl,
+                    "afrm": item.unwrappedAfrm,
+                    "ata": item.unwrappedAta,
+                    "eta": item.unwrappedEta,
+                    "fDiff": item.unwrappedFdiff,
+                    "fWind": item.unwrappedFwind,
+                    "oat": item.unwrappedOat,
+                    "posn": item.unwrappedPosn,
+                    "tas": item.unwrappedTas,
+                    "vws": item.unwrappedVws,
+                    "zfrq": item.unwrappedZfrq,
+                    "ztm": item.unwrappedZtm
+                ])
+            }
+            
+            let arrivalPageData = [
+                "atis": [
+                    "code": dataArrivalAtis.unwrappedCode,
+                    "time": dataArrivalAtis.unwrappedTime,
+                    "rwy": dataArrivalAtis.unwrappedRwy,
+                    "translvl": dataArrivalAtis.unwrappedTransLvl,
+                    "wind": dataArrivalAtis.unwrappedWind,
+                    "vis": dataArrivalAtis.unwrappedVis,
+                    "wx": dataArrivalAtis.unwrappedWx,
+                    "cloud": dataArrivalAtis.unwrappedCloud,
+                    "temp": dataArrivalAtis.unwrappedTemp,
+                    "dp": dataArrivalAtis.unwrappedDp,
+                    "qnh": dataArrivalAtis.unwrappedQnh,
+                    "remarks": dataArrivalAtis.unwrappedRemarks
+                ],
+                "atc": [
+                    "atcDest": dataArrivalAtc.unwrappedAtcDest,
+                    "atcRwy": dataArrivalAtc.unwrappedAtcRwy,
+                    "atcArr": dataArrivalAtc.unwrappedAtcArr,
+                    "atcTransLvl": dataArrivalAtc.unwrappedAtcTransLvl
+                ],
+                "entries": [
+                    "entLdg": dataArrivalEntries.unwrappedEntLdg,
+                    "entFuelOnChocks": dataArrivalEntries.unwrappedEntFuelOnChocks,
+                    "entOn": dataArrivalEntries.unwrappedEntOn
+                ]
+            ]
+            
+            let payload = [
+                "company": "Test Company",
+                "fltno": dataSummaryInfo.unwrappedPlanNo,
+                "flightDate": dataSummaryInfo.unwrappedFlightDate,
+                "summaryPageData": summaryPageData,
+                "departurePageData": departurePageData,
+                "enroutePageData": enroutePageData,
+                "arrivalPageData": arrivalPageData
+            ]
+            isUpdating = true
+            
+            await self.remoteService.updateFuelData(payload, completion: { success in
+                if(success) {
+                    self.isUpdating = false
+                }
+            })
         }
     }
 }

@@ -33,6 +33,9 @@ struct ATLASApp: App {
                     ContentView()
                 }
             }
+            .onAppWentToBackground {
+                coreDataModel.updateFlightPlan()
+            }
             .environmentObject(network)
                 .environmentObject(tabModelState)
                 .environmentObject(sideMenuModelState)
