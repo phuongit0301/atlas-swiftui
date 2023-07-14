@@ -233,7 +233,7 @@ struct CustomField: View {
     @State var field = ""
     
     var body: some View {
-        TextField("Enter remarks (optional)", text: $field)
+        TextField("Enter actual weight", text: $field)
             .onSubmit {
                 item.actual = field
                 coreDataModel.save()

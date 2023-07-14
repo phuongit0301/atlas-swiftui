@@ -25,7 +25,7 @@ struct ArrivalDelayView: View {
         let projDelaysResponse = fuelPageData.first!.projDelays
         let historicalDelaysResponse = fuelPageData.first!.historicalDelays
         
-        WidthThresholdReader(widthThreshold: 520) { proxy in
+        WidthThresholdReader(widthThreshold: 800) { proxy in
             ScrollView(.vertical) {
                 VStack(spacing: 16) {
                     Text("Arrival Delay") // TODO adjust font and size and add fuel selector sync with flight plan fuel table
