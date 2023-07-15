@@ -154,7 +154,7 @@ class CoreDataModelState: ObservableObject {
                         if let waypointsData = data?.waypointsData {
                             self.initDataEnroute(waypointsData)
                         }
-                        
+
                         if let infoData = data?.infoData {
                             self.initDataSummaryInfo(infoData)
                         }
@@ -1037,10 +1037,10 @@ class CoreDataModelState: ObservableObject {
         newObj.depICAO = infoData.depICAO
         newObj.destICAO = infoData.destICAO
         newObj.flightDate = infoData.flightDate
-        newObj.stdUTC = infoData.stdUTC
-        newObj.staUTC = infoData.staUTC
-        newObj.stdLocal = infoData.stdLocal
-        newObj.staLocal = infoData.staLocal
+        newObj.stdUTC = infoData.STDUTC
+        newObj.staUTC = infoData.STAUTC
+        newObj.stdLocal = infoData.STDLocal
+        newObj.staLocal = infoData.STALocal
         newObj.blkTime = infoData.blkTime
         newObj.fltTime = infoData.fltTime
         
@@ -1092,7 +1092,7 @@ class CoreDataModelState: ObservableObject {
         newObj.crzComp = perfData.crzComp
         newObj.apd = perfData.apd
         newObj.ci = perfData.ci
-        newObj.zfwChange = perfData.zfwChange
+        newObj.zfwChange = perfData.minus_zfwChange
         newObj.lvlChange = perfData.lvlChange
         newObj.planZFW = perfData.planZFW
         newObj.maxZFW = perfData.maxZFW
@@ -1128,8 +1128,8 @@ class CoreDataModelState: ObservableObject {
         newObj.crzComp = perfData.crzComp
         newObj.apd = perfData.apd
         newObj.ci = perfData.ci
-        newObj.zfwChange = "M1000KG BURN LESS \(perfData.zfwChange)KG"
-        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange)KG"
+        newObj.zfwChange = "M1000KG BURN LESS \(perfData.minus_zfwChange!)KG"
+        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange!)KG"
         
         do {
             // Persist the data in this managed object context to the underlying store
@@ -1148,9 +1148,9 @@ class CoreDataModelState: ObservableObject {
     
     func initDataPerfWeight(_ perfData: IPerfDataResponseModel) {
         let perfWeightsTable = [
-            perfWeights(weight: "ZFW", plan: "\(perfData.planZFW)", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
-            perfWeights(weight: "TOW", plan: "\(perfData.planTOW)", actual: "", max: "\(perfData.maxTOW)", limitation: perfData.limTOW ?? ""),
-            perfWeights(weight: "LDW", plan: "\(perfData.planLDW)", actual: "", max: "\(perfData.maxLDW)", limitation: perfData.limLDW ?? ""),
+            perfWeights(weight: "ZFW", plan: perfData.planZFW ?? "", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
+            perfWeights(weight: "TOW", plan: perfData.planTOW ?? "", actual: "", max: perfData.maxTOW ?? "", limitation: perfData.limTOW ?? ""),
+            perfWeights(weight: "LDW", plan: perfData.planLDW ?? "", actual: "", max: perfData.maxLDW ?? "", limitation: perfData.limLDW ?? ""),
         ]
         
         perfWeightsTable.forEach { item in
@@ -1795,7 +1795,7 @@ class CoreDataModelState: ObservableObject {
                 
                 // Init data performance change table
                 if let item = response.first {
-                    perfChangesTable = [perfChanges(zfwChange: "M1000KG BURN LESS \(item.unwrappedZfwChange)KG", lvlChange: "P2000FT BURN LESS \(item.unwrappedLvlChange)KG")]
+                    perfChangesTable = [perfChanges(zfwChange: item.unwrappedZfwChange, lvlChange: item.unwrappedLvlChange)]
                 }
             }
         } catch {

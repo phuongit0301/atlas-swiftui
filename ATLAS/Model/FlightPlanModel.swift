@@ -334,10 +334,10 @@ struct IInfoDataResponseModel: Decodable {
     var fltNo: String?
     var fltTime: String?
     var planNo: String?
-    var staLocal: String?
-    var staUTC: String?
-    var stdLocal: String?
-    var stdUTC: String?
+    var STALocal: String?
+    var STAUTC: String?
+    var STDLocal: String?
+    var STDUTC: String?
     var tailNo: String?
     var pob: String?
 }
@@ -381,6 +381,7 @@ struct IPerfDataResponseModel: Decodable {
     var apd: String?
     var ci: String?
     var zfwChange: String?
+    var minus_zfwChange: String?
     var lvlChange: String?
     var planZFW: String?
     var maxZFW: String?

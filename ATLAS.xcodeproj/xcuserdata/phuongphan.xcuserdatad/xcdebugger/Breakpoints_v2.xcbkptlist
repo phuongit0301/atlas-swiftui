@@ -2379,8 +2379,8 @@
             filePath = "ATLAS/Model/FlightPlanModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "389"
-            endingLineNumber = "389"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "IPerfDataResponseModel"
             landmarkType = "14">
             <Locations>
@@ -2901,38 +2901,6 @@
             endingLineNumber = "2203"
             landmarkName = "initProjDelays(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "74AE7236-D5F5-48D3-B438-A710C2D71E74 - 2429b100e2bd6340"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ATLAS.CoreDataModelState.initProjDelays(ATLAS.IProjDelaysModel) -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2202"
-                  endingLineNumber = "2202"
-                  offsetFromSymbolStart = "380">
-               </Location>
-               <Location
-                  uuid = "74AE7236-D5F5-48D3-B438-A710C2D71E74 - 2429b100e2bd6302"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ATLAS.CoreDataModelState.initProjDelays(ATLAS.IProjDelaysModel) -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2204"
-                  endingLineNumber = "2204"
-                  offsetFromSymbolStart = "380">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4023,8 +3991,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1387"
-            endingLineNumber = "1387"
+            startingLineNumber = "1385"
+            endingLineNumber = "1385"
             landmarkName = "onToggleArrDelays()"
             landmarkType = "7">
             <Locations>
@@ -4071,8 +4039,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1288"
-            endingLineNumber = "1288"
+            startingLineNumber = "1286"
+            endingLineNumber = "1286"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -4119,8 +4087,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1276"
-            endingLineNumber = "1276"
+            startingLineNumber = "1274"
+            endingLineNumber = "1274"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -4306,8 +4274,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1275"
-            endingLineNumber = "1275"
+            startingLineNumber = "1273"
+            endingLineNumber = "1273"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -4322,13 +4290,13 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1272"
-            endingLineNumber = "1272"
+            startingLineNumber = "1270"
+            endingLineNumber = "1270"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "75B1B7D5-B7D1-4311-A9EB-4DF3663FAA7A - 6eb1a6844da4da27"
+                  uuid = "75B1B7D5-B7D1-4311-A9EB-4DF3663FAA7A - 6eb1a6844da4db82"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4338,12 +4306,12 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1273"
-                  endingLineNumber = "1273"
-                  offsetFromSymbolStart = "736">
+                  startingLineNumber = "1270"
+                  endingLineNumber = "1270"
+                  offsetFromSymbolStart = "396">
                </Location>
                <Location
-                  uuid = "75B1B7D5-B7D1-4311-A9EB-4DF3663FAA7A - 6eb1a6844da4da40"
+                  uuid = "75B1B7D5-B7D1-4311-A9EB-4DF3663FAA7A - 6eb1a6844da4db82"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4353,11 +4321,91 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1272"
-                  endingLineNumber = "1272"
+                  startingLineNumber = "1270"
+                  endingLineNumber = "1270"
                   offsetFromSymbolStart = "736">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD878460-38A0-4EBA-9501-A8BD63394F85"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4B53B487-8153-4558-B0DE-B69849BE79FE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/PersistenceController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2000"
+            endingLineNumber = "2000"
+            landmarkName = "calculatedZFWFuel()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4B53B487-8153-4558-B0DE-B69849BE79FE - 6b19f250b06e05e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.CoreDataModelState.calculatedZFWFuel() -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2000"
+                  endingLineNumber = "2000"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "4B53B487-8153-4558-B0DE-B69849BE79FE - 6be865b7f7f93e67"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (ATLAS.PerfWeightList) -&gt; Swift.Bool in ATLAS.CoreDataModelState.calculatedZFWFuel() -&gt; Swift.Int"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2000"
+                  endingLineNumber = "2000"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "165B0248-24C6-4BD8-B1DB-E7B6D43F6034"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/PersistenceController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2001"
+            endingLineNumber = "2001"
+            landmarkName = "calculatedZFWFuel()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -198,11 +198,11 @@ struct FlightPlanSummaryView: View {
         
         var includedDelayFuel: [String: Any] {
             if includedArrDelays && calculatedDelayFuelValue > 0 {
-                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelArrivalDelayRemark
-                if remarks == "" {
+                let remarks = coreDataModel.dataFuelExtra?.unwrappedRemarkArrDelays
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG);"]
                 } else {
-                    return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG, \(remarks));"]
+                    return ["fuel": calculatedDelayFuelValue, "time": selectedArrDelays, "remarks": "Arrival Delays (\(calculatedDelayFuel)KG, \(remarks!));"]
                 }
             } else {
                 return ["fuel": 0, "time": 0, "remarks": ""]
@@ -228,8 +228,8 @@ struct FlightPlanSummaryView: View {
         }
         var includedTaxiFuel: [String: Any] {
             if includedTaxi && calculatedTaxiFuelValue > 0 {
-                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelAdditionalTaxiRemark
-                if remarks == "" {
+                let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkTaxi
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedTaxiFuelValue, "time": selectedTaxi, "remarks": "Additional Taxi Time (\(calculatedTaxiFuel)KG);"]
                 } else {
                     return ["fuel": calculatedTaxiFuelValue, "time": selectedTaxi, "remarks": "Additional Taxi Time (\(calculatedTaxiFuel)KG, \(remarks));"]
@@ -256,8 +256,8 @@ struct FlightPlanSummaryView: View {
         }
         var includedFlightLevelFuel: [String: Any] {
             if includedFlightLevel && calculatedFlightLevelFuelValue != 0 {
-                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelFlightLevelRemark
-                if remarks == "" {
+                let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation (\(calculatedFlightLevelFuel)KG);"]
                 } else {
                     return ["fuel": calculatedFlightLevelFuelValue, "remarks": "Flight Level Deviation (\(calculatedFlightLevelFuel)KG, \(remarks));"]
@@ -286,9 +286,9 @@ struct FlightPlanSummaryView: View {
         }
         var includedTrackShorteningFuel: [String: Any] {
             if includedTrackShortening {
-                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelTrackShorteningRemark
+                let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening
                 if calculatedTrackShorteningFuelValue < 0 {
-                    if remarks == "" {
+                    if remarks == "" || remarks == nil {
                         return ["fuel": calculatedTrackShorteningFuelValue, "time": selectedTrackShortening, "remarks": "Track Shortening Savings (\(calculatedTrackShorteningFuel)KG);"]
                     } else {
                         return ["fuel": calculatedTrackShorteningFuelValue, "time": selectedTrackShortening, "remarks": "Track Shortening Savings (\(calculatedTrackShorteningFuel)KG, \(remarks));"]
@@ -321,8 +321,8 @@ struct FlightPlanSummaryView: View {
         }
         var includedEnrWxFuel: [String: Any] {
             if includedEnrWx && calculatedEnrWxFuelValue > 0{
-                let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelEnrouteWeatherRemark
-                if remarks == "" {
+                let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedEnrWxFuelValue, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation (\(calculatedEnrWxFuel)KG);"]
                 } else {
                     return ["fuel": calculatedEnrWxFuelValue, "time": selectedEnrWx, "remarks": "Enroute Weather Deviation (\(calculatedEnrWxFuel)KG, \(remarks));"]
@@ -351,15 +351,15 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedReciprocalRwyFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelReciprocalRemark
+            let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy
             if (includedReciprocalRwy && selectedReciprocalRwy > 0) {
-                if remarks == "" {
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy (\(calculatedReciprocalRwyFuel)KG);"]
                 } else {
                     return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy (\(calculatedReciprocalRwyFuel)KG, \(remarks));"]
                 }
             } else if (includedReciprocalRwy && selectedReciprocalRwy < 0) {
-                if remarks == "" {
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy Savings (\(calculatedReciprocalRwyFuel)KG);"]
                 } else {
                     return ["fuel": calculatedReciprocalRwyFuelValue, "time": selectedReciprocalRwy, "remarks": "Reciprocal Rwy Savings (\(calculatedReciprocalRwyFuel)KG, \(remarks);"]
@@ -378,9 +378,9 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedZFWFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelZFWChangeRemark
+            let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange
             if (includedZFWchange && calculatedZFWFuelValue > 0) {
-                if remarks == "" {
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedZFWFuelValue, "remarks": "ZFW Increase (\(calculatedZFWFuel)KG);"]
                 } else {
                     return ["fuel": calculatedZFWFuelValue, "remarks": "ZFW Increase (\(calculatedZFWFuel)KG, \(remarks));"]
@@ -403,9 +403,9 @@ struct FlightPlanSummaryView: View {
             }
         }
         var includedOthersFuel: [String: Any] {
-            let remarks = coreDataModel.dataFlightPlan?.unwrappedFuelOtherRemark
+            let remarks = coreDataModel.dataFuelExtra.unwrappedRemarkOthers
             if includedOthers && calculatedOthersFuelValue > 0 {
-                if remarks == "" {
+                if remarks == "" || remarks == nil {
                     return ["fuel": calculatedOthersFuelValue, "remarks": "Others (\(calculatedOthersFuel)KG);"]
                 } else {
                     return ["fuel": calculatedOthersFuelValue, "remarks": "Others (\(calculatedOthersFuel)KG, \(remarks));"]
@@ -820,7 +820,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 HStack {
                                                     withAnimation(.linear) {
-                                                        ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "mins")
+                                                        ButtonStepper(onToggle: onToggleArrDelays, value: $selectedArrDelays, suffix: "mins").disabled(!includedArrDelays)
                                                     }
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
@@ -860,7 +860,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    ButtonStepper(onToggle: onToggleIncludedTaxi, value: $selectedTaxi, suffix: "mins")
+                                                    ButtonStepper(onToggle: onToggleIncludedTaxi, value: $selectedTaxi, suffix: "mins").disabled(!includedTaxi)
                                                     
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
@@ -908,7 +908,7 @@ struct FlightPlanSummaryView: View {
                                                 }
                                                 
                                                 HStack {
-                                                    ButtonStepperMultiple(onToggle: onToggleFlightLevel, value: $selectedFlightLevelPrint, suffix: "")
+                                                    ButtonStepperMultiple(onToggle: onToggleFlightLevel, value: $selectedFlightLevelPrint, suffix: "").disabled(!includedFlightLevel)
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
                                                 
@@ -948,7 +948,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    ButtonStepper(onToggle: onToggleTrackShortening, value: $selectedTrackShortening, suffix: "mins")
+                                                    ButtonStepper(onToggle: onToggleTrackShortening, value: $selectedTrackShortening, suffix: "mins").disabled(!includedTrackShortening)
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
                                                 
@@ -989,7 +989,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    ButtonStepper(onToggle: onToggleEnrWx, value: $selectedEnrWx, suffix: "mins")
+                                                    ButtonStepper(onToggle: onToggleEnrWx, value: $selectedEnrWx, suffix: "mins").disabled(!includedEnrWx)
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
                                                 
@@ -1033,7 +1033,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    ButtonStepper(onToggle: onToggleReciprocalRwy, value: $selectedReciprocalRwy, suffix: "mins")
+                                                    ButtonStepper(onToggle: onToggleReciprocalRwy, value: $selectedReciprocalRwy, suffix: "mins").disabled(!includedReciprocalRwy)
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
                                                 
@@ -1110,7 +1110,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    ButtonStepperMultiple(onToggle: onToggleOthers, value: $selectedOtherPrint, suffix: "")
+                                                    ButtonStepperMultiple(onToggle: onToggleOthers, value: $selectedOtherPrint, suffix: "").disabled(!includedOthers)
                                                     
                                                 }.frame(width: calculateWidth(proxy.size.width - 702, 3), alignment: .leading)
                                                     .padding(.horizontal, 32)
@@ -1235,7 +1235,7 @@ struct FlightPlanSummaryView: View {
 //                    }
 //                }
             }
-            .formSheet(isPresented: $showSheet) {
+            .sheet(isPresented: $showSheet) {
                 FuelView().edgesIgnoringSafeArea(.all)
                     .interactiveDismissDisabled(true)
             }
@@ -1250,7 +1250,7 @@ struct FlightPlanSummaryView: View {
                 self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
                 self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
                 
-                self.selectedArrDelays = Int(coreDataModel.dataFuelExtra.selectedArrDelays)
+                self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
                 self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
                 self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
                 self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
@@ -1263,8 +1263,6 @@ struct FlightPlanSummaryView: View {
                 self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
                 
                 self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
-                
-//                self.onCalculatedZFWFuel()
             }
             .onChange(of: selectionOutput) { newValue in
                 switch self.target {
@@ -1293,12 +1291,12 @@ struct FlightPlanSummaryView: View {
             .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
                 self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
             }
-            .sheet(isPresented: $isShowModal) {
+            .formSheet(isPresented: $isShowModal) {
                 ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: $selection, target: $target)
                     .presentationDetents([.medium])
                     .interactiveDismissDisabled(true)
             }
-            .sheet(isPresented: $isShowModalMultiple) {
+            .formSheet(isPresented: $isShowModalMultiple) {
                 ModalPickerMultiple(isShowing: $isShowModalMultiple, target: $target, onSelectOutput: onSelectOutput, selection1: $selection1, selection2: $selection2)
                     .presentationDetents([.medium])
                     .interactiveDismissDisabled(true)
