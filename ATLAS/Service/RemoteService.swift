@@ -133,6 +133,7 @@ class RemoteService: ObservableObject {
                     DispatchQueue.main.async {
                         guard let response = response as? HTTPURLResponse else { return }
                         if response.statusCode == 200 {
+                            print("data=========\(data)")
                             print("Update successfully")
                             completion(true)
                         }

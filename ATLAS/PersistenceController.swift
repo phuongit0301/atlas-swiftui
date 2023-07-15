@@ -2726,10 +2726,10 @@ class CoreDataModelState: ObservableObject {
             // do your job here
             
             let summaryPageData = [
-                "pob": dataSummaryInfo.pob,
-                "perActualZFW": dataFlightPlan?.perActualZFW,
-                "perActualTOW": dataFlightPlan?.perActualTOW,
-                "perActualLDW": dataFlightPlan?.perActualLDW,
+                "pob": dataSummaryInfo.pob ?? "",
+                "perActualZFW": dataFlightPlan?.perActualZFW ?? "",
+                "perActualTOW": dataFlightPlan?.perActualTOW ?? "",
+                "perActualLDW": dataFlightPlan?.perActualLDW ?? "",
                 "includedArrDelays": dataFuelExtra.includedArrDelays,
                 "includedFlightLevel": dataFuelExtra.includedFlightLevel,
                 "includedEnrWx": dataFuelExtra.includedEnrWx,
@@ -2792,7 +2792,6 @@ class CoreDataModelState: ObservableObject {
             dataFPEnroute.forEach { item in
                 enroutePageData.append([
                     "Cord": item.unwrappedCord,
-//                    "Cord": "N1341.2 E10044.99999",
                     "Diff": item.unwrappedDiff,
                     "Dis": item.unwrappedDis,
                     "Drm": item.unwrappedDrm,
