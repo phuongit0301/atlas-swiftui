@@ -138,7 +138,6 @@ struct FlightPlanSummaryView: View {
     @State private var perActualZFW: String = ""
     @State private var calculatedZFWFuelValue = 0
     
-    @State private var isActive: Bool = false
     @State var showSheet = false
 
     @Environment(\.modelContext) private var context
@@ -769,11 +768,16 @@ struct FlightPlanSummaryView: View {
                                                         //                                                    }.navigationBarBackButtonHidden()
                                                         //                                                    .navigationBarHidden(true)
                                                         //                                                    .buttonStyle(.plain)
-                                                        Button(action: {
+//                                                        Button(action: {
+//                                                            showSheet = true
+//                                                        }, label: {
+//                                                            Text("Details").foregroundStyle(Color.blue)
+//                                                        })
+                                                        Text("Details")
+                                                        .onTapGesture {
                                                             showSheet = true
-                                                        }, label: {
-                                                            Text("Details").foregroundStyle(Color.blue)
-                                                        })
+                                                        }
+                                                        .foregroundColor(.blue)
                                                         
                                                     }.frame(width: calculateWidth(proxy.size.width - 700, 3), alignment: .leading)
                                                         .padding(.horizontal)
@@ -1213,31 +1217,12 @@ struct FlightPlanSummaryView: View {
                         //                    Text("\(atcFlightPlan)")
                         //                        .padding(.leading, 25)
                         //                }
-                    }.keyboardAvoidView()
-//                        .background(
-//                            NavigationLink(destination:
-//                                            FuelView()
-//                                                .breadCrumbRef(NavigationEnumeration.FuelScreen, NavigationEnumeration.FlightPlanScreen)
-//                                                .navigationBarBackButtonHidden()
-//                                                .navigationBarHidden(true)
-//                                                .ignoresSafeArea()
-//                                           , isActive: $isActive
-//                                          ) { EmptyView() }
-//                        )
+                    }
+                    .keyboardAvoidView()
+                    .sheet(isPresented: $showSheet, content: {
+                        FuelModal(isShowing: $showSheet).interactiveDismissDisabled(true)
+                    })
                 }
-//                if showSheet {
-//                    ModalView(isPresented: $showSheet) {
-//                        FuelView()
-//                            .navigationBarBackButtonHidden()
-//                            .navigationBarHidden(true)
-//                            .ignoresSafeArea()
-//                            .interactiveDismissDisabled(true)
-//                    }
-//                }
-            }
-            .sheet(isPresented: $showSheet) {
-                FuelView().edgesIgnoringSafeArea(.all)
-                    .interactiveDismissDisabled(true)
             }
             .onAppear {
                 self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
@@ -1472,3 +1457,32 @@ struct FlightPlanSummaryView: View {
     }
 }
 
+// todo @phuong customise Modal view per figma
+struct FuelModal: View {
+    @Binding var isShowing: Bool
+    
+    var body: some View {
+        VStack {
+            HStack(alignment: .center) {
+                Spacer()
+                
+                Text("Fuel Statistics").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                
+                Spacer()
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                }
+            }.padding()
+                .background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
+            
+            FuelView()
+        }
+    }
+    
+    func dismiss() {
+        // Call this function to dismiss the modal todo add dismiss function
+    }
+}

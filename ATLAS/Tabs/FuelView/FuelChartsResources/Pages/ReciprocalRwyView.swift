@@ -44,7 +44,7 @@ struct ReciprocalRunwayView: View {
                         }.fixedSize()
                     }.padding()
                         .background(.white)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 1))
                 }.padding()
                 

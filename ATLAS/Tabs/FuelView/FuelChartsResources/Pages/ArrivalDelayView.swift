@@ -32,7 +32,7 @@ struct ArrivalDelayView: View {
         let projDelaysResponse = fuelPageData.first!.projDelays
         let historicalDelaysResponse = fuelPageData.first!.historicalDelays
         
-        WidthThresholdReader(widthThreshold: 520) { proxy in
+        WidthThresholdReader(widthThreshold: 800) { proxy in
             VStack {
                 HStack {
                     HStack {
@@ -45,7 +45,7 @@ struct ArrivalDelayView: View {
                         }.fixedSize()
                     }.padding()
                     .background(.white)
-                    .cornerRadius(16)
+                    .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 1))
                 }.padding()
                 
@@ -62,7 +62,6 @@ struct ArrivalDelayView: View {
                                     historicalDelaysView(convertedJSON: historicalDelaysResponse)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-//                                .fixedSize(horizontal: false, vertical: true)
                                 .padding([.horizontal, .bottom], 16)
                                 .frame(maxWidth: .infinity)
                             }
