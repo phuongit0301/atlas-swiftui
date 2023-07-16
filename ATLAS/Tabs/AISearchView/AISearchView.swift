@@ -10,15 +10,17 @@ import SwiftUI
 
 struct AISearchView: View {
     @EnvironmentObject var network: Network
+    @Environment(\.modelContext) var context
     
     @State private var like = Status.normal
     @State private var flag: Bool = false
     @State private var showLoading: Bool = false
-    @State private var firstLoading: Bool = true
+    @State var pasteboard = UIPasteboard.general
     // For Search
     @State private var txtSearch: String = ""
     
     @State private var message = ""
+    @State private var itemCurrent: SDAISearchModel?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -45,8 +47,10 @@ struct AISearchView: View {
                             }
                             TextField("Search", text: $txtSearch)
                                 .onSubmit {
-                                    message = ""
-                                    onSearch()
+                                    if txtSearch != "" {
+                                        message = ""
+                                        onSearch()
+                                    }
                                 }
                                 .font(.custom("Inter-Regular", size: 16))
                                 .padding(13)
@@ -83,6 +87,159 @@ struct AISearchView: View {
                             .stroke(.white, lineWidth: 1)
                     )
                     
+                    HStack {
+                        HStack {
+                            Button(action: {
+                                if message == "" {
+                                    return
+                                }
+                                
+                                if like == Status.like {
+                                    self.like = Status.normal
+                                } else {
+                                    self.like = Status.like
+                                }
+                            }) {
+                                if like == Status.like {
+                                    Image(systemName: "hand.thumbsup.fill")
+                                        .foregroundColor(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "hand.thumbsup")
+                                        .foregroundColor(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                
+                            }
+                            
+                            Button(action: {
+                                if message == "" {
+                                    return
+                                }
+                                
+                                if like == Status.dislike {
+                                    self.like = Status.normal
+                                } else {
+                                    self.like = Status.dislike
+                                }
+                            }) {
+                                if like == Status.dislike {
+                                    Image(systemName: "hand.thumbsdown.fill")
+                                        .foregroundColor(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "hand.thumbsdown")
+                                        .foregroundColor(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }
+                            
+                            Button {
+                                if message == "" {
+                                    return
+                                }
+                                
+                                self.flag.toggle()
+                            } label: {
+                                if self.flag {
+                                    Image(systemName: "flag.fill")
+                                        .tint(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "flag")
+                                        .tint(Color.theme.azure)
+                                        .frame(width: 24, height: 24)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }
+                        }//group icons
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Button(action: {
+                                if txtSearch != "" {
+                                    self.message = ""
+
+                                    self.showLoading = true
+                                    onSearch()
+                                }
+                            }) {
+                                Text("Regenerate")
+                                    .font(.system(size: 17, weight: .regular))
+                                    .foregroundColor(Color.theme.azure)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.theme.azure, lineWidth: 0)
+                                    )
+                                
+                                if showLoading {
+                                    ActivityIndicator(shouldAnimate: self.$showLoading)
+                                }
+                            }.disabled(self.showLoading)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.white)
+                                .cornerRadius(12)
+                                .border(Color.theme.azure, width: 1, cornerRadius: 12)
+                            
+                            Button(action: {
+                                pasteboard.string = message
+                            }) {
+                                Text("Copy")
+                                    .font(.system(size: 17, weight: .regular))
+                                    .foregroundColor(Color.white)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.init(
+                                                Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 0)
+                                    )
+                            }.disabled(self.showLoading)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.theme.azure)
+                                .cornerRadius(12)
+                                .border(Color.theme.azure, width: 1, cornerRadius: 12)
+                            
+                            Button(action: {
+                                if let item = itemCurrent {
+                                    item.isFavorite = true
+                                }
+                            }) {
+                                Text("Save to Reference")
+                                    .font(.system(size: 17, weight: .regular))
+                                    .foregroundColor(Color.theme.azure)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.theme.azure, lineWidth: 0)
+                                    )
+                            }.disabled(self.showLoading)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.white)
+                                .cornerRadius(12)
+                                .border(Color.theme.azure, width: 1, cornerRadius: 12)
+                        }//group button
+                    }
+                    
+                    Spacer()
                 }
             }.padding(16)
                 .background(Color.white)
@@ -99,6 +256,11 @@ struct AISearchView: View {
             
             withAnimation {
                 message = network.dataSearch.result
+                let result = SDAISearchModel(id: UUID(), question: txtSearch, answer: message, isFavorite: false, creationDate: Date())
+                
+                context.insert(object: result)
+                
+                self.itemCurrent = result
             }
         }, onFailure: { error in
             self.showLoading = false

@@ -312,9 +312,9 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
         return AnyView(
-            AISearchView()
+            AISearchContainerView()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -340,7 +340,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.NotamDetailScreen {
         return AnyView(
-            NotamDetailView()
+            FlightPlanNOTAMView()
                 .navigationBarBackButtonHidden()
                 .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)

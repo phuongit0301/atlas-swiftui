@@ -58,7 +58,7 @@ struct ATLASApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
         }
-        .modelContainer(for: FuelPageData.self)
+        .modelContainer(for: [FuelPageData.self, SDAISearchModel.self])
         .handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )

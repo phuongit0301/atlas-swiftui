@@ -365,12 +365,12 @@ struct INotamsDataChildResponseModel: Decodable {
 }
 
 struct INotamsDataResponseModel: Decodable {
-//    var depNotams: [INotamsDataChildResponseModel]
-//    var enrNotams: [INotamsDataChildResponseModel]
-//    var arrNotams: [INotamsDataChildResponseModel]
-    var depNotams: [[String: String]]
-    var enrNotams: [[String: String]]
-    var arrNotams: [[String: String]]
+    var depNotams: [INotamsDataChildResponseModel]
+    var enrNotams: [INotamsDataChildResponseModel]
+    var arrNotams: [INotamsDataChildResponseModel]
+//    var depNotams: [[String: String]]
+//    var enrNotams: [[String: String]]
+//    var arrNotams: [[String: String]]
 }
 
 struct IPerfDataResponseModel: Decodable {

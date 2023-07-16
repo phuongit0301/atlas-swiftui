@@ -29,7 +29,8 @@ class RemoteService: ObservableObject {
             let requestBody = [
                 "company": "Test Company",
                 "flight_no": "TR753",
-                "flightDate": "2023-07-08"
+                "flightDate": "2023-07-14"
+//                "flightDate": "2023-07-08"
             ]
             
             do {

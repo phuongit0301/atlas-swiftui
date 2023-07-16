@@ -106,7 +106,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAltnList: [AltnDataList] = []
     
     // For NoTams
-    @Published var dataNotams: NotamsDataList!
+    @Published var dataNotams: [NotamsDataList] = []
     @Published var existDataNotams: Bool = false
     
     // For Metar Taf
@@ -237,81 +237,17 @@ class CoreDataModelState: ObservableObject {
         readArrivalAtc()
         readArrivalAtis()
         readArrivalEntries()
-        readDataNotamsList()
+        dataNotams = readDataNotamsList()
         readDataMetarTafList()
         dataAltnTaf = readDataAltnTafList()
     }
     
     func checkAndSyncData() async {
         let response = read()
-//        dataFPEnroute = readEnrouteList()
-//        dataSummaryInfo = readSummaryInfo()
-//        dataSummaryRoute = readSummaryRoute()
-//        dataPerfData = readPerfData()
-//        dataPerfInfo = readPerfInfo()
-//        dataPerfWeight = readPerfWeight()
-//        dataFuelTableList = readFuelTableList()
-//        dataFuelExtra = readFuelExtra()
-//        dataAltnList = readAltnList()
-//        dataNotams = readDataNotamsList()
-//        dataMetarTaf = readDataMetarTafList()
-//        dataAltnTaf = readDataAltnTafList()
         
         if response.count == 0 {
-            //            initDataTag()
             initData()
         }
-        
-//        if dataFPEnroute.count == 0 {
-//            initDataEnrouteLocal()
-//            dataFPEnroute = readEnrouteList()
-//        }
-//
-//        if !existDataSummaryInfo {
-//            initDataSummaryInfoLocal()
-//            dataSummaryInfo = readSummaryInfo()
-//        }
-//
-//        if !existDataSummaryRoute {
-//            initDataSummaryRouteLocal()
-//            dataSummaryRoute = readSummaryRoute()
-//        }
-//
-//        if !existDataPerfData {
-//            initDataPerfDataLocal()
-//            dataPerfData = readPerfData()
-//        }
-//
-//        if !existDataPerfInfo {
-//            initDataPerfInfoLocal()
-//            dataPerfInfo = readPerfInfo()
-//        }
-//
-//        if !existDataPerfWeight {
-//            initDataPerfWeightLocal()
-//            dataPerfWeight = readPerfWeight()
-//        }
-//
-//        if dataFuelTableList.count == 0 {
-//            initDataFuelListLocal()
-//            dataFuelTableList = readFuelTableList()
-//        }
-//
-//        if dataAltnList.count == 0 {
-//            initDataAltnLocal()
-//            dataAltnList = readAltnList()
-//        }
-//
-//        if !existDataNotams {
-//            initDataNotamsLocal()
-//            dataNotams = readDataNotamsList()
-//        }
-//
-//        if !existDataMetarTaf || dataAltnTaf.count == 0 {
-//            initDataTafLocal()
-//            readDataMetarTafList()
-//            readDataAltnTafList()
-//        }
     }
     
     func initDataTag() {
@@ -482,334 +418,6 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataEnrouteLocal() {
-        let newObject1 = EnrouteList(context: service.container.viewContext)
-        
-        newObject1.id = UUID()
-        newObject1.posn = "A"
-        newObject1.actm = "somestring"
-        newObject1.ztm = "00:05"
-        newObject1.eta = "0130"
-        newObject1.ata =  "0135"
-        newObject1.afl = "220"
-        newObject1.oat = "M59"
-        newObject1.adn = "somestring"
-        newObject1.awind =  "25015"
-        newObject1.tas = "somestring"
-        newObject1.vws = "somestring"
-        newObject1.zfrq = "0.3"
-        newObject1.afrm = "086.9"
-        newObject1.cord = "somestring"
-        newObject1.msa = "somestring"
-        newObject1.dis = "somestring"
-        newObject1.diff = "somestring"
-        newObject1.pfl = "somestring"
-        newObject1.imt = "somestring"
-        newObject1.pdn = "somestring"
-        newObject1.fwind = "somestring"
-        newObject1.gsp = "somestring"
-        newObject1.drm = "somestring"
-        newObject1.pfrm = "086.9"
-        newObject1.fdiff = "somestring"
-        
-        let newObject2 = EnrouteList(context: service.container.viewContext)
-        newObject2.posn = "B"
-        newObject2.actm = "somestring"
-        newObject2.ztm = "00:02"
-        newObject2.eta = "0135"
-        newObject2.ata =  "0140"
-        newObject2.afl = "230"
-        newObject2.oat = "M60"
-        newObject2.adn = "somestring"
-        newObject2.awind =  "26527"
-        newObject2.tas = "somestring"
-        newObject2.vws = "7"
-        newObject2.zfrq = "0.2"
-        newObject2.afrm = "086.6"
-        newObject2.cord = "somestring"
-        newObject2.msa = "100*"
-        newObject2.dis = "somestring"
-        newObject2.diff = "somestring"
-        newObject2.pfl = "somestring"
-        newObject2.imt = "somestring"
-        newObject2.pdn = "somestring"
-        newObject2.fwind = "somestring"
-        newObject2.gsp = "somestring"
-        newObject2.drm = "somestring"
-        newObject2.pfrm = "086.6"
-        newObject2.fdiff = "somestring"
-        
-        let newObject3 = EnrouteList(context: service.container.viewContext)
-        newObject3.posn = "C"
-        newObject3.actm = "somestring"
-        newObject3.ztm = "00:03"
-        newObject3.eta = "0140"
-        newObject3.ata =  "0145"
-        newObject3.afl = "240"
-        newObject3.oat = "M61"
-        newObject3.adn = "somestring"
-        newObject3.awind =  "27018"
-        newObject3.tas = "somestring"
-        newObject3.vws = "somestring"
-        newObject3.zfrq = "0.4"
-        newObject3.afrm = "086.3"
-        newObject3.cord = "somestring"
-        newObject3.msa = "70"
-        newObject3.dis = "somestring"
-        newObject3.diff = "somestring"
-        newObject3.pfl = "somestring"
-        newObject3.imt = "somestring"
-        newObject3.pdn = "somestring"
-        newObject3.fwind = "somestring"
-        newObject3.gsp = "somestring"
-        newObject3.drm = "somestring"
-        newObject3.pfrm = "086.3"
-        newObject3.fdiff = "somestring"
-        
-        let newObject4 = EnrouteList(context: service.container.viewContext)
-        newObject4.posn = "D"
-        newObject4.actm = "somestring"
-        newObject4.ztm = "00:01"
-        newObject4.eta = "0145"
-        newObject4.ata =  "0150"
-        newObject4.afl = "250"
-        newObject4.oat = "M62"
-        newObject4.adn = "somestring"
-        newObject4.awind =  "28019"
-        newObject4.tas = "somestring"
-        newObject4.vws = "3"
-        newObject4.zfrq = "0.5"
-        newObject4.afrm = "086.2"
-        newObject4.cord = "somestring"
-        newObject4.msa = "somestring"
-        newObject4.dis = "somestring"
-        newObject4.diff = "somestring"
-        newObject4.pfl = "somestring"
-        newObject4.imt = "somestring"
-        newObject4.pdn = "somestring"
-        newObject4.fwind = "somestring"
-        newObject4.gsp = "somestring"
-        newObject4.drm = "somestring"
-        newObject4.pfrm = "086.2"
-        newObject4.fdiff = "somestring"
-        
-        service.container.viewContext.performAndWait {
-            do {
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-                print("saved successfully")
-            } catch {
-                // Something went wrong 😭
-                print("Failed to save: \(error)")
-                // Rollback any changes in the managed object context
-                service.container.viewContext.rollback()
-                
-            }
-        }
-    }
-    
-    func initDataSummaryInfoLocal() {
-        let newObj = SummaryInfoList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.planNo = "20"
-        newObj.fltNo = "SQ123"
-        newObj.tailNo = "9VSHM"
-        newObj.dep = "SIN"
-        newObj.dest = "BER"
-        newObj.depICAO = "WSSS"
-        newObj.destICAO = "EDDB"
-        newObj.flightDate = "040723"
-        newObj.stdUTC = "04 08:00"
-        newObj.staUTC = "04 17:00"
-        newObj.stdLocal = "04 10:00"
-        newObj.staLocal = "04 21:00"
-        newObj.blkTime = "09:00"
-        newObj.fltTime = "08:45"
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataSummaryRouteLocal() {
-        let newObj = SummaryRouteList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.routeNo = "SINBER91"
-        newObj.route = "WSSS/20L AKOMA DCT AKMET DCT AROSO Y513 KALIL Y504 BILIK G582 PUGER P574 UDULO P574 TOTOX L555 TOLDA M628 PEKEM M628 MIGMA M550 MEVDO  Y511 PMA V22 YEN L300 LXR P751 KATAB B12 DBA L613 TANSA UL617 KEA UG33 KOROS UN133 PEREN UL863 EVIVI DCT OKANA DCT TONDO DCT BEGLA DCT LOKVU DCT LEGAZ DCT BEFRE T204 TEXTI T204 NUKRO DCT EDDB/25L"
-        newObj.depRwy = "WSSS/20L"
-        newObj.arrRwy = "EDDB/25L"
-        newObj.levels = "SIN/360/UDULO/380/PEKEM/390/MIGMA/400/KEA/410/KOROS/430/TEXTI/380"
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved summary route successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataPerfDataLocal() {
-        let newObj = PerfDataList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.fltRules = perfData.fltRules
-        newObj.gndMiles = perfData.gndMiles
-        newObj.airMiles = perfData.airMiles
-        newObj.crzComp = perfData.crzComp
-        newObj.apd = perfData.apd
-        newObj.ci = perfData.ci
-        newObj.zfwChange = perfData.zfwChange
-        newObj.lvlChange = perfData.lvlChange
-        newObj.planZFW = perfData.planZFW
-        newObj.maxZFW = perfData.maxZFW
-        newObj.limZFW = perfData.limZFW
-        newObj.planTOW = perfData.planTOW
-        newObj.maxTOW = perfData.maxTOW
-        newObj.limTOW = perfData.limTOW
-        newObj.planLDW = perfData.planLDW
-        newObj.maxLDW = perfData.maxLDW
-        newObj.limLDW = perfData.limLDW
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved perf info successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataPerfInfoLocal() {
-        let newObj = PerfInfoList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.fltRules = perfData.fltRules
-        newObj.gndMiles = perfData.gndMiles
-        newObj.airMiles = perfData.airMiles
-        newObj.crzComp = perfData.crzComp
-        newObj.apd = perfData.apd
-        newObj.ci = perfData.ci
-        newObj.zfwChange = "M1000KG BURN LESS \(perfData.zfwChange)KG"
-        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange)KG"
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved perf info successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataPerfWeightLocal() {
-        let perfWeightsTable = [
-            perfWeights(weight: "ZFW", plan: perfData.planZFW, actual: "", max: perfData.maxZFW, limitation: perfData.limZFW),
-            perfWeights(weight: "TOW", plan: perfData.planTOW, actual: "", max: perfData.maxTOW, limitation: perfData.limTOW),
-            perfWeights(weight: "LDW", plan: perfData.planLDW, actual: "", max: perfData.maxLDW, limitation: perfData.limLDW),
-        ]
-        
-        perfWeightsTable.forEach { item in
-            let newObj = PerfWeightList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.weight = item.weight
-            newObj.plan = item.plan
-            newObj.actual = ""
-            newObj.max = item.max
-            newObj.limitation = item.limitation
-            
-            service.container.viewContext.performAndWait {
-                do {
-                    try service.container.viewContext.save()
-                    print("saved perf weight successfully")
-                } catch {
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-        }
-    }
-    
-    func initDataFuelListLocal() {
-        let fuelData = FuelData(burnoff: ["time": "14:21", "fuel": "076157", "unit": "100"], cont: ["time": "00:34", "fuel": "003000", "policy": "5%"], altn: ["time": "00:42", "fuel": "003279", "unit": "100"], hold: ["time": "00:30", "fuel": "002031", "unit": "100"], topup60: ["time": "00:00", "fuel": "000000"], taxi: ["time": "N.A", "fuel": "000500", "policy": "7mins std taxi time", "unit": "100"], planReq: ["time": "16:07", "fuel": "084967"], dispAdd: ["time": "00:10", "fuel": "000600", "policy": "PER COMPANY POLICY FOR SINBER FLIGHTS"])
-        
-        let fuelTable = [
-            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"]!, fuel: fuelData.burnoff["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"]!, fuel: fuelData.cont["fuel"]!, policy_reason: fuelData.cont["policy"]!),
-            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"]!, fuel: fuelData.altn["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"]!, fuel: fuelData.hold["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"]!, fuel: fuelData.topup60["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"]!, fuel: fuelData.taxi["fuel"]!, policy_reason: fuelData.taxi["policy"]!),
-            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"]!, fuel: fuelData.planReq["fuel"]!, policy_reason: ""),
-            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"]!, fuel: fuelData.dispAdd["fuel"]!, policy_reason: fuelData.dispAdd["policy"]!)
-        ]
-        
-        do {
-            let newFuelData = FuelDataList(context: service.container.viewContext)
-            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
-            
-            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
-            
-            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
-            
-            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
-            
-            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
-            
-            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
-            
-            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
-            
-            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
-        } catch {
-            print("failed to archive array with error: \(error)")
-        }
-        
-        fuelTable.forEach { item in
-            let newObj = FuelTableList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.firstColumn = item.firstColumn
-            newObj.time = item.time
-            newObj.fuel = item.fuel
-            newObj.policyReason = item.policy_reason
-            
-            service.container.viewContext.performAndWait {
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved perf weight successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-        }
-        
-        dataFuelTableList = readFuelTableList()
-    }
     
     func save() {
         if service.container.viewContext.hasChanges {
@@ -841,140 +449,6 @@ class CoreDataModelState: ObservableObject {
         
         // return results
         return data
-    }
-    
-    func initDataAltnLocal() {
-        let altnData = [
-            AltnData(altnRwy: "EDDH/15", rte: "EDDB SOGMA1N SOGMA M748 RARUP T909 HAM DCT", vis: "1600", minima: "670", dist: "0190", fl: "220", comp: "M015", time: "0042", fuel: "03279"),
-            AltnData(altnRwy: "EDDK/32R", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y221 EBANA T841 ERNEP ERNEP1C", vis: "1600", minima: "800", dist: "0270", fl: "280", comp: "M017", time: "0055", fuel: "04269"),
-            AltnData(altnRwy: "EDDL/05L", rte: "EDDB POVEL1N POVEL DCT EXOBA DCT HMM T851 HALME HALME1X", vis: "1600", minima: "550", dist: "0301", fl: "320", comp: "M018", time: "0057", fuel: "04512"),
-            AltnData(altnRwy: "EDDF/25L", rte: "EDDB ODLUN1N ODLUN DCT ORTAG DCT ERSIL Y222 FUL T152 KERAX KERAX3A", vis: "1600", minima: "940", dist: "0246", fl: "280", comp: "M014", time: "0049", fuel: "03914")
-        ]
-        
-        altnData.forEach { item in
-            let newObj = AltnDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.altnRwy = item.altnRwy
-            newObj.rte = item.rte
-            newObj.vis = item.vis
-            newObj.minima = item.minima
-            newObj.dist = item.dist
-            newObj.fl = item.fl
-            newObj.comp = item.comp
-            newObj.time = item.time
-            newObj.fuel = item.fuel
-        }
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved perf weight successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataNotamsLocal() {
-        let notamsData = NotamsData(depNotams: ["""
-            A1333/23 NOTAMN
-            Q) WSJC/QMXLC/IV/BO/A/000/999/0122N10359E005
-            A) WSSS B) 2306161700 C) 2306292100
-            D) JUN 16 17 20 22 23 24 27 29 1700-2100
-            E) FLW TWY CLSD DUE TO WIP:
-            1) TWY J BTN TWY T AND TWY J12, INCLUDING JUNCTION OF TWY J/TWY J12
-            AND JUNCTION OF TWY J/TWY B
-            2) TWY K BTN TWY T AND TWY J12, INCLUDING JUNCTION OF TWY K/TWY J12
-            AND JUNCTION OF TWY K/TWY B
-            3) TWY K1, TWY K2 AND TWY K3
-            """], enrNotams: ["""
-            B0157/23
-            Q) EDXX/QAFXX/IV/NBO/E/000/999/5123N01019E262
-            A) EDWW  A) EDGG  A) EDMM  B) FROM: 23/02/28 14:29  TO: 23/05/25 23:59 EST
-            E) MILITARY INVASION OF UKRAINE BY RUSSIAN FEDERATION:
-            
-            NOTE 1: ALL AIRCRAFT OWNED, CHARTERED OR OPERATED BY CITIZENS OF THE
-            RUSSIAN FEDERATION OR OTHERWISE CONTROLLED BY NATURAL OR LEGAL
-            PERSONS OR ENTITY FROM THE RUSSIAN FEDERATION AND OPERATORS HOLDING
-            AIR OPERATOR CERTIFICATE (AOC) ISSUED BY THE RUSSIAN FEDERATION
-            AUTHORITIES ARE PROHIBITED TO ENTER, EXIT OR OVERFLY GERMAN AIRSPACE
-            EXCEPT HUMANITARIAN FLIGHTS WITH THE PERMISSION OF THE GERMAN
-            MINISTRY FOR DIGITAL AND TRANSPORT AND IN CASE OF EMERGENCY LANDING
-            OR EMERGENCY OVERFLIGHT. REQUESTS FOR HUMANITARIAN FLIGHTS SHALL BE
-            SENT TO HUM-FLIGHTS(AT)DFS.DE WITH DATE, EOBT, ADEP AND ADES.
-            END PART 1 OF 2
-            """], arrNotams: ["""
-            A2143/23
-            Q) EDWW/QNVAS/IV/BO/AE/000/999/5225N01408E025
-            A) EDDB  B) FROM: 23/05/09 10:21  TO: 23/05/11 15:00 EST
-            E) FUERSTENWALDE VOR/DME FWE 113.30MHZ/CH80X, VOR PART OUT OF
-            SERVICE
-            """])
-        
-        do {
-            let newObj = NotamsDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.depNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.depNotams, requiringSecureCoding: true)
-            newObj.enrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.enrNotams, requiringSecureCoding: true)
-            newObj.arrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.arrNotams, requiringSecureCoding: true)
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            print("saved notams successfully")
-        } catch {
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataTafLocal() {
-        let metarTafData = MetarTafData(depMetar: "METAR WSSS 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", depTaf: "TAF WSSS 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", arrMetar: "METAR EDDB 161320Z AUTO 30011KT 9999 3100 -SHRA SCT026 BKN040 FEW///CB 17/13 Q1015 RESHRA TEMPO SHRA", arrTaf: "TAF EDDB 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015", altnTaf: [
-            AltnTafData(altnRwy: "EDDH/15", eta: "1742", taf: "TAF EDDH 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
-            AltnTafData(altnRwy: "EDDK/32R", eta: "1755", taf: "TAF EDDK 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
-            AltnTafData(altnRwy: "EDDL/05L", eta: "1757", taf: "TAF EDDL 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015"),
-            AltnTafData(altnRwy: "EDDF/25L", eta: "1749", taf: "TAF EDDF 161100Z 1612/1712 31009KT 9999 SCT020 BKN030 PROB40 TEMPO 1612/1620 31015G25KT 3000 TSRA BKN025CB BECMG 1617/1619 28004KT TEMPO 1620/1624 BKN012 BECMG 1700/1702 BKN010 PROB30 TEMPO 1701/1706 4000 BR BKN005 BECMG 1706/1709 BKN015")
-        ])
-        
-        do {
-            let newObj = MetarTafDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.depMetar = metarTafData.depMetar
-            newObj.depTaf = metarTafData.depTaf
-            newObj.arrMetar = metarTafData.arrMetar
-            newObj.arrTaf = metarTafData.arrTaf
-            try service.container.viewContext.save()
-            
-            print("saved Metar Taf successfully")
-        } catch {
-            print("Failed to save: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-        
-        
-        service.container.viewContext.performAndWait {
-            metarTafData.altnTaf.forEach { item in
-                do {
-                    let newObj1 = AltnTafDataList(context: service.container.viewContext)
-                    newObj1.id = UUID()
-                    newObj1.altnRwy = item.altnRwy
-                    newObj1.eta = item.eta
-                    newObj1.taf = item.taf
-                    try service.container.viewContext.save()
-                    print("saved altn taf successfully")
-                } catch {
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-        }
     }
     
     func initDataEnroute(_ dataEnroute: [IEnrouteDataResponseModel]) {
@@ -1273,15 +747,63 @@ class CoreDataModelState: ObservableObject {
     
     func initDataNotams(_ notamsData: INotamsDataResponseModel) {
         do {
-            let newObj = NotamsDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.depNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.depNotams, requiringSecureCoding: true)
-            newObj.enrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.enrNotams, requiringSecureCoding: true)
-            newObj.arrNotams = try NSKeyedArchiver.archivedData(withRootObject: notamsData.arrNotams, requiringSecureCoding: true)
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            existDataNotams = true
-            print("saved notams successfully")
+            notamsData.depNotams.forEach { item in
+                let newObj = NotamsDataList(context: self.service.container.viewContext)
+                newObj.id = UUID()
+                newObj.type = "depNotams"
+                newObj.notam = item.notam
+                newObj.date = item.date
+                newObj.rank = item.rank
+                newObj.isChecked = false
+                self.service.container.viewContext.performAndWait {
+                    do {
+                        try self.service.container.viewContext.save()
+                        print("saved notams successfully")
+                    } catch {
+                        print("Failed to Notams depNotams save: \(error)")
+                    }
+                    
+                }
+            }
+            
+            notamsData.arrNotams.forEach { item in
+                let newObj = NotamsDataList(context: self.service.container.viewContext)
+                newObj.id = UUID()
+                newObj.type = "arrNotams"
+                newObj.notam = item.notam
+                newObj.date = item.date
+                newObj.rank = item.rank
+                newObj.isChecked = false
+                self.service.container.viewContext.performAndWait {
+                    do {
+                        try self.service.container.viewContext.save()
+                        print("saved notams successfully")
+                    } catch {
+                        print("Failed to Notams arrNotams save: \(error)")
+                    }
+                    
+                }
+            }
+            
+            notamsData.enrNotams.forEach { item in
+                let newObj = NotamsDataList(context: self.service.container.viewContext)
+                newObj.id = UUID()
+                newObj.type = "enrNotams"
+                newObj.notam = item.notam
+                newObj.date = item.date
+                newObj.rank = item.rank
+                newObj.isChecked = false
+                self.service.container.viewContext.performAndWait {
+                    do {
+                        try self.service.container.viewContext.save()
+                        print("saved notams successfully")
+                    } catch {
+                        print("Failed to Notams enrNotams save: \(error)")
+                    }
+                    
+                }
+            }
+            
         } catch {
             print("Failed to Notams save: \(error)")
             existDataNotams = false
@@ -1949,19 +1471,20 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readDataNotamsList() {
+    func readDataNotamsList() -> [NotamsDataList] {
+        var data: [NotamsDataList] = []
+        
         let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
         do {
             let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
-                if let item = response.first {
-                    dataNotams = item
-                    existDataNotams = true
-                }
+                data = response
             }
         } catch {
             print("Could not fetch notams from Core Data.")
         }
+        
+        return data
     }
     
     func readDataMetarTafList() {

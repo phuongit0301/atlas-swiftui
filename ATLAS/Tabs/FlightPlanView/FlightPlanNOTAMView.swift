@@ -15,13 +15,11 @@ struct FlightPlanNOTAMView: View {
     @State private var isSortDateDep = true
     @State private var isSortDateEnr = true
     @State private var isSortDateArr = true
-    @State var sortedDepNotams: [[String: Any]] = [["date": "", "notam": "", "rank": ""]]
+    @State var arrDepNotams = [NotamsDataList]()
+    @State var arrEnrNotams = [NotamsDataList]()
+    @State var arrArrNotams = [NotamsDataList]()
 
     var body: some View {
-        // here we sort the notams according to the toogle selection
-//        var sortedDepNotams: [[String: Any]] = sortNotams(notamsDict: coreDataModel.dataNotams.unwrappedDepNotams, sortKey: isSortDateDep)
-        let sortedEnrNotams: [[String: Any]] = sortNotams(notamsDict: coreDataModel.dataNotams.unwrappedEnrNotams, sortKey: isSortDateEnr)
-        let sortedArrNotams: [[String: Any]] = sortNotams(notamsDict: coreDataModel.dataNotams.unwrappedArrNotams, sortKey: isSortDateArr)
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
                 Text("NOTAMS")
@@ -29,18 +27,18 @@ struct FlightPlanNOTAMView: View {
                     .padding(.leading, 30)
             }
             .padding(.bottom, 10)
+            
             Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
-            .padding(.leading, 30)
-            .padding(.bottom, 10)
+                .padding(.leading, 30)
+                .padding(.bottom, 10)
             //scrollable outer list section
             List {
                 // Dep NOTAM section
                 Section(header:
                     HStack {
                         Text("DEP NOTAMS").foregroundStyle(Color.black)
-                        // toggle to sort by rank or date
+                        Spacer().frame(maxWidth: .infinity)
                         HStack {
-                            Spacer()
                             Toggle(isOn: $isSortDateDep) {
                                 Text("Most Relevant")
                                     .font(.subheadline)
@@ -49,177 +47,139 @@ struct FlightPlanNOTAMView: View {
                             Text("Most Recent")
                                 .font(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
-                        
-//                        Button(action: {
-//                            coreDataModel.dataNotams.isDepReference.toggle()
-//                            coreDataModel.save()
-//                            
-//                            coreDataModel.readDataNotamsList()
-//                        }) {
-//                            if coreDataModel.dataNotams.isDepReference {
-//                                Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-//                            } else {
-//                                Image(systemName: "star").foregroundColor(Color.theme.azure)
-//                            }
-//                        }
+                        }.padding(.horizontal).fixedSize()
                     }
                 ) {
-                    ForEach(sortedDepNotams.indices, id: \.self) { index in
+                    ForEach(arrDepNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(sortedDepNotams[index]["notam"] as! String)
-                                .padding(.leading, 25)
+                            Text(item.unwrappedNotam).padding(.leading, 25)
                             Spacer()
                             // star function to add to reference
                             Button(action: {
-                                if let item = sortedDepNotams[index]["isActive"] {
-                                    if Bool("\(item)")! {
-                                        sortedDepNotams[index]["isActive"] = false
-                                    } else {
-                                        sortedDepNotams[index]["isActive"] = true
-                                    }
-                                } else {
-                                    sortedDepNotams[index]["isActive"] = true
-                                }
+                                item.isChecked.toggle()
                                 coreDataModel.save()
-                                coreDataModel.readDataNotamsList()
+                                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
                             }) {
-                                if let item = sortedDepNotams[index]["isActive"] {
-                                    if Bool("\(item)")! {
-                                        Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                    } else {
-                                        Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                    }
+                                if item.isChecked {
+                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
                                 } else {
                                     Image(systemName: "star").foregroundColor(Color.theme.azure)
                                 }
-                            }
+                            }.fixedSize()
                         }
                     }
                 }
                 // Enr NOTAM section
-//                Section(header:
-//                        HStack {
-//                            Text("ENROUTE NOTAMS").foregroundStyle(Color.black)
-//                            Spacer()
-//                            // toggle to sort by rank or date
-//                            Text("Most Relevant")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-//                            Toggle(isOn: $isSortDateEnr) {
-//                            Text("Most Relevant")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-//                            }
-//                            Text("Most Recent")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-////                            Button(action: {
-////                                coreDataModel.dataNotams.isEnrReference.toggle()
-////                                coreDataModel.save()
-////                                
-////                                coreDataModel.readDataNotamsList()
-////                            }) {
-////                                if coreDataModel.dataNotams.isEnrReference {
-////                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-////                                } else {
-////                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
-////                                }
-////                            }
-//                        }
-//                    ) {
-////                    ForEach(coreDataModel.dataNotams.unwrappedEnrNotams, id: \.self) { notam in
-////                        Text(notam["notam"] ?? "")
-////                            .padding(.leading, 25)
-////                    }
-//                    ForEach(sortedEnrNotams, id: \.self) { notam in
-//                        VStack {
-//                            // notam text
-//                            Text(notam)
-//                                .padding(.leading, 25)
-//                            // star function to add to reference
-//                            Button(action: {
-//                                coreDataModel.dataNotams.isDepReference.toggle()
-//                                coreDataModel.save()
-//                                
-//                                coreDataModel.readDataNotamsList()
-//                            }) {
-//                                if coreDataModel.dataNotams.isDepReference {
-//                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-//                                } else {
-//                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                // Arr NOTAM section
-//                Section(header:
-//                        HStack {
-//                            Text("ARR NOTAMS").foregroundStyle(Color.black)
-//                            Spacer()
-//                            // toggle to sort by rank or date
-//                            Text("Most Relevant")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-//                            Toggle(isOn: $isSortDateArr) {
-//                            Text("Most Relevant")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-//                            }
-//                            Text("Most Recent")
-//                                .font(.subheadline)
-//                                .frame(maxWidth: .infinity, alignment: .trailing)
-////                            Button(action: {
-////                                coreDataModel.dataNotams.isArrReference.toggle()
-////                                coreDataModel.save()
-////                                
-////                                coreDataModel.readDataNotamsList()
-////                            }) {
-////                                if coreDataModel.dataNotams.isArrReference {
-////                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-////                                } else {
-////                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
-////                                }
-////                            }
-//                        }
-//                    ) {
-////                    ForEach(coreDataModel.dataNotams.unwrappedArrNotams, id: \.self) { notam in
-////                        Text(notam["notam"] ?? "")
-////                            .padding(.leading, 25)
-////                    }
-//                    ForEach(sortedArrNotams, id: \.self) { notam in
-//                        VStack {
-//                            // notam text
-//                            Text(notam)
-//                                .padding(.leading, 25)
-//                            // star function to add to reference
-//                            Button(action: {
-//                                coreDataModel.dataNotams.isDepReference.toggle()
-//                                coreDataModel.save()
-//                                
-//                                coreDataModel.readDataNotamsList()
-//                            }) {
-//                                if coreDataModel.dataNotams.isDepReference {
-//                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-//                                } else {
-//                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                Section(header:
+                    HStack {
+                        Text("ENROUTE NOTAMS").foregroundStyle(Color.black)
+                        
+                        Spacer().frame(maxWidth: .infinity)
+                    
+                        HStack {
+                            Toggle(isOn: $isSortDateEnr) {
+                                Text("Most Relevant")
+                                    .font(.subheadline)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }.padding(.horizontal)
+                            Text("Most Recent")
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }.fixedSize()
+                    }
+                ) {
+                    ForEach(arrEnrNotams, id: \.id) { item in
+                        HStack(alignment: .top) {
+                            // notam text
+                            Text(item.unwrappedNotam).padding(.leading, 25)
+                            Spacer()
+                            // star function to add to reference
+                            Button(action: {
+                                item.isChecked.toggle()
+                                coreDataModel.save()
+                                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                            }) {
+                                if item.isChecked {
+                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                                } else {
+                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                }
+                            }.fixedSize()
+                        }
+                    }
+                }
+                
+                // Arr NOTAM section
+                Section(header:
+                    HStack {
+                        Text("ARR NOTAMS").foregroundStyle(Color.black)
+                        
+                        Spacer().frame(maxWidth: .infinity)
+                    
+                        HStack {
+                            Toggle(isOn: $isSortDateArr) {
+                                Text("Most Relevant")
+                                    .font(.subheadline)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }.padding(.horizontal)
+                            Text("Most Recent")
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }.fixedSize()
+                    }
+                ) {
+                    ForEach(arrArrNotams, id: \.id) { item in
+                        HStack(alignment: .top) {
+                            // notam text
+                            Text(item.unwrappedNotam).padding(.leading, 25)
+                            Spacer()
+                            // star function to add to reference
+                            Button(action: {
+                                item.isChecked.toggle()
+                                coreDataModel.save()
+                                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                            }) {
+                                if item.isChecked {
+                                    Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                                } else {
+                                    Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                }
+                            }.fixedSize()
+                        }
+                    }
+                }
             }
         }
+        .onChange(of: isSortDateDep) { newValue in
+            arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
+        }
+        .onChange(of: isSortDateEnr) { newValue in
+            arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
+        }
+        .onChange(of: isSortDateArr) { newValue in
+            arrArrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDateArr)
+        }
         .onAppear {
-            sortedDepNotams = sortNotams(notamsDict: coreDataModel.dataNotams.unwrappedDepNotams, sortKey: isSortDateDep)
+            coreDataModel.dataNotams.forEach { item in
+                if item.type == "arrNotams" {
+                    arrArrNotams.append(item)
+                } else if item.type == "depNotams" {
+                    arrDepNotams.append(item)
+                } else {
+                    arrEnrNotams.append(item)
+                }
+            }
+            arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
+            arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDateArr)
+            arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
         }
         .navigationTitle("NOTAMS")
         .background(Color(.systemGroupedBackground))
     }
-    func sortNotams(notamsDict: [[String: Any]], sortKey: Bool) -> [[String: Any]] {
-        var sortedNotams: [[String: Any]]
+    
+    func sortNotams(notamsDict: [NotamsDataList], sortKey: Bool) -> [NotamsDataList] {
+        var sortedNotams: [NotamsDataList]
         
         switch sortKey {
         case true:
@@ -227,9 +187,9 @@ struct FlightPlanNOTAMView: View {
             dateFormatter.dateFormat = "yyMMddHHmm"
             
             sortedNotams = notamsDict.sorted {
-                guard let dateString1 = $0["date"] as? String,
+                guard let dateString1 = $0.date,
                       let date1 = dateFormatter.date(from: dateString1),
-                      let dateString2 = $1["date"] as? String,
+                      let dateString2 = $1.date,
                       let date2 = dateFormatter.date(from: dateString2) else {
                     return false
                 }
@@ -238,9 +198,9 @@ struct FlightPlanNOTAMView: View {
             }
         case false:
             sortedNotams = notamsDict.sorted {
-                guard let rankString1 = $0["rank"] as? String,
+                guard let rankString1 = $0.rank,
                       let rank1 = Int(rankString1),
-                      let rankString2 = $1["rank"] as? String,
+                      let rankString2 = $1.rank,
                       let rank2 = Int(rankString2) else {
                     return false
                 }
@@ -251,7 +211,7 @@ struct FlightPlanNOTAMView: View {
         
 //        let result = sortedNotams.map { $0["notam"] as? String ?? "" }
         
-        return sortedNotams as [[String: Any]]
+        return sortedNotams
     }
 
 }

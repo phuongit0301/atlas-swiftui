@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22189.1" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="AltnData" representedClassName="AltnDataList" syncable="YES">
         <attribute name="altnRwy" optional="YES" attributeType="String"/>
         <attribute name="comp" optional="YES" attributeType="String"/>
@@ -259,13 +259,12 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
-        <attribute name="arrNotams" optional="YES" attributeType="Binary"/>
-        <attribute name="depNotams" optional="YES" attributeType="Binary"/>
-        <attribute name="enrNotams" optional="YES" attributeType="Binary"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="isArrReference" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isDepReference" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="isEnrReference" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="notam" optional="YES" attributeType="String"/>
+        <attribute name="rank" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
         <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>

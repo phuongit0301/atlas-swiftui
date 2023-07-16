@@ -2,7 +2,7 @@
 //  NotamsDataList+CoreDataClass.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/07/2023.
+//  Created by phuong phan on 15/07/2023.
 //
 //
 

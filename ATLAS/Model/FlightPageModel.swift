@@ -74,7 +74,7 @@ struct ListReferenceModel {
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen),
             ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen),
-//            ListFlightInformationItem(name: "AI Search", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
+            ListFlightInformationItem(name: "AI Search", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
             ListFlightInformationItem(name: "Scratchpad", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
         ]
         
