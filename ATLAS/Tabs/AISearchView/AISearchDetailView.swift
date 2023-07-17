@@ -14,7 +14,7 @@ struct AISearchDetailView: View {
     @State var item: SDAISearchModel?
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text(item?.question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
                 
@@ -56,7 +56,8 @@ struct AISearchDetailView: View {
             
             Divider()
             
-            Text(item?.answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
+            Text(item?.answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+            
             Spacer()
         }.background(
             RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.white)

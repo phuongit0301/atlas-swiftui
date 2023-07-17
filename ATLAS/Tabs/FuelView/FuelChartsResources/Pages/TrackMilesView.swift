@@ -77,6 +77,7 @@ struct TrackMilesView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedTrackShortening = newValue
             coreDataModel.save()
+            coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedTrackShortening
         }
@@ -86,7 +87,6 @@ struct TrackMilesView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Track Miles Difference")
     }
     
     func onToggle() {

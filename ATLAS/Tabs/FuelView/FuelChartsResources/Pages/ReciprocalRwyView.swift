@@ -75,6 +75,7 @@ struct ReciprocalRunwayView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedReciprocalRwy = newValue
             coreDataModel.save()
+            coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedReciprocalRwy
         }
@@ -84,7 +85,6 @@ struct ReciprocalRunwayView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Reciprocal Runway")
     }
     
     func onToggle() {

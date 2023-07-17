@@ -9,8 +9,32 @@ import SwiftUI
 
 struct FlightInformationDetailView: View {
     @State private var showUTC = true
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var body: some View {
+        
+        var eta: String {
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "HHmm"
+            
+            if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
+                let entTakeoff =  dateFormatterTime.date(from: takeoff)
+                
+                if let flightTimeComponents = coreDataModel.dataSummaryInfo.fltTime {
+                    let components = flightTimeComponents.components(separatedBy: ":")
+                    if components.count > 1 {
+                        let flightTime = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                        if let etaTime = entTakeoff?.addingTimeInterval(TimeInterval(flightTime)) {
+                            return dateFormatterTime.string(from: etaTime)
+                        }
+                    }
+                    
+                }
+            }
+            
+            return ""
+        }
+        
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
                 Text("FLIGHT INFORMATION")
@@ -48,18 +72,18 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text("XXXXXX")
+                                Text(coreDataModel.dataDepartureEntries.unwrappedEntOff)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("XXXXXX")
+                                Text(coreDataModel.dataArrivalEntries.unwrappedEntOn)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
-                }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                }.listRowBackground(Color.theme.antiFlashWhite)
                 
                 Section {
                     // grouped row using hstack
@@ -83,22 +107,23 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text("XX:XX")
+                                //coreDataModel.dataDepartureEntries.stdUTC
+                                Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("XX:XX")
+                                Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("XX:XX")
+                                Text(eta)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
-                }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                }.listRowBackground(Color.theme.antiFlashWhite)
                 
                 Section {
                     // grouped row using hstack
@@ -118,18 +143,18 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text("XX:XX")
+                                Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("XX:XX")
+                                Text(coreDataModel.dataSummaryInfo.unwrappedFltTime)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
-                }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                }.listRowBackground(Color.theme.antiFlashWhite)
                 
                 Section {
                     // grouped row using hstack
@@ -145,14 +170,14 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text("XXX")
+                                Text(coreDataModel.dataSummaryInfo.unwrappedPob)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
-                }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                }.listRowBackground(Color.theme.antiFlashWhite)
                 
                 Section {
                     // grouped row using hstack
@@ -168,14 +193,14 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+                                Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
-                }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                }.listRowBackground(Color.theme.antiFlashWhite)
             }.listStyle(.insetGrouped)
                 .scrollContentBackground(.hidden)
                 .padding(.leading, -16)

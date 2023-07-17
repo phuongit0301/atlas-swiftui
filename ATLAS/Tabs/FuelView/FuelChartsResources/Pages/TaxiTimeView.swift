@@ -76,6 +76,7 @@ struct TaxiTimeView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedTaxi = newValue
             coreDataModel.save()
+            coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedTaxi
         }
@@ -85,7 +86,6 @@ struct TaxiTimeView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Taxi Time")
     }
     
     func onToggle() {

@@ -134,6 +134,15 @@
 		3E4E10132A62518B0026802B /* NotamsDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10112A62518B0026802B /* NotamsDataList+CoreDataProperties.swift */; };
 		3E4E10162A6366870026802B /* SDAISearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10152A6366870026802B /* SDAISearchModel.swift */; };
 		3E4E10182A63E6F60026802B /* AISearchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10172A63E6F60026802B /* AISearchDetailView.swift */; };
+		3E4E101A2A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */; };
+		3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */; };
+		3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E101D2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift */; };
+		3E4E10202A65519A0026802B /* PreviousSearchSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E101F2A65519A0026802B /* PreviousSearchSplitView.swift */; };
+		3E4E10222A6552520026802B /* AISearchDetailSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10212A6552520026802B /* AISearchDetailSplitView.swift */; };
+		3E4E10262A65677D0026802B /* ScratchPadSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10252A65677D0026802B /* ScratchPadSplitView.swift */; };
+		3E4E10282A6567910026802B /* ItemListScratchPadSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10272A6567910026802B /* ItemListScratchPadSplit.swift */; };
+		3E4E102A2A6567B90026802B /* ScratchPadSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10292A6567B90026802B /* ScratchPadSplitForm.swift */; };
+		3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E102B2A6567C50026802B /* ScratchPadEditSplitForm.swift */; };
 		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63B2A18BCB500A97ECF /* NavView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
@@ -372,6 +381,15 @@
 		3E4E10112A62518B0026802B /* NotamsDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4E10152A6366870026802B /* SDAISearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDAISearchModel.swift; sourceTree = "<group>"; };
 		3E4E10172A63E6F60026802B /* AISearchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISearchDetailView.swift; sourceTree = "<group>"; };
+		3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanNOTAMReferenceView.swift; sourceTree = "<group>"; };
+		3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousSearchReferenceView.swift; sourceTree = "<group>"; };
+		3E4E101D2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanNOTAMSplitView.swift; sourceTree = "<group>"; };
+		3E4E101F2A65519A0026802B /* PreviousSearchSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousSearchSplitView.swift; sourceTree = "<group>"; };
+		3E4E10212A6552520026802B /* AISearchDetailSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AISearchDetailSplitView.swift; sourceTree = "<group>"; };
+		3E4E10252A65677D0026802B /* ScratchPadSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadSplitView.swift; sourceTree = "<group>"; };
+		3E4E10272A6567910026802B /* ItemListScratchPadSplit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListScratchPadSplit.swift; sourceTree = "<group>"; };
+		3E4E10292A6567B90026802B /* ScratchPadSplitForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadSplitForm.swift; sourceTree = "<group>"; };
+		3E4E102B2A6567C50026802B /* ScratchPadEditSplitForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadEditSplitForm.swift; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
@@ -547,6 +565,8 @@
 		3E3FCBE82A21C8CB008017FA /* Container */ = {
 			isa = PBXGroup;
 			children = (
+				3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */,
+				3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */,
 				3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */,
 				3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */,
 				3E3FCBEF2A21C924008017FA /* DepatureReferenceContainer.swift */,
@@ -558,6 +578,8 @@
 		3E3FCC052A24B59C008017FA /* Split */ = {
 			isa = PBXGroup;
 			children = (
+				3E4E10242A65675A0026802B /* ScratchPad */,
+				3E4E10232A65525E0026802B /* AISearchView */,
 				3EFA5F092A42126B001ED6CF /* Form */,
 				3EFA5F042A421221001ED6CF /* List */,
 				3E3FCC1A2A2500BB008017FA /* ArrivalSplit */,
@@ -573,6 +595,7 @@
 				3E3FCBF52A23676A008017FA /* NavViewSplit.swift */,
 				C59C714C2A38AB130063D16B /* FuelViewSplit.swift */,
 				3EFA5EF52A3F0E6A001ED6CF /* HeaderViewSplit.swift */,
+				3E4E101D2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift */,
 			);
 			path = Split;
 			sourceTree = "<group>";
@@ -655,6 +678,26 @@
 				3E4E10152A6366870026802B /* SDAISearchModel.swift */,
 			);
 			path = SwiftData;
+			sourceTree = "<group>";
+		};
+		3E4E10232A65525E0026802B /* AISearchView */ = {
+			isa = PBXGroup;
+			children = (
+				3E4E10212A6552520026802B /* AISearchDetailSplitView.swift */,
+				3E4E101F2A65519A0026802B /* PreviousSearchSplitView.swift */,
+			);
+			path = AISearchView;
+			sourceTree = "<group>";
+		};
+		3E4E10242A65675A0026802B /* ScratchPad */ = {
+			isa = PBXGroup;
+			children = (
+				3E4E10272A6567910026802B /* ItemListScratchPadSplit.swift */,
+				3E4E10252A65677D0026802B /* ScratchPadSplitView.swift */,
+				3E4E10292A6567B90026802B /* ScratchPadSplitForm.swift */,
+				3E4E102B2A6567C50026802B /* ScratchPadEditSplitForm.swift */,
+			);
+			path = ScratchPad;
 			sourceTree = "<group>";
 		};
 		3E5AF6492A18FF2900A97ECF /* Tabs */ = {
@@ -1229,6 +1272,7 @@
 				3E4A368C2A570BA800027C61 /* SummaryInfoList+CoreDataClass.swift in Sources */,
 				3E4A37632A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
 				3E4A36A22A570BA800027C61 /* EnrouteList+CoreDataClass.swift in Sources */,
+				3E4E10282A6567910026802B /* ItemListScratchPadSplit.swift in Sources */,
 				3E4A366E2A570B9A00027C61 /* ScratchPadList+CoreDataClass.swift in Sources */,
 				C52063F52A4356290041580E /* FlightPlanDepView.swift in Sources */,
 				3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */,
@@ -1237,11 +1281,13 @@
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E4A366B2A570B9A00027C61 /* ScratchPadList+CoreDataProperties.swift in Sources */,
+				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */,
 				C580EA222A481B7D00E3E8D6 /* FlightPlanArrView.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
+				3E4E10202A65519A0026802B /* PreviousSearchSplitView.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				C580EA242A48251500E3E8D6 /* FlightPlanNOTAMView.swift in Sources */,
 				3E766FA72A5F914200B11616 /* AISearchSegmented.swift in Sources */,
@@ -1293,6 +1339,7 @@
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3E4A37212A5C361500027C61 /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
+				3E4E102A2A6567B90026802B /* ScratchPadSplitForm.swift in Sources */,
 				3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3E4A36A42A570BA800027C61 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E4A37222A5C361500027C61 /* HistorycalDelaysRefList+CoreDataProperties.swift in Sources */,
@@ -1324,6 +1371,7 @@
 				3E4A37862A5D003F00027C61 /* ProjDelaysListRef+CoreDataProperties.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */,
+				3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */,
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
@@ -1341,6 +1389,7 @@
 				3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
+				3E4E10222A6552520026802B /* AISearchDetailSplitView.swift in Sources */,
 				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3E4A37382A5C691500027C61 /* FuelTaxiRefList+CoreDataProperties.swift in Sources */,
 				3EFA5EEF2A3D5D8C001ED6CF /* FlightPlanModel.swift in Sources */,
@@ -1349,6 +1398,7 @@
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E4A366C2A570B9A00027C61 /* NoteList+CoreDataProperties.swift in Sources */,
 				3E4A375D2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
+				3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */,
 				3E4E10132A62518B0026802B /* NotamsDataList+CoreDataProperties.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
@@ -1388,6 +1438,7 @@
 				3EFA5F2E2A458F25001ED6CF /* TableDetail.swift in Sources */,
 				3E3FCBDF2A21C719008017FA /* DepatureCardContainer.swift in Sources */,
 				3E4A37852A5D003F00027C61 /* ProjDelaysListRef+CoreDataClass.swift in Sources */,
+				3E4E101A2A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift in Sources */,
 				3E4A36912A570BA800027C61 /* AltnDataList+CoreDataProperties.swift in Sources */,
 				3E4A36432A55D55700027C61 /* CustomTFKeyboard.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
@@ -1399,6 +1450,7 @@
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */,
+				3E4E10262A65677D0026802B /* ScratchPadSplitView.swift in Sources */,
 				3E3FCBFC2A236E56008017FA /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

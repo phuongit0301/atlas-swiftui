@@ -43,11 +43,11 @@ struct FlightPlanNOTAMView: View {
                                 Text("Most Relevant")
                                     .font(.subheadline)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                            }
+                            }.padding(.horizontal)
                             Text("Most Recent")
                                 .font(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
-                        }.padding(.horizontal).fixedSize()
+                        }.fixedSize()
                     }
                 ) {
                     ForEach(arrDepNotams, id: \.id) { item in
@@ -60,6 +60,7 @@ struct FlightPlanNOTAMView: View {
                                 item.isChecked.toggle()
                                 coreDataModel.save()
                                 coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
                             }) {
                                 if item.isChecked {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -99,6 +100,7 @@ struct FlightPlanNOTAMView: View {
                                 item.isChecked.toggle()
                                 coreDataModel.save()
                                 coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
                             }) {
                                 if item.isChecked {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -139,6 +141,7 @@ struct FlightPlanNOTAMView: View {
                                 item.isChecked.toggle()
                                 coreDataModel.save()
                                 coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
                             }) {
                                 if item.isChecked {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)

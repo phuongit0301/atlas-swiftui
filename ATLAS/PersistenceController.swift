@@ -107,6 +107,7 @@ class CoreDataModelState: ObservableObject {
     
     // For NoTams
     @Published var dataNotams: [NotamsDataList] = []
+    @Published var dataNotamsRef: [NotamsDataList] = []
     @Published var existDataNotams: Bool = false
     
     // For Metar Taf
@@ -238,6 +239,7 @@ class CoreDataModelState: ObservableObject {
         readArrivalAtis()
         readArrivalEntries()
         dataNotams = readDataNotamsList()
+        dataNotamsRef = readDataNotamsRefList()
         readDataMetarTafList()
         dataAltnTaf = readDataAltnTafList()
     }
@@ -740,7 +742,6 @@ class CoreDataModelState: ObservableObject {
                 existDataAltn = false
                 // Rollback any changes in the managed object context
                 service.container.viewContext.rollback()
-                
             }
         }
     }
@@ -1485,6 +1486,27 @@ class CoreDataModelState: ObservableObject {
         }
         
         return data
+    }
+    
+    func readDataNotamsRefList() -> [NotamsDataList] {
+        var data: [NotamsDataList] = []
+        
+        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
+        do {
+            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                response.forEach {item in
+                    if item.isChecked {
+                        data.append(item)
+                    }
+                }
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
+        
     }
     
     func readDataMetarTafList() {

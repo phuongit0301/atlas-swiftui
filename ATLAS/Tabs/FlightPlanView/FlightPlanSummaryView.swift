@@ -1248,6 +1248,29 @@ struct FlightPlanSummaryView: View {
                 self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
                 
                 self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
+            }.onReceive(Just(coreDataModel.dataFuelExtra)) { newValue in
+                self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
+                self.includedTaxi = coreDataModel.dataFuelExtra.includedTaxi
+                self.includedFlightLevel = coreDataModel.dataFuelExtra.includedFlightLevel
+                self.includedTrackShortening = coreDataModel.dataFuelExtra.includedTrackShortening
+                self.includedEnrWx = coreDataModel.dataFuelExtra.includedEnrWx
+                self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
+                self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
+                self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
+                
+                self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
+                self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
+                self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
+                self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
+                self.selectedFlightLevel00 = coreDataModel.dataFuelExtra.selectedFlightLevel00
+                self.selectedFlightLevelPrint = "\((self.selectedFlightLevel000 * 10) + self.selectedFlightLevel00)00ft"
+                self.selectedEnrWx = coreDataModel.dataFuelExtra.selectedEnrWx
+                self.selectedReciprocalRwy = coreDataModel.dataFuelExtra.selectedReciprocalRwy
+                self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
+                self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
+                self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
+                
+                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
             }
             .onChange(of: selectionOutput) { newValue in
                 switch self.target {

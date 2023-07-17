@@ -52,6 +52,10 @@ extension View {
         ModifiedContent(content: self, modifier: BreadCrumbRef(screenName: screenName, parentScreenName: parentScreenName))
     }
     
+    func breadCrumbNotamRef(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen, _ parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen) -> some View {
+        ModifiedContent(content: self, modifier: BreadCrumbNotamRef(screenName: screenName, parentScreenName: parentScreenName))
+    }
+    
     func hideKeyboardWhenTappedAround() -> some View  {
             return self.onTapGesture {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
@@ -275,7 +279,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             FuelView()
                 .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -312,7 +316,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
         return AnyView(
-            AISearchContainerView()
+            PreviousSearchReferenceView(title: "AI Search")
                 .navigationBarBackButtonHidden()
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
@@ -340,10 +344,10 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.NotamDetailScreen {
         return AnyView(
-            FlightPlanNOTAMView()
+            FlightPlanNOTAMReferenceView()
                 .navigationBarBackButtonHidden()
                 .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .breadCrumbNotamRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -395,7 +399,18 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(AtlasSearchSplit())
+        return AnyView(PreviousSearchSplitView())
+    }
+    
+    if item.screenName == NavigationEnumeration.ScratchPadScreen {
+        return AnyView(ScratchPadSplitView())
+    }
+    
+    if item.screenName == NavigationEnumeration.NotamDetailScreen {
+        return AnyView(
+            FlightPlanNOTAMSplitView()
+            .navigationBarBackButtonHidden()
+            .ignoresSafeArea())
     }
     
     return AnyView(FlightPlanSplit())
@@ -507,6 +522,40 @@ public struct HasTabbar: ViewModifier {
             TabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("TabBarView")
             content
         }.background(Color.theme.sonicSilver.opacity(0.12))
+    }
+}
+
+public struct BreadCrumbNotamRef: ViewModifier {
+    @Environment(\.dismiss) private var dismiss
+    var screenName: NavigationEnumeration
+    var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
+    
+    public func body(content: Content) -> some View {
+        VStack (alignment: .leading, spacing: 0) {
+            HStack {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            if let parentScreenName = parentScreenName {
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                            }
+                        }
+                    }
+                    Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                }.padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 1))
+                    
+            }.padding()
+            .background(Color(.systemGroupedBackground))
+            
+            content
+        }
     }
 }
 

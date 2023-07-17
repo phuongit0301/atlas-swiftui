@@ -812,6 +812,7 @@ struct FlightPlanDepView: View {
                                                 }
 
                                                 coreDataModel.save()
+                                                coreDataModel.readDepartureEntries()
 
                                                 isEditingEntOff = false
                                                 isTextFieldEntFuelInTanksFocused = true
@@ -842,6 +843,7 @@ struct FlightPlanDepView: View {
                                                 }
 
                                                 coreDataModel.save()
+                                                coreDataModel.readDepartureEntries()
 
                                                 isEditingEntFuelInTanks = false
                                                 isTextFieldEntTaxiFocused = true
@@ -873,6 +875,7 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
+                                            coreDataModel.readDepartureEntries()
 
                                             isEditingEntTaxi = false
                                             isTextFieldEntTakeoffFocused = true
@@ -903,6 +906,7 @@ struct FlightPlanDepView: View {
                                             }
 
                                             coreDataModel.save()
+                                            coreDataModel.readDepartureEntries()
 
                                             isEditingEntTakeoff = false
                                             isTextFieldEntOffFocused = true
@@ -920,136 +924,153 @@ struct FlightPlanDepView: View {
                     }
                 }
                 
-                // custom keyboard view - todo set position properly - like normal ipad keyboard position
-                Group {
-                    if isEditingCode {
-                        CustomKeyboardView1(text: $code, cursorPosition: $cursorPositionCode, currentFocus: $isEditingCode, nextFocus: $isEditingTime, prevFocus: $isEditingRemarks)
-                    }
-                    if isEditingTime {
-                        CustomKeyboardView1(text: $time, cursorPosition: $cursorPositionTime, currentFocus: $isEditingTime, nextFocus: $isEditingRwy, prevFocus: $isEditingCode)
-                    }
-                    if isEditingRwy {
-                        CustomKeyboardView1(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: $isEditingRwy, nextFocus: $isEditingTransLvl, prevFocus: $isEditingTime)
-                    }
-                    if isEditingTransLvl {
-                        CustomKeyboardView1(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: $isEditingTransLvl, nextFocus: $isEditingWind, prevFocus: $isEditingRwy)
-                    }
-                    if isEditingWind {
-                        CustomKeyboardView1(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: $isEditingWind, nextFocus: $isEditingVis, prevFocus: $isEditingTransLvl)
-                    }
-                    if isEditingVis {
-                        CustomKeyboardView1(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: $isEditingVis, nextFocus: $isEditingWx, prevFocus: $isEditingWind)
-                    }
-                    if isEditingWx {
-                        CustomKeyboardView1(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: $isEditingWx, nextFocus: $isEditingCloud, prevFocus: $isEditingVis)
-                    }
-                    if isEditingCloud {
-                        CustomKeyboardView1(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: $isEditingCloud, nextFocus: $isEditingTemp, prevFocus: $isEditingWx)
-                    }
-                    if isEditingTemp {
-                        CustomKeyboardView1(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: $isEditingTemp, nextFocus: $isEditingDP, prevFocus: $isEditingCloud)
-                    }
-                    if isEditingDP {
-                        CustomKeyboardView1(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: $isEditingDP, nextFocus: $isEditingQNH, prevFocus: $isEditingTemp)
-                    }
-                }
-                Group {
-                    if isEditingQNH {
-                        CustomKeyboardView1(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: $isEditingQNH, nextFocus: $isEditingRemarks, prevFocus: $isEditingDP)
-                    }
-                    if isEditingRemarks {
-                        CustomKeyboardView1(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: $isEditingRemarks, nextFocus: $isEditingCode, prevFocus: $isEditingQNH)
-                    }
-                }
-                Group {
-                    if isEditingAtcRwy {
-                        CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: $isEditingAtcRwy, nextFocus: $isEditingAtcDep, prevFocus: $isEditingAtcSQ)
-                    }
-                    if isEditingAtcDep {
-                        CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: $isEditingAtcDep, nextFocus: $isEditingAtcRte, prevFocus: $isEditingAtcRwy)
-                    }
-                    if isEditingAtcRte {
-                        CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: $isEditingAtcRte, nextFocus: $isEditingAtcFL, prevFocus: $isEditingAtcDep)
-                    }
-                    if isEditingAtcFL {
-                        CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: $isEditingAtcFL, nextFocus: $isEditingAtcSQ, prevFocus: $isEditingAtcRte)
-                    }
-                    if isEditingAtcSQ {
-                        CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: $isEditingAtcSQ, nextFocus: $isEditingAtcRwy, prevFocus: $isEditingAtcRte)
-                    }
-                }
-                Group {
-                    if isEditingEntOff {
-                        CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: $isEditingEntOff, nextFocus: $isEditingEntFuelInTanks, prevFocus: $isEditingEntTakeoff)
-                    }
-                    if isEditingEntFuelInTanks {
-                        CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: $isEditingEntFuelInTanks, nextFocus: $isEditingEntTaxi, prevFocus: $isEditingEntOff)
-                    }
-                    if isEditingEntTaxi {
-                        CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: $isEditingEntTaxi, nextFocus: $isEditingEntTakeoff, prevFocus: $isEditingEntFuelInTanks)
-                    }
-                    if isEditingEntTakeoff {
-                        CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: $isEditingEntTakeoff, nextFocus: $isEditingEntOff, prevFocus: $isEditingEntTaxi)
-                    }
-                }
-                Group {
-                    if isShowingAutofillOptionsWx {
-                        List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                            Button(action: {
-                                let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                cursorPositionWx -= wx.count
-                                wx = modifiedText + " " + option + " "
-                                cursorPositionWx += wx.count
-                                isShowingAutofillOptionsWx = false
-                            }) {
-                                Text(option)
+                HStack(alignment: .center) {
+                    VStack {
+                        // custom keyboard view - todo set position properly - like normal ipad keyboard position
+                        Group {
+                            if isEditingCode {
+                                CustomKeyboardView1(text: $code, cursorPosition: $cursorPositionCode, currentFocus: $isEditingCode, nextFocus: $isEditingTime, prevFocus: $isEditingRemarks)
+                            }
+                            if isEditingTime {
+                                CustomKeyboardView1(text: $time, cursorPosition: $cursorPositionTime, currentFocus: $isEditingTime, nextFocus: $isEditingRwy, prevFocus: $isEditingCode)
+                            }
+                            if isEditingRwy {
+                                CustomKeyboardView1(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: $isEditingRwy, nextFocus: $isEditingTransLvl, prevFocus: $isEditingTime)
+                            }
+                            if isEditingTransLvl {
+                                CustomKeyboardView1(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: $isEditingTransLvl, nextFocus: $isEditingWind, prevFocus: $isEditingRwy)
+                            }
+                            if isEditingWind {
+                                CustomKeyboardView1(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: $isEditingWind, nextFocus: $isEditingVis, prevFocus: $isEditingTransLvl)
+                            }
+                            if isEditingVis {
+                                CustomKeyboardView1(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: $isEditingVis, nextFocus: $isEditingWx, prevFocus: $isEditingWind)
+                            }
+                            if isEditingWx {
+                                CustomKeyboardView1(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: $isEditingWx, nextFocus: $isEditingCloud, prevFocus: $isEditingVis)
+                            }
+                            if isEditingCloud {
+                                CustomKeyboardView1(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: $isEditingCloud, nextFocus: $isEditingTemp, prevFocus: $isEditingWx)
+                            }
+                            if isEditingTemp {
+                                CustomKeyboardView1(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: $isEditingTemp, nextFocus: $isEditingDP, prevFocus: $isEditingCloud)
+                            }
+                            if isEditingDP {
+                                CustomKeyboardView1(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: $isEditingDP, nextFocus: $isEditingQNH, prevFocus: $isEditingTemp)
                             }
                         }
-                        .listStyle(GroupedListStyle())
-                    }
-                    if isShowingAutofillOptionsCloud {
-                        List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                            Button(action: {
-                                let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                cursorPositionCloud -= cloud.count
-                                cloud = modifiedText + " " + option + " "
-                                cursorPositionCloud += cloud.count
-                                isShowingAutofillOptionsCloud = false
-                            }) {
-                                Text(option)
+                        Group {
+                            if isEditingQNH {
+                                CustomKeyboardView1(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: $isEditingQNH, nextFocus: $isEditingRemarks, prevFocus: $isEditingDP)
+                            }
+                            if isEditingRemarks {
+                                CustomKeyboardView1(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: $isEditingRemarks, nextFocus: $isEditingCode, prevFocus: $isEditingQNH)
                             }
                         }
-                        .listStyle(GroupedListStyle())
-                    }
-                    if isShowingAutofillOptionsRemarks {
-                        List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                            Button(action: {
-                                let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                cursorPositionRemarks -= remarks.count
-                                remarks = modifiedText + " " + option + " "
-                                cursorPositionRemarks += remarks.count
-                                isShowingAutofillOptionsRemarks = false
-                            }) {
-                                Text(option)
+                        Group {
+                            if isEditingAtcRwy {
+                                CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: $isEditingAtcRwy, nextFocus: $isEditingAtcDep, prevFocus: $isEditingAtcSQ)
+                            }
+                            if isEditingAtcDep {
+                                CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: $isEditingAtcDep, nextFocus: $isEditingAtcRte, prevFocus: $isEditingAtcRwy)
+                            }
+                            if isEditingAtcRte {
+                                CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: $isEditingAtcRte, nextFocus: $isEditingAtcFL, prevFocus: $isEditingAtcDep)
+                            }
+                            if isEditingAtcFL {
+                                CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: $isEditingAtcFL, nextFocus: $isEditingAtcSQ, prevFocus: $isEditingAtcRte)
+                            }
+                            if isEditingAtcSQ {
+                                CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: $isEditingAtcSQ, nextFocus: $isEditingAtcRwy, prevFocus: $isEditingAtcRte)
                             }
                         }
-                        .listStyle(GroupedListStyle())
-                    }
-                    if isShowingAutofillOptionsAtcRte {
-                        List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                            Button(action: {
-                                let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                cursorPositionAtcRte -= atcRte.count
-                                atcRte = modifiedText + " " + option + " "
-                                cursorPositionAtcRte += atcRte.count
-                                isShowingAutofillOptionsAtcRte = false
-                            }) {
-                                Text(option)
+                        Group {
+                            if isEditingEntOff {
+                                CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: $isEditingEntOff, nextFocus: $isEditingEntFuelInTanks, prevFocus: $isEditingEntTakeoff)
+                            }
+                            if isEditingEntFuelInTanks {
+                                CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: $isEditingEntFuelInTanks, nextFocus: $isEditingEntTaxi, prevFocus: $isEditingEntOff)
+                            }
+                            if isEditingEntTaxi {
+                                CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: $isEditingEntTaxi, nextFocus: $isEditingEntTakeoff, prevFocus: $isEditingEntFuelInTanks)
+                            }
+                            if isEditingEntTakeoff {
+                                CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: $isEditingEntTakeoff, nextFocus: $isEditingEntOff, prevFocus: $isEditingEntTaxi)
                             }
                         }
-                        .listStyle(GroupedListStyle())
+                    } // End VStack Custom keyboard
+                    
+                    VStack {
+                        Group {
+                            if isShowingAutofillOptionsWx {
+                                List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                    Button(action: {
+                                        let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                        cursorPositionWx -= wx.count
+                                        wx = modifiedText + " " + option + " "
+                                        cursorPositionWx += wx.count
+                                        isShowingAutofillOptionsWx = false
+                                    }) {
+                                        Text(option)
+                                    }
+                                }.listStyle(.insetGrouped)
+                                    .background(Color.clear)
+                                    .padding(.top, -50)
+                            }
+                            if isShowingAutofillOptionsCloud {
+                                List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                    Button(action: {
+                                        let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                        cursorPositionCloud -= cloud.count
+                                        cloud = modifiedText + " " + option + " "
+                                        cursorPositionCloud += cloud.count
+                                        isShowingAutofillOptionsCloud = false
+                                    }) {
+                                        Text(option)
+                                    }
+                                }.listStyle(.insetGrouped)
+                                .background(Color.clear)
+                                .padding(.top, -50)
+                            }
+                            if isShowingAutofillOptionsRemarks {
+                                List(autofillOptionsATIS.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                    Button(action: {
+                                        let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                        cursorPositionRemarks -= remarks.count
+                                        remarks = modifiedText + " " + option + " "
+                                        cursorPositionRemarks += remarks.count
+                                        isShowingAutofillOptionsRemarks = false
+                                    }) {
+                                        Text(option)
+                                    }
+                                }.listStyle(.insetGrouped)
+                                .background(Color.clear)
+                                .padding(.top, -50)
+                            }
+                            if isShowingAutofillOptionsAtcRte {
+                                List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                    Button(action: {
+                                        let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                        cursorPositionAtcRte -= atcRte.count
+                                        atcRte = modifiedText + " " + option + " "
+                                        cursorPositionAtcRte += atcRte.count
+                                        isShowingAutofillOptionsAtcRte = false
+                                    }) {
+                                        Text(option)
+                                    }
+                                }.listStyle(.insetGrouped)
+                                .background(Color.clear)
+                                .padding(.top, -50)
+                            }
+                        }.frame(width: (proxy.size.width / 2) - 100)
+                            .padding()
+                            .scrollContentBackground(.hidden)
                     }
-                }
+                    
+                }.frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.theme.quickSilver)
+                
             }.navigationTitle("Departure")
                 .background(Color(.systemGroupedBackground))
                 //.hideKeyboardWhenTappedAround()

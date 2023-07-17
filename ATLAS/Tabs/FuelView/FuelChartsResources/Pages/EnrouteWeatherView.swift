@@ -75,6 +75,7 @@ struct EnrouteWeatherView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedEnrWx = newValue
             coreDataModel.save()
+            coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedEnrWx
         }
@@ -84,7 +85,6 @@ struct EnrouteWeatherView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Track Miles Deviation")
     }
     
     func onToggle() {

@@ -62,7 +62,7 @@ struct FlightInformationDetailSplitView: View {
                                 }
                             }
                         }
-                    }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                    }.listRowBackground(Color.theme.antiFlashWhite)
                     
                     Section {
                         // grouped row using hstack
@@ -101,7 +101,7 @@ struct FlightInformationDetailSplitView: View {
                                 }
                             }
                         }
-                    }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                    }.listRowBackground(Color.theme.antiFlashWhite)
                     
                     Section {
                         // grouped row using hstack
@@ -132,7 +132,7 @@ struct FlightInformationDetailSplitView: View {
                                 }
                             }
                         }
-                    }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                    }.listRowBackground(Color.theme.antiFlashWhite)
                     
                     Section {
                         // grouped row using hstack
@@ -155,7 +155,7 @@ struct FlightInformationDetailSplitView: View {
                                 }
                             }
                         }
-                    }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                    }.listRowBackground(Color.theme.antiFlashWhite)
                     
                     Section {
                         // grouped row using hstack
@@ -178,14 +178,13 @@ struct FlightInformationDetailSplitView: View {
                                 }
                             }
                         }
-                    }.listRowBackground(Color.theme.arsenic.opacity(0.33))
+                    }.listRowBackground(Color.theme.antiFlashWhite)
                 }.listStyle(.insetGrouped)
                     .padding(.leading, -16)
                     .padding(.trailing, -16)
                     .scrollContentBackground(.hidden)
             }.padding()
-        }.background(Color.theme.antiFlashWhite)
-            .navigationBarBackButtonHidden()
+        }.navigationBarBackButtonHidden()
             .ignoresSafeArea()
     }
 }

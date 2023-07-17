@@ -1,5 +1,5 @@
 //
-//  PreviousSearchView.swift
+//  PreviousSearchReferenceView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 13/07/2023.
@@ -8,11 +8,11 @@
 import SwiftUI
 import SwiftData
 
-struct PreviousSearchView: View {
+struct PreviousSearchReferenceView: View {
     @Environment(\.modelContext) private var context
     var title = "Previous Searches"
     
-    @Query(sort: \.creationDate, order: .forward)
+    @Query(filter: #Predicate { $0.isFavorite }, sort: \.creationDate, order: .forward)
     var results: [SDAISearchModel]
     
     var body: some View {
@@ -59,5 +59,5 @@ struct PreviousSearchView: View {
 }
 
 #Preview {
-    PreviousSearchView()
+    PreviousSearchReferenceView()
 }

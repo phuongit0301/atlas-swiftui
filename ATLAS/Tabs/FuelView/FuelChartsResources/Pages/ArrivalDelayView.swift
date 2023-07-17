@@ -79,6 +79,7 @@ struct ArrivalDelayView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedArrDelays = newValue
             coreDataModel.save()
+            coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedArrDelays
         }
@@ -88,7 +89,6 @@ struct ArrivalDelayView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Arrival Delay")
     }
     
     func onToggle() {

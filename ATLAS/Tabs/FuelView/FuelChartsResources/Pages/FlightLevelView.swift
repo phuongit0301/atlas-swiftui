@@ -88,7 +88,6 @@ struct FlightLevelView: View {
         .background(.quaternary.opacity(0.5))
 #endif
         .background()
-        .navigationTitle("Flight Level")
     }
     
     func onToggle() {
