@@ -41,7 +41,7 @@ struct ArrivalDelayView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins").disabled(!coreDataModel.dataFuelExtra.includedArrDelays)
+                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins")
                         }.fixedSize()
                     }.padding()
                     .background(.white)
@@ -78,6 +78,7 @@ struct ArrivalDelayView: View {
         .onChange(of: selectionOutput) { newValue in
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedArrDelays = newValue
+            coreDataModel.dataFuelExtra.includedArrDelays = true
             coreDataModel.save()
             coreDataModel.readFuelExtra()
         }.onAppear {
@@ -92,10 +93,6 @@ struct ArrivalDelayView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedArrDelays {
-            return
-        }
-
         self.selection = self.selectedValue
         self.isShowModal.toggle()
     }

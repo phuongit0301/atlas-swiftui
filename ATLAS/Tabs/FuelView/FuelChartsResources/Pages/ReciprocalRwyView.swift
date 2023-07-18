@@ -40,7 +40,7 @@ struct ReciprocalRunwayView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins").disabled(!coreDataModel.dataFuelExtra.includedReciprocalRwy)
+                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins")
                         }.fixedSize()
                     }.padding()
                         .background(.white)
@@ -75,6 +75,7 @@ struct ReciprocalRunwayView: View {
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedReciprocalRwy = newValue
             coreDataModel.save()
+            coreDataModel.dataFuelExtra.includedReciprocalRwy = true
             coreDataModel.readFuelExtra()
         }.onAppear {
             self.selectedValue = coreDataModel.dataFuelExtra.selectedReciprocalRwy
@@ -88,10 +89,6 @@ struct ReciprocalRunwayView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedReciprocalRwy {
-            return
-        }
-
         self.selection = self.selectedValue
         self.isShowModal.toggle()
     }

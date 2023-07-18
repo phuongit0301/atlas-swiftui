@@ -45,7 +45,7 @@ struct FlightLevelView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepperMultiple(onToggle: onToggle, value: $selectedFlightLevelPrint, suffix: "").disabled(!coreDataModel.dataFuelExtra.includedFlightLevel)
+                            ButtonStepperMultiple(onToggle: onToggle, value: $selectedFlightLevelPrint, suffix: "")
                         }.fixedSize()
                     }.padding()
                         .background(.white)
@@ -91,9 +91,6 @@ struct FlightLevelView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedFlightLevel {
-            return
-        }
         self.selection1 = self.selectedFlightLevel000
         self.selection2 = self.selectedFlightLevel00
         self.isShowModal.toggle()
@@ -107,6 +104,7 @@ struct FlightLevelView: View {
         self.selection2 = sel2
         coreDataModel.dataFuelExtra.selectedFlightLevel000 = sel1
         coreDataModel.dataFuelExtra.selectedFlightLevel00 = sel2
+        coreDataModel.dataFuelExtra.includedFlightLevel = true
         coreDataModel.save()
         coreDataModel.readFuelExtra()
     }

@@ -41,7 +41,7 @@ struct TaxiTimeView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins").disabled(!coreDataModel.dataFuelExtra.includedTaxi)
+                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins")
                         }.fixedSize()
                     }.padding()
                         .background(.white)
@@ -75,6 +75,7 @@ struct TaxiTimeView: View {
         .onChange(of: selectionOutput) { newValue in
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedTaxi = newValue
+            coreDataModel.dataFuelExtra.includedTaxi = true
             coreDataModel.save()
             coreDataModel.readFuelExtra()
         }.onAppear {
@@ -89,9 +90,6 @@ struct TaxiTimeView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedTaxi {
-            return
-        }
         self.selection = self.selectedValue
         self.isShowModal.toggle()
     }

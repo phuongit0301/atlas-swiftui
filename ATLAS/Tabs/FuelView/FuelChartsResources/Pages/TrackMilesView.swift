@@ -40,7 +40,7 @@ struct TrackMilesView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins").disabled(!coreDataModel.dataFuelExtra.includedTrackShortening)
+                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins")
                         }.fixedSize()
                     }.padding()
                         .background(.white)
@@ -76,6 +76,7 @@ struct TrackMilesView: View {
         .onChange(of: selectionOutput) { newValue in
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedTrackShortening = newValue
+            coreDataModel.dataFuelExtra.includedTrackShortening = true
             coreDataModel.save()
             coreDataModel.readFuelExtra()
         }.onAppear {
@@ -90,10 +91,6 @@ struct TrackMilesView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedTrackShortening {
-            return
-        }
-
         self.selection = self.selectedValue
         self.isShowModal.toggle()
     }

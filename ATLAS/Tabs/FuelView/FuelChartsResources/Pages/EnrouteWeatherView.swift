@@ -40,7 +40,7 @@ struct EnrouteWeatherView: View {
                         
                         HStack {
                             Text("Pilot Requirement").font(.system(size: 17, weight: .regular)).foregroundColor(.black)
-                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins").disabled(!coreDataModel.dataFuelExtra.includedEnrWx)
+                            ButtonStepper(onToggle: onToggle, value: $selectedValue, suffix: "mins")
                         }.fixedSize()
                     }.padding()
                         .background(.white)
@@ -74,6 +74,7 @@ struct EnrouteWeatherView: View {
         .onChange(of: selectionOutput) { newValue in
             self.selectedValue = newValue
             coreDataModel.dataFuelExtra.selectedEnrWx = newValue
+            coreDataModel.dataFuelExtra.includedEnrWx = true
             coreDataModel.save()
             coreDataModel.readFuelExtra()
         }.onAppear {
@@ -88,9 +89,6 @@ struct EnrouteWeatherView: View {
     }
     
     func onToggle() {
-        if !coreDataModel.dataFuelExtra.includedEnrWx {
-            return
-        }
         self.selection = self.selectedValue
         self.isShowModal.toggle()
     }
