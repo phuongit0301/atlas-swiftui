@@ -47,13 +47,12 @@ struct ATLASApp: App {
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)
-                .onAppear {
-                    Task {
-                        coreDataModel.loading = true
-                        await coreDataModel.checkAndSyncData()
-                        await coreDataModel.initFetchData()
-                        coreDataModel.loading = false
-                    }
+                .task {
+                    coreDataModel.loading = true
+                    await coreDataModel.checkAndSyncDataNote()
+                    await coreDataModel.checkAndSyncData()
+                    await coreDataModel.initFetchData()
+                    coreDataModel.loading = false
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 

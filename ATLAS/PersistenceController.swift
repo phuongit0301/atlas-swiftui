@@ -145,57 +145,55 @@ class CoreDataModelState: ObservableObject {
     
     @Published var isUpdating: Bool = false
     
-    init() {
+    func checkAndSyncData() async {
         dataFPEnroute = readEnrouteList()
         
         if dataFPEnroute.count == 0 {
-            Task {
-                await remoteService.getFlightPlanWX(completion: { data in
-                    DispatchQueue.main.async {
-                        if let waypointsData = data?.waypointsData {
-                            self.initDataEnroute(waypointsData)
-                        }
-
-                        if let infoData = data?.infoData {
-                            self.initDataSummaryInfo(infoData)
-                        }
-
-                        if let routeData = data?.routeData {
-                            self.initDataSummaryRoute(routeData)
-                        }
-
-                        if let perfData = data?.perfData {
-                            self.initDataPerfData(perfData)
-
-                            self.initDataPerfInfo(perfData)
-
-                            self.dataPerfWeight = self.readPerfWeight()
-
-                            self.initDataPerfWeight(perfData)
-                        }
-
-                        if let fuelData = data?.fuelData {
-                            self.initDataFuelList(fuelData)
-                        }
-
-                        if let altnData = data?.altnData {
-                            self.dataAltnList = self.readAltnList()
-                            self.initDataAltn(altnData)
-                        }
-
-                        if let notamsData = data?.notamsData {
-                            self.initDataNotams(notamsData)
-                        }
-
-                        if let metarTafData = data?.metarTafData {
-                            self.initDataMetarTaf(metarTafData)
-                            self.initDataAltnTaf(metarTafData)
-                        }
-
-                        print("Fetch data")
+            await remoteService.getFlightPlanWX(completion: { data in
+                DispatchQueue.main.async {
+                    if let waypointsData = data?.waypointsData {
+                        self.initDataEnroute(waypointsData)
                     }
-                })
-            }
+                    
+                    if let infoData = data?.infoData {
+                        self.initDataSummaryInfo(infoData)
+                    }
+                    
+                    if let routeData = data?.routeData {
+                        self.initDataSummaryRoute(routeData)
+                    }
+                    
+                    if let perfData = data?.perfData {
+                        self.initDataPerfData(perfData)
+                        
+                        self.initDataPerfInfo(perfData)
+                        
+                        self.dataPerfWeight = self.readPerfWeight()
+                        
+                        self.initDataPerfWeight(perfData)
+                    }
+                    
+                    if let fuelData = data?.fuelData {
+                        self.initDataFuelList(fuelData)
+                    }
+                    
+                    if let altnData = data?.altnData {
+                        self.dataAltnList = self.readAltnList()
+                        self.initDataAltn(altnData)
+                    }
+                    
+                    if let notamsData = data?.notamsData {
+                        self.initDataNotams(notamsData)
+                    }
+                    
+                    if let metarTafData = data?.metarTafData {
+                        self.initDataMetarTaf(metarTafData)
+                        self.initDataAltnTaf(metarTafData)
+                    }
+                    
+                    print("Fetch data")
+                }
+            })
         }
     }
     
@@ -244,7 +242,7 @@ class CoreDataModelState: ObservableObject {
         dataAltnTaf = readDataAltnTafList()
     }
     
-    func checkAndSyncData() async {
+    func checkAndSyncDataNote() async {
         let response = read()
         
         if response.count == 0 {
@@ -500,6 +498,7 @@ class CoreDataModelState: ObservableObject {
         }
         
         self.existDataFPEnroute = true
+        dataFPEnroute = readEnrouteList()
     }
     
     func initDataSummaryInfo(_ infoData: IInfoDataResponseModel) {
@@ -524,6 +523,7 @@ class CoreDataModelState: ObservableObject {
             // Persist the data in this managed object context to the underlying store
             try service.container.viewContext.save()
             existDataSummaryInfo = true
+            readSummaryInfo()
             print("saved successfully")
         } catch {
             // Something went wrong 😭
@@ -548,6 +548,7 @@ class CoreDataModelState: ObservableObject {
             // Persist the data in this managed object context to the underlying store
             try service.container.viewContext.save()
             existDataSummaryRoute = true
+            readSummaryRoute()
             print("saved summary route successfully")
         } catch {
             // Something went wrong 😭
@@ -584,9 +585,9 @@ class CoreDataModelState: ObservableObject {
             // Persist the data in this managed object context to the underlying store
             try service.container.viewContext.save()
             existDataPerfData = true
+            readPerfData()
             print("saved perf info successfully")
         } catch {
-            // Something went wrong 😭
             print("Failed to perf data save: \(error)")
             existDataPerfData = false
             // Rollback any changes in the managed object context
@@ -611,9 +612,9 @@ class CoreDataModelState: ObservableObject {
             // Persist the data in this managed object context to the underlying store
             try service.container.viewContext.save()
             existDataPerfInfo = true
+            dataPerfInfo = readPerfInfo()
             print("saved perf info successfully")
         } catch {
-            // Something went wrong 😭
             print("Failed to perf info save: \(error)")
             existDataPerfInfo = false
             // Rollback any changes in the managed object context
@@ -651,6 +652,7 @@ class CoreDataModelState: ObservableObject {
             }
         }
         existDataPerfWeight = true
+        dataPerfWeight = readPerfWeight()
     }
     
     func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
@@ -686,6 +688,7 @@ class CoreDataModelState: ObservableObject {
             
             try service.container.viewContext.save()
             existDataFuelDataList = true
+            readFuelDataList()
         } catch {
             existDataFuelDataList = false
             print("failed to fuel data save: \(error)")
@@ -715,6 +718,7 @@ class CoreDataModelState: ObservableObject {
         }
         
         dataFuelTableList = readFuelTableList()
+        readFuelExtra()
     }
     
     func initDataAltn(_ altnData: [IAltnDataResponseModel]) {
@@ -735,6 +739,7 @@ class CoreDataModelState: ObservableObject {
                 // Persist the data in this managed object context to the underlying store
                 try service.container.viewContext.save()
                 existDataAltn = true
+                dataAltnList = readAltnList()
                 print("saved data altn successfully")
             } catch {
                 // Something went wrong 😭
@@ -804,7 +809,7 @@ class CoreDataModelState: ObservableObject {
                     
                 }
             }
-            
+            dataNotams = readDataNotamsList()
         } catch {
             print("Failed to Notams save: \(error)")
             existDataNotams = false
@@ -824,6 +829,7 @@ class CoreDataModelState: ObservableObject {
             newObj.arrTaf = metarTafData.arrTaf
             try service.container.viewContext.save()
             existDataMetarTaf = true
+            readDataMetarTafList()
             print("saved Metar Taf successfully")
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -880,6 +886,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             existDataAltnTaf = true
+            dataAltnTaf = readDataAltnTafList()
         }
     }
     
@@ -1030,28 +1037,33 @@ class CoreDataModelState: ObservableObject {
                     dataDepartureAtc = item
                 }
             } else {
-                let newObj = DepartureATCList(context: service.container.viewContext)
-                newObj.atcDep = ""
-                newObj.atcSQ = ""
-                newObj.atcRte = ""
-                newObj.atcFL = ""
-                newObj.atcRwy = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDepartureAtc()
             }
             existDataDepartureAtc = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func initDepartureAtc() {
+        let newObj = DepartureATCList(context: service.container.viewContext)
+        newObj.atcDep = ""
+        newObj.atcSQ = ""
+        newObj.atcRte = ""
+        newObj.atcFL = ""
+        newObj.atcRwy = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            print("saved successfully")
+            readDepartureAtc()
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
     
@@ -1065,34 +1077,39 @@ class CoreDataModelState: ObservableObject {
                     dataDepartureAtis = item
                 }
             } else {
-                let newObj = DepartureATISList(context: service.container.viewContext)
-                newObj.cloud = ""
-                newObj.code = ""
-                newObj.dp = ""
-                newObj.qnh = ""
-                newObj.remarks = ""
-                newObj.rwy = ""
-                newObj.temp = ""
-                newObj.time = ""
-                newObj.translvl = ""
-                newObj.vis = ""
-                newObj.wx = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDepartureAtis()
             }
             existDataDepartureAtis = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func initDepartureAtis() {
+        let newObj = DepartureATISList(context: service.container.viewContext)
+        newObj.cloud = ""
+        newObj.code = ""
+        newObj.dp = ""
+        newObj.qnh = ""
+        newObj.remarks = ""
+        newObj.rwy = ""
+        newObj.temp = ""
+        newObj.time = ""
+        newObj.translvl = ""
+        newObj.vis = ""
+        newObj.wx = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            readDepartureAtis()
+            print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
     
@@ -1106,27 +1123,32 @@ class CoreDataModelState: ObservableObject {
                     dataDepartureEntries = item
                 }
             } else {
-                let newObj = DepartureEntriesList(context: service.container.viewContext)
-                newObj.entTaxi = ""
-                newObj.entTakeoff = ""
-                newObj.entOff = ""
-                newObj.entFuelInTanks = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDepartureEntries()
             }
             existDataDepartureEntries = true
         } catch {
             print("Could not fetch scratch pad from Core Data.")
+        }
+    }
+    
+    func initDepartureEntries() {
+        let newObj = DepartureEntriesList(context: service.container.viewContext)
+        newObj.entTaxi = ""
+        newObj.entTakeoff = ""
+        newObj.entOff = ""
+        newObj.entFuelInTanks = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            readDepartureEntries()
+            print("saved successfully")
+        } catch {
+            // Something went wrong 😭
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
     
@@ -1146,27 +1168,32 @@ class CoreDataModelState: ObservableObject {
                     dataArrivalAtc = item
                 }
             } else {
-                let newObject = ArrivalATCList(context: service.container.viewContext)
-                newObject.id = UUID()
-                newObject.atcDest = ""
-                newObject.atcArr = ""
-                newObject.atcRwy = ""
-                newObject.atcTransLvl = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDataArrivalAtc()
             }
             existDataArrivalAtc = true
         } catch {
             print("Could not fetch Arrival ATC from Core Data.")
+        }
+    }
+    
+    func initDataArrivalAtc() {
+        let newObject = ArrivalATCList(context: service.container.viewContext)
+        newObject.id = UUID()
+        newObject.atcDest = ""
+        newObject.atcArr = ""
+        newObject.atcRwy = ""
+        newObject.atcTransLvl = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            readArrivalAtc()
+            print("saved successfully")
+        } catch {
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
     
@@ -1180,35 +1207,39 @@ class CoreDataModelState: ObservableObject {
                     dataArrivalAtis = item
                 }
             } else {
-                let newObject = ArrivalATISList(context: service.container.viewContext)
-                newObject.id = UUID()
-                newObject.code = ""
-                newObject.time = ""
-                newObject.rwy = ""
-                newObject.transLvl = ""
-                newObject.wind = ""
-                newObject.vis = ""
-                newObject.wx = ""
-                newObject.cloud = ""
-                newObject.temp = ""
-                newObject.dp = ""
-                newObject.qnh = ""
-                newObject.remarks = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDataArrivalAtis()
             }
             existDataArrivalAtis = true
         } catch {
             print("Could not fetch Arrival Atis from Core Data.")
+        }
+    }
+    
+    func initDataArrivalAtis() {
+        let newObject = ArrivalATISList(context: service.container.viewContext)
+        newObject.id = UUID()
+        newObject.code = ""
+        newObject.time = ""
+        newObject.rwy = ""
+        newObject.transLvl = ""
+        newObject.wind = ""
+        newObject.vis = ""
+        newObject.wx = ""
+        newObject.cloud = ""
+        newObject.temp = ""
+        newObject.dp = ""
+        newObject.qnh = ""
+        newObject.remarks = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            readArrivalAtis()
+            print("saved successfully")
+        } catch {
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
         }
     }
     
@@ -1222,26 +1253,31 @@ class CoreDataModelState: ObservableObject {
                     dataArrivalEntries = item
                 }
             } else {
-                let newObject = ArrivalEntriesList(context: service.container.viewContext)
-                newObject.id = UUID()
-                newObject.entLdg = ""
-                newObject.entOn = ""
-                newObject.entFuelOnChocks = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+                initDataArrivalEntries()
             }
             existDataArrivalEntries = true
         } catch {
             print("Could not fetch Arrival Entries from Core Data.")
+        }
+    }
+    
+    func initDataArrivalEntries() {
+        let newObject = ArrivalEntriesList(context: service.container.viewContext)
+        newObject.id = UUID()
+        newObject.entLdg = ""
+        newObject.entOn = ""
+        newObject.entFuelOnChocks = ""
+        
+        do {
+            // Persist the data in this managed object context to the underlying store
+            try service.container.viewContext.save()
+            readArrivalEntries()
+            print("saved successfully")
+        } catch {
+            print("Failed to save: \(error)")
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
         }
     }
 
@@ -1274,8 +1310,6 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readSummaryRoute() {
-        var data: SummaryRouteList!
-        
         let request: NSFetchRequest<SummaryRouteList> = SummaryRouteList.fetchRequest()
         do {
             let response: [SummaryRouteList] = try service.container.viewContext.fetch(request)
@@ -1735,7 +1769,6 @@ class CoreDataModelState: ObservableObject {
             let response: [ProjDelaysList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 if let item = response.first {
-                    print("read ProjDelays ===== \(item)")
                     dataProjDelays = item
                 }
             }

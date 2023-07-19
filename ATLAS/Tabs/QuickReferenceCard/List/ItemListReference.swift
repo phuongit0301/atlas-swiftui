@@ -119,12 +119,12 @@ struct ItemListReference: View {
                                 }
                                 .tint(Color.theme.orangePeel)
                                 
-                                Button {
-                                    // todo: handle click info button
-                                } label: {
-                                    Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                }
-                                .tint(Color.theme.graniteGray)
+//                                Button {
+//                                    // todo: handle click info button
+//                                } label: {
+//                                    Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+//                                }
+//                                .tint(Color.theme.graniteGray)
                             }
                         }.onMove(perform: move)
                     }.listStyle(.plain)

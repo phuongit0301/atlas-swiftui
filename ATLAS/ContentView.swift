@@ -68,13 +68,20 @@ struct ContentView: View {
     // fuel page swift data initialise
     @Environment(\.modelContext) private var context
     @Query var fuelPageData: [FuelPageData]
+    @State var loading = false
     
     var body: some View {
-        MainView()
-        .onAppear {
+        VStack(spacing: 0) {
+            if loading {
+                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+            } else {
+                MainView()
+            }
+        }.onAppear {
             Task {
                 // check if fuel page swift data has data
                 if fuelPageData.first?.projDelays == nil {
+                    loading = true
                     // add fuel page data to swift data
                     // fetch api response
                     @ObservedObject var globalResponse = GlobalResponse.shared
@@ -86,6 +93,7 @@ struct ContentView: View {
                     // insert into context and save
                     context.insert(fetchedFuelPageData)
                     try? context.save()
+                    loading = false
                 }
             }
         }

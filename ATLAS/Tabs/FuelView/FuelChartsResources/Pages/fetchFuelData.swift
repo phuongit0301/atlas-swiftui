@@ -52,7 +52,7 @@ class APIManager: ObservableObject {
                 //let trimmedString = responseString.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
                 DispatchQueue.main.async {
                     self.globalResponse.response = responseString
-                    //print("responseString: \(responseString)")
+                    print("responseString: \(responseString)")
                 }
                 completion(responseString)
                 print("fetched")              

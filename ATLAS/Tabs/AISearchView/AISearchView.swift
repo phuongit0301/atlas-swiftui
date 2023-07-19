@@ -52,6 +52,7 @@ struct AISearchView: View {
                                         onSearch()
                                     }
                                 }
+                                .submitLabel(.search)
                                 .font(.custom("Inter-Regular", size: 16))
                                 .padding(13)
                                 .frame(maxWidth: .infinity, maxHeight: 48)

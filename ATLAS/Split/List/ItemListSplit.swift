@@ -64,19 +64,19 @@ struct ItemListSplit: View {
                                     
                                     Spacer()
                                     
-                                    ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
-                                        HStack {
-                                            Text(tag.name)
-                                                .padding(.vertical, 4)
-                                                .padding(.horizontal, 8)
-                                                .font(.system(size: 12, weight: .regular))
-                                                .foregroundColor(Color.theme.eerieBlack)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                                )
-                                        }.padding(.horizontal, 3)
-                                    }
+//                                    ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
+//                                        HStack {
+//                                            Text(tag.name)
+//                                                .padding(.vertical, 4)
+//                                                .padding(.horizontal, 8)
+//                                                .font(.system(size: 12, weight: .regular))
+//                                                .foregroundColor(Color.theme.eerieBlack)
+//                                                .overlay(
+//                                                    RoundedRectangle(cornerRadius: 16)
+//                                                        .stroke(Color.theme.eerieBlack, lineWidth: 1)
+//                                                )
+//                                        }.padding(.horizontal, 3)
+//                                    }
 
                                     
                                     Button(action: {
@@ -120,12 +120,12 @@ struct ItemListSplit: View {
 //                                }
 //                                .tint(Color.theme.orangePeel)
                                 
-                                Button {
-                                    // todo: handle click info button
-                                } label: {
-                                    Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                }
-                                .tint(Color.theme.graniteGray)
+//                                Button {
+//                                    // todo: handle click info button
+//                                } label: {
+//                                    Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+//                                }
+//                                .tint(Color.theme.graniteGray)
                             }
                         }.onMove(perform: move)
                     }.listStyle(.plain)
