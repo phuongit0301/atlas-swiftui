@@ -357,6 +357,8 @@
         <attribute name="stdLocal" optional="YES" attributeType="String"/>
         <attribute name="stdUTC" optional="YES" attributeType="String"/>
         <attribute name="tailNo" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffArr" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffDep" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SummaryRoute" representedClassName="SummaryRouteList" syncable="YES">
         <attribute name="arrRwy" optional="YES" attributeType="String"/>

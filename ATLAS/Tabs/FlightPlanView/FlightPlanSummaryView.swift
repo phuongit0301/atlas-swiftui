@@ -529,6 +529,10 @@ struct FlightPlanSummaryView: View {
                                                 "POB",
                                                 text: $pob
                                             )
+                                            .keyboardType(.numberPad)
+                                            .onReceive(pob.publisher.collect()) { output in
+                                                pob = String(output.prefix(3))
+                                            }
                                             .onSubmit {
                                                 if coreDataModel.existDataSummaryInfo {
                                                     coreDataModel.dataSummaryInfo.pob = pob
@@ -679,31 +683,55 @@ struct FlightPlanSummaryView: View {
                         Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                             // table body - first row
                             Table(coreDataModel.dataPerfInfo) {
-                                TableColumn("FLT Rules", value: \.unwrappedFltRules)
-                                TableColumn("GND Miles", value: \.unwrappedGndMiles)
-                                TableColumn("AIR Miles", value: \.unwrappedAirMiles)
-                                TableColumn("CRZ Comp", value: \.unwrappedCrzComp)
-                                TableColumn("APD", value: \.unwrappedApd)
-                                TableColumn("CI", value: \.unwrappedCi)
+                                TableColumn("FLT Rules") {
+                                    Text($0.unwrappedFltRules).foregroundColor(.black)
+                                }
+                                TableColumn("GND Miles") {
+                                    Text($0.unwrappedGndMiles).foregroundColor(.black)
+                                }
+                                TableColumn("AIR Miles") {
+                                    Text($0.unwrappedAirMiles).foregroundColor(.black)
+                                }
+                                TableColumn("CRZ Comp") {
+                                    Text($0.unwrappedCrzComp).foregroundColor(.black)
+                                }
+                                TableColumn("APD") {
+                                    Text($0.unwrappedApd).foregroundColor(.black)
+                                }
+                                TableColumn("CI") {
+                                    Text($0.unwrappedCi).foregroundColor(.black)
+                                }
                             }
                             .frame(minHeight: 65)
                             .scrollDisabled(true)
                             // table body - changes
                             Table(coreDataModel.perfChangesTable) {
-                                TableColumn("ZFW Change", value: \.zfwChange)
-                                TableColumn("FL Change", value: \.lvlChange)
+                                TableColumn("ZFW Change") {
+                                    Text($0.zfwChange).foregroundColor(.black)
+                                }
+                                TableColumn("FL Change") {
+                                    Text($0.lvlChange).foregroundColor(.black)
+                                }
                             }
                             .frame(minHeight: 65)
                             .scrollDisabled(true)
                             // table body - weights
                             Table(coreDataModel.dataPerfWeight) {
-                                TableColumn("Weight", value: \.unwrappedWeight)
-                                TableColumn("Plan", value: \.unwrappedPlan)
+                                TableColumn("Weight") {
+                                    Text($0.unwrappedWeight).foregroundColor(.black)
+                                }
+                                TableColumn("Plan") {
+                                    Text($0.unwrappedPlan).foregroundColor(.black)
+                                }
                                 TableColumn("Actual") {
                                     CustomField(item: $0)
                                 }
-                                TableColumn("Max", value: \.unwrappedMax)
-                                TableColumn("Limitation", value: \.unwrappedLimitation)
+                                TableColumn("Max") {
+                                    Text($0.unwrappedMax).foregroundColor(.black)
+                                }
+                                TableColumn("Limitation") {
+                                    Text($0.unwrappedLimitation).foregroundColor(.black)
+                                }
                             }
                             .frame(minHeight: 185)
                             .scrollDisabled(true)
@@ -715,10 +743,18 @@ struct FlightPlanSummaryView: View {
                             VStack(alignment: .leading, spacing: 0) {
                                 //fuel info table body
                                 Table(coreDataModel.dataFuelTableList) {
-                                    TableColumn("", value: \.unwrappedFirstColumn).width(420)
-                                    TableColumn("Time", value: \.unwrappedTime).width((proxy.size.width - 600) / 3)
-                                    TableColumn("Fuel", value: \.unwrappedFuel).width((proxy.size.width - 600) / 3)
-                                    TableColumn("Policy / Reason", value: \.unwrappedPolicyReason).width((proxy.size.width - 300) / 3)
+                                    TableColumn("") {
+                                        Text($0.unwrappedFirstColumn).foregroundColor(.black)
+                                    }.width(420)
+                                    TableColumn("Time") {
+                                        Text($0.unwrappedTime).foregroundColor(.black)
+                                    }.width((proxy.size.width - 600) / 3)
+                                    TableColumn("Fuel") {
+                                        Text($0.unwrappedFuel).foregroundColor(.black)
+                                    }.width((proxy.size.width - 600) / 3)
+                                    TableColumn("Policy / Reason") {
+                                        Text($0.unwrappedPolicyReason).foregroundColor(.black)
+                                    }.width((proxy.size.width - 300) / 3)
                                 }
                                 .frame(minHeight: 390)
                                 .scrollDisabled(true)

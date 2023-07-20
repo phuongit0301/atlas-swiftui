@@ -340,6 +340,8 @@ struct IInfoDataResponseModel: Decodable {
     var STDUTC: String?
     var tailNo: String?
     var pob: String?
+    var time_diff_arr: String?
+    var time_diff_dep: String?
 }
 
 struct IAltnDataTafResponseModel: Decodable {

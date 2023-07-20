@@ -2434,7 +2434,6 @@ class CoreDataModelState: ObservableObject {
                 "enroutePageData": enroutePageData,
                 "arrivalPageData": arrivalPageData
             ]
-            isUpdating = true
             
             await self.remoteService.updateFuelData(payload, completion: { success in
                 if(success) {

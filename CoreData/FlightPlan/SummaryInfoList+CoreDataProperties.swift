@@ -2,7 +2,7 @@
 //  SummaryInfoList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 04/07/2023.
+//  Created by phuong phan on 20/07/2023.
 //
 //
 
@@ -26,12 +26,14 @@ extension SummaryInfoList {
     @NSManaged public var fltTime: String?
     @NSManaged public var id: UUID?
     @NSManaged public var planNo: String?
+    @NSManaged public var pob: String?
     @NSManaged public var staLocal: String?
     @NSManaged public var staUTC: String?
     @NSManaged public var stdLocal: String?
     @NSManaged public var stdUTC: String?
     @NSManaged public var tailNo: String?
-    @NSManaged public var pob: String?
+    @NSManaged public var timeDiffArr: String?
+    @NSManaged public var timeDiffDep: String?
     
     public var unwrappedBlkTime: String {
         blkTime ?? ""
@@ -91,6 +93,14 @@ extension SummaryInfoList {
     
     public var unwrappedPob: String {
         pob ?? ""
+    }
+    
+    public var unwrappedTimeDiffArr: String {
+        timeDiffArr ?? ""
+    }
+    
+    public var unwrappedTimeDiffDep: String {
+        timeDiffDep ?? ""
     }
 }
 
