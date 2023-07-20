@@ -16,46 +16,53 @@ struct PreviousSearchSplitView: View {
     var results: [SDAISearchModel]
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             HeaderViewSplit(isMenu: true, isNext: true)
             
-            NavigationStack {
+            if results.count == 0 {
                 List {
-                    Section {
-                        Text(title).font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
-                        
-                        ForEach(results, id: \.id) {item in
-                            NavigationLink(destination: AISearchDetailSplitView(item: item)) {
-                                Text(item.question).font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
-                                
-                                if item.isFavorite {
-                                    Button(action: {
-                                        item.isFavorite.toggle()
-                                    }, label: {
-                                        Image(systemName: "star.fill")
-                                            .foregroundColor(Color.theme.azure)
-                                            .frame(width: 22, height: 22)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    })
+                    Text("No search saved").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.philippineGray2)
+                }.frame(maxHeight: .infinity)
+            } else {
+                NavigationStack {
+                    List {
+                        Section {
+                            Text(title).font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
+                            
+                            ForEach(results, id: \.id) {item in
+                                NavigationLink(destination: AISearchDetailSplitView(item: item)) {
+                                    Text(item.question).font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
                                     
-                                } else {
-                                    Button(action: {
-                                        item.isFavorite.toggle()
-                                    }, label: {
-                                        Image(systemName: "star")
-                                            .foregroundColor(Color.theme.azure)
-                                            .frame(width: 22, height: 22)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    })
-                                }
-                            }.buttonStyle(PlainButtonStyle())
+                                    if item.isFavorite {
+                                        Button(action: {
+                                            item.isFavorite.toggle()
+                                        }, label: {
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(Color.theme.azure)
+                                                .frame(width: 22, height: 22)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        })
+                                        
+                                    } else {
+                                        Button(action: {
+                                            item.isFavorite.toggle()
+                                        }, label: {
+                                            Image(systemName: "star")
+                                                .foregroundColor(Color.theme.azure)
+                                                .frame(width: 22, height: 22)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        })
+                                    }
+                                }.buttonStyle(PlainButtonStyle())
+                            }
                         }
-                    }
-                }.listStyle(.plain)
-                    .navigationBarHidden(true)
+                    }.listStyle(.plain)
+                        .navigationBarHidden(true)
+                }
             }
+            
         }
         
     }

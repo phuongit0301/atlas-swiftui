@@ -1156,6 +1156,27 @@ struct FlightPlanDepView: View {
         isEditingEntTaxi = false
         isEditingEntTakeoff = false
     }
+    
+    func strRecursive(_ arr: [String], _ str: String) -> [String] {
+        if str == "" {
+            return arr
+        }
+        
+        let strToArr = str.map( { String($0) })
+        var tempArr =  arr;
+        for (j, word) in strToArr.enumerated() {
+            tempArr = findWordInArray(j, word, tempArr)
+        }
+        print("tempArr=======\(tempArr)")
+        return tempArr
+    }
+    
+    func findWordInArray(_ index: Int, _ word: String, _ arr: [String]) -> [String] {
+        if index == 0 {
+            return arr.filter { $0.hasPrefix(word) }
+        }
+        return arr.filter { $0.contains(word) }
+    }
 }
 
 // Todo for custom keyboard

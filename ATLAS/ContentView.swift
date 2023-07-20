@@ -64,6 +64,7 @@ func toggleSidebar() {
 struct ContentView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     // fuel page swift data initialise
     @Environment(\.modelContext) private var context
@@ -72,7 +73,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if loading {
+            if loading || coreDataModel.loading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
             } else {
                 MainView()

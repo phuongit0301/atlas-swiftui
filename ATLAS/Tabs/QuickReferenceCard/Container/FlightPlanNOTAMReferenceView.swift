@@ -20,7 +20,7 @@ struct FlightPlanNOTAMReferenceView: View {
     @State var arrArrNotams = [NotamsDataList]()
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             if arrDepNotams.count == 0 && arrEnrNotams.count == 0 && arrArrNotams.count == 0 {
                 List {
                     VStack {

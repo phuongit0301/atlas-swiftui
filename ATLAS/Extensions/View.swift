@@ -399,7 +399,8 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(PreviousSearchSplitView())
+        return AnyView(PreviousSearchSplitView().navigationBarBackButtonHidden()
+            .ignoresSafeArea())
     }
     
     if item.screenName == NavigationEnumeration.ScratchPadScreen {
