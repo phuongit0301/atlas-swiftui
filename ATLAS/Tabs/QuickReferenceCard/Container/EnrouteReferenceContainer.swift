@@ -53,11 +53,9 @@ struct EnrouteReferenceContainer: View {
     private func update(_ index: Int) {
         if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
             found.isDefault = false
-            viewModel.delete(viewModel.enrouteRefArray[index])
-        } else {
-            viewModel.enrouteRefArray[index].isDefault = false
         }
         
+        viewModel.delete(viewModel.enrouteRefArray[index])
         viewModel.save()
         resetData()
     }
@@ -69,6 +67,10 @@ struct EnrouteReferenceContainer: View {
     }
     
     private func delete(_ index: Int) {
+        if let found = viewModel.enrouteRefArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+            found.isDefault = false
+        }
+        
         viewModel.delete(viewModel.enrouteRefArray[index])
         viewModel.save()
         resetData()

@@ -46,7 +46,7 @@ let IFlightPlanTabs = [
     Tab(title: "Enroute", screenName: FlightPlanEnumeration.EnrouteScreen),
     Tab(title: "Arrival", screenName: FlightPlanEnumeration.ArrivalScreen),
     Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
-    Tab(title: "METARS", screenName: FlightPlanEnumeration.METARSScreen)
+    Tab(title: "METAR / TAF", screenName: FlightPlanEnumeration.METARSScreen)
 ]
 //
 //struct IFlightPlanTabs {

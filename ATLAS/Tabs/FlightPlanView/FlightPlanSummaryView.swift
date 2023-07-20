@@ -1518,6 +1518,7 @@ struct FlightPlanSummaryView: View {
 
 // todo @phuong customise Modal view per figma
 struct FuelModal: View {
+    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
     @Binding var isShowing: Bool
     
     var body: some View {
@@ -1538,6 +1539,10 @@ struct FuelModal: View {
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
             FuelView()
+        }.onAppear {
+            flightPlanDetailModel.isModal = true
+        }.onDisappear {
+            flightPlanDetailModel.isModal = false
         }
     }
     

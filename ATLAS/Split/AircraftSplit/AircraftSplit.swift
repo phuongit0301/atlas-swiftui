@@ -58,11 +58,9 @@ struct AircraftSplit: View {
     private func update(_ index: Int) {
         if let found = viewModel.aircraftArray.first(where: {$0.id == viewModel.aircraftRefArray[index].parentId}) {
             found.isDefault = false
-            viewModel.delete(viewModel.aircraftRefArray[index])
-        } else {
-            viewModel.aircraftRefArray[index].isDefault = false
         }
         
+        viewModel.delete(viewModel.aircraftRefArray[index])
         viewModel.save()
         resetData()
     }
@@ -74,6 +72,10 @@ struct AircraftSplit: View {
     }
     
     private func delete(_ index: Int) {
+        if let found = viewModel.aircraftArray.first(where: {$0.id == viewModel.aircraftRefArray[index].parentId}) {
+            found.isDefault = false
+        }
+        
         viewModel.delete(viewModel.aircraftRefArray[index])
         viewModel.save()
         resetData()

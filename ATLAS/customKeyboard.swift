@@ -23,7 +23,7 @@ struct CustomKeyboardView1: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "EXEC", "CLOSE"]
+        ["Z", "SP", "⌫", "↩", "CLOSE"]
     ]
 
     var body: some View {

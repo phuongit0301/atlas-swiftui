@@ -132,13 +132,29 @@ struct NoteFormSplit: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
+            //Drop 3 characters at last of String
+            var flightNoteTarget = target
+            flightNoteTarget.removeLast(3)
+            
+            let flightNote = NoteList(context: persistenceController.container.viewContext)
+            flightNote.id = UUID()
+            flightNote.name = name
+            flightNote.isDefault = true
+            flightNote.canDelete = true
+            flightNote.fromParent = true
+            flightNote.target = flightNoteTarget
+            flightNote.addToTags(NSSet(array: tagListSelected))
+            
+            viewModel.save()
+            
             let item = NoteList(context: persistenceController.container.viewContext)
             item.id = UUID()
             item.name = name
             item.isDefault = true
             item.canDelete = true
-            item.fromParent = false
+            item.fromParent = true
             item.target = target
+            item.parentId = flightNote.id
             item.addToTags(NSSet(array: tagListSelected))
             
             viewModel.save()

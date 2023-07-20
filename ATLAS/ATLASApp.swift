@@ -21,6 +21,7 @@ struct ATLASApp: App {
     @StateObject var fpModelSplitState = FPModelSplitState()
     @StateObject var coreDataModel = CoreDataModelState()
     @StateObject var viewModelSummary = ViewModelSummary()
+    @StateObject var flightPlanDetailModel = FlightPlanDetailModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -43,6 +44,7 @@ struct ATLASApp: App {
                 .environmentObject(mainNavModelState)
                 .environmentObject(flightNoteModelState)
                 .environmentObject(searchModelSplitState)
+                .environmentObject(flightPlanDetailModel)
                 .environmentObject(viewModelSummary)
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)

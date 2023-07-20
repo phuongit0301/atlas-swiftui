@@ -48,3 +48,7 @@ struct FuelTab {
     var title: String
     var screenName: FuelEnumeration
 }
+
+class FlightPlanDetailModel: ObservableObject {
+    @Published var isModal: Bool = false
+}

@@ -89,82 +89,82 @@ struct AISearchView: View {
                     )
                     
                     HStack {
-                        HStack {
-                            Button(action: {
-                                if message == "" {
-                                    return
-                                }
-                                
-                                if like == Status.like {
-                                    self.like = Status.normal
-                                } else {
-                                    self.like = Status.like
-                                }
-                            }) {
-                                if like == Status.like {
-                                    Image(systemName: "hand.thumbsup.fill")
-                                        .foregroundColor(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                } else {
-                                    Image(systemName: "hand.thumbsup")
-                                        .foregroundColor(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }
-                                
-                            }
-                            
-                            Button(action: {
-                                if message == "" {
-                                    return
-                                }
-                                
-                                if like == Status.dislike {
-                                    self.like = Status.normal
-                                } else {
-                                    self.like = Status.dislike
-                                }
-                            }) {
-                                if like == Status.dislike {
-                                    Image(systemName: "hand.thumbsdown.fill")
-                                        .foregroundColor(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                } else {
-                                    Image(systemName: "hand.thumbsdown")
-                                        .foregroundColor(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }
-                            }
-                            
-                            Button {
-                                if message == "" {
-                                    return
-                                }
-                                
-                                self.flag.toggle()
-                            } label: {
-                                if self.flag {
-                                    Image(systemName: "flag.fill")
-                                        .tint(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                } else {
-                                    Image(systemName: "flag")
-                                        .tint(Color.theme.azure)
-                                        .frame(width: 24, height: 24)
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fit)
-                                }
-                            }
-                        }//group icons
+//                        HStack {
+//                            Button(action: {
+//                                if message == "" {
+//                                    return
+//                                }
+//                                
+//                                if like == Status.like {
+//                                    self.like = Status.normal
+//                                } else {
+//                                    self.like = Status.like
+//                                }
+//                            }) {
+//                                if like == Status.like {
+//                                    Image(systemName: "hand.thumbsup.fill")
+//                                        .foregroundColor(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                } else {
+//                                    Image(systemName: "hand.thumbsup")
+//                                        .foregroundColor(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                }
+//                                
+//                            }
+//                            
+//                            Button(action: {
+//                                if message == "" {
+//                                    return
+//                                }
+//                                
+//                                if like == Status.dislike {
+//                                    self.like = Status.normal
+//                                } else {
+//                                    self.like = Status.dislike
+//                                }
+//                            }) {
+//                                if like == Status.dislike {
+//                                    Image(systemName: "hand.thumbsdown.fill")
+//                                        .foregroundColor(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                } else {
+//                                    Image(systemName: "hand.thumbsdown")
+//                                        .foregroundColor(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                }
+//                            }
+//                            
+//                            Button {
+//                                if message == "" {
+//                                    return
+//                                }
+//                                
+//                                self.flag.toggle()
+//                            } label: {
+//                                if self.flag {
+//                                    Image(systemName: "flag.fill")
+//                                        .tint(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                } else {
+//                                    Image(systemName: "flag")
+//                                        .tint(Color.theme.azure)
+//                                        .frame(width: 24, height: 24)
+//                                        .scaledToFit()
+//                                        .aspectRatio(contentMode: .fit)
+//                                }
+//                            }
+//                        }//group icons
                         
                         Spacer()
                         

@@ -99,6 +99,7 @@ struct ItemList: View {
                                                 .scaledToFit()
                                                 .aspectRatio(contentMode: .fit)
                                     }.padding(.horizontal, 5)
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                             .padding(12)

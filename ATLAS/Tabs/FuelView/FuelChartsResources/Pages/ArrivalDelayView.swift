@@ -16,6 +16,7 @@ struct ArrivalDelayView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
 #endif
     // fuel page swift data initialise
     @Environment(\.modelContext) private var context
@@ -26,6 +27,7 @@ struct ArrivalDelayView: View {
     @State private var selectedValue: Int = 0
     @State private var isShowModal: Bool = false
     @State private var selectionOutput: Int = 0
+    
     
     var body: some View {
         // fetch SwiftData model
@@ -53,9 +55,17 @@ struct ArrivalDelayView: View {
                     VStack(spacing: 16) {
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
-                                projArrivalDelaysView(convertedJSON: projDelaysResponse)
-                                historicalDelaysView(convertedJSON: historicalDelaysResponse)
-
+                                if !flightPlanDetailModel.isModal {
+                                    projArrivalDelaysView(convertedJSON: projDelaysResponse)
+                                    historicalDelaysView(convertedJSON: historicalDelaysResponse)
+                                } else {
+                                    VStack(spacing: 20) {
+                                        projArrivalDelaysView(convertedJSON: projDelaysResponse)
+                                        historicalDelaysView(convertedJSON: historicalDelaysResponse)
+                                    }.containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                        .padding([.horizontal, .bottom], 16)
+                                        .frame(maxWidth: .infinity)
+                                }
                             } else {
                                 GridRow {
                                     projArrivalDelaysView(convertedJSON: projDelaysResponse)

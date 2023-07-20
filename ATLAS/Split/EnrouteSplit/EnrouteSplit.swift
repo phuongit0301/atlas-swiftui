@@ -58,11 +58,9 @@ struct EnrouteSplit: View {
     private func update(_ index: Int) {
         if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
             found.isDefault = false
-            viewModel.delete(viewModel.enrouteRefArray[index])
-        } else {
-            viewModel.enrouteRefArray[index].isDefault = false
         }
         
+        viewModel.delete(viewModel.enrouteRefArray[index])
         viewModel.save()
         resetData()
     }
@@ -74,6 +72,10 @@ struct EnrouteSplit: View {
     }
     
     private func delete(_ index: Int) {
+        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+            found.isDefault = false
+        }
+        
         viewModel.delete(viewModel.enrouteRefArray[index])
         viewModel.save()
         resetData()

@@ -56,11 +56,9 @@ struct ArrivalSplit: View {
     private func update(_ index: Int) {
         if let found = viewModel.arrivalArray.first(where: {$0.id == viewModel.arrivalRefArray[index].parentId}) {
             found.isDefault = false
-            viewModel.delete(viewModel.arrivalRefArray[index])
-        } else {
-            viewModel.arrivalRefArray[index].isDefault = false
         }
         
+        viewModel.delete(viewModel.arrivalRefArray[index])
         viewModel.save()
         resetData()
     }
@@ -72,6 +70,10 @@ struct ArrivalSplit: View {
     }
     
     private func delete(_ index: Int) {
+        if let found = viewModel.arrivalArray.first(where: {$0.id == viewModel.arrivalRefArray[index].parentId}) {
+            found.isDefault = false
+        }
+        
         viewModel.delete(viewModel.arrivalRefArray[index])
         viewModel.save()
         resetData()

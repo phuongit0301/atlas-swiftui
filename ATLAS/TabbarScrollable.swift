@@ -22,15 +22,17 @@ struct TabbarScrollable: View {
                             if item.isShowTabbar {
                                 TabbarItem(item: item, isActive: item.id == selectedTab.id, namespace: menuItemTransition)
                                     .onTapGesture {
-                                        withAnimation(.easeInOut) {
-                                            if (item.isExternal) {
-                                                if let url = URL(string: item.scheme) {
-                                                    if UIApplication.shared.canOpenURL(url) {
-                                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                        if !item.isDisabled {
+                                            withAnimation(.easeInOut) {
+                                                if (item.isExternal) {
+                                                    if let url = URL(string: item.scheme) {
+                                                        if UIApplication.shared.canOpenURL(url) {
+                                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                                        }
                                                     }
+                                                } else {
+                                                    selectedTab = item
                                                 }
-                                            } else {
-                                                selectedTab = item
                                             }
                                         }
                                     }
@@ -84,7 +86,7 @@ struct TabbarItem: View {
             HStack {
                 Text(item.name)
                     .font(.custom("Inter-Regular", size: 17))
-                    .foregroundColor(Color.theme.azure)
+                    .foregroundColor(item.isDisabled ? Color.theme.sonicSilver : Color.theme.azure)
                 
                 if item.isExternal {
                     Image(systemName: "pip.exit")

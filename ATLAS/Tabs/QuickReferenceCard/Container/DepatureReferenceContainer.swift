@@ -52,11 +52,9 @@ struct DepatureReferenceContainer: View {
     private func update(_ index: Int) {
         if let found = viewModel.departureArray.first(where: {$0.id == viewModel.departureRefArray[index].parentId}) {
             found.isDefault = false
-            viewModel.delete(viewModel.departureRefArray[index])
-        } else {
-            viewModel.departureRefArray[index].isDefault = false
         }
         
+        viewModel.delete(viewModel.departureRefArray[index])
         viewModel.save()
         resetData()
     }
@@ -68,6 +66,10 @@ struct DepatureReferenceContainer: View {
     }
     
     private func delete(_ index: Int) {
+        if let found = viewModel.departureArray.first(where: {$0.id == viewModel.departureRefArray[index].parentId}) {
+            found.isDefault = false
+        }
+        
         viewModel.delete(viewModel.departureRefArray[index])
         viewModel.save()
         resetData()

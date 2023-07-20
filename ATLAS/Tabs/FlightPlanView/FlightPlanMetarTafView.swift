@@ -163,12 +163,14 @@ struct FlightPlanMETARTAFView: View {
                 // ALTN TAF section
                 Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
                     Table(coreDataModel.dataAltnTaf) {
-                        TableColumn("ALTN / RWY", value: \.unwrappedAltnRwy)
+                        TableColumn("ALTN / RWY") {
+                            Text($0.unwrappedAltnRwy).foregroundColor(.black)
+                        }
                         TableColumn("ETA") {
-                            Text($0.unwrappedEta).font(.system(size: 17, weight: .regular))
+                            Text($0.unwrappedEta).font(.system(size: 17, weight: .regular)).foregroundColor(.black)
                         }
                         TableColumn("TAF") {
-                            Text($0.unwrappedTaf).font(.system(size: 17, weight: .regular)).lineLimit(nil)
+                            Text($0.unwrappedTaf).font(.system(size: 17, weight: .regular)).lineLimit(nil).foregroundColor(.black)
                         }.width(800)
                     }
                     .frame(minHeight: 350)

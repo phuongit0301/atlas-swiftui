@@ -223,9 +223,9 @@ struct FlightPlanEnrView: View {
                                 }
                                 HStack {
                                     Group {
-                                        Text("\(row.unwrappedCord) \(row.unwrappedMsa)").frame(width: calculateWidth(proxy.size.width - 50, 13) * 2, alignment: .leading).padding(.leading, 5)
-//                                        Text("-").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedCord) \(row.unwrappedMsa)").frame(width: calculateWidth(proxy.size.width - 50, 13) * 2, alignment: .leading)
+                                        Text("-").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 40, 13), alignment: .leading).padding(.leading, 5)
+//                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedDis)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedDiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedPfl)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
