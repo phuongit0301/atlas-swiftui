@@ -499,6 +499,8 @@ class CoreDataModelState: ObservableObject {
         
         self.existDataFPEnroute = true
         dataFPEnroute = readEnrouteList()
+        
+        updateValues(0, dataFPEnroute)
     }
     
     func initDataSummaryInfo(_ infoData: IInfoDataResponseModel) {
@@ -2441,5 +2443,222 @@ class CoreDataModelState: ObservableObject {
                 }
             })
         }
+    }
+    
+    
+    // Update data for Flight Plan Enroute textfield
+    private func updateValues(_ editedIndex: Int = 0, _ data: [EnrouteList]) {
+        var dataOriginal = data
+        
+        let dateFormatterTime = DateFormatter()
+        dateFormatterTime.dateFormat = "HHmm"
+        
+        // define the T_O_C index
+        var tocIndex: Int {
+            for (index, row) in data.enumerated() {
+                if row.unwrappedPosn == "T_O_C" {
+                    return index
+                }
+            }
+            return 0
+        }
+        
+        let startIndex = editedIndex + 1
+        for index in startIndex..<data.count {
+            //eta
+            let etaDefaultValue = dateFormatterTime.date(from: dataOriginal[index].unwrappedEta)!
+            if dateFormatterTime.date(from: data[index].eta!) != nil {
+                // Update the value based on the previous row's value in column
+                if dateFormatterTime.date(from: data[index-1].unwrappedEta) != nil {
+                    let etaPreviousRowValue = dateFormatterTime.date(from: data[index-1].unwrappedEta)!
+                    let ztmString = data[index].ztm
+                    let components = ztmString!.components(separatedBy: ":")
+                    let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                    let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                    data[index].eta = dateFormatterTime.string(from: NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+            }
+            
+            //ata
+            let ataDefaultValue = dateFormatterTime.date(from: dataOriginal[index].unwrappedAta)!
+            if dateFormatterTime.date(from: data[index].unwrappedAta) != nil {
+                // Update the value based on the previous row's value in column
+                var ataPreviousRowValue = dateFormatterTime.date(from: "0000")
+                
+                if data[index-1].unwrappedAta != "" {
+                    ataPreviousRowValue = dateFormatterTime.date(from: data[index-1].unwrappedAta)
+                }
+                
+                let ztmString = data[index].unwrappedZtm
+                let components = ztmString.components(separatedBy: ":")
+                let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                if let NewValue = ataPreviousRowValue?.addingTimeInterval(TimeInterval(ztm)) {
+                    data[index].ata = dateFormatterTime.string(from: NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].ata = dateFormatterTime.string(from: ataDefaultValue)
+            }
+            
+            //afl
+            let aflDefaultValue = dataOriginal[index].unwrappedAfl
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                data[index].afl = aflDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let aflPreviousRowValue = data[index-1].unwrappedAfl
+                let NewValue = aflPreviousRowValue
+                data[index].afl = NewValue
+            }
+            
+            //oat
+            let oatDefaultValue = dataOriginal[index].unwrappedOat
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                data[index].oat = oatDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let oatPreviousRowValue = data[index-1].unwrappedOat
+                let NewValue = oatPreviousRowValue
+                data[index].oat = NewValue
+            }
+            
+            //awind
+            let aWindDefaultValue = dataOriginal[index].unwrappedAwind
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                data[index].awind = aWindDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let aWindPreviousRowValue = data[index-1].unwrappedAwind
+                let NewValue = aWindPreviousRowValue
+                data[index].awind = NewValue
+            }
+            
+            //afrm
+            let afrmDefaultValue = Double(dataOriginal[index].unwrappedAfrm)
+            if Double(data[index].unwrappedAfrm) != nil {
+                // Update the value based on the previous row's value in column
+                let afrmPreviousRowValue = Double(data[index-1].unwrappedAfrm)
+                let zfrq = Double(data[index].unwrappedZfrq) ?? 0
+                var NewValue = zfrq
+                
+                if afrmPreviousRowValue != nil {
+                    NewValue = afrmPreviousRowValue! - zfrq
+                }
+                data[index].afrm = formatFuelNumberDouble(NewValue)
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
+            }
+        }
+        
+        for index in editedIndex..<data.count {
+            //diff
+            let diffDefaultValue = dataOriginal[index].unwrappedDiff
+            if dateFormatterTime.date(from: data[index].unwrappedEta) != nil &&  dateFormatterTime.date(from: data[index].unwrappedEta) != nil {
+                var eta = 0
+                if data[index].unwrappedEta != "" {
+                    let etaMins = data[index].unwrappedEta.suffix(2)
+                    let etaHrs = data[index].unwrappedEta.prefix(2)
+                    eta = Int(etaHrs)! * 60 + Int(etaMins)!
+                }
+                // Update the value based on the eta and ata
+                let ataMins = data[index].unwrappedAta.suffix(2)
+                let ataHrs = data[index].unwrappedAta.prefix(2)
+                var ata = ataMins != "" ? Int(ataMins)! : 0
+                
+                if ataHrs != "" {
+                    ata = Int(ataHrs)! * 60 + ata
+                }
+                
+                var NewValue = ata - eta
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    let NewValueString = formatTime(NewValue)
+                    data[index].diff = "-"+NewValueString
+                } else {
+                    let NewValueString = formatTime(NewValue)
+                    data[index].diff = "+"+NewValueString
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].diff = diffDefaultValue
+            }
+            
+            //fDiff
+            let fDiffDefaultValue = Double(dataOriginal[index].unwrappedFdiff)
+            if Double(data[index].unwrappedFdiff) != nil {
+                // Update the value based on the previous row's value in column
+                let afrm = Double(data[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(data[index].unwrappedPfrm) ?? 0
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    data[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    data[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
+        
+        for index in editedIndex..<data.count {
+            //fDiff
+            let fDiffDefaultValue = Double(dataOriginal[index].unwrappedFdiff)
+            if Double(data[index].unwrappedFdiff) != nil {
+                // Update the value based on the previous row's value in column
+                let afrm = Double(data[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(data[index].unwrappedPfrm) ?? 0
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    data[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    data[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                data[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
+        do {
+            // sync up with coreData, update data enroute
+            try service.container.viewContext.save()
+            dataFPEnroute = readEnrouteList()
+        } catch {
+            print("Error Update Enroute value")
+        }
+    }
+    
+    func formatFuelNumberDouble(_ number: Double) -> String {
+        let formattedString = String(format: "%05.1f", number)
+        return formattedString
+    }
+    func formatTime(_ minutes: Int) -> String {
+        let hours = minutes / 60
+        let mins = minutes % 60
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
+        
+        return formatter.string(from: date)
     }
 }
