@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
     
 struct EnrouteSplit: View {
+    @State var item: ListFlightInformationItem?
     @EnvironmentObject var viewModel: CoreDataModelState
-    @EnvironmentObject var persistenceController: PersistenceController
-    @State var enrouteTags: [ITagStorage] = []
     
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
@@ -23,7 +22,7 @@ struct EnrouteSplit: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true, isNext: true, nextScreen: item?.nextScreen)
             
             VStack(spacing: 0) {
                 ItemListSplit(

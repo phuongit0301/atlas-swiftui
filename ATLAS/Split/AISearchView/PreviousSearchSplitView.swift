@@ -17,7 +17,7 @@ struct PreviousSearchSplitView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             if results.count == 0 {
                 List {

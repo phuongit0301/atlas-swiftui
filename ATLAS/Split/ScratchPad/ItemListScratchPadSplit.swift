@@ -22,7 +22,7 @@ struct ItemListScratchPadSplit: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             HStack {
                 Text(header).foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))

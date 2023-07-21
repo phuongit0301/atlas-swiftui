@@ -10,6 +10,7 @@ import SwiftUI
 struct FlightInformationDetailView: View {
     @State private var showUTC = true
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State var pasteboard = UIPasteboard.general
     
     var body: some View {
         
@@ -188,6 +189,28 @@ struct FlightInformationDetailView: View {
                                     .font(.system(size: 17, weight: .semibold))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    pasteboard.string = coreDataModel.dataSummaryRoute.unwrappedRoute
+                                }) {
+                                    Text("Copy")
+                                        .font(.system(size: 17, weight: .regular))
+                                        .foregroundColor(Color.white)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.init(
+                                                    Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 0)
+                                        )
+                                }.padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.theme.azure)
+                                    .cornerRadius(12)
+                                    .border(Color.theme.azure, width: 1, cornerRadius: 12)
+                                    .buttonStyle(PlainButtonStyle())
                             }
                         }
                         Divider()

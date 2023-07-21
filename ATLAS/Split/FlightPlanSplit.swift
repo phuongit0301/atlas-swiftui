@@ -13,7 +13,7 @@ struct FlightPlanSplit: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             List {
                 HStack {

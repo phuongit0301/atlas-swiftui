@@ -15,7 +15,7 @@ struct AISearchDetailSplitView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             VStack(alignment: .leading) {
                 HStack(spacing: 0) {

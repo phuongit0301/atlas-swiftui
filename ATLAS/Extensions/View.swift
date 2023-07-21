@@ -387,15 +387,15 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     if item.screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(DepartureSplit())
+        return AnyView(DepartureSplit(item: item))
     }
     
     if item.screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(EnrouteSplit())
+        return AnyView(EnrouteSplit(item: item))
     }
     
     if item.screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(ArrivalSplit())
+        return AnyView(ArrivalSplit(item: item))
     }
     
     if item.screenName == NavigationEnumeration.AtlasSearchScreen {
@@ -415,6 +415,22 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     return AnyView(FlightPlanSplit())
+}
+
+func getDestinationNextSplit(_ screenName: NavigationEnumeration) -> AnyView {
+    if screenName == NavigationEnumeration.DepartureScreen {
+        return AnyView(DepartureSplit())
+    }
+    
+    if screenName == NavigationEnumeration.EnrouteScreen {
+        return AnyView(EnrouteSplit())
+    }
+    
+    if screenName == NavigationEnumeration.ArrivalScreen {
+        return AnyView(ArrivalSplit())
+    }
+    
+    return AnyView(DepartureSplit())
 }
 
 func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {

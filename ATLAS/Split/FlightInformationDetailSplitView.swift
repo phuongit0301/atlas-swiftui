@@ -35,7 +35,7 @@ struct FlightInformationDetailSplitView: View {
         }
         
         VStack(spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             VStack {
                 HStack(alignment: .center) {

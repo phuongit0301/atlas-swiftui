@@ -22,7 +22,7 @@ struct AircraftSplit: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             VStack(spacing: 0) {
                 ItemListSplit(

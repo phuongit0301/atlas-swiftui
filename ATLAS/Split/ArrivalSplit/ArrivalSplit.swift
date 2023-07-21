@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
     
 struct ArrivalSplit: View {
+    @State var item: ListFlightInformationItem?
     @EnvironmentObject var viewModel: CoreDataModelState
     
     @State private var currentIndex: Int = -1
@@ -21,7 +22,7 @@ struct ArrivalSplit: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true, isNext: true, nextScreen: item?.nextScreen)
             
             VStack(spacing: 0) {
                 ItemListSplit(

@@ -40,6 +40,7 @@ struct ListFlightInformationItem: Identifiable, Hashable {
     var isTextBox: Bool = false
     var screenName: NavigationEnumeration?
     var idReference: String?
+    var nextScreen: NavigationEnumeration?
 }
 
 struct ListFlightInformationModel {
@@ -71,9 +72,9 @@ struct ListReferenceModel {
             ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
             ListFlightInformationItem(name: "NOTAMS", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
-            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen),
-            ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen),
-            ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen),
+            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
+            ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen, nextScreen: NavigationEnumeration.ArrivalScreen),
+            ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen, nextScreen: NavigationEnumeration.DepartureScreen),
             ListFlightInformationItem(name: "AI Search", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
             ListFlightInformationItem(name: "Scratchpad", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
         ]

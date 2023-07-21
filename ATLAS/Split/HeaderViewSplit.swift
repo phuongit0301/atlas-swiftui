@@ -16,71 +16,113 @@ struct HeaderViewSplit: View {
     var isBack: Bool = false
     var isMenu: Bool = false
     var isNext: Bool = false
+    var nextScreen: NavigationEnumeration?
+    @State var currentScreen: NavigationEnumeration?
+    @State private var isActive: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading) {
-                Rectangle().fill(.clear).frame(height: 30
-                )
-                
-                HStack(spacing: 0) {
-                    if isBack {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            HStack(spacing: 0) {
-                                Image(systemName: "chevron.left")
-                                    .frame(width: 17, height: 22)
-                                    .foregroundColor(Color.theme.azure)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                                Text("Back")
-                                    .font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading) {
+                    Rectangle().fill(.clear).frame(height: 30)
+                    
+                    HStack(spacing: 0) {
+                        if isBack {
+                            Button(action: {
+                                dismiss()
+                            }) {
+                                HStack(spacing: 0) {
+                                    Image(systemName: "chevron.left")
+                                        .frame(width: 17, height: 22)
+                                        .foregroundColor(Color.theme.azure)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                    Text("Back")
+                                        .font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                                }
                             }
                         }
+                        
+                        if isMenu {
+                            Button(action: {
+                                dismiss()
+                            }) {
+                                Text("Menu").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
+                            }
+                        }
+                        
+                        HStack(alignment: .center, spacing: 0) {
+                            
+                            Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .semibold))
+                            
+                            if sideMenuState.selectedMenu?.date != nil {
+                                Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 5).font(.system(size: 17, weight: .semibold))
+                            }
+                        }.frame(maxWidth: .infinity)
+                        
+                        if isNext {
+                            if let screen = nextScreen {
+                                Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold)).onTapGesture {
+                                    isActive = true
+                                }.background(
+                                    NavigationLink(destination: getDestinationNextSplit(screen), isActive: $isActive) { EmptyView() }
+                                )
+//                                NavigationLink(value: screen) {
+//                                    HStack {
+//                                        Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
+//                                    }
+//                                }.navigationDestination(for: NavigationEnumeration.self) { screenName in
+//                                    switch screenName {
+//                                        case .DepartureScreen:
+//                                            DepartureSplit()
+//                                        case .EnrouteScreen:
+//                                            EnrouteSplit()
+//                                        case .ArrivalScreen:
+//                                            ArrivalSplit()
+//                                        default:
+//                                            DepartureSplit()
+//                                    }
+//                                        
+////                                    if screenName == NavigationEnumeration.DepartureScreen {
+////                                        DepartureSplit()
+////                                    }
+////                                    
+////                                    if screenName == NavigationEnumeration.EnrouteScreen {
+////                                        EnrouteSplit()
+////                                    }
+////                                    
+////                                    if screenName == NavigationEnumeration.ArrivalScreen {
+////                                        ArrivalSplit()
+////                                    }
+////                                    
+////                                    getDestinationNextSplit(item).Print("iten=======\(item)")
+//                                }
+                            }
+//                        destination: getDestinationNextSplit(screen)
+                            //                        Button(action: {
+                            //                            // todo: Handle press menu
+                            //                        }) {
+                            //                            Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
+                            //                        }
+                        }
+                        
                     }
                     
-                    if isMenu {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Text("Menu").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
-                        }
-                    }
+                    //                ZStack(alignment: .leading) {
+                    //                    HStack {
+                    //                        Image(systemName: "magnifyingglass").resizable().frame(width: 22, height: 22).aspectRatio(contentMode: .fit).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                    //                        
+                    //                        TextField("Can this be AI Search?", text: $searchText)
+                    //                        
+                    //                        Image(systemName: "mic.fill").resizable().frame(width: 17, height: 22).aspectRatio(contentMode: .fit).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                    //                    }.padding()
+                    //                        .background(Color.theme.sonicSilver.opacity(0.12))
+                    //                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    //                }
                     
-                    HStack(alignment: .center, spacing: 0) {
-                        
-                        Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .semibold))
-                        
-                        if sideMenuState.selectedMenu?.date != nil {
-                            Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 5).font(.system(size: 17, weight: .semibold))
-                        }
-                    }.frame(maxWidth: .infinity)
-                    
-                    if isNext {
-                        Button(action: {
-                            // todo: Handle press menu
-                        }) {
-                            Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
-                        }
-                    }
-                    
-                }
-                
-                ZStack(alignment: .leading) {
-                    HStack {
-                        Image(systemName: "magnifyingglass").resizable().frame(width: 22, height: 22).aspectRatio(contentMode: .fit).foregroundColor(Color.theme.arsenic.opacity(0.6))
-                        
-                        TextField("Can this be AI Search?", text: $searchText)
-                        
-                        Image(systemName: "mic.fill").resizable().frame(width: 17, height: 22).aspectRatio(contentMode: .fit).foregroundColor(Color.theme.arsenic.opacity(0.6))
-                    }.padding()
-                        .background(Color.theme.sonicSilver.opacity(0.12))
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                }
-
-            }.padding()
-        }.background(.white)
+                }.padding()
+            }.background(.white)
+        }
         Rectangle().fill(Color.black.opacity(0.3)).frame(height: 1)
     }
 }

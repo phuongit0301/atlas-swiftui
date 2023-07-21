@@ -21,7 +21,7 @@ struct FlightPlanNOTAMSplitView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HeaderViewSplit(isMenu: true, isNext: true)
+            HeaderViewSplit(isMenu: true)
             
             if arrDepNotams.count == 0 && arrEnrNotams.count == 0 && arrArrNotams.count == 0 {
                 List {
