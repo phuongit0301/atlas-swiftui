@@ -23,7 +23,7 @@ struct CustomKeyboardView1: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "↩", "CLOSE"]
+        ["Z", "SP", "⌫", "↵", "⌨"]
     ]
 
     var body: some View {
@@ -69,9 +69,9 @@ struct CustomKeyboardView1: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "EXEC" {
+        if character == "↵" {
             submit()
-        } else if character == "CLOSE" {
+        } else if character == "⌨" {
             currentFocus = false
         }
         else if character == "SP" {
@@ -150,7 +150,7 @@ struct CustomKeyboardView: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "EXEC", "CLOSE"]
+        ["Z", "SP", "⌫", "↵", "⌨"]
     ]
 
     var body: some View {
@@ -196,9 +196,9 @@ struct CustomKeyboardView: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "EXEC" {
+        if character == "↵" {
             submit()
-        } else if character == "CLOSE" {
+        } else if character == "⌨" {
             currentFocus = false
         }
         else if character == "SP" {

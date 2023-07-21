@@ -111,18 +111,19 @@ struct ScratchPadForm: View {
     }
     
     func save() {
-        var title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !content.isEmpty {
             let item = ScratchPadList(context: persistenceController.container.viewContext)
             item.id = UUID()
+            item.orderNum = (itemList.first?.orderNum ?? 0) + 1
             
-            if title.isEmpty {
-                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
-                    title = firstParagraph
-                }
-            }
+//            if title.isEmpty {
+//                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+//                    title = firstParagraph
+//                }
+//            }
             
             item.title = title
             item.content = content
@@ -136,16 +137,16 @@ struct ScratchPadForm: View {
     }
     
     func update() {
-        var title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !content.isEmpty {
             
-            if title.isEmpty {
-                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
-                    title = firstParagraph
-                }
-            }
+//            if title.isEmpty {
+//                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+//                    title = firstParagraph
+//                }
+//            }
             
             itemList[currentIndex].title = title
             itemList[currentIndex].content = content

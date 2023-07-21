@@ -943,7 +943,7 @@ class CoreDataModelState: ObservableObject {
         var data: [ScratchPadList] = []
         // initialize the fetch request
         let request: NSFetchRequest<ScratchPadList> = ScratchPadList.fetchRequest()
-        
+        request.sortDescriptors = [NSSortDescriptor(key: "orderNum", ascending: false)]
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)

@@ -91,11 +91,11 @@ struct ScratchPadEditForm: View {
             let item = ScratchPadList(context: persistenceController.container.viewContext)
             item.id = UUID()
             
-            if title.isEmpty {
-                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
-                    title = firstParagraph
-                }
-            }
+//            if title.isEmpty {
+//                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+//                    title = firstParagraph
+//                }
+//            }
             
             item.title = title
             item.content = content
@@ -109,16 +109,16 @@ struct ScratchPadEditForm: View {
     }
     
     func update() {
-        var title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !content.isEmpty {
             
-            if title.isEmpty {
-                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
-                    title = firstParagraph
-                }
-            }
+//            if title.isEmpty {
+//                if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+//                    title = firstParagraph
+//                }
+//            }
             
             itemList[currentIndex].title = title
             itemList[currentIndex].content = content

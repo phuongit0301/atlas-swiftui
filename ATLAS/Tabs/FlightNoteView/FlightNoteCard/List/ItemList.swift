@@ -101,7 +101,7 @@ struct ItemList: View {
                                     }.padding(.horizontal, 5)
                                         .buttonStyle(PlainButtonStyle())
                                 }
-                            }
+                            }.id(UUID())
                             .padding(12)
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)

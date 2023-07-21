@@ -883,7 +883,7 @@ struct FlightPlanDepView: View {
                                     }
                                     .frame(width: calculateWidth(proxy.size.width, 4))
 
-                                    TextField( "Takeoff", text: $entTakeoff)
+                                    TextField("Takeoff", text: $entTakeoff)
                                     .focused($isTextFieldEntTakeoffFocused)
                                     .onReceive(Just(isTextFieldEntTakeoffFocused)) { focused in
                                         if focused {
@@ -923,7 +923,7 @@ struct FlightPlanDepView: View {
                         coreDataModel.readDepartureEntries()
                     }
                 }
-                
+
                 HStack(alignment: .center) {
                     VStack {
                         // custom keyboard view - todo set position properly - like normal ipad keyboard position
@@ -1167,7 +1167,6 @@ struct FlightPlanDepView: View {
         for (j, word) in strToArr.enumerated() {
             tempArr = findWordInArray(j, word, tempArr)
         }
-        print("tempArr=======\(tempArr)")
         return tempArr
     }
     

@@ -2,7 +2,7 @@
 //  ScratchPadList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 27/06/2023.
+//  Created by phuong phan on 21/07/2023.
 //
 //
 
@@ -17,9 +17,10 @@ extension ScratchPadList {
     }
 
     @NSManaged public var content: String
-    @NSManaged public var id: UUID
+    @NSManaged public var id: UUID?
     @NSManaged public var title: String?
-
+    @NSManaged public var orderNum: Int16
+    
     public var unwrappedTitle: String {
         title ?? ""
     }

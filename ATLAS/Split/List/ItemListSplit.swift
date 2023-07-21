@@ -101,7 +101,7 @@ struct ItemListSplit: View {
                                     }.padding(.horizontal, 5)
                                         .buttonStyle(PlainButtonStyle())
                                 }
-                            }
+                            }.id(UUID())
                             .padding(12)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())

@@ -338,6 +338,7 @@
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="orderNum" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">

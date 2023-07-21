@@ -47,9 +47,9 @@ extension UIResponder {
 //    }
 //}
 //
-///// Note that the `KeyboardAdaptive` modifier wraps your view in a `GeometryReader`,
-///// which attempts to fill all the available space, potentially increasing content view size.
-//struct KeyboardAdaptive: ViewModifier {
+/// Note that the `KeyboardAdaptive` modifier wraps your view in a `GeometryReader`,
+/// which attempts to fill all the available space, potentially increasing content view size.
+//struct KeyboardAdaptive1: ViewModifier {
 //    @State private var bottomPadding: CGFloat = 0
 //
 //    func body(content: Content) -> some View {

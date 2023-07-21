@@ -70,7 +70,7 @@ struct ItemListScratchPad: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(itemList[index].unwrappedTitle.trimmingCharacters(in: .whitespacesAndNewlines))
+                                    Text(itemList[index].content.trimmingCharacters(in: .whitespacesAndNewlines))
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.system(size: 16, weight: .regular))
                                     
@@ -81,7 +81,7 @@ struct ItemListScratchPad: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                 }
-                            }
+                            }.id(UUID())
                             .padding(12)
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
@@ -127,10 +127,10 @@ struct ItemListScratchPad: View {
     func cloneItem(_ content: String) {
         let item = ScratchPadList(context: persistenceController.container.viewContext)
         item.id = UUID()
-
-        if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
-            item.title = firstParagraph
-        }
+        item.orderNum = (itemList.first?.orderNum ?? 0) + 1
+//        if let firstParagraph = content.components(separatedBy: CharacterSet.newlines).first {
+//            item.title = firstParagraph
+//        }
 
         item.content = content
 
@@ -138,9 +138,44 @@ struct ItemListScratchPad: View {
         self.viewModel.scratchPadArray = viewModel.readScratchPad()
     }
     
-    private func move(from source: IndexSet, to destination: Int) {
-        print("Move");
-        self.itemList.move(fromOffsets: source, toOffset: destination)
+    private func move(at sets: IndexSet, to destination: Int) {
+        let itemToMove = sets.first!
+        var orderNumToMove = itemList[itemToMove].orderNum
+        var tempOrderNumToMove = Int16(0)
+
+        if itemToMove < destination {
+            var startIndex = itemToMove + 1
+            let endIndex = destination - 1
+
+            while startIndex <= endIndex {
+                tempOrderNumToMove = itemList[startIndex].orderNum
+                itemList[startIndex].orderNum = orderNumToMove
+                orderNumToMove = tempOrderNumToMove
+                
+                startIndex = startIndex + 1
+            }
+
+            itemList[itemToMove].orderNum = tempOrderNumToMove
+        } else if destination < itemToMove {
+            var startIndex = destination
+            let endIndex = itemToMove - 1
+            
+            let orderDestination = itemList[destination].orderNum
+
+            while startIndex <= endIndex {
+                itemList[startIndex].orderNum = itemList[startIndex + 1].orderNum
+                startIndex = startIndex + 1
+            }
+            
+            itemList[itemToMove].orderNum = orderDestination
+        }
+        
+        do {
+            try viewModel.save()
+            viewModel.scratchPadArray = viewModel.readScratchPad()
+        } catch {
+            print("Error move item: \(error.localizedDescription)")
+        }
     }
 }
 

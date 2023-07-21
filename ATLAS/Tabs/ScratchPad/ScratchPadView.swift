@@ -68,6 +68,7 @@ struct ScratchPadView: View {
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
+        viewModel.scratchPadArray = viewModel.readScratchPad()
     }
 }
 
