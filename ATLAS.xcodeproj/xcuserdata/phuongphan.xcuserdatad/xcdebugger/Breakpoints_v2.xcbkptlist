@@ -1745,8 +1745,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -1823,8 +1823,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1839,8 +1839,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1855,8 +1855,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1871,8 +1871,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "702"
-            endingLineNumber = "702"
+            startingLineNumber = "714"
+            endingLineNumber = "714"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1887,89 +1887,10 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "726"
-            endingLineNumber = "726"
+            startingLineNumber = "738"
+            endingLineNumber = "738"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EA42C111-0F46-4FBE-AA74-435D526E71E8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "794"
-            endingLineNumber = "794"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "75B0E3CE-03A1-4785-A81C-26BF131C542F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "793"
-            endingLineNumber = "793"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "75B0E3CE-03A1-4785-A81C-26BF131C542F - 24db72b821120ffe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.font(Swift.Optional&lt;SwiftUI.Font&gt;) -&gt; some&gt;&gt;.0, SwiftUI.List&lt;Swift.Never, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of SwiftUI.View.hideKeyboardWhenTappedAround() -&gt; some&gt;&gt;.0 in ATLAS.FlightPlanDepView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1097"
-                  endingLineNumber = "1097"
-                  offsetFromSymbolStart = "6944">
-               </Location>
-               <Location
-                  uuid = "75B0E3CE-03A1-4785-A81C-26BF131C542F - db88b13b73cfa5e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #8 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.frame(minWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxWidth: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, minHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, idealHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, maxHeight: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0 in closure #2 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.font(Swift.Optional&lt;SwiftUI.Font&gt;) -&gt; some&gt;&gt;.0, SwiftUI.List&lt;Swift.Never, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of SwiftUI.View.hideKeyboardWhenTappedAround() -&gt; some&gt;&gt;.0 in ATLAS.FlightPlanDepView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1097"
-                  endingLineNumber = "1097"
-                  offsetFromSymbolStart = "5220">
-               </Location>
-               <Location
-                  uuid = "75B0E3CE-03A1-4785-A81C-26BF131C542F - 2e0d974ccef3b068"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #9 (ATLAS.DepartureEntriesList) -&gt; () in closure #2 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.font(Swift.Optional&lt;SwiftUI.Font&gt;) -&gt; some&gt;&gt;.0, SwiftUI.List&lt;Swift.Never, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;, Swift.Optional&lt;ATLAS.CustomKeyboardView&gt;)&gt;&gt;, SwiftUI.Group&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.listStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ListStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of SwiftUI.View.hideKeyboardWhenTappedAround() -&gt; some&gt;&gt;.0 in ATLAS.FlightPlanDepView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1097"
-                  endingLineNumber = "1097"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2094,8 +2015,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanArrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -2110,8 +2031,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanArrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -2378,8 +2299,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -3733,8 +3654,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -3749,8 +3670,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -3797,8 +3718,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -3909,8 +3830,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1008"
-            endingLineNumber = "1008"
+            startingLineNumber = "942"
+            endingLineNumber = "942"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -3925,8 +3846,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1006"
-            endingLineNumber = "1006"
+            startingLineNumber = "940"
+            endingLineNumber = "940"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -3941,8 +3862,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1009"
-            endingLineNumber = "1009"
+            startingLineNumber = "943"
+            endingLineNumber = "943"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -4198,6 +4119,38 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "926DCC89-D277-4AB7-A7D6-6FD48E29E7C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1061"
+            endingLineNumber = "1061"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D68536D4-56F3-49BA-88C7-3237655141E2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "785"
+            endingLineNumber = "785"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>

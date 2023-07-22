@@ -118,6 +118,15 @@ struct FlightPlanArrView: View {
     @State private var autofillOptions: [String] = ["APPLE", "BANANA", "CHERRY", "BLUEBERRY"] // Replace with your own autofill options
     @State private var autofillText = ""
     
+    // For datetime picker
+    @State var isShowModalLanding = false
+    @State var isShowModalChockOn = false
+    
+    @State private var currentDateLanding = Date()
+    @State private var currentDateLandingTemp = Date()
+    @State private var currentDateChockOn = Date()
+    @State private var currentDateChockOnTemp = Date()
+    
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading) {
@@ -769,62 +778,16 @@ struct FlightPlanArrView: View {
                                 .padding(.leading, 25)
                             HStack(alignment: .center) {
                                 Group {
-                                    TextField("Landing", text: $entLdg)
-                                        .focused($isTextFieldEntLdgFocused)
-                                        .onReceive(Just(isTextFieldEntLdgFocused)) { focused in
-                                            if focused {
-                                                isTextFieldEntLdgFocused = false
-                                                setFocusToFalse()
-                                                isEditingEntLdg = true
-                                            }
-                                        }
-                                        .overlay(isEditingEntLdg ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: entLdg) { newValue in
-                                            if newValue.count > 3 {
-                                                entLdg = String(newValue.prefix(4))
-                                                cursorPositionEntLdg = 4
-                                                if coreDataModel.existDataArrivalEntries {
-                                                    coreDataModel.dataArrivalEntries.entLdg = entLdg
-                                                } else {
-                                                    let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
-                                                    item.entLdg = entLdg
-                                                }
-                                                
-                                                coreDataModel.save()
-                                                
-                                                isEditingEntLdg = false
-                                                isTextFieldEntOnFocused = true
-                                            }
-                                        }
+                                    HStack {
+                                        ButtonDateStepper(onToggle: onLanding, value: $currentDateLanding, suffix: "").fixedSize()
+                                        Spacer()
+                                    }
                                 }
                                 Group {
-                                    TextField("Chocks On", text: $entOn)
-                                        .focused($isTextFieldEntOnFocused)
-                                        .onReceive(Just(isTextFieldEntOnFocused)) { focused in
-                                            if focused {
-                                                isTextFieldEntOnFocused = false
-                                                setFocusToFalse()
-                                                isEditingEntOn = true
-                                            }
-                                        }
-                                        .overlay(isEditingEntOn ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: entOn) { newValue in
-                                            if newValue.count > 3 {
-                                                entOn = String(newValue.prefix(4))
-                                                cursorPositionEntOn = 4
-                                                if coreDataModel.existDataArrivalEntries {
-                                                    coreDataModel.dataArrivalEntries.entOn = entOn
-                                                } else {
-                                                    let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
-                                                    item.entOn = entOn
-                                                }
-                                                
-                                                coreDataModel.save()
-                                                
-                                                isEditingEntOn = false
-                                                isTextFieldEntFuelOnChocksFocused = true
-                                            }
-                                        }
+                                    HStack {
+                                        ButtonDateStepper(onToggle: onChockOn, value: $currentDateChockOn, suffix: "").fixedSize()
+                                        Spacer()
+                                    }
                                 }
                                 Group {
                                     TextField("Fuel on Chocks", text: $entFuelOnChocks)
@@ -1036,12 +999,116 @@ struct FlightPlanArrView: View {
             }
             
             if coreDataModel.existDataArrivalEntries {
-                self.entLdg = coreDataModel.dataArrivalEntries.unwrappedEntLdg
-                self.cursorPositionEntLdg = coreDataModel.dataArrivalEntries.unwrappedEntLdg.count
-                self.entFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks
-                self.cursorPositionEntFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks.count
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                if coreDataModel.dataArrivalEntries.unwrappedEntLdg != "" {
+                    self.currentDateLanding = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntLdg) ?? Date()
+                }
+                
+                if coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks != "" {
+                    self.currentDateChockOn = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks) ?? Date()
+                }
+                
                 self.entOn = coreDataModel.dataArrivalEntries.unwrappedEntOn
                 self.cursorPositionEntOn = coreDataModel.dataArrivalEntries.unwrappedEntOn.count
+            }
+        }.formSheet(isPresented: $isShowModalLanding) {
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        self.isShowModalLanding.toggle()
+                    }) {
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Landing").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
+                    Spacer()
+                    Button(action: {
+                        // assign value from modal to entries form
+                        self.currentDateLanding = currentDateLandingTemp
+                        
+                        // Save data
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let str = dateFormatter.string(from: currentDateLandingTemp)
+                        
+                        if coreDataModel.existDataArrivalEntries {
+                            coreDataModel.dataArrivalEntries.entLdg = str
+                        } else {
+                            let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
+                            item.entLdg = dateFormatter.string(from: currentDateLandingTemp)
+                        }
+                        coreDataModel.save()
+                        coreDataModel.readArrivalEntries()
+                        
+                        self.isShowModalLanding.toggle()
+                    }) {
+                        Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                }.padding()
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                VStack {
+                    DatePicker("", selection: $currentDateLandingTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                        .environment(\.locale, Locale(identifier: "en_GB"))
+                }
+                Spacer()
+            }
+        }
+        .formSheet(isPresented: $isShowModalChockOn) {
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        self.isShowModalChockOn.toggle()
+                    }) {
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Chocks On").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
+                    Spacer()
+                    Button(action: {
+                        // assign value from modal to entries form
+                        self.currentDateChockOn = currentDateChockOnTemp
+                        
+                        // Save data
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let str = dateFormatter.string(from: currentDateChockOnTemp)
+                        
+                        if coreDataModel.existDataArrivalEntries {
+                            coreDataModel.dataArrivalEntries.entFuelOnChocks = str
+                        } else {
+                            let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
+                            item.entFuelOnChocks = dateFormatter.string(from: currentDateChockOnTemp)
+                        }
+                        coreDataModel.save()
+                        coreDataModel.readDepartureEntries()
+                        
+                        self.isShowModalChockOn.toggle()
+                    }) {
+                        Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                }.padding()
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                VStack {
+                    DatePicker("", selection: $currentDateChockOnTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                        .environment(\.locale, Locale(identifier: "en_GB"))
+                }
+                Spacer()
             }
         }
     }
@@ -1069,6 +1136,14 @@ struct FlightPlanArrView: View {
         isEditingEntLdg = false
         isEditingEntFuelOnChocks = false
         isEditingEntOn = false
+    }
+    
+    func onLanding() {
+        self.isShowModalLanding.toggle()
+    }
+    
+    func onChockOn() {
+        self.isShowModalChockOn.toggle()
     }
 }
 

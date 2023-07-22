@@ -192,6 +192,7 @@
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
+		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
@@ -443,6 +444,7 @@
 		3ED754822A11E1BD003072A1 /* ATLASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATLASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED754862A11E1BD003072A1 /* ATLASUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITests.swift; sourceTree = "<group>"; };
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -738,6 +740,7 @@
 				3EFA5F002A419EF2001ED6CF /* FlowLayout.swift */,
 				3EB99CD42A4C56770091BC08 /* CustomStepper.swift */,
 				3EB99CE02A4FC7060091BC08 /* ButtonStepper.swift */,
+				3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */,
 				3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */,
 				3EB99CDE2A4FB6A50091BC08 /* ModalPicker.swift */,
 				3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */,
@@ -1400,6 +1403,7 @@
 				3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */,
 				3E4E10132A62518B0026802B /* NotamsDataList+CoreDataProperties.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
+				3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
 				3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */,
 				3E3FCC452A270851008017FA /* enrWXChart.swift in Sources */,

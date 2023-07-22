@@ -123,6 +123,18 @@ struct FlightPlanDepView: View {
     @State private var autofillText = ""
     @State private var isShowingCustomKeyboard = false
     
+    // For datetime picker
+    @State var isShowModalChockOff = false
+    @State var isShowModalTaxi = false
+    @State var isShowModalTakeOff = false
+    
+    @State private var currentDateChockOff = Date()
+    @State private var currentDateChockOffTemp = Date()
+    @State private var currentDateTaxi = Date()
+    @State private var currentDateTaxiTemp = Date()
+    @State private var currentDateTakeOff = Date()
+    @State private var currentDateTakeOffTemp = Date()
+    
     var body: some View {
         let route = coreDataModel.dataSummaryRoute.unwrappedRoute
         let routeList: [String] = route.components(separatedBy: " ")
@@ -787,38 +799,12 @@ struct FlightPlanDepView: View {
 
                             Divider()
 
-                            HStack(alignment: .center) {
+                            HStack {
                                 Group {
-                                    TextField("Chocks Off", text: $entOff)
-                                        .focused($isTextFieldEntOffFocused)
-                                        .onReceive(Just(isTextFieldEntOffFocused)) { focused in
-                                            if focused {
-                                                isTextFieldEntOffFocused = false
-                                                setFocusToFalse()
-                                                isEditingEntOff = true
-                                            }
-                                        }
-                                        .overlay(isEditingEntOff ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: entOff) { newValue in
-                                            if newValue.count > 3 {
-                                                entOff = String(newValue.prefix(4))
-                                                cursorPositionEntOff = 4
-                                                if coreDataModel.existDataDepartureEntries {
-                                                    coreDataModel.dataDepartureEntries.entOff = entOff
-                                                } else {
-                                                    let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                    item.entOff = entOff
-                                                    coreDataModel.existDataDepartureEntries = true
-                                                }
-
-                                                coreDataModel.save()
-                                                coreDataModel.readDepartureEntries()
-
-                                                isEditingEntOff = false
-                                                isTextFieldEntFuelInTanksFocused = true
-                                            }
-                                        }
-                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                    HStack {
+                                        ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "").fixedSize()
+                                        Spacer()
+                                    }.frame(width: calculateWidth(proxy.size.width, 4))
 
                                     TextField("Fuel in Tanks", text: $entFuelInTanks)
                                         .focused($isTextFieldEntFuelInTanksFocused)
@@ -852,67 +838,15 @@ struct FlightPlanDepView: View {
                                         .frame(width: calculateWidth(proxy.size.width, 4))
                                 }
                                 Group {
-                                    TextField("Taxi", text: $entTaxi)
-                                    .focused($isTextFieldEntTaxiFocused)
-                                    .onReceive(Just(isTextFieldEntTaxiFocused)) { focused in
-                                        if focused {
-                                            isTextFieldEntTaxiFocused = false
-                                            setFocusToFalse()
-                                            isEditingEntTaxi = true
-                                        }
-                                    }
-                                    .overlay(isEditingEntTaxi ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: entTaxi) { newValue in
-                                        if newValue.count > 3 {
-                                            entTaxi = String(newValue.prefix(4))
-                                            cursorPositionEntTaxi = 4
-                                            if coreDataModel.existDataDepartureEntries {
-                                                coreDataModel.dataDepartureEntries.entTaxi = entTaxi
-                                            } else {
-                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                item.entTaxi = entTaxi
-                                                coreDataModel.existDataDepartureEntries = true
-                                            }
+                                    HStack {
+                                        ButtonDateStepper(onToggle: onTaxi, value: $currentDateTaxi, suffix: "").fixedSize()
+                                        Spacer()
+                                    }.frame(width: calculateWidth(proxy.size.width, 4))
 
-                                            coreDataModel.save()
-                                            coreDataModel.readDepartureEntries()
-
-                                            isEditingEntTaxi = false
-                                            isTextFieldEntTakeoffFocused = true
-                                        }
-                                    }
-                                    .frame(width: calculateWidth(proxy.size.width, 4))
-
-                                    TextField("Takeoff", text: $entTakeoff)
-                                    .focused($isTextFieldEntTakeoffFocused)
-                                    .onReceive(Just(isTextFieldEntTakeoffFocused)) { focused in
-                                        if focused {
-                                            isTextFieldEntTakeoffFocused = false
-                                            setFocusToFalse()
-                                            isEditingEntTakeoff = true
-                                        }
-                                    }
-                                    .overlay(isEditingEntTakeoff ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: entTakeoff) { newValue in
-                                        if newValue.count > 3 {
-                                            entTakeoff = String(newValue.prefix(4))
-                                            cursorPositionEntTakeoff = 4
-                                            if coreDataModel.existDataDepartureEntries {
-                                                coreDataModel.dataDepartureEntries.entTakeoff = entTakeoff
-                                            } else {
-                                                let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                item.entTakeoff = entTakeoff
-                                                coreDataModel.existDataDepartureEntries = true
-                                            }
-
-                                            coreDataModel.save()
-                                            coreDataModel.readDepartureEntries()
-
-                                            isEditingEntTakeoff = false
-                                            isTextFieldEntOffFocused = true
-                                        }
-                                    }
-                                    .frame(width: calculateWidth(proxy.size.width, 4))
+                                    HStack {
+                                        ButtonDateStepper(onToggle: onTakeOff, value: $currentDateTakeOff, suffix: "").fixedSize()
+                                        Spacer()
+                                    }.frame(width: calculateWidth(proxy.size.width, 4))
                                 }
                             }
                             .padding(.top, 5)
@@ -1120,14 +1054,171 @@ struct FlightPlanDepView: View {
             
             //set data entries
             if coreDataModel.existDataDepartureEntries {
-                self.entOff = coreDataModel.dataDepartureEntries.unwrappedEntOff
-                self.cursorPositionEntOff = coreDataModel.dataDepartureEntries.unwrappedEntOff.count
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                if coreDataModel.dataDepartureEntries.unwrappedEntOff != "" {
+                    self.currentDateChockOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
+                }
+                
+                if coreDataModel.dataDepartureEntries.unwrappedEntTaxi != "" {
+                    self.currentDateTaxi = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
+                }
+                
+                if coreDataModel.dataDepartureEntries.unwrappedEntTakeoff != "" {
+                    self.currentDateTakeOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
+                }
+                
                 self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
                 self.cursorPositionEntFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks.count
-                self.entTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi
-                self.cursorPositionEntTaxi = coreDataModel.dataDepartureEntries.unwrappedEntTaxi.count
-                self.entTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
-                self.cursorPositionEntTakeoff = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.count
+            }
+        }
+        .formSheet(isPresented: $isShowModalChockOff) {
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        self.isShowModalChockOff.toggle()
+                    }) {
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Chocks Off").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
+                    Spacer()
+                    Button(action: {
+                        // assign value from modal to entries form
+                        self.currentDateChockOff = currentDateChockOffTemp
+                        
+                        // Save data
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let str = dateFormatter.string(from: currentDateChockOffTemp)
+                        
+                        if coreDataModel.existDataDepartureEntries {
+                            coreDataModel.dataDepartureEntries.entOff = str
+                        } else {
+                            let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                            item.entOff = dateFormatter.string(from: currentDateChockOffTemp)
+                        }
+                        coreDataModel.save()
+                        coreDataModel.readDepartureEntries()
+                        
+                        self.isShowModalChockOff.toggle()
+                    }) {
+                        Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                }.padding()
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                VStack {
+                    DatePicker("", selection: $currentDateChockOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                        .environment(\.locale, Locale(identifier: "en_GB"))
+                }
+                Spacer()
+            }
+        }
+        .formSheet(isPresented: $isShowModalTaxi) {
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        self.isShowModalTaxi.toggle()
+                    }) {
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Taxi").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
+                    Spacer()
+                    Button(action: {
+                        // assign value from modal to entries form
+                        self.currentDateTaxi = currentDateTaxiTemp
+                        
+                        // Save data
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let str = dateFormatter.string(from: currentDateTaxiTemp)
+                        
+                        if coreDataModel.existDataDepartureEntries {
+                            coreDataModel.dataDepartureEntries.entTaxi = str
+                        } else {
+                            let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                            item.entTaxi = dateFormatter.string(from: currentDateTaxiTemp)
+                        }
+                        coreDataModel.save()
+                        coreDataModel.readDepartureEntries()
+                        
+                        self.isShowModalTaxi.toggle()
+                    }) {
+                        Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                }.padding()
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                VStack {
+                    DatePicker("", selection: $currentDateTaxiTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                        .environment(\.locale, Locale(identifier: "en_GB"))
+                }
+                Spacer()
+            }
+        }
+        .formSheet(isPresented: $isShowModalTakeOff) {
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        self.isShowModalTakeOff.toggle()
+                    }) {
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                    
+                    Spacer()
+                    
+                    Text("Takeoff").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // assign value from modal to entries form
+                        self.currentDateTakeOff = currentDateTakeOffTemp
+                        
+                        // Save data
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let str = dateFormatter.string(from: currentDateTakeOffTemp)
+                        
+                        if coreDataModel.existDataDepartureEntries {
+                            coreDataModel.dataDepartureEntries.entTakeoff = str
+                        } else {
+                            let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                            item.entTakeoff = dateFormatter.string(from: currentDateTakeOffTemp)
+                        }
+                        coreDataModel.save()
+                        coreDataModel.readDepartureEntries()
+                        
+                        self.isShowModalTakeOff.toggle()
+                    }) {
+                        Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                    }
+                }.padding()
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                VStack {
+                    DatePicker("", selection: $currentDateTakeOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                        .environment(\.locale, Locale(identifier: "en_GB"))
+                }
+                Spacer()
             }
         }
     }
@@ -1176,19 +1267,19 @@ struct FlightPlanDepView: View {
         }
         return arr.filter { $0.contains(word) }
     }
+    
+    func onChockOff() {
+        self.isShowModalChockOff.toggle()
+    }
+    
+    func onTaxi() {
+        self.isShowModalTaxi.toggle()
+    }
+        
+    func onTakeOff() {
+        self.isShowModalTakeOff.toggle()
+    }
 }
-
-// Todo for custom keyboard
-//struct PrKeyboard: View {
-//    var name = ""
-//    @State var code = ""
-//    
-//    var body: some View {
-//        TextField(name, text: $code, onEditingChanged: { editing in
-//            isEditingCode = editing
-//        })
-//    }
-//}
 
 struct FlightPlanDepView_Previews: PreviewProvider {
     static var previews: some View {
