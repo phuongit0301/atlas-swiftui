@@ -10,21 +10,23 @@ import SwiftUI
 struct FlightInformationDetailView: View {
     @State private var showUTC = true
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @State var pasteboard = UIPasteboard.general
     
     var body: some View {
         
-        var eta: String {
+        var etaUTC: String {
+            // define date format
             let dateFormatterTime = DateFormatter()
-            dateFormatterTime.dateFormat = "HHmm"
-            
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert takeoff time to date
             if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
                 let entTakeoff =  dateFormatterTime.date(from: takeoff)
-                
+                // get flight time
                 if let flightTimeComponents = coreDataModel.dataSummaryInfo.fltTime {
+                    // convert flight time to seconds
                     let components = flightTimeComponents.components(separatedBy: ":")
                     if components.count > 1 {
                         let flightTime = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                        // add flight time to takeoff time
                         if let etaTime = entTakeoff?.addingTimeInterval(TimeInterval(flightTime)) {
                             return dateFormatterTime.string(from: etaTime)
                         }
@@ -32,7 +34,72 @@ struct FlightInformationDetailView: View {
                     
                 }
             }
-            
+            return ""
+        }
+        
+        var etaLocal: String {
+            // define date format
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to format
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
+            let timeDiffFormatted = Int(timeDiff)! * 3600
+            // convert takeoff time to date
+            if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
+                let entTakeoff =  dateFormatterTime.date(from: takeoff)
+                // convert flight time to seconds
+                if let flightTimeComponents = coreDataModel.dataSummaryInfo.fltTime {
+                    let components = flightTimeComponents.components(separatedBy: ":")
+                    if components.count > 1 {
+                        // add flight time with time difference
+                        let adjTime = (Int(components[0])! * 3600) + (Int(components[1])! * 60) + timeDiffFormatted
+                        // add time difference and flight time to takeoff time
+                        if let etaTime = entTakeoff?.addingTimeInterval(TimeInterval(adjTime)) {
+                            return dateFormatterTime.string(from: etaTime)
+                        }
+                    }
+                }
+            }
+            return ""
+        }
+        
+        let chocksOffUTC: String = coreDataModel.dataDepartureEntries.entOff!
+        
+        var chocksOffLocal: String {
+            // define date formats
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to Int seconds
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffDep
+            let timeDiffFormatted = Int(timeDiff)! * 3600
+            // convert chocks off format
+            if let chocksOff = coreDataModel.dataDepartureEntries.entOff {
+                let chocksOffFormatted =  dateFormatterTime.date(from: chocksOff)
+                // add time diff to chocks off time
+                if let offTime = chocksOffFormatted?.addingTimeInterval(TimeInterval(timeDiffFormatted)) {
+                    return dateFormatterTime.string(from: offTime)
+                }
+            }
+            return ""
+        }
+        
+        let chocksOnUTC: String = coreDataModel.dataArrivalEntries.entOn!
+        
+        var chocksOnLocal: String {
+            // define date formats
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to Int seconds
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
+            let timeDiffFormatted = Int(timeDiff)! * 3600
+            // convert chocks on format
+            if let chocksOn = coreDataModel.dataArrivalEntries.entOn {
+                let chocksOnFormatted =  dateFormatterTime.date(from: chocksOn)
+                // add time diff to chocks on time
+                if let onTime = chocksOnFormatted?.addingTimeInterval(TimeInterval(timeDiffFormatted)) {
+                    return dateFormatterTime.string(from: onTime)
+                }
+            }
             return ""
         }
         
@@ -73,11 +140,13 @@ struct FlightInformationDetailView: View {
                         Divider()
                         HStack(alignment: .center) {
                             Group {
-                                Text(coreDataModel.dataDepartureEntries.unwrappedEntOff)
+                                Text(showUTC ? chocksOffUTC : chocksOffLocal)
+                                //Text(coreDataModel.dataDepartureEntries.unwrappedEntOff)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text(coreDataModel.dataArrivalEntries.unwrappedEntOn)
+                                Text(showUTC ? chocksOnUTC : chocksOnLocal)
+                                //Text(coreDataModel.dataArrivalEntries.unwrappedEntOn)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -117,7 +186,8 @@ struct FlightInformationDetailView: View {
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                Text(eta)
+                                Text(showUTC ? etaUTC : etaLocal)
+                                //Text(eta)
                                     .font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -189,28 +259,6 @@ struct FlightInformationDetailView: View {
                                     .font(.system(size: 17, weight: .semibold))
                                     .foregroundStyle(Color.black)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                Spacer()
-                                
-                                Button(action: {
-                                    pasteboard.string = coreDataModel.dataSummaryRoute.unwrappedRoute
-                                }) {
-                                    Text("Copy")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.white)
-                                        .padding(.horizontal, 8)
-                                        .padding(.vertical, 4)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .stroke(Color.init(
-                                                    Color.RGBColorSpace.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), lineWidth: 0)
-                                        )
-                                }.padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color.theme.azure)
-                                    .cornerRadius(12)
-                                    .border(Color.theme.azure, width: 1, cornerRadius: 12)
-                                    .buttonStyle(PlainButtonStyle())
                             }
                         }
                         Divider()
