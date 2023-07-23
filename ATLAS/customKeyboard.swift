@@ -23,7 +23,7 @@ struct CustomKeyboardView1: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "↵", "⌨"]
+        ["Z", "SP", "⌫", "return", "keyboard.chevron.compact.down.fill"]
     ]
 
     var body: some View {
@@ -54,12 +54,20 @@ struct CustomKeyboardView1: View {
                             Button(action: {
                                 handleInput(character)
                             }) {
-                                Text(character)
-                                    .font(.title)
-                                    .frame(width: 50, height: 50)
-                                    .background(Color.gray)
-                                    .cornerRadius(8)
-                                    .foregroundColor(.white)
+                                if character == "keyboard.chevron.compact.down.fill" || character == "return" {
+                                    VStack {
+                                        Image(systemName: character).foregroundColor(Color.white)
+                                    }.frame(width: 50, height: 50)
+                                        .background(Color.gray)
+                                        .cornerRadius(8)
+                                } else {
+                                    Text(character)
+                                        .font(.title)
+                                        .frame(width: 50, height: 50)
+                                        .background(Color.gray)
+                                        .cornerRadius(8)
+                                        .foregroundColor(.white)
+                                }
                             }
                         }
                     }
@@ -69,9 +77,9 @@ struct CustomKeyboardView1: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "↵" {
+        if character == "return" {
             submit()
-        } else if character == "⌨" {
+        } else if character == "keyboard.chevron.compact.down.fill" {
             currentFocus = false
         }
         else if character == "SP" {
@@ -150,7 +158,7 @@ struct CustomKeyboardView: View {
         ["K", "L", "M", "N", "O"],
         ["P", "Q", "R", "S", "T"],
         ["U", "V", "W", "X", "Y"],
-        ["Z", "SP", "⌫", "↵", "⌨"]
+        ["Z", "SP", "⌫", "return", "keyboard.chevron.compact.down.fill"]
     ]
 
     var body: some View {

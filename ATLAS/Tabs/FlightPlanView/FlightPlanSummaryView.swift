@@ -530,8 +530,9 @@ struct FlightPlanSummaryView: View {
                                                 text: $pob
                                             )
                                             .keyboardType(.numberPad)
-                                            .onReceive(pob.publisher.collect()) { output in
-                                                pob = String(output.prefix(3))
+                                            .onReceive(Just(pob)) { output in
+                                                let newOutput = output.filter { "0123456789".contains($0) }
+                                                pob = String(newOutput.prefix(3))
                                             }
                                             .onSubmit {
                                                 if coreDataModel.existDataSummaryInfo {

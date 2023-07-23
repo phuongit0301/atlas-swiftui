@@ -198,14 +198,12 @@ class CoreDataModelState: ObservableObject {
     }
     
     func syncDataMetarTaf() async {
-        Task {
-            await remoteService.getFlightPlanWX(completion: { data in
-                if let metarTafData = data?.metarTafData {
-                    self.updateDataMetarTaf(metarTafData)
-                    self.updateDataAltnTaf(metarTafData)
-                }
-            })
-        }
+        await remoteService.getFlightPlanWX(completion: { data in
+            if let metarTafData = data?.metarTafData {
+                self.updateDataMetarTaf(metarTafData)
+                self.updateDataAltnTaf(metarTafData)
+            }
+        })
     }
     
     func initFetchData() async {
@@ -929,9 +927,9 @@ class CoreDataModelState: ObservableObject {
                     print("Failed to delete Altn Taf : \(error)")
                 }
                 existDataAltnTaf = true
+                dataAltnTaf = readDataAltnTafList()
             }
             
-            dataAltnTaf = readDataAltnTafList()
             print("Delete to Altn Taf successfully")
         } catch {
             print("Failed to Altn Taf update: \(error)")

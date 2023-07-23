@@ -11,17 +11,17 @@ import SwiftUI
 struct HeaderViewSplit: View {
     @EnvironmentObject var sideMenuState: SideMenuModelState
     @Environment(\.dismiss) private var dismiss
+    var viewInformationModel = ListReferenceModel()
     
     @State var searchText: String = ""
     var isBack: Bool = false
     var isMenu: Bool = false
     var isNext: Bool = false
-    var nextScreen: NavigationEnumeration?
-    @State var currentScreen: NavigationEnumeration?
+    @State var item: ListFlightInformationItem?
     @State private var isActive: Bool = false
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading) {
                     Rectangle().fill(.clear).frame(height: 30)
@@ -61,53 +61,16 @@ struct HeaderViewSplit: View {
                         }.frame(maxWidth: .infinity)
                         
                         if isNext {
-                            if let screen = nextScreen {
-                                Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold)).onTapGesture {
-                                    isActive = true
-                                }.background(
-                                    NavigationLink(destination: getDestinationNextSplit(screen), isActive: $isActive) { EmptyView() }
-                                )
-//                                NavigationLink(value: screen) {
-//                                    HStack {
-//                                        Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
-//                                    }
-//                                }.navigationDestination(for: NavigationEnumeration.self) { screenName in
-//                                    switch screenName {
-//                                        case .DepartureScreen:
-//                                            DepartureSplit()
-//                                        case .EnrouteScreen:
-//                                            EnrouteSplit()
-//                                        case .ArrivalScreen:
-//                                            ArrivalSplit()
-//                                        default:
-//                                            DepartureSplit()
-//                                    }
-//                                        
-////                                    if screenName == NavigationEnumeration.DepartureScreen {
-////                                        DepartureSplit()
-////                                    }
-////                                    
-////                                    if screenName == NavigationEnumeration.EnrouteScreen {
-////                                        EnrouteSplit()
-////                                    }
-////                                    
-////                                    if screenName == NavigationEnumeration.ArrivalScreen {
-////                                        ArrivalSplit()
-////                                    }
-////                                    
-////                                    getDestinationNextSplit(item).Print("iten=======\(item)")
+                            if let screen = item {
+                                NavigationLink(destination: NoteDestinationSplit(item: screen)) {
+                                    Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
+                                }
+//                                NavigationLink(destination: getDestinationNextSplit(screen, viewInformationModel.ListItem)) {
+//                                    Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
 //                                }
                             }
-//                        destination: getDestinationNextSplit(screen)
-                            //                        Button(action: {
-                            //                            // todo: Handle press menu
-                            //                        }) {
-                            //                            Text("Next").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
-                            //                        }
                         }
-                        
                     }
-                    
                     //                ZStack(alignment: .leading) {
                     //                    HStack {
                     //                        Image(systemName: "magnifyingglass").resizable().frame(width: 22, height: 22).aspectRatio(contentMode: .fit).foregroundColor(Color.theme.arsenic.opacity(0.6))
@@ -122,7 +85,7 @@ struct HeaderViewSplit: View {
                     
                 }.padding()
             }.background(.white)
-        }
+//        }
         Rectangle().fill(Color.black.opacity(0.3)).frame(height: 1)
     }
 }

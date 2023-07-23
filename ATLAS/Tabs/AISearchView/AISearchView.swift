@@ -52,6 +52,7 @@ struct AISearchView: View {
                                         onSearch()
                                     }
                                 }
+                                .returnKeyAutomaticallyEnable(enable: true)
                                 .submitLabel(.search)
                                 .font(.custom("Inter-Regular", size: 16))
                                 .padding(13)

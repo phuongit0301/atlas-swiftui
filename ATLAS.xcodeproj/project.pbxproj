@@ -193,6 +193,8 @@
 		3ED754872A11E1BD003072A1 /* ATLASUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754862A11E1BD003072A1 /* ATLASUITests.swift */; };
 		3ED754892A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
+		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
+		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
@@ -445,6 +447,8 @@
 		3ED754862A11E1BD003072A1 /* ATLASUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITests.swift; sourceTree = "<group>"; };
 		3ED754882A11E1BD003072A1 /* ATLASUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLASUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
+		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
+		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -522,6 +526,7 @@
 				3E8250762A1E1FB6008F616D /* View.swift */,
 				3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */,
 				3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */,
+				3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -598,6 +603,7 @@
 				C59C714C2A38AB130063D16B /* FuelViewSplit.swift */,
 				3EFA5EF52A3F0E6A001ED6CF /* HeaderViewSplit.swift */,
 				3E4E101D2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift */,
+				3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */,
 			);
 			path = Split;
 			sourceTree = "<group>";
@@ -1331,6 +1337,7 @@
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
 				3E4A37842A5D003F00027C61 /* ProjDelaysList+CoreDataProperties.swift in Sources */,
+				3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
 				3EFA5F6F2A4A8377001ED6CF /* ScratchPadForm.swift in Sources */,
 				3E4A36612A56EAE800027C61 /* AltnTafDataList+CoreDataProperties.swift in Sources */,
@@ -1388,6 +1395,7 @@
 				3E4A36932A570BA800027C61 /* PerfDataList+CoreDataProperties.swift in Sources */,
 				3EFA5F122A42E825001ED6CF /* PersistenceController.swift in Sources */,
 				3E3FCC5B2A2D6284008017FA /* Storage.swift in Sources */,
+				3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */,
 				3E7F68302A1F634F00EC2CA3 /* FlightNoteView.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
 				3E4E10222A6552520026802B /* AISearchDetailSplitView.swift in Sources */,

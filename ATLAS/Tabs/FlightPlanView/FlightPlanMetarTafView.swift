@@ -52,6 +52,7 @@ struct FlightPlanMETARTAFView: View {
                     )
                     .padding(.horizontal)
                     .padding(.vertical, 8)
+                    .disabled(showLoading)
                     
             }
             .padding(.bottom, 10)

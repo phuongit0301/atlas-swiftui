@@ -22,7 +22,7 @@ struct DepartureSplit: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            HeaderViewSplit(isMenu: true, isNext: true, nextScreen: item?.nextScreen)
+            HeaderViewSplit(isMenu: true, isNext: true, item: item)
             
             VStack(spacing: 0) {
                 ItemListSplit(

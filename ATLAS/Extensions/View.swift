@@ -417,20 +417,23 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(FlightPlanSplit())
 }
 
-func getDestinationNextSplit(_ screenName: NavigationEnumeration) -> AnyView {
-    if screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(DepartureSplit())
+func getDestinationNextSplit(_ item: ListFlightInformationItem, _ listItem: [ListFlightInformationItem]) -> AnyView {
+    
+    if let index = listItem.firstIndex(where: {$0.screenName == item.screenName}) {
+        if item.nextScreen == NavigationEnumeration.DepartureScreen {
+            return AnyView(DepartureSplit(item: listItem[3]))
+        }
+        
+        if item.nextScreen == NavigationEnumeration.EnrouteScreen {
+            return AnyView(EnrouteSplit(item: listItem[index + 1]))
+        }
+        
+        if item.nextScreen == NavigationEnumeration.ArrivalScreen {
+            return AnyView(ArrivalSplit(item: listItem[index + 1]))
+        }
     }
     
-    if screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(EnrouteSplit())
-    }
-    
-    if screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(ArrivalSplit())
-    }
-    
-    return AnyView(DepartureSplit())
+    return AnyView(DepartureSplit(item: listItem[3]))
 }
 
 func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
