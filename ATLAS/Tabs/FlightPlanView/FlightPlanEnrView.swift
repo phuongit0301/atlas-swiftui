@@ -57,7 +57,6 @@ struct FlightPlanEnrView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading) {
-                // fixed header section, todo clean up design
                 HStack(alignment: .center) {
                     Text("Enroute")
                         .font(.system(size: 20, weight: .semibold))
@@ -292,19 +291,17 @@ struct FlightPlanEnrView: View {
     func setDefaultValues(waypointsTableDefault: [EnrouteList]) -> [EnrouteList] {
         // define the starting waypoint afrm based on user selections in departure page
         var afrmOff: Double {
-            if let unit = Int(coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] ?? "0") {
-                print("unit: ", unit)
-                let calculatedTaxi: Double = Double((coreDataModel.dataFuelExtra.selectedTaxi * unit) / 1000)
-                print("calculatedTaxi: ", calculatedTaxi)
-                let afrm = Double(coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks)! - calculatedTaxi
-                print("afrm: ", afrm)
+            if let unit = coreDataModel.dataFuelDataList.unwrappedTaxi["unit"] {
+                let unitChecked = unit != "" ? (unit as NSString).integerValue : 0
+                let taxiFuel = coreDataModel.dataFuelDataList.unwrappedTaxi["fuel"]
+                let taxiFuelChecked = taxiFuel != "" ? (taxiFuel! as NSString).integerValue : 0
+                let calculatedTaxi: Double = Double((coreDataModel.dataFuelExtra.selectedTaxi * unitChecked) / 1000) + (Double(taxiFuelChecked) / 1000)
+                let afrm = (Double(coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks)! / 1000) - calculatedTaxi
                 return afrm
             }
             
             return 0
         }
-        print("afrmOff: ", afrmOff)
-
         let formattedAfrmOff: String = formatFuelNumberDouble(afrmOff)
         
         // define the T_O_C index
@@ -319,16 +316,17 @@ struct FlightPlanEnrView: View {
         
         // set default values
         for (index, row) in waypointsTableDefault.enumerated() {
-            // eta, ata, afrm
+            // eta, ata, afrm first row
             if index == 0 {
-                row.eta = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
-                coreDataModel.dataFPEnroute[index].eta = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
-                row.ata = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
-                coreDataModel.dataFPEnroute[index].eta = coreDataModel.dataDepartureEntries.unwrappedEntTakeoff
+                // extract last 4 characters from date time string for eta and ata
+                row.eta = String(coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.suffix(4))
+                coreDataModel.dataFPEnroute[index].eta = String(coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.suffix(4))
+                row.ata = String(coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.suffix(4))
+                coreDataModel.dataFPEnroute[index].eta = String(coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.suffix(4))
                 row.afrm = formattedAfrmOff
                 coreDataModel.dataFPEnroute[index].afrm = formattedAfrmOff
             }
-            // afl, oat, awind
+            // afl, oat, awind rows less than toc
             if index < tocIndex {
                 row.afl = "CLB"
                 coreDataModel.dataFPEnroute[index].afl = "CLB"
@@ -337,8 +335,129 @@ struct FlightPlanEnrView: View {
                 row.oat = "N.A"
                 coreDataModel.dataFPEnroute[index].oat = "N.A"
             }
+            
+            //other rows
+            if index > 0 {
+                // eta
+                let dateFormatterTime = DateFormatter()
+                dateFormatterTime.dateFormat = "HHmm"
+                let etaDefaultValue = dateFormatterTime.date(from: row.unwrappedEta)!
+                if dateFormatterTime.date(from: row.eta!) != nil {
+                    // Update the value based on the previous row's value in column
+                    if dateFormatterTime.date(from: waypointsTableDefault[index-1].unwrappedEta) != nil {
+                        let etaPreviousRowValue = dateFormatterTime.date(from: waypointsTableDefault[index-1].unwrappedEta)!
+                        let ztmString = row.ztm
+                        let components = ztmString!.components(separatedBy: ":")
+                        let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                        let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                        row.eta = dateFormatterTime.string(from: NewValue)
+                    }
+                }
+                else {
+                    // Set the default value if it exists and currentValue is nil
+                    row.eta = dateFormatterTime.string(from: etaDefaultValue)
+                }
+                
+                //ata
+                let ataDefaultValue = dateFormatterTime.date(from: row.unwrappedAta)!
+                if dateFormatterTime.date(from: row.unwrappedAta) != nil {
+                    // Update the value based on the previous row's value in column
+                    var ataPreviousRowValue: Date
+                    
+                    if waypointsTableDefault[index-1].unwrappedAta != "" {
+                        ataPreviousRowValue = dateFormatterTime.date(from: waypointsTableDefault[index-1].unwrappedAta)!
+                        let ztmString = row.unwrappedZtm
+                        let components = ztmString.components(separatedBy: ":")
+                        let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                        let NewValue = ataPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                        row.ata = dateFormatterTime.string(from: NewValue)
+                    } else {
+                        row.ata = dateFormatterTime.string(from: ataDefaultValue)
+                    }
+                }
+                else {
+                    // Set the default value if it exists and currentValue is nil
+                    row.ata = dateFormatterTime.string(from: ataDefaultValue)
+                }
+                
+                //afrm
+                let afrmDefaultValue = Double(row.unwrappedAfrm)
+                if Double(row.unwrappedAfrm) != nil {
+                    // Update the value based on the previous row's value in column
+                    let afrmPreviousRowValue = Double(waypointsTableDefault[index-1].unwrappedAfrm)
+                    let zfrq = Double(row.unwrappedZfrq) ?? 0
+                    var NewValue = zfrq
+                    
+                    if afrmPreviousRowValue != nil {
+                        NewValue = afrmPreviousRowValue! - zfrq
+                    }
+                    row.afrm = formatFuelNumberDouble(NewValue)
+                }
+                else {
+                    // Set the default value if it exists and currentValue is nil
+                    row.afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
+                }
+                
+                //diff
+                let diffDefaultValue = row.unwrappedDiff
+                if dateFormatterTime.date(from: row.unwrappedEta) != nil &&  dateFormatterTime.date(from: row.unwrappedEta) != nil {
+                    var eta = 0
+                    if row.unwrappedEta != "" {
+                        let etaMins = row.unwrappedEta.suffix(2)
+                        let etaHrs = row.unwrappedEta.prefix(2)
+                        eta = Int(etaHrs)! * 60 + Int(etaMins)!
+                    }
+                    // Update the value based on the eta and ata
+                    let ataMins = row.unwrappedAta.suffix(2)
+                    let ataHrs = row.unwrappedAta.prefix(2)
+                    var ata = ataMins != "" ? Int(ataMins)! : 0
+                    
+                    if ataHrs != "" {
+                        ata = Int(ataHrs)! * 60 + ata
+                    }
+                    
+                    var NewValue = ata - eta
+                    if NewValue < 0 {
+                        NewValue = NewValue * -1
+                        let NewValueString = formatTime(NewValue)
+                        row.diff = "-"+NewValueString
+                    } else {
+                        let NewValueString = formatTime(NewValue)
+                        row.diff = "+"+NewValueString
+                    }
+                }
+                else {
+                    // Set the default value if it exists and currentValue is nil
+                    row.diff = diffDefaultValue
+                }
+                
+                //fDiff
+                let afrm = Double(row.unwrappedAfrm) ?? 0
+                let pfrm = Double(row.unwrappedPfrm) ?? 0
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    row.fdiff = "-"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    row.fdiff = "+"+formatFuelNumberDouble(NewValue)
+                    coreDataModel.dataFPEnroute[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
+                }
+            }
         }
         return waypointsTableDefault
+    }
+    
+    func formatTime(_ minutes: Int) -> String {
+        let hours = minutes / 60
+        let mins = minutes % 60
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
+        
+        return formatter.string(from: date)
     }
 }
 
@@ -348,7 +467,7 @@ struct EnrouteCustomField: View {
     
     let waypointsTableDefault: [EnrouteList]
     @Binding var waypointsTable: [EnrouteList]
-    
+        
     var name: String
     @State var field: String
     var index: Int
@@ -357,12 +476,21 @@ struct EnrouteCustomField: View {
         TextField("\(name)", text: $field).onSubmit {
             switch name {
                 case "eta":
-                    waypointsTable[index].eta = field
+                    // take only last 4 characters of string dd/M | HHmm
+                    waypointsTable[index].eta = String(field.suffix(4))
                 case "ata":
-                    waypointsTable[index].ata = field
+                    // take only last 4 characters of string dd/M | HHmm
+                    waypointsTable[index].ata = String(field.suffix(4))
                     if index == 0 {
+                        // date time format
+                        let dateFormatterTime = DateFormatter()
+                        dateFormatterTime.dateFormat = "dd/M | HHmm"
+                        // get takeoff date
+                        let takeoffDate = String(coreDataModel.dataDepartureEntries.unwrappedEntTakeoff.prefix(4))
+                        // convert field into date time format
+                        let newTime = "\(takeoffDate) | \(field)"
                         // update off time in dep page
-                        coreDataModel.dataDepartureEntries.entTakeoff = field
+                        coreDataModel.dataDepartureEntries.entTakeoff = newTime
                         coreDataModel.save()
                         coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
                     }
@@ -420,17 +548,17 @@ struct EnrouteCustomField: View {
             let ataDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedAta)!
             if dateFormatterTime.date(from: waypointsTable[index].unwrappedAta) != nil {
                 // Update the value based on the previous row's value in column
-                var ataPreviousRowValue = dateFormatterTime.date(from: "0000")
+                var ataPreviousRowValue: Date
                 
                 if waypointsTable[index-1].unwrappedAta != "" {
-                    ataPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].unwrappedAta)
-                }
-                
-                let ztmString = waypointsTable[index].unwrappedZtm
-                let components = ztmString.components(separatedBy: ":")
-                let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
-                if let NewValue = ataPreviousRowValue?.addingTimeInterval(TimeInterval(ztm)) {
+                    ataPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].unwrappedAta)!
+                    let ztmString = waypointsTable[index].unwrappedZtm
+                    let components = ztmString.components(separatedBy: ":")
+                    let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                    let NewValue = ataPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
                     waypointsTable[index].ata = dateFormatterTime.string(from: NewValue)
+                } else {
+                    waypointsTable[index].ata = dateFormatterTime.string(from: ataDefaultValue)
                 }
             }
             else {
@@ -530,10 +658,33 @@ struct EnrouteCustomField: View {
                 waypointsTable[index].diff = diffDefaultValue
             }
             
+            // adn
+            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
+            let aflDefaultValue = waypointsTableDefault[index].unwrappedAfl
+            if index < tocIndex {
+                // Set the default value if waypoint is before TOC
+                waypointsTable[index].adn = "N.A"
+            } else { // set value for the rest
+                // get ISA = 15 + -2deg per 1000ft
+                if aflDefaultValue != "" {
+                    let aflFormatted = Int(aflDefaultValue)! * 100
+                    let isa = 15 + (aflFormatted / 1000) * -2
+                    // get adn = oat - ISA
+                    let adn = Int(oatDefaultValue)! - isa
+                    // update value
+                    if adn < 0 {
+                        waypointsTable[index].adn = "\(adn)"
+                    } else {
+                        waypointsTable[index].adn = "+\(adn)"
+                    }
+                } else {
+                    waypointsTable[index].adn = "N.A"
+                }
+            }
+            
             //fDiff
             let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
             if Double(waypointsTable[index].unwrappedFdiff) != nil {
-                // Update the value based on the previous row's value in column
                 let afrm = Double(waypointsTable[index].unwrappedAfrm) ?? 0
                 let pfrm = Double(waypointsTable[index].unwrappedPfrm) ?? 0
                 var NewValue = afrm - pfrm
@@ -554,7 +705,6 @@ struct EnrouteCustomField: View {
             //fDiff
             let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
             if Double(waypointsTable[index].unwrappedFdiff) != nil {
-                // Update the value based on the previous row's value in column
                 let afrm = Double(waypointsTable[index].unwrappedAfrm) ?? 0
                 let pfrm = Double(waypointsTable[index].unwrappedPfrm) ?? 0
                 var NewValue = afrm - pfrm
