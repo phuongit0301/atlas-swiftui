@@ -32,14 +32,14 @@ struct OverviewView: View {
                         
                         Spacer()
                         
-                        HStack {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 16, height: 16)
-                                .foregroundColor(Color.theme.azure)
-                            Text("Add Item").foregroundColor(Color.theme.azure)
-                                .font(.system(size: 17, weight: .regular))
-                        }
+//                        HStack {
+//                            Image(systemName: "plus")
+//                                .resizable()
+//                                .frame(width: 16, height: 16)
+//                                .foregroundColor(Color.theme.azure)
+//                            Text("Add Item").foregroundColor(Color.theme.azure)
+//                                .font(.system(size: 17, weight: .regular))
+//                        }
                     }.padding(.vertical, 10)
                     
                     ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in

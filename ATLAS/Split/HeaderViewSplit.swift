@@ -45,7 +45,7 @@ struct HeaderViewSplit: View {
                         
                         if isMenu {
                             Button(action: {
-                                dismiss()
+                                NavigationUtil.popToRootView()
                             }) {
                                 Text("Menu").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
                             }

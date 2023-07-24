@@ -1006,10 +1006,12 @@ struct FlightPlanArrView: View {
                 
                 if coreDataModel.dataArrivalEntries.unwrappedEntLdg != "" {
                     self.currentDateLanding = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntLdg) ?? Date()
+                    self.currentDateLandingTemp = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntLdg) ?? Date()
                 }
                 
                 if coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks != "" {
                     self.currentDateChockOn = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks) ?? Date()
+                    self.currentDateChockOnTemp = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks) ?? Date()
                 }
                 
                 self.entOn = coreDataModel.dataArrivalEntries.unwrappedEntOn
@@ -1059,7 +1061,7 @@ struct FlightPlanArrView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateLandingTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                    DatePicker("", selection: $currentDateLandingTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
                 }
                 Spacer()
@@ -1109,7 +1111,7 @@ struct FlightPlanArrView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateChockOnTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                    DatePicker("", selection: $currentDateChockOnTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
                 }
                 Spacer()

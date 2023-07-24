@@ -136,6 +136,12 @@ struct FlightPlanDepView: View {
     @State private var currentDateTakeOff = Date()
     @State private var currentDateTakeOffTemp = Date()
     
+    var dateClosedRange: ClosedRange<Date> {
+        let min = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
+        let max = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        return min...max
+    }
+    
     var body: some View {
         let route = coreDataModel.dataSummaryRoute.unwrappedRoute
         let routeList: [String] = route.components(separatedBy: " ")
@@ -1061,14 +1067,17 @@ struct FlightPlanDepView: View {
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntOff != "" {
                     self.currentDateChockOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
+                    self.currentDateChockOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
                 }
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntTaxi != "" {
                     self.currentDateTaxi = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
+                    self.currentDateTaxiTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
                 }
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntTakeoff != "" {
                     self.currentDateTakeOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
+                    self.currentDateTakeOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
                 }
                 
                 self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
@@ -1119,7 +1128,7 @@ struct FlightPlanDepView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateChockOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                    DatePicker("", selection: $currentDateChockOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
                 }
                 Spacer()
@@ -1169,7 +1178,7 @@ struct FlightPlanDepView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateTaxiTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                    DatePicker("", selection: $currentDateTaxiTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
                 }
                 Spacer()
@@ -1220,7 +1229,7 @@ struct FlightPlanDepView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateTakeOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(GraphicalDatePickerStyle())
+                    DatePicker("", selection: $currentDateTakeOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
                 }
                 Spacer()

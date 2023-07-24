@@ -36,15 +36,19 @@ struct MainView: View {
     //app view wrapper
     var body: some View {
         if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-            NavigationSplitView(columnVisibility: $columnVisibility) {
-                Sidebar()
-            } detail: {
-                NavigationStack {
-                    HomeViewSplit()
-                    BottomTabs()
-                }
-            }.navigationSplitViewStyle(.balanced)
-                .accentColor(Color.theme.tuftsBlue)
+//            NavigationSplitView(columnVisibility: $columnVisibility) {
+//                Sidebar()
+//            } detail: {
+//                NavigationStack {
+//                    HomeViewSplit()
+//                    BottomTabs()
+//                }
+//            }.navigationSplitViewStyle(.balanced)
+//                .accentColor(Color.theme.tuftsBlue)
+            NavigationStack {
+                HomeViewSplit()
+                BottomTabs()
+            }
         } else {
             NavigationView {
                 Sidebar()
