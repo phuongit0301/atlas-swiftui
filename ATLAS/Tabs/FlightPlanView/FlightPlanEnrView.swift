@@ -204,14 +204,6 @@ struct FlightPlanEnrView: View {
                                             .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
 
                                         Text(row.unwrappedZfrq).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                        // entry here
-//                                        TextField(
-//                                            row.unwrappedAfrm,
-//                                            text: $afrm
-//                                        )
-//                                        .onSubmit {
-//                                            updateValues(editedIndex: index)
-//                                        }
                                         EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
                                             .id(UUID())
                                         .textInputAutocapitalization(.never)
@@ -222,9 +214,8 @@ struct FlightPlanEnrView: View {
                                 }
                                 HStack {
                                     Group {
-                                        Text("\(row.unwrappedCord) \(row.unwrappedMsa)").frame(width: calculateWidth(proxy.size.width - 50, 13) * 2, alignment: .leading)
-                                        Text("-").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 40, 13), alignment: .leading).padding(.leading, 5)
-//                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                        Text("\(row.unwrappedCord)").frame(width: calculateWidth(proxy.size.width - 50, 13) * 2, alignment: .leading)
+                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculateWidth(proxy.size.width - 40, 13), alignment: .leading).padding(.leading, 5)
                                         Text("\(row.unwrappedDis)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedDiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedPfl)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
