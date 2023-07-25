@@ -1071,19 +1071,64 @@ struct FlightPlanDepView: View {
                 dateFormatter.dateFormat = "dd/M | HHmm"
                 //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
+                // func to add year to the date value
+                func parseDate(from dateString: String, with formatter: DateFormatter) -> Date? {
+                    let currentYear = Calendar.current.component(.year, from: Date())
+                    let formattedDateString = "\(currentYear)/\(dateString)"
+                    return formatter.date(from: formattedDateString)
+                }
+                
                 if coreDataModel.dataDepartureEntries.unwrappedEntOff != "" {
-                    self.currentDateChockOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
-                    self.currentDateChockOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
+                    // format the date by adding the year so that it can be used by datepicker
+                    var formattedOffDate: Date {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd/M | HHmm"
+                        // read date value and add year
+                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                            return date
+                        } else {
+                            return Date()
+                        }
+                    }
+                    self.currentDateChockOff = formattedOffDate
+                    self.currentDateChockOffTemp = formattedOffDate
+//                    self.currentDateChockOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
+//                    self.currentDateChockOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntOff) ?? Date()
                 }
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntTaxi != "" {
-                    self.currentDateTaxi = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
-                    self.currentDateTaxiTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
+                    // format the date by adding the year so that it can be used by datepicker
+                    var formattedTaxiDate: Date {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd/M | HHmm"
+                        // read date value and add year
+                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                            return date
+                        } else {
+                            return Date()
+                        }
+                    }
+                    self.currentDateTaxi = formattedTaxiDate
+                    self.currentDateTaxiTemp = formattedTaxiDate
+//                    self.currentDateTaxi = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
+//                    self.currentDateTaxiTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi) ?? Date()
                 }
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntTakeoff != "" {
-                    self.currentDateTakeOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
-                    self.currentDateTakeOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
+                    var formattedTakeoffDate: Date {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd/M | HHmm"
+                        // read date value and add year
+                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                            return date
+                        } else {
+                            return Date()
+                        }
+                    }
+                    self.currentDateTakeOff = formattedTakeoffDate
+                    self.currentDateTakeOffTemp = formattedTakeoffDate
+//                    self.currentDateTakeOff = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
+//                    self.currentDateTakeOffTemp = dateFormatter.date(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff) ?? Date()
                 }
                 
                 self.entFuelInTanks = coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks
@@ -1132,7 +1177,6 @@ struct FlightPlanDepView: View {
                     .roundedCorner(12, corners: [.topLeft, .topRight])
                 
                 Divider()
-                
                 VStack {
                     DatePicker("", selection: $currentDateChockOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
