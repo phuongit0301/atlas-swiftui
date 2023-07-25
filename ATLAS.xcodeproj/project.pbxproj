@@ -194,6 +194,7 @@
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
 		3EECB8572A6E1BA6009D4971 /* SlideOverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8562A6E1BA6009D4971 /* SlideOverModel.swift */; };
+		3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
@@ -447,6 +448,7 @@
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
 		3EECB8562A6E1BA6009D4971 /* SlideOverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverModel.swift; sourceTree = "<group>"; };
+		3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerView.swift; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */,
 				3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */,
 				3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */,
+				3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1374,6 +1377,7 @@
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
 				3E4A37862A5D003F00027C61 /* ProjDelaysListRef+CoreDataProperties.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
+				3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */,
 				3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */,
 				3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */,
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,

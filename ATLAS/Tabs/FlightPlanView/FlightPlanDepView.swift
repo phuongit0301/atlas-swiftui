@@ -1180,7 +1180,7 @@ struct FlightPlanDepView: View {
                 VStack {
                     DatePicker("", selection: $currentDateChockOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
-                }.Print("currentDateChockOffTemp=======\(currentDateChockOffTemp)")
+                }
                 Spacer()
             }
         }
