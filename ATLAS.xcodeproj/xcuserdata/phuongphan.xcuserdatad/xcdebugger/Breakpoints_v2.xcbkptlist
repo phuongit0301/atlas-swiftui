@@ -2079,10 +2079,10 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
-            landmarkName = "EnrouteCustomField"
-            landmarkType = "14">
+            startingLineNumber = "346"
+            endingLineNumber = "346"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "33833844-747B-4056-BD0F-166215F37597 - 71edf41a62328a07"
@@ -2187,10 +2187,10 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
-            landmarkName = "EnrouteCustomField"
-            landmarkType = "14">
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2203,26 +2203,26 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "EnrouteCustomField"
-            landmarkType = "14">
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "57B318BB-A7C8-46DC-BA68-258D43905CAB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "57B318BB-A7C8-46DC-BA68-258D43905CAB - 2503ae95f931eff2"
@@ -2329,6 +2329,21 @@
                   endingLineNumber = "365"
                   offsetFromSymbolStart = "740">
                </Location>
+               <Location
+                  uuid = "57B318BB-A7C8-46DC-BA68-258D43905CAB - 57820a6f729cd389"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.setDefaultValues(waypointsTableDefault: Swift.Array&lt;ATLAS.EnrouteList&gt;) -&gt; Swift.Array&lt;ATLAS.EnrouteList&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "367"
+                  endingLineNumber = "367"
+                  offsetFromSymbolStart = "7780">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2342,10 +2357,10 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
-            landmarkName = "EnrouteCustomField"
-            landmarkType = "14">
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4265,22 +4280,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "926DCC89-D277-4AB7-A7D6-6FD48E29E7C3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1073"
-            endingLineNumber = "1073"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D68536D4-56F3-49BA-88C7-3237655141E2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4413,8 +4412,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4429,8 +4428,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
             <Locations>
@@ -4497,6 +4496,38 @@
             endingLineNumber = "17"
             landmarkName = "findNavigationController(viewController:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7D28E1D5-C564-414D-A5AF-7F918A325ADF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
+            landmarkName = "setDefaultValues(waypointsTableDefault:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D6C595E6-269D-4795-B965-CE03A13EAF6F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1137"
+            endingLineNumber = "1137"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

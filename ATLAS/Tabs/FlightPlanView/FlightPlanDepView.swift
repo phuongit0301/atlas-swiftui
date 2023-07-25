@@ -1136,7 +1136,7 @@ struct FlightPlanDepView: View {
                 VStack {
                     DatePicker("", selection: $currentDateChockOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
-                }
+                }.Print("currentDateChockOffTemp=======\(currentDateChockOffTemp)")
                 Spacer()
             }
         }
@@ -1237,10 +1237,6 @@ struct FlightPlanDepView: View {
                 VStack {
                     DatePicker("", selection: $currentDateTakeOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
-                        .onChange(of: currentDateTakeOffTemp) { newValue in
-                            currentDateTakeOffTemp = updateDateIfNeeded(date: newValue)
-                            print("currentDateTakeOff=========\(currentDateTakeOff)")
-                        }
                 }
                 Spacer()
             }
@@ -1302,23 +1298,6 @@ struct FlightPlanDepView: View {
     
     func onTakeOff() {
         self.isShowModalTakeOff.toggle()
-    }
-    
-    func updateDateIfNeeded(date: Date) -> Date {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        
-        let currentComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
-        var updatedComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-        
-        if updatedComponents.hour == 0 && updatedComponents.minute == 1 {
-            updatedComponents.day = currentComponents.day! + 1
-            updatedComponents.hour = 0
-            updatedComponents.minute = 1
-            return calendar.date(from: updatedComponents) ?? date
-        }
-        
-        return date
     }
 
 }

@@ -44,7 +44,7 @@ struct FlightInformationDetailView: View {
             dateFormatterTime.dateFormat = "dd/M | HHmm"
             // convert time diff to format
             let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
-            let timeDiffFormatted = Int(timeDiff)! * 3600
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
             // convert takeoff time to date
             if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
                 let entTakeoff =  dateFormatterTime.date(from: takeoff)
@@ -72,7 +72,7 @@ struct FlightInformationDetailView: View {
             dateFormatterTime.dateFormat = "dd/M | HHmm"
             // convert time diff to Int seconds
             let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffDep
-            let timeDiffFormatted = Int(timeDiff)! * 3600
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
             // convert chocks off format
             if let chocksOff = coreDataModel.dataDepartureEntries.entOff {
                 let chocksOffFormatted =  dateFormatterTime.date(from: chocksOff)
@@ -92,7 +92,7 @@ struct FlightInformationDetailView: View {
             dateFormatterTime.dateFormat = "dd/M | HHmm"
             // convert time diff to Int seconds
             let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
-            let timeDiffFormatted = Int(timeDiff)! * 3600
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
             // convert chocks on format
             if let chocksOn = coreDataModel.dataArrivalEntries.entOn {
                 let chocksOnFormatted =  dateFormatterTime.date(from: chocksOn)

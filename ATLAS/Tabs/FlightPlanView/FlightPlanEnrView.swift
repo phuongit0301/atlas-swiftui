@@ -296,7 +296,8 @@ struct FlightPlanEnrView: View {
                 let taxiFuel = coreDataModel.dataFuelDataList.unwrappedTaxi["fuel"]
                 let taxiFuelChecked = taxiFuel != "" ? (taxiFuel! as NSString).integerValue : 0
                 let calculatedTaxi: Double = Double((coreDataModel.dataFuelExtra.selectedTaxi * unitChecked) / 1000) + (Double(taxiFuelChecked) / 1000)
-                let afrm = (Double(coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks)! / 1000) - calculatedTaxi
+                let afrm = (Double(coreDataModel.dataDepartureEntries.unwrappedEntFuelInTanks) ?? 0 / 1000) - calculatedTaxi
+                
                 return afrm
             }
             
