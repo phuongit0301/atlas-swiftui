@@ -118,7 +118,7 @@ struct FlightPlanDepView: View {
     @State private var isShowingAutofillOptionsCloud = false
     @State private var isShowingAutofillOptionsRemarks = false
     @State private var isShowingAutofillOptionsAtcRte = false
-
+    
     @State private var autofillOptionsCloud: [String] = ["FEW", "SCT", "BKN", "OVC"]
     @State private var autofillOptionsWX: [String] = ["AC", "AD", "AMD", "AS", "ASR", "AUTO", "BASE", "BCFG", "BECMG", "BL", "BLW", "BR", "BTN", "CAVOK", "CB", "CC", "CI", "CIT", "CLD", "COR", "COT", "CS", "CU", "DEG", "DP", "DR", "DS", "DU", "DUC", "DZ", "ENE", "ESE", "EMBD", "FC", "FCST", "FG", "FL", "FPM", "FRQ", "FT", "FU", "FZ", "GR", "GS", "H", "HPA", "HVY", "HZ", "IC", "ICE", "INS", "INTSF", "IRVR", "ISOL", "JTST", "KM", "KMH", "KT", "LAN", "LCA", "LSQ", "LV", "LYR", "MB", "METAR", "MI", "MNM", "MOD", "MON", "MPS", "MS", "MSL", "MTW", "NAT", "NC", "NCD", "NDV", "NE", "NIL", "NM", "NNE", "NNW", "NOSIG", "NOTAM", "NS", "NSC", "NSW", "NW", "OCNL", "PL", "PO", "PRFG", "PROB30", "PROB40", "PS", "PSYS", "QFE", "QNE", "QNH", "RA", "RMK", "RVR", "RWY", "SA", "SC", "SE", "SEA", "SEV", "SFC", "SG", "SIG", "SKC", "SN", "SPECI", "SQ", "SS", "SSE", "SSW", "ST", "STNR", "SW", "T", "TAF", "TCU", "TEMPO", "TL", "TOP", "TROP", "TS", "TURB", "UP", "UTC", "VA", "VAL", "VIS", "VRB", "VSP", "WDSPR", "WNW", "WRNG", "WS", "WSPD", "WSW", "WX"]
     @State private var autofillText = ""
@@ -146,876 +146,882 @@ struct FlightPlanDepView: View {
         let route = coreDataModel.dataSummaryRoute.unwrappedRoute
         let routeList: [String] = route.components(separatedBy: " ")
         
-        GeometryReader { proxy in
-            VStack(alignment: .leading) {
-                HStack(alignment: .center) {
-                    Text("Departure")
-                        .font(.system(size: 20, weight: .semibold))
-                        .padding(.leading, 30)
-                }
-                .padding(.bottom, 10)
-                
-                Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT").padding(.leading, 30).padding(.bottom, 10)
-                    .font(.system(size: 15, weight: .semibold))
-                //scrollable outer list section
-                List {
-                    // ATIS section
-                    Section(header:
-                        HStack {
+        ScrollViewReader { scrollView in
+            GeometryReader { proxy in
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        Text("Departure")
+                            .font(.system(size: 20, weight: .semibold))
+                            .padding(.leading, 30)
+                    }
+                    .padding(.bottom, 10)
+                    
+                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT").padding(.leading, 30).padding(.bottom, 10)
+                        .font(.system(size: 15, weight: .semibold))
+                    //scrollable outer list section
+                    List {
+                        // ATIS section
+                        Section(header:
+                                    HStack {
                             Text("ATIS \(coreDataModel.dataSummaryInfo.unwrappedDep)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                         }
-                    ) {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Code")
+                        ) {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Code")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Time")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Rwy")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Trans Lvl")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Wind")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Vis")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Wx")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Cloud")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Temp")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("DP")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    Text("QNH")
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Time")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Rwy")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Trans Lvl")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Wind")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Vis")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Wx")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Cloud")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Temp")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("DP")
+                                    Text("Remarks")
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                                Text("QNH")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Remarks")
-                                    .foregroundStyle(Color.blue)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
-                            Divider()
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
                                 .padding(.leading, 25)
-                            HStack(alignment: .center) {
-                                Group {
-                                    TextField("Code", text: $code)
-                                    .focused($isTextFieldCodeFocused)
-                                    .onReceive(Just(isTextFieldCodeFocused)) { focused in
-                                        if focused {
-                                            isTextFieldCodeFocused = false
-                                            setFocusToFalse()
-                                            isEditingCode = true
-                                        }
-                                    }
-                                    .overlay(isEditingCode ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: code) { newValue in
-                                        // Limit the text to a maximum of 1 characters
-                                        if newValue.count > 0 {
-                                            code = String(newValue.prefix(1))
-                                            cursorPositionCode = 1
-                                            
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.code = code
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.code = code
+                                Divider()
+                                    .padding(.leading, 25)
+                                HStack(alignment: .center) {
+                                    Group {
+                                        TextField("Code", text: $code)
+                                            .focused($isTextFieldCodeFocused)
+                                            .onReceive(Just(isTextFieldCodeFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldCodeFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingCode = true
+                                                }
                                             }
-                                            
-                                            coreDataModel.save()
-                                            
-                                            isEditingCode = false
-                                            isTextFieldTimeFocused = true
-                                        }
-                                    }
-
-                                    TextField("Time", text: $time)
-                                    .focused($isTextFieldTimeFocused)
-                                    .onReceive(Just(isTextFieldTimeFocused)) { focused in
-                                        if focused {
-                                            isTextFieldTimeFocused = false
-                                            setFocusToFalse()
-                                            isEditingTime = true
-                                        }
-                                    }
-                                    .overlay(isEditingTime ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: time) { newValue in
-                                        if newValue.count > 3 {
-                                            time = String(newValue.prefix(4))
-                                            cursorPositionTime = 4
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.time = time
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.time = time
+                                            .overlay(isEditingCode ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: code) { newValue in
+                                                // Limit the text to a maximum of 1 characters
+                                                if newValue.count > 0 {
+                                                    code = String(newValue.prefix(1))
+                                                    cursorPositionCode = 1
+                                                    
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.code = code
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.code = code
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingCode = false
+                                                    isTextFieldTimeFocused = true
+                                                }
                                             }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingTime = false
-                                            isTextFieldRwyFocused = true
-                                        }
+                                        
+                                        TextField("Time", text: $time)
+                                            .focused($isTextFieldTimeFocused)
+                                            .onReceive(Just(isTextFieldTimeFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldTimeFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingTime = true
+                                                }
+                                            }
+                                            .overlay(isEditingTime ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: time) { newValue in
+                                                if newValue.count > 3 {
+                                                    time = String(newValue.prefix(4))
+                                                    cursorPositionTime = 4
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.time = time
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.time = time
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingTime = false
+                                                    isTextFieldRwyFocused = true
+                                                }
+                                            }
+                                    }
+                                    Group {
+                                        TextField("Rwy", text: $rwy)
+                                            .focused($isTextFieldRwyFocused)
+                                            .onReceive(Just(isTextFieldRwyFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldRwyFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingRwy = true
+                                                }
+                                            }
+                                            .overlay(isEditingRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: rwy) { newValue in
+                                                if newValue.count > 10 {
+                                                    rwy = String(newValue.prefix(11))
+                                                    cursorPositionRwy = 11
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.rwy = rwy
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.rwy = rwy
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingRwy = false
+                                                    isTextFieldTransLvlFocused = true
+                                                }
+                                            }
+                                        
+                                        TextField( "Trans Lvl", text: $transLvl)
+                                            .focused($isTextFieldTransLvlFocused)
+                                            .onReceive(Just(isTextFieldTransLvlFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldTransLvlFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingTransLvl = true
+                                                }
+                                            }
+                                            .overlay(isEditingTransLvl ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: transLvl) { newValue in
+                                                if newValue.count > 3 {
+                                                    transLvl = String(newValue.prefix(4))
+                                                    cursorPositionTransLvl = 4
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.translvl = transLvl
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.translvl = transLvl
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingTransLvl = false
+                                                    isTextFieldWindFocused = true
+                                                }
+                                            }
+                                    }
+                                    Group {
+                                        TextField( "Wind", text: $wind)
+                                            .focused($isTextFieldWindFocused)
+                                            .onReceive(Just(isTextFieldWindFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldWindFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingWind = true
+                                                }
+                                            }
+                                            .overlay(isEditingWind ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: wind) { newValue in
+                                                if newValue.count > 5 {
+                                                    wind = String(newValue.prefix(6))
+                                                    cursorPositionWind = 6
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.wind = wind
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.wind = wind
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingWind = false
+                                                    isTextFieldVisFocused = true
+                                                }
+                                            }
+                                        
+                                        TextField("Vis", text: $vis)
+                                            .focused($isTextFieldVisFocused)
+                                            .onReceive(Just(isTextFieldVisFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldVisFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingVis = true
+                                                }
+                                            }
+                                            .overlay(isEditingVis ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: vis) { newValue in
+                                                if newValue.count > 3 {
+                                                    vis = String(newValue.prefix(4))
+                                                    cursorPositionVis = 4
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.vis = vis
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.vis = vis
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingVis = false
+                                                    isTextFieldWxFocused = true
+                                                }
+                                            }
+                                    }
+                                    Group {
+                                        TextField("Wx", text: $wx)
+                                            .focused($isTextFieldWxFocused)
+                                            .onReceive(Just(isTextFieldWxFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldWxFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingWx = true
+                                                }
+                                            }
+                                            .overlay(isEditingWx ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onReceive(Just(wx)) { text in
+                                                let components = text.components(separatedBy: " ")
+                                                if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                                    let searchTerm = String(lastComponent.dropFirst())
+                                                    autofillText = searchTerm
+                                                    isShowingAutofillOptionsWx = true
+                                                } else {
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.wx = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.wx = text
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    isShowingAutofillOptionsWx = false
+                                                }
+                                            }
+                                            .onReceive(Just(isEditingWx)) { focused in
+                                                if !focused {
+                                                    isShowingAutofillOptionsWx = false
+                                                }
+                                            }
+                                        
+                                        TextField("Cloud", text: $cloud)
+                                            .focused($isTextFieldCloudFocused)
+                                            .onReceive(Just(isTextFieldCloudFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldCloudFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingCloud = true
+                                                }
+                                            }
+                                            .overlay(isEditingCloud ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onReceive(Just(cloud)) { text in
+                                                let components = text.components(separatedBy: " ")
+                                                if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                                    let searchTerm = String(lastComponent.dropFirst())
+                                                    autofillText = searchTerm
+                                                    isShowingAutofillOptionsCloud = true
+                                                } else {
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.cloud = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.cloud = text
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    isShowingAutofillOptionsCloud = false
+                                                }
+                                            }
+                                            .onReceive(Just(isEditingCloud)) { focused in
+                                                if !focused {
+                                                    isShowingAutofillOptionsCloud = false
+                                                }
+                                            }
+                                    }
+                                    Group {
+                                        TextField("Temp", text: $temp)
+                                            .focused($isTextFieldTempFocused)
+                                            .onReceive(Just(isTextFieldTempFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldTempFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingTemp = true
+                                                }
+                                            }
+                                            .overlay(isEditingTemp ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: temp) { newValue in
+                                                if newValue.count > 1 {
+                                                    temp = String(newValue.prefix(2))
+                                                    cursorPositionTemp = 2
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.temp = temp
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.temp = temp
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingTemp = false
+                                                    isTextFieldDPFocused = true
+                                                }
+                                            }
+                                        
+                                        TextField("DP", text: $dp)
+                                            .focused($isTextFieldDPFocused)
+                                            .onReceive(Just(isTextFieldDPFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldDPFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingDP = true
+                                                }
+                                            }
+                                            .overlay(isEditingDP ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: dp) { newValue in
+                                                if newValue.count > 1 {
+                                                    dp = String(newValue.prefix(2))
+                                                    cursorPositionDP = 2
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.dp = dp
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.dp = dp
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingDP = false
+                                                    isTextFieldQNHFocused = true
+                                                }
+                                            }
+                                    }
+                                    Group {
+                                        TextField("QNH", text: $qnh)
+                                            .focused($isTextFieldQNHFocused)
+                                            .onReceive(Just(isTextFieldQNHFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldQNHFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingQNH = true
+                                                }
+                                            }
+                                            .overlay(isEditingQNH ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: qnh) { newValue in
+                                                if newValue.count > 3 {
+                                                    qnh = String(newValue.prefix(4))
+                                                    cursorPositionQNH = 4
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.qnh = qnh
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.qnh = qnh
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingQNH = false
+                                                    isTextFieldRemarksFocused = true
+                                                }
+                                            }
+                                        
+                                        TextField("Remarks", text: $remarks)
+                                            .focused($isTextFieldRemarksFocused)
+                                            .onReceive(Just(isTextFieldRemarksFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldRemarksFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingRemarks = true
+                                                }
+                                            }
+                                            .overlay(isEditingRemarks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onReceive(Just(remarks)) { text in
+                                                let components = text.components(separatedBy: " ")
+                                                if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                                    let searchTerm = String(lastComponent.dropFirst())
+                                                    autofillText = searchTerm
+                                                    isShowingAutofillOptionsRemarks = true
+                                                } else {
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.remarks = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.remarks = text
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    isShowingAutofillOptionsRemarks = false
+                                                }
+                                            }
+                                            .onReceive(Just(isEditingRemarks)) { focused in
+                                                if !focused {
+                                                    isShowingAutofillOptionsRemarks = false
+                                                }
+                                            }
                                     }
                                 }
-                                Group {
-                                    TextField("Rwy", text: $rwy)
-                                    .focused($isTextFieldRwyFocused)
-                                    .onReceive(Just(isTextFieldRwyFocused)) { focused in
-                                        if focused {
-                                            isTextFieldRwyFocused = false
-                                            setFocusToFalse()
-                                            isEditingRwy = true
-                                        }
-                                    }
-                                    .overlay(isEditingRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: rwy) { newValue in
-                                        if newValue.count > 10 {
-                                            rwy = String(newValue.prefix(11))
-                                            cursorPositionRwy = 11
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.rwy = rwy
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.rwy = rwy
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingRwy = false
-                                            isTextFieldTransLvlFocused = true
-                                        }
-                                    }
-
-                                    TextField( "Trans Lvl", text: $transLvl)
-                                    .focused($isTextFieldTransLvlFocused)
-                                    .onReceive(Just(isTextFieldTransLvlFocused)) { focused in
-                                        if focused {
-                                            isTextFieldTransLvlFocused = false
-                                            setFocusToFalse()
-                                            isEditingTransLvl = true
-                                        }
-                                    }
-                                    .overlay(isEditingTransLvl ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: transLvl) { newValue in
-                                        if newValue.count > 3 {
-                                            transLvl = String(newValue.prefix(4))
-                                            cursorPositionTransLvl = 4
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.translvl = transLvl
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.translvl = transLvl
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingTransLvl = false
-                                            isTextFieldWindFocused = true
-                                        }
-                                    }
-                                }
-                                Group {
-                                    TextField( "Wind", text: $wind)
-                                    .focused($isTextFieldWindFocused)
-                                    .onReceive(Just(isTextFieldWindFocused)) { focused in
-                                        if focused {
-                                            isTextFieldWindFocused = false
-                                            setFocusToFalse()
-                                            isEditingWind = true
-                                        }
-                                    }
-                                    .overlay(isEditingWind ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: wind) { newValue in
-                                        if newValue.count > 5 {
-                                            wind = String(newValue.prefix(6))
-                                            cursorPositionWind = 6
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.wind = wind
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.wind = wind
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingWind = false
-                                            isTextFieldVisFocused = true
-                                        }
-                                    }
-                                    
-                                    TextField("Vis", text: $vis)
-                                    .focused($isTextFieldVisFocused)
-                                    .onReceive(Just(isTextFieldVisFocused)) { focused in
-                                        if focused {
-                                            isTextFieldVisFocused = false
-                                            setFocusToFalse()
-                                            isEditingVis = true
-                                        }
-                                    }
-                                    .overlay(isEditingVis ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: vis) { newValue in
-                                        if newValue.count > 3 {
-                                            vis = String(newValue.prefix(4))
-                                            cursorPositionVis = 4
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.vis = vis
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.vis = vis
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingVis = false
-                                            isTextFieldWxFocused = true
-                                        }
-                                    }
-                                }
-                                Group {
-                                    TextField("Wx", text: $wx)
-                                    .focused($isTextFieldWxFocused)
-                                    .onReceive(Just(isTextFieldWxFocused)) { focused in
-                                        if focused {
-                                            isTextFieldWxFocused = false
-                                            setFocusToFalse()
-                                            isEditingWx = true
-                                        }
-                                    }
-                                    .overlay(isEditingWx ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onReceive(Just(wx)) { text in
-                                        let components = text.components(separatedBy: " ")
-                                        if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
-                                            let searchTerm = String(lastComponent.dropFirst())
-                                            autofillText = searchTerm
-                                            isShowingAutofillOptionsWx = true
-                                        } else {
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.wx = text
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.wx = text
-                                            }
-
-                                            coreDataModel.save()
-                                            isShowingAutofillOptionsWx = false
-                                        }
-                                    }
-                                    .onReceive(Just(isEditingWx)) { focused in
-                                        if !focused {
-                                            isShowingAutofillOptionsWx = false
-                                        }
-                                    }
-                                    
-                                    TextField("Cloud", text: $cloud)
-                                    .focused($isTextFieldCloudFocused)
-                                    .onReceive(Just(isTextFieldCloudFocused)) { focused in
-                                        if focused {
-                                            isTextFieldCloudFocused = false
-                                            setFocusToFalse()
-                                            isEditingCloud = true
-                                        }
-                                    }
-                                    .overlay(isEditingCloud ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onReceive(Just(cloud)) { text in
-                                        let components = text.components(separatedBy: " ")
-                                        if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
-                                            let searchTerm = String(lastComponent.dropFirst())
-                                            autofillText = searchTerm
-                                            isShowingAutofillOptionsCloud = true
-                                        } else {
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.cloud = text
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.cloud = text
-                                            }
-
-                                            coreDataModel.save()
-                                            isShowingAutofillOptionsCloud = false
-                                        }
-                                    }
-                                    .onReceive(Just(isEditingCloud)) { focused in
-                                        if !focused {
-                                            isShowingAutofillOptionsCloud = false
-                                        }
-                                    }
-                                }
-                                Group {
-                                    TextField("Temp", text: $temp)
-                                    .focused($isTextFieldTempFocused)
-                                    .onReceive(Just(isTextFieldTempFocused)) { focused in
-                                        if focused {
-                                            isTextFieldTempFocused = false
-                                            setFocusToFalse()
-                                            isEditingTemp = true
-                                        }
-                                    }
-                                    .overlay(isEditingTemp ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: temp) { newValue in
-                                        if newValue.count > 1 {
-                                            temp = String(newValue.prefix(2))
-                                            cursorPositionTemp = 2
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.temp = temp
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.temp = temp
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingTemp = false
-                                            isTextFieldDPFocused = true
-                                        }
-                                    }
-                                    
-                                    TextField("DP", text: $dp)
-                                    .focused($isTextFieldDPFocused)
-                                    .onReceive(Just(isTextFieldDPFocused)) { focused in
-                                        if focused {
-                                            isTextFieldDPFocused = false
-                                            setFocusToFalse()
-                                            isEditingDP = true
-                                        }
-                                    }
-                                    .overlay(isEditingDP ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: dp) { newValue in
-                                        if newValue.count > 1 {
-                                            dp = String(newValue.prefix(2))
-                                            cursorPositionDP = 2
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.dp = dp
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.dp = dp
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingDP = false
-                                            isTextFieldQNHFocused = true
-                                        }
-                                    }
-                                }
-                                Group {
-                                    TextField("QNH", text: $qnh)
-                                    .focused($isTextFieldQNHFocused)
-                                    .onReceive(Just(isTextFieldQNHFocused)) { focused in
-                                        if focused {
-                                            isTextFieldQNHFocused = false
-                                            setFocusToFalse()
-                                            isEditingQNH = true
-                                        }
-                                    }
-                                    .overlay(isEditingQNH ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onChange(of: qnh) { newValue in
-                                        if newValue.count > 3 {
-                                            qnh = String(newValue.prefix(4))
-                                            cursorPositionQNH = 4
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.qnh = qnh
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.qnh = qnh
-                                            }
-
-                                            coreDataModel.save()
-                                            
-                                            isEditingQNH = false
-                                            isTextFieldRemarksFocused = true
-                                        }
-                                    }
-                                    
-                                    TextField("Remarks", text: $remarks)
-                                    .focused($isTextFieldRemarksFocused)
-                                    .onReceive(Just(isTextFieldRemarksFocused)) { focused in
-                                        if focused {
-                                            isTextFieldRemarksFocused = false
-                                            setFocusToFalse()
-                                            isEditingRemarks = true
-                                        }
-                                    }
-                                    .overlay(isEditingRemarks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                    .onReceive(Just(remarks)) { text in
-                                        let components = text.components(separatedBy: " ")
-                                        if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
-                                            let searchTerm = String(lastComponent.dropFirst())
-                                            autofillText = searchTerm
-                                            isShowingAutofillOptionsRemarks = true
-                                        } else {
-                                            if coreDataModel.existDataDepartureAtis {
-                                                coreDataModel.dataDepartureAtis.remarks = text
-                                            } else {
-                                                let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                item.remarks = text
-                                            }
-
-                                            coreDataModel.save()
-                                            isShowingAutofillOptionsRemarks = false
-                                        }
-                                    }
-                                    .onReceive(Just(isEditingRemarks)) { focused in
-                                        if !focused {
-                                            isShowingAutofillOptionsRemarks = false
-                                        }
-                                    }
-                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                .padding(.leading, 25)
                             }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                            .padding(.leading, 25)
+                        }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
+                            coreDataModel.readDepartureAtis()
                         }
-                    }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
-                        coreDataModel.readDepartureAtis()
-                    }
-                    
-                    // ATC section
-                    Section(header:
-                        HStack {
+                        
+                        // ATC section
+                        Section(header:
+                                    HStack {
                             Text("ATC").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                         }
-                    ) {
-                        // grouped row using hstack
-                        VStack(alignment: .center) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Dest")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    Text("Rwy")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    Text("Dep")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    Text("Rte")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    Text("FL")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    Text("SQ")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                        ) {
+                            // grouped row using hstack
+                            VStack(alignment: .center) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Dest")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("Rwy")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("Dep")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("Rte")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("FL")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        Text("SQ")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    }
+                                }.padding(.top, 5)
+                                    .padding(.bottom, 5)
+                                
+                                Divider()
+                                
+                                HStack(alignment: .center) {
+                                    Text("\(coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    Group {
+                                        TextField("Rwy", text: $atcRwy)
+                                            .focused($isTextFieldAtcRwyFocused)
+                                            .onReceive(Just(isTextFieldAtcRwyFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldAtcRwyFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingAtcRwy = true
+                                                }
+                                            }
+                                            .overlay(isEditingAtcRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: atcRwy) { newValue in
+                                                if newValue.count > 2 {
+                                                    atcRwy = String(newValue.prefix(3))
+                                                    cursorPositionAtcRwy = 3
+                                                    if coreDataModel.existDataDepartureAtc {
+                                                        coreDataModel.dataDepartureAtc.atcRwy = atcRwy
+                                                    } else {
+                                                        let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                        item.atcRwy = atcRwy
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingAtcRwy = false
+                                                    isTextFieldAtcDepFocused = true
+                                                }
+                                            }
+                                            .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                        
+                                        TextField("Dep", text: $atcDep)
+                                            .frame(width: calculateWidth(proxy.size.width, 6))
+                                            .focused($isTextFieldAtcDepFocused)
+                                            .onReceive(Just(isTextFieldAtcDepFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldAtcDepFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingAtcDep = true
+                                                }
+                                            }
+                                            .overlay(isEditingAtcDep ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onReceive(Just(atcDep)) { text in
+                                                if coreDataModel.existDataDepartureAtc {
+                                                    coreDataModel.dataDepartureAtc.atcDep = atcDep
+                                                } else {
+                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                    item.atcDep = atcDep
+                                                }
+                                                
+                                                coreDataModel.save()
+                                            }
+                                    }
+                                    Group {
+                                        TextField("Rte", text: $atcRte)
+                                            .focused($isTextFieldAtcRteFocused)
+                                            .onReceive(Just(isTextFieldAtcRteFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldAtcRteFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingAtcRte = true
+                                                }
+                                            }
+                                            .overlay(isEditingAtcRte ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onReceive(Just(atcRte)) { text in
+                                                let components = text.components(separatedBy: " ")
+                                                if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
+                                                    let searchTerm = String(lastComponent.dropFirst())
+                                                    autofillText = searchTerm
+                                                    isShowingAutofillOptionsAtcRte = true
+                                                } else {
+                                                    if coreDataModel.existDataDepartureAtc {
+                                                        coreDataModel.dataDepartureAtc.atcRte = text
+                                                    } else {
+                                                        let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                        item.atcRte = text
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isShowingAutofillOptionsAtcRte = false
+                                                }
+                                            }
+                                            .onReceive(Just(isEditingAtcRte)) { focused in
+                                                if !focused {
+                                                    isShowingAutofillOptionsAtcRte = false
+                                                }
+                                            }
+                                            .frame(width: calculateWidth(proxy.size.width, 6))
+                                        
+                                        TextField( "FL", text: $atcFL)
+                                            .focused($isTextFieldAtcFLFocused)
+                                            .onReceive(Just(isTextFieldAtcFLFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldAtcFLFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingAtcFL = true
+                                                }
+                                            }
+                                            .overlay(isEditingAtcFL ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: atcFL) { newValue in
+                                                if newValue.count > 2 {
+                                                    atcFL = String(newValue.prefix(3))
+                                                    cursorPositionAtcFL = 3
+                                                    if coreDataModel.existDataDepartureAtc {
+                                                        coreDataModel.dataDepartureAtc.atcFL = atcFL
+                                                    } else {
+                                                        let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                        item.atcFL = atcFL
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    isEditingAtcFL = false
+                                                    isTextFieldAtcSQFocused = true
+                                                }
+                                            }
+                                            .frame(width: calculateWidth(proxy.size.width, 6))
+                                    }
+                                    TextField("SQ", text: $atcSQ)
+                                        .focused($isTextFieldAtcSQFocused)
+                                        .onReceive(Just(isTextFieldAtcSQFocused)) { focused in
+                                            if focused {
+                                                isTextFieldAtcSQFocused = false
+                                                setFocusToFalse()
+                                                isEditingAtcSQ = true
+                                            }
+                                        }
+                                        .overlay(isEditingAtcSQ ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                        .onChange(of: atcSQ) { newValue in
+                                            if newValue.count > 3 {
+                                                atcSQ = String(newValue.prefix(4))
+                                                cursorPositionAtcSQ = 4
+                                                
+                                                if coreDataModel.existDataDepartureAtc {
+                                                    coreDataModel.dataDepartureAtc.atcSQ = atcSQ
+                                                } else {
+                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
+                                                    item.atcSQ = atcSQ
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                isEditingAtcSQ = false
+                                                isTextFieldAtcRwyFocused = true
+                                            }
+                                        }
+                                        .frame(width: calculateWidth(proxy.size.width, 6))
                                 }
-                            }.padding(.top, 5)
+                                .padding(.top, 5)
                                 .padding(.bottom, 5)
-
-                            Divider()
-
-                            HStack(alignment: .center) {
-                                Text("\(coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                Group {
-                                    TextField("Rwy", text: $atcRwy)
-                                        .focused($isTextFieldAtcRwyFocused)
-                                        .onReceive(Just(isTextFieldAtcRwyFocused)) { focused in
-                                            if focused {
-                                                isTextFieldAtcRwyFocused = false
-                                                setFocusToFalse()
-                                                isEditingAtcRwy = true
-                                            }
-                                        }
-                                        .overlay(isEditingAtcRwy ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: atcRwy) { newValue in
-                                            if newValue.count > 2 {
-                                                atcRwy = String(newValue.prefix(3))
-                                                cursorPositionAtcRwy = 3
-                                                if coreDataModel.existDataDepartureAtc {
-                                                    coreDataModel.dataDepartureAtc.atcRwy = atcRwy
-                                                } else {
-                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                    item.atcRwy = atcRwy
-                                                }
-
-                                                coreDataModel.save()
-
-                                                isEditingAtcRwy = false
-                                                isTextFieldAtcDepFocused = true
-                                            }
-                                        }
-                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-
-                                    TextField("Dep", text: $atcDep)
-                                        .frame(width: calculateWidth(proxy.size.width, 6))
-                                        .focused($isTextFieldAtcDepFocused)
-                                        .onReceive(Just(isTextFieldAtcDepFocused)) { focused in
-                                            if focused {
-                                                isTextFieldAtcDepFocused = false
-                                                setFocusToFalse()
-                                                isEditingAtcDep = true
-                                            }
-                                        }
-                                        .overlay(isEditingAtcDep ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onReceive(Just(atcDep)) { text in
-                                            if coreDataModel.existDataDepartureAtc {
-                                                coreDataModel.dataDepartureAtc.atcDep = atcDep
-                                            } else {
-                                                let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                item.atcDep = atcDep
-                                            }
-
-                                            coreDataModel.save()
-                                        }
-                                }
-                                Group {
-                                    TextField("Rte", text: $atcRte)
-                                        .focused($isTextFieldAtcRteFocused)
-                                        .onReceive(Just(isTextFieldAtcRteFocused)) { focused in
-                                            if focused {
-                                                isTextFieldAtcRteFocused = false
-                                                setFocusToFalse()
-                                                isEditingAtcRte = true
-                                            }
-                                        }
-                                        .overlay(isEditingAtcRte ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onReceive(Just(atcRte)) { text in
-                                            let components = text.components(separatedBy: " ")
-                                            if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
-                                                let searchTerm = String(lastComponent.dropFirst())
-                                                autofillText = searchTerm
-                                                isShowingAutofillOptionsAtcRte = true
-                                            } else {
-                                                if coreDataModel.existDataDepartureAtc {
-                                                    coreDataModel.dataDepartureAtc.atcRte = text
-                                                } else {
-                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                    item.atcRte = text
-                                                }
-
-                                                coreDataModel.save()
-
-                                                isShowingAutofillOptionsAtcRte = false
-                                            }
-                                        }
-                                        .onReceive(Just(isEditingAtcRte)) { focused in
-                                            if !focused {
-                                                isShowingAutofillOptionsAtcRte = false
-                                            }
-                                        }
-                                        .frame(width: calculateWidth(proxy.size.width, 6))
-
-                                    TextField( "FL", text: $atcFL)
-                                        .focused($isTextFieldAtcFLFocused)
-                                        .onReceive(Just(isTextFieldAtcFLFocused)) { focused in
-                                            if focused {
-                                                isTextFieldAtcFLFocused = false
-                                                setFocusToFalse()
-                                                isEditingAtcFL = true
-                                            }
-                                        }
-                                        .overlay(isEditingAtcFL ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: atcFL) { newValue in
-                                            if newValue.count > 2 {
-                                                atcFL = String(newValue.prefix(3))
-                                                cursorPositionAtcFL = 3
-                                                if coreDataModel.existDataDepartureAtc {
-                                                    coreDataModel.dataDepartureAtc.atcFL = atcFL
-                                                } else {
-                                                    let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                                    item.atcFL = atcFL
-                                                }
-
-                                                coreDataModel.save()
-
-                                                isEditingAtcFL = false
-                                                isTextFieldAtcSQFocused = true
-                                            }
-                                        }
-                                        .frame(width: calculateWidth(proxy.size.width, 6))
-                                }
-                                TextField("SQ", text: $atcSQ)
-                                .focused($isTextFieldAtcSQFocused)
-                                .onReceive(Just(isTextFieldAtcSQFocused)) { focused in
-                                    if focused {
-                                        isTextFieldAtcSQFocused = false
-                                        setFocusToFalse()
-                                        isEditingAtcSQ = true
-                                    }
-                                }
-                                .overlay(isEditingAtcSQ ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                .onChange(of: atcSQ) { newValue in
-                                    if newValue.count > 3 {
-                                        atcSQ = String(newValue.prefix(4))
-                                        cursorPositionAtcSQ = 4
-
-                                        if coreDataModel.existDataDepartureAtc {
-                                            coreDataModel.dataDepartureAtc.atcSQ = atcSQ
-                                        } else {
-                                            let item = DepartureATCList(context: persistenceController.container.viewContext)
-                                            item.atcSQ = atcSQ
-                                        }
-
-                                        coreDataModel.save()
-
-                                        isEditingAtcSQ = false
-                                        isTextFieldAtcRwyFocused = true
-                                    }
-                                }
-                                .frame(width: calculateWidth(proxy.size.width, 6))
-                                }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-
-                        }.padding(.horizontal, 25)
-                        .frame(maxWidth: proxy.size.width - 50)
-
-                    }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
-                        coreDataModel.readDepartureAtc()
-                    }
-                    // Entries section
-                    Section(header:
-                        HStack {
+                                
+                            }.padding(.horizontal, 25)
+                                .frame(maxWidth: proxy.size.width - 50)
+                            
+                        }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
+                            coreDataModel.readDepartureAtc()
+                        }
+                        // Entries section
+                        Section(header:
+                                    HStack {
                             Text("Entries").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                         }
-                    ) {
-                        // grouped row using hstack
-                        VStack(alignment: .center) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Chocks Off")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
-                                    Text("Fuel in Tanks")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
-                                    Text("Taxi")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
-                                    Text("Takeoff")
-                                        .foregroundStyle(Color.blue)
-                                        .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                        ) {
+                            // grouped row using hstack
+                            VStack(alignment: .center) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Chocks Off")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                        Text("Fuel in Tanks")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                        Text("Taxi")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                        Text("Takeoff")
+                                            .foregroundStyle(Color.blue)
+                                            .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    }
                                 }
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-
-                            Divider()
-
-                            HStack {
-                                Group {
-                                    HStack {
-                                        ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "").fixedSize()
-                                        Spacer()
-                                    }.frame(width: calculateWidth(proxy.size.width, 4))
-
-                                    TextField("Fuel in Tanks", text: $entFuelInTanks)
-                                        .focused($isTextFieldEntFuelInTanksFocused)
-                                        .onReceive(Just(isTextFieldEntFuelInTanksFocused)) { focused in
-                                            if focused {
-                                                isTextFieldEntFuelInTanksFocused = false
-                                                setFocusToFalse()
-                                                isEditingEntFuelInTanks = true
-                                            }
-                                        }
-                                        .overlay(isEditingEntFuelInTanks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                        .onChange(of: entFuelInTanks) { newValue in
-                                            if newValue.count > 4 {
-                                                entFuelInTanks = String(newValue.prefix(5))
-                                                cursorPositionEntFuelInTanks = 5
-                                                if coreDataModel.existDataDepartureEntries {
-                                                    coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
-                                                } else {
-                                                    let item = DepartureEntriesList(context: persistenceController.container.viewContext)
-                                                    item.entFuelInTanks = entFuelInTanks
-                                                    coreDataModel.existDataDepartureEntries = true
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                                
+                                Divider()
+                                
+                                HStack {
+                                    Group {
+                                        HStack {
+                                            ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "").fixedSize()
+                                            Spacer()
+                                        }.frame(width: calculateWidth(proxy.size.width, 4))
+                                        
+                                        TextField("Fuel in Tanks", text: $entFuelInTanks)
+                                            .focused($isTextFieldEntFuelInTanksFocused)
+                                            .onReceive(Just(isTextFieldEntFuelInTanksFocused)) { focused in
+                                                if focused {
+                                                    isTextFieldEntFuelInTanksFocused = false
+                                                    setFocusToFalse()
+                                                    isEditingEntFuelInTanks = true
                                                 }
-
-                                                coreDataModel.save()
-                                                coreDataModel.readDepartureEntries()
-
-                                                isEditingEntFuelInTanks = false
-                                                isTextFieldEntTaxiFocused = true
                                             }
+                                            .overlay(isEditingEntFuelInTanks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+                                            .onChange(of: entFuelInTanks) { newValue in
+                                                if newValue.count > 4 {
+                                                    entFuelInTanks = String(newValue.prefix(5))
+                                                    cursorPositionEntFuelInTanks = 5
+                                                    if coreDataModel.existDataDepartureEntries {
+                                                        coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
+                                                    } else {
+                                                        let item = DepartureEntriesList(context: persistenceController.container.viewContext)
+                                                        item.entFuelInTanks = entFuelInTanks
+                                                        coreDataModel.existDataDepartureEntries = true
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    coreDataModel.readDepartureEntries()
+                                                    
+                                                    isEditingEntFuelInTanks = false
+                                                    isTextFieldEntTaxiFocused = true
+                                                }
+                                            }
+                                            .frame(width: calculateWidth(proxy.size.width, 4))
+                                    }
+                                    Group {
+                                        HStack {
+                                            ButtonDateStepper(onToggle: onTaxi, value: $currentDateTaxi, suffix: "").fixedSize()
+                                            Spacer()
+                                        }.frame(width: calculateWidth(proxy.size.width, 4))
+                                        
+                                        HStack {
+                                            ButtonDateStepper(onToggle: onTakeOff, value: $currentDateTakeOff, suffix: "").fixedSize()
+                                            Spacer()
+                                        }.frame(width: calculateWidth(proxy.size.width, 4))
+                                    }
+                                }
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                            }.padding(.horizontal, 25)
+                                .frame(maxWidth: proxy.size.width - 50)
+                        }.onChange(of: coreDataModel.dataDepartureEntries) { _ in
+                            coreDataModel.readDepartureEntries()
+                        }.id("entries")
+                    }
+                    
+                    HStack(alignment: .center) {
+                        VStack {
+                            // custom keyboard view - todo set position properly - like normal ipad keyboard position
+                            Group {
+                                if isEditingCode {
+                                    CustomKeyboardView1(text: $code, cursorPosition: $cursorPositionCode, currentFocus: $isEditingCode, nextFocus: $isEditingTime, prevFocus: $isEditingRemarks)
+                                }
+                                if isEditingTime {
+                                    CustomKeyboardView1(text: $time, cursorPosition: $cursorPositionTime, currentFocus: $isEditingTime, nextFocus: $isEditingRwy, prevFocus: $isEditingCode)
+                                }
+                                if isEditingRwy {
+                                    CustomKeyboardView1(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: $isEditingRwy, nextFocus: $isEditingTransLvl, prevFocus: $isEditingTime)
+                                }
+                                if isEditingTransLvl {
+                                    CustomKeyboardView1(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: $isEditingTransLvl, nextFocus: $isEditingWind, prevFocus: $isEditingRwy)
+                                }
+                                if isEditingWind {
+                                    CustomKeyboardView1(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: $isEditingWind, nextFocus: $isEditingVis, prevFocus: $isEditingTransLvl)
+                                }
+                                if isEditingVis {
+                                    CustomKeyboardView1(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: $isEditingVis, nextFocus: $isEditingWx, prevFocus: $isEditingWind)
+                                }
+                                if isEditingWx {
+                                    CustomKeyboardView1(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: $isEditingWx, nextFocus: $isEditingCloud, prevFocus: $isEditingVis)
+                                }
+                                if isEditingCloud {
+                                    CustomKeyboardView1(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: $isEditingCloud, nextFocus: $isEditingTemp, prevFocus: $isEditingWx)
+                                }
+                                if isEditingTemp {
+                                    CustomKeyboardView1(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: $isEditingTemp, nextFocus: $isEditingDP, prevFocus: $isEditingCloud)
+                                }
+                                if isEditingDP {
+                                    CustomKeyboardView1(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: $isEditingDP, nextFocus: $isEditingQNH, prevFocus: $isEditingTemp)
+                                }
+                            }
+                            Group {
+                                if isEditingQNH {
+                                    CustomKeyboardView1(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: $isEditingQNH, nextFocus: $isEditingRemarks, prevFocus: $isEditingDP)
+                                }
+                                if isEditingRemarks {
+                                    CustomKeyboardView1(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: $isEditingRemarks, nextFocus: $isEditingCode, prevFocus: $isEditingQNH)
+                                }
+                            }
+                            Group {
+                                if isEditingAtcRwy {
+                                    CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: $isEditingAtcRwy, nextFocus: $isEditingAtcDep, prevFocus: $isEditingAtcSQ)
+                                }
+                                if isEditingAtcDep {
+                                    CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: $isEditingAtcDep, nextFocus: $isEditingAtcRte, prevFocus: $isEditingAtcRwy)
+                                }
+                                if isEditingAtcRte {
+                                    CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: $isEditingAtcRte, nextFocus: $isEditingAtcFL, prevFocus: $isEditingAtcDep)
+                                }
+                                if isEditingAtcFL {
+                                    CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: $isEditingAtcFL, nextFocus: $isEditingAtcSQ, prevFocus: $isEditingAtcRte)
+                                }
+                                if isEditingAtcSQ {
+                                    CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: $isEditingAtcSQ, nextFocus: $isEditingAtcRwy, prevFocus: $isEditingAtcRte)
+                                }
+                            }
+                            Group {
+                                if isEditingEntOff {
+                                    CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: $isEditingEntOff, nextFocus: $isEditingEntFuelInTanks, prevFocus: $isEditingEntTakeoff)
+                                }
+                                if isEditingEntFuelInTanks {
+                                    CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: $isEditingEntFuelInTanks, nextFocus: $isEditingEntTaxi, prevFocus: $isEditingEntOff)
+                                }
+                                if isEditingEntTaxi {
+                                    CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: $isEditingEntTaxi, nextFocus: $isEditingEntTakeoff, prevFocus: $isEditingEntFuelInTanks)
+                                }
+                                if isEditingEntTakeoff {
+                                    CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: $isEditingEntTakeoff, nextFocus: $isEditingEntOff, prevFocus: $isEditingEntTaxi)
+                                }
+                            }
+                        } // End VStack Custom keyboard
+                        
+                        VStack {
+                            Group {
+                                if isShowingAutofillOptionsWx {
+                                    List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                        Button(action: {
+                                            let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                            cursorPositionWx -= wx.count
+                                            wx = modifiedText + " " + option + " "
+                                            cursorPositionWx += wx.count
+                                            isShowingAutofillOptionsWx = false
+                                        }) {
+                                            Text(option)
                                         }
-                                        .frame(width: calculateWidth(proxy.size.width, 4))
+                                    }.listStyle(.insetGrouped)
+                                        .background(Color.clear)
+                                        .padding(.top, -50)
                                 }
-                                Group {
-                                    HStack {
-                                        ButtonDateStepper(onToggle: onTaxi, value: $currentDateTaxi, suffix: "").fixedSize()
-                                        Spacer()
-                                    }.frame(width: calculateWidth(proxy.size.width, 4))
-
-                                    HStack {
-                                        ButtonDateStepper(onToggle: onTakeOff, value: $currentDateTakeOff, suffix: "").fixedSize()
-                                        Spacer()
-                                    }.frame(width: calculateWidth(proxy.size.width, 4))
+                                if isShowingAutofillOptionsCloud {
+                                    List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                        Button(action: {
+                                            let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                            cursorPositionCloud -= cloud.count
+                                            cloud = modifiedText + " " + option + " "
+                                            cursorPositionCloud += cloud.count
+                                            isShowingAutofillOptionsCloud = false
+                                        }) {
+                                            Text(option)
+                                        }
+                                    }.listStyle(.insetGrouped)
+                                        .background(Color.clear)
+                                        .padding(.top, -50)
                                 }
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
-                        }.padding(.horizontal, 25)
-                            .frame(maxWidth: proxy.size.width - 50)
-                    }.onChange(of: coreDataModel.dataDepartureEntries) { _ in
-                        coreDataModel.readDepartureEntries()
-                    }
-                }
-
-                HStack(alignment: .center) {
-                    VStack {
-                        // custom keyboard view - todo set position properly - like normal ipad keyboard position
-                        Group {
-                            if isEditingCode {
-                                CustomKeyboardView1(text: $code, cursorPosition: $cursorPositionCode, currentFocus: $isEditingCode, nextFocus: $isEditingTime, prevFocus: $isEditingRemarks)
-                            }
-                            if isEditingTime {
-                                CustomKeyboardView1(text: $time, cursorPosition: $cursorPositionTime, currentFocus: $isEditingTime, nextFocus: $isEditingRwy, prevFocus: $isEditingCode)
-                            }
-                            if isEditingRwy {
-                                CustomKeyboardView1(text: $rwy, cursorPosition: $cursorPositionRwy, currentFocus: $isEditingRwy, nextFocus: $isEditingTransLvl, prevFocus: $isEditingTime)
-                            }
-                            if isEditingTransLvl {
-                                CustomKeyboardView1(text: $transLvl, cursorPosition: $cursorPositionTransLvl, currentFocus: $isEditingTransLvl, nextFocus: $isEditingWind, prevFocus: $isEditingRwy)
-                            }
-                            if isEditingWind {
-                                CustomKeyboardView1(text: $wind, cursorPosition: $cursorPositionWind, currentFocus: $isEditingWind, nextFocus: $isEditingVis, prevFocus: $isEditingTransLvl)
-                            }
-                            if isEditingVis {
-                                CustomKeyboardView1(text: $vis, cursorPosition: $cursorPositionVis, currentFocus: $isEditingVis, nextFocus: $isEditingWx, prevFocus: $isEditingWind)
-                            }
-                            if isEditingWx {
-                                CustomKeyboardView1(text: $wx, cursorPosition: $cursorPositionWx, currentFocus: $isEditingWx, nextFocus: $isEditingCloud, prevFocus: $isEditingVis)
-                            }
-                            if isEditingCloud {
-                                CustomKeyboardView1(text: $cloud, cursorPosition: $cursorPositionCloud, currentFocus: $isEditingCloud, nextFocus: $isEditingTemp, prevFocus: $isEditingWx)
-                            }
-                            if isEditingTemp {
-                                CustomKeyboardView1(text: $temp, cursorPosition: $cursorPositionTemp, currentFocus: $isEditingTemp, nextFocus: $isEditingDP, prevFocus: $isEditingCloud)
-                            }
-                            if isEditingDP {
-                                CustomKeyboardView1(text: $dp, cursorPosition: $cursorPositionDP, currentFocus: $isEditingDP, nextFocus: $isEditingQNH, prevFocus: $isEditingTemp)
-                            }
+                                if isShowingAutofillOptionsRemarks {
+                                    List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                        Button(action: {
+                                            let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                            cursorPositionRemarks -= remarks.count
+                                            remarks = modifiedText + " " + option + " "
+                                            cursorPositionRemarks += remarks.count
+                                            isShowingAutofillOptionsRemarks = false
+                                        }) {
+                                            Text(option)
+                                        }
+                                    }.listStyle(.insetGrouped)
+                                        .background(Color.clear)
+                                        .padding(.top, -50)
+                                }
+                                if isShowingAutofillOptionsAtcRte {
+                                    List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                        Button(action: {
+                                            let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
+                                            cursorPositionAtcRte -= atcRte.count
+                                            atcRte = modifiedText + " " + option + " "
+                                            cursorPositionAtcRte += atcRte.count
+                                            isShowingAutofillOptionsAtcRte = false
+                                        }) {
+                                            Text(option)
+                                        }
+                                    }.listStyle(.insetGrouped)
+                                        .background(Color.clear)
+                                        .padding(.top, -50)
+                                }
+                            }.frame(width: (proxy.size.width / 2) - 100)
+                                .padding()
+                                .scrollContentBackground(.hidden)
                         }
-                        Group {
-                            if isEditingQNH {
-                                CustomKeyboardView1(text: $qnh, cursorPosition: $cursorPositionQNH, currentFocus: $isEditingQNH, nextFocus: $isEditingRemarks, prevFocus: $isEditingDP)
-                            }
-                            if isEditingRemarks {
-                                CustomKeyboardView1(text: $remarks, cursorPosition: $cursorPositionRemarks, currentFocus: $isEditingRemarks, nextFocus: $isEditingCode, prevFocus: $isEditingQNH)
-                            }
+                        
+                    }.frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.theme.quickSilver)
+                        .onChange(of: isEditingEntFuelInTanks) { _ in
+                            scrollView.scrollTo("entries")
                         }
-                        Group {
-                            if isEditingAtcRwy {
-                                CustomKeyboardView1(text: $atcRwy, cursorPosition: $cursorPositionAtcRwy, currentFocus: $isEditingAtcRwy, nextFocus: $isEditingAtcDep, prevFocus: $isEditingAtcSQ)
-                            }
-                            if isEditingAtcDep {
-                                CustomKeyboardView1(text: $atcDep, cursorPosition: $cursorPositionAtcDep, currentFocus: $isEditingAtcDep, nextFocus: $isEditingAtcRte, prevFocus: $isEditingAtcRwy)
-                            }
-                            if isEditingAtcRte {
-                                CustomKeyboardView1(text: $atcRte, cursorPosition: $cursorPositionAtcRte, currentFocus: $isEditingAtcRte, nextFocus: $isEditingAtcFL, prevFocus: $isEditingAtcDep)
-                            }
-                            if isEditingAtcFL {
-                                CustomKeyboardView1(text: $atcFL, cursorPosition: $cursorPositionAtcFL, currentFocus: $isEditingAtcFL, nextFocus: $isEditingAtcSQ, prevFocus: $isEditingAtcRte)
-                            }
-                            if isEditingAtcSQ {
-                                CustomKeyboardView1(text: $atcSQ, cursorPosition: $cursorPositionAtcSQ, currentFocus: $isEditingAtcSQ, nextFocus: $isEditingAtcRwy, prevFocus: $isEditingAtcRte)
-                            }
-                        }
-                        Group {
-                            if isEditingEntOff {
-                                CustomKeyboardView1(text: $entOff, cursorPosition: $cursorPositionEntOff, currentFocus: $isEditingEntOff, nextFocus: $isEditingEntFuelInTanks, prevFocus: $isEditingEntTakeoff)
-                            }
-                            if isEditingEntFuelInTanks {
-                                CustomKeyboardView1(text: $entFuelInTanks, cursorPosition: $cursorPositionEntFuelInTanks, currentFocus: $isEditingEntFuelInTanks, nextFocus: $isEditingEntTaxi, prevFocus: $isEditingEntOff)
-                            }
-                            if isEditingEntTaxi {
-                                CustomKeyboardView1(text: $entTaxi, cursorPosition: $cursorPositionEntTaxi, currentFocus: $isEditingEntTaxi, nextFocus: $isEditingEntTakeoff, prevFocus: $isEditingEntFuelInTanks)
-                            }
-                            if isEditingEntTakeoff {
-                                CustomKeyboardView1(text: $entTakeoff, cursorPosition: $cursorPositionEntTakeoff, currentFocus: $isEditingEntTakeoff, nextFocus: $isEditingEntOff, prevFocus: $isEditingEntTaxi)
-                            }
-                        }
-                    } // End VStack Custom keyboard
                     
-                    VStack {
-                        Group {
-                            if isShowingAutofillOptionsWx {
-                                List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                                    Button(action: {
-                                        let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                        cursorPositionWx -= wx.count
-                                        wx = modifiedText + " " + option + " "
-                                        cursorPositionWx += wx.count
-                                        isShowingAutofillOptionsWx = false
-                                    }) {
-                                        Text(option)
-                                    }
-                                }.listStyle(.insetGrouped)
-                                    .background(Color.clear)
-                                    .padding(.top, -50)
-                            }
-                            if isShowingAutofillOptionsCloud {
-                                List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                                    Button(action: {
-                                        let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                        cursorPositionCloud -= cloud.count
-                                        cloud = modifiedText + " " + option + " "
-                                        cursorPositionCloud += cloud.count
-                                        isShowingAutofillOptionsCloud = false
-                                    }) {
-                                        Text(option)
-                                    }
-                                }.listStyle(.insetGrouped)
-                                .background(Color.clear)
-                                .padding(.top, -50)
-                            }
-                            if isShowingAutofillOptionsRemarks {
-                                List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                                    Button(action: {
-                                        let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                        cursorPositionRemarks -= remarks.count
-                                        remarks = modifiedText + " " + option + " "
-                                        cursorPositionRemarks += remarks.count
-                                        isShowingAutofillOptionsRemarks = false
-                                    }) {
-                                        Text(option)
-                                    }
-                                }.listStyle(.insetGrouped)
-                                .background(Color.clear)
-                                .padding(.top, -50)
-                            }
-                            if isShowingAutofillOptionsAtcRte {
-                                List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
-                                    Button(action: {
-                                        let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
-                                        cursorPositionAtcRte -= atcRte.count
-                                        atcRte = modifiedText + " " + option + " "
-                                        cursorPositionAtcRte += atcRte.count
-                                        isShowingAutofillOptionsAtcRte = false
-                                    }) {
-                                        Text(option)
-                                    }
-                                }.listStyle(.insetGrouped)
-                                .background(Color.clear)
-                                .padding(.top, -50)
-                            }
-                        }.frame(width: (proxy.size.width / 2) - 100)
-                            .padding()
-                            .scrollContentBackground(.hidden)
-                    }
-                    
-                }.frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.theme.quickSilver)
-                
-            }.navigationTitle("Departure")
-                .background(Color(.systemGroupedBackground))
+                }.navigationTitle("Departure")
+                    .background(Color(.systemGroupedBackground))
                 //.hideKeyboardWhenTappedAround()
-        }.onAppear {
+            }
+        }
+        .onAppear {
             coreDataModel.readDepartures()
             //set data ats
             if coreDataModel.existDataDepartureAtis {
@@ -1229,8 +1235,12 @@ struct FlightPlanDepView: View {
                 Divider()
                 
                 VStack {
-                    DatePicker("", selection: $currentDateTakeOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
+                    DatePicker("", selection: $currentDateTakeOffTemp, in: dateClosedRange, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                         .environment(\.locale, Locale(identifier: "en_GB"))
+                        .onChange(of: currentDateTakeOffTemp) { newValue in
+                            currentDateTakeOffTemp = updateDateIfNeeded(date: newValue)
+                            print("currentDateTakeOff=========\(currentDateTakeOff)")
+                        }
                 }
                 Spacer()
             }
@@ -1255,7 +1265,7 @@ struct FlightPlanDepView: View {
         isEditingAtcRte = false
         isEditingAtcFL = false
         isEditingAtcSQ = false
-
+        
         isEditingEntOff = false
         isEditingEntFuelInTanks = false
         isEditingEntTaxi = false
@@ -1289,10 +1299,28 @@ struct FlightPlanDepView: View {
     func onTaxi() {
         self.isShowModalTaxi.toggle()
     }
-        
+    
     func onTakeOff() {
         self.isShowModalTakeOff.toggle()
     }
+    
+    func updateDateIfNeeded(date: Date) -> Date {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let currentComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        var updatedComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        
+        if updatedComponents.hour == 0 && updatedComponents.minute == 1 {
+            updatedComponents.day = currentComponents.day! + 1
+            updatedComponents.hour = 0
+            updatedComponents.minute = 1
+            return calendar.date(from: updatedComponents) ?? date
+        }
+        
+        return date
+    }
+
 }
 
 struct FlightPlanDepView_Previews: PreviewProvider {
