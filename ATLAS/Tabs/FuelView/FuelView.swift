@@ -7,34 +7,33 @@
 
 import Foundation
 import SwiftUI
-import SwiftData
 
 struct FuelView: View {
     // fuel page swift data initialise
     @Environment(\.modelContext) private var context
     @State private var selectedTab: Int = 0
-    @Query var fuelPageData: [FuelPageData]
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var body: some View {
         GeometryReader { proxy in
             Group {
-                if fuelPageData.first?.projDelays != nil {
                     VStack {
                         switch selectedTab {
                             case 0:
-                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
-                            case 1:
-                                TaxiTimeView().tag(selectedTab).ignoresSafeArea()
-                            case 2:
-                                TrackMilesView().tag(selectedTab).ignoresSafeArea()
-                            case 3:
-                                EnrouteWeatherView().tag(selectedTab).ignoresSafeArea()
-                            case 4:
-                                FlightLevelView().tag(selectedTab).ignoresSafeArea()
-                            case 5:
-                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
+//                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
+                            ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
+//                            case 1:
+//                                TaxiTimeView().tag(selectedTab).ignoresSafeArea()
+//                            case 2:
+//                                TrackMilesView().tag(selectedTab).ignoresSafeArea()
+//                            case 3:
+//                                EnrouteWeatherView().tag(selectedTab).ignoresSafeArea()
+//                            case 4:
+//                                FlightLevelView().tag(selectedTab).ignoresSafeArea()
+//                            case 5:
+//                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
                             default:
-                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
+                                projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays).tag(selectedTab).ignoresSafeArea()
                             }
                         Spacer()
                         FuelSegmented(preselected: $selectedTab, options: IFuelTabs, geoWidth: proxy.size.width)
@@ -47,9 +46,6 @@ struct FuelView: View {
                     //EnrouteWeatherView()
 //                    ReciprocalRunwayView()
                     
-                } else {
-                    Text("Loading...")
-                }
             }
             .task {
                 await waitForResponse()
@@ -58,7 +54,7 @@ struct FuelView: View {
     }
     
     func waitForResponse() async {
-        while fuelPageData.first?.projDelays == nil {
+        while coreDataModel.dataProjDelays == nil {
             do {
                 try await Task.sleep(nanoseconds: 500000000) // Sleep for 0.5 seconds
             }

@@ -142,6 +142,7 @@ class CoreDataModelState: ObservableObject {
     
     // For Fuel Chart
     @Published var dataProjDelays: ProjDelaysList!
+    @Published var dataHistoricalDelays: [HistoricalDelaysList] = []
     
     @Published var isUpdating: Bool = false
     
@@ -194,6 +195,38 @@ class CoreDataModelState: ObservableObject {
                     print("Fetch data")
                 }
             })
+            
+            await remoteService.getFuelData(completion: { response in
+                    DispatchQueue.main.async {
+                        if let historicalDelays = response?.historicalDelays {
+                            self.initHistoricalDelays(historicalDelays)
+                        }
+
+                        if let projDelays = response?.projDelays {
+                            self.initProjDelays(projDelays)
+                        }
+
+                        if let taxi = response?.taxi {
+                            self.initProjTaxi(taxi)
+                        }
+        
+                        if let trackMiles = response?.trackMiles {
+                            self.initTrackMiles(trackMiles)
+                        }
+        
+                        if let enrWX = response?.enrWX {
+                            self.initEnrWX(enrWX)
+                        }
+        
+                        if let flightLevel = response?.flightLevel {
+                            self.initFlightLevel(flightLevel)
+                        }
+        
+                        if let reciprocalRwy = response?.reciprocalRwy {
+                            self.initReciprocalRwy(reciprocalRwy)
+                        }
+                    }
+                })
         }
     }
     
@@ -207,37 +240,42 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initFetchData() async {
-        tagList = readTag()
-        aircraftArray = read("aircraft")
-        departureArray = read("departure")
-        enrouteArray = read("enroute")
-        arrivalArray = read("arrival")
-        aircraftRefArray = read("aircraftref")
-        departureRefArray = read("departureref")
-        enrouteRefArray = read("enrouteref")
-        arrivalRefArray = read("arrivalref")
-        scratchPadArray = readScratchPad()
-        dataFPEnroute = readEnrouteList()
-//        readFlightPlan()
-        readSummaryInfo()
-        readSummaryRoute()
-        readPerfData()
-        dataPerfInfo = readPerfInfo()
-        dataPerfWeight = readPerfWeight()
-        readFuelDataList()
-        dataFuelTableList = readFuelTableList()
-        readFuelExtra()
-        dataAltnList = readAltnList()
-        readDepartureAtc()
-        readDepartureAtis()
-        readDepartureEntries()
-        readArrivalAtc()
-        readArrivalAtis()
-        readArrivalEntries()
-        dataNotams = readDataNotamsList()
-        dataNotamsRef = readDataNotamsRefList()
-        readDataMetarTafList()
-        dataAltnTaf = readDataAltnTafList()
+        DispatchQueue.main.async {
+            self.tagList = self.readTag()
+            self.aircraftArray = self.read("aircraft")
+            self.departureArray = self.read("departure")
+            self.enrouteArray = self.read("enroute")
+            self.arrivalArray = self.read("arrival")
+            self.aircraftRefArray = self.read("aircraftref")
+            self.departureRefArray = self.read("departureref")
+            self.enrouteRefArray = self.read("enrouteref")
+            self.arrivalRefArray = self.read("arrivalref")
+            self.scratchPadArray = self.readScratchPad()
+            self.dataFPEnroute = self.readEnrouteList()
+            //        readFlightPlan()
+            self.readSummaryInfo()
+            self.readSummaryRoute()
+            self.readPerfData()
+            self.dataPerfInfo = self.readPerfInfo()
+            self.dataPerfWeight = self.readPerfWeight()
+            self.readFuelDataList()
+            self.dataFuelTableList = self.readFuelTableList()
+            self.readFuelExtra()
+            self.dataAltnList = self.readAltnList()
+            self.readDepartureAtc()
+            self.readDepartureAtis()
+            self.readDepartureEntries()
+            self.readArrivalAtc()
+            self.readArrivalAtis()
+            self.readArrivalEntries()
+            self.dataNotams = self.readDataNotamsList()
+            self.dataNotamsRef = self.readDataNotamsRefList()
+            self.readDataMetarTafList()
+            self.dataAltnTaf = self.readDataAltnTafList()
+            // For Fuel
+            self.readProjDelays()
+            self.readHistoricalDelays()
+        }
     }
     
     func checkAndSyncDataNote() async {
@@ -1635,12 +1673,10 @@ class CoreDataModelState: ObservableObject {
     func readHistoricalDelays() {
         do {
             let request: NSFetchRequest<HistoricalDelaysList> = HistoricalDelaysList.fetchRequest()
-            let results = try service.container.viewContext.fetch(request)
-            print("results=======\(results.count)")
+            let response = try service.container.viewContext.fetch(request)
             
-            if let result = results.first {
-                print("resultdelays=======\(result.delays?.allObjects ?? [])")
-                print("resultdelays=======\((result.delays?.allObjects ?? []).count)")
+            if(response.count > 0) {
+                dataHistoricalDelays = response
             }
         } catch {
             print("Could not fetch notes from Core Data.")

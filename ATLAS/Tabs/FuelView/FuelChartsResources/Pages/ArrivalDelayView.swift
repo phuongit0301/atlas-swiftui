@@ -56,20 +56,20 @@ struct ArrivalDelayView: View {
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
                                 if !flightPlanDetailModel.isModal {
-                                    projArrivalDelaysView(convertedJSON: projDelaysResponse)
-                                    historicalDelaysView(convertedJSON: historicalDelaysResponse)
+                                    projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+                                    historicalDelaysView(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
                                 } else {
                                     VStack(spacing: 20) {
-                                        projArrivalDelaysView(convertedJSON: projDelaysResponse)
-                                        historicalDelaysView(convertedJSON: historicalDelaysResponse)
+                                        projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+                                        historicalDelaysView(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
                                     }.containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                         .padding([.horizontal, .bottom], 16)
                                         .frame(maxWidth: .infinity)
                                 }
                             } else {
                                 GridRow {
-                                    projArrivalDelaysView(convertedJSON: projDelaysResponse)
-                                    historicalDelaysView(convertedJSON: historicalDelaysResponse)
+                                    projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays)
+                                    historicalDelaysView(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .padding([.horizontal, .bottom], 16)

@@ -9,8 +9,10 @@ import Foundation
 import SwiftUI
 
 struct historicalDelaysView: View {
-    var convertedJSON: processedFuelDataModel.arrivalDelaysNestedJSON
+    @Binding var dataHistoricalDelays: [HistoricalDelaysList]
+//    var convertedJSON: processedFuelDataModel.arrivalDelaysNestedJSON
     @SceneStorage("historyTimeframe") private var timeframe: delayTimeframe = .days
+    @State var delays: [ArrivalDelays]?
     
     @State private var showWeather = true
     var body: some View {
@@ -46,7 +48,7 @@ struct historicalDelaysView: View {
                             .foregroundColor(.secondary)
                         Text("\(arrTimeDelayWX.formatted()) mins")
                             .font(.headline)
-                        historicalDelaysChart(arrivalDelays: delays, eta: eta, arrTimeDelay: arrTimeDelayWX, ymax: ymax)
+                        historicalDelaysChart(arrivalDelays: delays ?? [], eta: eta, arrTimeDelay: arrTimeDelayWX, ymax: ymax)
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     } else {
@@ -55,92 +57,169 @@ struct historicalDelaysView: View {
                             .foregroundColor(.secondary)
                         Text("\(arrTimeDelay.formatted()) mins")
                             .font(.headline)
-                        let filteredDelays = delays.filter { $0.condition != "Added delay due WX" }
-                        historicalDelaysChart(arrivalDelays: filteredDelays, eta: eta, arrTimeDelay: arrTimeDelay, ymax: ymax)
+                        let filteredDelays = delays?.filter { $0.condition != "Added delay due WX" }
+                        historicalDelaysChart(arrivalDelays: filteredDelays ?? [], eta: eta, arrTimeDelay: arrTimeDelay, ymax: ymax)
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     }
                 }
                 .padding()
+                .onAppear {
+                    handleData()
+                }.onChange(of: timeframe) { _ in
+                    handleData()
+                }
             }
         }
         .navigationTitle("Historical Delays")
         .background()
     }
+    
+    func handleData() {
+        let items = dataFilter()
+        delays = delaysFunc(items)
+    }
+    
+    func dataFilter() -> [String: HistoricalDelaysList?] {
+        var days: HistoricalDelaysList?
+        var weeks: HistoricalDelaysList?
+        var months: HistoricalDelaysList?
+
+        dataHistoricalDelays.forEach { item in
+            if item.type == "days3" {
+                days = item
+            } else if item.type == "week1" {
+                weeks = item
+            } else if item.type == "months3" {
+                months = item
+            }
+        }
+        
+//        return ["days": days, "week": weeks, "months": months, "dayDelays": dayDelays, "weekDelays": weekDelays, "monthDelays": monthDelays]
+        return ["days": days, "weeks": weeks, "months": months]
+    }
     // switcher by period
-    var delays: [ArrivalDelays] {
-        let fetchedDelays: processedFuelDataModel.arrivalDelaysNestedJSON = convertedJSON
-
+    func delaysFunc(_ dataFilter: [String: HistoricalDelaysList?]) -> [ArrivalDelays]? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
         switch timeframe {
-        case .days:
-            let fetchedDelaysItems = fetchedDelays.days3
-            return fetchedDelaysItems!.delays 
-        case .week:
-            let fetchedDelaysItems = fetchedDelays.week1
-            return fetchedDelaysItems!.delays
-        case .months:
-            let fetchedDelaysItems = fetchedDelays.months3
-            return fetchedDelaysItems!.delays 
+            case .days:
+                var temp = [ArrivalDelays]()
+                
+                if let items = dataFilter["days"] {
+                    (items?.delays?.allObjects as? [HistorycalDelaysRefList] ?? []).forEach {item in
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                    }
+                }
+                return temp
+            case .week:
+                var temp = [ArrivalDelays]()
+                
+                if let items = dataFilter["weeks"] {
+                    (items?.delays?.allObjects as? [HistorycalDelaysRefList] ?? []).forEach {item in
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                    }
+                }
+                return temp
+            case .months:
+                var temp = [ArrivalDelays]()
+                
+                if let items = dataFilter["months"] {
+                    (items?.delays?.allObjects as? [HistorycalDelaysRefList] ?? []).forEach {item in
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                    }
+                }
+                return temp
         }
     }
+    
     var arrTimeDelay: Int {
-        let fetchedDelays: processedFuelDataModel.arrivalDelaysNestedJSON = convertedJSON
-
+        let dataFilter = dataFilter()
         switch timeframe {
-        case .days:
-            let fetchedDelaysItems = fetchedDelays.days3
-            return fetchedDelaysItems!.arrTimeDelay
-        case .week:
-            let fetchedDelaysItems = fetchedDelays.week1
-            return fetchedDelaysItems!.arrTimeDelay
-        case .months:
-            let fetchedDelaysItems = fetchedDelays.months3
-            return fetchedDelaysItems!.arrTimeDelay
+            case .days:
+                if let days = dataFilter["days"] as? HistoricalDelaysList  {
+                    return days.arrTimeDelay
+                }
+                return 0
+               
+            case .week:
+                if let days = dataFilter["weeks"] as? HistoricalDelaysList {
+                    return days.arrTimeDelay
+                }
+                return 0
+            case .months:
+                if let days = dataFilter["months"] as? HistoricalDelaysList {
+                    return days.arrTimeDelay
+                }
+                return 0
         }
     }
-    var arrTimeDelayWX: Int{
-        let fetchedDelays: processedFuelDataModel.arrivalDelaysNestedJSON = convertedJSON
-
+    
+    var arrTimeDelayWX: Int {
+        let dataFilter = dataFilter()
         switch timeframe {
         case .days:
-            let fetchedDelaysItems = fetchedDelays.days3
-            return fetchedDelaysItems!.arrTimeDelayWX
+            if let days = dataFilter["days"] as? HistoricalDelaysList {
+                return days.arrTimeDelayWX
+            }
+            return 0
         case .week:
-            let fetchedDelaysItems = fetchedDelays.week1
-            return fetchedDelaysItems!.arrTimeDelayWX
+            if let days = dataFilter["weeks"] as? HistoricalDelaysList {
+                return days.arrTimeDelayWX
+            }
+            return 0
         case .months:
-            let fetchedDelaysItems = fetchedDelays.months3
-            return fetchedDelaysItems!.arrTimeDelayWX
+            if let days = dataFilter["months"] as? HistoricalDelaysList {
+                return days.arrTimeDelayWX
+            }
+            return 0
         }
     }
-    var eta: Date{
-        let fetchedDelays: processedFuelDataModel.arrivalDelaysNestedJSON = convertedJSON
-
+    
+    var eta: Date {
+        let dataFilter = dataFilter()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
         switch timeframe {
-        case .days:
-            let fetchedDelaysItems = fetchedDelays.days3
-            return fetchedDelaysItems!.eta
-        case .week:
-            let fetchedDelaysItems = fetchedDelays.week1
-            return fetchedDelaysItems!.eta
-        case .months:
-            let fetchedDelaysItems = fetchedDelays.months3
-            return fetchedDelaysItems!.eta
+            case .days:
+                if let days = dataFilter["days"] as? HistoricalDelaysList {
+                    return formatter.date(from: days.eta ?? "00:00") ?? formatter.date(from: "00:00")!
+                }
+                return formatter.date(from: "00:00")!
+            
+            case .week:
+                if let week = dataFilter["weeks"] as? HistoricalDelaysList {
+                    return formatter.date(from: week.eta ?? "00:00") ?? formatter.date(from: "00:00")!
+                }
+                return formatter.date(from: "00:00")!
+            case .months:
+                if let month = dataFilter["months"] as? HistoricalDelaysList {
+                    return formatter.date(from: month.eta ?? "00:00") ?? formatter.date(from: "00:00")!
+                }
+                return formatter.date(from: "00:00")!
         }
     }
-    var ymax: Int{
-        let fetchedDelays: processedFuelDataModel.arrivalDelaysNestedJSON = convertedJSON
-
+    
+    var ymax: Int {
+        let dataFilter = dataFilter()
         switch timeframe {
         case .days:
-            let fetchedDelaysItems = fetchedDelays.days3
-            return fetchedDelaysItems!.ymax
+            if let days = dataFilter["days"] as? HistoricalDelaysList {
+                return days.ymax
+            }
+            return 0
         case .week:
-            let fetchedDelaysItems = fetchedDelays.week1
-            return fetchedDelaysItems!.ymax
+            if let days = dataFilter["weeks"] as? HistoricalDelaysList {
+                return days.ymax
+            }
+            return 0
         case .months:
-            let fetchedDelaysItems = fetchedDelays.months3
-            return fetchedDelaysItems!.ymax
+            if let days = dataFilter["months"] as? HistoricalDelaysList {
+                return days.ymax
+            }
+            return 0
         }
     }
     
