@@ -22,7 +22,8 @@ class FBAppDelegate: NSObject, UIApplicationDelegate {
 struct ATLASApp: App {
     // register app delegate for Firebase setup
      @UIApplicationDelegateAdaptor(FBAppDelegate.self) var delegate
-
+    @AppStorage("uid") var userID: String = ""
+    
     let persistenceController = PersistenceController.shared
     
     @ObservedObject var apiManager = APIManager.shared
@@ -44,8 +45,11 @@ struct ATLASApp: App {
                 if coreDataModel.loading {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
-                    LoginView()
-//                    ContentView()
+                    if userID != "" {
+                        ContentView()
+                    } else {
+                        LoginView()
+                    }
                 }
             }
             .onAppWentToBackground {

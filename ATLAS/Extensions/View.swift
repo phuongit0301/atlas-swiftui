@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 import UIKit
+import FirebaseAuth
+
 
 struct RoundedCorner: Shape {
 
@@ -486,6 +488,7 @@ public struct HasToolbar: ViewModifier {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @AppStorage("uid") var userID: String = ""
 
     public func body(content: Content) -> some View {
         if verticalSizeClass == .regular && horizontalSizeClass == .compact {
@@ -526,6 +529,26 @@ public struct HasToolbar: ViewModifier {
                             Text(sideMenuState.selectedMenu?.flight ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                             
                             Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            let firebaseAuth = Auth.auth()
+                            do {
+                                try firebaseAuth.signOut()
+                                withAnimation {
+                                    userID = ""
+                                }
+                            } catch let signOutError as NSError {
+                                print("Error signing out: %@", signOutError)
+                            }
+                        }) {
+//                                Image(systemName: "rectangle.portrait.and.arrow.right")
+//                                    .scaledToFit()
+//                                    .aspectRatio(contentMode: .fit).accentColor(.black)
+//                                
+                                Text("Logout").font(.system(size: 17)).foregroundColor(.black)
                         }
                     }
                 }
@@ -744,5 +767,17 @@ struct FormSheet<Content: View> : UIViewControllerRepresentable {
         else {
             uiViewController.hide()
         }
+    }
+}
+
+extension String {
+    func isValidEmail() -> Bool {
+        // test@email.com -> true
+        // test.com -> false
+        
+        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+        
+        return regex.firstMatch(in: self, range: NSRange(location: 0, length: count)) != nil
+        
     }
 }
