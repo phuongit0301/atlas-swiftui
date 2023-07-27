@@ -17,7 +17,7 @@ struct LoginView: View {
     var body: some View {
         VStack {
                         HStack {
-                            Text("Welcome Back!")
+                            Text("Login")
                                 .font(.largeTitle)
                                 .bold()
                             
