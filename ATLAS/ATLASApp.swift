@@ -13,7 +13,7 @@ struct ATLASApp: App {
     let persistenceController = PersistenceController.shared
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-    @ObservedObject var apiManager = APIManager.shared
+//    @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
     @StateObject var mainNavModelState = MainNavModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
@@ -29,7 +29,7 @@ struct ATLASApp: App {
     var body: some Scene {
         WindowGroup {
             VStack {
-                if coreDataModel.loading {
+                if coreDataModel.loading || coreDataModel.loadingInit {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
                     ContentView()
@@ -51,10 +51,16 @@ struct ATLASApp: App {
                 .environmentObject(persistenceController)
                 .task {
                     coreDataModel.loading = true
+//                    await coreDataModel.checkAndSyncDataNote()
+//                    await coreDataModel.checkAndSyncData()
+//                    await coreDataModel.checkAndSyncDataFuel()
+//                    await coreDataModel.initFetchData()
+//                    coreDataModel.loading = false
                     await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.checkAndSyncData()
-                    await coreDataModel.initFetchData()
                     coreDataModel.loading = false
+                }.task {
+                    await coreDataModel.initFetchData()
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 

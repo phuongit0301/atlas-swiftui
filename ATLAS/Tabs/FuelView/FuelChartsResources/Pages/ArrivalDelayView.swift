@@ -31,8 +31,8 @@ struct ArrivalDelayView: View {
     
     var body: some View {
         // fetch SwiftData model
-        let projDelaysResponse = fuelPageData.first!.projDelays
-        let historicalDelaysResponse = fuelPageData.first!.historicalDelays
+//        let projDelaysResponse = fuelPageData.first!.projDelays
+//        let historicalDelaysResponse = fuelPageData.first!.historicalDelays
         
         WidthThresholdReader(widthThreshold: 800) { proxy in
             VStack {

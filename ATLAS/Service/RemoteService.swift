@@ -18,7 +18,7 @@ class RemoteService: ObservableObject {
     
     private init() {}
     
-    func getFlightPlanWX(completion: @escaping (IFlightPlanDataModel?) -> Void) async  {
+    func getFlightPlanWX() async -> IFlightPlanDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flightPlan_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -42,32 +42,22 @@ class RemoteService: ObservableObject {
                 // Set the Content-Type header to indicate JSON format
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
-                let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let error = error {
-                        print("Request error: ", error)
-                        return
-                    }
-                    
-                    guard let response = response as? HTTPURLResponse else { return }
-                    if response.statusCode == 200 {
-                        guard let jsonObject = data else { return }
-                        
-                        do {
-                            let decodedSearch = try JSONDecoder().decode(IFlightPlanDataModel.self, from: jsonObject)
-                            completion(decodedSearch)
-                        } catch let error {
-                            print("Error decoding: ", error)
-                        }
-                    }
-                }
+                let (data, _) = try await URLSession.shared.data(for: request)
                 
-                dataTask.resume()
+                do {
+                    let decodedSearch = try JSONDecoder().decode(IFlightPlanDataModel.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+                 
             } catch {
                 print("Error: \(error)")
             }
+        return nil
     }
     
-    func getFuelData(completion: @escaping (IFuelDataModel?) -> Void) async  {
+    func getFuelData() async -> IFuelDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_fuel_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -92,28 +82,18 @@ class RemoteService: ObservableObject {
                 // Set the Content-Type header to indicate JSON format
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
-                let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let error = error {
-                        print("Request error: ", error)
-                        return
-                    }
-
-                    guard let response = response as? HTTPURLResponse else { return }
-                    if response.statusCode == 200 {
-                        guard let jsonObject = data else { return }
-                        do {
-                            let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: jsonObject)
-                            completion(decodedSearch)
-                        } catch let error {
-                            print("Error decoding: ", error)
-                        }
-                    }
-                }
+                let (data, _) = try await URLSession.shared.data(for: request)
                 
-                dataTask.resume()
+                do {
+                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
             } catch {
                 print("Error: \(error)")
             }
+        return nil
     }
     
     func updateFuelData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {

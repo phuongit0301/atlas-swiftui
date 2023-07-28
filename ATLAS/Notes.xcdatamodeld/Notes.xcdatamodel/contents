@@ -246,7 +246,9 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
