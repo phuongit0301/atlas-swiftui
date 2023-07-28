@@ -1819,6 +1819,7 @@ class CoreDataModelState: ObservableObject {
                 newObject.id = UUID()
                 var arr = [ProjDelaysListRef]()
                 
+                var order = 1
                 projDelays.delays.forEach { item in
                     let newObjDelay = ProjDelaysListRef(context: self.service.container.viewContext)
                     newObjDelay.id = UUID()
@@ -1826,11 +1827,13 @@ class CoreDataModelState: ObservableObject {
                     newObjDelay.delay = Int(item.delay)
                     newObjDelay.mindelay = Int(item.mindelay)
                     newObjDelay.maxdelay = Int(item.maxdelay)
+                    newObjDelay.order = Int16(order)
                     
                     do {
                         // Persist the data in this managed object context to the underlying store
                         try service.container.viewContext.save()
                         arr.append(newObjDelay)
+                        order += 1
                         print("saved Proj Delays successfully")
                     } catch {
                         // Something went wrong 😭
