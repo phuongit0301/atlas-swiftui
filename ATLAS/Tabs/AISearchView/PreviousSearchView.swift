@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct PreviousSearchView: View {
-    @Environment(\.modelContext) private var context
-    var title = "Previous Searches"
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
-    @Query(sort: \.creationDate, order: .forward)
-    var results: [SDAISearchModel]
+    var title = "Previous Searches"
+//
+//    @Query(sort: \.creationDate, order: .forward)
+//    var results: [AISearchView]
     
     var body: some View {
         NavigationStack {
@@ -21,33 +21,25 @@ struct PreviousSearchView: View {
                 Section {
                     Text(title).font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
                     
-                    ForEach(results, id: \.id) {item in
-                        NavigationLink(destination: AISearchDetailView(item: item)) {
-                            Text(item.question).font(.system(size: 20, weight: .regular)).foregroundColor(.black)
+                    ForEach(coreDataModel.dataAISearch.indices, id: \.self) {index in
+                        NavigationLink(destination: AISearchDetailView(dataAISearch: $coreDataModel.dataAISearch, index: index)) {
+                            Text(coreDataModel.dataAISearch[index].question ?? "").font(.system(size: 20, weight: .regular)).foregroundColor(.black)
                             
                             Spacer().frame(maxWidth: .infinity)
                             
-                            if item.isFavorite {
-                                Button(action: {
-                                    item.isFavorite.toggle()
-                                }, label: {
+                            Button(action: { onUpdate(index) }) {
+                                coreDataModel.dataAISearch[index].isFavorite ?
                                     Image(systemName: "star.fill")
                                         .foregroundColor(Color.theme.azure)
                                         .frame(width: 22, height: 22)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
-                                })
-                                
-                            } else {
-                                Button(action: {
-                                    item.isFavorite.toggle()
-                                }, label: {
+                                :
                                     Image(systemName: "star")
                                         .foregroundColor(Color.theme.azure)
                                         .frame(width: 22, height: 22)
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
-                                })
                             }
                         }.buttonStyle(PlainButtonStyle())
                     }
@@ -56,8 +48,11 @@ struct PreviousSearchView: View {
                 .navigationBarHidden(true)
         }
     }
-}
-
-#Preview {
-    PreviousSearchView()
+    
+    func onUpdate(_ index: Int) {
+        coreDataModel.dataAISearch[index].isFavorite.toggle()
+        coreDataModel.save()
+        coreDataModel.dataAISearch = coreDataModel.readAISearch()
+        coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
+    }
 }

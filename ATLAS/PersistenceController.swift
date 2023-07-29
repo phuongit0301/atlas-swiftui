@@ -147,6 +147,9 @@ class CoreDataModelState: ObservableObject {
     
     @Published var isUpdating: Bool = false
     
+    @Published var dataAISearch: [AISearchList] = []
+    @Published var dataAISearchFavorite: [AISearchList] = []
+    
     func checkAndSyncData() async {
         dataFPEnroute = readEnrouteList()
         
@@ -275,6 +278,10 @@ class CoreDataModelState: ObservableObject {
             // For Fuel
             self.readProjDelays()
             self.readHistoricalDelays()
+            
+            // For AISearch
+            self.dataAISearch = self.readAISearch()
+            self.dataAISearchFavorite = self.readAISearch(target: true)
         }
     }
     
@@ -2732,5 +2739,27 @@ class CoreDataModelState: ObservableObject {
         let date = Calendar.current.date(bySettingHour: hours, minute: mins, second: 0, of: Date()) ?? Date()
         
         return formatter.string(from: date)
+    }
+    
+    func readAISearch(target: Bool = false) -> [AISearchList] {
+        var data: [AISearchList] = []
+        
+        let request: NSFetchRequest<AISearchList> = AISearchList.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        
+        if target {
+            request.predicate = NSPredicate(format: "isFavorite == 1")
+        }
+        
+        do {
+            let response: [AISearchList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch AISearch from Core Data.")
+        }
+        
+        return data
     }
 }

@@ -178,6 +178,8 @@
 		3E870BA52A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E870BA32A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift */; };
 		3E870BAC2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E870BAA2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataClass.swift */; };
 		3E870BAD2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E870BAB2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataProperties.swift */; };
+		3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E870BB32A7485FD0036DE3B /* AISearchList+CoreDataClass.swift */; };
+		3E870BB62A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E870BB42A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift */; };
 		3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD02A4BD52A0091BC08 /* ScratchPadEditForm.swift */; };
 		3EB99CD32A4C16F00091BC08 /* FlightPlanSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */; };
 		3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD42A4C56770091BC08 /* CustomStepper.swift */; };
@@ -185,6 +187,7 @@
 		3EB99CE12A4FC7060091BC08 /* ButtonStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE02A4FC7060091BC08 /* ButtonStepper.swift */; };
 		3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */; };
 		3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */; };
+		3EB9DAD52A7500EB009AEDFB /* AISearchDetailReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD42A7500EB009AEDFB /* AISearchDetailReferenceView.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -429,6 +432,8 @@
 		3E870BA32A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjDelaysListRef+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E870BAA2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistorycalDelaysRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E870BAB2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistorycalDelaysRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E870BB32A7485FD0036DE3B /* AISearchList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AISearchList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E870BB42A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AISearchList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB99CD02A4BD52A0091BC08 /* ScratchPadEditForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadEditForm.swift; sourceTree = "<group>"; };
 		3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanSegmented.swift; sourceTree = "<group>"; };
 		3EB99CD42A4C56770091BC08 /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
@@ -436,6 +441,7 @@
 		3EB99CE02A4FC7060091BC08 /* ButtonStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStepper.swift; sourceTree = "<group>"; };
 		3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalPickerMultiple.swift; sourceTree = "<group>"; };
 		3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStepperMultiple.swift; sourceTree = "<group>"; };
+		3EB9DAD42A7500EB009AEDFB /* AISearchDetailReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AISearchDetailReferenceView.swift; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -555,6 +561,7 @@
 		3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */ = {
 			isa = PBXGroup;
 			children = (
+				3EB9DAD62A7500F4009AEDFB /* AISearch */,
 				3EFA5F0C2A429B2C001ED6CF /* List */,
 				3E3FCBE82A21C8CB008017FA /* Container */,
 				3E3FCBE72A21C8C6008017FA /* Form */,
@@ -573,7 +580,6 @@
 		3E3FCBE82A21C8CB008017FA /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */,
 				3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */,
 				3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */,
 				3E3FCBED2A21C913008017FA /* ArrivalReferenceContainer.swift */,
@@ -811,6 +817,24 @@
 			path = FlightNoteCard;
 			sourceTree = "<group>";
 		};
+		3E870BAE2A7484AC0036DE3B /* AISearch */ = {
+			isa = PBXGroup;
+			children = (
+				3E870BB32A7485FD0036DE3B /* AISearchList+CoreDataClass.swift */,
+				3E870BB42A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift */,
+			);
+			path = AISearch;
+			sourceTree = "<group>";
+		};
+		3EB9DAD62A7500F4009AEDFB /* AISearch */ = {
+			isa = PBXGroup;
+			children = (
+				3EB9DAD42A7500EB009AEDFB /* AISearchDetailReferenceView.swift */,
+				3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */,
+			);
+			path = AISearch;
+			sourceTree = "<group>";
+		};
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
@@ -955,6 +979,7 @@
 		C56AF50F2A565EEB00BD07A1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3E870BAE2A7484AC0036DE3B /* AISearch */,
 				C56AF5122A565FE900BD07A1 /* FlightNotes_Reference */,
 				C56AF5112A565FC900BD07A1 /* FuelPage */,
 				C56AF5102A565F7200BD07A1 /* FlightPlan */,
@@ -1310,6 +1335,7 @@
 				3EFA5EFC2A407204001ED6CF /* NoteForm.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
+				3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */,
 				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3E4A37762A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
@@ -1347,6 +1373,7 @@
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
 				3E4E102A2A6567B90026802B /* ScratchPadSplitForm.swift in Sources */,
+				3EB9DAD52A7500EB009AEDFB /* AISearchDetailReferenceView.swift in Sources */,
 				3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3E4A36A42A570BA800027C61 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E4A36CC2A595B4A00027C61 /* FlightPlanList+CoreDataProperties.swift in Sources */,
@@ -1354,6 +1381,7 @@
 				3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeView.swift in Sources */,
 				3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */,
+				3E870BB62A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift in Sources */,
 				3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */,
 				C580EA282A482F8800E3E8D6 /* FlightPlanMetarTafView.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,

@@ -10,8 +10,9 @@ import SwiftUI
 
 struct AISearchDetailSplitView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
-    @State var item: SDAISearchModel?
+    @State var index = 0
     
     var body: some View {
         VStack(spacing: 0) {
@@ -19,16 +20,15 @@ struct AISearchDetailSplitView: View {
             
             VStack(alignment: .leading) {
                 HStack(spacing: 0) {
-                    Text(item?.question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.trailing)
+                    Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.trailing)
                     
                     Spacer()
                     
                     HStack(spacing: 0) {
-                        if item?.isFavorite == true {
+                        if coreDataModel.dataAISearchFavorite[index].isFavorite == true {
                             Button(action: {
-                                if item?.isFavorite != nil {
-                                    item?.isFavorite.toggle()
-                                }
+                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                coreDataModel.save()
                             }, label: {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(Color.theme.azure)
@@ -38,9 +38,8 @@ struct AISearchDetailSplitView: View {
                             }).padding(.horizontal)
                         } else {
                             Button(action: {
-                                if item?.isFavorite != nil {
-                                    item?.isFavorite.toggle()
-                                }
+                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                coreDataModel.save()
                             }, label: {
                                 Image(systemName: "star")
                                     .foregroundColor(Color.theme.azure)
@@ -59,7 +58,7 @@ struct AISearchDetailSplitView: View {
                 
                 Divider()
                 
-                Text(item?.answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+                Text(coreDataModel.dataAISearchFavorite[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
             }.padding()
             
             Spacer()

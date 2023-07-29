@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-@Model
 class SDAISearchModel {
     var id: UUID = UUID()
     var question: String

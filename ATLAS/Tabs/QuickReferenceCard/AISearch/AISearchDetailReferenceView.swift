@@ -8,17 +8,20 @@
 import Foundation
 import SwiftUI
 
-struct AISearchDetailView: View {
+struct AISearchDetailReferenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
-    @Binding var dataAISearch: [AISearchList]
+    @State var dataAISearch: [AISearchList] = []
     @State var index: Int = 0
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(dataAISearch[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
+                if dataAISearch.count > 0 {
+                    Text(dataAISearch[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
+                }
+                
                 
                 Spacer().frame(maxWidth: .infinity)
                 
@@ -27,8 +30,6 @@ struct AISearchDetailView: View {
                         Button(action: {
                             dataAISearch[index].isFavorite.toggle()
                             coreDataModel.save()
-                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
-                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                         }, label: {
                             Image(systemName: "star.fill")
                                 .foregroundColor(Color.theme.azure)
@@ -40,8 +41,6 @@ struct AISearchDetailView: View {
                         Button(action: {
                             dataAISearch[index].isFavorite.toggle()
                             coreDataModel.save()
-                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
-                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                         }, label: {
                             Image(systemName: "star")
                                 .foregroundColor(Color.theme.azure)
@@ -51,6 +50,8 @@ struct AISearchDetailView: View {
                         }).padding(.horizontal)
                     }
                     Button(action: {
+                        coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                        coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
@@ -60,7 +61,9 @@ struct AISearchDetailView: View {
             
             Divider()
             
-            Text(dataAISearch[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+            if dataAISearch.count > 0 {
+                Text(dataAISearch[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+            }
             
             Spacer()
         }.background(

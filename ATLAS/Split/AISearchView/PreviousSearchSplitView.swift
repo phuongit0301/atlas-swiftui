@@ -6,20 +6,16 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct PreviousSearchSplitView: View {
-    @Environment(\.modelContext) private var context
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     var title = "Previous Searches"
-    
-    @Query(filter: #Predicate { $0.isFavorite }, sort: \.creationDate, order: .forward)
-    var results: [SDAISearchModel]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HeaderViewSplit(isMenu: true)
             
-            if results.count == 0 {
+            if coreDataModel.dataAISearchFavorite.count == 0 {
                 List {
                     Text("No search saved").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.philippineGray2)
                 }.frame(maxHeight: .infinity)
@@ -29,13 +25,16 @@ struct PreviousSearchSplitView: View {
                         Section {
                             Text(title).font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
                             
-                            ForEach(results, id: \.id) {item in
-                                NavigationLink(destination: AISearchDetailSplitView(item: item)) {
-                                    Text(item.question).font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
+                            ForEach(coreDataModel.dataAISearchFavorite.indices, id: \.self) {index in
+                                NavigationLink(destination: AISearchDetailSplitView(index: index)) {
+                                    Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
                                     
-                                    if item.isFavorite {
+                                    if coreDataModel.dataAISearchFavorite[index].isFavorite {
                                         Button(action: {
-                                            item.isFavorite.toggle()
+                                            coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                            coreDataModel.save()
+                                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                                         }, label: {
                                             Image(systemName: "star.fill")
                                                 .foregroundColor(Color.theme.azure)
@@ -46,7 +45,10 @@ struct PreviousSearchSplitView: View {
                                         
                                     } else {
                                         Button(action: {
-                                            item.isFavorite.toggle()
+                                            coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                            coreDataModel.save()
+                                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                                         }, label: {
                                             Image(systemName: "star")
                                                 .foregroundColor(Color.theme.azure)
@@ -66,8 +68,4 @@ struct PreviousSearchSplitView: View {
         }
         
     }
-}
-
-#Preview {
-    PreviousSearchSplitView()
 }

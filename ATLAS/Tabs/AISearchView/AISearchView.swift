@@ -11,6 +11,8 @@ import SwiftUI
 struct AISearchView: View {
     @EnvironmentObject var network: Network
     @Environment(\.modelContext) var context
+    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     
     @State private var like = Status.normal
     @State private var flag: Bool = false
@@ -20,7 +22,7 @@ struct AISearchView: View {
     @State private var txtSearch: String = ""
     
     @State private var message = ""
-    @State private var itemCurrent: SDAISearchModel?
+    @State private var itemCurrent: AISearchList?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -221,6 +223,10 @@ struct AISearchView: View {
                             Button(action: {
                                 if let item = itemCurrent {
                                     item.isFavorite = true
+                                    viewModel.save()
+                                    
+                                    viewModel.dataAISearch = viewModel.readAISearch()
+                                    viewModel.dataAISearchFavorite = viewModel.readAISearch(target: true)
                                 }
                             }) {
                                 Text("Save to Reference")
@@ -258,9 +264,16 @@ struct AISearchView: View {
             
             withAnimation {
                 message = network.dataSearch.result
-                let result = SDAISearchModel(id: UUID(), question: txtSearch, answer: message, isFavorite: false, creationDate: Date())
+                let result = AISearchList(context: persistenceController.container.viewContext)
+                result.id = UUID()
+                result.question = txtSearch
+                result.answer = message
+                result.isFavorite = false
+                result.creationDate = Date()
                 
-                context.insert(object: result)
+                viewModel.save()
+                
+                viewModel.dataAISearch = viewModel.readAISearch()
                 
                 self.itemCurrent = result
             }
