@@ -146,6 +146,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelEnrWX" inverseName="trackMiles" inverseEntity="FuelEnrWX"/>
     </entity>
@@ -187,6 +188,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="flightLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="waypoint" optional="YES" attributeType="String"/>
         <relationship name="flightLevelsRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelFlightLevel" inverseName="flightLevels" inverseEntity="FuelFlightLevel"/>
     </entity>
@@ -201,6 +203,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelReciprocalRwy" inverseName="trackMiles" inverseEntity="FuelReciprocalRwy"/>
     </entity>
@@ -237,6 +240,7 @@
     <entity name="FuelTrackMilesRef" representedClassName="FuelTrackMilesRefList" syncable="YES">
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="phase" optional="YES" attributeType="String"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTrackMiles" inverseName="trackMiles" inverseEntity="FuelTrackMiles"/>

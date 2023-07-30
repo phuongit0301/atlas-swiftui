@@ -28,9 +28,6 @@ struct TrackMilesView: View {
     @State private var selectionOutput: Int = 0
     
     var body: some View {
-        // fetch SwiftData model
-        let trackMilesResponse = fuelPageData.first!.trackMiles
-        
         WidthThresholdReader(widthThreshold: 520) { proxy in
             VStack {
                 HStack {
@@ -53,11 +50,11 @@ struct TrackMilesView: View {
                         
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
-                                trackMilesView(convertedJSON: trackMilesResponse)
+                                trackMilesView(dataTrackMiles: $coreDataModel.dataTrackMiles)
                                 
                             } else {
                                 GridRow {
-                                    trackMilesView(convertedJSON: trackMilesResponse)
+                                    trackMilesView(dataTrackMiles: $coreDataModel.dataTrackMiles)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .fixedSize(horizontal: false, vertical: true)

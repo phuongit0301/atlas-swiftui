@@ -2,7 +2,7 @@
 //  FuelEnrWXRefList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/07/2023.
+//  Created by phuong phan on 30/07/2023.
 //
 //
 
@@ -16,10 +16,11 @@ extension FuelEnrWXRefList {
         return NSFetchRequest<FuelEnrWXRefList>(entityName: "FuelEnrWXRef")
     }
 
-    @NSManaged public var date: String?
     @NSManaged public var condition: String?
-    @NSManaged public var trackMilesDiff: Int
+    @NSManaged public var date: String?
     @NSManaged public var id: UUID?
+    @NSManaged public var trackMilesDiff: Int
+    @NSManaged public var order: Int16
     @NSManaged public var trackMilesRef: FuelEnrWXList?
     
     public var unwrappedDate: String {

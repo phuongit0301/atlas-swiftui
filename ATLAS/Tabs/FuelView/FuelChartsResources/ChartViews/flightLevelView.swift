@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct flightLevelView: View {
-    var convertedJSON: processedFuelDataModel.flightLevelNestedJSON
+    @Binding var dataFlightLevel: [FuelFlightLevelList]
     @SceneStorage("historyTimeframe") private var timeframe: flightLevelTimeframe = .threeFlights
 
     var body: some View {
@@ -34,19 +34,19 @@ struct flightLevelView: View {
                     .pickerStyle(.segmented)
                     .padding(.bottom, 10)
                     
-                    Text("Average actual minus plan flight level")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    if (aveDiff < 0) {
-                        Text("\(aveDiff.formatted()) ft")
-                            .font(.headline)
-                    } else {
-                        Text("+\(aveDiff.formatted()) ft")
-                            .font(.headline)
-                    }
+//                    Text("Average actual minus plan flight level")
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
+//                    if (aveDiff < 0) {
+//                        Text("\(aveDiff.formatted()) ft")
+//                            .font(.headline)
+//                    } else {
+//                        Text("+\(aveDiff.formatted()) ft")
+//                            .font(.headline)
+//                    }
                                         
-                    flightLevelChart(flightLevels: FlightLevel)
-                        .frame(minHeight: 300)
+//                    flightLevelChart(flightLevels: FlightLevel)
+//                        .frame(minHeight: 300)
                 }
                 .padding()
             }
@@ -55,37 +55,37 @@ struct flightLevelView: View {
         .background()
     }
     // switcher by period
-    var FlightLevel: [FlightLevel] {
-        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
-
-        switch timeframe {
-        case .threeFlights:
-            let threeFlights = fetchedData.flights3
-            return threeFlights!.flightLevels
-        case .week:
-            let week = fetchedData.week1
-            return week!.flightLevels
-        case .months:
-            let months = fetchedData.months3
-            return months!.flightLevels
-        }
-    }
-
-    var aveDiff: Int{
-        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
-
-        switch timeframe {
-        case .threeFlights:
-            let threeFlights = fetchedData.flights3
-            return threeFlights!.aveDiff
-        case .week:
-            let week = fetchedData.week1
-            return week!.aveDiff
-        case .months:
-            let months = fetchedData.months3
-            return months!.aveDiff
-        }
-    }
+//    var FlightLevel: [FlightLevel] {
+//        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
+//
+//        switch timeframe {
+//        case .threeFlights:
+//            let threeFlights = fetchedData.flights3
+//            return threeFlights!.flightLevels
+//        case .week:
+//            let week = fetchedData.week1
+//            return week!.flightLevels
+//        case .months:
+//            let months = fetchedData.months3
+//            return months!.flightLevels
+//        }
+//    }
+//
+//    var aveDiff: Int{
+//        let fetchedData: processedFuelDataModel.flightLevelNestedJSON = convertedJSON
+//
+//        switch timeframe {
+//        case .threeFlights:
+//            let threeFlights = fetchedData.flights3
+//            return threeFlights!.aveDiff
+//        case .week:
+//            let week = fetchedData.week1
+//            return week!.aveDiff
+//        case .months:
+//            let months = fetchedData.months3
+//            return months!.aveDiff
+//        }
+//    }
 }
 
 struct FlightLevelJSON: Codable {

@@ -20,18 +20,17 @@ struct FuelView: View {
                     VStack {
                         switch selectedTab {
                             case 0:
-//                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
                                 ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
                             case 1:
                                 TaxiTimeView().tag(selectedTab).ignoresSafeArea()
-//                            case 2:
-//                                TrackMilesView().tag(selectedTab).ignoresSafeArea()
-//                            case 3:
-//                                EnrouteWeatherView().tag(selectedTab).ignoresSafeArea()
-//                            case 4:
-//                                FlightLevelView().tag(selectedTab).ignoresSafeArea()
-//                            case 5:
-//                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
+                            case 2:
+                                TrackMilesView().tag(selectedTab).ignoresSafeArea()
+                            case 3:
+                                EnrouteWeatherView().tag(selectedTab).ignoresSafeArea()
+                            case 4:
+                                FlightLevelView().tag(selectedTab).ignoresSafeArea()
+                            case 5:
+                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
                             default:
                                 ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
                             }

@@ -2,7 +2,7 @@
 //  FuelFlightLevelRefList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/07/2023.
+//  Created by phuong phan on 30/07/2023.
 //
 //
 
@@ -16,10 +16,11 @@ extension FuelFlightLevelRefList {
         return NSFetchRequest<FuelFlightLevelRefList>(entityName: "FuelFlightLevelRef")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var waypoint: String?
     @NSManaged public var condition: String?
     @NSManaged public var flightLevel: Int
+    @NSManaged public var id: UUID?
+    @NSManaged public var waypoint: String?
+    @NSManaged public var order: Int16
     @NSManaged public var flightLevelsRef: FuelFlightLevelList?
     
     public var unwrappedWaypoint: String {

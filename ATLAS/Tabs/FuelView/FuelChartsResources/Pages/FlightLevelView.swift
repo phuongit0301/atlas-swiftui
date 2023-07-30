@@ -10,17 +10,12 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
-import SwiftData
 
 struct FlightLevelView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @EnvironmentObject var coreDataModel: CoreDataModelState
 #endif
-    // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
-    
     @State private var selectedFlightLevel000: Int = 0
     @State private var selectedFlightLevel00: Int = 0
     @State private var selectedFlightLevelPrint: String = "0ft"
@@ -33,9 +28,6 @@ struct FlightLevelView: View {
     @State private var selectionOutput: Int = 0
     
     var body: some View {
-        // fetch SwiftData model
-        let flightLevelResponse = fuelPageData.first!.flightLevel
-        
         WidthThresholdReader(widthThreshold: 520) { proxy in
             VStack {
                 HStack {
@@ -57,11 +49,11 @@ struct FlightLevelView: View {
                     VStack(spacing: 16) {
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
-                                flightLevelView(convertedJSON: flightLevelResponse)
+                                flightLevelView(dataFlightLevel: $coreDataModel.dataFlightLevel)
                                 
                             } else {
                                 GridRow {
-                                    flightLevelView(convertedJSON: flightLevelResponse)
+                                    flightLevelView(dataFlightLevel: $coreDataModel.dataFlightLevel)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .fixedSize(horizontal: false, vertical: true)

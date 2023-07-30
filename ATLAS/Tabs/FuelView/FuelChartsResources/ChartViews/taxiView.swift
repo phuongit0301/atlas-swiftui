@@ -102,19 +102,16 @@ struct taxiView: View {
     func funcTaxiTimes() -> [TaxiTimes] {
         let fetchedTimes = dataFilter()
         var temp = [TaxiTimes]()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
         
         switch timeframe {
             case .threeFlights:
-            
-            if let threeFlights = fetchedTimes["flights3"] {
-                let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
-                
-                items.forEach {item in
-                    temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
+                if let threeFlights = fetchedTimes["flights3"] {
+                    let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    
+                    items.forEach {item in
+                        temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
+                    }
                 }
-            }
                 return temp
             case .week:
                 if let week = fetchedTimes["weeks"] {

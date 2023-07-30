@@ -10,7 +10,6 @@ import SwiftUI
 
 struct historicalDelaysView: View {
     @Binding var dataHistoricalDelays: [HistoricalDelaysList]
-//    var convertedJSON: processedFuelDataModel.arrivalDelaysNestedJSON
     @SceneStorage("historyTimeframe") private var timeframe: delayTimeframe = .days
     @State var delays: [ArrivalDelays]?
     

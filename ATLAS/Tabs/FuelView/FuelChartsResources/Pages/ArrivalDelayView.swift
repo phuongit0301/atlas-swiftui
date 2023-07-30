@@ -25,8 +25,6 @@ struct ArrivalDelayView: View {
     
     
     var body: some View {
-        // fetch SwiftData model
-        
         WidthThresholdReader(widthThreshold: 800) { proxy in
             VStack {
                 HStack {

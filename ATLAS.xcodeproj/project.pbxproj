@@ -102,18 +102,10 @@
 		3E4A374E2A5CC85C00027C61 /* MetarTafDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A374C2A5CC85C00027C61 /* MetarTafDataList+CoreDataProperties.swift */; };
 		3E4A375B2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */; };
 		3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */; };
-		3E4A375D2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */; };
-		3E4A375E2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A375A2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift */; };
-		3E4A37632A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */; };
-		3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */; };
 		3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */; };
 		3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */; };
 		3E4A37732A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A376F2A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift */; };
 		3E4A37742A5CD18C00027C61 /* FuelFlightLevelList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37702A5CD18C00027C61 /* FuelFlightLevelList+CoreDataProperties.swift */; };
-		3E4A37752A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37712A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataClass.swift */; };
-		3E4A37762A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37722A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift */; };
-		3E4A377B2A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37772A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataClass.swift */; };
-		3E4A377C2A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37782A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataProperties.swift */; };
 		3E4A377D2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37792A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataClass.swift */; };
 		3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A377A2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift */; };
 		3E4E10122A62518B0026802B /* NotamsDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10102A62518B0026802B /* NotamsDataList+CoreDataClass.swift */; };
@@ -188,6 +180,14 @@
 		3EB9DAD52A7500EB009AEDFB /* AISearchDetailReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD42A7500EB009AEDFB /* AISearchDetailReferenceView.swift */; };
 		3EB9DAD92A750F5D009AEDFB /* FuelTaxiRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */; };
 		3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */; };
+		3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */; };
+		3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */; };
+		3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADF2A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift */; };
+		3EB9DAE22A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */; };
+		3EB9DAE52A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE32A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift */; };
+		3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE42A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift */; };
+		3EB9DAE92A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE72A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift */; };
+		3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -355,18 +355,10 @@
 		3E4A374C2A5CC85C00027C61 /* MetarTafDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MetarTafDataList+CoreDataProperties.swift"; path = "CoreData/FuelPage/MetarTafDataList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E4A375A2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A376F2A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A37702A5CD18C00027C61 /* FuelFlightLevelList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4A37712A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E4A37722A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4A37772A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E4A37782A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A37792A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A377A2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4E10102A62518B0026802B /* NotamsDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -442,6 +434,14 @@
 		3EB9DAD42A7500EB009AEDFB /* AISearchDetailReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AISearchDetailReferenceView.swift; sourceTree = "<group>"; };
 		3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB9DADF2A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB9DAE32A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB9DAE42A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EB9DAE72A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -1043,22 +1043,22 @@
 				3E870BA32A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift */,
 				3E870B9E2A73647F0036DE3B /* ProjDelaysList+CoreDataClass.swift */,
 				3E870B9F2A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift */,
-				3E4A37772A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataClass.swift */,
-				3E4A37782A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataProperties.swift */,
+				3EB9DAE72A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift */,
+				3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */,
 				3E4A37792A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataClass.swift */,
 				3E4A377A2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift */,
+				3EB9DAE32A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift */,
+				3EB9DAE42A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift */,
 				3E4A376F2A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift */,
 				3E4A37702A5CD18C00027C61 /* FuelFlightLevelList+CoreDataProperties.swift */,
-				3E4A37712A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataClass.swift */,
-				3E4A37722A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift */,
-				3E4A375F2A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift */,
-				3E4A37602A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift */,
+				3EB9DADF2A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift */,
+				3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */,
 				3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */,
 				3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */,
+				3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */,
+				3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */,
 				3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */,
 				3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */,
-				3E4A37592A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift */,
-				3E4A375A2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift */,
 				3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */,
 				3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */,
 				3E4A37352A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift */,
@@ -1292,9 +1292,9 @@
 				3E870BAC2A7418490036DE3B /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
-				3E4A377B2A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */,
 				3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */,
 				3E4A36BF2A571C7500027C61 /* NotamDetailView.swift in Sources */,
+				3EB9DAE22A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
@@ -1305,18 +1305,17 @@
 				3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */,
 				3E4A36A72A570BA800027C61 /* FuelExtraList+CoreDataClass.swift in Sources */,
 				C52063F72A43D3240041580E /* FlightPlanEnrView.swift in Sources */,
-				3E4A37632A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
 				3E4A36A22A570BA800027C61 /* EnrouteList+CoreDataClass.swift in Sources */,
 				3E4E10282A6567910026802B /* ItemListScratchPadSplit.swift in Sources */,
 				C52063F52A4356290041580E /* FlightPlanDepView.swift in Sources */,
 				3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */,
-				3E4A37752A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
+				3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
 				3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */,
 				C580EA222A481B7D00E3E8D6 /* FlightPlanArrView.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
@@ -1334,11 +1333,11 @@
 				3E4A36992A570BA800027C61 /* PerfDataList+CoreDataClass.swift in Sources */,
 				3EFA5EFC2A407204001ED6CF /* NoteForm.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
+				3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */,
 				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
-				3E4A37762A5CD18C00027C61 /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
 				3E4A368E2A570BA800027C61 /* FuelTableList+CoreDataProperties.swift in Sources */,
@@ -1361,6 +1360,7 @@
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E4A36A62A570BA800027C61 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
+				3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
@@ -1371,10 +1371,10 @@
 				3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */,
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
+				3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
 				3E4E102A2A6567B90026802B /* ScratchPadSplitForm.swift in Sources */,
 				3EB9DAD52A7500EB009AEDFB /* AISearchDetailReferenceView.swift in Sources */,
-				3E4A37642A5CCDFE00027C61 /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3E4A36A42A570BA800027C61 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E4A36CC2A595B4A00027C61 /* FlightPlanList+CoreDataProperties.swift in Sources */,
 				3E3FCBE12A21C72B008017FA /* EnrouteCardContainer.swift in Sources */,
@@ -1387,7 +1387,6 @@
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
 				3E4A368F2A570BA800027C61 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
 				3E3FCBF02A21C924008017FA /* DepatureReferenceContainer.swift in Sources */,
-				3E4A377C2A5CD3C200027C61 /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */,
 				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3E4A36D02A5A4A6400027C61 /* ArrivalATISList+CoreDataProperties.swift in Sources */,
@@ -1414,6 +1413,7 @@
 				3EFA5F6D2A4A833C001ED6CF /* ItemListScratchPad.swift in Sources */,
 				3E4E10122A62518B0026802B /* NotamsDataList+CoreDataClass.swift in Sources */,
 				3EB99CD32A4C16F00091BC08 /* FlightPlanSegmented.swift in Sources */,
+				3EB9DAE92A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */,
 				3E870BA02A73647F0036DE3B /* ProjDelaysList+CoreDataClass.swift in Sources */,
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
 				3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */,
@@ -1433,17 +1433,16 @@
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E4E10342A6A07460026802B /* ScratchPadList+CoreDataProperties.swift in Sources */,
 				3E4A366C2A570B9A00027C61 /* NoteList+CoreDataProperties.swift in Sources */,
-				3E4A375D2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
 				3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */,
 				3E4E10132A62518B0026802B /* NotamsDataList+CoreDataProperties.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
 				3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */,
+				3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
 				3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */,
 				3E3FCC452A270851008017FA /* enrWXChart.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
-				3E4A375E2A5CC9A700027C61 /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3E4A374D2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
@@ -1481,6 +1480,7 @@
 				3E4E10332A6A07460026802B /* ScratchPadList+CoreDataClass.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
 				3E4A36A32A570BA800027C61 /* PerfWeightList+CoreDataClass.swift in Sources */,
+				3EB9DAE52A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */,
 				3E870BA52A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift in Sources */,
 				3EECB8572A6E1BA6009D4971 /* SlideOverModel.swift in Sources */,
 				3E4A36922A570BA800027C61 /* FuelDataList+CoreDataProperties.swift in Sources */,

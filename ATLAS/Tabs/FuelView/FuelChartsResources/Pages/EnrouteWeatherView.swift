@@ -10,17 +10,12 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
-import SwiftData
 
 struct EnrouteWeatherView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @EnvironmentObject var coreDataModel: CoreDataModelState
 #endif
-    // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
-    
     @State private var selection: Int = 0
     @State private var target: String = "EnrouteWeather"
     @State private var selectedValue: Int = 0
@@ -28,9 +23,6 @@ struct EnrouteWeatherView: View {
     @State private var selectionOutput: Int = 0
     
     var body: some View {
-        // fetch SwiftData model
-        let enrWXResponse = fuelPageData.first!.enrWX
-        
         WidthThresholdReader(widthThreshold: 520) { proxy in
             VStack {
                 HStack {
@@ -52,10 +44,10 @@ struct EnrouteWeatherView: View {
                     VStack(spacing: 16) {
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
-                                enrWXView(convertedJSON: enrWXResponse)
+                                enrWXView(dataEnrWX: $coreDataModel.dataEnrWX)
                             } else {
                                 GridRow {
-                                    enrWXView(convertedJSON: enrWXResponse)
+                                    enrWXView(dataEnrWX: $coreDataModel.dataEnrWX)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .fixedSize(horizontal: false, vertical: true)
