@@ -223,6 +223,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="taxiTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="timesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTaxi" inverseName="times" inverseEntity="FuelTaxi"/>
     </entity>

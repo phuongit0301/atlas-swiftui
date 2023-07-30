@@ -11,17 +11,12 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
-import SwiftData
 
 struct TaxiTimeView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @EnvironmentObject var coreDataModel: CoreDataModelState
 #endif
-    // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
-    
     @State private var selection: Int = 0
     @State private var target: String = "IncludedTaxi"
     @State private var selectedValue: Int = 0
@@ -29,9 +24,6 @@ struct TaxiTimeView: View {
     @State private var selectionOutput: Int = 0
     
     var body: some View {
-        // fetch SwiftData model
-        let taxiResponse = fuelPageData.first!.taxi
-        
         WidthThresholdReader(widthThreshold: 520) { proxy in
             VStack {
                 HStack {
@@ -52,11 +44,11 @@ struct TaxiTimeView: View {
                     VStack(spacing: 16) {
                         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
                             if proxy.isCompact {
-                                taxiView(convertedJSON: taxiResponse)
+                                taxiView(dataProjTaxi: $coreDataModel.dataProjTaxi)
                                 
                             } else {
                                 GridRow {
-                                    taxiView(convertedJSON: taxiResponse)
+                                    taxiView(dataProjTaxi: $coreDataModel.dataProjTaxi)
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .fixedSize(horizontal: false, vertical: true)

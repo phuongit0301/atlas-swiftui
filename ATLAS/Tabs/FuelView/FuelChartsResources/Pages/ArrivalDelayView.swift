@@ -10,7 +10,6 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
-import SwiftData
 
 struct ArrivalDelayView: View {
 #if os(iOS)
@@ -18,10 +17,6 @@ struct ArrivalDelayView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
 #endif
-    // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
-    
     @State private var selection: Int = 0
     @State private var target: String = "ArrDelays"
     @State private var selectedValue: Int = 0
@@ -31,8 +26,6 @@ struct ArrivalDelayView: View {
     
     var body: some View {
         // fetch SwiftData model
-//        let projDelaysResponse = fuelPageData.first!.projDelays
-//        let historicalDelaysResponse = fuelPageData.first!.historicalDelays
         
         WidthThresholdReader(widthThreshold: 800) { proxy in
             VStack {

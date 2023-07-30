@@ -21,9 +21,9 @@ struct FuelView: View {
                         switch selectedTab {
                             case 0:
 //                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
-                            ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
-//                            case 1:
-//                                TaxiTimeView().tag(selectedTab).ignoresSafeArea()
+                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
+                            case 1:
+                                TaxiTimeView().tag(selectedTab).ignoresSafeArea()
 //                            case 2:
 //                                TrackMilesView().tag(selectedTab).ignoresSafeArea()
 //                            case 3:
@@ -33,7 +33,7 @@ struct FuelView: View {
 //                            case 5:
 //                                ReciprocalRunwayView().tag(selectedTab).ignoresSafeArea()
                             default:
-                                projArrivalDelaysView(dataProjDelays: $coreDataModel.dataProjDelays).tag(selectedTab).ignoresSafeArea()
+                                ArrivalDelayView().tag(selectedTab).ignoresSafeArea()
                             }
                         Spacer()
                         FuelSegmented(preselected: $selectedTab, options: IFuelTabs, geoWidth: proxy.size.width)

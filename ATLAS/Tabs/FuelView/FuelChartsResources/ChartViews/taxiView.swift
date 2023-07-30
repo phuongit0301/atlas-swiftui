@@ -9,8 +9,10 @@ import Foundation
 import SwiftUI
 
 struct taxiView: View {
-    var convertedJSON: processedFuelDataModel.taxiNestedJSON
+    @Binding var dataProjTaxi: [FuelTaxiList]
     @SceneStorage("historyTimeframe") private var timeframe: taxiTimeframe = .threeFlights
+    
+    @State var taxiTimes: [TaxiTimes]?
 
     var body: some View {
         ScrollView {
@@ -41,22 +43,49 @@ struct taxiView: View {
                         .font(.headline)
                     
                     if (chartType == "bar") {
-                        taxiChartBar(taxiTimes: taxiTimes)
+                        taxiChartBar(taxiTimes: taxiTimes ?? [])
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     }
                     else {
-                        taxiChartLine(taxiTimes: taxiTimes)
+                        taxiChartLine(taxiTimes: taxiTimes ?? [])
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     }
                     
                 }
                 .padding()
+                .onAppear {
+                    handleData()
+                }.onChange(of: timeframe) { _ in
+                    handleData()
+                }
             }
         }
         .navigationTitle("Taxi")
         .background()
+    }
+    
+    func handleData() {
+        taxiTimes = funcTaxiTimes()
+    }
+    
+    func dataFilter() -> [String: FuelTaxiList?] {
+        var flights3: FuelTaxiList?
+        var weeks: FuelTaxiList?
+        var months: FuelTaxiList?
+        
+        dataProjTaxi.forEach { item in
+            if item.type == "flights3" {
+                flights3 = item
+            } else if item.type == "week1" {
+                weeks = item
+            } else if item.type == "months3" {
+                months = item
+            }
+        }
+        
+        return ["flights3": flights3, "weeks": weeks, "months": months]
     }
     // switcher by period
     var chartType: String {
@@ -70,64 +99,107 @@ struct taxiView: View {
         }
     }
     
-    var taxiTimes: [TaxiTimes] {
-        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
-
+    func funcTaxiTimes() -> [TaxiTimes] {
+        let fetchedTimes = dataFilter()
+        var temp = [TaxiTimes]()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
         switch timeframe {
-        case .threeFlights:
-            let threeFlights = fetchedTimes.flights3
-            return threeFlights!.times
-        case .week:
-            let week = fetchedTimes.week1
-            return week!.times
-        case .months:
-            let months = fetchedTimes.months3
-            return months!.times
+            case .threeFlights:
+            
+            if let threeFlights = fetchedTimes["flights3"] {
+                let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                
+                items.forEach {item in
+                    temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
+                }
+            }
+                return temp
+            case .week:
+                if let week = fetchedTimes["weeks"] {
+                    let items = (week?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    
+                    items.forEach {item in
+                        temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
+                    }
+                }
+                return temp
+            case .months:
+                if let months = fetchedTimes["months"] {
+                    let items = (months?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    
+                    items.forEach {item in
+                        temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
+                    }
+                }
+                return temp
         }
     }
+    
     var aveTime: Int {
-        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
+        let fetchedTimes = dataFilter()
 
         switch timeframe {
-        case .threeFlights:
-            let threeFlights = fetchedTimes.flights3
-            return threeFlights!.aveTime
-        case .week:
-            let week = fetchedTimes.week1
-            return week!.aveTime
-        case .months:
-            let months = fetchedTimes.months3
-            return months!.aveTime
-        }
+            case .threeFlights:
+                if let threeFlights = fetchedTimes["flights3"] as? FuelTaxiList {
+                    return threeFlights.aveTime
+                }
+                return 0
+            case .week:
+                if let weeks = fetchedTimes["weeks"] as? FuelTaxiList {
+                    return weeks.aveTime
+                }
+                return 0
+            case .months:
+                if let months = fetchedTimes["months"] as? FuelTaxiList {
+                    return months.aveTime
+                }
+                return 0
+            }
     }
+    
     var aveDiff: Int{
-        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
+        let fetchedTimes = dataFilter()
 
         switch timeframe {
-        case .threeFlights:
-            let threeFlights = fetchedTimes.flights3
-            return threeFlights!.aveDiff
+            case .threeFlights:
+                if let threeFlights = fetchedTimes["flights3"] as? FuelTaxiList {
+                    return threeFlights.aveDiff
+                }
+                return 0
         case .week:
-            let week = fetchedTimes.week1
-            return week!.aveDiff
+            if let weeks = fetchedTimes["weeks"] as? FuelTaxiList {
+                return weeks.aveDiff
+            }
+            return 0
         case .months:
-            let months = fetchedTimes.months3
-            return months!.aveDiff
+            if let months = fetchedTimes["months"] as? FuelTaxiList {
+                return months.aveDiff
+            }
+            return 0
         }
     }
-    var ymax: Int{
-        let fetchedTimes: processedFuelDataModel.taxiNestedJSON = convertedJSON
+    
+    var ymax: Int {
+        let fetchedTimes = dataFilter()
 
         switch timeframe {
         case .threeFlights:
-            let threeFlights = fetchedTimes.flights3
-            return threeFlights!.ymax
+            if let threeFlights = fetchedTimes["flights3"] as? FuelTaxiList {
+                return threeFlights.ymax
+            }
+            return 0
         case .week:
-            let week = fetchedTimes.week1
-            return week!.ymax
+            if let weeks = fetchedTimes["weeks"] as? FuelTaxiList {
+                return weeks.ymax
+            }
+            return 0
         case .months:
-            let months = fetchedTimes.months3
-            return months!.ymax
+            if let months = fetchedTimes["months"] as? FuelTaxiList {
+                return months.ymax
+            }
+            return 0
         }
     }
 }
