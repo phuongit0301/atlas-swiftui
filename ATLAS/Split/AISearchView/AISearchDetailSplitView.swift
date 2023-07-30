@@ -20,35 +20,21 @@ struct AISearchDetailSplitView: View {
             
             VStack(alignment: .leading) {
                 HStack(spacing: 0) {
-                    Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.trailing)
+                    if coreDataModel.dataAISearchFavorite.count > 0 {
+                        Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.trailing)
+                    }
                     
-                    Spacer()
+                    Spacer().frame(maxWidth: .infinity)
                     
                     HStack(spacing: 0) {
-                        if coreDataModel.dataAISearchFavorite[index].isFavorite == true {
-                            Button(action: {
-                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
-                                coreDataModel.save()
-                            }, label: {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(Color.theme.azure)
-                                    .frame(width: 22, height: 22)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }).padding(.horizontal)
-                        } else {
-                            Button(action: {
-                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
-                                coreDataModel.save()
-                            }, label: {
-                                Image(systemName: "star")
-                                    .foregroundColor(Color.theme.azure)
-                                    .frame(width: 22, height: 22)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }).padding(.horizontal)
+                        if coreDataModel.dataAISearchFavorite.count > 0 {
+                            AIButton(isFavorite: $coreDataModel.dataAISearchFavorite[index].isFavorite)
                         }
+                        
                         Button(action: {
+                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
+                            index = 0
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
@@ -58,7 +44,9 @@ struct AISearchDetailSplitView: View {
                 
                 Divider()
                 
-                Text(coreDataModel.dataAISearchFavorite[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+                if coreDataModel.dataAISearchFavorite.count > 0 {
+                    Text(coreDataModel.dataAISearchFavorite[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+                }
             }.padding()
             
             Spacer()

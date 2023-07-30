@@ -3731,6 +3731,21 @@
                   endingLineNumber = "82"
                   offsetFromSymbolStart = "220">
                </Location>
+               <Location
+                  uuid = "093107F2-A766-4D3B-9AAF-97893F35CBF4 - 5b37338f755911e6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Swift.Int) -&gt; () in ATLAS.ArrivalDelayView.body.getter : some"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FuelView/FuelChartsResources/Pages/ArrivalDelayView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "220">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -4973,8 +4988,8 @@
             filePath = "ATLAS/Tabs/QuickReferenceCard/AISearch/PreviousSearchReferenceView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -5376,7 +5391,53 @@
                   endingLineNumber = "130"
                   offsetFromSymbolStart = "48">
                </Location>
+               <Location
+                  uuid = "A0593DEB-E463-409D-9457-D6EF14785004 - 2a664b86114f762d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.taxiView.funcTaxiTimes() -&gt; Swift.Array&lt;ATLAS.TaxiTimes&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FuelView/FuelChartsResources/ChartViews/taxiView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "1992">
+               </Location>
+               <Location
+                  uuid = "A0593DEB-E463-409D-9457-D6EF14785004 - cc21d706e886418a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (ATLAS.FuelTaxiRefList, ATLAS.FuelTaxiRefList) -&gt; Swift.Bool in ATLAS.taxiView.funcTaxiTimes() -&gt; Swift.Array&lt;ATLAS.TaxiTimes&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Tabs/FuelView/FuelChartsResources/ChartViews/taxiView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "48">
+               </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D22192E0-899D-4BAC-9512-9530D0E0671D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Tabs/QuickReferenceCard/AISearch/AISearchDetailReferenceView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

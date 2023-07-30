@@ -27,35 +27,39 @@ struct PreviousSearchSplitView: View {
                             
                             ForEach(coreDataModel.dataAISearchFavorite.indices, id: \.self) {index in
                                 NavigationLink(destination: AISearchDetailSplitView(index: index)) {
-                                    Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
-                                    
-                                    if coreDataModel.dataAISearchFavorite[index].isFavorite {
-                                        Button(action: {
-                                            coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
-                                            coreDataModel.save()
-                                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
-                                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
-                                        }, label: {
-                                            Image(systemName: "star.fill")
-                                                .foregroundColor(Color.theme.azure)
-                                                .frame(width: 22, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        })
+                                    HStack {
+                                        Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .regular)).foregroundColor(.black).padding(.trailing)
                                         
-                                    } else {
-                                        Button(action: {
-                                            coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
-                                            coreDataModel.save()
-                                            coreDataModel.dataAISearch = coreDataModel.readAISearch()
-                                            coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
-                                        }, label: {
-                                            Image(systemName: "star")
-                                                .foregroundColor(Color.theme.azure)
-                                                .frame(width: 22, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        })
+                                        Spacer()
+                                        
+                                        if coreDataModel.dataAISearchFavorite[index].isFavorite {
+                                            Button(action: {
+                                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                                coreDataModel.save()
+                                                coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                                                coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
+                                            }, label: {
+                                                Image(systemName: "star.fill")
+                                                    .foregroundColor(Color.theme.azure)
+                                                    .frame(width: 22, height: 22)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                            })
+                                            
+                                        } else {
+                                            Button(action: {
+                                                coreDataModel.dataAISearchFavorite[index].isFavorite.toggle()
+                                                coreDataModel.save()
+                                                coreDataModel.dataAISearch = coreDataModel.readAISearch()
+                                                coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
+                                            }, label: {
+                                                Image(systemName: "star")
+                                                    .foregroundColor(Color.theme.azure)
+                                                    .frame(width: 22, height: 22)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                            })
+                                        }
                                     }
                                 }.buttonStyle(PlainButtonStyle())
                             }

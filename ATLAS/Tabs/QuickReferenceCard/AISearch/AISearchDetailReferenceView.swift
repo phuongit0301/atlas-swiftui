@@ -12,46 +12,27 @@ struct AISearchDetailReferenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
-    @State var dataAISearch: [AISearchList] = []
     @State var index: Int = 0
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if dataAISearch.count > 0 {
-                    Text(dataAISearch[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
+                if coreDataModel.dataAISearchFavorite.count > 0 {
+                    Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.vertical)
                 }
                 
                 
                 Spacer().frame(maxWidth: .infinity)
                 
                 HStack {
-                    if dataAISearch[index].isFavorite == true {
-                        Button(action: {
-                            dataAISearch[index].isFavorite.toggle()
-                            coreDataModel.save()
-                        }, label: {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(Color.theme.azure)
-                                .frame(width: 22, height: 22)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }).padding(.horizontal)
-                    } else {
-                        Button(action: {
-                            dataAISearch[index].isFavorite.toggle()
-                            coreDataModel.save()
-                        }, label: {
-                            Image(systemName: "star")
-                                .foregroundColor(Color.theme.azure)
-                                .frame(width: 22, height: 22)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }).padding(.horizontal)
+                    if coreDataModel.dataAISearchFavorite.count > 0 {
+                        AIButton(isFavorite: $coreDataModel.dataAISearchFavorite[index].isFavorite)
                     }
+
                     Button(action: {
                         coreDataModel.dataAISearch = coreDataModel.readAISearch()
                         coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
+                        index = 0
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
@@ -61,8 +42,8 @@ struct AISearchDetailReferenceView: View {
             
             Divider()
             
-            if dataAISearch.count > 0 {
-                Text(dataAISearch[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
+            if coreDataModel.dataAISearchFavorite.count > 0 {
+                Text(coreDataModel.dataAISearchFavorite[index].answer ?? "").font(.system(size: 17, weight: .regular)).foregroundColor(.black).padding(.vertical)
             }
             
             Spacer()
@@ -73,5 +54,30 @@ struct AISearchDetailReferenceView: View {
         .padding()
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
+    }
+}
+
+struct AIButton: View {
+    @Binding var isFavorite: Bool
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    
+    var body: some View {
+        Button(action: {
+            isFavorite.toggle()
+            coreDataModel.save()
+        }, label: {
+            isFavorite ?
+                Image(systemName: "star.fill")
+                    .foregroundColor(Color.theme.azure)
+                    .frame(width: 22, height: 22)
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+            :
+                Image(systemName: "star")
+                    .foregroundColor(Color.theme.azure)
+                    .frame(width: 22, height: 22)
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+        }).padding(.horizontal)
     }
 }
