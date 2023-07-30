@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct ATLASApp: App {
@@ -65,7 +64,6 @@ struct ATLASApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
         }
-        .modelContainer(for: [FuelPageData.self])
         .handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftData
 
 // class that stores the API response
 class GlobalResponse: ObservableObject {
@@ -529,23 +528,23 @@ func convertAllresponseFromAPI(jsonString: String) -> processedFuelDataModel {
 }
 
 // SwiftData class which relies on the processedFuelDataModel struct
-@Model
-class FuelPageData {
-    var projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON
-    var historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON
-    var taxi: processedFuelDataModel.taxiNestedJSON
-    var trackMiles: processedFuelDataModel.trackMilesNestedJSON
-    var enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON
-    var flightLevel: processedFuelDataModel.flightLevelNestedJSON
-    var reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON
-    
-    init(projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON, historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON, taxi: processedFuelDataModel.taxiNestedJSON, trackMiles: processedFuelDataModel.trackMilesNestedJSON, enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON, flightLevel: processedFuelDataModel.flightLevelNestedJSON, reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON) {
-        self.projDelays = projDelays
-        self.historicalDelays = historicalDelays
-        self.taxi = taxi
-        self.trackMiles = trackMiles
-        self.enrWX = enrWX
-        self.flightLevel = flightLevel
-        self.reciprocalRwy = reciprocalRwy
-    }
-}
+//@Model
+//class FuelPageData {
+//    var projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON
+//    var historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON
+//    var taxi: processedFuelDataModel.taxiNestedJSON
+//    var trackMiles: processedFuelDataModel.trackMilesNestedJSON
+//    var enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON
+//    var flightLevel: processedFuelDataModel.flightLevelNestedJSON
+//    var reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON
+//    
+//    init(projDelays: processedFuelDataModel.projArrivalDelaysNestedJSON, historicalDelays: processedFuelDataModel.arrivalDelaysNestedJSON, taxi: processedFuelDataModel.taxiNestedJSON, trackMiles: processedFuelDataModel.trackMilesNestedJSON, enrWX: processedFuelDataModel.enrWXTrackMilesNestedJSON, flightLevel: processedFuelDataModel.flightLevelNestedJSON, reciprocalRwy: processedFuelDataModel.reciprocalRwyNestedJSON) {
+//        self.projDelays = projDelays
+//        self.historicalDelays = historicalDelays
+//        self.taxi = taxi
+//        self.trackMiles = trackMiles
+//        self.enrWX = enrWX
+//        self.flightLevel = flightLevel
+//        self.reciprocalRwy = reciprocalRwy
+//    }
+//}

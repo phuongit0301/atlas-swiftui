@@ -10,7 +10,6 @@ import SwiftUI
 
 struct FuelView: View {
     // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
     @State private var selectedTab: Int = 0
     @EnvironmentObject var coreDataModel: CoreDataModelState
     

@@ -10,7 +10,6 @@ import UIKit
 import MobileCoreServices
 import QuickLookThumbnailing
 import Foundation
-import SwiftData
 
 struct TrackMilesView: View {
 #if os(iOS)
@@ -18,9 +17,6 @@ struct TrackMilesView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
 #endif
     // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
-    
     @State private var selection: Int = 0
     @State private var target: String = "TrackShortening"
     @State private var selectedValue: Int = 0

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct AISearchView: View {
     @EnvironmentObject var network: Network
-    @Environment(\.modelContext) var context
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     

@@ -110,7 +110,6 @@
 		3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A377A2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift */; };
 		3E4E10122A62518B0026802B /* NotamsDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10102A62518B0026802B /* NotamsDataList+CoreDataClass.swift */; };
 		3E4E10132A62518B0026802B /* NotamsDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10112A62518B0026802B /* NotamsDataList+CoreDataProperties.swift */; };
-		3E4E10162A6366870026802B /* SDAISearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10152A6366870026802B /* SDAISearchModel.swift */; };
 		3E4E10182A63E6F60026802B /* AISearchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10172A63E6F60026802B /* AISearchDetailView.swift */; };
 		3E4E101A2A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */; };
 		3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */; };
@@ -363,7 +362,6 @@
 		3E4A377A2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4E10102A62518B0026802B /* NotamsDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4E10112A62518B0026802B /* NotamsDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4E10152A6366870026802B /* SDAISearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDAISearchModel.swift; sourceTree = "<group>"; };
 		3E4E10172A63E6F60026802B /* AISearchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISearchDetailView.swift; sourceTree = "<group>"; };
 		3E4E10192A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanNOTAMReferenceView.swift; sourceTree = "<group>"; };
 		3E4E101B2A652A2D0026802B /* PreviousSearchReferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousSearchReferenceView.swift; sourceTree = "<group>"; };
@@ -688,14 +686,6 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		3E4E10142A6366700026802B /* SwiftData */ = {
-			isa = PBXGroup;
-			children = (
-				3E4E10152A6366870026802B /* SDAISearchModel.swift */,
-			);
-			path = SwiftData;
-			sourceTree = "<group>";
-		};
 		3E4E10232A65525E0026802B /* AISearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -838,7 +828,6 @@
 		3ED7545F2A11E1BA003072A1 = {
 			isa = PBXGroup;
 			children = (
-				3E4E10142A6366700026802B /* SwiftData */,
 				C56AF50F2A565EEB00BD07A1 /* CoreData */,
 				3ED7546A2A11E1BA003072A1 /* ATLAS */,
 				3ED7547B2A11E1BD003072A1 /* ATLASTests */,
@@ -1408,7 +1397,6 @@
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
-				3E4E10162A6366870026802B /* SDAISearchModel.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
 				3EFA5F6D2A4A833C001ED6CF /* ItemListScratchPad.swift in Sources */,
 				3E4E10122A62518B0026802B /* NotamsDataList+CoreDataClass.swift in Sources */,
