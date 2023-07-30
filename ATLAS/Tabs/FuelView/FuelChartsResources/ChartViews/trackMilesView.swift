@@ -101,7 +101,7 @@ struct trackMilesView: View {
         switch timeframe {
             case .threeFlights:
                 if let threeFlights = fetchedTrackMiles["flights3"] {
-                    let items = (threeFlights?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (threeFlights?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TrackMiles(phase: item.phase ?? "", condition: item.condition ?? "", trackMilesDiff: item.trackMilesDiff))
@@ -110,7 +110,7 @@ struct trackMilesView: View {
                 return temp
             case .week:
                 if let weeks = fetchedTrackMiles["weeks"] {
-                    let items = (weeks?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (weeks?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TrackMiles(phase: item.phase ?? "", condition: item.condition ?? "", trackMilesDiff: item.trackMilesDiff))
@@ -119,7 +119,7 @@ struct trackMilesView: View {
                 return temp
             case .months:
                 if let months = fetchedTrackMiles["months"] {
-                    let items = (months?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (months?.trackMiles?.allObjects as! [FuelTrackMilesRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TrackMiles(phase: item.phase ?? "", condition: item.condition ?? "", trackMilesDiff: item.trackMilesDiff))

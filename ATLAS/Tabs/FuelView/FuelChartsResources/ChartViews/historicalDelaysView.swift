@@ -106,7 +106,7 @@ struct historicalDelaysView: View {
                 var temp = [ArrivalDelays]()
                 
                 if let days = dataFilter["days"] {
-                    let items = (days?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (days?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
@@ -117,7 +117,7 @@ struct historicalDelaysView: View {
                 var temp = [ArrivalDelays]()
                 
                 if let weeks = dataFilter["weeks"] {
-                    let items = (weeks?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (weeks?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
@@ -128,7 +128,7 @@ struct historicalDelaysView: View {
                 var temp = [ArrivalDelays]()
                 
                 if let months = dataFilter["months"] {
-                    let items = (months?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (months?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))

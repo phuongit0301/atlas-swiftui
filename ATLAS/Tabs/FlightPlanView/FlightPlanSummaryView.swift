@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import Combine
-import SwiftData
 
 // creating flight info table structure
 struct flightInfo: Identifiable, Equatable {
@@ -140,19 +139,19 @@ struct FlightPlanSummaryView: View {
     
     @State var showSheet = false
 
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
+//    @Environment(\.modelContext) private var context
+//    @Query var fuelPageData: [FuelPageData]
     
     var body: some View {
         @StateObject var viewModel = ViewModelSummary()
         
         // MARK: fetch fuel data - todo move to core data
-        let fetchedDelays = fuelPageData.first?.projDelays
-        let fetchedLevels = fuelPageData.first?.flightLevel
-        let fetchedMiles = fuelPageData.first?.trackMiles
-        let fetchedTimes = fuelPageData.first?.taxi
-        let fetchedEnrWX = fuelPageData.first?.enrWX
-        let fetchedReciprocalRwy = fuelPageData.first?.reciprocalRwy
+        let fetchedDelays = coreDataModel.dataProjDelays
+        let fetchedLevels = coreDataModel.dataFlightLevel
+        let fetchedMiles = coreDataModel.dataTrackMiles
+        let fetchedTimes = coreDataModel.dataProjTaxi
+        let fetchedEnrWX = coreDataModel.dataEnrWX
+        let fetchedReciprocalRwy = coreDataModel.dataReciprocalRwy
         // arrival delays
         var projDelay: Int {
             if fetchedDelays!.expectedDelay != nil {
@@ -161,16 +160,16 @@ struct FlightPlanSummaryView: View {
             return 0
         }
         // taxi
-        let threeFlightsTaxi = fetchedTimes?.flights3
+        let threeFlightsTaxi = fetchedTimes.first(where: {$0.type == "flights3"})
         let aveDiffTaxi: Int = threeFlightsTaxi!.aveDiff
         // track miles
-        let threeFlightsMiles = fetchedMiles?.flights3
+        let threeFlightsMiles = fetchedMiles.first(where: {$0.type == "flights3"})
         let sumMINS: Int = threeFlightsMiles!.sumMINS
         // enroute weather
-        let threeFlightsEnrWX = fetchedEnrWX?.flights3
+        let threeFlightsEnrWX = fetchedEnrWX.first(where: {$0.type == "flights3"})
         let aveDiffEnrWX: Int = threeFlightsEnrWX!.aveMINS
         // flight level
-        let threeFlightsLevels = fetchedLevels?.flights3
+        let threeFlightsLevels = fetchedLevels.first(where: {$0.type == "flights3"})
         let aveDiffLevels: Int = threeFlightsLevels!.aveDiff
         // reciprocal rwy
         let reciprocalRwy: Int = fetchedReciprocalRwy!.aveMINS

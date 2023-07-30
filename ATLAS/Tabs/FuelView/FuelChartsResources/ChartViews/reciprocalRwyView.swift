@@ -53,7 +53,7 @@ struct reciprocalRwyView: View {
                 .onAppear {
                     var temp = [ReciprocalRwyTrackMiles]()
                     
-                    let items = (dataReciprocalRwy.trackMiles?.allObjects as! [FuelReciprocalRwyRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (dataReciprocalRwy.trackMiles?.allObjects as! [FuelReciprocalRwyRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(ReciprocalRwyTrackMiles(date: parseDateString(item.date!)!, condition: item.condition ?? "", trackMilesDiff: item.trackMilesDiff))

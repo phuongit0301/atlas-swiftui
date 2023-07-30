@@ -45,7 +45,7 @@ struct projArrivalDelaysView: View {
 // replace with API call
 func fetchProjArrivalDelays(_ dataProjDelays: ProjDelaysList) -> [String: Any] {
     var projArrivalDelays = [ProjArrivalDelays]()
-    let items = (dataProjDelays.delays?.allObjects as! [ProjDelaysListRef]).sorted(by: {$0.order > $1.order})
+    let items = (dataProjDelays.delays?.allObjects as! [ProjDelaysListRef]).sorted(by: {$0.order < $1.order})
     
     items.forEach { item in
         let entry = ProjArrivalDelays(time: item.unwrappedTime!, delay: item.delay, mindelay: item.mindelay, maxdelay: item.maxdelay)

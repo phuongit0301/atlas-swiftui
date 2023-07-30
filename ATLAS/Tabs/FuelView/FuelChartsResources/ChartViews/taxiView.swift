@@ -106,7 +106,7 @@ struct taxiView: View {
         switch timeframe {
             case .threeFlights:
                 if let threeFlights = fetchedTimes["flights3"] {
-                    let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
@@ -115,7 +115,7 @@ struct taxiView: View {
                 return temp
             case .week:
                 if let week = fetchedTimes["weeks"] {
-                    let items = (week?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (week?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
@@ -124,7 +124,7 @@ struct taxiView: View {
                 return temp
             case .months:
                 if let months = fetchedTimes["months"] {
-                    let items = (months?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order > $1.order})
+                    let items = (months?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
                         temp.append(TaxiTimes(date: parseDateString(item.date!)!, condition: item.condition ?? "", taxiTime: item.taxiTime))
