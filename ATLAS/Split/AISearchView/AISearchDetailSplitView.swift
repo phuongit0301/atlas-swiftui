@@ -24,7 +24,7 @@ struct AISearchDetailSplitView: View {
                         Text(coreDataModel.dataAISearchFavorite[index].question ?? "").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).padding(.trailing)
                     }
                     
-                    Spacer().frame(maxWidth: .infinity)
+                    Spacer()
                     
                     HStack(spacing: 0) {
                         if coreDataModel.dataAISearchFavorite.count > 0 {

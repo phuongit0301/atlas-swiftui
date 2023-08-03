@@ -23,7 +23,3 @@ struct NoteDestinationSplit: View {
         }
     }
 }
-
-#Preview {
-    NoteDestinationSplit()
-}

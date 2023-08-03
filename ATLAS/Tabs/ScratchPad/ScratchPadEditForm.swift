@@ -84,7 +84,7 @@ struct ScratchPadEditForm: View {
     }
     
     func save() {
-        var title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !content.isEmpty {

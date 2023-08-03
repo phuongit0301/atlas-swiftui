@@ -155,6 +155,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAISearch: [AISearchList] = []
     @Published var dataAISearchFavorite: [AISearchList] = []
     
+    @MainActor
     func checkAndSyncData() async {
         dataFPEnroute = readEnrouteList()
         
@@ -247,6 +248,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    @MainActor
     func initFetchData() async {
         DispatchQueue.main.async {
             self.tagList = self.readTag()
@@ -807,71 +809,65 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataNotams(_ notamsData: INotamsDataResponseModel) {
-        do {
-            notamsData.depNotams.forEach { item in
-                let newObj = NotamsDataList(context: self.service.container.viewContext)
-                newObj.id = UUID()
-                newObj.type = "depNotams"
-                newObj.notam = item.notam
-                newObj.date = item.date
-                newObj.rank = item.rank
-                newObj.isChecked = false
-                self.service.container.viewContext.performAndWait {
-                    do {
-                        try self.service.container.viewContext.save()
-                        print("saved notams successfully")
-                    } catch {
-                        print("Failed to Notams depNotams save: \(error)")
-                    }
-                    
+        notamsData.depNotams.forEach { item in
+            let newObj = NotamsDataList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.type = "depNotams"
+            newObj.notam = item.notam
+            newObj.date = item.date
+            newObj.rank = item.rank
+            newObj.isChecked = false
+            self.service.container.viewContext.performAndWait {
+                do {
+                    try self.service.container.viewContext.save()
+                    print("saved notams successfully")
+                } catch {
+                    print("Failed to Notams depNotams save: \(error)")
                 }
+                
             }
-            
-            notamsData.arrNotams.forEach { item in
-                let newObj = NotamsDataList(context: self.service.container.viewContext)
-                newObj.id = UUID()
-                newObj.type = "arrNotams"
-                newObj.notam = item.notam
-                newObj.date = item.date
-                newObj.rank = item.rank
-                newObj.isChecked = false
-                self.service.container.viewContext.performAndWait {
-                    do {
-                        try self.service.container.viewContext.save()
-                        print("saved notams successfully")
-                    } catch {
-                        print("Failed to Notams arrNotams save: \(error)")
-                    }
-                    
-                }
-            }
-            
-            notamsData.enrNotams.forEach { item in
-                let newObj = NotamsDataList(context: self.service.container.viewContext)
-                newObj.id = UUID()
-                newObj.type = "enrNotams"
-                newObj.notam = item.notam
-                newObj.date = item.date
-                newObj.rank = item.rank
-                newObj.isChecked = false
-                self.service.container.viewContext.performAndWait {
-                    do {
-                        try self.service.container.viewContext.save()
-                        print("saved notams successfully")
-                    } catch {
-                        print("Failed to Notams enrNotams save: \(error)")
-                    }
-                    
-                }
-            }
-            dataNotams = readDataNotamsList()
-        } catch {
-            print("Failed to Notams save: \(error)")
-            existDataNotams = false
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
         }
+        
+        notamsData.arrNotams.forEach { item in
+            let newObj = NotamsDataList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.type = "arrNotams"
+            newObj.notam = item.notam
+            newObj.date = item.date
+            newObj.rank = item.rank
+            newObj.isChecked = false
+            self.service.container.viewContext.performAndWait {
+                do {
+                    try self.service.container.viewContext.save()
+                    print("saved notams successfully")
+                } catch {
+                    service.container.viewContext.rollback()
+                    print("Failed to Notams arrNotams save: \(error)")
+                }
+                
+            }
+        }
+        
+        notamsData.enrNotams.forEach { item in
+            let newObj = NotamsDataList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.type = "enrNotams"
+            newObj.notam = item.notam
+            newObj.date = item.date
+            newObj.rank = item.rank
+            newObj.isChecked = false
+            self.service.container.viewContext.performAndWait {
+                do {
+                    try self.service.container.viewContext.save()
+                    print("saved notams successfully")
+                } catch {
+                    service.container.viewContext.rollback()
+                    print("Failed to Notams enrNotams save: \(error)")
+                }
+                
+            }
+        }
+        dataNotams = readDataNotamsList()
     }
     
     func initDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
@@ -2288,6 +2284,7 @@ class CoreDataModelState: ObservableObject {
                     try service.container.viewContext.save()
                     arr2.append(newObjRef)
                     print("saved Enr WX Ref Month1 successfully")
+                    order2 += 1
                 } catch {
                     // Something went wrong 😭
                     print("Failed to save Enr WX Ref Month1: \(error)")
@@ -2527,9 +2524,9 @@ class CoreDataModelState: ObservableObject {
                 "selectedReciprocalRwy": dataFuelExtra.selectedReciprocalRwy,
                 "selectedOthers000": dataFuelExtra.selectedOthers000,
                 "selectedOthers00": dataFuelExtra.selectedOthers00,
-                "remarkArrDelays": dataFuelExtra.remarkArrDelays,
-                "remarkTaxi": dataFuelExtra.remarkTaxi,
-                "remarkFlightLevel": dataFuelExtra.remarkFlightLevel,
+                "remarkArrDelays": dataFuelExtra.remarkArrDelays ?? "",
+                "remarkTaxi": dataFuelExtra.remarkTaxi ?? "",
+                "remarkFlightLevel": dataFuelExtra.remarkFlightLevel ?? "",
                 "remarkTrackShortening": dataFuelExtra.remarkTrackShortening,
                 "remarkEnrWx": dataFuelExtra.remarkEnrWx,
                 "remarkReciprocalRwy": dataFuelExtra.remarkReciprocalRwy,
@@ -2648,7 +2645,7 @@ class CoreDataModelState: ObservableObject {
     
     // Update data for Flight Plan Enroute textfield
     private func updateValues(_ editedIndex: Int = 0, _ data: [EnrouteList]) {
-        var dataOriginal = data
+        let dataOriginal = data
         
         let dateFormatterTime = DateFormatter()
         dateFormatterTime.dateFormat = "HHmm"

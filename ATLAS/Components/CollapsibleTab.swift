@@ -43,14 +43,15 @@ struct CollapsibleTab<Content: View, HeaderContent: View>: View {
             .padding(.bottom, 8)
             if collapsed {
                 Rectangle().fill(Color.theme.eerieBlack).frame(height: 1)
-                VStack {
-                    self.content()
+                withAnimation(.easeInOut(duration: 1)) {
+                    VStack {
+                        self.content()
+                    }
+                    //            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? .none : 0)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .clipped()
+                    .transition(.opacity)
                 }
-                //            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? .none : 0)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .clipped()
-                .animation(.easeOut(duration: 1.0))
-                .transition(.opacity)
             }
         }
     }
