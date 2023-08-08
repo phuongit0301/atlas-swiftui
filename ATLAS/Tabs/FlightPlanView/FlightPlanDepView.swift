@@ -405,14 +405,14 @@ struct FlightPlanDepView: View {
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsWx = true
                                                 } else {
-                                                    if coreDataModel.existDataDepartureAtis {
-                                                        coreDataModel.dataDepartureAtis.wx = text
-                                                    } else {
-                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                        item.wx = text
-                                                    }
-                                                    
-                                                    coreDataModel.save()
+//                                                    if coreDataModel.existDataDepartureAtis {
+//                                                        coreDataModel.dataDepartureAtis.wx = text
+//                                                    } else {
+//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+//                                                        item.wx = text
+//                                                    }
+//
+//                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsWx = false
                                                 }
                                             }
@@ -439,14 +439,14 @@ struct FlightPlanDepView: View {
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsCloud = true
                                                 } else {
-                                                    if coreDataModel.existDataDepartureAtis {
-                                                        coreDataModel.dataDepartureAtis.cloud = text
-                                                    } else {
-                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                        item.cloud = text
-                                                    }
-                                                    
-                                                    coreDataModel.save()
+//                                                    if coreDataModel.existDataDepartureAtis {
+//                                                        coreDataModel.dataDepartureAtis.cloud = text
+//                                                    } else {
+//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+//                                                        item.cloud = text
+//                                                    }
+//
+//                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsCloud = false
                                                 }
                                             }
@@ -559,14 +559,14 @@ struct FlightPlanDepView: View {
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsRemarks = true
                                                 } else {
-                                                    if coreDataModel.existDataDepartureAtis {
-                                                        coreDataModel.dataDepartureAtis.remarks = text
-                                                    } else {
-                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-                                                        item.remarks = text
-                                                    }
-                                                    
-                                                    coreDataModel.save()
+//                                                    if coreDataModel.existDataDepartureAtis {
+//                                                        coreDataModel.dataDepartureAtis.remarks = text
+//                                                    } else {
+//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+//                                                        item.remarks = text
+//                                                    }
+//
+//                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
                                             }
@@ -582,7 +582,7 @@ struct FlightPlanDepView: View {
                                 .padding(.leading, 25)
                             }
                         }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
-                            coreDataModel.readDepartureAtis()
+//                            coreDataModel.readDepartureAtis()
                         }
                         
                         // ATC section
@@ -777,7 +777,7 @@ struct FlightPlanDepView: View {
                             
                         }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
                             coreDataModel.readDepartureAtc()
-                        }
+                        }.id("atc")
                         // Entries section
                         Section(header:
                                     HStack {
@@ -944,7 +944,7 @@ struct FlightPlanDepView: View {
                         
                         VStack {
                             Group {
-                                if isShowingAutofillOptionsWx {
+                                if isShowingAutofillOptionsWx && autofillOptionsWX.filter { $0.hasPrefix(autofillText) }.count > 0 {
                                     List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -959,8 +959,8 @@ struct FlightPlanDepView: View {
                                         .background(Color.clear)
                                         .padding(.top, -50)
                                 }
-                                if isShowingAutofillOptionsCloud {
-                                    List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
+                                if isShowingAutofillOptionsCloud && autofillOptionsCloud.filter({ $0.hasPrefix(autofillText) }).count > 0 {
+                                    List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }) { option in
                                         Button(action: {
                                             let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
                                             cursorPositionCloud -= cloud.count
@@ -1014,6 +1014,21 @@ struct FlightPlanDepView: View {
                         .background(Color.theme.quickSilver)
                         .onChange(of: isEditingEntFuelInTanks) { _ in
                             scrollView.scrollTo("entries")
+                        }
+                        .onChange(of: isEditingAtcRwy) { _ in
+                            scrollView.scrollTo("atc")
+                        }
+                        .onChange(of: isEditingAtcDep) { _ in
+                            scrollView.scrollTo("atc")
+                        }
+                        .onChange(of: isEditingAtcRte) { _ in
+                            scrollView.scrollTo("atc")
+                        }
+                        .onChange(of: isEditingAtcFL) { _ in
+                            scrollView.scrollTo("atc")
+                        }
+                        .onChange(of: isEditingAtcSQ) { _ in
+                            scrollView.scrollTo("atc")
                         }
                     
                 }.navigationTitle("Departure")
@@ -1073,16 +1088,26 @@ struct FlightPlanDepView: View {
                 
                 // func to add year to the date value
                 func parseDate(from dateString: String, with formatter: DateFormatter) -> Date? {
-                    let currentYear = Calendar.current.component(.year, from: Date())
-                    let formattedDateString = "\(currentYear)/\(dateString)"
-                    return formatter.date(from: formattedDateString)
+                    // split date to array and join to new format
+                    let arr = dateString.components(separatedBy: " | ")
+                    if arr.count > 0 {
+                        let dateMonth = arr[0].components(separatedBy: "/")
+                        let currentYear = Calendar.current.component(.year, from: Date())
+                        let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
+                        
+                        return formatter.date(from: formattedDateString);
+                    }
+                    
+                    let currentDate = formatter.string(from: Date())
+                    
+                    return formatter.date(from: currentDate)
                 }
                 
                 if coreDataModel.dataDepartureEntries.unwrappedEntOff != "" {
                     // format the date by adding the year so that it can be used by datepicker
                     var formattedOffDate: Date {
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd/M | HHmm"
+                        formatter.dateFormat = "yyyy-M-dd HHmm"
                         // read date value and add year
                         if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
                             return date
@@ -1100,9 +1125,9 @@ struct FlightPlanDepView: View {
                     // format the date by adding the year so that it can be used by datepicker
                     var formattedTaxiDate: Date {
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd/M | HHmm"
+                        formatter.dateFormat = "yyyy-M-dd HHmm"
                         // read date value and add year
-                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntTaxi, with: formatter) {
                             return date
                         } else {
                             return Date()
@@ -1117,9 +1142,9 @@ struct FlightPlanDepView: View {
                 if coreDataModel.dataDepartureEntries.unwrappedEntTakeoff != "" {
                     var formattedTakeoffDate: Date {
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd/M | HHmm"
+                        formatter.dateFormat = "yyyy-M-dd HHmm"
                         // read date value and add year
-                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntTakeoff, with: formatter) {
                             return date
                         } else {
                             return Date()

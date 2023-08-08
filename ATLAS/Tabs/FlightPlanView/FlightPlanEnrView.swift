@@ -107,9 +107,9 @@ struct FlightPlanEnrView: View {
                             }
                             .foregroundStyle(Color.blue)
                             Group {
-                                Text("VWS\nDRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                Text("ZFRQ\nPFRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                Text("AFRM\nDIFF").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("VWS\n\nDRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("ZFRQ\n\nPFRM").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
+                                Text("AFRM\n\nDIFF").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                             }
                             .foregroundStyle(Color.blue)
                         }.listRowSeparator(.visible)

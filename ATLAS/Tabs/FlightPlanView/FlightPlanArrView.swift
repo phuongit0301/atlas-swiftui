@@ -760,7 +760,7 @@ struct FlightPlanArrView: View {
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
                                 .padding(.leading, 25)
-                            }
+                            }.id("arrAtc")
                         }
                         // Entries section
                         Section(header: Text("Entries").foregroundStyle(Color.black)) {
@@ -963,6 +963,18 @@ struct FlightPlanArrView: View {
                         .onChange(of: isEditingEntFuelOnChocks) { _ in
                             scrollView.scrollTo("arrEntries")
                         }
+                        .onChange(of: isEditingAtcDest) { _ in
+                            scrollView.scrollTo("arrAtc")
+                        }
+                        .onChange(of: isEditingAtcRwy) { _ in
+                            scrollView.scrollTo("arrAtc")
+                        }
+                        .onChange(of: isEditingAtcArr) { _ in
+                            scrollView.scrollTo("arrAtc")
+                        }
+                        .onChange(of: isEditingAtcTransLvl) { _ in
+                            scrollView.scrollTo("arrAtc")
+                        }
                     
                 }.navigationTitle("Arrival")
                     .background(Color(.systemGroupedBackground))
@@ -1017,18 +1029,28 @@ struct FlightPlanArrView: View {
                 
                 // func to add year to the date value
                 func parseDate(from dateString: String, with formatter: DateFormatter) -> Date? {
-                    let currentYear = Calendar.current.component(.year, from: Date())
-                    let formattedDateString = "\(currentYear)/\(dateString)"
-                    return formatter.date(from: formattedDateString)
+                    // split date to array and join to new format
+                    let arr = dateString.components(separatedBy: " | ")
+                    if arr.count > 0 {
+                        let dateMonth = arr[0].components(separatedBy: "/")
+                        let currentYear = Calendar.current.component(.year, from: Date())
+                        let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
+                        
+                        return formatter.date(from: formattedDateString);
+                    }
+                    
+                    let currentDate = formatter.string(from: Date())
+                    
+                    return formatter.date(from: currentDate)
                 }
                 
                 if coreDataModel.dataArrivalEntries.unwrappedEntLdg != "" {
                     // format the date by adding the year so that it can be used by datepicker
                     var formattedLandingDate: Date {
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd/M | HHmm"
+                        formatter.dateFormat = "yyyy-M-dd HHmm"
                         // read date value and add year
-                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                        if let date = parseDate(from: coreDataModel.dataArrivalEntries.unwrappedEntLdg, with: formatter) {
                             return date
                         } else {
                             return Date()
@@ -1040,13 +1062,13 @@ struct FlightPlanArrView: View {
 //                    self.currentDateLandingTemp = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntLdg) ?? Date()
                 }
                 
-                if coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks != "" {
+                if coreDataModel.dataArrivalEntries.unwrappedEntOn != "" {
                     // format the date by adding the year so that it can be used by datepicker
                     var formattedOnDate: Date {
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd/M | HHmm"
+                        formatter.dateFormat = "yyyy-M-dd HHmm"
                         // read date value and add year
-                        if let date = parseDate(from: coreDataModel.dataDepartureEntries.unwrappedEntOff, with: formatter) {
+                        if let date = parseDate(from: coreDataModel.dataArrivalEntries.unwrappedEntOn, with: formatter) {
                             return date
                         } else {
                             return Date()
@@ -1058,8 +1080,7 @@ struct FlightPlanArrView: View {
 //                    self.currentDateChockOnTemp = dateFormatter.date(from: coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks) ?? Date()
                 }
                 
-                self.entOn = coreDataModel.dataArrivalEntries.unwrappedEntOn
-                self.cursorPositionEntOn = coreDataModel.dataArrivalEntries.unwrappedEntOn.count
+                self.entFuelOnChocks = coreDataModel.dataArrivalEntries.unwrappedEntFuelOnChocks
             }
         }.formSheet(isPresented: $isShowModalLanding) {
             VStack {
@@ -1136,10 +1157,10 @@ struct FlightPlanArrView: View {
                         let str = dateFormatter.string(from: currentDateChockOnTemp)
                         
                         if coreDataModel.existDataArrivalEntries {
-                            coreDataModel.dataArrivalEntries.entFuelOnChocks = str
+                            coreDataModel.dataArrivalEntries.entOn = str
                         } else {
                             let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
-                            item.entFuelOnChocks = dateFormatter.string(from: currentDateChockOnTemp)
+                            item.entOn = dateFormatter.string(from: currentDateChockOnTemp)
                         }
                         coreDataModel.save()
                         coreDataModel.readDepartureEntries()

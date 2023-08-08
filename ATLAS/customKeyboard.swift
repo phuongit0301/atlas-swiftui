@@ -204,9 +204,9 @@ struct CustomKeyboardView: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "↵" {
+        if character == "return" {
             submit()
-        } else if character == "⌨" {
+        } else if character == "keyboard.chevron.compact.down.fill" {
             currentFocus = false
         }
         else if character == "SP" {

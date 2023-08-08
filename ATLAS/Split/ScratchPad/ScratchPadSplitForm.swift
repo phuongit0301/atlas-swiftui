@@ -34,15 +34,15 @@ struct ScratchPadSplitForm: View {
                             content = ""
                             self.showSheet.toggle()
                         }) {
-                            Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                            Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
                         }
                         
                         Spacer()
                         
                         if currentIndex > -1 {
-                            Text("Edit Item").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
+                            Text("Edit Item").foregroundColor(.black).font(.system(size: 15, weight: .semibold))
                         } else {
-                            Text("Add New Item").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
+                            Text("Add New Item").foregroundColor(.black).font(.system(size: 15, weight: .semibold))
                         }
                         
                         Spacer()
@@ -54,7 +54,7 @@ struct ScratchPadSplitForm: View {
                                 save()
                             }
                         }) {
-                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
                         }
                     }
                     .padding()

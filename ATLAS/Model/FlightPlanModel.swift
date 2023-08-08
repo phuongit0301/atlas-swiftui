@@ -161,6 +161,7 @@ struct FieldString: View {
     
     var body: some View {
         TextField("Enter remarks (optional)", text: $field)
+            .font(.system(size: 15))
             .onAppear {
                 let item = coreDataModel.dataFuelExtra!
                 

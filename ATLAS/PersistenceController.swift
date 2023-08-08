@@ -575,6 +575,8 @@ class CoreDataModelState: ObservableObject {
         newObj.staLocal = infoData.STALocal
         newObj.blkTime = infoData.blkTime
         newObj.fltTime = infoData.fltTime
+        newObj.timeDiffArr = infoData.time_diff_arr
+        newObj.timeDiffDep = infoData.time_diff_dep
         
         do {
             // Persist the data in this managed object context to the underlying store

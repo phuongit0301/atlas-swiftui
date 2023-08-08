@@ -302,6 +302,22 @@ struct FlightInformationDetailView: View {
                 .padding(.trailing, -16)
         }.padding(.top, 32)
     }
+    
+    func parseDate(from dateString: String, with formatter: DateFormatter) -> Date? {
+        // split date to array and join to new format
+        let arr = dateString.components(separatedBy: " | ")
+        if arr.count > 0 {
+            let dateMonth = arr[0].components(separatedBy: "/")
+            let currentYear = Calendar.current.component(.year, from: Date())
+            let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
+            
+            return formatter.date(from: formattedDateString);
+        }
+        
+        let currentDate = formatter.string(from: Date())
+        
+        return formatter.date(from: currentDate)
+    }
 }
 
 struct FlightInformationDetailView_Previews: PreviewProvider {

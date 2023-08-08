@@ -55,19 +55,19 @@
 			<array/>
 		</dict>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<string>NO</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>Aerodocs</string>
 		<string>jdmpro.jeppesen</string>
 		<string>App-Prefs</string>
 		<string>ewas</string>
-		<string>com.adobe.Adobe-Reader</string>
 		<string>atlas</string>
+		<string>com.adobe.Adobe-Reader</string>
 	</array>
-    <key>LSMinimumSystemVersion</key>
-    <string>13.3</string>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <string>NO</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.3</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>

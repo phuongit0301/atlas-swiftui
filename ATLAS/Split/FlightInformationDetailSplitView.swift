@@ -12,17 +12,20 @@ struct FlightInformationDetailSplitView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var body: some View {
-        var eta: String {
+        var etaUTC: String {
+            // define date format
             let dateFormatterTime = DateFormatter()
-            dateFormatterTime.dateFormat = "HHmm"
-            
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert takeoff time to date
             if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
                 let entTakeoff =  dateFormatterTime.date(from: takeoff)
-                
+                // get flight time
                 if let flightTimeComponents = coreDataModel.dataSummaryInfo.fltTime {
+                    // convert flight time to seconds
                     let components = flightTimeComponents.components(separatedBy: ":")
                     if components.count > 1 {
                         let flightTime = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                        // add flight time to takeoff time
                         if let etaTime = entTakeoff?.addingTimeInterval(TimeInterval(flightTime)) {
                             return dateFormatterTime.string(from: etaTime)
                         }
@@ -30,7 +33,72 @@ struct FlightInformationDetailSplitView: View {
                     
                 }
             }
-            
+            return ""
+        }
+        
+        var etaLocal: String {
+            // define date format
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to format
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
+            // convert takeoff time to date
+            if let takeoff = coreDataModel.dataDepartureEntries.entTakeoff {
+                let entTakeoff =  dateFormatterTime.date(from: takeoff)
+                // convert flight time to seconds
+                if let flightTimeComponents = coreDataModel.dataSummaryInfo.fltTime {
+                    let components = flightTimeComponents.components(separatedBy: ":")
+                    if components.count > 1 {
+                        // add flight time with time difference
+                        let adjTime = (Int(components[0])! * 3600) + (Int(components[1])! * 60) + timeDiffFormatted
+                        // add time difference and flight time to takeoff time
+                        if let etaTime = entTakeoff?.addingTimeInterval(TimeInterval(adjTime)) {
+                            return dateFormatterTime.string(from: etaTime)
+                        }
+                    }
+                }
+            }
+            return ""
+        }
+        
+        let chocksOffUTC: String = coreDataModel.dataDepartureEntries.entOff!
+        
+        var chocksOffLocal: String {
+            // define date formats
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to Int seconds
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffDep
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
+            // convert chocks off format
+            if let chocksOff = coreDataModel.dataDepartureEntries.entOff {
+                let chocksOffFormatted =  dateFormatterTime.date(from: chocksOff)
+                // add time diff to chocks off time
+                if let offTime = chocksOffFormatted?.addingTimeInterval(TimeInterval(timeDiffFormatted)) {
+                    return dateFormatterTime.string(from: offTime)
+                }
+            }
+            return ""
+        }
+        
+        let chocksOnUTC: String = coreDataModel.dataArrivalEntries.entOn!
+        
+        var chocksOnLocal: String {
+            // define date formats
+            let dateFormatterTime = DateFormatter()
+            dateFormatterTime.dateFormat = "dd/M | HHmm"
+            // convert time diff to Int seconds
+            let timeDiff = coreDataModel.dataSummaryInfo.unwrappedTimeDiffArr
+            let timeDiffFormatted = timeDiff != "" ? Int(timeDiff)! * 3600 : 0
+            // convert chocks on format
+            if let chocksOn = coreDataModel.dataArrivalEntries.entOn {
+                let chocksOnFormatted =  dateFormatterTime.date(from: chocksOn)
+                // add time diff to chocks on time
+                if let onTime = chocksOnFormatted?.addingTimeInterval(TimeInterval(timeDiffFormatted)) {
+                    return dateFormatterTime.string(from: onTime)
+                }
+            }
             return ""
         }
         
@@ -74,11 +142,11 @@ struct FlightInformationDetailSplitView: View {
                             Divider()
                             HStack(alignment: .center) {
                                 Group {
-                                    Text(coreDataModel.dataDepartureEntries.unwrappedEntOff)
+                                    Text(showUTC ? chocksOffUTC : chocksOffLocal)
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundStyle(Color.black)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(coreDataModel.dataArrivalEntries.unwrappedEntOn)
+                                    Text(showUTC ? chocksOnUTC : chocksOnLocal)
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundStyle(Color.black)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -117,7 +185,7 @@ struct FlightInformationDetailSplitView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundStyle(Color.black)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(eta)
+                                    Text(showUTC ? etaUTC : etaLocal)
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundStyle(Color.black)
                                         .frame(maxWidth: .infinity, alignment: .leading)

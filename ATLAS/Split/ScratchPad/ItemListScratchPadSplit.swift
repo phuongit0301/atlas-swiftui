@@ -25,7 +25,7 @@ struct ItemListScratchPadSplit: View {
             HeaderViewSplit(isMenu: true)
             
             HStack {
-                Text(header).foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+                Text(header).foregroundColor(Color.theme.eerieBlack).font(.system(size: 18, weight: .semibold))
                 Spacer()
                 
                 Button(action: {
@@ -34,8 +34,8 @@ struct ItemListScratchPadSplit: View {
                     }
                 }) {
                     Text("Paste").foregroundColor(Color.white)
-                        .font(.system(size: 17, weight: .regular))
-                        .padding(.horizontal, 12)
+                        .font(.system(size: 15, weight: .regular))
+                        .padding(.horizontal, 10)
                             .padding(.vertical, 6)
                 }.background(Color.theme.azure)
                 .cornerRadius(12)
@@ -49,14 +49,14 @@ struct ItemListScratchPadSplit: View {
                     self.showSheet.toggle()
                 }) {
                     Text("Add Note").foregroundColor(Color.theme.azure)
-                        .font(.system(size: 17, weight: .regular))
+                        .font(.system(size: 15, weight: .regular))
                 }
             }.padding()
             Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
             
             if itemList.isEmpty {
                 VStack(alignment: .leading) {
-                    Text("No scratch pad saved. Tap on Add Note to save your first scratch pad.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
+                    Text("No scratch pad saved. Tap on Add Note to save your first scratch pad.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular)).padding()
                     Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
                 }
                 Spacer()

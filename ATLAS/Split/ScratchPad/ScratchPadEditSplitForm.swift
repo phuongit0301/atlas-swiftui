@@ -40,8 +40,8 @@ struct ScratchPadEditSplitForm: View {
                             pasteboard.string = itemList[currentIndex].content
                         }) {
                             Text("Copy").foregroundColor(Color.white)
-                                .font(.system(size: 17, weight: .regular))
-                                .padding(.horizontal, 12)
+                                .font(.system(size: 15, weight: .regular))
+                                .padding(.horizontal, 10)
                                     .padding(.vertical, 6)
                         }.background(Color.theme.azure)
                         .cornerRadius(12)
@@ -53,7 +53,7 @@ struct ScratchPadEditSplitForm: View {
                         Button(action: {
                             update()
                         }) {
-                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
                         }
                     }
                     .padding()
