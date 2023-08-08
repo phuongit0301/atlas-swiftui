@@ -398,25 +398,25 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .overlay(isEditingWx ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(wx)) { text in
+                                            .onChange(of: wx) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsWx = true
                                                 } else {
-//                                                    if coreDataModel.existDataDepartureAtis {
-//                                                        coreDataModel.dataDepartureAtis.wx = text
-//                                                    } else {
-//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-//                                                        item.wx = text
-//                                                    }
-//
-//                                                    coreDataModel.save()
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.wx = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.wx = text
+                                                    }
+
+                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsWx = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingWx)) { focused in
+                                            .onChange(of: isEditingWx) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsWx = false
                                                 }
@@ -432,25 +432,25 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .overlay(isEditingCloud ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(cloud)) { text in
+                                            .onChange(of: cloud) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsCloud = true
                                                 } else {
-//                                                    if coreDataModel.existDataDepartureAtis {
-//                                                        coreDataModel.dataDepartureAtis.cloud = text
-//                                                    } else {
-//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-//                                                        item.cloud = text
-//                                                    }
-//
-//                                                    coreDataModel.save()
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.cloud = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.cloud = text
+                                                    }
+
+                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsCloud = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingCloud)) { focused in
+                                            .onChange(of: isEditingCloud) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsCloud = false
                                                 }
@@ -552,25 +552,25 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .overlay(isEditingRemarks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(remarks)) { text in
+                                            .onChange(of: remarks) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
                                                     autofillText = searchTerm
                                                     isShowingAutofillOptionsRemarks = true
                                                 } else {
-//                                                    if coreDataModel.existDataDepartureAtis {
-//                                                        coreDataModel.dataDepartureAtis.remarks = text
-//                                                    } else {
-//                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
-//                                                        item.remarks = text
-//                                                    }
-//
-//                                                    coreDataModel.save()
+                                                    if coreDataModel.existDataDepartureAtis {
+                                                        coreDataModel.dataDepartureAtis.remarks = text
+                                                    } else {
+                                                        let item = DepartureATISList(context: persistenceController.container.viewContext)
+                                                        item.remarks = text
+                                                    }
+
+                                                    coreDataModel.save()
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingRemarks)) { focused in
+                                            .onChange(of: isEditingRemarks) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
@@ -580,9 +580,9 @@ struct FlightPlanDepView: View {
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
                                 .padding(.leading, 25)
-                            }
+                            }.id("atis")
                         }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
-//                            coreDataModel.readDepartureAtis()
+                            coreDataModel.readDepartureAtis()
                         }
                         
                         // ATC section
@@ -684,7 +684,7 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .overlay(isEditingAtcRte ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(atcRte)) { text in
+                                            .onChange(of: atcRte) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
@@ -703,7 +703,7 @@ struct FlightPlanDepView: View {
                                                     isShowingAutofillOptionsAtcRte = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingAtcRte)) { focused in
+                                            .onChange(of: isEditingAtcRte) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsAtcRte = false
                                                 }
@@ -944,7 +944,7 @@ struct FlightPlanDepView: View {
                         
                         VStack {
                             Group {
-                                if isShowingAutofillOptionsWx && autofillOptionsWX.filter { $0.hasPrefix(autofillText) }.count > 0 {
+                                if isShowingAutofillOptionsWx && autofillOptionsWX.filter({ $0.hasPrefix(autofillText) }).count > 0 {
                                     List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -960,7 +960,7 @@ struct FlightPlanDepView: View {
                                         .padding(.top, -50)
                                 }
                                 if isShowingAutofillOptionsCloud && autofillOptionsCloud.filter({ $0.hasPrefix(autofillText) }).count > 0 {
-                                    List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }) { option in
+                                    List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
                                             cursorPositionCloud -= cloud.count
@@ -974,7 +974,7 @@ struct FlightPlanDepView: View {
                                         .background(Color.clear)
                                         .padding(.top, -50)
                                 }
-                                if isShowingAutofillOptionsRemarks {
+                                if isShowingAutofillOptionsRemarks && (autofillOptionsWX.filter { $0.hasPrefix(autofillText) }).count > 0 {
                                     List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -989,7 +989,7 @@ struct FlightPlanDepView: View {
                                         .background(Color.clear)
                                         .padding(.top, -50)
                                 }
-                                if isShowingAutofillOptionsAtcRte {
+                                if isShowingAutofillOptionsAtcRte && (routeList.filter { $0.hasPrefix(autofillText) }).count > 0 {
                                     List(routeList.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = atcRte.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -1029,6 +1029,12 @@ struct FlightPlanDepView: View {
                         }
                         .onChange(of: isEditingAtcSQ) { _ in
                             scrollView.scrollTo("atc")
+                        }
+                        .onChange(of: isEditingCode) { _ in
+                            scrollView.scrollTo("atis")
+                        }
+                        .onChange(of: isEditingTime) { _ in
+                            scrollView.scrollTo("atis")
                         }
                     
                 }.navigationTitle("Departure")

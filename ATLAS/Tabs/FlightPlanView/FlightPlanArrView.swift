@@ -145,7 +145,7 @@ struct FlightPlanArrView: View {
                             .padding(.leading, 30)
                     }
                     .padding(.bottom, 10)
-                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)) | Last updated 0820LT")
+                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
                         .padding(.leading, 30)
                         .padding(.bottom, 10)
                     //scrollable outer list section
@@ -429,7 +429,7 @@ struct FlightPlanArrView: View {
                                                 }
                                             }
                                             .overlay(isEditingWx ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(wx)) { text in
+                                            .onChange(of: wx) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
@@ -448,7 +448,7 @@ struct FlightPlanArrView: View {
                                                     isShowingAutofillOptionsWx = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingWx)) { focused in
+                                            .onChange(of: isEditingWx) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsWx = false
                                                 }
@@ -464,7 +464,7 @@ struct FlightPlanArrView: View {
                                                 }
                                             }
                                             .overlay(isEditingCloud ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(cloud)) { text in
+                                            .onChange(of: cloud) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
@@ -483,7 +483,7 @@ struct FlightPlanArrView: View {
                                                     isShowingAutofillOptionsCloud = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingCloud)) { focused in
+                                            .onChange(of: isEditingCloud) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsCloud = false
                                                 }
@@ -588,7 +588,7 @@ struct FlightPlanArrView: View {
                                                 }
                                             }
                                             .overlay(isEditingRemarks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
-                                            .onReceive(Just(remarks)) { text in
+                                            .onChange(of: remarks) { text in
                                                 let components = text.components(separatedBy: " ")
                                                 if let lastComponent = components.last, lastComponent.hasPrefix(".") && lastComponent.count > 1 {
                                                     let searchTerm = String(lastComponent.dropFirst())
@@ -607,7 +607,7 @@ struct FlightPlanArrView: View {
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
                                             }
-                                            .onReceive(Just(isEditingRemarks)) { focused in
+                                            .onChange(of: isEditingRemarks) { focused in
                                                 if !focused {
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
@@ -617,7 +617,7 @@ struct FlightPlanArrView: View {
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
                                 .padding(.leading, 25)
-                            }
+                            }.id("arrAtis")
                         }
                         
                         // ATC section
@@ -975,7 +975,45 @@ struct FlightPlanArrView: View {
                         .onChange(of: isEditingAtcTransLvl) { _ in
                             scrollView.scrollTo("arrAtc")
                         }
-                    
+                        .onChange(of: isEditingDest) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingCode) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingTime) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingRwy) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingTransLvl) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingWind) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingVis) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingWx) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingCloud) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingTemp) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingDP) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingQNH) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
+                        .onChange(of: isEditingRemarks) { _ in
+                            scrollView.scrollTo("arrAtis")
+                        }
                 }.navigationTitle("Arrival")
                     .background(Color(.systemGroupedBackground))
             }
