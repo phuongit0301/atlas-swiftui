@@ -72,9 +72,15 @@ struct ItemListScratchPadSplit: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(itemList[index].unwrappedTitle.trimmingCharacters(in: .whitespacesAndNewlines))
-                                        .foregroundColor(Color.theme.eerieBlack)
-                                        .font(.system(size: 16, weight: .regular))
+                                    if itemList[index].title != "", let title = itemList[index].title {
+                                        Text(title.trimmingCharacters(in: .whitespacesAndNewlines))
+                                            .foregroundColor(Color.theme.eerieBlack)
+                                            .font(.system(size: 16, weight: .regular))
+                                    } else {
+                                        Text(itemList[index].content.trimmingCharacters(in: .whitespacesAndNewlines))
+                                            .foregroundColor(Color.theme.eerieBlack)
+                                            .font(.system(size: 16, weight: .regular))
+                                    }
                                     
                                     Spacer()
                                     
