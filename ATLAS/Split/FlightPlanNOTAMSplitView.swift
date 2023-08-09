@@ -26,7 +26,7 @@ struct FlightPlanNOTAMSplitView: View {
             if arrDepNotams.count == 0 && arrEnrNotams.count == 0 && arrArrNotams.count == 0 {
                 List {
                     VStack {
-                        Text("No Notams saved").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.philippineGray2)
+                        Text("No Notams saved").font(.system(size: 12, weight: .regular)).foregroundColor(Color.theme.philippineGray2)
                     }
                 }.frame(maxHeight: .infinity)
                 
@@ -37,20 +37,20 @@ struct FlightPlanNOTAMSplitView: View {
                     if arrDepNotams.count > 0 {
                         Section(header:
                                     VStack(alignment: .leading) {
-                            Text("DEP NOTAMS").font(.system(size: 15)).foregroundStyle(Color.black)
+                            Text("DEP NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
                             HStack {
                                 Toggle(isOn: $isSortDateDep) {
-                                    Text("Most Relevant").font(.system(size: 15))
+                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
                                 }
                                 Spacer()
-                                Text("Most Recent").font(.system(size: 15))
+                                Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
                         ) {
                             ForEach(arrDepNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 12, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -66,6 +66,7 @@ struct FlightPlanNOTAMSplitView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
@@ -75,20 +76,20 @@ struct FlightPlanNOTAMSplitView: View {
                         // Enr NOTAM section
                         Section(header:
                                     VStack(alignment: .leading) {
-                            Text("ENROUTE NOTAMS").font(.system(size: 15)).foregroundStyle(Color.black)
+                            Text("ENROUTE NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
                             HStack {
                                 Toggle(isOn: $isSortDateEnr) {
-                                    Text("Most Relevant").font(.system(size: 15))
+                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
                                 }
                                 Spacer()
-                                Text("Most Recent").font(.system(size: 15))
+                                Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
                         ) {
                             ForEach(arrEnrNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 12, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -104,6 +105,7 @@ struct FlightPlanNOTAMSplitView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
@@ -113,20 +115,20 @@ struct FlightPlanNOTAMSplitView: View {
                         // Arr NOTAM section
                         Section(header:
                                     VStack(alignment: .leading) {
-                            Text("ARR NOTAMS").font(.system(size: 15)).foregroundStyle(Color.black)
+                            Text("ARR NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
                             HStack {
                                 Toggle(isOn: $isSortDateArr) {
-                                    Text("Most Relevant").font(.system(size: 15))
+                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
                                 }
                                 Spacer()
-                                Text("Most Recent").font(.system(size: 15))
+                                Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
                         ) {
                             ForEach(arrArrNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 12, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -142,6 +144,7 @@ struct FlightPlanNOTAMSplitView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
