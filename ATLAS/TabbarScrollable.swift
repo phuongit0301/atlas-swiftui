@@ -23,16 +23,14 @@ struct TabbarScrollable: View {
                                 TabbarItem(item: item, isActive: item.id == selectedTab.id, namespace: menuItemTransition)
                                     .onTapGesture {
                                         if !item.isDisabled {
-                                            withAnimation(.easeInOut) {
-                                                if (item.isExternal) {
-                                                    if let url = URL(string: item.scheme) {
-                                                        if UIApplication.shared.canOpenURL(url) {
-                                                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                                        }
+                                            if (item.isExternal) {
+                                                if let url = URL(string: item.scheme) {
+                                                    if UIApplication.shared.canOpenURL(url) {
+                                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
                                                     }
-                                                } else {
-                                                    selectedTab = item
                                                 }
+                                            } else {
+                                                selectedTab = item
                                             }
                                         }
                                     }
@@ -44,9 +42,7 @@ struct TabbarScrollable: View {
                 .padding(4)
                 .background(Color.theme.sonicSilver.opacity(0.12))
                     .onChange(of: selectedTab) { newItem in
-                        withAnimation {
-                            scrollView.scrollTo(newItem, anchor: .center)
-                        }
+                        scrollView.scrollTo(newItem, anchor: .center)
                     }
             }.cornerRadius(5)
             .padding(.horizontal, 16)
