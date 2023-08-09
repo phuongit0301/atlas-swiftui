@@ -54,7 +54,7 @@ struct ItemListScratchPad: View {
             
             if itemList.isEmpty {
                 VStack(alignment: .leading) {
-                    Text("No scratch pad saved. Tap on Add Note to save your first scratch pad.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
+                    Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
                     Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
                 }
                 Spacer()

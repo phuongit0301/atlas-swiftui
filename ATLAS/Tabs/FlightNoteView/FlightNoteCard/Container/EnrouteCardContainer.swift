@@ -43,8 +43,7 @@ struct EnrouteCardContainer: View {
                     showSheet: $showSheet,
                     target: target,
                     resetData: self.resetData
-                ).keyboardAdaptive()
-                    .interactiveDismissDisabled(true)
+                ).interactiveDismissDisabled(true)
             }
     }
     

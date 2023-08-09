@@ -42,8 +42,7 @@ struct EnrouteReferenceContainer: View {
                             showSheet: $showSheet,
                             target: target,
                             resetData: self.resetData
-                        ).keyboardAdaptive()
-                            .interactiveDismissDisabled(true)
+                        ).interactiveDismissDisabled(true)
                     }
                     .breadCrumb(NavigationEnumeration.EnrouteScreen)
             }

@@ -451,12 +451,12 @@ struct FlightPlanSummaryView: View {
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
                         Text("Summary")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.system(size: 20, weight: .semibold))
                         
                         Spacer().frame(maxWidth: .infinity)
                         
                         Button(action: {}) {  // todo add the action here, fix design
-                            Text("Sign-off").foregroundColor(.white).font(.system(size: 15, weight: .regular))
+                            Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
                         }
                         .padding(.vertical, 11)
                         .padding(.horizontal)
@@ -487,10 +487,10 @@ struct FlightPlanSummaryView: View {
                             
                             HStack {
                                 Toggle(isOn: $showUTC) {
-                                    Text("Local").font(.system(size: 15, weight: .regular))
+                                    Text("Local").font(.system(size: 17, weight: .regular))
                                         .foregroundStyle(Color.black)
                                 }
-                                Text("UTC").font(.system(size: 15, weight: .regular))
+                                Text("UTC").font(.system(size: 17, weight: .regular))
                                     .foregroundStyle(Color.black)
                             }.fixedSize(horizontal: true, vertical: false)
                         }) {
@@ -590,7 +590,7 @@ struct FlightPlanSummaryView: View {
                                                 coreDataModel.save()
                                             }
                                             
-                                        }.font(.system(size: 15, weight: .regular))
+                                        }.font(.system(size: 17, weight: .regular))
                                             .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                     }
                                 }
@@ -609,7 +609,7 @@ struct FlightPlanSummaryView: View {
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
                                         .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 15, weight: .regular))
+                                        .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -624,7 +624,7 @@ struct FlightPlanSummaryView: View {
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
                                         .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 15, weight: .regular))
+                                        .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -639,7 +639,7 @@ struct FlightPlanSummaryView: View {
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedDepRwy)
                                         .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 15, weight: .regular))
+                                        .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -654,7 +654,7 @@ struct FlightPlanSummaryView: View {
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedArrRwy)
                                         .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 15, weight: .regular))
+                                        .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -669,7 +669,7 @@ struct FlightPlanSummaryView: View {
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedLevels)
                                         .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 15, weight: .regular))
+                                        .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -682,22 +682,22 @@ struct FlightPlanSummaryView: View {
                             // table body - first row
                             Table(coreDataModel.dataPerfInfo) {
                                 TableColumn("FLT Rules") {
-                                    Text($0.unwrappedFltRules).foregroundColor(.black)
+                                    Text($0.unwrappedFltRules).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("GND Miles") {
-                                    Text($0.unwrappedGndMiles).foregroundColor(.black)
+                                    Text($0.unwrappedGndMiles).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("AIR Miles") {
-                                    Text($0.unwrappedAirMiles).foregroundColor(.black)
+                                    Text($0.unwrappedAirMiles).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("CRZ Comp") {
-                                    Text($0.unwrappedCrzComp).foregroundColor(.black)
+                                    Text($0.unwrappedCrzComp).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("APD") {
-                                    Text($0.unwrappedApd).foregroundColor(.black)
+                                    Text($0.unwrappedApd).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("CI") {
-                                    Text($0.unwrappedCi).foregroundColor(.black)
+                                    Text($0.unwrappedCi).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                             }
                             .frame(minHeight: 65)
@@ -705,10 +705,10 @@ struct FlightPlanSummaryView: View {
                             // table body - changes
                             Table(coreDataModel.perfChangesTable) {
                                 TableColumn("ZFW Change") {
-                                    Text($0.zfwChange).foregroundColor(.black)
+                                    Text($0.zfwChange).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("FL Change") {
-                                    Text($0.lvlChange).foregroundColor(.black)
+                                    Text($0.lvlChange).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                             }
                             .frame(minHeight: 65)
@@ -716,19 +716,19 @@ struct FlightPlanSummaryView: View {
                             // table body - weights
                             Table(coreDataModel.dataPerfWeight) {
                                 TableColumn("Weight") {
-                                    Text($0.unwrappedWeight).foregroundColor(.black)
+                                    Text($0.unwrappedWeight).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("Plan") {
-                                    Text($0.unwrappedPlan).foregroundColor(.black)
+                                    Text($0.unwrappedPlan).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("Actual") {
                                     CustomField(item: $0)
                                 }
                                 TableColumn("Max") {
-                                    Text($0.unwrappedMax).foregroundColor(.black)
+                                    Text($0.unwrappedMax).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("Limitation") {
-                                    Text($0.unwrappedLimitation).foregroundColor(.black)
+                                    Text($0.unwrappedLimitation).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                             }
                             .frame(minHeight: 185)
@@ -736,22 +736,22 @@ struct FlightPlanSummaryView: View {
                         }
                         
                         // MARK: Fuel section
-                        Section(header: Text("FUEL").foregroundStyle(Color.black)) {
+                        Section(header: Text("FUEL").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                             // grouped row using hstack
                             VStack(alignment: .leading, spacing: 0) {
                                 //fuel info table body
                                 Table(coreDataModel.dataFuelTableList) {
                                     TableColumn("") {
-                                        Text($0.unwrappedFirstColumn).foregroundColor(.black).font(.system(size: 15, weight: .regular))
+                                        Text($0.unwrappedFirstColumn).foregroundColor(.black).font(.system(size: 15, weight: .medium))
                                     }.width(420)
                                     TableColumn("Time") {
-                                        Text($0.unwrappedTime).foregroundColor(.black).font(.system(size: 15, weight: .regular))
+                                        Text($0.unwrappedTime).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                     }.width((proxy.size.width - 600) / 3)
                                     TableColumn("Fuel") {
-                                        Text($0.unwrappedFuel).foregroundColor(.black).font(.system(size: 15, weight: .regular))
+                                        Text($0.unwrappedFuel).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                     }.width((proxy.size.width - 600) / 3)
                                     TableColumn("Policy / Reason") {
-                                        Text($0.unwrappedPolicyReason).foregroundColor(.black).font(.system(size: 15, weight: .regular))
+                                        Text($0.unwrappedPolicyReason).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                     }.width((proxy.size.width - 300) / 3)
                                 }
                                 .frame(minHeight: 390)
@@ -766,17 +766,17 @@ struct FlightPlanSummaryView: View {
                                         HStack(alignment: .center) {
                                             Text("(I) Pilot Extra Fuel")
                                                 .frame(width: 420, alignment: .leading)
-                                                .font(.system(size: 15, weight: .regular))
+                                                .font(.system(size: 15, weight: .medium))
                                             Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-                                                .font(.system(size: 15, weight: .regular))
+                                                .font(.system(size: 17, weight: .regular))
                                         
                                             Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-                                                .font(.system(size: 15, weight: .regular))
+                                                .font(.system(size: 17, weight: .regular))
                                         
                                             Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)).frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
-                                                .font(.system(size: 15, weight: .regular))
+                                                .font(.system(size: 17, weight: .regular))
                                                 .lineLimit(nil)
                                         }.padding(.vertical)
                                             .padding(.horizontal, 58)
@@ -797,15 +797,17 @@ struct FlightPlanSummaryView: View {
                                                 HStack(alignment: .center) {
                                                     Text("Included")
                                                         .frame(width: 70, alignment: .leading)
+                                                        .font(.system(size: 15, weight: .medium))
                                                         .padding(.horizontal, 24)
                                                     
                                                     Text("Reason")
                                                         .frame(width: 160, alignment: .leading)
+                                                        .font(.system(size: 15, weight: .medium))
                                                         .padding(.horizontal)
                                                     
                                                     HStack {
-                                                        Text("Statistical")
-                                                        Text("Details")
+                                                        Text("Statistical").font(.system(size: 15, weight: .medium))
+                                                        Text("Details").font(.system(size: 15, weight: .medium))
                                                         .onTapGesture {
                                                             showSheet = true
                                                         }
@@ -814,14 +816,17 @@ struct FlightPlanSummaryView: View {
                                                         .padding(.horizontal)
                                                     
                                                     Text("Pilot Requirement")
+                                                        .font(.system(size: 15, weight: .medium))
                                                         .frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
                                                         .padding(.horizontal)
                                                     
                                                     Text("Calculated Extra Fuel")
+                                                        .font(.system(size: 15, weight: .medium))
                                                         .frame(width: 170, alignment: .leading)
                                                         .padding(.horizontal)
                                                     
                                                     Text("Remarks")
+                                                        .font(.system(size: 15, weight: .medium))
                                                         .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 }.frame(width: proxy.size.width - 50)
                                                     .padding()
@@ -849,10 +854,12 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal, 24)
                                                 
                                                 Text("Arrival Delays").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("+\(String(projDelay))mins").foregroundColor(includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -864,6 +871,7 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 Text("\(calculatedDelayFuel)KG").foregroundColor(coreDataModel.dataFuelExtra.includedArrDelays ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -890,10 +898,12 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal, 24)
                                                 
                                                 Text("Additional taxi").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("+\(String(aveDiffTaxi))mins").foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -905,6 +915,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedTaxiFuel)KG")
                                                     .foregroundColor(includedTaxi ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -930,17 +941,20 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal, 24)
                                                 
                                                 Text("Flight level deviation").foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 if aveDiffLevels < 0 {
                                                     Text("\(String(aveDiffLevels))ft")
                                                         .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                        .font(.system(size: 17, weight: .regular))
                                                         .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                         .padding(.horizontal)
                                                 } else {
                                                     Text("+\(String(aveDiffLevels))ft")
                                                         .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                        .font(.system(size: 17, weight: .regular))
                                                         .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                         .padding(.horizontal)
                                                 }
@@ -952,6 +966,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedFlightLevelFuel)KG")
                                                     .foregroundColor(includedFlightLevel ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
@@ -977,11 +992,13 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("Track shortening savings")
                                                     .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("\(String(sumMINS))mins")
                                                     .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -992,6 +1009,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedTrackShorteningFuel)KG")
                                                     .foregroundColor(includedTrackShortening ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1018,11 +1036,13 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("Enroute weather deviation")
                                                     .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("+\(String(aveDiffEnrWX))mins")
                                                     .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1033,6 +1053,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedEnrWxFuel)KG")
                                                     .foregroundColor(includedEnrWx ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1062,11 +1083,13 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("Reciprocal rwy")
                                                     .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("+/-\(String(reciprocalRwy))mins")
                                                     .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1077,6 +1100,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedReciprocalRwyFuel)KG")
                                                     .foregroundColor(includedReciprocalRwy ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1100,21 +1124,26 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("ZFW Change")
                                                     .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("N.A.")
                                                     .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 HStack {
-                                                    Text("N.A.").foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    Text("N.A.")
+                                                        .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                        .font(.system(size: 17, weight: .regular))
                                                 }.frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("\(calculatedZFWFuel)KG")
                                                     .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1139,11 +1168,13 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("Others")
                                                     .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
                                                 Text("N.A.")
                                                     .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1155,6 +1186,7 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 Text("\(calculatedOthersFuel)KG")
                                                     .foregroundColor(includedOthers ? Color.black : Color.theme.sonicSilver)
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
@@ -1171,11 +1203,11 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal, 24)
                                                 
                                                 Text("Total Extra Fuel")
-                                                    .font(.system(size: 15, weight: .regular))
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 160, alignment: .leading)
                                                 
                                                 Text("\(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
-                                                    .font(.system(size: 15, weight: .regular))
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                         .padding(.leading, 32)
                                                 
@@ -1184,12 +1216,12 @@ struct FlightPlanSummaryView: View {
                                                     .padding(.horizontal)
                                                 
                                                 Text("\(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))KG")
-                                                    .font(.system(size: 15, weight: .regular))
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.leading, 32)
                                                 
                                                 Text("\(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))")
-                                                    .font(.system(size: 15, weight: .regular))
+                                                    .font(.system(size: 17, weight: .regular))
                                                     .lineLimit(nil)
                                                     .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                             }.padding()
@@ -1205,16 +1237,16 @@ struct FlightPlanSummaryView: View {
                                     HStack(alignment: .center) {
                                         Text("Fuel in Tanks (G + H + I)")
                                             .frame(width: 420, alignment: .leading)
-                                            .font(.system(size: 15, weight: .regular))
+                                            .font(.system(size: 15, weight: .medium))
                                         Text("\(fuelInTanksTime)")
                                             .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-                                            .font(.system(size: 15, weight: .regular))
+                                            .font(.system(size: 17, weight: .regular))
                                         Text("\(fuelInTanksFuel)")
                                             .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-                                            .font(.system(size: 15, weight: .regular))
+                                            .font(.system(size: 17, weight: .regular))
                                         Text("")
                                             .frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
-                                            .font(.system(size: 15, weight: .regular))
+                                            .font(.system(size: 17, weight: .regular))
                                     }.padding(.vertical, 32)
                                         .padding(.horizontal, 58)
                                 }.frame(width: proxy.size.width)
@@ -1225,32 +1257,32 @@ struct FlightPlanSummaryView: View {
                         Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                             Table(coreDataModel.dataAltnList) {
                                 TableColumn("ALTN / RWY") {
-                                    Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("RTE") {
-                                    Text($0.unwrappedRte).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedRte).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                         .lineLimit(nil)
                                 }.width(200)
                                 TableColumn("VIS") {
-                                    Text($0.unwrappedVis).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedVis).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("MINIMA") {
-                                    Text($0.unwrappedMinima).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedMinima).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("DIST") {
-                                    Text($0.unwrappedDist).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedDist).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("FL") {
-                                    Text($0.unwrappedFl).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedFl).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("COMP") {
-                                    Text($0.unwrappedComp).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedComp).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("TIME") {
-                                    Text($0.unwrappedTime).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedTime).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("FUEL") {
-                                    Text($0.unwrappedFuel).foregroundStyle(Color.black).font(.system(size: 15, weight: .regular))
+                                    Text($0.unwrappedFuel).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))
                                 }
                             }
                             .frame(minHeight: 350)

@@ -21,8 +21,6 @@ struct TabViewCustom: View {
  
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Rectangle().fill(Color.theme.spanishGray).frame(width: geoWidth, height: 1)
-            
             HStack {
                 ForEach(tabbarItems.indices, id: \.self) { index in
                     VStack {

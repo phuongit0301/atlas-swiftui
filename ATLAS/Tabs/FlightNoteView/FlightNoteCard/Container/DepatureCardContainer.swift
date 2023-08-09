@@ -44,8 +44,7 @@ struct DepartureCardContainer: View {
                     showSheet: $showSheet,
                     target: target,
                     resetData: self.resetData
-                ).keyboardAdaptive()
-                    .interactiveDismissDisabled(true)
+                ).interactiveDismissDisabled(true)
             }
     }
     

@@ -46,7 +46,7 @@ struct AISearchView: View {
                             if showLoading {
                                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black))
                             }
-                            TextField("Search", text: $txtSearch)
+                            TextField("Enter your search query here", text: $txtSearch)
                                 .onSubmit {
                                     if txtSearch != "" {
                                         message = ""
@@ -55,7 +55,7 @@ struct AISearchView: View {
                                 }
                                 .returnKeyAutomaticallyEnable(enable: true)
                                 .submitLabel(.search)
-                                .font(.custom("Inter-Regular", size: 16))
+                                .font(.system(size: 15))
                                 .padding(13)
                                 .frame(maxWidth: .infinity, maxHeight: 48)
                         }.padding(.horizontal, 12)
@@ -78,7 +78,7 @@ struct AISearchView: View {
                             }
                         } else {
                             VStack(alignment: .leading) {
-                                Text("Response is generated here").font(.system(size: 17, weight: .regular)).foregroundColor(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                                Text("Response is generated here").font(.system(size: 17, weight: .regular)).foregroundColor(message != "" ? Color.black : Color.theme.gray).frame(maxWidth: .infinity, alignment: .leading)
                             }.padding()
                         }
                         Spacer()

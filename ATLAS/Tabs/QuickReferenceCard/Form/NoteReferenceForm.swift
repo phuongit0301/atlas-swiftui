@@ -72,7 +72,7 @@ struct NoteReferenceForm: View {
                             TextField("Tap in this space to type or edit", text: $textNote, axis: .vertical)
                                 .padding(.vertical, 10)
                                 .frame(width: geo.size.width - 64 > 0 ? geo.size.width - 64 : geo.size.width, alignment: .leading)
-                                .lineLimit(8, reservesSpace: true)
+                                .lineLimit(6, reservesSpace: true)
                             
                             
                             if tagList.count > 0 {
@@ -94,7 +94,7 @@ struct NoteReferenceForm: View {
                     .padding()
 
                 }.background(Color.theme.platinum)
-                    .frame(height: geo.size.height)
+                    .keyboardAdaptive()
             }.cornerRadius(8)
                 .background(.white)
                 .frame(maxHeight: .infinity)
