@@ -41,8 +41,7 @@ struct FlightPlanNOTAMSplitView: View {
                             HStack {
                                 Toggle(isOn: $isSortDateDep) {
                                     Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }
-                                Spacer()
+                                }.fixedSize()
                                 Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
@@ -80,8 +79,7 @@ struct FlightPlanNOTAMSplitView: View {
                             HStack {
                                 Toggle(isOn: $isSortDateEnr) {
                                     Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }
-                                Spacer()
+                                }.fixedSize()
                                 Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
@@ -119,8 +117,7 @@ struct FlightPlanNOTAMSplitView: View {
                             HStack {
                                 Toggle(isOn: $isSortDateArr) {
                                     Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }
-                                Spacer()
+                                }.fixedSize()
                                 Text("Most Recent").font(.system(size: 12, weight: .regular))
                             }
                         }
