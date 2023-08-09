@@ -83,7 +83,7 @@ struct HomeView: View {
                         }
 
                 }
-                .background(Color.theme.sonicSilver.opacity(0.12))
+//                .background(Color.theme.sonicSilver.opacity(0.12))
                 .hasTabbar()
                 .hasToolbar()
             }

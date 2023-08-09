@@ -65,6 +65,12 @@ struct ListFlightInformationModel {
     }()
 }
 
+class ScreenReferenceModel: ObservableObject {
+    @Published var isActive: Bool = false
+    @Published var selectedItem: ListFlightInformationItem?
+    @Published var isTable: Bool = false
+}
+
 struct ListReferenceModel {
     let ListItem = {
         let MainItem = [

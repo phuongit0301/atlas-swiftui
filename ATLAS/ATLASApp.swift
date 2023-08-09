@@ -21,6 +21,7 @@ struct ATLASApp: App {
     @StateObject var coreDataModel = CoreDataModelState()
     @StateObject var viewModelSummary = ViewModelSummary()
     @StateObject var flightPlanDetailModel = FlightPlanDetailModel()
+    @StateObject var refModel = ScreenReferenceModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -48,6 +49,7 @@ struct ATLASApp: App {
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)
+                .environmentObject(refModel)
                 .task {
                     coreDataModel.loading = true
 //                    await coreDataModel.checkAndSyncDataNote()

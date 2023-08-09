@@ -268,7 +268,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             AircraftReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
             
@@ -288,7 +288,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             DepatureReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -298,7 +298,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             EnrouteReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -308,7 +308,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             ArrivalReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -336,7 +336,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             FlightInformationDetailView()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -346,7 +346,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             FlightPlanNOTAMReferenceView()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbNotamRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -356,6 +356,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             ScratchPadView()
                 .navigationBarBackButtonHidden()
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -440,7 +441,6 @@ func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(
         TableDetail(row: item)
             .navigationBarBackButtonHidden()
-            .navigationBarHidden(true)
             .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
             .ignoresSafeArea()
     )
@@ -546,6 +546,7 @@ public struct HasTabbar: ViewModifier {
 }
 
 public struct BreadCrumbNotamRef: ViewModifier {
+    @EnvironmentObject var refState: ScreenReferenceModel
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
     var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
@@ -555,7 +556,9 @@ public struct BreadCrumbNotamRef: ViewModifier {
             HStack {
                 HStack {
                     Button {
-                        dismiss()
+                        refState.isActive = false
+                        refState.selectedItem = nil
+                        refState.isTable = false
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {
@@ -580,6 +583,7 @@ public struct BreadCrumbNotamRef: ViewModifier {
 }
 
 public struct BreadCrumbRef: ViewModifier {
+    @EnvironmentObject var refState: ScreenReferenceModel
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
     var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
@@ -590,7 +594,9 @@ public struct BreadCrumbRef: ViewModifier {
 
                 HStack(alignment: .center) {
                     Button {
-                        dismiss()
+                        refState.isActive = false
+                        refState.selectedItem = nil
+                        refState.isTable = false
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {

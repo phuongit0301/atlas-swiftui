@@ -49,10 +49,12 @@ struct MainView: View {
                 BottomTabs()
             }
         } else {
-            NavigationView {
+            NavigationSplitView(columnVisibility: $columnVisibility) {
                 Sidebar()
+            } detail: {
                 HomeView()
             }.accentColor(Color.theme.tuftsBlue)
+                
         }
     }
 }
