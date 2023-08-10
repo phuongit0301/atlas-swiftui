@@ -627,7 +627,7 @@ struct FlightPlanArrView: View {
                         }
                         
                         // ATC section
-                        Section(header: Text("ATC").foregroundStyle(Color.black)) {
+                        Section(header: Text("ATC").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {
                                 HStack(alignment: .center) {
@@ -770,7 +770,7 @@ struct FlightPlanArrView: View {
                             }.id("arrAtc")
                         }
                         // Entries section
-                        Section(header: Text("Entries").foregroundStyle(Color.black)) {
+                        Section(header: Text("Entries").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {
                                 HStack(alignment: .center) {

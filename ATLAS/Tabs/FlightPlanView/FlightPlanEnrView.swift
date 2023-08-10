@@ -71,7 +71,10 @@ struct FlightPlanEnrView: View {
                 //scrollable outer list section
                 List {
                     // waypoints section
-                    Section(header:Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
+                    Section(header: HStack {
+                        Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black).padding(.leading, -12)
+                        Spacer()
+                    }) {
                         // table
                         HStack {
                             Group {
