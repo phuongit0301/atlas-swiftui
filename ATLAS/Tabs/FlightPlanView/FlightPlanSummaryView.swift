@@ -521,7 +521,7 @@ struct FlightPlanSummaryView: View {
                                             Text("\(coreDataModel.dataSummaryInfo.unwrappedStaUTC)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                             Text("\(coreDataModel.dataSummaryInfo.unwrappedBlkTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                             Text("\(coreDataModel.dataSummaryInfo.unwrappedFltTime)").frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
-                                        }.font(.system(size: 15, weight: .regular))
+                                        }.font(.system(size: 17, weight: .regular))
                                         Group {
                                             // entry here
                                             TextField(
@@ -542,7 +542,7 @@ struct FlightPlanSummaryView: View {
                                                 }
                                                 coreDataModel.save()
                                             }
-                                        }.font(.system(size: 15, weight: .regular))
+                                        }.font(.system(size: 17, weight: .regular))
                                             .frame(width: calculateWidth(proxy.size.width - 65, 9), alignment: .leading)
                                     }
                                 }
