@@ -45,7 +45,6 @@ struct PreviousSearchView: View {
                     }
                 }
             }.listStyle(.plain)
-                .navigationBarHidden(true)
         }
     }
     

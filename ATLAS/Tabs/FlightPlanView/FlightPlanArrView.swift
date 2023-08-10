@@ -161,7 +161,7 @@ struct FlightPlanArrView: View {
                                 isEditingDest = editing
                             })
                             .focused($isTextFieldDestFocused)
-                            .font(.system(size: 17, weight: .regular))
+                            .font(.system(size: 15, weight: .semibold))
                         }) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {

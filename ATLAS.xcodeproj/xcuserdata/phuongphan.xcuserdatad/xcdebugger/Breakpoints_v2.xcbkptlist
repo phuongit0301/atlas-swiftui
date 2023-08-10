@@ -5263,8 +5263,8 @@
             filePath = "ATLAS/Tabs/AISearchView/PreviousSearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "onUpdate(_:)"
             landmarkType = "7">
          </BreakpointContent>

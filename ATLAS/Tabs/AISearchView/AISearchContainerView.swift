@@ -17,11 +17,10 @@ struct AISearchContainerView: View {
                 TabView(selection: $selectedIndex, content: {
                     AISearchView().tag(0)
                     PreviousSearchView().tag(1)
-                }).background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.white)
-                    )
-                    .cornerRadius(8)
-                    .padding()
+                }).background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                    .padding(.horizontal)
+                    .padding(.top)
                 TabViewCustom(tabbarItems: ["Search", "Previous Searches"], geoWidth: proxy.size.width, selectedIndex: $selectedIndex)
             }
         }

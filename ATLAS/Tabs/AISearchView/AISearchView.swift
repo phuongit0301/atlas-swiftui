@@ -90,6 +90,7 @@ struct AISearchView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(.white, lineWidth: 1)
                     )
+                    .padding(.bottom, 16)
                     
                     HStack {
 //                        HStack {
@@ -251,9 +252,7 @@ struct AISearchView: View {
                 }
             }.padding(16)
                 .background(Color.white)
-                .cornerRadius(8)
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        }.padding(16)
+        }
         
     }
     
