@@ -85,7 +85,7 @@ struct FlightPlanMETARTAFView: View {
                                     }
                                 }
                             }
-                        }.padding(.leading, 25)
+                        }
                     }
                     
                     // Dep TAF section
@@ -110,7 +110,6 @@ struct FlightPlanMETARTAFView: View {
                                     }
                                 }
                             }
-                            .padding(.leading, 25)
                         }
                     }
                     // Arr METAR section
@@ -135,7 +134,7 @@ struct FlightPlanMETARTAFView: View {
                                     }
                                 }
                             }
-                        }.padding(.leading, 25)
+                        }
                     }
                     // Arr TAF section
                     Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
@@ -159,7 +158,7 @@ struct FlightPlanMETARTAFView: View {
                                     }
                                 }
                             }
-                        }.padding(.leading, 25)
+                        }
                     }
                     // ALTN TAF section
                     Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
@@ -176,6 +175,8 @@ struct FlightPlanMETARTAFView: View {
                         }
                         .frame(minHeight: 350)
                         .scrollDisabled(true)
+                        .listStyle(.insetGrouped)
+                        .listRowInsets((EdgeInsets(.init(top: 0, leading: -10, bottom: 0, trailing: 0))))
                     }
                 }
             }

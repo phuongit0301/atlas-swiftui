@@ -207,12 +207,11 @@ struct FlightPlanDepView: View {
                                     Text("Remarks")
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                                .padding(.top, 5)
-                                .padding(.bottom, 5)
-                                .padding(.leading, 25)
+                                }.padding(.top, 5)
+                                    .padding(.bottom, 5)
+                                
                                 Divider()
-                                    .padding(.leading, 25)
+                                
                                 HStack(alignment: .center) {
                                     Group {
                                         TextField("Code", text: $code)
@@ -579,7 +578,6 @@ struct FlightPlanDepView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                             }.id("atis")
                         }.onChange(of: coreDataModel.dataDepartureAtis) { _ in
                             coreDataModel.readDepartureAtis()
@@ -772,8 +770,7 @@ struct FlightPlanDepView: View {
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
                                 
-                            }.padding(.horizontal, 25)
-                                .frame(maxWidth: proxy.size.width - 50)
+                            }.frame(maxWidth: proxy.size.width - 50)
                             
                         }.onChange(of: coreDataModel.dataDepartureAtc) { _ in
                             coreDataModel.readDepartureAtc()
@@ -859,8 +856,7 @@ struct FlightPlanDepView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                            }.padding(.horizontal, 25)
-                                .frame(maxWidth: proxy.size.width - 50)
+                            }.frame(maxWidth: proxy.size.width - 50)
                         }.onChange(of: coreDataModel.dataDepartureEntries) { _ in
                             coreDataModel.readDepartureEntries()
                         }.id("entries")

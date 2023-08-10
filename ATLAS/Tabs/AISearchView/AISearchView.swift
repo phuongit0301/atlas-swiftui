@@ -79,7 +79,8 @@ struct AISearchView: View {
                         } else {
                             VStack(alignment: .leading) {
                                 Text("Response is generated here").font(.system(size: 17, weight: .regular)).foregroundColor(message != "" ? Color.black : Color.theme.gray).frame(maxWidth: .infinity, alignment: .leading)
-                            }.padding()
+                            }.padding(.vertical)
+                                .padding(.horizontal, 24)
                         }
                         Spacer()
                     }.frame(maxWidth: .infinity, maxHeight: .infinity)

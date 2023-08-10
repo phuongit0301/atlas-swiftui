@@ -69,7 +69,7 @@ struct ScratchPadEditForm: View {
                         Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
                         Spacer()
                     }
-                }.frame(height: geo.size.height)
+                }.keyboardAdaptive()
             }.frame(maxHeight: .infinity)
                 .onAppear {
                     if currentIndex > -1 {

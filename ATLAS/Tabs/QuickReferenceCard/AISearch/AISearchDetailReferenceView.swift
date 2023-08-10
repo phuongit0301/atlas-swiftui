@@ -11,6 +11,7 @@ import SwiftUI
 struct AISearchDetailReferenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var aiSearchState: AISearchModelState
     
     @State var index: Int = 0
     
@@ -33,10 +34,11 @@ struct AISearchDetailReferenceView: View {
                         coreDataModel.dataAISearch = coreDataModel.readAISearch()
                         coreDataModel.dataAISearchFavorite = coreDataModel.readAISearch(target: true)
                         index = 0
-                        presentationMode.wrappedValue.dismiss()
+                        aiSearchState.currentIndex = -1
+//                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                    })
+                    }).buttonStyle(PlainButtonStyle())
                 }
             }
             
@@ -50,10 +52,7 @@ struct AISearchDetailReferenceView: View {
         }.background(
             RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.white)
         )
-        .cornerRadius(8)
-        .padding()
         .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
     }
 }
 
@@ -79,5 +78,6 @@ struct AIButton: View {
                     .scaledToFit()
                     .aspectRatio(contentMode: .fit)
         }).padding(.horizontal)
+            .buttonStyle(PlainButtonStyle())
     }
 }

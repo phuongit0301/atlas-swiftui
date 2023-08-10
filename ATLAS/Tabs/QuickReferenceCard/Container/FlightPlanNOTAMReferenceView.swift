@@ -68,6 +68,7 @@ struct FlightPlanNOTAMReferenceView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
@@ -112,6 +113,7 @@ struct FlightPlanNOTAMReferenceView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
@@ -156,6 +158,7 @@ struct FlightPlanNOTAMReferenceView: View {
                                             Image(systemName: "star").foregroundColor(Color.theme.azure)
                                         }
                                     }.fixedSize()
+                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }

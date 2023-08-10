@@ -37,8 +37,7 @@ struct ScratchPadView: View {
                             currentIndex: $currentIndex,
                             showSheet: $showSheet,
                             resetData: self.resetData
-                        ).keyboardAdaptive()
-                            .interactiveDismissDisabled(true)
+                        ).interactiveDismissDisabled(true)
                     }
                     .sheet(isPresented: $showSheetEdit) {
                         ScratchPadEditForm(
@@ -47,8 +46,7 @@ struct ScratchPadView: View {
                             showSheetEdit: $showSheetEdit,
                             resetData: self.resetData,
                             pasteboard: $pasteboard
-                        ).keyboardAdaptive()
-                            .interactiveDismissDisabled(true)
+                        ).interactiveDismissDisabled(true)
                     }
             }
         }

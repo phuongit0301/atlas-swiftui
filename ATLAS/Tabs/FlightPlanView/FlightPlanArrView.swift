@@ -207,9 +207,9 @@ struct FlightPlanArrView: View {
                                 } // todo correct design and spacing
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
+                                
                                 Divider()
-                                    .padding(.leading, 25)
+                                
                                 HStack(alignment: .center) {
                                     TextField("Dest", text: $dest)
                                         .focused($isTextFieldDestFocused)
@@ -616,7 +616,6 @@ struct FlightPlanArrView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                             }.id("arrAtis")
                         }
                         
@@ -642,9 +641,9 @@ struct FlightPlanArrView: View {
                                 } // todo correct design and spacing
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
+                                
                                 Divider()
-                                    .padding(.leading, 25)
+                                
                                 HStack(alignment: .center) {
                                     Group {
                                         TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $atcDest)
@@ -759,7 +758,6 @@ struct FlightPlanArrView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                             }.id("arrAtc")
                         }
                         // Entries section
@@ -781,9 +779,9 @@ struct FlightPlanArrView: View {
                                 } // todo correct design and spacing
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
+
                                 Divider()
-                                    .padding(.leading, 25)
+
                                 HStack(alignment: .center) {
                                     Group {
                                         HStack {
@@ -829,7 +827,6 @@ struct FlightPlanArrView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                             }.id("arrEntries")
                         }
                     }

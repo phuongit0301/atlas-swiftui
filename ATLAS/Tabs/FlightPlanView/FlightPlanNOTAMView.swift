@@ -53,7 +53,7 @@ struct FlightPlanNOTAMView: View {
                     ForEach(arrDepNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(item.unwrappedNotam).padding(.leading, 25)
+                            Text(item.unwrappedNotam)
                             Spacer()
                             // star function to add to reference
                             Button(action: {
@@ -68,6 +68,7 @@ struct FlightPlanNOTAMView: View {
                                     Image(systemName: "star").foregroundColor(Color.theme.azure)
                                 }
                             }.fixedSize()
+                                .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
@@ -93,7 +94,7 @@ struct FlightPlanNOTAMView: View {
                     ForEach(arrEnrNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(item.unwrappedNotam).padding(.leading, 25)
+                            Text(item.unwrappedNotam)
                             Spacer()
                             // star function to add to reference
                             Button(action: {
@@ -108,6 +109,7 @@ struct FlightPlanNOTAMView: View {
                                     Image(systemName: "star").foregroundColor(Color.theme.azure)
                                 }
                             }.fixedSize()
+                                .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
@@ -134,7 +136,7 @@ struct FlightPlanNOTAMView: View {
                     ForEach(arrArrNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(item.unwrappedNotam).padding(.leading, 25)
+                            Text(item.unwrappedNotam)
                             Spacer()
                             // star function to add to reference
                             Button(action: {
@@ -149,6 +151,7 @@ struct FlightPlanNOTAMView: View {
                                     Image(systemName: "star").foregroundColor(Color.theme.azure)
                                 }
                             }.fixedSize()
+                                .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }

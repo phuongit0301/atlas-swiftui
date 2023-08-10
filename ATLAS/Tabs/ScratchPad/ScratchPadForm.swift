@@ -94,7 +94,7 @@ struct ScratchPadForm: View {
                     .padding()
                     
                 }.background(Color.theme.platinum)
-                    .frame(height: geo.size.height)
+                    .keyboardAdaptive()
             }.cornerRadius(8)
                 .background(.white)
                 .frame(maxHeight: .infinity)

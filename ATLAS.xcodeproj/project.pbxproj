@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E024D8D2A848A730066C8E3 /* ReferenceModel.swift */; };
 		3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */; };
 		3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C64C2A15D4D80099ACA3 /* Color.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
@@ -259,6 +260,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E024D8D2A848A730066C8E3 /* ReferenceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceModel.swift; sourceTree = "<group>"; };
 		3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
 		3E03C64C2A15D4D80099ACA3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */,
 				3E351CD62A17C02700207FF1 /* FlightPageModel.swift */,
 				3E3FCC4F2A28822A008017FA /* NavigationModel.swift */,
+				3E024D8D2A848A730066C8E3 /* ReferenceModel.swift */,
 				3EFA5EEE2A3D5D8C001ED6CF /* FlightPlanModel.swift */,
 				3E766FA22A5EEFDA00B11616 /* FuelModel.swift */,
 				3E766FA82A5F917100B11616 /* AISearchModel.swift */,
@@ -1325,6 +1328,7 @@
 				3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
 				3E5AF63C2A18BCB500A97ECF /* NavView.swift in Sources */,
 				3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */,
+				3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */,
 				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,

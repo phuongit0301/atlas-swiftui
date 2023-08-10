@@ -88,6 +88,7 @@ struct ItemListScratchPad: View {
                                 }
                             }.id(UUID())
                             .padding(12)
+                            .contentShape(Rectangle())
                             .frame(maxWidth: geoWidth, alignment: .leading)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())

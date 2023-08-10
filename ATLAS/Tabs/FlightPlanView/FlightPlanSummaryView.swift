@@ -613,9 +613,8 @@ struct FlightPlanSummaryView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                                 
-                                Divider().padding(.leading, 25)
+                                Divider()
                                 
                                 HStack(alignment: .center) {
                                     Text("Route")
@@ -628,9 +627,8 @@ struct FlightPlanSummaryView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                                 
-                                Divider().padding(.leading, 25)
+                                Divider()
                                 
                                 HStack(alignment: .center) {
                                     Text("Planned Dep Rwy")
@@ -643,9 +641,8 @@ struct FlightPlanSummaryView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                                 
-                                Divider().padding(.leading, 25)
+                                Divider()
                                 
                                 HStack(alignment: .center) {
                                     Text("Planned Arr Rwy")
@@ -658,9 +655,8 @@ struct FlightPlanSummaryView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                                 
-                                Divider().padding(.leading, 25)
+                                Divider()
                                 
                                 HStack(alignment: .center) {
                                     Text("Planned levels")
@@ -673,7 +669,6 @@ struct FlightPlanSummaryView: View {
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
-                                .padding(.leading, 25)
                             }
                         }
                         
@@ -701,6 +696,8 @@ struct FlightPlanSummaryView: View {
                                 }
                             }
                             .frame(minHeight: 65)
+                            .listStyle(.insetGrouped)
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                             // table body - changes
                             Table(coreDataModel.perfChangesTable) {
@@ -712,6 +709,8 @@ struct FlightPlanSummaryView: View {
                                 }
                             }
                             .frame(minHeight: 65)
+                            .listStyle(.insetGrouped)
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                             // table body - weights
                             Table(coreDataModel.dataPerfWeight) {
@@ -732,6 +731,8 @@ struct FlightPlanSummaryView: View {
                                 }
                             }
                             .frame(minHeight: 185)
+                            .listStyle(.insetGrouped)
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                         }
                         
@@ -757,6 +758,8 @@ struct FlightPlanSummaryView: View {
                                 .frame(minHeight: 390)
                                 .scrollDisabled(true)
                             }.listRowSeparator(.hidden)
+                                .listStyle(.insetGrouped)
+                                .listRowInsets((EdgeInsets(.init(top: 10, leading: 0, bottom: 0, trailing: 0))))
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 // extra fuel section
@@ -767,6 +770,7 @@ struct FlightPlanSummaryView: View {
                                             Text("(I) Pilot Extra Fuel")
                                                 .frame(width: 420, alignment: .leading)
                                                 .font(.system(size: 15, weight: .medium))
+                                                .padding(.leading, 16)
                                             Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
@@ -779,7 +783,6 @@ struct FlightPlanSummaryView: View {
                                                 .font(.system(size: 17, weight: .regular))
                                                 .lineLimit(nil)
                                         }.padding(.vertical)
-                                            .padding(.horizontal, 58)
                                     }.background(Color.theme.azure.opacity(0.12))
                                         .frame(width: proxy.size.width)
                                 }.onTapGesture {
@@ -1230,7 +1233,7 @@ struct FlightPlanSummaryView: View {
                                             .frame(width: proxy.size.width)
                                     } // end VStack
                                 }// end collapsible
-                            }
+                            }.listRowInsets((EdgeInsets(.init(top: 0, leading: -16, bottom: 0, trailing: 0))))
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .center) {
@@ -1247,10 +1250,11 @@ struct FlightPlanSummaryView: View {
                                         Text("")
                                             .frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
                                             .font(.system(size: 17, weight: .regular))
-                                    }.padding(.vertical, 32)
-                                        .padding(.horizontal, 58)
+                                    }.padding(.vertical)
                                 }.frame(width: proxy.size.width)
                             }.listRowBackground(Color.theme.sonicSilver.opacity(0.12))
+                                .listRowInsets(EdgeInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)))
+                            
                         }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
                         
                         // ALTN section
@@ -1286,6 +1290,8 @@ struct FlightPlanSummaryView: View {
                                 }
                             }
                             .frame(minHeight: 350)
+                            .listStyle(.insetGrouped)
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                         }
                         
