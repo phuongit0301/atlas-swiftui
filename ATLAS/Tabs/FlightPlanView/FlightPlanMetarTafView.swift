@@ -29,7 +29,7 @@ struct FlightPlanMETARTAFView: View {
                 // fixed header section, todo clean up design
                 HStack(alignment: .center) {
                     Text("METAR / TAF")
-                        .font(.title)
+                        .font(.system(size: 20, weight: .semibold))
                         .padding(.leading, 30)
                     Spacer()
                     Button(action: {
@@ -58,30 +58,36 @@ struct FlightPlanMETARTAFView: View {
                 .padding(.bottom, 10)
                 
                 Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
+                    .font(.system(size: 15, weight: .semibold))
                     .padding(.leading, 30)
                     .padding(.bottom, 10)
                 
                 //scrollable outer list section
                 List {
                     // Dep METAR section
-                    Section(header: Text("DEP METAR | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
+                    Section(header: Text("DEP METAR | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)")
+                        .font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedDepMetar.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if let number = Int(word), number < 3000 {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else {
-                                        Text(word)
+                                        Text(word).font(.system(size: 17, weight: .regular))
                                     }
                                 }
                             }
@@ -89,82 +95,94 @@ struct FlightPlanMETARTAFView: View {
                     }
                     
                     // Dep TAF section
-                    Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").foregroundStyle(Color.black)) {
+                    Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedDepTaf.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if let number = Int(word), number < 3000 {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else {
-                                        Text(word)
+                                        Text(word).font(.system(size: 17, weight: .regular))
                                     }
                                 }
                             }
                         }
                     }
                     // Arr METAR section
-                    Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
+                    Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedArrMetar.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if let number = Int(word), number < 3000 {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else {
-                                        Text(word)
+                                        Text(word).font(.system(size: 17, weight: .regular))
                                     }
                                 }
                             }
                         }
                     }
                     // Arr TAF section
-                    Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").foregroundStyle(Color.black)) {
+                    Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedArrTaf.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if let number = Int(word), number < 3000 {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.red)
                                     } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
                                         Text(word)
+                                            .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(.green)
                                     } else {
-                                        Text(word)
+                                        Text(word).font(.system(size: 17, weight: .regular))
                                     }
                                 }
                             }
                         }
                     }
                     // ALTN TAF section
-                    Section(header: Text("ALTN TAF").foregroundStyle(Color.black)) {
+                    Section(header: Text("ALTN TAF").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         Table(coreDataModel.dataAltnTaf) {
                             TableColumn("ALTN / RWY") {
-                                Text($0.unwrappedAltnRwy).foregroundColor(.black)
+                                Text($0.unwrappedAltnRwy).font(.system(size: 17, weight: .regular)).foregroundColor(.black)
                             }
                             TableColumn("ETA") {
                                 Text($0.unwrappedEta).font(.system(size: 17, weight: .regular)).foregroundColor(.black)

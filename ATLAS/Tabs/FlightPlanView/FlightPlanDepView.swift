@@ -171,40 +171,52 @@ struct FlightPlanDepView: View {
                                 HStack(alignment: .center) {
                                     Group {
                                         Text("Code")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Time")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Rwy")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Trans Lvl")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Wind")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Vis")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Wx")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Cloud")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Temp")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("DP")
+                                            .font(.system(size: 15, weight: .medium))
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                     Text("QNH")
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text("Remarks")
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }.padding(.top, 5)
@@ -271,7 +283,7 @@ struct FlightPlanDepView: View {
                                                     isTextFieldRwyFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Rwy", text: $rwy)
                                             .focused($isTextFieldRwyFocused)
@@ -328,7 +340,7 @@ struct FlightPlanDepView: View {
                                                     isTextFieldWindFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField( "Wind", text: $wind)
                                             .focused($isTextFieldWindFocused)
@@ -385,7 +397,7 @@ struct FlightPlanDepView: View {
                                                     isTextFieldWxFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Wx", text: $wx)
                                             .focused($isTextFieldWxFocused)
@@ -454,7 +466,7 @@ struct FlightPlanDepView: View {
                                                     isShowingAutofillOptionsCloud = false
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Temp", text: $temp)
                                             .focused($isTextFieldTempFocused)
@@ -511,7 +523,7 @@ struct FlightPlanDepView: View {
                                                     isTextFieldQNHFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("QNH", text: $qnh)
                                             .focused($isTextFieldQNHFocused)
@@ -574,7 +586,7 @@ struct FlightPlanDepView: View {
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -611,14 +623,16 @@ struct FlightPlanDepView: View {
                                         Text("SQ")
                                             .foregroundStyle(Color.blue)
                                             .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                    }
+                                    }.font(.system(size: 15, weight: .medium))
                                 }.padding(.top, 5)
                                     .padding(.bottom, 5)
                                 
                                 Divider()
                                 
                                 HStack(alignment: .center) {
-                                    Text("\(coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
+                                    Text("\(coreDataModel.dataSummaryInfo.unwrappedDest)")
+                                        .font(.system(size: 17, weight: .regular))
+                                        .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                     Group {
                                         TextField("Rwy", text: $atcRwy)
                                             .focused($isTextFieldAtcRwyFocused)
@@ -670,7 +684,7 @@ struct FlightPlanDepView: View {
                                                 
                                                 coreDataModel.save()
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Rte", text: $atcRte)
                                             .focused($isTextFieldAtcRteFocused)
@@ -736,8 +750,9 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .frame(width: calculateWidth(proxy.size.width, 6))
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     TextField("SQ", text: $atcSQ)
+                                        .font(.system(size: 17, weight: .regular))
                                         .focused($isTextFieldAtcSQFocused)
                                         .onReceive(Just(isTextFieldAtcSQFocused)) { focused in
                                             if focused {
@@ -797,7 +812,7 @@ struct FlightPlanDepView: View {
                                         Text("Takeoff")
                                             .foregroundStyle(Color.blue)
                                             .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
-                                    }
+                                    }.font(.system(size: 15, weight: .medium))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -841,7 +856,7 @@ struct FlightPlanDepView: View {
                                                 }
                                             }
                                             .frame(width: calculateWidth(proxy.size.width, 4))
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         HStack {
                                             ButtonDateStepper(onToggle: onTaxi, value: $currentDateTaxi, suffix: "").fixedSize()
@@ -852,7 +867,7 @@ struct FlightPlanDepView: View {
                                             ButtonDateStepper(onToggle: onTakeOff, value: $currentDateTakeOff, suffix: "").fixedSize()
                                             Spacer()
                                         }.frame(width: calculateWidth(proxy.size.width, 4))
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)

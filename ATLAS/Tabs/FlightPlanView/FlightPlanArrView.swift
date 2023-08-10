@@ -141,13 +141,14 @@ struct FlightPlanArrView: View {
                     // fixed header section, todo clean up design
                     HStack(alignment: .center) {
                         Text("Arrival")
-                            .font(.title)
+                            .font(.system(size: 20, weight: .semibold))
                             .padding(.leading, 30)
                     }
                     .padding(.bottom, 10)
                     Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
                         .padding(.leading, 30)
                         .padding(.bottom, 10)
+                        .font(.system(size: 15, weight: .semibold))
                     //scrollable outer list section
                     // todo implement coredata into code
                     List {
@@ -155,10 +156,12 @@ struct FlightPlanArrView: View {
                         Section(header:
                                     HStack {
                             Text("ATIS").foregroundStyle(Color.black)
+                                .font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                             TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $dest, onEditingChanged: { editing in
                                 isEditingDest = editing
                             })
                             .focused($isTextFieldDestFocused)
+                            .font(.system(size: 17, weight: .regular))
                         }) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {
@@ -194,14 +197,17 @@ struct FlightPlanArrView: View {
                                         Text("Temp")
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                    }
+                                    }.font(.system(size: 15, weight: .medium))
                                     Text("DP")
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text("QNH")
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text("Remarks")
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 } // todo correct design and spacing
@@ -212,6 +218,7 @@ struct FlightPlanArrView: View {
                                 
                                 HStack(alignment: .center) {
                                     TextField("Dest", text: $dest)
+                                        .font(.system(size: 17, weight: .regular))
                                         .focused($isTextFieldDestFocused)
                                         .onReceive(Just(isTextFieldDestFocused)) { focused in
                                             if focused {
@@ -299,7 +306,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldRwyFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Rwy", text: $rwy)
                                             .focused($isTextFieldRwyFocused)
@@ -358,7 +365,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldWindFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField( "Wind", text: $wind)
                                             .focused($isTextFieldWindFocused)
@@ -417,7 +424,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldWxFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Wx", text: $wx)
                                             .focused($isTextFieldWxFocused)
@@ -488,7 +495,7 @@ struct FlightPlanArrView: View {
                                                     isShowingAutofillOptionsCloud = false
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("Temp", text: $temp)
                                             .focused($isTextFieldTempFocused)
@@ -547,7 +554,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldQNHFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                     Group {
                                         TextField("QNH", text: $qnh)
                                             .focused($isTextFieldQNHFocused)
@@ -612,7 +619,7 @@ struct FlightPlanArrView: View {
                                                     isShowingAutofillOptionsRemarks = false
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -637,7 +644,7 @@ struct FlightPlanArrView: View {
                                         Text("Trans Lvl")
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                    }
+                                    }.font(.system(size: 15, weight: .medium))
                                 } // todo correct design and spacing
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -647,6 +654,7 @@ struct FlightPlanArrView: View {
                                 HStack(alignment: .center) {
                                     Group {
                                         TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $atcDest)
+                                            .font(.system(size: 17, weight: .regular))
                                             .focused($isTextFieldAtcDestFocused)
                                             .onReceive(Just(isTextFieldAtcDestFocused)) { focused in
                                                 if focused {
@@ -676,6 +684,7 @@ struct FlightPlanArrView: View {
                                             }
                                         
                                         TextField("Rwy", text: $atcRwy)
+                                            .font(.system(size: 17, weight: .regular))
                                             .focused($isTextFieldAtcRwyFocused)
                                             .onReceive(Just(isTextFieldAtcRwyFocused)) { focused in
                                                 if focused {
@@ -754,7 +763,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldAtcDestFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -775,7 +784,7 @@ struct FlightPlanArrView: View {
                                         Text("Fuel on Chocks")
                                             .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                    }
+                                    }.font(.system(size: 15, weight: .medium))
                                 } // todo correct design and spacing
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -823,7 +832,7 @@ struct FlightPlanArrView: View {
                                                     isTextFieldEntLdgFocused = true
                                                 }
                                             }
-                                    }
+                                    }.font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)

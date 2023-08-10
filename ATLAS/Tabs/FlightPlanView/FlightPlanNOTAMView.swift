@@ -23,12 +23,13 @@ struct FlightPlanNOTAMView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
                 Text("NOTAMS")
-                    .font(.title)
+                    .font(.system(size: 20, weight: .semibold))
                     .padding(.leading, 30)
             }
             .padding(.bottom, 10)
             
             Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
+                .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 30)
                 .padding(.bottom, 10)
             //scrollable outer list section
@@ -36,16 +37,16 @@ struct FlightPlanNOTAMView: View {
                 // Dep NOTAM section
                 Section(header:
                     HStack {
-                        Text("DEP NOTAMS").foregroundStyle(Color.black)
+                        Text("DEP NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                         Spacer().frame(maxWidth: .infinity)
                         HStack {
                             Toggle(isOn: $isSortDateDep) {
                                 Text("Most Relevant")
-                                    .font(.subheadline)
+                                    .font(.system(size: 17, weight: .regular))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.padding(.horizontal)
                             Text("Most Recent")
-                                .font(.subheadline)
+                                .font(.system(size: 17, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }.fixedSize()
                     }
@@ -54,6 +55,7 @@ struct FlightPlanNOTAMView: View {
                         HStack(alignment: .top) {
                             // notam text
                             Text(item.unwrappedNotam)
+                                .font(.system(size: 17, weight: .regular))
                             Spacer()
                             // star function to add to reference
                             Button(action: {
@@ -75,18 +77,18 @@ struct FlightPlanNOTAMView: View {
                 // Enr NOTAM section
                 Section(header:
                     HStack {
-                        Text("ENROUTE NOTAMS").foregroundStyle(Color.black)
+                        Text("ENROUTE NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                         
                         Spacer().frame(maxWidth: .infinity)
                     
                         HStack {
                             Toggle(isOn: $isSortDateEnr) {
                                 Text("Most Relevant")
-                                    .font(.subheadline)
+                                    .font(.system(size: 17, weight: .regular))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.padding(.horizontal)
                             Text("Most Recent")
-                                .font(.subheadline)
+                                .font(.system(size: 17, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }.fixedSize()
                     }
@@ -94,7 +96,7 @@ struct FlightPlanNOTAMView: View {
                     ForEach(arrEnrNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(item.unwrappedNotam)
+                            Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
                             Spacer()
                             // star function to add to reference
                             Button(action: {
@@ -118,17 +120,18 @@ struct FlightPlanNOTAMView: View {
                 Section(header:
                     HStack {
                         Text("ARR NOTAMS").foregroundStyle(Color.black)
+                        .font(.system(size: 15, weight: .semibold))
                         
                         Spacer().frame(maxWidth: .infinity)
                     
                         HStack {
                             Toggle(isOn: $isSortDateArr) {
                                 Text("Most Relevant")
-                                    .font(.subheadline)
+                                    .font(.system(size: 17, weight: .regular))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.padding(.horizontal)
                             Text("Most Recent")
-                                .font(.subheadline)
+                                .font(.system(size: 17, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }.fixedSize()
                     }
@@ -136,7 +139,7 @@ struct FlightPlanNOTAMView: View {
                     ForEach(arrArrNotams, id: \.id) { item in
                         HStack(alignment: .top) {
                             // notam text
-                            Text(item.unwrappedNotam)
+                            Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
                             Spacer()
                             // star function to add to reference
                             Button(action: {
