@@ -2116,8 +2116,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
             <Locations>
@@ -2224,8 +2224,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2240,8 +2240,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2256,8 +2256,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
             <Locations>
@@ -2394,8 +2394,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2506,10 +2506,10 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "FlightPlanEnrView"
+            landmarkType = "14">
             <Locations>
                <Location
                   uuid = "04D2EFBD-F98E-43E0-9EE2-619300680B96 - 79d648588b414db7"
@@ -4642,8 +4642,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4658,8 +4658,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
             <Locations>
@@ -4738,8 +4738,8 @@
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "setDefaultValues(waypointsTableDefault:)"
             landmarkType = "7">
          </BreakpointContent>

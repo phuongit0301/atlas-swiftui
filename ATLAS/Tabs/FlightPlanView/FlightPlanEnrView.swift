@@ -46,6 +46,7 @@ struct FlightPlanEnrView: View {
     
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
+    @State private var overText = -1
     
     @State var eta = ""
     @State var ata = ""
@@ -198,7 +199,8 @@ struct FlightPlanEnrView: View {
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
 
                                         Text(row.unwrappedTas).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                    }.font(.system(size: 15, weight: .regular))
+                                    }.font(.system(size: 15))
+                                        .fontWeight(overText == index ? .medium : .regular)
                                     Group {
                                         Text(row.unwrappedVws)
                                             .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
@@ -210,7 +212,8 @@ struct FlightPlanEnrView: View {
                                         .disableAutocorrection(true)
                                         .border(.secondary) // todo todo change design
                                         .frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                    }.font(.system(size: 15, weight: .regular))
+                                    }.font(.system(size: 15))
+                                        .fontWeight(overText == index ? .medium : .regular)
                                 }
                                 HStack {
                                     Group {
@@ -223,15 +226,20 @@ struct FlightPlanEnrView: View {
                                         Text("\(row.unwrappedPdn)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedFwind)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedGsp)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                    }.font(.system(size: 15, weight: .regular))
+                                    }.font(.system(size: 15))
+                                        .fontWeight(overText == index ? .medium : .regular)
+                                    
                                     Group {
                                         Text("\(row.unwrappedDrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedPfrm)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                                         Text("\(row.unwrappedFdiff)").frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
-                                    }.font(.system(size: 15, weight: .regular))
+                                    }.font(.system(size: 15))
+                                        .fontWeight(overText == index ? .medium : .regular)
                                 }
-                            }
-                                .listRowBackground((index  % 2 == 0) ? Color.theme.sonicSilver.opacity(0.12) : Color(.white))
+                            }.listRowBackground((index  % 2 == 0) ? Color.theme.sonicSilver.opacity(0.12) : Color(.white))
+                                .onHover(perform: { hovering in
+                                    overText = index
+                                })
                         }
                         .listRowSeparator(.hidden)
                     }.padding()

@@ -659,7 +659,7 @@ struct FlightPlanSummaryView: View {
                                 Divider()
                                 
                                 HStack(alignment: .center) {
-                                    Text("Planned levels")
+                                    Text("Planned Levels")
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))

@@ -55,7 +55,7 @@ struct AISearchView: View {
                                 }
                                 .returnKeyAutomaticallyEnable(enable: true)
                                 .submitLabel(.search)
-                                .font(.system(size: 15))
+                                .font(.system(size: 17))
                                 .padding(13)
                                 .frame(maxWidth: .infinity, maxHeight: 48)
                         }.padding(.horizontal, 12)
@@ -78,7 +78,7 @@ struct AISearchView: View {
                             }
                         } else {
                             VStack(alignment: .leading) {
-                                Text("Response is generated here").font(.system(size: 17, weight: .regular)).foregroundColor(message != "" ? Color.black : Color.theme.gray).frame(maxWidth: .infinity, alignment: .leading)
+                                Text("Response is generated here").font(.system(size: 17)).foregroundColor(message != "" ? Color.black : Color.theme.gray).frame(maxWidth: .infinity, alignment: .leading)
                             }.padding(.vertical)
                                 .padding(.horizontal, 24)
                         }
