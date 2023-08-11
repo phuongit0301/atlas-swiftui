@@ -116,7 +116,7 @@ struct FlightPlanEnrView: View {
                                 Text("AFRM\n\nDIFF").font(.system(size: 15, weight: .medium)).frame(width: calculateWidth(proxy.size.width - 50, 13), alignment: .leading)
                             }
                             .foregroundStyle(Color.blue)
-                        }.listRowSeparator(.visible)
+                        }.listRowSeparator(.hidden)
                         
                         ForEach(waypointsTable.indices, id: \.self) { index in
                             let row = waypointsTable[index]

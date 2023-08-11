@@ -32,7 +32,10 @@ struct OverviewView: View {
                                         Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
                                     }.padding(.vertical, 10)
                                     ForEach(viewInformationModel.ListItem, id: \.self) { item in
-                                        Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
+                                        HStack {
+                                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
+                                            Spacer()
+                                        }.contentShape(Rectangle())
                                             .onTapGesture {
                                                 refState.isActive = true
                                                 refState.selectedItem = item
@@ -55,16 +58,15 @@ struct OverviewView: View {
                                     }.padding(.vertical, 10)
                                     
                                     ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
-//                                        NavigationLink(destination: getDestinationTable(item)) {
-                                            HStack {
-                                                Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
-                                                    .onTapGesture {
-                                                        refState.isActive = true
-                                                        refState.selectedItem = item
-                                                        refState.isTable = true
-                                                    }
+                                        HStack {
+                                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
+                                            Spacer()
+                                        }.contentShape(Rectangle())
+                                            .onTapGesture {
+                                                refState.isActive = true
+                                                refState.selectedItem = item
+                                                refState.isTable = true
                                             }
-//                                        }
                                     }
                                     
                                 }.scrollContentBackground(.hidden)
