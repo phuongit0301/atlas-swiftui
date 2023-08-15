@@ -782,7 +782,7 @@ struct FlightPlanSummaryView: View {
                                             Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedZFWFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)).frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
                                                 .lineLimit(nil)
-                                        }.padding(.vertical)
+                                        }.padding()
                                     }.background(Color.theme.azure.opacity(0.12))
                                         .frame(width: proxy.size.width)
                                 }.onTapGesture {

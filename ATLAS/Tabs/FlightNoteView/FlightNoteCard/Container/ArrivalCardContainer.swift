@@ -15,7 +15,7 @@ struct ArrivalCardContainer: View {
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
-    var header: String = "Arrival Status"
+    var header: String = "Arrival"
     var target: String = "arrival"
     
     var geoWidth: Double = 0

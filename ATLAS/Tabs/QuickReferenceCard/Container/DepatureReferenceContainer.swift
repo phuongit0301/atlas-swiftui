@@ -17,7 +17,7 @@ struct DepatureReferenceContainer: View {
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
-    var header: String = "Depature Status"
+    var header: String = "Depature"
     var target: String = "departureref"
     
     var body: some View {

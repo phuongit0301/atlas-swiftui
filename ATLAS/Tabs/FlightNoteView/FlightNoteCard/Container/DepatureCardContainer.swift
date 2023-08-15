@@ -16,7 +16,7 @@ struct DepartureCardContainer: View {
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
-    var header: String = "Departure Status"
+    var header: String = "Departure"
     var target: String = "departure"
     
     var geoWidth: Double = 0

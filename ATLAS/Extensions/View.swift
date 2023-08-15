@@ -662,7 +662,7 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
         case .FlightPlanScreen:
             return "Flight Plan"
         case .FlightInformationDetailScreen:
-            return "Flight Information"
+            return "Flight Summary"
         case .NotamDetailScreen:
             return "NOTAMs"
         case .AirCraftScreen:

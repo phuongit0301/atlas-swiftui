@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22189.1" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
         <attribute name="answer" optional="YES" attributeType="String"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" defaultDateTimeInterval="712279380" usesScalarValueType="NO"/>
@@ -358,6 +358,8 @@
     </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
         <attribute name="blkTime" optional="YES" attributeType="String"/>
+        <attribute name="cm1" optional="YES" attributeType="String"/>
+        <attribute name="cm2" optional="YES" attributeType="String"/>
         <attribute name="dep" optional="YES" attributeType="String"/>
         <attribute name="depICAO" optional="YES" attributeType="String"/>
         <attribute name="dest" optional="YES" attributeType="String"/>

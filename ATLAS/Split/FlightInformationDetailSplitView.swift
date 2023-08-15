@@ -10,6 +10,8 @@ import SwiftUI
 struct FlightInformationDetailSplitView: View {
     @State private var showUTC = true
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State private var selectedCm1 = SummaryDataDropDown.pic
+    @State private var selectedCm2 = SummaryDataDropDown.pic
     
     var body: some View {
         var etaUTC: String {
@@ -102,181 +104,225 @@ struct FlightInformationDetailSplitView: View {
             return ""
         }
         
-        VStack(spacing: 0) {
-            HeaderViewSplit(isMenu: true)
-            
-            VStack {
-                HStack(alignment: .center) {
-                    Text("FLIGHT INFORMATION")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Color.black)
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Toggle(isOn: $showUTC) {
-                            Text("Local").font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(Color.black)
-                        }
-                        Text("UTC").font(.system(size: 17, weight: .regular))
-                            .foregroundStyle(Color.black)
-                    }.fixedSize(horizontal: true, vertical: false)
-                }
+        GeometryReader { proxy in
+            VStack(spacing: 0) {
+                HeaderViewSplit(isMenu: true)
                 
-                List {
-                    Section {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Chocks Off")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Chocks On")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
+                VStack {
+                    HStack(alignment: .center) {
+                        Text("FLIGHT INFORMATION")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Color.black)
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Toggle(isOn: $showUTC) {
+                                Text("Local").font(.system(size: 17, weight: .regular))
+                                    .foregroundStyle(Color.black)
                             }
-                            Divider()
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text(showUTC ? chocksOffUTC : chocksOffLocal)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(showUTC ? chocksOnUTC : chocksOnLocal)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        }
-                    }.listRowBackground(Color.theme.antiFlashWhite)
+                            Text("UTC").font(.system(size: 17, weight: .regular))
+                                .foregroundStyle(Color.black)
+                        }.fixedSize(horizontal: true, vertical: false)
+                    }
                     
-                    Section {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("STD")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("STA")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("ETA")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                    List {
+                        Section {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Chocks Off")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Chocks On")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                }
+                                Divider()
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text(showUTC ? chocksOffUTC : chocksOffLocal)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text(showUTC ? chocksOnUTC : chocksOnLocal)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
                                 }
                             }
-                            Divider()
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(showUTC ? etaUTC : etaLocal)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                        }.listRowBackground(Color.theme.antiFlashWhite)
+                        
+                        Section {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("STD")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("STA")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("ETA")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                }
+                                Divider()
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text(showUTC ? etaUTC : etaLocal)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
                                 }
                             }
-                        }
-                    }.listRowBackground(Color.theme.antiFlashWhite)
-                    
-                    Section {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Block Time")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Flight Time")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                        }.listRowBackground(Color.theme.antiFlashWhite)
+                        
+                        Section {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Block Time")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("Flight Time")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                }
+                                Divider()
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Text(coreDataModel.dataSummaryInfo.unwrappedFltTime)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
                                 }
                             }
-                            Divider()
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltTime)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                        }.listRowBackground(Color.theme.antiFlashWhite)
+                        
+                        Section {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("POB")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(width: proxy.size.width / 4, alignment: .leading)
+                                        Text("CM1")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(width: proxy.size.width / 4, alignment: .leading)
+                                            .padding(.leading, 16)
+                                        Text("CM2")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(width: proxy.size.width / 4, alignment: .leading)
+                                    }
+                                }
+                                Divider()
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text(coreDataModel.dataSummaryInfo.unwrappedPob)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(width: proxy.size.width / 4, alignment: .leading)
+                                        HStack {
+                                            Picker("", selection: $selectedCm1) {
+                                                ForEach(SummaryDataDropDown.allCases, id: \.self) {
+                                                    Text($0.rawValue).tag($0.rawValue)
+                                                }
+                                            }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                            Spacer()
+                                        }.frame(width: proxy.size.width / 4)
+                                       
+                                        HStack {
+                                            Picker("", selection: $selectedCm2) {
+                                                ForEach(SummaryDataDropDown.allCases, id: \.self) {
+                                                    Text($0.rawValue).tag($0.rawValue)
+                                                }
+                                            }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                            Spacer()
+                                        }.frame(width: proxy.size.width / 4)
+                                    }
                                 }
                             }
-                        }
-                    }.listRowBackground(Color.theme.antiFlashWhite)
-                    
-                    Section {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("POB")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                        }.listRowBackground(Color.theme.antiFlashWhite)
+                        
+                        Section {
+                            // grouped row using hstack
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text("Route")
+                                            .font(.system(size: 17, weight: .semibold))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                }
+                                Divider()
+                                HStack(alignment: .center) {
+                                    Group {
+                                        Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .foregroundStyle(Color.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
                                 }
                             }
-                            Divider()
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedPob)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        }
-                    }.listRowBackground(Color.theme.antiFlashWhite)
-                    
-                    Section {
-                        // grouped row using hstack
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text("Route")
-                                        .font(.system(size: 17, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                            Divider()
-                            HStack(alignment: .center) {
-                                Group {
-                                    Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        }
-                    }.listRowBackground(Color.theme.antiFlashWhite)
-                }.listStyle(.insetGrouped)
-                    .padding(.leading, -16)
-                    .padding(.trailing, -16)
-                    .scrollContentBackground(.hidden)
-            }.padding()
-        }.navigationBarBackButtonHidden()
-            .ignoresSafeArea()
+                        }.listRowBackground(Color.theme.antiFlashWhite)
+                    }.listStyle(.insetGrouped)
+                        .padding(.leading, -16)
+                        .padding(.trailing, -16)
+                        .scrollContentBackground(.hidden)
+                }.padding()
+            }.navigationBarBackButtonHidden()
+                .ignoresSafeArea()
+                .onAppear {
+                    selectedCm1 = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCm1) ?? SummaryDataDropDown.pic
+                    selectedCm2 = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCm2) ?? SummaryDataDropDown.pic
+                }
+                .onChange(of: selectedCm1) { value in
+                    if coreDataModel.existDataSummaryInfo {
+                        coreDataModel.dataSummaryInfo.cm1 = value.rawValue
+                        coreDataModel.save()
+                    }
+                }
+                .onChange(of: selectedCm2) { value in
+                    if coreDataModel.existDataSummaryInfo {
+                        coreDataModel.dataSummaryInfo.cm2 = value.rawValue
+                        coreDataModel.save()
+                    }
+                }
+        }
     }
 }
 

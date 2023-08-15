@@ -21,14 +21,23 @@ struct Sidebar: View {
             
             List(selection: $sideMenuState.selectedMenu) {
                 ForEach(sideMenuState.mainMenu, id: \.self) { item in
-                    if !item.subMenuItems.isEmpty {
-                        Section() {
-                            ForEach(item.subMenuItems, id: \.self) { row in
-                                SidebarItem(item: row, selectedItem: $sideMenuState.selectedMenu)
+                    Group {
+                        if !item.subMenuItems.isEmpty {
+                            Section(header:
+                                Text(item.name)
+                                    .foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+                            ) {
+                                ForEach(item.subMenuItems, id: \.self) { row in
+                                    SidebarItem(item: row, selectedItem: $sideMenuState.selectedMenu)
+                                }
                             }
-                        } header: {
-                            Text(item.name)
-                                .foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+                        } else {
+                            Section(header:
+                                Text(item.name)
+                                    .foregroundColor(Color.theme.sonicSilver).font(.system(size: 20, weight: .semibold))
+                            ) {
+                                EmptyView()
+                            }.listStyle(.insetGrouped)
                         }
                     }
                 }

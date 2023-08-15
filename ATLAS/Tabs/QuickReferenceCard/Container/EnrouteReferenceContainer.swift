@@ -17,7 +17,7 @@ struct EnrouteReferenceContainer: View {
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
-    var header: String = "Enroute Status"
+    var header: String = "Enroute"
     var target: String = "enrouteref"
     
     var body: some View {
