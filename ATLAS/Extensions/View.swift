@@ -120,7 +120,7 @@ struct TypingText: View {
     let fullText: String
     let typingIntervalRange: ClosedRange<Double>
 
-    init(text: String, typingIntervalRange: ClosedRange<Double> = 0.05...0.15) {
+    init(text: String, typingIntervalRange: ClosedRange<Double> = 0.03...0.05) {
         self.fullText = text
         self.typingIntervalRange = typingIntervalRange
     }
@@ -135,7 +135,7 @@ struct TypingText: View {
                 .onAppear {
                     self.typeText()
                 }
-        }.frame(maxWidth: .infinity)
+        }.frame(maxWidth: .infinity, alignment: .leading)
     }
 
     func typeText() {
@@ -286,7 +286,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.DepartureScreen {
         return AnyView(
-            DepatureReferenceContainer()
+            DepartureReferenceContainer()
                 .navigationBarBackButtonHidden()
 //                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
@@ -347,7 +347,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
             FlightPlanNOTAMReferenceView()
                 .navigationBarBackButtonHidden()
 //                .navigationBarHidden(true)
-                .breadCrumbNotamRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -562,12 +562,12 @@ public struct BreadCrumbNotamRef: ViewModifier {
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {
-                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                             }
                         }
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                 }.padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
@@ -600,12 +600,12 @@ public struct BreadCrumbRef: ViewModifier {
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {
-                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                             }
                         }
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                 }.padding()
                 
                 content.padding(.horizontal)
@@ -613,8 +613,9 @@ public struct BreadCrumbRef: ViewModifier {
             }.padding()
                 .background(Color.white)
                 .cornerRadius(8)
-        }.padding()
-            .background(screenName == NavigationEnumeration.FlightInformationDetailScreen ? Color.white : Color.theme.antiFlashWhite)
+        }.padding(.horizontal)
+            .padding(.vertical, 36)
+            .background(Color.theme.antiFlashWhite)
             
     }
 }
@@ -634,11 +635,11 @@ public struct BreadCrumb: ViewModifier {
                                 dismiss()
                             } label: {
                                 HStack {
-                                    Text("Reference").font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                    Text("Reference").font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                                 }
                             }
                             Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                            Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                            Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                         }.padding()
                         if screenName == NavigationEnumeration.FuelScreen || screenName == NavigationEnumeration.FlightPlanScreen {
                             Rectangle().fill(Color.clear).frame(height: 8)

@@ -1,5 +1,5 @@
 //
-//  DepatureReferenceContainer.swift
+//  DepartureReferenceContainer.swift
 //  ATLAS
 //
 //  Created by phuong phan on 23/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DepatureReferenceContainer: View {
+struct DepartureReferenceContainer: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     // Custom Back button
@@ -17,7 +17,7 @@ struct DepatureReferenceContainer: View {
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
-    var header: String = "Depature"
+    var header: String = "Departure"
     var target: String = "departureref"
     
     var body: some View {
@@ -84,9 +84,9 @@ struct DepatureReferenceContainer: View {
     }
 }
 
-struct DepatureReferenceContainer_Previews: PreviewProvider {
+struct DepartureReferenceContainer_Previews: PreviewProvider {
     static var previews: some View {
-        DepatureReferenceContainer().environmentObject(FlightNoteModelState())
+        DepartureReferenceContainer().environmentObject(FlightNoteModelState())
             .environmentObject(SideMenuModelState())
     }
 }

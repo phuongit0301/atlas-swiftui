@@ -35,16 +35,17 @@ struct FlightPlanNOTAMReferenceView: View {
                     if arrDepNotams.count > 0 {
                         Section(header:
                             HStack {
-                                Text("DEP NOTAMS").foregroundStyle(Color.black)
+                                Text("DEP NOTAMS").font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(Color.black)
                                 Spacer().frame(maxWidth: .infinity)
                                 HStack {
                                     Toggle(isOn: $isSortDateDep) {
                                         Text("Most Relevant")
-                                            .font(.subheadline)
+                                            .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                     }.padding(.horizontal)
                                     Text("Most Recent")
-                                        .font(.subheadline)
+                                        .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.fixedSize()
                             }
@@ -52,7 +53,7 @@ struct FlightPlanNOTAMReferenceView: View {
                             ForEach(arrDepNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -69,7 +70,7 @@ struct FlightPlanNOTAMReferenceView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }
+                                }.listRowBackground(Color.theme.antiFlashWhite)
                             }
                         }
                     }
@@ -78,18 +79,19 @@ struct FlightPlanNOTAMReferenceView: View {
                         // Enr NOTAM section
                         Section(header:
                             HStack {
-                                Text("ENROUTE NOTAMS").foregroundStyle(Color.black)
+                                Text("ENROUTE NOTAMS").font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(Color.black)
                                 
                                 Spacer().frame(maxWidth: .infinity)
                             
                                 HStack {
                                     Toggle(isOn: $isSortDateEnr) {
                                         Text("Most Relevant")
-                                            .font(.subheadline)
+                                            .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                     }.padding(.horizontal)
                                     Text("Most Recent")
-                                        .font(.subheadline)
+                                        .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.fixedSize()
                             }
@@ -97,7 +99,7 @@ struct FlightPlanNOTAMReferenceView: View {
                             ForEach(arrEnrNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -114,7 +116,7 @@ struct FlightPlanNOTAMReferenceView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }
+                                }.listRowBackground(Color.theme.antiFlashWhite)
                             }
                         }
                     }
@@ -123,18 +125,19 @@ struct FlightPlanNOTAMReferenceView: View {
                         // Arr NOTAM section
                         Section(header:
                             HStack {
-                                Text("ARR NOTAMS").foregroundStyle(Color.black)
+                                Text("ARR NOTAMS").font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(Color.black)
                                 
                                 Spacer().frame(maxWidth: .infinity)
                             
                                 HStack {
                                     Toggle(isOn: $isSortDateArr) {
                                         Text("Most Relevant")
-                                            .font(.subheadline)
+                                            .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                     }.padding(.horizontal)
                                     Text("Most Recent")
-                                        .font(.subheadline)
+                                        .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.fixedSize()
                             }
@@ -142,7 +145,7 @@ struct FlightPlanNOTAMReferenceView: View {
                             ForEach(arrArrNotams, id: \.id) { item in
                                 HStack(alignment: .top) {
                                     // notam text
-                                    Text(item.unwrappedNotam).padding(.leading, 25)
+                                    Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -159,14 +162,16 @@ struct FlightPlanNOTAMReferenceView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }
+                                }.listRowBackground(Color.theme.antiFlashWhite)
                             }
                         }
                     }
-                }.scrollContentBackground(.hidden)
+                }.background(Color.white)
+                .scrollContentBackground(.hidden)
             }
             
-        }
+        }.padding(.leading, -16)
+            .padding(.trailing, -16)
         .onChange(of: isSortDateDep) { newValue in
             arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
         }
