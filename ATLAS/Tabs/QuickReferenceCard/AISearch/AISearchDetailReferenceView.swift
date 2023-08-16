@@ -49,10 +49,8 @@ struct AISearchDetailReferenceView: View {
             }
             
             Spacer()
-        }.background(
-            RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.white)
-        )
-        .navigationBarBackButtonHidden(true)
+        }.background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.white))
+            .navigationBarBackButtonHidden(true)
     }
 }
 

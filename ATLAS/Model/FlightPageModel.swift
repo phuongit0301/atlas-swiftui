@@ -76,7 +76,7 @@ struct ListReferenceModel {
         let MainItem = [
             ListFlightInformationItem(name: "Flight Summary", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
             ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
-            ListFlightInformationItem(name: "NOTAMS", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
+            ListFlightInformationItem(name: "NOTAMs", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen, nextScreen: NavigationEnumeration.ArrivalScreen),

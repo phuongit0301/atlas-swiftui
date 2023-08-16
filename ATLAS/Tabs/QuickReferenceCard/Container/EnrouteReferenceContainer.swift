@@ -44,7 +44,6 @@ struct EnrouteReferenceContainer: View {
                             resetData: self.resetData
                         ).interactiveDismissDisabled(true)
                     }
-                    .breadCrumb(NavigationEnumeration.EnrouteScreen)
             }
         }
     }

@@ -606,9 +606,9 @@ public struct BreadCrumbRef: ViewModifier {
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
                     Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
-                }.padding()
+                }.padding(.vertical)
                 
-                content.padding(.horizontal)
+                content
                 
             }.padding()
                 .background(Color.white)

@@ -21,13 +21,18 @@ struct FlightPlanNOTAMReferenceView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .center) {
+                Text("NOTAMs")
+                    .font(.system(size: 20, weight: .semibold))
+            }.padding(.vertical, 16)
+            
             if arrDepNotams.count == 0 && arrEnrNotams.count == 0 && arrArrNotams.count == 0 {
-                List {
-                    VStack {
-                        Text("No Notams saved").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.philippineGray2)
-                    }
-                }.frame(maxHeight: .infinity)
-                
+                Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
+                VStack(alignment: .leading) {
+                    Text("No NOTAMs saved.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
+                    Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 1)
+                }
+                Spacer()
             } else {
                 //scrollable outer list section
                 List {
@@ -170,8 +175,7 @@ struct FlightPlanNOTAMReferenceView: View {
                 .scrollContentBackground(.hidden)
             }
             
-        }.padding(.leading, -16)
-            .padding(.trailing, -16)
+        }
         .onChange(of: isSortDateDep) { newValue in
             arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
         }
@@ -195,8 +199,6 @@ struct FlightPlanNOTAMReferenceView: View {
             arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDateArr)
             arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
         }
-        .navigationTitle("NOTAMS")
-        .background(Color(.systemGroupedBackground))
     }
     
     func sortNotams(notamsDict: [NotamsDataList], sortKey: Bool) -> [NotamsDataList] {

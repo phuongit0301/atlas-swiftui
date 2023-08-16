@@ -72,6 +72,7 @@ struct PreviousSearchReferenceView: View {
                     }
                 }
             }.listStyle(.plain)
+                .padding(.leading, -16)
 //                .navigationBarHidden(true)
         }
     }
