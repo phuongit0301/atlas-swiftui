@@ -110,7 +110,7 @@ struct FlightInformationDetailView: View {
             VStack {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(alignment: .center) {
-                        Text("FLIGHT SUMMARY")
+                        Text("Flight Summary")
                             .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(Color.black)
                         
