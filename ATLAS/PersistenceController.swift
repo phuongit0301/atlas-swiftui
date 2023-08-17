@@ -162,7 +162,7 @@ class CoreDataModelState: ObservableObject {
         if dataFPEnroute.count == 0 {
             self.loadingInit = true
             Task {
-                let data = await remoteService.getFlightPlanWX()
+                let data = await remoteService.getFlightPlanData()
                 let response = await remoteService.getFuelData()
                 
                 DispatchQueue.main.async {
@@ -242,7 +242,7 @@ class CoreDataModelState: ObservableObject {
     func syncDataMetarTaf() async {
         let response = await remoteService.getFlightPlanWX()
         
-        if let metarTafData = response?.metarTafData {
+        if let metarTafData = response {
             self.updateDataMetarTaf(metarTafData)
             self.updateDataAltnTaf(metarTafData)
         }

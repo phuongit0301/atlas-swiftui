@@ -115,8 +115,8 @@ struct FlightPlanArrView: View {
     @State private var isShowingAutofillOptionsRemarks = false
     @State private var isShowingAutofillOptionsAtcRte = false
 
-    @State private var autofillOptionsCloud: [String] = ["FEW", "SCT", "BKN", "OVC"]
-    @State private var autofillOptionsWX: [String] = ["AC", "AD", "AMD", "AS", "ASR", "AUTO", "BASE", "BCFG", "BECMG", "BL", "BLW", "BR", "BTN", "CAVOK", "CB", "CC", "CI", "CIT", "CLD", "COR", "COT", "CS", "CU", "DEG", "DP", "DR", "DS", "DU", "DUC", "DZ", "ENE", "ESE", "EMBD", "FC", "FCST", "FG", "FL", "FPM", "FRQ", "FT", "FU", "FZ", "GR", "GS", "H", "HPA", "HVY", "HZ", "IC", "ICE", "INS", "INTSF", "IRVR", "ISOL", "JTST", "KM", "KMH", "KT", "LAN", "LCA", "LSQ", "LV", "LYR", "MB", "METAR", "MI", "MNM", "MOD", "MON", "MPS", "MS", "MSL", "MTW", "NAT", "NC", "NCD", "NDV", "NE", "NIL", "NM", "NNE", "NNW", "NOSIG", "NOTAM", "NS", "NSC", "NSW", "NW", "OCNL", "PL", "PO", "PRFG", "PROB30", "PROB40", "PS", "PSYS", "QFE", "QNE", "QNH", "RA", "RMK", "RVR", "RWY", "SA", "SC", "SE", "SEA", "SEV", "SFC", "SG", "SIG", "SKC", "SN", "SPECI", "SQ", "SS", "SSE", "SSW", "ST", "STNR", "SW", "T", "TAF", "TCU", "TEMPO", "TL", "TOP", "TROP", "TS", "TURB", "UP", "UTC", "VA", "VAL", "VIS", "VRB", "VSP", "WDSPR", "WNW", "WRNG", "WS", "WSPD", "WSW", "WX"]
+    @State private var autofillOptionsCloud: [String] = ["FEW", "SCT", "BKN", "OVC", "AC", "AS", "CB", "CC", "CU", "SC", "ST", "SC"]
+    @State private var autofillOptionsWX: [String] = ["AC", "AD", "AMD", "AS", "ASR", "AUTO", "BASE", "BCFG", "BECMG", "BL", "BLW", "BR", "BTN", "CAVOK", "CB", "CC", "CI", "CIT", "CLD", "COR", "COT", "CS", "CU", "DEG", "DP", "DR", "DS", "DU", "DUC", "DZ", "ENE", "ESE", "EMBD", "FC", "FCST", "FG", "FL", "FPM", "FRQ", "FT", "FU", "FZ", "GR", "GS", "HPA", "HVY", "HZ", "IC", "ICE", "INS", "INTSF", "IRVR", "ISOL", "JTST", "KM", "KMH", "KT", "LAN", "LCA", "LSQ", "LV", "LYR", "MB", "METAR", "MI", "MNM", "MOD", "MON", "MPS", "MS", "MSL", "MTW", "NAT", "NC", "NCD", "NDV", "NE", "NIL", "NM", "NNE", "NNW", "NOSIG", "NOTAM", "NS", "NSC", "NSW", "NW", "OCNL", "PL", "PO", "PRFG", "PROB30", "PROB4", "PS", "PSYS", "QFE", "QNE", "QNH", "RA", "RMK", "RVR", "RWY", "SA", "SC", "SE", "SEA", "SEV", "SFC", "SG", "SIG", "SKC", "SN", "SPECI", "SQ", "SS", "SSE", "SSW", "ST", "STNR", "SW", "TAF", "TCU", "TEMPO", "TL", "TOP", "TROP", "TS", "TURB", "UP", "UTC", "VA", "VAL", "VIS", "VRB", "VSP", "WDSPR", "WNW", "WRNG", "WS", "WSPD", "WSW", "WX"]
     @State private var autofillText = ""
 
     // For datetime picker
@@ -816,9 +816,9 @@ struct FlightPlanArrView: View {
                                             }
                                             .overlay(isEditingEntFuelOnChocks ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
                                             .onChange(of: entFuelOnChocks) { newValue in
-                                                if newValue.count > 4 {
+//                                                if newValue.count > 4 {
                                                     entFuelOnChocks = String(newValue.prefix(5))
-                                                    cursorPositionEntFuelOnChocks = 5
+//                                                    cursorPositionEntFuelOnChocks = 5
                                                     if coreDataModel.existDataArrivalEntries {
                                                         coreDataModel.dataArrivalEntries.entFuelOnChocks = entFuelOnChocks
                                                     } else {
@@ -828,9 +828,9 @@ struct FlightPlanArrView: View {
                                                     
                                                     coreDataModel.save()
                                                     
-                                                    isEditingEntFuelOnChocks = false
-                                                    isTextFieldEntLdgFocused = true
-                                                }
+//                                                    isEditingEntFuelOnChocks = false
+//                                                    isTextFieldEntLdgFocused = true
+//                                                }
                                             }
                                     }.font(.system(size: 17, weight: .regular))
                                 }
@@ -840,7 +840,7 @@ struct FlightPlanArrView: View {
                         }
                     }
                     
-                    HStack(alignment: .center) {
+                    ZStack {
                         VStack {
                             // custom keyboard view - todo set position properly - like normal ipad keyboard position
                             Group {
@@ -908,13 +908,13 @@ struct FlightPlanArrView: View {
                                     CustomKeyboardView1(text: $entOn, cursorPosition: $cursorPositionEntOn, currentFocus: $isEditingEntOn, nextFocus: $isEditingEntFuelOnChocks, prevFocus: $isEditingEntLdg)
                                 }
                                 if isEditingEntFuelOnChocks {
-                                    CustomKeyboardView1(text: $entFuelOnChocks, cursorPosition: $cursorPositionEntFuelOnChocks, currentFocus: $isEditingEntFuelOnChocks, nextFocus: $isEditingEntLdg, prevFocus: $isEditingEntOn)
+                                    CustomKeyboardView1(text: $entFuelOnChocks, cursorPosition: $cursorPositionEntFuelOnChocks, currentFocus: $isEditingEntFuelOnChocks, nextFocus: .constant(false), prevFocus: $isEditingEntOn)
                                 }
                             }
                         } // End VStack Custom keyboard
-                        VStack {
+                        ZStack {
                             Group {
-                                if isShowingAutofillOptionsWx {
+                                if isShowingAutofillOptionsWx && (autofillOptionsWX.filter { $0.hasPrefix(autofillText) }).count > 0 {
                                     List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = wx.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -926,10 +926,10 @@ struct FlightPlanArrView: View {
                                             Text(option)
                                         }
                                     }.listStyle(.insetGrouped)
+                                        .scrollIndicators(.hidden)
                                         .background(Color.clear)
-                                        .padding(.top, -50)
                                 }
-                                if isShowingAutofillOptionsCloud {
+                                if isShowingAutofillOptionsCloud && (autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }).count > 0 {
                                     List(autofillOptionsCloud.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = cloud.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -941,10 +941,10 @@ struct FlightPlanArrView: View {
                                             Text(option)
                                         }
                                     }.listStyle(.insetGrouped)
+                                        .scrollIndicators(.hidden)
                                         .background(Color.clear)
-                                        .padding(.top, -50)
                                 }
-                                if isShowingAutofillOptionsRemarks {
+                                if isShowingAutofillOptionsRemarks && (autofillOptionsWX.filter { $0.hasPrefix(autofillText) }).count > 0 {
                                     List(autofillOptionsWX.filter { $0.hasPrefix(autofillText) }, id: \.self) { option in
                                         Button(action: {
                                             let modifiedText = remarks.components(separatedBy: " ").dropLast().joined(separator: " ")
@@ -956,10 +956,11 @@ struct FlightPlanArrView: View {
                                             Text(option)
                                         }
                                     }.listStyle(.insetGrouped)
+                                        .scrollIndicators(.hidden)
                                         .background(Color.clear)
-                                        .padding(.top, -50)
                                 }
-                            }.frame(width: (proxy.size.width / 2) - 100)
+                            }.frame(width: 300)
+                                .offset(x: 400, y: -16)
                                 .padding()
                                 .scrollContentBackground(.hidden)
                         }

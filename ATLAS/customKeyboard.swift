@@ -78,7 +78,11 @@ struct CustomKeyboardView1: View {
 
     private func handleInput(_ character: String) {
         if character == "return" {
-            submit()
+            if nextFocus {
+                submit()
+            } else {
+                currentFocus = false
+            }
         } else if character == "keyboard.chevron.compact.down.fill" {
             currentFocus = false
         }

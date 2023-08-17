@@ -18,7 +18,7 @@ class RemoteService: ObservableObject {
     
     private init() {}
     
-    func getFlightPlanWX() async -> IFlightPlanDataModel?  {
+    func getFlightPlanData() async -> IFlightPlanDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flightPlan_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -46,6 +46,45 @@ class RemoteService: ObservableObject {
                 
                 do {
                     let decodedSearch = try JSONDecoder().decode(IFlightPlanDataModel.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+                 
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
+    func getFlightPlanWX() async -> IFlightPlanWXResponseModel?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flightPlan_wx") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "company": "Test Company",
+                "flight_no": "TR753",
+                "flightDate": "2023-07-24"
+//                "flightDate": "2023-07-08"
+            ]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(IFlightPlanWXResponseModel.self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)
