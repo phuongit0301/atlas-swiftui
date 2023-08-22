@@ -360,6 +360,8 @@
         <attribute name="blkTime" optional="YES" attributeType="String"/>
         <attribute name="cm1" optional="YES" attributeType="String"/>
         <attribute name="cm2" optional="YES" attributeType="String"/>
+        <attribute name="crewCA" optional="YES" attributeType="String"/>
+        <attribute name="crewFO" optional="YES" attributeType="String"/>
         <attribute name="dep" optional="YES" attributeType="String"/>
         <attribute name="depICAO" optional="YES" attributeType="String"/>
         <attribute name="dest" optional="YES" attributeType="String"/>

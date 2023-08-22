@@ -12,6 +12,7 @@ struct FlightSummaryView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @State private var selectedCA = SummaryDataDropDown.pic
+    @State private var selectedFO = SummaryDataDropDown.pic
     @State private var pob: String = ""
     @State private var showUTC = true
     
@@ -166,9 +167,10 @@ struct FlightSummaryView: View {
                                             item.pob = pob
                                         }
                                         coreDataModel.save()
+                                        coreDataModel.readSummaryInfo()
                                     }
                                     .frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                }
+                                }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                             }
                         }
                     }// end section Flight Info
@@ -193,7 +195,7 @@ struct FlightSummaryView: View {
                                     Group {
                                         Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
                                         Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
-                                    }
+                                    }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }.padding(.leading, -5)
                             
@@ -214,7 +216,7 @@ struct FlightSummaryView: View {
                                         Text(coreDataModel.dataSummaryInfo.unwrappedFltTime).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                         Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                     }
-                                    .font(.system(size: 15, weight: .medium))
+                                    .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }
                             
@@ -234,7 +236,7 @@ struct FlightSummaryView: View {
                                         Text(showUTC ? chocksOffUTC : chocksOffLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                         Text(showUTC ? etaUTC : etaLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                         Text(showUTC ? chocksOnUTC : chocksOnLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                    }
+                                    }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }
                         }
@@ -262,10 +264,10 @@ struct FlightSummaryView: View {
                                     Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                     Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
                                 }
-                                .font(.system(size: 15, weight: .medium))
+                                .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                             }
                         }
-                    }//
+                    }
                     
                     Section(header:
                                 Text("Crew")
@@ -273,33 +275,110 @@ struct FlightSummaryView: View {
                         .foregroundStyle(Color.black)
                     ) {
                         VStack(spacing: 16) {
-                            HStack {
-                                Text("CA xxx").frame(width: 200, alignment: .leading)
+                            Group {
                                 HStack {
-                                    Picker("", selection: $selectedCA) {
-                                        ForEach(SummaryDataDropDown.allCases, id: \.self) {
-                                            Text($0.rawValue).tag($0.rawValue)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                    Spacer()
-                                }.frame(width: (proxy.size.width - 200) / 2)
-                            }
+                                    HStack {
+                                        Text("CA Caleb")
+                                        HStack {
+                                            Picker("", selection: $selectedCA) {
+                                                ForEach(SummaryDataDropDown.allCases, id: \.self) {
+                                                    Text($0.rawValue).tag($0.rawValue)
+                                                }
+                                            }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                            Spacer()
+                                        }.fixedSize()
+                                    }.frame(width: (proxy.size.width - 95) / 2, alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("FO Danial")
+                                        HStack {
+                                            Picker("", selection: $selectedFO) {
+                                                ForEach(SummaryDataDropDown.allCases, id: \.self) {
+                                                    Text($0.rawValue).tag($0.rawValue)
+                                                }
+                                            }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                        }.fixedSize()
+                                    }.frame(width: (proxy.size.width - 95) / 2, alignment: .leading)
+                                }
+                            }// end group
                             
-                            HStack {
-                                Text("FO xxx").frame(width: 200, alignment: .leading)
+                            Group {
                                 HStack {
-                                    Picker("", selection: $selectedCA) {
-                                        ForEach(SummaryDataDropDown.allCases, id: \.self) {
-                                            Text($0.rawValue).tag($0.rawValue)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                    Spacer()
-                                }.frame(width: (proxy.size.width - 200) / 2)
-                            }
+                                    HStack {
+                                        Text("CIC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Adam").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Amanda").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Bryan").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                }
+                            }// end group
+                            
+                            Group {
+                                HStack {
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Aliza").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Pree").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Firdaus").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                }
+                            }// end group
+                            
+                            Group {
+                                HStack {
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Ben").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Sarah").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    
+                                    HStack {
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Michael").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                }
+                            }// end group
                         }
                     }// END CREW
                 }// end List
             }// end VStack
+            .onAppear {
+                selectedCA = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewCA) ?? SummaryDataDropDown.pic
+                selectedFO = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewFO) ?? SummaryDataDropDown.pic
+                pob = coreDataModel.dataSummaryInfo.unwrappedPob
+            }
+            .onChange(of: selectedCA) { value in
+                if coreDataModel.existDataSummaryInfo {
+                    coreDataModel.dataSummaryInfo.crewCA = value.rawValue
+                    coreDataModel.save()
+                }
+            }
+            .onChange(of: selectedFO) { value in
+                if coreDataModel.existDataSummaryInfo {
+                    coreDataModel.dataSummaryInfo.crewFO = value.rawValue
+                    coreDataModel.save()
+                }
+            }
         }//end geometry
     }
 }

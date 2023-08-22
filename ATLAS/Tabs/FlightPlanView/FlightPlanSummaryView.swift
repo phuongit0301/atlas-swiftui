@@ -138,6 +138,7 @@ struct FlightPlanSummaryView: View {
     @State private var calculatedZFWFuelValue = 0
     
     @State var showSheet = false
+    @State var showMapSheet = false
 
 //    @Environment(\.modelContext) private var context
 //    @Query var fuelPageData: [FuelPageData]
@@ -599,7 +600,7 @@ struct FlightPlanSummaryView: View {
                         }
                         
                         // MARK: Route section
-                        Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        Section(header: Text("ROUTE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold)).padding(.bottom, 6)) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {
                                 HStack(alignment: .center) {
@@ -607,9 +608,15 @@ struct FlightPlanSummaryView: View {
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
-                                    Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
-                                        .frame(maxWidth: 860, alignment: .leading)
-                                        .font(.system(size: 17, weight: .regular))
+                                    HStack {
+                                        Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
+                                            .font(.system(size: 17, weight: .regular))
+                                        Text("View").font(.system(size: 15, weight: .medium))
+                                            .foregroundColor(.blue)
+                                            .onTapGesture {
+                                                showMapSheet = true
+                                            }
+                                    }.frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -622,7 +629,7 @@ struct FlightPlanSummaryView: View {
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
-                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
@@ -636,7 +643,7 @@ struct FlightPlanSummaryView: View {
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedDepRwy)
-                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
@@ -650,7 +657,7 @@ struct FlightPlanSummaryView: View {
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedArrRwy)
-                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
@@ -664,7 +671,7 @@ struct FlightPlanSummaryView: View {
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
                                     Text(coreDataModel.dataSummaryRoute.unwrappedLevels)
-                                        .frame(maxWidth: 860, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 17, weight: .regular))
                                 }
                                 .padding(.top, 5)
@@ -1111,49 +1118,49 @@ struct FlightPlanSummaryView: View {
                                             }.padding()
                                             Divider()
                                             // zfw change row
-                                            HStack(alignment: .center) {
-                                                HStack {
-                                                    Toggle(isOn: Binding<Bool>(
-                                                        get: {coreDataModel.dataFuelExtra.includedZFWchange},
-                                                        set: {
-                                                            self.includedZFWchange = $0
-                                                            coreDataModel.dataFuelExtra.includedZFWchange = $0
-                                                            coreDataModel.save()
-                                                        }
-                                                    )){}
-                                                    Spacer().frame(maxWidth: .infinity)
-                                                }.frame(width: 70)
-                                                    .padding(.horizontal, 24)
-                                                
-                                                Text("ZFW Change")
-                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                    .font(.system(size: 17, weight: .regular))
-                                                    .frame(width: 160, alignment: .leading)
-                                                    .padding(.horizontal)
-                                                
-                                                Text("N.A.")
-                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                    .font(.system(size: 17, weight: .regular))
-                                                    .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
-                                                    .padding(.horizontal)
-                                                
-                                                HStack {
-                                                    Text("N.A.")
-                                                        .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                }.frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
-                                                    .padding(.horizontal)
-                                                
-                                                Text("\(calculatedZFWFuel)KG")
-                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-                                                    .font(.system(size: 17, weight: .regular))
-                                                    .frame(width: 170, alignment: .leading)
-                                                    .padding(.horizontal)
-                                                
-                                                FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-                                                    .disabled(!includedZFWchange)
-                                            }.padding()
-                                            Divider()
+//                                            HStack(alignment: .center) {
+//                                                HStack {
+//                                                    Toggle(isOn: Binding<Bool>(
+//                                                        get: {coreDataModel.dataFuelExtra.includedZFWchange},
+//                                                        set: {
+//                                                            self.includedZFWchange = $0
+//                                                            coreDataModel.dataFuelExtra.includedZFWchange = $0
+//                                                            coreDataModel.save()
+//                                                        }
+//                                                    )){}
+//                                                    Spacer().frame(maxWidth: .infinity)
+//                                                }.frame(width: 70)
+//                                                    .padding(.horizontal, 24)
+//                                                
+//                                                Text("ZFW Change")
+//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+//                                                    .font(.system(size: 17, weight: .regular))
+//                                                    .frame(width: 160, alignment: .leading)
+//                                                    .padding(.horizontal)
+//                                                
+//                                                Text("N.A.")
+//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+//                                                    .font(.system(size: 17, weight: .regular))
+//                                                    .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
+//                                                    .padding(.horizontal)
+//                                                
+//                                                HStack {
+//                                                    Text("N.A.")
+//                                                        .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+//                                                        .font(.system(size: 17, weight: .regular))
+//                                                }.frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
+//                                                    .padding(.horizontal)
+//                                                
+//                                                Text("\(calculatedZFWFuel)KG")
+//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+//                                                    .font(.system(size: 17, weight: .regular))
+//                                                    .frame(width: 170, alignment: .leading)
+//                                                    .padding(.horizontal)
+//                                                
+//                                                FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+//                                                    .disabled(!includedZFWchange)
+//                                            }.padding()
+//                                            Divider()
                                             // others row
                                             HStack(alignment: .center) {
                                                 HStack {
@@ -1304,6 +1311,9 @@ struct FlightPlanSummaryView: View {
                     .keyboardAvoidView()
                     .sheet(isPresented: $showSheet, content: {
                         FuelModal(isShowing: $showSheet).interactiveDismissDisabled(true)
+                    })
+                    .sheet(isPresented: $showMapSheet, content: {
+                        MapModal(isShowing: $showMapSheet).interactiveDismissDisabled(true)
                     })
                 }
             }
@@ -1560,40 +1570,5 @@ struct FlightPlanSummaryView: View {
         self.selection2 = sel2
         coreDataModel.dataFuelExtra.selectedFlightLevel000 = sel1
         coreDataModel.dataFuelExtra.selectedFlightLevel00 = sel2
-    }
-}
-
-// todo @phuong customise Modal view per figma
-struct FuelModal: View {
-    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
-    @Binding var isShowing: Bool
-    
-    var body: some View {
-        VStack {
-            HStack(alignment: .center) {
-                Spacer()
-                
-                Text("Fuel Statistics").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
-                
-                Spacer()
-                Button(action: {
-                    self.isShowing.toggle()
-                }) {
-                    Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                }
-            }.padding()
-                .background(.white)
-                .roundedCorner(12, corners: [.topLeft, .topRight])
-            
-            FuelView()
-        }.onAppear {
-            flightPlanDetailModel.isModal = true
-        }.onDisappear {
-            flightPlanDetailModel.isModal = false
-        }
-    }
-    
-    func dismiss() {
-        // Call this function to dismiss the modal todo add dismiss function
     }
 }

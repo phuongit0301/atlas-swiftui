@@ -620,7 +620,7 @@ struct FlightPlanDepView: View {
                                         Text("FL")
                                             .foregroundStyle(Color.blue)
                                             .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
-                                        Text("SQ")
+                                        Text("A")
                                             .foregroundStyle(Color.blue)
                                             .frame(width: calculateWidth(proxy.size.width, 6), alignment: .leading)
                                     }.font(.system(size: 15, weight: .medium))
