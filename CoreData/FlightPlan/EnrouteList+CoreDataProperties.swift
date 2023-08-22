@@ -2,7 +2,7 @@
 //  EnrouteList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 04/07/2023.
+//  Created by phuong phan on 22/08/2023.
 //
 //
 
@@ -16,32 +16,33 @@ extension EnrouteList {
         return NSFetchRequest<EnrouteList>(entityName: "Enroute")
     }
 
-    @NSManaged public var posn: String?
-    @NSManaged public var id: UUID?
     @NSManaged public var actm: String?
-    @NSManaged public var ztm: String?
-    @NSManaged public var eta: String?
-    @NSManaged public var ata: String?
-    @NSManaged public var afl: String?
-    @NSManaged public var oat: String?
     @NSManaged public var adn: String?
+    @NSManaged public var afl: String?
+    @NSManaged public var afrm: String?
+    @NSManaged public var ata: String?
     @NSManaged public var awind: String?
+    @NSManaged public var cord: String?
+    @NSManaged public var diff: String?
+    @NSManaged public var dis: String?
+    @NSManaged public var drm: String?
+    @NSManaged public var eta: String?
+    @NSManaged public var fdiff: String?
+    @NSManaged public var fwind: String?
+    @NSManaged public var gsp: String?
+    @NSManaged public var id: UUID?
+    @NSManaged public var imt: String?
+    @NSManaged public var msa: String?
+    @NSManaged public var oat: String?
+    @NSManaged public var pdn: String?
+    @NSManaged public var pfl: String?
+    @NSManaged public var pfrm: String?
+    @NSManaged public var posn: String?
     @NSManaged public var tas: String?
     @NSManaged public var vws: String?
     @NSManaged public var zfrq: String?
-    @NSManaged public var afrm: String?
-    @NSManaged public var cord: String?
-    @NSManaged public var msa: String?
-    @NSManaged public var dis: String?
-    @NSManaged public var diff: String?
-    @NSManaged public var pfl: String?
-    @NSManaged public var imt: String?
-    @NSManaged public var pdn: String?
-    @NSManaged public var fwind: String?
-    @NSManaged public var gsp: String?
-    @NSManaged public var drm: String?
-    @NSManaged public var pfrm: String?
-    @NSManaged public var fdiff: String?
+    @NSManaged public var ztm: String?
+    @NSManaged public var isSkipped: Bool
     
     public var unwrappedPosn: String {
         posn ?? ""

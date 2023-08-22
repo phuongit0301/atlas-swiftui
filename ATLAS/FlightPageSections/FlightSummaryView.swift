@@ -219,7 +219,15 @@ struct FlightSummaryView: View {
                                     .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }
-                            
+                        }
+                    }// end section ETA
+                    
+                    Section(header:
+                                Text("Actual Times")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Color.black)
+                    ) {
+                        VStack(spacing: 16) {
                             VStack(spacing: 12) {
                                 HStack {
                                     Group {
@@ -239,33 +247,28 @@ struct FlightSummaryView: View {
                                     }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }
-                        }
-                    }// end section ETA
-                    
-                    Section(header:
-                                Text("Actual Times")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Color.black)
-                    ) {
-                        VStack(spacing: 16) {
-                            HStack {
-                                Group {
-                                    Text("Day").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                    Text("Night").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                    Text("Total Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                            
+                            VStack(spacing: 12) {
+                                HStack {
+                                    Group {
+                                        Text("Day").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("Night").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("Total Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                    }
+                                    .foregroundStyle(Color.blue)
+                                    .font(.system(size: 15, weight: .medium))
                                 }
-                                .foregroundStyle(Color.blue)
-                                .font(.system(size: 15, weight: .medium))
+                                
+                                HStack {
+                                    Group {
+                                        Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                    }
+                                    .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                }
                             }
                             
-                            HStack {
-                                Group {
-                                    Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                    Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                    Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                }
-                                .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                            }
                         }
                     }
                     
@@ -278,7 +281,8 @@ struct FlightSummaryView: View {
                             Group {
                                 HStack {
                                     HStack {
-                                        Text("CA Caleb")
+                                        Text("CA").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Caleb").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         HStack {
                                             Picker("", selection: $selectedCA) {
                                                 ForEach(SummaryDataDropDown.allCases, id: \.self) {
@@ -290,7 +294,8 @@ struct FlightSummaryView: View {
                                     }.frame(width: (proxy.size.width - 95) / 2, alignment: .leading)
                                     
                                     HStack {
-                                        Text("FO Danial")
+                                        Text("FO").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("Danial").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         HStack {
                                             Picker("", selection: $selectedFO) {
                                                 ForEach(SummaryDataDropDown.allCases, id: \.self) {

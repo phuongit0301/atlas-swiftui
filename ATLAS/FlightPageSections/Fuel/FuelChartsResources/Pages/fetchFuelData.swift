@@ -385,7 +385,8 @@ func convertAllResponseJSONToObject(json: allAPIresponseNestedJSON) -> processed
                         let arrivalDelay = ArrivalDelays(
                             condition: delayJSON.condition,
                             time: parseTimeString(delayJSON.time)!,
-                            delay: delayJSON.delay
+                            delay: delayJSON.delay,
+                            weather: "" // TODO handle weather
                         )
                         delays.append(arrivalDelay)
                     }

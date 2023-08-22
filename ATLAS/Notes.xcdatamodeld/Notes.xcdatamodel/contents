@@ -98,6 +98,7 @@
         <attribute name="gsp" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imt" optional="YES" attributeType="String"/>
+        <attribute name="isSkipped" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="msa" optional="YES" attributeType="String"/>
         <attribute name="oat" optional="YES" attributeType="String"/>
         <attribute name="pdn" optional="YES" attributeType="String"/>
@@ -261,6 +262,7 @@
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="weather" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">

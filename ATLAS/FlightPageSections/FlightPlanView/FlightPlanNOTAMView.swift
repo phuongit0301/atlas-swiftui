@@ -26,7 +26,7 @@ struct FlightPlanNOTAMView: View {
                     .font(.system(size: 20, weight: .semibold))
                     .padding(.leading, 30)
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 13)
             
             Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
                 .font(.system(size: 15, weight: .semibold))
@@ -159,7 +159,7 @@ struct FlightPlanNOTAMView: View {
                     }
                 }
             }
-        }
+        }.padding(.vertical)
         .onChange(of: isSortDateDep) { newValue in
             arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
         }

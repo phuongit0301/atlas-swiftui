@@ -109,7 +109,7 @@ struct historicalDelaysView: View {
                     let items = (days?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
-                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay, weather: ""))// TODO handle weather
                     }
                 }
                 return temp
@@ -120,7 +120,7 @@ struct historicalDelaysView: View {
                     let items = (weeks?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
-                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay, weather: ""))// TODO handle weather
                     }
                 }
                 return temp
@@ -131,7 +131,7 @@ struct historicalDelaysView: View {
                     let items = (months?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
-                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay))
+                        temp.append(ArrivalDelays(condition: item.condition ?? "", time: formatter.date(from: item.time!)!, delay: item.delay, weather: ""))// TODO handle weather
                     }
                 }
                 return temp
@@ -230,7 +230,8 @@ struct historicalDelaysView: View {
 }
 
 struct ArrivalDelaysJSON: Codable {
-        let condition: String
-        let time: String
-        let delay: Int
-    }
+    let condition: String
+    let time: String
+    let delay: Int
+    let weather: String
+}

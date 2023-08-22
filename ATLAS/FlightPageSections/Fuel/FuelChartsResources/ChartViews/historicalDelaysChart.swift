@@ -9,13 +9,18 @@ struct historicalDelaysChart: View {
     var body: some View {
         let etaMin = eta.addingTimeInterval(-10 * 60)
         let etaMax = eta.addingTimeInterval(70 * 60)
-        Chart(arrivalDelays) {
+        Chart(arrivalDelays) { data in
             BarMark(
-                x: .value("Time", $0.time, unit: .hour),
-                y: .value("Delay", $0.delay)
+                x: .value("Time", data.time, unit: .hour),
+                y: .value("Delay", data.delay)
             )
             // Add stacking layer
-            .foregroundStyle(by: .value("condition", $0.condition))
+            .foregroundStyle(by: .value("condition", data.condition))
+            .annotation(position: .automatic, alignment: .center) {
+                Text("\(data.weather)")
+                    .foregroundColor(.white)
+            }
+
             // Add highlighted background
             AreaMark(
                 x: .value("Time", etaMin),
@@ -24,20 +29,20 @@ struct historicalDelaysChart: View {
             )
             .foregroundStyle(.orange)
             .opacity(0.3)
-            AreaMark(
-                x: .value("Time", eta),
-                yStart: .value("areaMin", 0),
-                yEnd: .value("areaMax", ymax)
-            )
-            .foregroundStyle(.orange)
-            .opacity(0.3)
-            AreaMark(
-                x: .value("Time", etaMax),
-                yStart: .value("areaMin", 0),
-                yEnd: .value("areaMax", ymax)
-            )
-            .foregroundStyle(.orange)
-            .opacity(0.3)
+//            AreaMark(
+//                x: .value("Time", eta),
+//                yStart: .value("areaMin", 0),
+//                yEnd: .value("areaMax", ymax)
+//            )
+//            .foregroundStyle(.orange)
+//            .opacity(0.3)
+//            AreaMark(
+//                x: .value("Time", etaMax),
+//                yStart: .value("areaMin", 0),
+//                yEnd: .value("areaMax", ymax)
+//            )
+//            .foregroundStyle(.orange)
+//            .opacity(0.3)
         }
         .chartLegend(position: .top)
         .chartXAxis {
@@ -50,6 +55,7 @@ struct ArrivalDelays: Identifiable, Codable {
     let condition: String
     let time: Date
     let delay: Int
+    let weather: String
     var id: Date { time }
 }
 
