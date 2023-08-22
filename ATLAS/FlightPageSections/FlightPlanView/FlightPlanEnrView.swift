@@ -56,6 +56,9 @@ struct FlightPlanEnrView: View {
     @State var awind = ""
     @State var afrm = ""
     
+    // For modal
+    @State var isShowEta = false
+    
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading) {
@@ -260,6 +263,7 @@ struct FlightPlanEnrView: View {
                         
                         ForEach(waypointsTable.indices, id: \.self) { index in
                             let row = waypointsTable[index]
+                            
                             VStack {
                                 HStack {
                                     if isEdit {
@@ -315,12 +319,15 @@ struct FlightPlanEnrView: View {
                                                     //                                        ).onSubmit {
                                                     //                                            updateValues1(editedIndex: index)
                                                     //                                        }
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, suffix: "").fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     
                                                     //                                        TextField(
@@ -443,7 +450,14 @@ struct FlightPlanEnrView: View {
                 self.waypointsTableDefault = setDefaultValues(waypointsTableDefault: coreDataModel.dataFPEnroute)
                 self.waypointsTable = waypointsTableDefault
             }
+            .formSheet(isPresented: $isShowEta) {
+                
+            }
         }
+    }
+    
+    func onEta() {
+        self.isShowEta.toggle()
     }
     
     func calculate(_ width: CGFloat) -> CGFloat {
