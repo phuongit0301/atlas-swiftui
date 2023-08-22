@@ -47,4 +47,5 @@ struct ColorTheme {
     let charlestonGreen = Color("CharlestonGreen") //272729
     let quickSilver = Color("QuickSilver") //A1A1A1
     let gray = Color("Gray") //BABABC
+    let pictonBlue = Color("PictonBlue") //32ADE6
 }

@@ -46,7 +46,7 @@ struct FlightPlanEnrView: View {
     
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
-    @State private var overText = -1
+    @State private var currentIndex = 0
     @State private var isEdit = false
     
     @State var eta = ""
@@ -74,28 +74,31 @@ struct FlightPlanEnrView: View {
                     Text("Enroute").font(.system(size: 20, weight: .semibold))
                     Spacer()
                     
-                    HStack {
+                    if waypointsTable.count > 0 {
                         HStack {
-                            Text("Current Waypoint: SAMBA").font(.system(size: 17, weight: .semibold))
-                        }.padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(Color.white)
-                            .cornerRadius(4)
-                        
-                        HStack {
-                            Text("Fuel Diff: +000.5").font(.system(size: 17, weight: .semibold))
-                        }.padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(Color.white)
-                            .cornerRadius(4)
-                        
-                        HStack {
-                            Text("Time Diff: +00:04").font(.system(size: 17, weight: .semibold))
-                        }.padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(Color.white)
-                            .cornerRadius(4)
+                            HStack {
+                                Text("Current Waypoint: \(waypointsTable[currentIndex].unwrappedPosn)").font(.system(size: 17, weight: .semibold))
+                            }.padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(Color.white)
+                                .cornerRadius(4)
+                            
+                            HStack {
+                                Text("Fuel Diff: \(waypointsTable[currentIndex].unwrappedFdiff)").font(.system(size: 17, weight: .semibold))
+                            }.padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(Color.white)
+                                .cornerRadius(4)
+                            
+                            HStack {
+                                Text("Time Diff: \(waypointsTable[currentIndex].unwrappedDiff)").font(.system(size: 17, weight: .semibold))
+                            }.padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(Color.white)
+                                .cornerRadius(4)
+                        }
                     }
+                    
                 }.padding(.horizontal, 16)
                 
                 //scrollable outer list section
@@ -381,7 +384,7 @@ struct FlightPlanEnrView: View {
                                                     
                                                     Text(row.unwrappedTas).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                 }.font(.system(size: 15))
-                                                    .fontWeight(overText == index ? .medium : .regular)
+                                                    .fontWeight(.regular)
                                                 Group {
                                                     Text(row.unwrappedVws)
                                                         .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
@@ -394,7 +397,7 @@ struct FlightPlanEnrView: View {
                                                         .border(.secondary) // todo todo change design
                                                         .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                 }.font(.system(size: 15))
-                                                    .fontWeight(overText == index ? .medium : .regular)
+                                                    .fontWeight(.regular)
                                             }
                                             HStack {
                                                 Group {
@@ -408,22 +411,24 @@ struct FlightPlanEnrView: View {
                                                     Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     Text("\(row.unwrappedGsp)").frame(width: calculate(proxy.size.width), alignment: .leading)
                                                 }.font(.system(size: 15))
-                                                    .fontWeight(overText == index ? .medium : .regular)
+                                                    .fontWeight(.regular)
                                                 
                                                 Group {
                                                     Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
                                                 }.font(.system(size: 15))
-                                                    .fontWeight(overText == index ? .medium : .regular)
+                                                    .fontWeight(.regular)
                                             }
                                         }
                                     }// end else condition
                                 }// end HStack
-                            }.listRowBackground((index  % 2 == 0) ? Color.theme.sonicSilver.opacity(0.12) : Color(.white))
-                                .onHover(perform: { hovering in
-                                    overText = index
-                                })
+                            }.listRowBackground((currentIndex == index) ? Color.theme.pictonBlue.opacity(0.1) : Color(.white))
+                                .onTapGesture {
+                                    if !row.isSkipped {
+                                        currentIndex = index
+                                    }
+                                }
                         }
                         .listRowSeparator(.hidden)
                     }.padding()
