@@ -23,6 +23,7 @@
 		3E086D8E2A94E4C500BE00AD /* EnrouteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D8C2A94E4C500BE00AD /* EnrouteList+CoreDataProperties.swift */; };
 		3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D932A94FF4700BE00AD /* EnrouteStepper.swift */; };
 		3E086D962A95000B00BE00AD /* EnrouteButtonTimeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D952A95000B00BE00AD /* EnrouteButtonTimeStepper.swift */; };
+		3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDA2A21C6F8008017FA /* AircraftStatusContainer.swift */; };
 		3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */; };
@@ -284,6 +285,7 @@
 		3E086D932A94FF4700BE00AD /* EnrouteStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteStepper.swift; sourceTree = "<group>"; };
 		3E086D952A95000B00BE00AD /* EnrouteButtonTimeStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteButtonTimeStepper.swift; sourceTree = "<group>"; };
 		3E086D972A9501C200BE00AD /* ATLAS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ATLAS.entitlements; sourceTree = "<group>"; };
+		3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPicker.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBDA2A21C6F8008017FA /* AircraftStatusContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftStatusContainer.swift; sourceTree = "<group>"; };
 		3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCardContainer.swift; sourceTree = "<group>"; };
@@ -778,6 +780,7 @@
 				3E086D952A95000B00BE00AD /* EnrouteButtonTimeStepper.swift */,
 				3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */,
 				3EB99CDE2A4FB6A50091BC08 /* ModalPicker.swift */,
+				3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */,
 				3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */,
 				3E086D742A94914700BE00AD /* FuelModal.swift */,
 				3E086D762A94918F00BE00AD /* MapModal.swift */,
@@ -1389,6 +1392,7 @@
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E4A36A62A570BA800027C61 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
+				3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */,
 				3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,

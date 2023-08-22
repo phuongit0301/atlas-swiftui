@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EnrouteButtonTimeStepper: View {
-    @State var onToggle: () -> Void
-    @State var value: String = "00:00"
-    @State var suffix: String? = ""
+    @State var onToggle: (_ index: Int) -> Void
+    @State var value: String = "0000"
+    @State var index: Int = 0
     
     var body: some View {
-        Button(action: { onToggle() }, label: {
+        Button(action: { onToggle(index) }, label: {
             HStack {
                 Text("\(value)").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                     .padding(.trailing, 16)

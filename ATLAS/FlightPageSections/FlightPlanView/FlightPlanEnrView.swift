@@ -46,7 +46,8 @@ struct FlightPlanEnrView: View {
     
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
-    @State private var currentIndex = 0
+    @State private var currentIndex = 0 // change background when user tap gesture on row
+    @State private var modalIndex = 0 // when user click on row to update number
     @State private var isEdit = false
     
     @State var eta = ""
@@ -58,6 +59,13 @@ struct FlightPlanEnrView: View {
     
     // For modal
     @State var isShowEta = false
+    @State private var selectionOutputEta: Double = 0
+    
+    @State var isShowAta = false
+    @State private var selectionOutputAta: Double = 0
+    
+    @State var isShowAfrm = false
+    @State private var selectionOutputAfrm: Double = 0
     
     var body: some View {
         GeometryReader { proxy in
@@ -326,7 +334,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, suffix: "").fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize()
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     
@@ -337,12 +345,15 @@ struct FlightPlanEnrView: View {
                                                     //                                        .onSubmit {
                                                     //                                            updateValues(editedIndex: index)
                                                     //                                        }
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     //                                        TextField(
                                                     //                                            row.unwrappedAfl,
@@ -397,12 +408,16 @@ struct FlightPlanEnrView: View {
                                                         .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                     Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
                                                 }.font(.system(size: 15))
                                                     .fontWeight(.regular)
                                             }
@@ -451,13 +466,48 @@ struct FlightPlanEnrView: View {
                 self.waypointsTable = waypointsTableDefault
             }
             .formSheet(isPresented: $isShowEta) {
-                
+                EnrouteModalPicker(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
+            }
+            .onChange(of: selectionOutputEta) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].eta = "\(value)"
+            }
+            .formSheet(isPresented: $isShowAta) {
+                EnrouteModalPicker(isShowing: $isShowAta, selectionOutput: $selectionOutputAta)
+            }
+            .onChange(of: selectionOutputAta) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].ata = "\(value)"
+            }
+            .formSheet(isPresented: $isShowAfrm) {
+                EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
+            }
+            .onChange(of: selectionOutputAfrm) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].afrm = String(format: "%.1f", value)
             }
         }
     }
     
-    func onEta() {
+    func onEta(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputEta = Double(waypointsTable[modalIndex].unwrappedEta) ?? 0
         self.isShowEta.toggle()
+    }
+    
+    func onAta(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputAta = Double(waypointsTable[modalIndex].unwrappedAta) ?? 0
+        self.isShowAta.toggle()
+    }
+    
+    func onAfrm(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputAfrm = Double(waypointsTable[modalIndex].unwrappedAfrm) ?? 0
+        self.isShowAfrm.toggle()
     }
     
     func calculate(_ width: CGFloat) -> CGFloat {
