@@ -43,6 +43,7 @@ struct FlightPlanEnrView: View {
     // initialise state variables
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @ObservedObject var enrouteSection = EnrouteSection()
     
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []
@@ -63,6 +64,9 @@ struct FlightPlanEnrView: View {
     
     @State var isShowAta = false
     @State private var selectionOutputAta: Double = 0
+    
+    @State var isShowAfl = false
+    @State private var selectionOutputAfl = ""
     
     @State var isShowAfrm = false
     @State private var selectionOutputAfrm: Double = 0
@@ -362,12 +366,15 @@ struct FlightPlanEnrView: View {
                                                     //                                        .onSubmit {
                                                     //                                            updateValues(editedIndex: index)
                                                     //                                        }
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
                                                     // entry here
                                                     //                                        TextField(
@@ -481,6 +488,14 @@ struct FlightPlanEnrView: View {
                 print("Value==========\(value)")
                 waypointsTable[modalIndex].ata = "\(value)"
             }
+            .formSheet(isPresented: $isShowAfl) {
+                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
+            }
+            .onChange(of: selectionOutputAfl) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].afl = "\(value)"
+            }
             .formSheet(isPresented: $isShowAfrm) {
                 EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
             }
@@ -502,6 +517,12 @@ struct FlightPlanEnrView: View {
         self.modalIndex = index
         self.selectionOutputAta = Double(waypointsTable[modalIndex].unwrappedAta) ?? 0
         self.isShowAta.toggle()
+    }
+    
+    func onAfl(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputAfl = waypointsTable[modalIndex].unwrappedAfl
+        self.isShowAfl.toggle()
     }
     
     func onAfrm(_ index: Int) {

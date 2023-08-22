@@ -647,3 +647,7 @@ struct IFlightNoteTabs {
 //    }
 
 //}
+
+class EnrouteSection: ObservableObject {
+    @Published var dataDropDown: [String] = ["CLB", "CLB1", "CLB2", "CLB3"]
+}
