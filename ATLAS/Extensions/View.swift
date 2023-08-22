@@ -652,6 +652,8 @@ public struct BreadCrumb: ViewModifier {
 
 func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
     switch screenName {
+        case .FlightSummaryScreen:
+            return "Flight Summary"
         case .HomeScreen:
             return "Home"
         case .FlightScreen:

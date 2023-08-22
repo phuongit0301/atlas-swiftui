@@ -42,11 +42,11 @@ struct Tab {
 
 let IFlightPlanTabs = [
     Tab(title: "Summary", screenName: FlightPlanEnumeration.SummaryScreen),
+    Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
+    Tab(title: "METAR / TAF", screenName: FlightPlanEnumeration.METARSScreen),
     Tab(title: "Departure", screenName: FlightPlanEnumeration.DepartureScreen),
     Tab(title: "Enroute", screenName: FlightPlanEnumeration.EnrouteScreen),
     Tab(title: "Arrival", screenName: FlightPlanEnumeration.ArrivalScreen),
-    Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
-    Tab(title: "METAR / TAF", screenName: FlightPlanEnumeration.METARSScreen)
 ]
 //
 //struct IFlightPlanTabs {

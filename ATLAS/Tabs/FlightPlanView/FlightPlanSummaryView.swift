@@ -470,7 +470,7 @@ struct FlightPlanSummaryView: View {
                     }.padding(.bottom, 10)
                         .padding(.horizontal, 30)
                     
-                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
+                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 10 mins ago")
                         .font(.system(size: 15, weight: .semibold))
                         .padding(.leading, 30)
                         .padding(.bottom, 10)

@@ -22,6 +22,12 @@ struct HomeView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     // Tabs
                     switch modelState.selectedTab.screenName {
+                        case NavigationEnumeration.FlightSummaryScreen:
+                            FlightSummaryView()
+                                .tag(NavigationEnumeration.OverviewScreen)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .toolbar(.hidden, for: .tabBar)
+                                .ignoresSafeArea()
                         case NavigationEnumeration.OverviewScreen:
                             OverviewView()
                                 .tag(NavigationEnumeration.OverviewScreen)

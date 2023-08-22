@@ -10,6 +10,8 @@
 		3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E024D8D2A848A730066C8E3 /* ReferenceModel.swift */; };
 		3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */; };
 		3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03C64C2A15D4D80099ACA3 /* Color.swift */; };
+		3E086D6F2A944CF200BE00AD /* FlightSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D6E2A944CF200BE00AD /* FlightSummaryView.swift */; };
+		3E086D722A945DEA00BE00AD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D712A945DEA00BE00AD /* Helper.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBDB2A21C6F8008017FA /* AircraftStatusContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDA2A21C6F8008017FA /* AircraftStatusContainer.swift */; };
 		3E3FCBDD2A21C706008017FA /* ArrivalCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */; };
@@ -263,6 +265,8 @@
 		3E024D8D2A848A730066C8E3 /* ReferenceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceModel.swift; sourceTree = "<group>"; };
 		3E03C6462A14B83C0099ACA3 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
 		3E03C64C2A15D4D80099ACA3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		3E086D6E2A944CF200BE00AD /* FlightSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSummaryView.swift; sourceTree = "<group>"; };
+		3E086D712A945DEA00BE00AD /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBDA2A21C6F8008017FA /* AircraftStatusContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftStatusContainer.swift; sourceTree = "<group>"; };
 		3E3FCBDC2A21C706008017FA /* ArrivalCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCardContainer.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 				3E4A36422A55D55700027C61 /* CustomTFKeyboard.swift */,
 				3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */,
 				3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */,
+				3E086D712A945DEA00BE00AD /* Helper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -727,6 +732,7 @@
 				3EFA5F2D2A458F25001ED6CF /* TableDetail.swift */,
 				3E4A36BC2A571A2500027C61 /* FlightInformationDetailView.swift */,
 				3E4A36BE2A571C7500027C61 /* NotamDetailView.swift */,
+				3E086D6E2A944CF200BE00AD /* FlightSummaryView.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -1302,6 +1308,7 @@
 				C52063F52A4356290041580E /* FlightPlanDepView.swift in Sources */,
 				3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
+				3E086D6F2A944CF200BE00AD /* FlightSummaryView.swift in Sources */,
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
@@ -1391,6 +1398,7 @@
 				C5A8DE022A4E8D7F0045EB32 /* TrackMilesView.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AISearchView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
+				3E086D722A945DEA00BE00AD /* Helper.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */,
