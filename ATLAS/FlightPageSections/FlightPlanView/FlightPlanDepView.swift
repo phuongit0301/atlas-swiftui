@@ -751,7 +751,7 @@ struct FlightPlanDepView: View {
                                             }
                                             .frame(width: calculateWidth(proxy.size.width, 6))
                                     }.font(.system(size: 17, weight: .regular))
-                                    TextField("SQ", text: $atcSQ)
+                                    TextField("A", text: $atcSQ)
                                         .font(.system(size: 17, weight: .regular))
                                         .focused($isTextFieldAtcSQFocused)
                                         .onReceive(Just(isTextFieldAtcSQFocused)) { focused in

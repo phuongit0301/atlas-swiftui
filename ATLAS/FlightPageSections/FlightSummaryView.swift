@@ -130,26 +130,26 @@ struct FlightSummaryView: View {
                 // End header
                 List {
                     Section(header:
-                                Text("Flight info")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Color.black)
+                        VStack {
+                            Text("Flight info").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
+                        }
                     ) {
                         VStack(spacing: 12) {
                             HStack {
                                 Group {
-                                    Text("Callsign").frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                    Text("Sector").frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                    Text("Aircraft").frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                    Text("POB").frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
+                                    Text("Callsign").frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    Text("Sector").frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    Text("Aircraft").frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    Text("POB").frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
                                 }
                                 .foregroundStyle(Color.blue)
                                 .font(.system(size: 15, weight: .medium))
                             }
                             HStack {
                                 Group {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo).frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                    Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedTailNo).frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo).frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    Text("\(coreDataModel.dataSummaryInfo.unwrappedDep+" / "+coreDataModel.dataSummaryInfo.unwrappedDest)").frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedTailNo).frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
                                     
                                     TextField(
                                         "POB",
@@ -170,7 +170,7 @@ struct FlightSummaryView: View {
                                         coreDataModel.save()
                                         coreDataModel.readSummaryInfo()
                                     }
-                                    .frame(width: calculateWidth(proxy.size.width - 65, 4), alignment: .leading)
+                                    .frame(width: calculateWidth(proxy.size.width, 4), alignment: .leading)
                                 }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                             }
                         }
@@ -186,8 +186,9 @@ struct FlightSummaryView: View {
                             VStack(spacing: 12) {
                                 HStack {
                                     Group {
-                                        Text("STD").frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
-                                        Text("STA").frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
+                                        Text("STD").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("STA").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .foregroundStyle(Color.blue)
                                     .font(.system(size: 15, weight: .medium))
@@ -195,18 +196,21 @@ struct FlightSummaryView: View {
                                 
                                 HStack {
                                     Group {
-                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
-                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).frame(width: calculateWidth(proxy.size.width - 65, 2), alignment: .leading)
+                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("").frame(width: calculateWidth(proxy.size.width, 3))
                                     }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }.padding(.leading, -5)
                             
+                            Divider()
+                            
                             VStack(spacing: 12) {
                                 HStack {
                                     Group {
-                                        Text("Block Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("Flight Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("Block Time - Flight Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("Block Time").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("Flight Time").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("Block Time - Flight Time").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .foregroundStyle(Color.blue)
                                     .font(.system(size: 15, weight: .medium))
@@ -214,9 +218,9 @@ struct FlightSummaryView: View {
                                 
                                 HStack {
                                     Group {
-                                        Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text(coreDataModel.dataSummaryInfo.unwrappedFltTime).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(coreDataModel.dataSummaryInfo.unwrappedFltTime).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime)).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
@@ -233,9 +237,9 @@ struct FlightSummaryView: View {
                             VStack(spacing: 12) {
                                 HStack {
                                     Group {
-                                        Text("Chocks Off").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("ETA").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("Chocks On").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("Chocks Off").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("ETA").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("Chocks On").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .foregroundStyle(Color.blue)
                                     .font(.system(size: 15, weight: .medium))
@@ -243,19 +247,21 @@ struct FlightSummaryView: View {
                                 
                                 HStack {
                                     Group {
-                                        Text(showUTC ? chocksOffUTC : chocksOffLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text(showUTC ? etaUTC : etaLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text(showUTC ? chocksOnUTC : chocksOnLocal).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text(showUTC ? chocksOffUTC : chocksOffLocal).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(showUTC ? etaUTC : etaLocal).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(showUTC ? chocksOnUTC : chocksOnLocal).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }.font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
                             }
                             
+                            Divider()
+                            
                             VStack(spacing: 12) {
                                 HStack {
                                     Group {
-                                        Text("Day").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("Night").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("Total Time").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("Day").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("Night").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("Total Time").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .foregroundStyle(Color.blue)
                                     .font(.system(size: 15, weight: .medium))
@@ -263,9 +269,9 @@ struct FlightSummaryView: View {
                                 
                                 HStack {
                                     Group {
-                                        Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text("TODO").frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
-                                        Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width - 65, 3), alignment: .leading)
+                                        Text("TODO").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text("TODO").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }
@@ -283,7 +289,7 @@ struct FlightSummaryView: View {
                             Group {
                                 HStack {
                                     HStack {
-                                        Text("CA").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CA").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Caleb").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         HStack {
                                             Picker("", selection: $selectedCA) {
@@ -293,10 +299,10 @@ struct FlightSummaryView: View {
                                             }.pickerStyle(MenuPickerStyle()).fixedSize()
                                             Spacer()
                                         }.fixedSize()
-                                    }.frame(width: (proxy.size.width - 95) / 2, alignment: .leading)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("FO").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("FO").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Danial").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         HStack {
                                             Picker("", selection: $selectedFO) {
@@ -305,62 +311,69 @@ struct FlightSummaryView: View {
                                                 }
                                             }.pickerStyle(MenuPickerStyle()).fixedSize()
                                         }.fixedSize()
-                                    }.frame(width: (proxy.size.width - 95) / 2, alignment: .leading)
+                                    }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                    Text("").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                 }
                             }// end group
+                            
+                            Divider()
                             
                             Group {
                                 HStack {
                                     HStack {
-                                        Text("CIC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CIC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Adam").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Amanda").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CL").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Bryan").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                 }
                             }// end group
                             
+                            Divider()
+                            
                             Group {
                                 HStack {
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Aliza").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Pree").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Firdaus").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                 }
                             }// end group
                             
+                            Divider()
+                            
                             Group {
                                 HStack {
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Ben").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Sarah").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium))
+                                        Text("CC").foregroundStyle(Color.blue).font(.system(size: 15, weight: .medium)).frame(width: 30, alignment: .leading)
                                         Text("Michael").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                     }.frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                 }

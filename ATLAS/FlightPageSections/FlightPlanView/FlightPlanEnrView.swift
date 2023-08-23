@@ -379,7 +379,11 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+                                                        if index >= getTocIndex() {
+                                                            EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+                                                        } else {
+                                                            Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                        }
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
                                                     // entry here
@@ -398,7 +402,11 @@ struct FlightPlanEnrView: View {
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+                                                        if index >= getTocIndex() {
+                                                            EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+                                                        } else {
+                                                            Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                        }
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                     Text(row.unwrappedAdn).frame(width: calculate(proxy.size.width), alignment: .leading)
@@ -470,7 +478,7 @@ struct FlightPlanEnrView: View {
                                     if !row.isSkipped {
                                         currentIndex = index
                                     }
-                                }.Print("row==========\(row.unwrappedEta)")
+                                }
                         }
                         .listRowSeparator(.hidden)
                     }.padding()
@@ -505,24 +513,17 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowAfl) {
-//                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
                 EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
             }
             .onChange(of: selectionOutputAfl) { value in
-                // TODO Adil: value will populate from Modal
                 waypointsTable[modalIndex].afl = "\(value)"
                 updateValues(editedIndex: modalIndex)
-                print("Value==========\(value)")
-                
             }
             .formSheet(isPresented: $isShowOat) {
                 EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
             }
             .onChange(of: selectionOutputOat) { value in
-                // TODO Adil: value will populate from Modal
                 waypointsTable[modalIndex].oat = "\(value)"
-                print("Value==========\(value)")
-                
             }
             .formSheet(isPresented: $isShowAwind) {
                 EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
@@ -617,6 +618,15 @@ struct FlightPlanEnrView: View {
         } else {
             return .black
         }
+    }
+    
+    func getTocIndex() -> Int {
+        for (index, row) in waypointsTableDefault.enumerated() {
+            if row.unwrappedPosn == "T_O_C" {
+                return index
+            }
+        }
+        return 0
     }
 
     func onUpdate(_ index: Int) {

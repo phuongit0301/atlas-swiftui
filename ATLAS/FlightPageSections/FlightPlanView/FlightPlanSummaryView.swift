@@ -620,11 +620,6 @@ struct FlightPlanSummaryView: View {
                                     HStack {
                                         Text(coreDataModel.dataSummaryRoute.unwrappedRouteNo)
                                             .font(.system(size: 17, weight: .regular))
-                                        Text("View").font(.system(size: 15, weight: .medium))
-                                            .foregroundColor(.blue)
-                                            .onTapGesture {
-                                                showMapSheet = true
-                                            }
                                     }.frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(.top, 5)
@@ -637,9 +632,20 @@ struct FlightPlanSummaryView: View {
                                         .foregroundStyle(Color.blue)
                                         .frame(maxWidth: 144, alignment: .leading)
                                         .font(.system(size: 15, weight: .medium))
-                                    Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(.system(size: 17, weight: .regular))
+                                    
+                                    VStack {
+                                        Text(coreDataModel.dataSummaryRoute.unwrappedRoute)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .font(.system(size: 17, weight: .regular))
+                                            .padding(.bottom, 6)
+                                        
+                                        Text("Map View").font(.system(size: 15, weight: .medium))
+                                            .foregroundColor(.blue)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .onTapGesture {
+                                                showMapSheet = true
+                                            }
+                                    }
                                 }
                                 .padding(.top, 5)
                                 .padding(.bottom, 5)
@@ -689,7 +695,7 @@ struct FlightPlanSummaryView: View {
                         }
                         
                         // MARK: Performance section
-                        Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        Section(header: Text("PERFORMANCE").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold)).padding(.bottom, 6)) {
                             // table body - first row
                             Table(coreDataModel.dataPerfInfo) {
                                 TableColumn("FLT Rules") {
@@ -753,7 +759,7 @@ struct FlightPlanSummaryView: View {
                         }
                         
                         // MARK: Fuel section
-                        Section(header: Text("FUEL").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        Section(header: Text("FUEL").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold)).padding(.bottom, 12)) {
                             // grouped row using hstack
                             VStack(alignment: .leading, spacing: 0) {
                                 //fuel info table body
@@ -1278,7 +1284,7 @@ struct FlightPlanSummaryView: View {
                         }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
                         
                         // ALTN section
-                        Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
+                        Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold)).padding(.bottom, 6)) {
                             Table(coreDataModel.dataAltnList) {
                                 TableColumn("ALTN / RWY") {
                                     Text($0.unwrappedAltnRwy).foregroundStyle(Color.black).font(.system(size: 17, weight: .regular))

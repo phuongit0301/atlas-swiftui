@@ -6970,8 +6970,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -6986,8 +6986,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7002,8 +7002,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7018,8 +7018,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7034,8 +7034,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7050,8 +7050,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "805"
-            endingLineNumber = "805"
+            startingLineNumber = "815"
+            endingLineNumber = "815"
             landmarkName = "updateValues(editedIndex:)"
             landmarkType = "7">
             <Locations>
@@ -7099,6 +7099,21 @@
                   startingLineNumber = "801"
                   endingLineNumber = "801"
                   offsetFromSymbolStart = "1404">
+               </Location>
+               <Location
+                  uuid = "E6A359E5-9D33-4F0F-ABDD-9F1D60F71855 - 9d0311acfa1f62d6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "815"
+                  endingLineNumber = "815"
+                  offsetFromSymbolStart = "1736">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -32,7 +32,7 @@ func calculateTime(_ startTime: String, _ endTime: String) -> String {
     let hours = result / 60
     let minutes = result % 60
     
-    return "\(hours):\(minutes)"
+    return String(format: "%02d:%02d", hours, minutes)
 }
 
 func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
@@ -68,6 +68,5 @@ func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
     }
     
     let components = Calendar.current.dateComponents([.day, .hour, .minute], from: sDateTime!, to: eDateTime!)
-    
-    return "\(String(format:"%d%02d", components.hour ?? 0, components.minute ?? 0))"
+    return "\(String(format:"%02d:%02d", components.hour ?? 0, components.minute ?? 0))"
 }
