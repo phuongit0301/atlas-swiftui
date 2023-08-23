@@ -46,9 +46,11 @@ struct EnrouteModalWheelTime: View {
     }
 }
 
-// todo enroutemodal wheel for afl, awind and afrm
-// for afl: 2 wheel - 3|20 (where second wheel is increments of 10, you can refer to ModalPickerMultiple for reference)
-// for awind and afrm - 6 digit wheel
+// todo enroutemodal wheel for afl, oat, awind and afrm
+// for afl: 2 wheel - A|B - A from 0 to 5, B from 0 to 90, increments of 10 (you can refer to ModalPickerMultiple for reference)
+// for oat: 2 digit wheel A|B, - A from -9 to 9, B from 0 to 9.
+// for awind: 6 digit wheel A|B|C|D|E|F|G - A from 0 to 3, B from 0 to 6, C from 0 to 9, D,E,F,G each from 0 to 9
+// for afrm: 6 digit wheel A|B|C|D|E|F|G - A,B,C,D,E,F,G from 0 to 9
 struct EnrouteModalWheelAfl: View {
     @Binding var isShowing: Bool
     @Binding var selectionOutput: Int

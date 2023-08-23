@@ -507,7 +507,7 @@ struct FlightPlanEnrView: View {
             .formSheet(isPresented: $isShowAfl) {
 //                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
 //                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
-                EnrouteModalWheelAfl(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
+                EnrouteModalWheelAfl(isShowing: $isShowAfl, selectionOutput: $selectionOutputAfl)
             }
             .onChange(of: selectionOutputAfl) { value in
                 // TODO Adil: value will populate from Modal
@@ -517,7 +517,8 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowOat) {
-                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
+//                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
+                EnrouteModalWheelOat(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
             }
             .onChange(of: selectionOutputOat) { value in
                 // TODO Adil: value will populate from Modal
@@ -526,7 +527,8 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowAwind) {
-                EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
+//                EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
+                EnrouteModalWheelAwind(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
             }
             .onChange(of: selectionOutputAwind) { value in
                 // TODO Adil: value will populate from Modal
@@ -536,7 +538,8 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowAfrm) {
-                EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
+//                EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
+                EnrouteModalWheelAfrm(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm)
             }
             .onChange(of: selectionOutputAfrm) { value in
                 // TODO Adil: value will populate from Modal
