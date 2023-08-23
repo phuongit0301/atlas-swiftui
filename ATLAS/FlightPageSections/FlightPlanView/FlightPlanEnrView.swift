@@ -470,7 +470,7 @@ struct FlightPlanEnrView: View {
                                     if !row.isSkipped {
                                         currentIndex = index
                                     }
-                                }
+                                }.Print("row==========\(row.unwrappedEta)")
                         }
                         .listRowSeparator(.hidden)
                     }.padding()
@@ -489,12 +489,11 @@ struct FlightPlanEnrView: View {
                 // todo time picker for hours and minutes
                 EnrouteModalPicker(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
             }
-            .onChange(of: selectionOutputEta) { value in
-                // TODO Adil: value will populate from Modal
-                waypointsTable[modalIndex].eta = "\(value)"
-                updateValues(editedIndex: modalIndex)
-                print("Value==========\(value)")
-            }
+//            .onChange(of: selectionOutputEta) { value in
+//                // TODO Adil: value will populate from Modal
+//                waypointsTable[modalIndex].eta = String(format: "%.0f", value)
+//                updateValues(editedIndex: modalIndex)
+//            }
             .formSheet(isPresented: $isShowAta) {
                 // todo time picker for hours and minutes
                 EnrouteModalPicker(isShowing: $isShowAta, selectionOutput: $selectionOutputAta)
@@ -797,6 +796,7 @@ struct FlightPlanEnrView: View {
         return formatter.string(from: date)
     }
     func updateValues(editedIndex: Int) {
+        print("12313123")
         let dateFormatterTime = DateFormatter()
         dateFormatterTime.dateFormat = "HHmm"
         
