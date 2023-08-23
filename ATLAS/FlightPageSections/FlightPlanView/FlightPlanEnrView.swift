@@ -278,7 +278,7 @@ struct FlightPlanEnrView: View {
                             }
                             .foregroundStyle(Color.blue)
                         }.listRowSeparator(.hidden)
-                        
+                        // first row - todo scroll starts here only
                         ForEach(waypointsTable.indices, id: \.self) { index in
                             let row = waypointsTable[index]
                             
@@ -486,52 +486,64 @@ struct FlightPlanEnrView: View {
                 self.waypointsTable = waypointsTableDefault
             }
             .formSheet(isPresented: $isShowEta) {
+                // todo time picker for hours and minutes
                 EnrouteModalPicker(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
             }
             .onChange(of: selectionOutputEta) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].eta = "\(value)"
+                updateValues(editedIndex: modalIndex)
+                print("Value==========\(value)")
             }
             .formSheet(isPresented: $isShowAta) {
+                // todo time picker for hours and minutes
                 EnrouteModalPicker(isShowing: $isShowAta, selectionOutput: $selectionOutputAta)
             }
             .onChange(of: selectionOutputAta) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].ata = "\(value)"
+                updateValues(editedIndex: modalIndex)
+                print("Value==========\(value)")
+                
             }
             .formSheet(isPresented: $isShowAfl) {
-                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
+//                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
+                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
             }
             .onChange(of: selectionOutputAfl) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].afl = "\(value)"
+                updateValues(editedIndex: modalIndex)
+                print("Value==========\(value)")
+                
             }
             .formSheet(isPresented: $isShowOat) {
                 EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
             }
             .onChange(of: selectionOutputOat) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].oat = "\(value)"
+                print("Value==========\(value)")
+                
             }
             .formSheet(isPresented: $isShowAwind) {
                 EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
             }
             .onChange(of: selectionOutputAwind) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].awind = "\(value)"
+                updateValues(editedIndex: modalIndex)
+                print("Value==========\(value)")
+                
             }
             .formSheet(isPresented: $isShowAfrm) {
                 EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
             }
             .onChange(of: selectionOutputAfrm) { value in
                 // TODO Adil: value will populate from Modal
-                print("Value==========\(value)")
                 waypointsTable[modalIndex].afrm = String(format: "%.1f", value)
+                updateValues(editedIndex: modalIndex)
+                print("Value==========\(value)")
             }
         }
     }
@@ -602,9 +614,12 @@ struct FlightPlanEnrView: View {
             return .black
         }
     }
-    func formatFuelNumberDouble(_ number: Double) -> String {
-        let formattedString = String(format: "%05.1f", number)
-        return formattedString
+
+    func onUpdate(_ index: Int) {
+        waypointsTable[index].isSkipped.toggle()
+        coreDataModel.dataFPEnroute = waypointsTable
+        coreDataModel.save()
+        coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
     }
     func setDefaultValues(waypointsTableDefault: [EnrouteList]) -> [EnrouteList] {
         // define the starting waypoint afrm based on user selections in departure page
@@ -766,7 +781,10 @@ struct FlightPlanEnrView: View {
         }
         return waypointsTableDefault
     }
-    
+    func formatFuelNumberDouble(_ number: Double) -> String {
+        let formattedString = String(format: "%05.1f", number)
+        return formattedString
+    }
     func formatTime(_ minutes: Int) -> String {
         let hours = minutes / 60
         let mins = minutes % 60
@@ -778,13 +796,222 @@ struct FlightPlanEnrView: View {
         
         return formatter.string(from: date)
     }
-    
-    func onUpdate(_ index: Int) {
-        waypointsTable[index].isSkipped.toggle()
+    func updateValues(editedIndex: Int) {
+        let dateFormatterTime = DateFormatter()
+        dateFormatterTime.dateFormat = "HHmm"
+        
+        // define the T_O_C index
+        var tocIndex: Int {
+            for (index, row) in waypointsTableDefault.enumerated() {
+                if row.unwrappedPosn == "T_O_C" {
+                    return index
+                }
+            }
+            return 0
+        }
+        
+        let startIndex = editedIndex + 1
+        for index in startIndex..<waypointsTable.count {
+            //eta
+            let etaDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedEta)!
+            if dateFormatterTime.date(from: waypointsTable[index].eta!) != nil {
+                // Update the value based on the previous row's value in column
+                if dateFormatterTime.date(from: waypointsTable[index-1].unwrappedEta) != nil {
+                    let etaPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].unwrappedEta)!
+                    let ztmString = waypointsTable[index].ztm
+                    let components = ztmString!.components(separatedBy: ":")
+                    let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                    let NewValue = etaPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                    waypointsTable[index].eta = dateFormatterTime.string(from: NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].eta = dateFormatterTime.string(from: etaDefaultValue)
+            }
+            
+            //ata
+            let ataDefaultValue = dateFormatterTime.date(from: waypointsTableDefault[index].unwrappedAta)!
+            if dateFormatterTime.date(from: waypointsTable[index].unwrappedAta) != nil {
+                // Update the value based on the previous row's value in column
+                var ataPreviousRowValue: Date
+                
+                if waypointsTable[index-1].unwrappedAta != "" {
+                    ataPreviousRowValue = dateFormatterTime.date(from: waypointsTable[index-1].unwrappedAta)!
+                    let ztmString = waypointsTable[index].unwrappedZtm
+                    let components = ztmString.components(separatedBy: ":")
+                    let ztm = (Int(components[0])! * 3600) + (Int(components[1])! * 60)
+                    let NewValue = ataPreviousRowValue.addingTimeInterval(TimeInterval(ztm))
+                    waypointsTable[index].ata = dateFormatterTime.string(from: NewValue)
+                } else {
+                    waypointsTable[index].ata = dateFormatterTime.string(from: ataDefaultValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].ata = dateFormatterTime.string(from: ataDefaultValue)
+            }
+            
+            //afl
+            let aflDefaultValue = waypointsTableDefault[index].unwrappedAfl
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                waypointsTable[index].afl = aflDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let aflPreviousRowValue = waypointsTable[index-1].unwrappedAfl
+                let NewValue = aflPreviousRowValue
+                waypointsTable[index].afl = NewValue
+            }
+            
+            //oat
+            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                waypointsTable[index].oat = oatDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let oatPreviousRowValue = waypointsTable[index-1].unwrappedOat
+                let NewValue = oatPreviousRowValue
+                waypointsTable[index].oat = NewValue
+            }
+            
+            //awind
+            let aWindDefaultValue = waypointsTableDefault[index].unwrappedAwind
+            if index <= tocIndex {
+                // Set the default value if waypoint is before TOC
+                waypointsTable[index].awind = aWindDefaultValue
+            }
+            else {
+                // Update the value based on the previous row's value in column
+                let aWindPreviousRowValue = waypointsTable[index-1].unwrappedAwind
+                let NewValue = aWindPreviousRowValue
+                waypointsTable[index].awind = NewValue
+            }
+            
+            //afrm
+            let afrmDefaultValue = Double(waypointsTableDefault[index].unwrappedAfrm)
+            if Double(waypointsTable[index].unwrappedAfrm) != nil {
+                // Update the value based on the previous row's value in column
+                let afrmPreviousRowValue = Double(waypointsTable[index-1].unwrappedAfrm)
+                let zfrq = Double(waypointsTable[index].unwrappedZfrq) ?? 0
+                var NewValue = zfrq
+                
+                if afrmPreviousRowValue != nil {
+                    NewValue = afrmPreviousRowValue! - zfrq
+                }
+                waypointsTable[index].afrm = formatFuelNumberDouble(NewValue)
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].afrm = formatFuelNumberDouble(afrmDefaultValue ?? 0)
+            }
+        }
+        
+        for index in editedIndex..<waypointsTable.count {
+            //diff
+            let diffDefaultValue = waypointsTableDefault[index].unwrappedDiff
+            if dateFormatterTime.date(from: waypointsTable[index].unwrappedEta) != nil &&  dateFormatterTime.date(from: waypointsTable[index].unwrappedEta) != nil {
+                var eta = 0
+                if waypointsTable[index].unwrappedEta != "" {
+                    let etaMins = waypointsTable[index].unwrappedEta.suffix(2)
+                    let etaHrs = waypointsTable[index].unwrappedEta.prefix(2)
+                    eta = Int(etaHrs)! * 60 + Int(etaMins)!
+                }
+                // Update the value based on the eta and ata
+                let ataMins = waypointsTable[index].unwrappedAta.suffix(2)
+                let ataHrs = waypointsTable[index].unwrappedAta.prefix(2)
+                var ata = ataMins != "" ? Int(ataMins)! : 0
+                
+                if ataHrs != "" {
+                    ata = Int(ataHrs)! * 60 + ata
+                }
+                
+                var NewValue = ata - eta
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    let NewValueString = formatTime(NewValue)
+                    waypointsTable[index].diff = "-"+NewValueString
+                } else {
+                    let NewValueString = formatTime(NewValue)
+                    waypointsTable[index].diff = "+"+NewValueString
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].diff = diffDefaultValue
+            }
+            
+            // adn
+            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
+            let aflDefaultValue = waypointsTableDefault[index].unwrappedAfl
+            if index < tocIndex {
+                // Set the default value if waypoint is before TOC
+                waypointsTable[index].adn = "N.A"
+            } else { // set value for the rest
+                // get ISA = 15 + -2deg per 1000ft
+                if aflDefaultValue != "" {
+                    let aflFormatted = Int(aflDefaultValue)! * 100
+                    let isa = 15 + (aflFormatted / 1000) * -2
+                    // get adn = oat - ISA
+                    let adn = Int(oatDefaultValue)! - isa
+                    // update value
+                    if adn < 0 {
+                        waypointsTable[index].adn = "\(adn)"
+                    } else {
+                        waypointsTable[index].adn = "+\(adn)"
+                    }
+                } else {
+                    waypointsTable[index].adn = "N.A"
+                }
+            }
+            
+            //fDiff
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
+            if Double(waypointsTable[index].unwrappedFdiff) != nil {
+                let afrm = Double(waypointsTable[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(waypointsTable[index].unwrappedPfrm) ?? 0
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    waypointsTable[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    waypointsTable[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
+        
+        for index in editedIndex..<waypointsTable.count {
+            //fDiff
+            let fDiffDefaultValue = Double(waypointsTableDefault[index].unwrappedFdiff)
+            if Double(waypointsTable[index].unwrappedFdiff) != nil {
+                let afrm = Double(waypointsTable[index].unwrappedAfrm) ?? 0
+                let pfrm = Double(waypointsTable[index].unwrappedPfrm) ?? 0
+                var NewValue = afrm - pfrm
+                if NewValue < 0 {
+                    NewValue = NewValue * -1
+                    waypointsTable[index].fdiff = "-"+formatFuelNumberDouble(NewValue)
+                } else {
+                    waypointsTable[index].fdiff = "+"+formatFuelNumberDouble(NewValue)
+                }
+            }
+            else {
+                // Set the default value if it exists and currentValue is nil
+                waypointsTable[index].fdiff = formatFuelNumberDouble(fDiffDefaultValue ?? 0)
+            }
+        }
+        // sync up with coreData, save and reload
         coreDataModel.dataFPEnroute = waypointsTable
         coreDataModel.save()
         coreDataModel.dataFPEnroute = coreDataModel.readEnrouteList()
     }
+    
 }
 
 struct EnrouteCustomField: View {
