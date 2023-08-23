@@ -486,7 +486,7 @@ struct FlightPlanEnrView: View {
                 self.waypointsTable = waypointsTableDefault
             }
             .formSheet(isPresented: $isShowEta) {
-                EnrouteModalWheel(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
+                EnrouteModalWheelTime(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
             }
             .onChange(of: selectionOutputEta) { value in
                 let formatter = DateFormatter()
@@ -495,7 +495,7 @@ struct FlightPlanEnrView: View {
                 updateValues(editedIndex: modalIndex)
             }
             .formSheet(isPresented: $isShowAta) {
-                EnrouteModalWheel(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
+                EnrouteModalWheelTime(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
             }
             .onChange(of: selectionOutputAta) { value in
                 let formatter = DateFormatter()
@@ -506,7 +506,8 @@ struct FlightPlanEnrView: View {
             }
             .formSheet(isPresented: $isShowAfl) {
 //                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
-                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
+//                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
+                EnrouteModalWheelAfl(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
             }
             .onChange(of: selectionOutputAfl) { value in
                 // TODO Adil: value will populate from Modal
