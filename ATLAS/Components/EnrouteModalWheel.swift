@@ -54,7 +54,10 @@ struct EnrouteModalWheelTime: View {
 struct EnrouteModalWheelAfl: View {
     @Binding var isShowing: Bool
     @Binding var selectionOutput: Int
-    @State private var selection = Int
+    @State var itemsA: ClosedRange<Int> = 0...5
+    @State var itemsB: ClosedRange<Int> = 0...90
+    @State private var selectionA = 0
+    @State private var selectionB = 0
     
     var body: some View {
         VStack {
@@ -70,7 +73,7 @@ struct EnrouteModalWheelAfl: View {
                 
                 Spacer()
                 Button(action: {
-                    self.selectionOutput = selection
+                    self.selectionOutput = selectionA
                     self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -80,12 +83,23 @@ struct EnrouteModalWheelAfl: View {
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
             HStack {
-                DatePicker("", selection: $selection, displayedComponents: [.hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
-                    .environment(\.locale, Locale(identifier: "en_GB"))
-            }.Print("hour=======\(selection)")
+                Picker(selection: $selectionA, label: Text("")) {
+                    ForEach(itemsA, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionB, label: Text("")) {
+                    ForEach(itemsB, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+            }
             Spacer()
         }.onAppear {
-            self.selection = selectionOutput
+            self.selectionA = selectionOutput
         }
     }
 }

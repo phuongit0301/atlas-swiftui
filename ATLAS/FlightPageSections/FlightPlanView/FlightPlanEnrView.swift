@@ -66,7 +66,7 @@ struct FlightPlanEnrView: View {
     @State private var selectionOutputAta = Date()
     
     @State var isShowAfl = false
-    @State private var selectionOutputAfl = ""
+    @State private var selectionOutputAfl = 0
     
     @State var isShowOat = false
     @State private var selectionOutputOat: Double = 0
@@ -523,14 +523,14 @@ struct FlightPlanEnrView: View {
             }
             .formSheet(isPresented: $isShowOat) {
 //                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
-                EnrouteModalWheelOat(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
+//                EnrouteModalWheelOat(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
             }
             .onChange(of: selectionOutputOat) { value in
                 waypointsTable[modalIndex].oat = "\(value)"
             }
             .formSheet(isPresented: $isShowAwind) {
 //                EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
-                EnrouteModalWheelAwind(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
+//                EnrouteModalWheelAwind(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
             }
             .onChange(of: selectionOutputAwind) { value in
                 // TODO Adil: value will populate from Modal
@@ -541,7 +541,7 @@ struct FlightPlanEnrView: View {
             }
             .formSheet(isPresented: $isShowAfrm) {
 //                EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
-                EnrouteModalWheelAfrm(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm)
+//                EnrouteModalWheelAfrm(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm)
             }
             .onChange(of: selectionOutputAfrm) { value in
                 // TODO Adil: value will populate from Modal
@@ -572,7 +572,7 @@ struct FlightPlanEnrView: View {
     
     func onAfl(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputAfl = waypointsTable[modalIndex].unwrappedAfl
+        self.selectionOutputAfl = Int(waypointsTable[modalIndex].unwrappedAfl) ?? 0
         self.isShowAfl.toggle()
     }
     
