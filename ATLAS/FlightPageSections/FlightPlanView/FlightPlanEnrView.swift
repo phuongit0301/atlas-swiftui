@@ -68,6 +68,12 @@ struct FlightPlanEnrView: View {
     @State var isShowAfl = false
     @State private var selectionOutputAfl = ""
     
+    @State var isShowOat = false
+    @State private var selectionOutputOat: Double = 0
+    
+    @State var isShowAwind = false
+    @State private var selectionOutputAwind: Double = 0
+    
     @State var isShowAfrm = false
     @State private var selectionOutputAfrm: Double = 0
     
@@ -384,13 +390,17 @@ struct FlightPlanEnrView: View {
                                                     //                                        .onSubmit {
                                                     //                                            updateValues(editedIndex: index)
                                                     //                                        }
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
                                                     Text(row.unwrappedAdn).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     //                                        TextField(
@@ -400,12 +410,15 @@ struct FlightPlanEnrView: View {
                                                     //                                        .onSubmit {
                                                     //                                            updateValues(editedIndex: index)
                                                     //                                        }
-                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
-                                                        .id(UUID())
-                                                        .textInputAutocapitalization(.never)
-                                                        .disableAutocorrection(true)
-                                                        .border(.secondary) // todo todo change design
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
+//                                                        .id(UUID())
+//                                                        .textInputAutocapitalization(.never)
+//                                                        .disableAutocorrection(true)
+//                                                        .border(.secondary) // todo todo change design
+//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize()
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                     Text(row.unwrappedTas).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                 }.font(.system(size: 15))
@@ -496,6 +509,22 @@ struct FlightPlanEnrView: View {
                 print("Value==========\(value)")
                 waypointsTable[modalIndex].afl = "\(value)"
             }
+            .formSheet(isPresented: $isShowOat) {
+                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
+            }
+            .onChange(of: selectionOutputOat) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].oat = "\(value)"
+            }
+            .formSheet(isPresented: $isShowAwind) {
+                EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
+            }
+            .onChange(of: selectionOutputAwind) { value in
+                // TODO Adil: value will populate from Modal
+                print("Value==========\(value)")
+                waypointsTable[modalIndex].awind = "\(value)"
+            }
             .formSheet(isPresented: $isShowAfrm) {
                 EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
             }
@@ -523,6 +552,18 @@ struct FlightPlanEnrView: View {
         self.modalIndex = index
         self.selectionOutputAfl = waypointsTable[modalIndex].unwrappedAfl
         self.isShowAfl.toggle()
+    }
+    
+    func onOat(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputOat = Double(waypointsTable[modalIndex].unwrappedOat) ?? 0
+        self.isShowOat.toggle()
+    }
+    
+    func onAwind(_ index: Int) {
+        self.modalIndex = index
+        self.selectionOutputAwind = Double(waypointsTable[modalIndex].unwrappedAwind) ?? 0
+        self.isShowAwind.toggle()
     }
     
     func onAfrm(_ index: Int) {
