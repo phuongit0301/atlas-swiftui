@@ -1402,13 +1402,6 @@ struct FlightPlanSummaryView: View {
                 }
                 coreDataModel.save()
             }
-//            .onChange(of: actualZFW) {
-//                if let firstItem = coreDataModel.dataFuelTableList.first {
-//                    firstItem.fuel = actualZFW
-//                    coreDataModel.save()
-//                }
-//            }
-
             .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
                 self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
             }
