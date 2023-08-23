@@ -334,7 +334,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
         return AnyView(
-            FlightInformationDetailView()
+            FlightSummaryView(isReference: true)
                 .navigationBarBackButtonHidden()
 //                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)

@@ -60,10 +60,10 @@ struct FlightPlanEnrView: View {
     
     // For modal
     @State var isShowEta = false
-    @State private var selectionOutputEta: Double = 0
+    @State private var selectionOutputEta = Date()
     
     @State var isShowAta = false
-    @State private var selectionOutputAta: Double = 0
+    @State private var selectionOutputAta = Date()
     
     @State var isShowAfl = false
     @State private var selectionOutputAfl = ""
@@ -344,7 +344,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     
@@ -362,7 +362,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     // entry here
                                                     //                                        TextField(
@@ -379,7 +379,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
                                                     // entry here
@@ -398,7 +398,7 @@ struct FlightPlanEnrView: View {
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     //
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                     Text(row.unwrappedAdn).frame(width: calculate(proxy.size.width), alignment: .leading)
@@ -417,7 +417,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                     Text(row.unwrappedTas).frame(width: calculate(proxy.size.width), alignment: .leading)
@@ -435,7 +435,7 @@ struct FlightPlanEnrView: View {
 //                                                        .border(.secondary) // todo todo change design
 //                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize()
+                                                        EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
                                                     }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                     
                                                 }.font(.system(size: 15))
@@ -486,23 +486,22 @@ struct FlightPlanEnrView: View {
                 self.waypointsTable = waypointsTableDefault
             }
             .formSheet(isPresented: $isShowEta) {
-                // todo time picker for hours and minutes
-                EnrouteModalPicker(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
+                EnrouteModalWheel(isShowing: $isShowEta, selectionOutput: $selectionOutputEta)
             }
-//            .onChange(of: selectionOutputEta) { value in
-//                // TODO Adil: value will populate from Modal
-//                waypointsTable[modalIndex].eta = String(format: "%.0f", value)
-//                updateValues(editedIndex: modalIndex)
-//            }
+            .onChange(of: selectionOutputEta) { value in
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HHmm"
+                waypointsTable[modalIndex].eta = formatter.string(from: value)
+                updateValues(editedIndex: modalIndex)
+            }
             .formSheet(isPresented: $isShowAta) {
-                // todo time picker for hours and minutes
-                EnrouteModalPicker(isShowing: $isShowAta, selectionOutput: $selectionOutputAta)
+                EnrouteModalWheel(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
             }
             .onChange(of: selectionOutputAta) { value in
-                // TODO Adil: value will populate from Modal
-                waypointsTable[modalIndex].ata = "\(value)"
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HHmm"
+                waypointsTable[modalIndex].ata = formatter.string(from: value)
                 updateValues(editedIndex: modalIndex)
-                print("Value==========\(value)")
                 
             }
             .formSheet(isPresented: $isShowAfl) {
@@ -548,14 +547,20 @@ struct FlightPlanEnrView: View {
     }
     
     func onEta(_ index: Int) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HHmm"
+        
         self.modalIndex = index
-        self.selectionOutputEta = Double(waypointsTable[modalIndex].unwrappedEta) ?? 0
+        self.selectionOutputEta = formatter.date(from: waypointsTable[modalIndex].unwrappedEta)!
         self.isShowEta.toggle()
     }
     
     func onAta(_ index: Int) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HHmm"
+        
         self.modalIndex = index
-        self.selectionOutputAta = Double(waypointsTable[modalIndex].unwrappedAta) ?? 0
+        self.selectionOutputAta = formatter.date(from: waypointsTable[modalIndex].unwrappedAta)!
         self.isShowAta.toggle()
     }
     

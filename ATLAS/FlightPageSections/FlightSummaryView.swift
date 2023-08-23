@@ -11,6 +11,7 @@ import Combine
 struct FlightSummaryView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @State var isReference = false
     @State private var selectedCA = SummaryDataDropDown.pic
     @State private var selectedFO = SummaryDataDropDown.pic
     @State private var pob: String = ""
@@ -174,6 +175,7 @@ struct FlightSummaryView: View {
                             }
                         }
                     }// end section Flight Info
+                    
                     
                     Section(header:
                                 Text("Planned times")
@@ -365,8 +367,13 @@ struct FlightSummaryView: View {
                             }// end group
                         }
                     }// END CREW
-                }// end List
-            }// end VStack
+                }.scrollContentBackground(.hidden)
+                #if isReference
+                    .background(.white)
+                #endif
+                // end List
+            }.padding(.leading, isReference ? -32: 0)
+            // end VStack
             .onAppear {
                 selectedCA = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewCA) ?? SummaryDataDropDown.pic
                 selectedFO = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewFO) ?? SummaryDataDropDown.pic
