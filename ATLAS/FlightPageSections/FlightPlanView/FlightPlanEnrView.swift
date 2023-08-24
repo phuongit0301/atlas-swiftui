@@ -121,7 +121,8 @@ struct FlightPlanEnrView: View {
                         }
                     }
                     
-                }.padding(.horizontal, 16)
+                }.padding(.vertical, 10)
+                    .padding(.horizontal, 30)
                 
                 //scrollable outer list section
                 List {
