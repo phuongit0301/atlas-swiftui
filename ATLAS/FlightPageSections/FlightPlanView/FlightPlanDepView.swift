@@ -841,7 +841,7 @@ struct FlightPlanDepView: View {
                                                     entFuelInTanks = String(newValue.prefix(5))
 //                                                    cursorPositionEntFuelInTanks = 5
                                                     if coreDataModel.existDataDepartureEntries {
-                                                        coreDataModel.dataDepartureEntries.entFuelInTanks = entFuelInTanks
+                                                        coreDataModel.dataDepartureEntries.entFuelInTanks = String(format: "%05.1f", Double(entFuelInTanks) ?? 0)
                                                     } else {
                                                         let item = DepartureEntriesList(context: persistenceController.container.viewContext)
                                                         item.entFuelInTanks = entFuelInTanks

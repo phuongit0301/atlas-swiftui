@@ -47,9 +47,11 @@ struct EnrouteModalWheelTime: View {
 }
 
 // for afl: 2 wheel - A|B - A from 0 to 5, B from 0 to 90, increments of 10 (you can refer to ModalPickerMultiple for reference)
+// todo check default value can render if the selection is ""
 struct EnrouteModalWheelAfl: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
+    var defaultValue: String
     @State var itemsA: ClosedRange<Int> = 0...5
     @State var itemsB: ClosedRange<Int> = 0...9
     @State private var selectionA = 0
@@ -95,13 +97,19 @@ struct EnrouteModalWheelAfl: View {
             }
             Spacer()
         }.onAppear {
-            self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
-            self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
+            if selectionInOut.count > 1 {
+                self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
+                self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
+            } else {
+                self.selectionA = Int(defaultValue.suffix(defaultValue.count).prefix(1)) ?? 0
+                self.selectionB = Int(defaultValue.suffix(defaultValue.count - 1).prefix(1)) ?? 0
+            }
         }
     }
 }
 
 // for oat: 2 digit wheel A|B, - A from -9 to 9, B from 0 to 9.
+// todo check the modal split if correct
 struct EnrouteModalWheelOat: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
@@ -159,9 +167,11 @@ struct EnrouteModalWheelOat: View {
 }
 
 // for awind: 6 digit wheel A|B|C|D|E|F|G - A from 0 to 3, B from 0 to 6, C from 0 to 9, D,E,F,G each from 0 to 9
+// todo check default value can render if the selection is ""
 struct EnrouteModalWheelAWind: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
+    var defaultValue: String
     @State var itemsA: ClosedRange<Int> = 0...3
     @State var itemsB: ClosedRange<Int> = 0...6
     @State var itemsC: ClosedRange<Int> = 0...9
@@ -250,6 +260,13 @@ struct EnrouteModalWheelAWind: View {
                 self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
                 self.selectionE = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
                 self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 5).prefix(1)) ?? 0
+            } else {
+                self.selectionA = Int(defaultValue.suffix(defaultValue.count).prefix(1)) ?? 0
+                self.selectionB = Int(defaultValue.suffix(defaultValue.count - 1).prefix(1)) ?? 0
+                self.selectionC = Int(defaultValue.suffix(defaultValue.count - 2).prefix(1)) ?? 0
+                self.selectionD = Int(defaultValue.suffix(defaultValue.count - 3).prefix(1)) ?? 0
+                self.selectionE = Int(defaultValue.suffix(defaultValue.count - 4).prefix(1)) ?? 0
+                self.selectionF = Int(defaultValue.suffix(defaultValue.count - 5).prefix(1)) ?? 0
             }
         }
     }
@@ -264,8 +281,8 @@ struct EnrouteModalWheelAfrm: View {
     @State private var selectionB = 0
     @State private var selectionC = 0
     @State private var selectionD = 0
-    @State private var selectionE = 0
-    @State private var selectionF = 0
+//    @State private var selectionE = 0
+//    @State private var selectionF = 0
     
     var body: some View {
         VStack {
@@ -281,7 +298,7 @@ struct EnrouteModalWheelAfrm: View {
                 
                 Spacer()
                 Button(action: {
-                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)\(selectionD)\(selectionE)\(selectionF)"
+                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC).\(selectionD)"
                     self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -312,6 +329,9 @@ struct EnrouteModalWheelAfrm: View {
                 }.pickerStyle(.wheel)
                 .labelsHidden()
                 
+                // decimal point
+                Text(".")
+                
                 Picker(selection: $selectionD, label: Text("")) {
                     ForEach(itemsA, id: \.self) {
                         Text("\($0)").tag("\($0)")
@@ -319,19 +339,19 @@ struct EnrouteModalWheelAfrm: View {
                 }.pickerStyle(.wheel)
                 .labelsHidden()
                 
-                Picker(selection: $selectionE, label: Text("")) {
-                    ForEach(itemsA, id: \.self) {
-                        Text("\($0)").tag("\($0)")
-                    }
-                }.pickerStyle(.wheel)
-                .labelsHidden()
-                
-                Picker(selection: $selectionF, label: Text("")) {
-                    ForEach(itemsA, id: \.self) {
-                        Text("\($0)").tag("\($0)")
-                    }
-                }.pickerStyle(.wheel)
-                .labelsHidden()
+//                Picker(selection: $selectionE, label: Text("")) {
+//                    ForEach(itemsA, id: \.self) {
+//                        Text("\($0)").tag("\($0)")
+//                    }
+//                }.pickerStyle(.wheel)
+//                .labelsHidden()
+//
+//                Picker(selection: $selectionF, label: Text("")) {
+//                    ForEach(itemsA, id: \.self) {
+//                        Text("\($0)").tag("\($0)")
+//                    }
+//                }.pickerStyle(.wheel)
+//                .labelsHidden()
             }
             Spacer()
         }.onAppear {
@@ -339,9 +359,9 @@ struct EnrouteModalWheelAfrm: View {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
                 self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
-                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
-                self.selectionE = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
-                self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 5).prefix(1)) ?? 0
+                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
+//                self.selectionE = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
+//                self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 5).prefix(1)) ?? 0
             }
         }
     }
