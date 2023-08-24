@@ -138,19 +138,25 @@ struct FlightPlanArrView: View {
         ScrollViewReader { scrollView in
             GeometryReader { proxy in
                 VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        HStack {
+                            Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
+                            Spacer()
+                            Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
+                        }.padding()
+                        .background(Color.theme.lightGray1)
+                            .cornerRadius(8)
+                    }
+                    .padding(.horizontal, 16)
+                    
                     // fixed header section, todo clean up design
                     HStack(alignment: .center) {
                         Text("Arrival")
                             .font(.system(size: 20, weight: .semibold))
                             .padding(.leading, 30)
-                    }
-                    .padding(.bottom, 10)
-                    Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
-                        .padding(.leading, 30)
-                        .padding(.bottom, 10)
-                        .font(.system(size: 15, weight: .semibold))
+                    }.padding(.vertical)
+                    
                     //scrollable outer list section
-                    // todo implement coredata into code
                     List {
                         // ATIS section
                         Section(header:

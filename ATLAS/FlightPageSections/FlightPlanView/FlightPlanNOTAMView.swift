@@ -13,9 +13,7 @@ struct FlightPlanNOTAMView: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @StateObject var notamSection = NotamSection()
     // initialise state variables
-//    @State private var isSortDateDep = true
-    @State private var isSortDateEnr = true
-    @State private var isSortDateArr = true
+    @State private var isSortDate = true
     @State var arrDepNotams = [NotamsDataList]()
     @State var arrEnrNotams = [NotamsDataList]()
     @State var arrArrNotams = [NotamsDataList]()
@@ -32,16 +30,34 @@ struct FlightPlanNOTAMView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
+                HStack {
+                    Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
+                    Spacer()
+                    Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
+                }.padding()
+                .background(Color.theme.lightGray1)
+                    .cornerRadius(8)
+            }
+            .padding(.horizontal, 16)
+            
+            HStack(alignment: .center) {
                 Text("NOTAMS")
                     .font(.system(size: 20, weight: .semibold))
                     .padding(.leading, 30)
-            }
-            .padding(.bottom, 13)
+                Spacer()
+                
+                HStack {
+                    Toggle(isOn: $isSortDate) {
+                        Text("Most Relevant")
+                            .font(.system(size: 17, weight: .regular))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }.padding(.horizontal)
+                    Text("Most Recent")
+                        .font(.system(size: 17, weight: .regular))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }.fixedSize()
+            }.padding(.vertical)
             
-            Text("Plan \(coreDataModel.dataSummaryInfo.unwrappedPlanNo) | Last updated 0820LT")
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.leading, 30)
-                .padding(.bottom, 10)
             //scrollable outer list section
             List {
                 // Dep NOTAM section
@@ -194,7 +210,7 @@ struct FlightPlanNOTAMView: View {
                 }).listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
             }
-        }.padding(.vertical)
+        }
         .onChange(of: selectionArr) { newValue in
             var temp = [NotamsDataList]()
             coreDataModel.dataNotams.forEach { item in
@@ -204,7 +220,7 @@ struct FlightPlanNOTAMView: View {
                     temp.append(item)
                 }
             }
-            arrArrNotams = temp
+            arrArrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
         }
         .onChange(of: selectionDep) { newValue in
             var temp = [NotamsDataList]()
@@ -215,7 +231,12 @@ struct FlightPlanNOTAMView: View {
                     temp.append(item)
                 }
             }
-            arrDepNotams = temp
+            arrDepNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
+        }
+        .onChange(of: isSortDate) { newValue in
+            arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: newValue)
+            arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: newValue)
+            arrArrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: newValue)
         }
         .onAppear {
             selectionDep = notamSection.dataDropDown.first ?? ""
@@ -234,10 +255,47 @@ struct FlightPlanNOTAMView: View {
                     arrEnrNotams.append(item)
                 }
             }
+            arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDate)
+            arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDate)
+            arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDate)
         }
         .navigationTitle("NOTAMS")
         .background(Color(.systemGroupedBackground))
     }
+    
+    func sortNotams(notamsDict: [NotamsDataList], sortKey: Bool) -> [NotamsDataList] {
+            var sortedNotams: [NotamsDataList]
+            
+            switch sortKey {
+            case true:
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyMMddHHmm"
+                
+                sortedNotams = notamsDict.sorted {
+                    guard let dateString1 = $0.date,
+                          let date1 = dateFormatter.date(from: dateString1),
+                          let dateString2 = $1.date,
+                          let date2 = dateFormatter.date(from: dateString2) else {
+                        return false
+                    }
+                    
+                    return date1 < date2
+                }
+            case false:
+                sortedNotams = notamsDict.sorted {
+                    guard let rankString1 = $0.rank,
+                          let rank1 = Int(rankString1),
+                          let rankString2 = $1.rank,
+                          let rank2 = Int(rankString2) else {
+                        return false
+                    }
+                    
+                    return rank1 < rank2
+                }
+            }
+            
+            return sortedNotams
+        }
 
 }
 
