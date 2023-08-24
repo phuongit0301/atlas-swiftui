@@ -124,7 +124,7 @@ struct FlightPlanEnrView: View {
                 }.padding(.vertical, 10)
                     .padding(.horizontal, 30)
                 
-                //scrollable outer list section
+                //fixed section as a list - todo @phuong adjust height of list
                 List {
                     // waypoints section
                     Section(header: HStack {
@@ -136,7 +136,6 @@ struct FlightPlanEnrView: View {
                             Text(isEdit ? "Done" : "Direct").font(.system(size: 17, weight: .medium)).textCase(nil)
                         })
                     }) {
-                        // table
                         HStack {
                             if isEdit {
                                 Text("").frame(width: 30)
@@ -281,154 +280,465 @@ struct FlightPlanEnrView: View {
                             .foregroundStyle(Color.blue)
                         }.listRowSeparator(.hidden)
                             .frame(height: 88)
-                        // first row - todo scroll starts here only
-                            
-                        ForEach(waypointsTable.indices, id: \.self) { index in
-                            let row = waypointsTable[index]
-                            
-                            VStack(spacing: 0) {
-                                HStack {
-                                    if isEdit {
-                                        Group {
-                                            HStack {
-                                                Button(action: { onUpdate(index) }, label: {
-                                                    if row.isSkipped {
-                                                        Image(systemName: "plus.circle")
-                                                            .foregroundColor(Color.theme.azure)
-                                                            .frame(width: 24, height: 24)
-                                                            .scaledToFit()
-                                                            .aspectRatio(contentMode: .fit)
-                                                    } else {
-                                                        Image(systemName: "minus.circle")
-                                                            .foregroundColor(Color.theme.azure)
-                                                            .frame(width: 24, height: 24)
-                                                            .scaledToFit()
-                                                            .aspectRatio(contentMode: .fit)
-                                                    }
-                                                }).buttonStyle(PlainButtonStyle())
-                                            }.frame(width: 30)
-                                        }
-                                    }
-                                    
-                                    VStack(spacing: 0) {
-                                        if row.isSkipped {
-                                            VStack(spacing: 0) {
-                                                HStack {
-                                                    Group {
-                                                        Text(row.unwrappedPosn)
-                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("Waypoint skipped. Tap \(isEdit ? "+" : "\"Direct\"") to reinstate")
-                                                            .frame(width: calculateWidth(proxy.size.width, 2), alignment: .leading)
-                                                            .font(.system(size: 17, weight: .regular))
-                                                            .italic()
-                                                    }
-                                                    Spacer()
-                                                }
-                                            }.padding(.leading, isEdit ? 0 : 24).frame(height: 44)
-                                        } else {
-                                            VStack(spacing: 0) {
-                                                HStack {
-                                                    Group {
-                                                        Text(row.unwrappedPosn)
-                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        Text(row.unwrappedActm).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
-                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
-                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        HStack {
-                                                            if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
-                                                            } else {
-                                                                Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
-                                                            }
-                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        HStack {
-                                                            if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
-                                                            } else {
-                                                                Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
-                                                            }
-                                                        }.frame(width: 65, alignment: .leading)
-                                                        
-                                                        Text(row.unwrappedAdn).frame(width: 65, alignment: .leading)
-                                                        
-                                                        HStack {
-                                                            if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
-                                                            } else {
-                                                                Text(row.unwrappedAwind).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
-                                                            }
-                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        Text(row.unwrappedTas).frame(width: 65, alignment: .leading)
-                                                    }.font(.system(size: 15))
-                                                        .fontWeight(.regular)
-                                                    Group {
-                                                        Text(row.unwrappedVws)
-                                                            .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                        HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
-                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        
-                                                    }.font(.system(size: 15))
-                                                        .fontWeight(.regular)
-                                                }
-                                                HStack {
-                                                    Group {
-                                                        Text("\(row.unwrappedCord)").frame(width: calculate(proxy.size.width) * 2, alignment: .leading)
-                                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculate(proxy.size.width), alignment: .leading).padding(.leading, 5)
-                                                        Text("\(row.unwrappedDis)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedDiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedPfl)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedImt)").frame(width: 65, alignment: .leading)
-                                                        Text("\(row.unwrappedPdn)").frame(width: 65, alignment: .leading)
-                                                        Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading)
-                                                    }.font(.system(size: 15))
-                                                        .fontWeight(.regular)
-                                                    
-                                                    Group {
-                                                        Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    }.font(.system(size: 15))
-                                                        .fontWeight(.regular)
-                                                }
-                                            }.frame(height: 88)
-                                        }// end else condition
-                                    }
-                                }.padding(.leading, (isEdit && row.isSkipped) ? 16 : 0)
-                                // end HStack
+                    }
+                }
+                .scrollDisabled(true)
+                .frame(width: proxy.size.width - 50)
+                .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets.init(top: 8, leading: 16, bottom: 8, trailing: 16))
                                 
-                                Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
-                                    .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            }.listRowBackground((currentIndex == index) ? Color.theme.pictonBlue.opacity(0.1) : Color(.white))
-                                .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                                .onTapGesture {
-                                    if !row.isSkipped {
-                                        currentIndex = index
+                //scrollable waypoints section as a list
+                List {
+                    // table
+                    // first row - todo scroll starts here only
+                    ForEach(waypointsTable.indices, id: \.self) { index in
+                        let row = waypointsTable[index]
+                        
+                        VStack(spacing: 0) {
+                            HStack {
+                                if isEdit {
+                                    Group {
+                                        HStack {
+                                            Button(action: { onUpdate(index) }, label: {
+                                                if row.isSkipped {
+                                                    Image(systemName: "plus.circle")
+                                                        .foregroundColor(Color.theme.azure)
+                                                        .frame(width: 24, height: 24)
+                                                        .scaledToFit()
+                                                        .aspectRatio(contentMode: .fit)
+                                                } else {
+                                                    Image(systemName: "minus.circle")
+                                                        .foregroundColor(Color.theme.azure)
+                                                        .frame(width: 24, height: 24)
+                                                        .scaledToFit()
+                                                        .aspectRatio(contentMode: .fit)
+                                                }
+                                            }).buttonStyle(PlainButtonStyle())
+                                        }.frame(width: 30)
                                     }
                                 }
-                        }
+                                
+                                VStack(spacing: 0) {
+                                    if row.isSkipped {
+                                        VStack(spacing: 0) {
+                                            HStack {
+                                                Group {
+                                                    Text(row.unwrappedPosn)
+                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("Waypoint skipped. Tap \(isEdit ? "+" : "\"Direct\"") to reinstate")
+                                                        .frame(width: calculateWidth(proxy.size.width, 2), alignment: .leading)
+                                                        .font(.system(size: 17, weight: .regular))
+                                                        .italic()
+                                                }
+                                                Spacer()
+                                            }
+                                        }.padding(.leading, isEdit ? 0 : 24).frame(height: 44)
+                                    } else {
+                                        VStack(spacing: 0) {
+                                            HStack {
+                                                Group {
+                                                    Text(row.unwrappedPosn)
+                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    Text(row.unwrappedActm).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    HStack {
+                                                        if index >= getTocIndex() {
+                                                            EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+                                                        } else {
+                                                            Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                        }
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    HStack {
+                                                        if index >= getTocIndex() {
+                                                            EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+                                                        } else {
+                                                            Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                        }
+                                                    }.frame(width: 65, alignment: .leading)
+                                                    
+                                                    Text(row.unwrappedAdn).frame(width: 65, alignment: .leading)
+                                                    
+                                                    HStack {
+                                                        if index >= getTocIndex() {
+                                                            EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
+                                                        } else {
+                                                            Text(row.unwrappedAwind).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                        }
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    Text(row.unwrappedTas).frame(width: 65, alignment: .leading)
+                                                }.font(.system(size: 15))
+                                                    .fontWeight(.regular)
+                                                Group {
+                                                    Text(row.unwrappedVws)
+                                                        .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                    HStack {
+                                                        EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
+                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    
+                                                }.font(.system(size: 15))
+                                                    .fontWeight(.regular)
+                                            }
+                                            HStack {
+                                                Group {
+                                                    Text("\(row.unwrappedCord)").frame(width: calculate(proxy.size.width) * 2, alignment: .leading)
+                                                    Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculate(proxy.size.width), alignment: .leading).padding(.leading, 5)
+                                                    Text("\(row.unwrappedDis)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedDiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedPfl)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedImt)").frame(width: 65, alignment: .leading)
+                                                    Text("\(row.unwrappedPdn)").frame(width: 65, alignment: .leading)
+                                                    Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading)
+                                                }.font(.system(size: 15))
+                                                    .fontWeight(.regular)
+                                                
+                                                Group {
+                                                    Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                }.font(.system(size: 15))
+                                                    .fontWeight(.regular)
+                                            }
+                                        }.frame(height: 88)
+                                    }// end else condition
+                                }
+                            }.padding(.leading, (isEdit && row.isSkipped) ? 16 : 0)
+                            // end HStack
+                            
+                            Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
+                                .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }.listRowBackground((currentIndex == index) ? Color.theme.pictonBlue.opacity(0.1) : Color(.white))
+                            .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .onTapGesture {
+                                if !row.isSkipped {
+                                    currentIndex = index
+                                }
+                            }
                     }
-                    .frame(width: proxy.size.width - 50)
-                    .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets.init(top: 8, leading: 16, bottom: 8, trailing: 16))
-                    // winds section
-                    
-                }.keyboardAvoidView()
+                }
+                .frame(width: proxy.size.width - 50)
+                .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+
+//                List {
+//                    // waypoints section
+//                    Section(header: HStack {
+//                        Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
+//                        Spacer()
+//                        Button(action: {
+//                            self.isEdit.toggle()
+//                        }, label: {
+//                            Text(isEdit ? "Done" : "Direct").font(.system(size: 17, weight: .medium)).textCase(nil)
+//                        })
+//                    }) {
+//                        // table
+//                        HStack {
+//                            if isEdit {
+//                                Text("").frame(width: 30)
+//                            }
+//
+//                            Group {
+//                                VStack(spacing: 16) {
+//                                    Text("POSN")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("COORD")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("ACTM")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("")
+//                                }
+//
+//                                VStack(spacing: 16) {
+//                                    Text("ZTM")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("MSA")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//
+//                                VStack(spacing: 16) {
+//                                    Text("ETA")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("DIS")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("ATA")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("DIFF")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("AFL")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("PFL")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("OAT")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: 65, alignment: .leading)
+//                                    Text("IMT")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: 65, alignment: .leading)
+//                                }
+//
+//                                VStack(spacing: 16) {
+//                                    Text("ADN")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: 65, alignment: .leading)
+//                                    Text("PDN")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: 65, alignment: .leading)
+//                                }
+//
+//                                VStack(spacing: 16) {
+//                                    Text("AWIND")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("FWIND")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("TAS")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: 65, alignment: .leading)
+//                                    Text("GSP")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: 65, alignment: .leading)
+//                                }
+//
+//                            }
+//                            Group {
+//                                VStack(spacing: 16) {
+//                                    Text("VWS")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("DRM")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("ZFRQ")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("PFRM")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                                VStack(spacing: 16) {
+//                                    Text("AFRM")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.blue)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                    Text("DIFF")
+//                                        .font(.system(size: 15, weight: .medium))
+//                                        .foregroundStyle(Color.black)
+//                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                }
+//                            }
+//                            .foregroundStyle(Color.blue)
+//                        }.listRowSeparator(.hidden)
+//                            .frame(height: 88)
+//                        // first row - todo scroll starts here only
+//
+//                        ForEach(waypointsTable.indices, id: \.self) { index in
+//                            let row = waypointsTable[index]
+//
+//                            VStack(spacing: 0) {
+//                                HStack {
+//                                    if isEdit {
+//                                        Group {
+//                                            HStack {
+//                                                Button(action: { onUpdate(index) }, label: {
+//                                                    if row.isSkipped {
+//                                                        Image(systemName: "plus.circle")
+//                                                            .foregroundColor(Color.theme.azure)
+//                                                            .frame(width: 24, height: 24)
+//                                                            .scaledToFit()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                    } else {
+//                                                        Image(systemName: "minus.circle")
+//                                                            .foregroundColor(Color.theme.azure)
+//                                                            .frame(width: 24, height: 24)
+//                                                            .scaledToFit()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                    }
+//                                                }).buttonStyle(PlainButtonStyle())
+//                                            }.frame(width: 30)
+//                                        }
+//                                    }
+//
+//                                    VStack(spacing: 0) {
+//                                        if row.isSkipped {
+//                                            VStack(spacing: 0) {
+//                                                HStack {
+//                                                    Group {
+//                                                        Text(row.unwrappedPosn)
+//                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("Waypoint skipped. Tap \(isEdit ? "+" : "\"Direct\"") to reinstate")
+//                                                            .frame(width: calculateWidth(proxy.size.width, 2), alignment: .leading)
+//                                                            .font(.system(size: 17, weight: .regular))
+//                                                            .italic()
+//                                                    }
+//                                                    Spacer()
+//                                                }
+//                                            }.padding(.leading, isEdit ? 0 : 24).frame(height: 44)
+//                                        } else {
+//                                            VStack(spacing: 0) {
+//                                                HStack {
+//                                                    Group {
+//                                                        Text(row.unwrappedPosn)
+//                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        Text(row.unwrappedActm).frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        HStack {
+//                                                            EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
+//                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        HStack {
+//                                                            EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
+//                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        HStack {
+//                                                            if index >= getTocIndex() {
+//                                                                EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+//                                                            } else {
+//                                                                Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+//                                                            }
+//                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        HStack {
+//                                                            if index >= getTocIndex() {
+//                                                                EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+//                                                            } else {
+//                                                                Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+//                                                            }
+//                                                        }.frame(width: 65, alignment: .leading)
+//
+//                                                        Text(row.unwrappedAdn).frame(width: 65, alignment: .leading)
+//
+//                                                        HStack {
+//                                                            if index >= getTocIndex() {
+//                                                                EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
+//                                                            } else {
+//                                                                Text(row.unwrappedAwind).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+//                                                            }
+//                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        Text(row.unwrappedTas).frame(width: 65, alignment: .leading)
+//                                                    }.font(.system(size: 15))
+//                                                        .fontWeight(.regular)
+//                                                    Group {
+//                                                        Text(row.unwrappedVws)
+//                                                            .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                        HStack {
+//                                                            EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
+//                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+//
+//                                                    }.font(.system(size: 15))
+//                                                        .fontWeight(.regular)
+//                                                }
+//                                                HStack {
+//                                                    Group {
+//                                                        Text("\(row.unwrappedCord)").frame(width: calculate(proxy.size.width) * 2, alignment: .leading)
+//                                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculate(proxy.size.width), alignment: .leading).padding(.leading, 5)
+//                                                        Text("\(row.unwrappedDis)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedDiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedPfl)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedImt)").frame(width: 65, alignment: .leading)
+//                                                        Text("\(row.unwrappedPdn)").frame(width: 65, alignment: .leading)
+//                                                        Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading)
+//                                                    }.font(.system(size: 15))
+//                                                        .fontWeight(.regular)
+//
+//                                                    Group {
+//                                                        Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                        Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+//                                                    }.font(.system(size: 15))
+//                                                        .fontWeight(.regular)
+//                                                }
+//                                            }.frame(height: 88)
+//                                        }// end else condition
+//                                    }
+//                                }.padding(.leading, (isEdit && row.isSkipped) ? 16 : 0)
+//                                // end HStack
+//
+//                                Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
+//                                    .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+//                            }.listRowBackground((currentIndex == index) ? Color.theme.pictonBlue.opacity(0.1) : Color(.white))
+//                                .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+//                                .onTapGesture {
+//                                    if !row.isSkipped {
+//                                        currentIndex = index
+//                                    }
+//                                }
+//                        }
+//                    }
+//                    .frame(width: proxy.size.width - 50)
+//                    .listRowSeparator(.hidden)
+//                        .listRowInsets(EdgeInsets.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+//                    // winds section
+//
+//                }.keyboardAvoidView()
             }
             .navigationTitle("Enroute")
             .background(Color(.systemGroupedBackground))
