@@ -7050,10 +7050,10 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "815"
-            endingLineNumber = "815"
-            landmarkName = "formatTime(_:)"
-            landmarkType = "7">
+            startingLineNumber = "744"
+            endingLineNumber = "744"
+            landmarkName = "body"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "E6A359E5-9D33-4F0F-ABDD-9F1D60F71855 - 85ee0a34abb0f47e"
@@ -7115,7 +7115,54 @@
                   endingLineNumber = "815"
                   offsetFromSymbolStart = "1736">
                </Location>
+               <Location
+                  uuid = "E6A359E5-9D33-4F0F-ABDD-9F1D60F71855 - ac22c25ee4b78bbd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.formatTime(Swift.Int) -&gt; Swift.String"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "816"
+                  endingLineNumber = "816"
+                  offsetFromSymbolStart = "1340">
+               </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C5562E63-7AB9-4854-90CE-5210EC0B1844"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Extensions/Helper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "calculateDateTime(_:_:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE94A24A-1D84-453E-9FA0-B994533FE277"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Components/EnrouteModalWheel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

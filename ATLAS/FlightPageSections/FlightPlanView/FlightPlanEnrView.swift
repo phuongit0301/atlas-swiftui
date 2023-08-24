@@ -66,16 +66,16 @@ struct FlightPlanEnrView: View {
     @State private var selectionOutputAta = Date()
     
     @State var isShowAfl = false
-    @State private var selectionOutputAfl = 0
+    @State private var selectionOutputAfl = ""
     
     @State var isShowOat = false
-    @State private var selectionOutputOat: Double = 0
+    @State private var selectionOutputOat = ""
     
     @State var isShowAwind = false
-    @State private var selectionOutputAwind: Double = 0
+    @State private var selectionOutputAwind = ""
     
     @State var isShowAfrm = false
-    @State private var selectionOutputAfrm: Double = 0
+    @State private var selectionOutputAfrm = ""
     
     var body: some View {
         GeometryReader { proxy in
@@ -103,6 +103,7 @@ struct FlightPlanEnrView: View {
                                 .padding(.horizontal, 16)
                                 .background(Color.white)
                                 .cornerRadius(4)
+                                .border(Color.theme.azure, width: 2, cornerRadius: 4)
                             
                             HStack {
                                 Text("Fuel Diff: \(waypointsTable[currentIndex].unwrappedFdiff)").font(.system(size: 17, weight: .semibold))
@@ -126,13 +127,13 @@ struct FlightPlanEnrView: View {
                 List {
                     // waypoints section
                     Section(header: HStack {
-                        Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black).padding(.leading, -20)
+                        Text("WAYPOINTS").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
                         Spacer()
                         Button(action: {
                             self.isEdit.toggle()
                         }, label: {
-                            Text(isEdit ? "Done" : "Edit").font(.system(size: 17, weight: .medium)).textCase(nil)
-                        }).padding(.trailing, -20)
+                            Text(isEdit ? "Done" : "Direct").font(.system(size: 17, weight: .medium)).textCase(nil)
+                        })
                     }) {
                         // table
                         HStack {
@@ -204,22 +205,22 @@ struct FlightPlanEnrView: View {
                                     Text("OAT")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.blue)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                     Text("IMT")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                 }
                                 
                                 VStack(spacing: 16) {
                                     Text("ADN")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                     Text("PDN")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                 }
                                 
                                 VStack(spacing: 16) {
@@ -236,11 +237,11 @@ struct FlightPlanEnrView: View {
                                     Text("TAS")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                     Text("GSP")
                                         .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                        .frame(width: 65, alignment: .leading)
                                 }
                                 
                             }
@@ -278,11 +279,13 @@ struct FlightPlanEnrView: View {
                             }
                             .foregroundStyle(Color.blue)
                         }.listRowSeparator(.hidden)
+                            .frame(height: 88)
                         // first row - todo scroll starts here only
+                            
                         ForEach(waypointsTable.indices, id: \.self) { index in
                             let row = waypointsTable[index]
                             
-                            VStack {
+                            VStack(spacing: 0) {
                                 HStack {
                                     if isEdit {
                                         Group {
@@ -303,186 +306,121 @@ struct FlightPlanEnrView: View {
                                                     }
                                                 }).buttonStyle(PlainButtonStyle())
                                             }.frame(width: 30)
-                                                .padding(.leading, row.isSkipped ? -18 : 0)
-                                                .padding(.trailing, row.isSkipped ? 18 : 0)
                                         }
                                     }
                                     
-                                    if row.isSkipped {
-                                        VStack {
-                                            HStack {
-                                                Group {
-                                                    Text(row.unwrappedPosn)
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("Waypoint skipped. Tap “+” to reinstate")
-                                                        .frame(width: calculateWidth(proxy.size.width, 2), alignment: .leading)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .italic()
+                                    VStack(spacing: 0) {
+                                        if row.isSkipped {
+                                            VStack(spacing: 0) {
+                                                HStack {
+                                                    Group {
+                                                        Text(row.unwrappedPosn)
+                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("Waypoint skipped. Tap \(isEdit ? "+" : "\"Direct\"") to reinstate")
+                                                            .frame(width: calculateWidth(proxy.size.width, 2), alignment: .leading)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .italic()
+                                                    }
+                                                    Spacer()
                                                 }
-                                                Spacer()
-                                            }
-                                        }.padding(.leading, -16)
-                                    } else {
-                                        VStack {
-                                            HStack {
-                                                Group {
-                                                    Text(row.unwrappedPosn)
-                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text(row.unwrappedActm).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    // entry here
-                                                    //                                        TextField(
-                                                    //                                            "\(row.unwrappedEta)",
-                                                    //                                            text: $eta
-                                                    //                                        ).onSubmit {
-                                                    //                                            updateValues1(editedIndex: index)
-                                                    //                                        }
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "eta", field: row.unwrappedEta, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    // entry here
+                                            }.padding(.leading, isEdit ? 0 : 24).frame(height: 44)
+                                        } else {
+                                            VStack(spacing: 0) {
+                                                HStack {
+                                                    Group {
+                                                        Text(row.unwrappedPosn)
+                                                            .frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        Text(row.unwrappedActm).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        HStack {
+                                                            EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
+                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        HStack {
+                                                            EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
+                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        HStack {
+                                                            if index >= getTocIndex() {
+                                                                EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+                                                            } else {
+                                                                Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                            }
+                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        HStack {
+                                                            if index >= getTocIndex() {
+                                                                EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+                                                            } else {
+                                                                Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
+                                                            }
+                                                        }.frame(width: 65, alignment: .leading)
+                                                        
+                                                        Text(row.unwrappedAdn).frame(width: 65, alignment: .leading)
+                                                        
+                                                        HStack {
+                                                            EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
+                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        Text(row.unwrappedTas).frame(width: 65, alignment: .leading)
+                                                    }.font(.system(size: 15))
+                                                        .fontWeight(.regular)
+                                                    Group {
+                                                        Text(row.unwrappedVws)
+                                                            .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                        HStack {
+                                                            EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
+                                                        }.frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        
+                                                    }.font(.system(size: 15))
+                                                        .fontWeight(.regular)
+                                                }
+                                                HStack {
+                                                    Group {
+                                                        Text("\(row.unwrappedCord)").frame(width: calculate(proxy.size.width) * 2, alignment: .leading)
+                                                        Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculate(proxy.size.width), alignment: .leading).padding(.leading, 5)
+                                                        Text("\(row.unwrappedDis)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedDiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedPfl)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedImt)").frame(width: 65, alignment: .leading)
+                                                        Text("\(row.unwrappedPdn)").frame(width: 65, alignment: .leading)
+                                                        Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading)
+                                                    }.font(.system(size: 15))
+                                                        .fontWeight(.regular)
                                                     
-                                                    //                                        TextField(
-                                                    //                                            "\(row.unwrappedAta)",
-                                                    //                                            text: $ata
-                                                    //                                        )
-                                                    //                                        .onSubmit {
-                                                    //                                            updateValues(editedIndex: index)
-                                                    //                                        }
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "ata", field: row.unwrappedAta, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    // entry here
-                                                    //                                        TextField(
-                                                    //                                            row.unwrappedAfl,
-                                                    //                                            text: $afl
-                                                    //                                        )
-                                                    //                                        .onSubmit {
-                                                    //                                            updateValues(editedIndex: index)
-                                                    //                                        }
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afl", field: row.unwrappedAfl, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    HStack {
-                                                        if index >= getTocIndex() {
-                                                            EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
-                                                        } else {
-                                                            Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
-                                                        }
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    //
-                                                    // entry here
-                                                    //                                        TextField(
-                                                    //                                            row.unwrappedOat,
-                                                    //                                            text: $oat
-                                                    //                                        )
-                                                    //                                        .onSubmit {
-                                                    //                                            updateValues(editedIndex: index)
-                                                    //                                        }
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "oat", field: row.unwrappedOat, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    //
-                                                    HStack {
-                                                        if index >= getTocIndex() {
-                                                            EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
-                                                        } else {
-                                                            Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
-                                                        }
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    
-                                                    Text(row.unwrappedAdn).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    // entry here
-                                                    //                                        TextField(
-                                                    //                                            row.unwrappedAwind,
-                                                    //                                            text: $awind
-                                                    //                                        )
-                                                    //                                        .onSubmit {
-                                                    //                                            updateValues(editedIndex: index)
-                                                    //                                        }
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "awind", field: row.unwrappedAwind, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    
-                                                    Text(row.unwrappedTas).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                }.font(.system(size: 15))
-                                                    .fontWeight(.regular)
-                                                Group {
-                                                    Text(row.unwrappedVws)
-                                                        .foregroundColor(textColorVws(for: row.unwrappedVws)).frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    
-                                                    Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
-//                                                    EnrouteCustomField(waypointsTableDefault: waypointsTableDefault, waypointsTable: $waypointsTable, name: "afrm", field: row.unwrappedAfrm, index: index)
-//                                                        .id(UUID())
-//                                                        .textInputAutocapitalization(.never)
-//                                                        .disableAutocorrection(true)
-//                                                        .border(.secondary) // todo todo change design
-//                                                        .frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    HStack {
-                                                        EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
-                                                    }.frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    
-                                                }.font(.system(size: 15))
-                                                    .fontWeight(.regular)
-                                            }
-                                            HStack {
-                                                Group {
-                                                    Text("\(row.unwrappedCord)").frame(width: calculate(proxy.size.width) * 2, alignment: .leading)
-                                                    Text("\(row.unwrappedMsa)").foregroundColor(textColorMsa(for: row.unwrappedMsa)).frame(width: calculate(proxy.size.width), alignment: .leading).padding(.leading, 5)
-                                                    Text("\(row.unwrappedDis)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedDiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedPfl)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedImt)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedPdn)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedGsp)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                }.font(.system(size: 15))
-                                                    .fontWeight(.regular)
-                                                
-                                                Group {
-                                                    Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                    Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                }.font(.system(size: 15))
-                                                    .fontWeight(.regular)
-                                            }
-                                        }
-                                    }// end else condition
-                                }// end HStack
+                                                    Group {
+                                                        Text("\(row.unwrappedDrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedPfrm)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                        Text("\(row.unwrappedFdiff)").frame(width: calculate(proxy.size.width), alignment: .leading)
+                                                    }.font(.system(size: 15))
+                                                        .fontWeight(.regular)
+                                                }
+                                            }.frame(height: 88)
+                                        }// end else condition
+                                    }
+                                }.padding(.leading, (isEdit && row.isSkipped) ? 16 : 0)
+                                // end HStack
+                                
+                                Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
+                                    .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }.listRowBackground((currentIndex == index) ? Color.theme.pictonBlue.opacity(0.1) : Color(.white))
+                                .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                                 .onTapGesture {
                                     if !row.isSkipped {
                                         currentIndex = index
                                     }
                                 }
                         }
-                        .listRowSeparator(.hidden)
-                    }.padding()
+                    }
                     .frame(width: proxy.size.width - 50)
+                    .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 8, leading: 16, bottom: 8, trailing: 16))
                     // winds section
                     
                 }.keyboardAvoidView()
@@ -513,41 +451,32 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowAfl) {
-//                EnrouteModalPickerString(isShowing: $isShowAfl, items: $enrouteSection.dataDropDown, selectionInOut: $selectionOutputAfl)
-//                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat, stepper: 10)
-                EnrouteModalWheelAfl(isShowing: $isShowAfl, selectionOutput: $selectionOutputAfl)
+                EnrouteModalWheelAfl(isShowing: $isShowAfl, selectionInOut: $selectionOutputAfl)
             }
             .onChange(of: selectionOutputAfl) { value in
-                waypointsTable[modalIndex].afl = "\(value)"
+                waypointsTable[modalIndex].afl = value
                 updateValues(editedIndex: modalIndex)
             }
             .formSheet(isPresented: $isShowOat) {
-//                EnrouteModalPicker(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
-//                EnrouteModalWheelOat(isShowing: $isShowOat, selectionOutput: $selectionOutputOat)
+                EnrouteModalWheelOat(isShowing: $isShowOat, selectionInOut: $selectionOutputOat)
             }
             .onChange(of: selectionOutputOat) { value in
-                waypointsTable[modalIndex].oat = "\(value)"
+                waypointsTable[modalIndex].oat = value
+                updateValues(editedIndex: modalIndex)
             }
             .formSheet(isPresented: $isShowAwind) {
-//                EnrouteModalPicker(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
-//                EnrouteModalWheelAwind(isShowing: $isShowAwind, selectionOutput: $selectionOutputAwind)
+                EnrouteModalWheelAWind(isShowing: $isShowAwind, selectionInOut: $selectionOutputAwind)
             }
             .onChange(of: selectionOutputAwind) { value in
-                // TODO Adil: value will populate from Modal
-                waypointsTable[modalIndex].awind = "\(value)"
+                waypointsTable[modalIndex].awind = value
                 updateValues(editedIndex: modalIndex)
-                print("Value==========\(value)")
-                
             }
             .formSheet(isPresented: $isShowAfrm) {
-//                EnrouteModalPicker(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm, stepper: 0.1)
-//                EnrouteModalWheelAfrm(isShowing: $isShowAfrm, selectionOutput: $selectionOutputAfrm)
+                EnrouteModalWheelAfrm(isShowing: $isShowAfrm, selectionInOut: $selectionOutputAfrm)
             }
             .onChange(of: selectionOutputAfrm) { value in
-                // TODO Adil: value will populate from Modal
-                waypointsTable[modalIndex].afrm = String(format: "%.1f", value)
+                waypointsTable[modalIndex].afrm = value
                 updateValues(editedIndex: modalIndex)
-                print("Value==========\(value)")
             }
         }
     }
@@ -572,25 +501,25 @@ struct FlightPlanEnrView: View {
     
     func onAfl(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputAfl = Int(waypointsTable[modalIndex].unwrappedAfl) ?? 0
+        self.selectionOutputAfl = waypointsTable[modalIndex].unwrappedAfl
         self.isShowAfl.toggle()
     }
     
     func onOat(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputOat = Double(waypointsTable[modalIndex].unwrappedOat) ?? 0
+        self.selectionOutputOat = waypointsTable[modalIndex].unwrappedOat
         self.isShowOat.toggle()
     }
     
     func onAwind(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputAwind = Double(waypointsTable[modalIndex].unwrappedAwind) ?? 0
+        self.selectionOutputAwind = waypointsTable[modalIndex].unwrappedAwind
         self.isShowAwind.toggle()
     }
     
     func onAfrm(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputAfrm = Double(waypointsTable[modalIndex].unwrappedAfrm) ?? 0
+        self.selectionOutputAfrm = waypointsTable[modalIndex].unwrappedAfrm
         self.isShowAfrm.toggle()
     }
     
@@ -976,7 +905,7 @@ struct FlightPlanEnrView: View {
                     let aflFormatted = Int(aflDefaultValue)! * 100
                     let isa = 15 + (aflFormatted / 1000) * -2
                     // get adn = oat - ISA
-                    let adn = Int(oatDefaultValue)! - isa
+                    let adn = Int(oatDefaultValue) ?? 0 - isa
                     // update value
                     if adn < 0 {
                         waypointsTable[index].adn = "\(adn)"
