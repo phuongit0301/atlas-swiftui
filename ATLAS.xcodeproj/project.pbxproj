@@ -1253,6 +1253,7 @@
 			mainGroup = 3ED7545F2A11E1BA003072A1;
 			packageReferences = (
 				3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
+				3ECD577E2A977C8B00C5FEF3 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			productRefGroup = 3ED754692A11E1BA003072A1 /* Products */;
 			projectDirPath = "";
@@ -1884,6 +1885,14 @@
 			requirement = {
 				branch = main;
 				kind = branch;
+			};
+		};
+		3ECD577E2A977C8B00C5FEF3 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

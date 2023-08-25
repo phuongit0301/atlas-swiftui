@@ -52,11 +52,12 @@ struct FlightPlanNOTAMView: View {
                             .font(.system(size: 17, weight: .regular))
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }.padding(.horizontal)
+                    
                     Text("Most Recent")
                         .font(.system(size: 17, weight: .regular))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }.fixedSize()
-            }.padding(.vertical)
+            }.padding()
             
             //scrollable outer list section
             List {

@@ -75,6 +75,10 @@ struct altn: Identifiable {
     let id = UUID()
 }
 
+enum FocusElement: Hashable {
+    case remarkArrDelays
+    case remarkArrDelays12
+}
 
 struct FlightPlanSummaryView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
@@ -139,6 +143,28 @@ struct FlightPlanSummaryView: View {
     
     @State var showSheet = false
     @State var showMapSheet = false
+    
+    // For Remarks focused
+    @FocusState var focusedTextField: FocusElement?
+    
+    @State var arrDelays: String = ""
+    @State var remarkTaxi: String = ""
+    
+    @State var isEditingArrDelays = false
+    @State var isEditingTaxi = false
+    
+    @FocusState var isArrDelaysFocused: Bool
+    @FocusState var isTaxiFocused: Bool
+    @FocusState var isFlightLevelFocused: Bool
+    @FocusState var isTrackShorteningFocused: Bool
+    @FocusState var isEnrWxFocused: Bool
+    @FocusState var isReciprocalRwyFocused: Bool
+    @FocusState var isZFWChange: Bool
+    @FocusState var isOthers: Bool
+    
+    // defined cursor
+    @State private var cursorPositionArrDelays = 0
+    @State private var cursorPositionTaxi = 0
 
 //    @Environment(\.modelContext) private var context
 //    @Query var fuelPageData: [FuelPageData]
@@ -456,8 +482,8 @@ struct FlightPlanSummaryView: View {
         }
         
         // MARK: main body
-        GeometryReader { proxy in
-            ZStack {
+        ScrollViewReader { scrollView in
+            GeometryReader { proxy in
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
                         HStack {
@@ -465,7 +491,7 @@ struct FlightPlanSummaryView: View {
                             Spacer()
                             Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
                         }.padding()
-                        .background(Color.theme.lightGray1)
+                            .background(Color.theme.lightGray1)
                             .cornerRadius(8)
                     }
                     .padding(.horizontal, 16)
@@ -806,11 +832,11 @@ struct FlightPlanSummaryView: View {
                                             Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
-                                        
+                                            
                                             Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
-                                        
+                                            
                                             Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)).frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
                                                 .lineLimit(nil)
@@ -843,10 +869,10 @@ struct FlightPlanSummaryView: View {
                                                     HStack {
                                                         Text("Statistical").font(.system(size: 15, weight: .medium))
                                                         Text("Details").font(.system(size: 15, weight: .medium))
-                                                        .onTapGesture {
-                                                            showSheet = true
-                                                        }
-                                                        .foregroundColor(.blue)
+                                                            .onTapGesture {
+                                                                showSheet = true
+                                                            }
+                                                            .foregroundColor(.blue)
                                                     }.frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
                                                         .padding(.horizontal)
                                                     
@@ -910,8 +936,14 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkArrDelays", field: coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedArrDelays)
-                                                
+                                                FieldString(name: "remarkArrDelays", field: $arrDelays, focusedTextField: _isArrDelaysFocused, isEditing: $isEditingArrDelays, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedArrDelays)
+                                                    .onChange(of: arrDelays) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkArrDelays = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
@@ -954,7 +986,16 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkTaxi", field: coreDataModel.dataFuelExtra.unwrappedRemarkTaxi).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedTaxi)
+                                                FieldString(name: "remarkTaxi", field: $remarkTaxi, focusedTextField: _isTaxiFocused, isEditing: $isEditingTaxi, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedTaxi)
+                                                    .onChange(of: remarkTaxi) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkTaxi = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
+                                                
+                                                //                                                FieldString(name: "remarkTaxi", field: coreDataModel.dataFuelExtra.unwrappedRemarkTaxi).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedTaxi)
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             Divider()
@@ -1004,8 +1045,8 @@ struct FlightPlanSummaryView: View {
                                                     .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
-                                                FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-                                                    .disabled(!includedFlightLevel)
+                                                //                                                FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                //                                                    .disabled(!includedFlightLevel)
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
@@ -1048,8 +1089,8 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkTrackShortening", field: coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-                                                    .disabled(!includedTrackShortening)
+                                                //                                                FieldString(name: "remarkTrackShortening", field: coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                //                                                    .disabled(!includedTrackShortening)
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
@@ -1092,8 +1133,8 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkEnrWx", field: coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-                                                    .disabled(!includedEnrWx)
+                                                //                                                FieldString(name: "remarkEnrWx", field: coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                //                                                    .disabled(!includedEnrWx)
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
@@ -1139,53 +1180,53 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedReciprocalRwy)
+                                                //                                                FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedReciprocalRwy)
                                             }.padding()
                                             Divider()
                                             // zfw change row
-//                                            HStack(alignment: .center) {
-//                                                HStack {
-//                                                    Toggle(isOn: Binding<Bool>(
-//                                                        get: {coreDataModel.dataFuelExtra.includedZFWchange},
-//                                                        set: {
-//                                                            self.includedZFWchange = $0
-//                                                            coreDataModel.dataFuelExtra.includedZFWchange = $0
-//                                                            coreDataModel.save()
-//                                                        }
-//                                                    )){}
-//                                                    Spacer().frame(maxWidth: .infinity)
-//                                                }.frame(width: 70)
-//                                                    .padding(.horizontal, 24)
-//
-//                                                Text("ZFW Change")
-//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-//                                                    .font(.system(size: 17, weight: .regular))
-//                                                    .frame(width: 160, alignment: .leading)
-//                                                    .padding(.horizontal)
-//
-//                                                Text("N.A.")
-//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-//                                                    .font(.system(size: 17, weight: .regular))
-//                                                    .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
-//                                                    .padding(.horizontal)
-//
-//                                                HStack {
-//                                                    Text("N.A.")
-//                                                        .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-//                                                        .font(.system(size: 17, weight: .regular))
-//                                                }.frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
-//                                                    .padding(.horizontal)
-//
-//                                                Text("\(calculatedZFWFuel)KG")
-//                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
-//                                                    .font(.system(size: 17, weight: .regular))
-//                                                    .frame(width: 170, alignment: .leading)
-//                                                    .padding(.horizontal)
-//
-//                                                FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-//                                                    .disabled(!includedZFWchange)
-//                                            }.padding()
-//                                            Divider()
+                                            //                                            HStack(alignment: .center) {
+                                            //                                                HStack {
+                                            //                                                    Toggle(isOn: Binding<Bool>(
+                                            //                                                        get: {coreDataModel.dataFuelExtra.includedZFWchange},
+                                            //                                                        set: {
+                                            //                                                            self.includedZFWchange = $0
+                                            //                                                            coreDataModel.dataFuelExtra.includedZFWchange = $0
+                                            //                                                            coreDataModel.save()
+                                            //                                                        }
+                                            //                                                    )){}
+                                            //                                                    Spacer().frame(maxWidth: .infinity)
+                                            //                                                }.frame(width: 70)
+                                            //                                                    .padding(.horizontal, 24)
+                                            //
+                                            //                                                Text("ZFW Change")
+                                            //                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                            //                                                    .font(.system(size: 17, weight: .regular))
+                                            //                                                    .frame(width: 160, alignment: .leading)
+                                            //                                                    .padding(.horizontal)
+                                            //
+                                            //                                                Text("N.A.")
+                                            //                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                            //                                                    .font(.system(size: 17, weight: .regular))
+                                            //                                                    .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
+                                            //                                                    .padding(.horizontal)
+                                            //
+                                            //                                                HStack {
+                                            //                                                    Text("N.A.")
+                                            //                                                        .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                            //                                                        .font(.system(size: 17, weight: .regular))
+                                            //                                                }.frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
+                                            //                                                    .padding(.horizontal)
+                                            //
+                                            //                                                Text("\(calculatedZFWFuel)KG")
+                                            //                                                    .foregroundColor(includedZFWchange ? Color.black : Color.theme.sonicSilver)
+                                            //                                                    .font(.system(size: 17, weight: .regular))
+                                            //                                                    .frame(width: 170, alignment: .leading)
+                                            //                                                    .padding(.horizontal)
+                                            //
+                                            //                                                FieldString(name: "remarkZFWChange", field: coreDataModel.dataFuelExtra.unwrappedRemarkZFWChange).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                            //                                                    .disabled(!includedZFWchange)
+                                            //                                            }.padding()
+                                            //                                            Divider()
                                             // others row
                                             HStack(alignment: .center) {
                                                 HStack {
@@ -1225,8 +1266,8 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
-                                                FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
-                                                    .disabled(!includedOthers)
+                                                //                                                FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                //                                                    .disabled(!includedOthers)
                                             }.padding()
                                             Divider()
                                         }.frame(width: proxy.size.width - 50)
@@ -1244,7 +1285,7 @@ struct FlightPlanSummaryView: View {
                                                 Text("\(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))mins")
                                                     .font(.system(size: 17, weight: .regular))
                                                     .frame(width: calculateWidth(proxy.size.width - 590, 3), alignment: .leading)
-                                                        .padding(.leading, 32)
+                                                    .padding(.leading, 32)
                                                 
                                                 
                                                 Text("").frame(width: calculateWidth(proxy.size.width - 627, 3), alignment: .leading)
@@ -1261,11 +1302,12 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                             }.padding()
                                         }.padding(.horizontal, 20)
-                                        .background(Color.theme.azure.opacity(0.12))
+                                            .background(Color.theme.azure.opacity(0.12))
                                             .frame(width: proxy.size.width)
                                     } // end VStack
                                 }// end collapsible
                             }.listRowInsets((EdgeInsets(.init(top: 0, leading: -16, bottom: 0, trailing: 0))))
+                                .id("remarkArrDelays")
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .center) {
@@ -1333,66 +1375,99 @@ struct FlightPlanSummaryView: View {
                         //                        .padding(.leading, 25)
                         //                }
                     }
-                    .keyboardAvoidView()
-                    .sheet(isPresented: $showSheet, content: {
-                        FuelModal(isShowing: $showSheet).interactiveDismissDisabled(true)
-                    })
-                    .sheet(isPresented: $showMapSheet, content: {
-                        MapModal(isShowing: $showMapSheet).interactiveDismissDisabled(true)
-                    })
-                }
-            }
-            .onAppear {
-                self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
-                self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
-                self.includedTaxi = coreDataModel.dataFuelExtra.includedTaxi
-                self.includedFlightLevel = coreDataModel.dataFuelExtra.includedFlightLevel
-                self.includedTrackShortening = coreDataModel.dataFuelExtra.includedTrackShortening
-                self.includedEnrWx = coreDataModel.dataFuelExtra.includedEnrWx
-                self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
-                self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
-                self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
-                
-                self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
-                self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
-                self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
-                self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
-                self.selectedFlightLevel00 = coreDataModel.dataFuelExtra.selectedFlightLevel00
-                self.selectedFlightLevelPrint = "\((self.selectedFlightLevel000 * 10) + self.selectedFlightLevel00)00ft"
-                self.selectedEnrWx = coreDataModel.dataFuelExtra.selectedEnrWx
-                self.selectedReciprocalRwy = coreDataModel.dataFuelExtra.selectedReciprocalRwy
-                self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
-                self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
-                self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
-                
-                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
-            }.onReceive(Just(coreDataModel.dataFuelExtra)) { newValue in
-                self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
-                self.includedTaxi = coreDataModel.dataFuelExtra.includedTaxi
-                self.includedFlightLevel = coreDataModel.dataFuelExtra.includedFlightLevel
-                self.includedTrackShortening = coreDataModel.dataFuelExtra.includedTrackShortening
-                self.includedEnrWx = coreDataModel.dataFuelExtra.includedEnrWx
-                self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
-                self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
-                self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
-                
-                self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
-                self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
-                self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
-                self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
-                self.selectedFlightLevel00 = coreDataModel.dataFuelExtra.selectedFlightLevel00
-                self.selectedFlightLevelPrint = "\((self.selectedFlightLevel000 * 10) + self.selectedFlightLevel00)00ft"
-                self.selectedEnrWx = coreDataModel.dataFuelExtra.selectedEnrWx
-                self.selectedReciprocalRwy = coreDataModel.dataFuelExtra.selectedReciprocalRwy
-                self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
-                self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
-                self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
-                
-                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
-            }
-            .onChange(of: selectionOutput) { newValue in
-                switch self.target {
+                    //                    .keyboardAvoidView()
                     
+                    if isEditingArrDelays || isEditingTaxi {
+                        ZStack {
+                            VStack {
+                                // custom keyboard view - todo set position properly - like normal ipad keyboard position
+                                Group {
+                                    if isEditingArrDelays {
+                                        CustomKeyboardView1(text: $arrDelays, cursorPosition: $cursorPositionArrDelays, currentFocus: $isEditingArrDelays, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingTaxi {
+                                        CustomKeyboardView1(text: $remarkTaxi, cursorPosition: $cursorPositionTaxi, currentFocus: $isEditingTaxi, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                }
+                            }
+                        }.frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.theme.quickSilver)
+                            .offset(x: 0, y: 0)
+                    }
+                }
+                .sheet(isPresented: $showSheet, content: {
+                    FuelModal(isShowing: $showSheet).interactiveDismissDisabled(true)
+                })
+                .sheet(isPresented: $showMapSheet, content: {
+                    MapModal(isShowing: $showMapSheet).interactiveDismissDisabled(true)
+                })
+                .onAppear {
+                    self.pob = coreDataModel.dataSummaryInfo.unwrappedPob
+                    self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
+                    self.includedTaxi = coreDataModel.dataFuelExtra.includedTaxi
+                    self.includedFlightLevel = coreDataModel.dataFuelExtra.includedFlightLevel
+                    self.includedTrackShortening = coreDataModel.dataFuelExtra.includedTrackShortening
+                    self.includedEnrWx = coreDataModel.dataFuelExtra.includedEnrWx
+                    self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
+                    self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
+                    self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
+                    
+                    self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
+                    self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
+                    self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
+                    self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
+                    self.selectedFlightLevel00 = coreDataModel.dataFuelExtra.selectedFlightLevel00
+                    self.selectedFlightLevelPrint = "\((self.selectedFlightLevel000 * 10) + self.selectedFlightLevel00)00ft"
+                    self.selectedEnrWx = coreDataModel.dataFuelExtra.selectedEnrWx
+                    self.selectedReciprocalRwy = coreDataModel.dataFuelExtra.selectedReciprocalRwy
+                    self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
+                    self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
+                    self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
+                    
+                    self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
+                    
+                    // for remarks
+                    self.arrDelays = coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays
+                    self.cursorPositionArrDelays = coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays.count
+                    
+                    self.remarkTaxi = coreDataModel.dataFuelExtra.unwrappedRemarkTaxi
+                    self.cursorPositionTaxi = coreDataModel.dataFuelExtra.unwrappedRemarkTaxi.count
+                    
+                }.onReceive(Just(coreDataModel.dataFuelExtra)) { newValue in
+                    self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
+                    self.includedTaxi = coreDataModel.dataFuelExtra.includedTaxi
+                    self.includedFlightLevel = coreDataModel.dataFuelExtra.includedFlightLevel
+                    self.includedTrackShortening = coreDataModel.dataFuelExtra.includedTrackShortening
+                    self.includedEnrWx = coreDataModel.dataFuelExtra.includedEnrWx
+                    self.includedReciprocalRwy = coreDataModel.dataFuelExtra.includedReciprocalRwy
+                    self.includedZFWchange = coreDataModel.dataFuelExtra.includedZFWchange
+                    self.includedOthers = coreDataModel.dataFuelExtra.includedOthers
+                    
+                    self.selectedArrDelays = coreDataModel.dataFuelExtra.selectedArrDelays
+                    self.selectedTaxi = coreDataModel.dataFuelExtra.selectedTaxi
+                    self.selectedTrackShortening = coreDataModel.dataFuelExtra.selectedTrackShortening
+                    self.selectedFlightLevel000 = coreDataModel.dataFuelExtra.selectedFlightLevel000
+                    self.selectedFlightLevel00 = coreDataModel.dataFuelExtra.selectedFlightLevel00
+                    self.selectedFlightLevelPrint = "\((self.selectedFlightLevel000 * 10) + self.selectedFlightLevel00)00ft"
+                    self.selectedEnrWx = coreDataModel.dataFuelExtra.selectedEnrWx
+                    self.selectedReciprocalRwy = coreDataModel.dataFuelExtra.selectedReciprocalRwy
+                    self.selectedOthers000 = coreDataModel.dataFuelExtra.selectedOthers000
+                    self.selectedOthers00 = coreDataModel.dataFuelExtra.selectedOthers00
+                    self.selectedOtherPrint = "\((self.selectedOthers000 * 10) + self.selectedOthers00)00KG"
+                    
+                    self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
+                }
+                .onChange(of: isEditingArrDelays) { newValue in
+                    scrollView.scrollTo("remarkArrDelays")
+                }
+                .onChange(of: isEditingTaxi) { newValue in
+                    scrollView.scrollTo("remarkArrDelays", anchor: .center)
+                }
+                .onChange(of: selectionOutput) { newValue in
+                    switch self.target {
+                        
                     case "IncludedTaxi":
                         self.selectedTaxi = newValue
                         coreDataModel.dataFuelExtra.selectedTaxi = newValue
@@ -1411,25 +1486,26 @@ struct FlightPlanSummaryView: View {
                     default:
                         self.selectedArrDelays = newValue
                         coreDataModel.dataFuelExtra.selectedArrDelays = newValue
+                    }
+                    coreDataModel.save()
                 }
-                coreDataModel.save()
-            }
-            .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
-                self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
-            }
-            .formSheet(isPresented: $isShowModal) {
-                ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: $selection, target: $target)
-                    .presentationDetents([.medium])
-                    .interactiveDismissDisabled(true)
-            }
-            .formSheet(isPresented: $isShowModalMultiple) {
-                ModalPickerMultiple(isShowing: $isShowModalMultiple, target: $target, onSelectOutput: onSelectOutput, selection1: $selection1, selection2: $selection2)
-                    .presentationDetents([.medium])
-                    .interactiveDismissDisabled(true)
-            }
-            .navigationTitle("Summary")
-            .background(Color(.systemGroupedBackground))
-        }
+                .onReceive(Just(coreDataModel.dataPerfWeight)) { _ in
+                    self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
+                }
+                .formSheet(isPresented: $isShowModal) {
+                    ModalPicker(selectionOutput: $selectionOutput, isShowing: $isShowModal, selection: $selection, target: $target)
+                        .presentationDetents([.medium])
+                        .interactiveDismissDisabled(true)
+                }
+                .formSheet(isPresented: $isShowModalMultiple) {
+                    ModalPickerMultiple(isShowing: $isShowModalMultiple, target: $target, onSelectOutput: onSelectOutput, selection1: $selection1, selection2: $selection2)
+                        .presentationDetents([.medium])
+                        .interactiveDismissDisabled(true)
+                }
+                .navigationTitle("Summary")
+                .background(Color(.systemGroupedBackground))
+            } // End of GeometryReader
+        } // End of ScrollViewReader
     }
     
     func includedExtraFuelTime(_ includedDelayFuel: [String: Any], _ includedTrackShorteningFuel: [String: Any], _ includedEnrWxFuel: [String: Any], _ includedReciprocalRwyFuel: [String: Any]) -> String {
@@ -1593,5 +1669,16 @@ struct FlightPlanSummaryView: View {
         self.selection2 = sel2
         coreDataModel.dataFuelExtra.selectedFlightLevel000 = sel1
         coreDataModel.dataFuelExtra.selectedFlightLevel00 = sel2
+    }
+    
+    func setFocusToFalse() {
+        isArrDelaysFocused = false
+        isTaxiFocused = false
+        isFlightLevelFocused = false
+        isTrackShorteningFocused = false
+        isEnrWxFocused = false
+        isReciprocalRwyFocused = false
+        isZFWChange = false
+        isOthers = false
     }
 }
