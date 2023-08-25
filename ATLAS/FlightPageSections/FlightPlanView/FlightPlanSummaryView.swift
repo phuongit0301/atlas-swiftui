@@ -147,11 +147,38 @@ struct FlightPlanSummaryView: View {
     // For Remarks focused
     @FocusState var focusedTextField: FocusElement?
     
+    //Performance custom keyboard
+    @State var arrZFW: String = ""
+    @State var arrTOW: String = ""
+    @State var arrLDW: String = ""
+    
+    @State var isEditingZFW = false
+    @State var isEditingTOW = false
+    @State var isEditingLDW = false
+    
+    @FocusState var isZFWFocused: Bool
+    @FocusState var isTOWFocused: Bool
+    @FocusState var isLDWFocused: Bool
+    
+    @State private var cursorZFW = 0
+    @State private var cursorTOW = 0
+    @State private var cursorLDW = 0
+    
     @State var arrDelays: String = ""
     @State var remarkTaxi: String = ""
+    @State var remarkFlightLevel: String = ""
+    @State var remarkTrackShortening: String = ""
+    @State var remarkEnrWx: String = ""
+    @State var remarkReciprocalRwy: String = ""
+    @State var remarkOthers: String = ""
     
     @State var isEditingArrDelays = false
     @State var isEditingTaxi = false
+    @State var isEditingFlightLevel = false
+    @State var isEditingTrackShortening = false
+    @State var isEditingEnrWx = false
+    @State var isEditingReciprocalRwy = false
+    @State var isEditingOthers = false
     
     @FocusState var isArrDelaysFocused: Bool
     @FocusState var isTaxiFocused: Bool
@@ -160,11 +187,16 @@ struct FlightPlanSummaryView: View {
     @FocusState var isEnrWxFocused: Bool
     @FocusState var isReciprocalRwyFocused: Bool
     @FocusState var isZFWChange: Bool
-    @FocusState var isOthers: Bool
+    @FocusState var isOthersFocused: Bool
     
     // defined cursor
     @State private var cursorPositionArrDelays = 0
     @State private var cursorPositionTaxi = 0
+    @State private var cursorFlightLevel = 0
+    @State private var cursorTrackShortening = 0
+    @State private var cursorEnrWx = 0
+    @State private var cursorReciprocalRwy = 0
+    @State private var cursorOthers = 0
 
 //    @Environment(\.modelContext) private var context
 //    @Query var fuelPageData: [FuelPageData]
@@ -774,8 +806,39 @@ struct FlightPlanSummaryView: View {
                                 TableColumn("Plan") {
                                     Text($0.unwrappedPlan).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
-                                TableColumn("Actual") {
-                                    CustomField(item: $0)
+                                TableColumn("Actual") { item in
+//                                    CustomField(item: $0)
+                                    if item.weight == "ZFW" {
+                                        FieldString(name: "zfw", field: $arrZFW, focusedTextField: _isZFWFocused, isEditing: $isEditingZFW, setFocusToFalse: setFocusToFalse)
+                                            .onChange(of: arrZFW) { newValue in
+                                                if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
+                                                    item.actual = newValue
+                                                    coreDataModel.save()
+                                                    coreDataModel.dataPerfWeight = coreDataModel.readPerfWeight()
+                                                }
+                                            }
+                                    } else if item.weight == "TOW" {
+                                        FieldString(name: "tow", field: $arrTOW, focusedTextField: _isTOWFocused, isEditing: $isEditingTOW, setFocusToFalse: setFocusToFalse)
+                                            .onChange(of: arrTOW) { newValue in
+                                                if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "TOW"}) {
+                                                    item.actual = newValue
+                                                    coreDataModel.save()
+                                                    coreDataModel.dataPerfWeight = coreDataModel.readPerfWeight()
+                                                }
+                                            }
+                                    } else if item.weight == "LDW" {
+                                        FieldString(name: "ldw", field: $arrLDW, focusedTextField: _isLDWFocused, isEditing: $isEditingLDW, setFocusToFalse: setFocusToFalse)
+                                            .onChange(of: arrLDW) { newValue in
+                                                if coreDataModel.dataPerfWeight.count > 0 {
+                                                    if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "LDW"}) {
+                                                        item.actual = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.dataPerfWeight = coreDataModel.readPerfWeight()
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    
                                 }
                                 TableColumn("Max") {
                                     Text($0.unwrappedMax).foregroundColor(.black).font(.system(size: 17, weight: .regular))
@@ -788,6 +851,7 @@ struct FlightPlanSummaryView: View {
                             .listStyle(.insetGrouped)
                             .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
+                            .id("performance")
                         }
                         
                         // MARK: Fuel section
@@ -994,8 +1058,6 @@ struct FlightPlanSummaryView: View {
                                                         coreDataModel.save()
                                                         coreDataModel.readFlightPlan()
                                                     }
-                                                
-                                                //                                                FieldString(name: "remarkTaxi", field: coreDataModel.dataFuelExtra.unwrappedRemarkTaxi).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedTaxi)
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             Divider()
@@ -1045,6 +1107,15 @@ struct FlightPlanSummaryView: View {
                                                     .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkFlightLevel", field: $remarkFlightLevel, focusedTextField: _isFlightLevelFocused, isEditing: $isEditingFlightLevel, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedFlightLevel)
+                                                    .onChange(of: remarkFlightLevel) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkFlightLevel = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
                                                 //                                                FieldString(name: "remarkFlightLevel", field: coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 //                                                    .disabled(!includedFlightLevel)
                                             }.padding()
@@ -1089,6 +1160,15 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
+                                                FieldString(name: "remarkTrackShortening", field: $remarkTrackShortening, focusedTextField: _isTrackShorteningFocused, isEditing: $isEditingTrackShortening, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedTrackShortening)
+                                                    .onChange(of: remarkTrackShortening) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkTrackShortening = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
+                                                
                                                 //                                                FieldString(name: "remarkTrackShortening", field: coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 //                                                    .disabled(!includedTrackShortening)
                                             }.padding()
@@ -1132,6 +1212,15 @@ struct FlightPlanSummaryView: View {
                                                     .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkEnrWx", field: $remarkEnrWx, focusedTextField: _isEnrWxFocused, isEditing: $isEditingEnrWx, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedEnrWx)
+                                                    .onChange(of: remarkEnrWx) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkEnrWx = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
                                                 
                                                 //                                                FieldString(name: "remarkEnrWx", field: coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 //                                                    .disabled(!includedEnrWx)
@@ -1179,6 +1268,15 @@ struct FlightPlanSummaryView: View {
                                                     .font(.system(size: 17, weight: .regular))
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
+                                                
+                                                FieldString(name: "remarkReciprocalRwy", field: $remarkReciprocalRwy, focusedTextField: _isReciprocalRwyFocused, isEditing: $isEditingReciprocalRwy, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedReciprocalRwy)
+                                                    .onChange(of: remarkReciprocalRwy) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkReciprocalRwy = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
                                                 
                                                 //                                                FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedReciprocalRwy)
                                             }.padding()
@@ -1266,6 +1364,15 @@ struct FlightPlanSummaryView: View {
                                                     .frame(width: 170, alignment: .leading)
                                                     .padding(.horizontal)
                                                 
+                                                FieldString(name: "remarkOthers", field: $remarkOthers, focusedTextField: _isOthersFocused, isEditing: $isEditingOthers, setFocusToFalse: setFocusToFalse)
+                                                    .frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
+                                                    .disabled(!includedOthers)
+                                                    .onChange(of: remarkOthers) { newValue in
+                                                        coreDataModel.dataFuelExtra.remarkOthers = newValue
+                                                        coreDataModel.save()
+                                                        coreDataModel.readFlightPlan()
+                                                    }
+                                                
                                                 //                                                FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 //                                                    .disabled(!includedOthers)
                                             }.padding()
@@ -1307,7 +1414,7 @@ struct FlightPlanSummaryView: View {
                                     } // end VStack
                                 }// end collapsible
                             }.listRowInsets((EdgeInsets(.init(top: 0, leading: -16, bottom: 0, trailing: 0))))
-                                .id("remarkArrDelays")
+                                .id("extraFuel")
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 HStack(alignment: .center) {
@@ -1377,7 +1484,7 @@ struct FlightPlanSummaryView: View {
                     }
                     //                    .keyboardAvoidView()
                     
-                    if isEditingArrDelays || isEditingTaxi {
+                    if isEditingArrDelays || isEditingTaxi || isEditingFlightLevel || isEditingTrackShortening || isEditingEnrWx || isEditingReciprocalRwy || isEditingOthers || isEditingZFW || isEditingTOW || isEditingLDW {
                         ZStack {
                             VStack {
                                 // custom keyboard view - todo set position properly - like normal ipad keyboard position
@@ -1388,6 +1495,38 @@ struct FlightPlanSummaryView: View {
                                     
                                     if isEditingTaxi {
                                         CustomKeyboardView1(text: $remarkTaxi, cursorPosition: $cursorPositionTaxi, currentFocus: $isEditingTaxi, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingFlightLevel {
+                                        CustomKeyboardView1(text: $remarkFlightLevel, cursorPosition: $cursorFlightLevel, currentFocus: $isEditingFlightLevel, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingTrackShortening {
+                                        CustomKeyboardView1(text: $remarkTrackShortening, cursorPosition: $cursorTrackShortening, currentFocus: $isEditingTrackShortening, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingReciprocalRwy {
+                                        CustomKeyboardView1(text: $remarkReciprocalRwy, cursorPosition: $cursorReciprocalRwy, currentFocus: $isEditingReciprocalRwy, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingEnrWx {
+                                        CustomKeyboardView1(text: $remarkEnrWx, cursorPosition: $cursorEnrWx, currentFocus: $isEditingEnrWx, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingOthers {
+                                        CustomKeyboardView1(text: $remarkOthers, cursorPosition: $cursorOthers, currentFocus: $isEditingOthers, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingZFW {
+                                        CustomKeyboardView1(text: $arrZFW, cursorPosition: $cursorZFW, currentFocus: $isEditingZFW, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingTOW {
+                                        CustomKeyboardView1(text: $arrTOW, cursorPosition: $cursorTOW, currentFocus: $isEditingTOW, nextFocus: .constant(false), prevFocus: .constant(false))
+                                    }
+                                    
+                                    if isEditingLDW {
+                                        CustomKeyboardView1(text: $arrLDW, cursorPosition: $cursorLDW, currentFocus: $isEditingLDW, nextFocus: .constant(false), prevFocus: .constant(false))
                                     }
                                 }
                             }
@@ -1430,10 +1569,30 @@ struct FlightPlanSummaryView: View {
                     
                     // for remarks
                     self.arrDelays = coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays
-                    self.cursorPositionArrDelays = coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays.count
                     
                     self.remarkTaxi = coreDataModel.dataFuelExtra.unwrappedRemarkTaxi
-                    self.cursorPositionTaxi = coreDataModel.dataFuelExtra.unwrappedRemarkTaxi.count
+                    
+                    self.remarkFlightLevel = coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel
+                    
+                    self.remarkTrackShortening = coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening
+                    
+                    self.remarkEnrWx = coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx
+                    
+                    self.remarkReciprocalRwy = coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy
+                    
+                    self.remarkOthers = coreDataModel.dataFuelExtra.unwrappedRemarkOthers
+                    
+                    if coreDataModel.dataPerfWeight.count > 0 {
+                        coreDataModel.dataPerfWeight.forEach {item in
+                            if item.weight == "ZFW" {
+                                arrZFW = item.unwrappedActual
+                            } else if item.weight == "TOW" {
+                                arrTOW = item.unwrappedActual
+                            } else if item.weight == "LDW" {
+                                arrLDW = item.unwrappedActual
+                            }
+                        }
+                    }
                     
                 }.onReceive(Just(coreDataModel.dataFuelExtra)) { newValue in
                     self.includedArrDelays = coreDataModel.dataFuelExtra.includedArrDelays
@@ -1460,10 +1619,56 @@ struct FlightPlanSummaryView: View {
                     self.calculatedZFWFuelValue = coreDataModel.calculatedZFWFuel()
                 }
                 .onChange(of: isEditingArrDelays) { newValue in
-                    scrollView.scrollTo("remarkArrDelays")
+                    scrollView.scrollTo("extraFuel")
+                    self.cursorPositionArrDelays = newValue ?  coreDataModel.dataFuelExtra.unwrappedRemarkArrDelays.count : 0
                 }
                 .onChange(of: isEditingTaxi) { newValue in
-                    scrollView.scrollTo("remarkArrDelays", anchor: .center)
+                    scrollView.scrollTo("extraFuel", anchor: .center)
+                    self.cursorPositionTaxi = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkTaxi.count : 0
+                }
+                .onChange(of: isEditingFlightLevel) { newValue in
+                    scrollView.scrollTo("extraFuel", anchor: .center)
+                    self.cursorFlightLevel = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkFlightLevel.count : 0
+                }
+                .onChange(of: isEditingTrackShortening) { newValue in
+                    scrollView.scrollTo("extraFuel", anchor: .center)
+                    self.cursorTrackShortening = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkTrackShortening.count : 0
+                }
+                .onChange(of: isEditingEnrWx) { newValue in
+                    scrollView.scrollTo("extraFuel", anchor: .bottom)
+                    self.cursorEnrWx = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkEnrWx.count : 0
+                }
+                .onChange(of: isEditingReciprocalRwy) { newValue in
+                    scrollView.scrollTo("extraFuel", anchor: .bottom)
+                    self.cursorReciprocalRwy = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy.count : 0
+                }
+                .onChange(of: isEditingOthers) { newValue in
+                    scrollView.scrollTo("extraFuel", anchor: .bottom)
+                    self.cursorOthers = newValue ? coreDataModel.dataFuelExtra.unwrappedRemarkOthers.count : 0
+                }
+                .onChange(of: isEditingZFW) { newValue in
+                    scrollView.scrollTo("performance", anchor: .top)
+                    if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
+                        print("item.unwrappedActual===========\(item.unwrappedActual)")
+                        print("item.unwrappedActualcount===========\(item.unwrappedActual.count)")
+                        self.cursorZFW = newValue ? item.unwrappedActual.count : 0
+                    }
+                }
+                .onChange(of: isEditingTOW) { newValue in
+                    scrollView.scrollTo("performance", anchor: .top)
+                    if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "TOW"}) {
+                        print("item.unwrappedActual11===========\(item.unwrappedActual)")
+                        print("item.unwrappedActualcount11===========\(item.unwrappedActual.count)")
+                        self.cursorTOW = newValue ? item.unwrappedActual.count : 0
+                    }
+                }
+                .onChange(of: isEditingLDW) { newValue in
+                    scrollView.scrollTo("performance", anchor: .top)
+                    if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "LDW"}) {
+                        print("item.unwrappedActual22===========\(item.unwrappedActual)")
+                        print("item.unwrappedActualcount22===========\(item.unwrappedActual.count)")
+                        self.cursorLDW = newValue ? item.unwrappedActual.count : 0
+                    }
                 }
                 .onChange(of: selectionOutput) { newValue in
                     switch self.target {
@@ -1672,6 +1877,17 @@ struct FlightPlanSummaryView: View {
     }
     
     func setFocusToFalse() {
+        isEditingArrDelays = false
+        isEditingTaxi = false
+        isEditingFlightLevel = false
+        isEditingTrackShortening = false
+        isEditingEnrWx = false
+        isEditingReciprocalRwy = false
+        isEditingOthers = false
+        isEditingZFW = false
+        isEditingTOW = false
+        isEditingLDW = false
+        
         isArrDelaysFocused = false
         isTaxiFocused = false
         isFlightLevelFocused = false
@@ -1679,6 +1895,9 @@ struct FlightPlanSummaryView: View {
         isEnrWxFocused = false
         isReciprocalRwyFocused = false
         isZFWChange = false
-        isOthers = false
+        isOthersFocused = false
+        isZFWFocused = false
+        isTOWFocused = false
+        isLDWFocused = false
     }
 }
