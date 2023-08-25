@@ -464,9 +464,9 @@ struct INotamsDataChildResponseModel: Decodable {
 }
 
 struct INotamsDataResponseModel: Decodable {
-    var depNotams: [INotamsDataChildResponseModel]
+    var depNotams: [String: [INotamsDataChildResponseModel]]
     var enrNotams: [INotamsDataChildResponseModel]
-    var arrNotams: [INotamsDataChildResponseModel]
+    var arrNotams: [String: [INotamsDataChildResponseModel]]
 //    var depNotams: [[String: String]]
 //    var enrNotams: [[String: String]]
 //    var arrNotams: [[String: String]]

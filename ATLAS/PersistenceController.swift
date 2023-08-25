@@ -811,67 +811,52 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataNotams(_ notamsData: INotamsDataResponseModel) {
-//        if notamsData.depNotams.Others.count > 0 {
-//            notamsData.depNotams.Others.forEach { item in
-//                let newObj = NotamsDataList(context: self.service.container.viewContext)
-//                newObj.id = UUID()
-//                newObj.type = "depNotams"
-//                newObj.notam = item.notam
-//                newObj.date = item.date
-//                newObj.rank = item.rank
-//                newObj.isChecked = false
-//                newObj.category = "Others"
-//                self.service.container.viewContext.performAndWait {
-//                    do {
-//                        try self.service.container.viewContext.save()
-//                        print("saved notams successfully")
-//                    } catch {
-//                        print("Failed to Notams depNotams save: \(error)")
-//                    }
-//                    
-//                }
-//            }
-//        }
-//        
-//        if notamsData.depNotams.Taxiway.count > 0 {
-//            notamsData.depNotams.Taxiway.forEach { item in
-//                let newObj = NotamsDataList(context: self.service.container.viewContext)
-//                newObj.id = UUID()
-//                newObj.type = "depNotams"
-//                newObj.notam = item.notam
-//                newObj.date = item.date
-//                newObj.rank = item.rank
-//                newObj.isChecked = false
-//                newObj.category = "Taxiway"
-//                self.service.container.viewContext.performAndWait {
-//                    do {
-//                        try self.service.container.viewContext.save()
-//                        print("saved notams successfully")
-//                    } catch {
-//                        print("Failed to Notams depNotams save: \(error)")
-//                    }
-//                    
-//                }
-//            }
-//        }
         
-        notamsData.arrNotams.forEach { item in
-            let newObj = NotamsDataList(context: self.service.container.viewContext)
-            newObj.id = UUID()
-            newObj.type = "arrNotams"
-            newObj.notam = item.notam
-            newObj.date = item.date
-            newObj.rank = item.rank
-            newObj.isChecked = false
-            self.service.container.viewContext.performAndWait {
-                do {
-                    try self.service.container.viewContext.save()
-                    print("saved notams successfully")
-                } catch {
-                    service.container.viewContext.rollback()
-                    print("Failed to Notams arrNotams save: \(error)")
+        for data in notamsData.depNotams {
+            if data.value.count > 0 {
+                data.value.forEach { item in
+                    let newObj = NotamsDataList(context: self.service.container.viewContext)
+                    newObj.id = UUID()
+                    newObj.type = "depNotams"
+                    newObj.notam = item.notam
+                    newObj.date = item.date
+                    newObj.rank = item.rank
+                    newObj.isChecked = false
+                    newObj.category = data.key
+                    self.service.container.viewContext.performAndWait {
+                        do {
+                            try self.service.container.viewContext.save()
+                            print("saved notams successfully")
+                        } catch {
+                            print("Failed to Notams depNotams save: \(error)")
+                        }
+    
+                    }
                 }
-                
+            }
+        }
+        
+        for data in notamsData.arrNotams {
+            if data.value.count > 0 {
+                data.value.forEach { item in
+                    let newObj = NotamsDataList(context: self.service.container.viewContext)
+                    newObj.id = UUID()
+                    newObj.type = "arrNotams"
+                    newObj.notam = item.notam
+                    newObj.date = item.date
+                    newObj.rank = item.rank
+                    newObj.isChecked = false
+                    newObj.category = data.key
+                    self.service.container.viewContext.performAndWait {
+                        do {
+                            try self.service.container.viewContext.save()
+                            print("saved notams successfully")
+                        } catch {
+                            print("Failed to Notams depNotams save: \(error)")
+                        }
+    
+                    }
+                }
             }
         }
         
@@ -891,10 +876,32 @@ class CoreDataModelState: ObservableObject {
                     service.container.viewContext.rollback()
                     print("Failed to Notams enrNotams save: \(error)")
                 }
-                
+
             }
         }
         dataNotams = readDataNotamsList()
+        
+//        notamsData.arrNotams.forEach { item in
+//            let newObj = NotamsDataList(context: self.service.container.viewContext)
+//            newObj.id = UUID()
+//            newObj.type = "arrNotams"
+//            newObj.notam = item.notam
+//            newObj.date = item.date
+//            newObj.rank = item.rank
+//            newObj.isChecked = false
+//            self.service.container.viewContext.performAndWait {
+//                do {
+//                    try self.service.container.viewContext.save()
+//                    print("saved notams successfully")
+//                } catch {
+//                    service.container.viewContext.rollback()
+//                    print("Failed to Notams arrNotams save: \(error)")
+//                }
+//
+//            }
+//        }
+//
+
     }
     
     func initDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
