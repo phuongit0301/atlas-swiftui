@@ -271,7 +271,7 @@ struct FlightSummaryView: View {
                                     Group {
                                         Text("TODO").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                         Text("TODO").frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
-                                        Text(calculateDateTime(showUTC ? chocksOffUTC : chocksOffLocal, showUTC ? chocksOnUTC : chocksOnLocal)).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
+                                        Text(calculateDateTime(chocksOffUTC, chocksOnUTC)).frame(width: calculateWidth(proxy.size.width, 3), alignment: .leading)
                                     }
                                     .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 }

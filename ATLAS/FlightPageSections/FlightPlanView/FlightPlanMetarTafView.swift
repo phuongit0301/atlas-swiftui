@@ -71,7 +71,7 @@ struct FlightPlanMETARTAFView: View {
                 List {
                     // Dep METAR section
                     Section(header:
-                                Text("DEP METAR | PLAN DEP VTBS/19L | PREDICTED VTBS/19L")
+                                Text("DEP METAR | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO) \(coreDataModel.dataSummaryRoute.unwrappedDepRwy) | PREDICTED VTBS/19L")
                         .font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
@@ -101,7 +101,7 @@ struct FlightPlanMETARTAFView: View {
                     }
                     
                     // Dep TAF section
-                    Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
+                    Section(header: Text("DEP TAF | PLAN DEP \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedDepRwy) | PREDICTED VTBS/19L").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedDepTaf.components(separatedBy: " "), id: \.self) { word in
@@ -129,7 +129,7 @@ struct FlightPlanMETARTAFView: View {
                         }
                     }
                     // Arr METAR section
-                    Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
+                    Section(header: Text("ARR METAR | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy) | PREDICTED WSSS/20R").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedArrMetar.components(separatedBy: " "), id: \.self) { word in
@@ -157,7 +157,7 @@ struct FlightPlanMETARTAFView: View {
                         }
                     }
                     // Arr TAF section
-                    Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy)").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
+                    Section(header: Text("ARR TAF | PLAN ARR \(coreDataModel.dataSummaryInfo.unwrappedDepICAO)  \(coreDataModel.dataSummaryRoute.unwrappedArrRwy) | PREDICTED WSSS/20R").font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)) {
                         HStack(spacing: 10) {
                             NewFlowLayout(alignment: .leading) {
                                 ForEach(coreDataModel.dataMetarTaf.unwrappedArrTaf.components(separatedBy: " "), id: \.self) { word in

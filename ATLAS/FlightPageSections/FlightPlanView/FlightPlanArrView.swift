@@ -161,20 +161,15 @@ struct FlightPlanArrView: View {
                         // ATIS section
                         Section(header:
                                     HStack {
-                            Text("ATIS").foregroundStyle(Color.black)
+                            Text("ATIS \(coreDataModel.dataSummaryInfo.unwrappedDest)").foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.black)
-                            TextField(" \(coreDataModel.dataSummaryInfo.unwrappedDest)", text: $dest, onEditingChanged: { editing in
-                                isEditingDest = editing
-                            })
-                            .focused($isTextFieldDestFocused)
-                            .font(.system(size: 15, weight: .semibold))
                         }) {
                             // grouped row using hstack
                             VStack(alignment: .leading) {
                                 HStack(alignment: .center) {
                                     Group {
                                         Text("Dest")
-                                            .foregroundStyle(Color.black)
+                                            .foregroundStyle(Color.blue)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         Text("Code")
                                             .foregroundStyle(Color.blue)

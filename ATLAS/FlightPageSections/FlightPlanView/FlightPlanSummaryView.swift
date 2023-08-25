@@ -1649,24 +1649,18 @@ struct FlightPlanSummaryView: View {
                 .onChange(of: isEditingZFW) { newValue in
                     scrollView.scrollTo("performance", anchor: .top)
                     if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
-                        print("item.unwrappedActual===========\(item.unwrappedActual)")
-                        print("item.unwrappedActualcount===========\(item.unwrappedActual.count)")
                         self.cursorZFW = newValue ? item.unwrappedActual.count : 0
                     }
                 }
                 .onChange(of: isEditingTOW) { newValue in
                     scrollView.scrollTo("performance", anchor: .top)
                     if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "TOW"}) {
-                        print("item.unwrappedActual11===========\(item.unwrappedActual)")
-                        print("item.unwrappedActualcount11===========\(item.unwrappedActual.count)")
                         self.cursorTOW = newValue ? item.unwrappedActual.count : 0
                     }
                 }
                 .onChange(of: isEditingLDW) { newValue in
                     scrollView.scrollTo("performance", anchor: .top)
                     if let item = coreDataModel.dataPerfWeight.first(where: {$0.weight == "LDW"}) {
-                        print("item.unwrappedActual22===========\(item.unwrappedActual)")
-                        print("item.unwrappedActualcount22===========\(item.unwrappedActual.count)")
                         self.cursorLDW = newValue ? item.unwrappedActual.count : 0
                     }
                 }
