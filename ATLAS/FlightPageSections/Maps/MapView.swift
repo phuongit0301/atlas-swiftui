@@ -164,7 +164,8 @@ struct MapViewModal: View {
             MapView(
                 region: modelView.region,
                 lineCoordinates: modelView.lineCoordinates,
-                annotation: modelView.pointsOfInterest
+                annotation: modelView.pointsOfInterest,
+                currentLocation: locationViewModel.currentLocation
             )
         }.onAppear {
             if locationViewModel.authorizationStatus == .notDetermined {
@@ -178,12 +179,14 @@ struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
     let lineCoordinates: [CLLocationCoordinate2D]
     let annotation: [MKAnnotation]
+    let currentLocation: CLLocationCoordinate2D
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
 //        mapView.region = region
         mapView.setRegion(region, animated: true)
-        mapView.showsUserLocation = true
+        
+        mapView.showsUserLocation = false
         mapView.showsScale = true
         
         mapView.addAnnotations(annotation)
@@ -196,7 +199,14 @@ struct MapView: UIViewRepresentable {
         return mapView
     }
     
-    func updateUIView(_ view: MKMapView, context: Context) {}
+    func updateUIView(_ view: MKMapView, context: Context) {
+        if annotation.count != view.annotations.count {
+            view.removeAnnotations(view.annotations)
+            view.addAnnotations(annotation)
+        }
+        view.showsUserLocation = true
+        view.setCenter(currentLocation, animated: true)
+    }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -210,6 +220,12 @@ class Coordinator: NSObject, MKMapViewDelegate {
         self.parent = parent
     }
     
+//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+//        if !mapView.showsUserLocation {
+//            parent.centerCoordinate = mapView.centerCoordinate
+//        }
+//    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // If the annotation is the user dot then return nil
         if annotation is MKPointAnnotation {
@@ -219,7 +235,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         // Create an annotation view
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "business")
         
-        annotationView.image = UIImage(named: "pin.circle.fill")
+        annotationView.image = UIImage(named: "triangle.inset.filled")
         annotationView.canShowCallout = false
         annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         //        annotationView.isHidden = true

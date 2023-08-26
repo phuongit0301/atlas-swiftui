@@ -105,41 +105,44 @@ struct IMapModel: Identifiable, Decodable {
     var coord: String
 }
 
-let DATA_MAP = [
-    IMapModel(name: "KIGOB", coord: "N1306.8 E10051.1"),
-    IMapModel(name: "PASVA", coord: "N0615.5 E10204.5"),
-    IMapModel(name: "NUFFA", coord: "N0253.7 E10338.5"),
-    IMapModel(name: "PIBAP", coord: "N0230.4 E10406.3"),
-    IMapModel(name: "PASPU", coord: "N0159.3 E10406.3"),
-    IMapModel(name: "NYLON", coord: "N0136.9 E10406.4"),
-    IMapModel(name: "POSUB", coord: "N0127.4 E10407.8"),
-    IMapModel(name: "SANAT", coord: "N0107.8 E10359.5"),
-]
+//let DATA_MAP = [
+//    IMapModel(name: "KIGOB", coord: "N1306.8 E10051.1"),
+//    IMapModel(name: "PASVA", coord: "N0615.5 E10204.5"),
+//    IMapModel(name: "NUFFA", coord: "N0253.7 E10338.5"),
+//    IMapModel(name: "PIBAP", coord: "N0230.4 E10406.3"),
+//    IMapModel(name: "PASPU", coord: "N0159.3 E10406.3"),
+//    IMapModel(name: "NYLON", coord: "N0136.9 E10406.4"),
+//    IMapModel(name: "POSUB", coord: "N0127.4 E10407.8"),
+//    IMapModel(name: "SANAT", coord: "N0107.8 E10359.5"),
+//]
 
 class MapViewModel: ObservableObject {
-    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
     @Published var pointsOfInterest = [MKAnnotation]()
+    @StateObject var coreDataModel = CoreDataModelState()
     
     init() {
-        var temp = [MKPointAnnotation]()
-        var temp1 = [CLLocationCoordinate2D]()
+        var pointAnnotation = [MKPointAnnotation]()
+        var locationCoordinate = [CLLocationCoordinate2D]()
+        let dataMap = coreDataModel.readDataMapList()
         
-        for item in DATA_MAP {
-            let coord = convertCoordinates(item.coord)
+        for item in dataMap {
             let annotation = MKPointAnnotation()
-            annotation.title = item.name
+            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+            annotation.title = item.title
             annotation.coordinate = coord
             
-            temp.append(annotation)
-            temp1.append(coord)
+            pointAnnotation.append(annotation)
+            locationCoordinate.append(coord)
         }
-        self.lineCoordinates = temp1
-        self.pointsOfInterest = temp
+        
+        self.lineCoordinates = locationCoordinate
+        self.pointsOfInterest = pointAnnotation
     }
 }
 
-func convertCoordinates(_ coordinateString: String) -> CLLocationCoordinate2D {
+func convertCoordinates(_ coordinateString: String) -> [String: String] {
     let components = coordinateString.components(separatedBy: " ")
     
     if components.count == 2 {
@@ -163,26 +166,31 @@ func convertCoordinates(_ coordinateString: String) -> CLLocationCoordinate2D {
             let decimalLatitude = String(format: "%.6f", decimalLat)
             let decimalLongitude = String(format: "%.6f", decimalLon)
             
-            return CLLocationCoordinate2D(latitude: (decimalLatitude as NSString).doubleValue, longitude: (decimalLongitude as NSString).doubleValue)
+            return ["latitude": decimalLatitude, "longitude": decimalLongitude]
+//            return CLLocationCoordinate2D(latitude: (decimalLatitude as NSString).doubleValue, longitude: (decimalLongitude as NSString).doubleValue)
         }
     }
-    
-    return CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708)
+    return ["latitude": "0", "longitude": "0"]
+//    return CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var authorizationStatus: CLAuthorizationStatus
+    @Published var currentLocation: CLLocationCoordinate2D
 
     private let locationManager: CLLocationManager
 
     override init() {
         locationManager = CLLocationManager()
+        currentLocation = CLLocationCoordinate2D()
         authorizationStatus = locationManager.authorizationStatus
 
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+        
+        getCurrentLocation()
     }
 
     func requestPermission() {
@@ -191,5 +199,12 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
+    }
+    
+    func getCurrentLocation() {
+        let lat = locationManager.location?.coordinate.latitude ?? 0
+        let log = locationManager.location?.coordinate.longitude ?? 0
+        currentLocation.latitude = lat
+        currentLocation.longitude = log
     }
 }

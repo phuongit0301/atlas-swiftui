@@ -47,11 +47,10 @@ struct EnrouteModalWheelTime: View {
 }
 
 // for afl: 2 wheel - A|B - A from 0 to 5, B from 0 to 90, increments of 10 (you can refer to ModalPickerMultiple for reference)
-// todo check default value can render if the selection is ""
 struct EnrouteModalWheelAfl: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
-    var defaultValue: String
+    @Binding var defaultValue: String
     @State var itemsA: ClosedRange<Int> = 0...5
     @State var itemsB: ClosedRange<Int> = 0...9
     @State private var selectionA = 0
@@ -109,7 +108,6 @@ struct EnrouteModalWheelAfl: View {
 }
 
 // for oat: 2 digit wheel A|B, - A from -9 to 9, B from 0 to 9.
-// todo check the modal split if correct
 struct EnrouteModalWheelOat: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
@@ -167,13 +165,12 @@ struct EnrouteModalWheelOat: View {
 }
 
 // for awind: 6 digit wheel A|B|C|D|E|F|G - A from 0 to 3, B from 0 to 6, C from 0 to 9, D,E,F,G each from 0 to 9
-// todo check default value can render if the selection is ""
 struct EnrouteModalWheelAWind: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
-    var defaultValue: String
+    @Binding var defaultValue: String
     @State var itemsA: ClosedRange<Int> = 0...3
-    @State var itemsB: ClosedRange<Int> = 0...6
+    @State var itemsB: ClosedRange<Int> = 0...9
     @State var itemsC: ClosedRange<Int> = 0...9
     @State var itemsD: ClosedRange<Int> = 0...9
     @State var itemsE: ClosedRange<Int> = 0...9

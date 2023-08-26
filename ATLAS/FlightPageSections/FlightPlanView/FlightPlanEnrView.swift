@@ -67,12 +67,14 @@ struct FlightPlanEnrView: View {
     
     @State var isShowAfl = false
     @State private var selectionOutputAfl = ""
+    @State private var selectionDefaultAfl = ""
     
     @State var isShowOat = false
     @State private var selectionOutputOat = ""
     
     @State var isShowAwind = false
     @State private var selectionOutputAwind = ""
+    @State private var selectionDefaultAwind = ""
     
     @State var isShowAfrm = false
     @State private var selectionOutputAfrm = ""
@@ -378,15 +380,15 @@ struct FlightPlanEnrView: View {
                                                         Text(row.unwrappedZtm).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         
                                                         HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: index).fixedSize().id(UUID())
+                                                            EnrouteButtonTimeStepper(onToggle: onEta, value: row.unwrappedEta, index: .constant(index)).fixedSize().id(UUID())
                                                         }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         
                                                         HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: index).fixedSize().id(UUID())
+                                                            EnrouteButtonTimeStepper(onToggle: onAta, value: row.unwrappedAta, index: .constant(index)).fixedSize().id(UUID())
                                                         }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         HStack {
                                                             if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: index).fixedSize().id(UUID())
+                                                                EnrouteButtonTimeStepper(onToggle: onAfl, value: row.unwrappedAfl, index: .constant(index)).fixedSize().id(UUID())
                                                             } else {
                                                                 Text(row.unwrappedAfl).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
                                                             }
@@ -394,7 +396,7 @@ struct FlightPlanEnrView: View {
                                                         
                                                         HStack {
                                                             if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: index).fixedSize().id(UUID())
+                                                                EnrouteButtonTimeStepper(onToggle: onOat, value: row.unwrappedOat, index: .constant(index)).fixedSize().id(UUID())
                                                             } else {
                                                                 Text(row.unwrappedOat).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
                                                             }
@@ -404,7 +406,7 @@ struct FlightPlanEnrView: View {
                                                         
                                                         HStack {
                                                             if index >= getTocIndex() {
-                                                                EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: index).fixedSize().id(UUID())
+                                                                EnrouteButtonTimeStepper(onToggle: onAwind, value: row.unwrappedAwind, index: .constant(index)).fixedSize().id(UUID())
                                                             } else {
                                                                 Text(row.unwrappedAwind).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.blue)
                                                             }
@@ -420,7 +422,7 @@ struct FlightPlanEnrView: View {
                                                         Text(row.unwrappedZfrq).frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         
                                                         HStack {
-                                                            EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: index).fixedSize().id(UUID())
+                                                            EnrouteButtonTimeStepper(onToggle: onAfrm, value: row.unwrappedAfrm, index: .constant(index)).fixedSize().id(UUID())
                                                         }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         
                                                     }.font(.system(size: 15))
@@ -496,7 +498,7 @@ struct FlightPlanEnrView: View {
                 
             }
             .formSheet(isPresented: $isShowAfl) {
-                EnrouteModalWheelAfl(isShowing: $isShowAfl, selectionInOut: $selectionOutputAfl, defaultValue: waypointsTableDefault[modalIndex].unwrappedAfl)
+                EnrouteModalWheelAfl(isShowing: $isShowAfl, selectionInOut: $selectionOutputAfl, defaultValue: $selectionDefaultAfl)
             }
             .onChange(of: selectionOutputAfl) { value in
                 waypointsTable[modalIndex].afl = value
@@ -510,7 +512,7 @@ struct FlightPlanEnrView: View {
                 updateValues(editedIndex: modalIndex)
             }
             .formSheet(isPresented: $isShowAwind) {
-                EnrouteModalWheelAWind(isShowing: $isShowAwind, selectionInOut: $selectionOutputAwind, defaultValue: waypointsTableDefault[modalIndex].unwrappedAwind)
+                EnrouteModalWheelAWind(isShowing: $isShowAwind, selectionInOut: $selectionOutputAwind, defaultValue: $selectionDefaultAwind)
             }
             .onChange(of: selectionOutputAwind) { value in
                 waypointsTable[modalIndex].awind = value
@@ -546,7 +548,8 @@ struct FlightPlanEnrView: View {
     
     func onAfl(_ index: Int) {
         self.modalIndex = index
-        self.selectionOutputAfl = waypointsTable[modalIndex].unwrappedAfl
+        self.selectionOutputAfl = waypointsTable[index].unwrappedAfl
+        self.selectionDefaultAfl = waypointsTable[index].unwrappedPfl
         self.isShowAfl.toggle()
     }
     
@@ -559,6 +562,7 @@ struct FlightPlanEnrView: View {
     func onAwind(_ index: Int) {
         self.modalIndex = index
         self.selectionOutputAwind = waypointsTable[modalIndex].unwrappedAwind
+        self.selectionDefaultAwind = waypointsTable[modalIndex].unwrappedFwind
         self.isShowAwind.toggle()
     }
     

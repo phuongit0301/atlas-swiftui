@@ -493,12 +493,18 @@ struct IPerfDataResponseModel: Decodable {
     var limLDW: String?
 }
 
+struct IWaypoints: Decodable {
+    var name: String
+    var coord: String
+}
+
 struct ISummaryDataResponseModel: Decodable {
     var routeNo: String?
     var route: String?
     var depRwy: String?
     var arrRwy: String?
     var levels: String?
+    var waypoints: [IWaypoints]
 }
 
 struct IEnrouteDataResponseModel: Decodable {

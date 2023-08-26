@@ -265,6 +265,12 @@
         <attribute name="weather" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
+    <entity name="Map" representedClassName="WaypointMapList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
         <attribute name="arrMetar" optional="YES" attributeType="String"/>

@@ -10,7 +10,7 @@ import SwiftUI
 struct EnrouteButtonTimeStepper: View {
     @State var onToggle: (_ index: Int) -> Void
     @State var value: String = "0000"
-    @State var index: Int = 0
+    @Binding var index: Int
     
     var body: some View {
         Button(action: { onToggle(index) }, label: {

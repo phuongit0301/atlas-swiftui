@@ -176,57 +176,7 @@ class CoreDataModelState: ObservableObject {
                     
                     if let routeData = data?.routeData {
                         self.initDataSummaryRoute(routeData)
-                    }
-                    
-                    if let perfData = data?.perfData {
-                        self.initDataPerfData(perfData)
-                        
-                        self.initDataPerfInfo(perfData)
-                        
-                        self.dataPerfWeight = self.readPerfWeight()
-                        
-                        self.initDataPerfWeight(perfData)
-                    }
-                    
-                    if let fuelData = data?.fuelData {
-                        self.initDataFuelList(fuelData)
-                    }
-                    
-                    if let altnData = data?.altnData {
-                        self.dataAltnList = self.readAltnList()
-                        self.initDataAltn(altnData)
-                    }
-                    
-                    if let notamsData = data?.notamsData {
-                        self.initDataNotams(notamsData)
-                    }
-                    
-                    if let metarTafData = data?.metarTafData {
-                        self.initDataMetarTaf(metarTafData)
-                        self.initDataAltnTaf(metarTafData)
-                    }
-                    if let historicalDelays = response?.historicalDelays {
-                        self.initHistoricalDelays(historicalDelays)
-                    }
-                    
-                    if let projDelays = response?.projDelays {
-                        self.initProjDelays(projDelays)
-                    }
-                    
-                    if let taxi = response?.taxi {
-                        self.initProjTaxi(taxi)
-                    }
-                    
-                    if let trackMiles = response?.trackMiles {
-                        self.initTrackMiles(trackMiles)
-                    }
-                    
-                    if let enrWX = response?.enrWX {
-                        self.initEnrWX(enrWX)
-                    }
-                    
-                    if let flightLevel = response?.flightLevel {
-                        self.initFlightLevel(flightLevel)
+                        self.initDataMap(routeData.waypoints)
                     }
                     
                     if let reciprocalRwy = response?.reciprocalRwy {
@@ -616,6 +566,32 @@ class CoreDataModelState: ObservableObject {
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
             
+        }
+    }
+    
+    func initDataMap(_ dataWaypoints: [IWaypoints]) {
+        if dataWaypoints.count > 0 {
+            dataWaypoints.forEach { item in
+                let coord = convertCoordinates(item.coord)
+                let newObj = WaypointMapList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.title = item.name
+                newObj.latitude = coord["latitude"]
+                newObj.longitude = coord["longitude"]
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data maps successfully")
+                    } catch {
+                        print("Failed to perf weight save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
         }
     }
     
@@ -1677,6 +1653,22 @@ class CoreDataModelState: ObservableObject {
             return Int(Double(actual - unwrappedPlanZFW) * Double(unwrappedZfwChange / 1000))
         }
         return 0
+    }
+    
+    func readDataMapList() -> [WaypointMapList] {
+        var data: [WaypointMapList] = []
+        
+        let request: NSFetchRequest<WaypointMapList> = WaypointMapList.fetchRequest()
+        do {
+            let response: [WaypointMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Map List from Core Data.")
+        }
+        
+        return data
     }
     
 //    func checkAndSyncDataFuel() async {

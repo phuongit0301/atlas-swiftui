@@ -149,6 +149,8 @@
 		3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6532A19979700A97ECF /* Collapsible.swift */; };
 		3E5AF65B2A1A5AEE00A97ECF /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65A2A1A5AEE00A97ECF /* Form.swift */; };
 		3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */; };
+		3E63FC562A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63FC542A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift */; };
+		3E63FC572A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63FC552A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -419,6 +421,8 @@
 		3E5AF6532A19979700A97ECF /* Collapsible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collapsible.swift; sourceTree = "<group>"; };
 		3E5AF65A2A1A5AEE00A97ECF /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTab.swift; sourceTree = "<group>"; };
+		3E63FC542A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E63FC552A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -1028,6 +1032,8 @@
 		C56AF5102A565F7200BD07A1 /* FlightPlan */ = {
 			isa = PBXGroup;
 			children = (
+				3E63FC542A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift */,
+				3E63FC552A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift */,
 				3E086D7F2A94957E00BE00AD /* SummaryInfoList+CoreDataClass.swift */,
 				3E086D802A94957E00BE00AD /* SummaryInfoList+CoreDataProperties.swift */,
 				3E4A374B2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift */,
@@ -1458,6 +1464,7 @@
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E086D8E2A94E4C500BE00AD /* EnrouteList+CoreDataProperties.swift in Sources */,
+				3E63FC572A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift in Sources */,
 				3E3FCC262A25E4D1008017FA /* Network.swift in Sources */,
 				3E5AF6542A19979700A97ECF /* Collapsible.swift in Sources */,
 				3EFA5F6D2A4A833C001ED6CF /* ItemListScratchPad.swift in Sources */,
@@ -1506,6 +1513,7 @@
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E766FAD2A5F92FA00B11616 /* PreviousSearchView.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
+				3E63FC562A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift in Sources */,
 				3E4A36CB2A595B4A00027C61 /* FlightPlanList+CoreDataClass.swift in Sources */,
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
