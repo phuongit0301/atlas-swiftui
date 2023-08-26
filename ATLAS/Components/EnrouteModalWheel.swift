@@ -38,7 +38,7 @@ struct EnrouteModalWheelTime: View {
             HStack {
                 DatePicker("", selection: $selection, displayedComponents: [.hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                     .environment(\.locale, Locale(identifier: "en_GB"))
-            }.Print("hour=======\(selection)")
+            }
             Spacer()
         }.onAppear {
             self.selection = selectionOutput

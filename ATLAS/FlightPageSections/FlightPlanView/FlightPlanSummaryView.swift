@@ -522,7 +522,8 @@ struct FlightPlanSummaryView: View {
                             Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
                             Spacer()
                             Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
-                        }.padding()
+                        }.padding(.horizontal)
+                            .padding(.vertical, 8)
                             .background(Color.theme.lightGray1)
                             .cornerRadius(8)
                     }
@@ -783,8 +784,11 @@ struct FlightPlanSummaryView: View {
                             }
                             .frame(minHeight: 65)
                             .listStyle(.insetGrouped)
-                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
+                            .listRowSeparator(.hidden)
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
+                            
+                            Divider()
                             // table body - changes
                             Table(coreDataModel.perfChangesTable) {
                                 TableColumn("ZFW Change") {
@@ -796,8 +800,12 @@ struct FlightPlanSummaryView: View {
                             }
                             .frame(minHeight: 65)
                             .listStyle(.insetGrouped)
-                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))))
+                            .listRowSeparator(.hidden)
                             .scrollDisabled(true)
+                            
+                            Divider()
+                            
                             // table body - weights
                             Table(coreDataModel.dataPerfWeight) {
                                 TableColumn("Weight") {
@@ -849,16 +857,17 @@ struct FlightPlanSummaryView: View {
                             }
                             .frame(minHeight: 185)
                             .listStyle(.insetGrouped)
-                            .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
+                            .listRowInsets((EdgeInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
+                            .listRowSeparator(.hidden)
                             .id("performance")
                         }
                         
                         // MARK: Fuel section
                         Section(header: Text("FUEL").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {
                             // grouped row using hstack
-                            VStack(alignment: .leading, spacing: 0) {
                                 //fuel info table body
+                            VStack(alignment: .leading, spacing: 0) {
                                 Table(coreDataModel.dataFuelTableList) {
                                     TableColumn("") {
                                         Text($0.unwrappedFirstColumn).foregroundColor(.black).font(.system(size: 15, weight: .medium))
@@ -875,13 +884,15 @@ struct FlightPlanSummaryView: View {
                                     }.width((proxy.size.width - 600) / 3)
                                     TableColumn("Policy / Reason") {
                                         Text($0.unwrappedPolicyReason).foregroundColor(.black).font(.system(size: 17, weight: .regular))
-                                    }.width((proxy.size.width - 300) / 3)
+                                    }.width((proxy.size.width - 380) / 3)
                                 }
                                 .frame(minHeight: 390)
-                                .scrollDisabled(true)
-                            }.listRowSeparator(.hidden)
                                 .listStyle(.insetGrouped)
-                                .listRowInsets((EdgeInsets(.init(top: 10, leading: 0, bottom: 0, trailing: 0))))
+                                .listRowSeparator(.hidden)
+                                .listRowInsets((EdgeInsets(.init(top: 10, leading: 16, bottom: 10, trailing: 0))))
+                                .scrollDisabled(true)
+                            }.frame(width: proxy.size.width - 32)
+                                .listRowSeparator(.hidden)
                             
                             VStack(alignment: .leading, spacing: 0) {
                                 // extra fuel section
@@ -892,7 +903,7 @@ struct FlightPlanSummaryView: View {
                                             Text("(I) Pilot Extra Fuel")
                                                 .frame(width: 420, alignment: .leading)
                                                 .font(.system(size: 15, weight: .medium))
-                                                .padding(.leading, 16)
+                                                .padding(.leading, 26)
                                             Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
                                                 .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
                                                 .font(.system(size: 17, weight: .regular))
@@ -959,7 +970,7 @@ struct FlightPlanSummaryView: View {
                                                 .background(Color.theme.azure.opacity(0.12))
                                                 .frame(width: proxy.size.width)
                                             
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
                                         }.font(.system(size: 15, weight: .medium))
                                         
                                         Group {
@@ -1011,7 +1022,7 @@ struct FlightPlanSummaryView: View {
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
                                             // taxi row
                                             HStack(alignment: .center) {
                                                 HStack {
@@ -1060,7 +1071,8 @@ struct FlightPlanSummaryView: View {
                                                     }
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
-                                            Divider()
+                                            
+                                            Divider().frame(width: proxy.size.width - 50)
                                             
                                             // flight level row
                                             HStack(alignment: .center) {
@@ -1121,7 +1133,7 @@ struct FlightPlanSummaryView: View {
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
                                             // track shortening row
                                             HStack(alignment: .center) {
                                                 HStack {
@@ -1174,7 +1186,7 @@ struct FlightPlanSummaryView: View {
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
                                             // enr wx row
                                             HStack(alignment: .center) {
                                                 HStack {
@@ -1227,7 +1239,8 @@ struct FlightPlanSummaryView: View {
                                             }.padding()
                                                 .frame(width: proxy.size.width - 50)
                                             
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
+                                            
                                         }.font(.system(size: 15, weight: .regular))
                                         
                                         Group {
@@ -1280,7 +1293,8 @@ struct FlightPlanSummaryView: View {
                                                 
                                                 //                                                FieldString(name: "remarkReciprocalRwy", field: coreDataModel.dataFuelExtra.unwrappedRemarkReciprocalRwy).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading).disabled(!includedReciprocalRwy)
                                             }.padding()
-                                            Divider()
+                                            
+                                            Divider().frame(width: proxy.size.width - 50)
                                             // zfw change row
                                             //                                            HStack(alignment: .center) {
                                             //                                                HStack {
@@ -1376,7 +1390,7 @@ struct FlightPlanSummaryView: View {
                                                 //                                                FieldString(name: "remarkOthers", field: coreDataModel.dataFuelExtra.unwrappedRemarkOthers).frame(width: calculateWidth(proxy.size.width - 430, 3), alignment: .leading)
                                                 //                                                    .disabled(!includedOthers)
                                             }.padding()
-                                            Divider()
+                                            Divider().frame(width: proxy.size.width - 50)
                                         }.frame(width: proxy.size.width - 50)
                                             .font(.system(size: 15, weight: .regular))
                                         
@@ -1413,7 +1427,7 @@ struct FlightPlanSummaryView: View {
                                             .frame(width: proxy.size.width)
                                     } // end VStack
                                 }// end collapsible
-                            }.listRowInsets((EdgeInsets(.init(top: 0, leading: -16, bottom: 0, trailing: 0))))
+                            }.listRowInsets((EdgeInsets(.init(top: 0, leading: 50, bottom: 0, trailing: 50))))
                                 .id("extraFuel")
                             
                             VStack(alignment: .leading, spacing: 0) {
@@ -1422,6 +1436,7 @@ struct FlightPlanSummaryView: View {
                                         Text("Fuel in Tanks (G + H + I)")
                                             .frame(width: 420, alignment: .leading)
                                             .font(.system(size: 15, weight: .medium))
+                                            .padding(.leading, 26)
                                         Text("\(fuelInTanksTime)")
                                             .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
                                             .font(.system(size: 17, weight: .regular))
@@ -1431,12 +1446,12 @@ struct FlightPlanSummaryView: View {
                                         Text("")
                                             .frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
                                             .font(.system(size: 17, weight: .regular))
-                                    }.padding(.vertical)
+                                    }
                                 }.frame(width: proxy.size.width)
                             }.listRowBackground(Color.theme.sonicSilver.opacity(0.12))
-                                .listRowInsets(EdgeInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)))
+                                .listRowSeparator(.hidden)
                             
-                        }.listRowInsets(EdgeInsets(.init(top: 0, leading: 24, bottom: 0, trailing: 0)))
+                        }
                         
                         // ALTN section
                         Section(header: Text("ALTN").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))) {

@@ -199,6 +199,7 @@
 		3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */; };
 		3ECD577D2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD577C2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift */; };
 		3ECD57942A98E19300C5FEF3 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD57932A98E19300C5FEF3 /* MapViewModel.swift */; };
+		3ECD57962A98F83C00C5FEF3 /* ListViewSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD57952A98F83C00C5FEF3 /* ListViewSeparator.swift */; };
 		3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED7546F2A11E1BC003072A1 /* Assets.xcassets */; };
 		3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */; };
 		3ED7547D2A11E1BD003072A1 /* ATLASTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7547C2A11E1BD003072A1 /* ATLASTests.swift */; };
@@ -465,6 +466,7 @@
 		3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3ECD577C2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalWheel.swift; sourceTree = "<group>"; };
 		3ECD57932A98E19300C5FEF3 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		3ECD57952A98F83C00C5FEF3 /* ListViewSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewSeparator.swift; sourceTree = "<group>"; };
 		3ED754682A11E1BA003072A1 /* ATLAS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATLAS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED7546F2A11E1BC003072A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 				3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */,
 				3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */,
 				3E086D712A945DEA00BE00AD /* Helper.swift */,
+				3ECD57952A98F83C00C5FEF3 /* ListViewSeparator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1347,6 +1350,7 @@
 				3EB99CD12A4BD52A0091BC08 /* ScratchPadEditForm.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E086D6F2A944CF200BE00AD /* FlightSummaryView.swift in Sources */,
+				3ECD57962A98F83C00C5FEF3 /* ListViewSeparator.swift in Sources */,
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3ECD577D2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,

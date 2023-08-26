@@ -27,7 +27,7 @@ struct MapModal: View {
                 .background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
-            MapView()
+            MapViewModal()
         }
     }
 }

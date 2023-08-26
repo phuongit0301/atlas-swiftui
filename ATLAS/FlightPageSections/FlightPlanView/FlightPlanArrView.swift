@@ -143,7 +143,8 @@ struct FlightPlanArrView: View {
                             Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
                             Spacer()
                             Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
-                        }.padding()
+                        }.padding(.horizontal)
+                            .padding(.vertical, 8)
                         .background(Color.theme.lightGray1)
                             .cornerRadius(8)
                     }

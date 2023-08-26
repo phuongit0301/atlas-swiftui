@@ -81,13 +81,14 @@ struct FlightPlanEnrView: View {
     
     var body: some View {
         GeometryReader { proxy in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .center) {
                     HStack {
                         Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
                         Spacer()
                         Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
-                    }.padding()
+                    }.padding(.horizontal)
+                        .padding(.vertical, 8)
                     .background(Color.theme.lightGray1)
                         .cornerRadius(8)
                 }
@@ -123,8 +124,7 @@ struct FlightPlanEnrView: View {
                         }
                     }
                     
-                }.padding(.vertical)
-                    .padding(.leading, 30)
+                }.padding(.leading, 30)
                     .padding(.trailing, 22)
                 
                 //fixed section as a list - todo @phuong adjust height of list
@@ -264,10 +264,12 @@ struct FlightPlanEnrView: View {
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundStyle(Color.black)
                                                 .frame(width: 65, alignment: .leading)
+                                                .padding(.leading, 12)
                                             Text("GSP")
-                                                .font(.system(size: 15, weight: .medium))
+                                                .font(.system(size: 12, weight: .medium))
                                                 .foregroundStyle(Color.black)
                                                 .frame(width: 65, alignment: .leading)
+                                                .padding(.leading, 8)
                                         }
                                         
                                     }
@@ -311,8 +313,12 @@ struct FlightPlanEnrView: View {
                         
                     }.background(Color.white)
                     .roundedCorner(12, corners: [.topLeft, .topRight])
+                    
+                    Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }.zIndex(10)
-                    .padding()
+                    .padding(.horizontal)
+                
                 //scrollable waypoints section as a list
                 if !isCollapse {
                     List {
@@ -359,7 +365,7 @@ struct FlightPlanEnrView: View {
                                                     }
                                                     Spacer()
                                                 }
-                                            }.padding(.leading, isEdit ? 0 : 38).frame(height: 44)
+                                            }.padding(.leading, isEdit ? 0 : 30).frame(height: 44)
                                         } else {
                                             VStack(spacing: 0) {
                                                 HStack {
@@ -404,7 +410,7 @@ struct FlightPlanEnrView: View {
                                                             }
                                                         }.frame(width: calculate(proxy.size.width), alignment: .leading)
                                                         
-                                                        Text(row.unwrappedTas).frame(width: 65, alignment: .leading)
+                                                        Text(row.unwrappedTas).frame(width: 65, alignment: .leading).padding(.leading, 12)
                                                     }.font(.system(size: 15))
                                                         .fontWeight(.regular)
                                                     Group {
@@ -430,7 +436,7 @@ struct FlightPlanEnrView: View {
                                                         Text("\(row.unwrappedImt)").frame(width: 65, alignment: .leading)
                                                         Text("\(row.unwrappedPdn)").frame(width: 65, alignment: .leading)
                                                         Text("\(row.unwrappedFwind)").frame(width: calculate(proxy.size.width), alignment: .leading)
-                                                        Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading)
+                                                        Text("\(row.unwrappedGsp)").frame(width: 65, alignment: .leading).padding(.leading, 12)
                                                     }.font(.system(size: 15))
                                                         .fontWeight(.regular)
                                                     
@@ -441,10 +447,11 @@ struct FlightPlanEnrView: View {
                                                     }.font(.system(size: 15))
                                                         .fontWeight(.regular)
                                                 }
-                                            }.frame(height: index == 0 ? 96 : 88)
+                                            }.frame(height: index == 0 ? 104 : 88)
                                         }// end else condition
                                     }
-                                }.padding(.leading, (isEdit && row.isSkipped) ? 28 : 0)
+                                }.padding(.leading, (isEdit && row.isSkipped) ? 20 : 0)
+                                    .padding(.top, index == 0 ? 8 : 0)
                                 // end HStack
                                 
                                 Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
@@ -460,7 +467,7 @@ struct FlightPlanEnrView: View {
                     }
                     .frame(width: proxy.size.width)
                     .listRowSeparator(.hidden)
-                    .padding(.top, -64)
+                    .padding(.top, -56)
                 }//end if
                 
             }
@@ -785,7 +792,6 @@ struct FlightPlanEnrView: View {
         return formatter.string(from: date)
     }
     func updateValues(editedIndex: Int) {
-        print("12313123")
         let dateFormatterTime = DateFormatter()
         dateFormatterTime.dateFormat = "HHmm"
         
