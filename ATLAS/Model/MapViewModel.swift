@@ -99,33 +99,30 @@ struct IMapModel: Identifiable, Decodable {
 //    IMapModel(name: "SANAT", coord: "N0107.8 E10359.5"),
 //]
 
-class MapViewModel: ObservableObject {
-    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
-    @Published var lineCoordinates = [CLLocationCoordinate2D]()
-    @Published var pointsOfInterest = [MKAnnotation]()
-    @ObservedObject var coreDataModel = CoreDataModelState()
-    
-    init() {
-        coreDataModel.loadingFlightPlan = true
-        var pointAnnotation = [MKPointAnnotation]()
-        var locationCoordinate = [CLLocationCoordinate2D]()
-        let dataMap = coreDataModel.readDataMapList()
-        
-        for item in dataMap {
-            let annotation = MKPointAnnotation()
-            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            annotation.title = item.title
-            annotation.coordinate = coord
-            
-            pointAnnotation.append(annotation)
-            locationCoordinate.append(coord)
-        }
-        
-        self.lineCoordinates = locationCoordinate
-        self.pointsOfInterest = pointAnnotation
-        coreDataModel.loadingFlightPlan = false
-    }
-}
+//class MapViewModel: ObservableObject {
+//    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
+//    @Published var lineCoordinates = [CLLocationCoordinate2D]()
+//    @Published var pointsOfInterest = [MKAnnotation]()
+//    @ObservedObject var coreDataModel: CoreDataModelState
+//    
+//    init() {
+//        var pointAnnotation = [MKPointAnnotation]()
+//        var locationCoordinate = [CLLocationCoordinate2D]()
+//        
+//        for item in coreDataModel.dataMap {
+//            let annotation = MKPointAnnotation()
+//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+//            annotation.title = item.title
+//            annotation.coordinate = coord
+//            
+//            pointAnnotation.append(annotation)
+//            locationCoordinate.append(coord)
+//        }
+//        
+//        self.lineCoordinates = locationCoordinate
+//        self.pointsOfInterest = pointAnnotation
+//    }
+//}
 
 func convertCoordinates(_ coordinateString: String) -> [String: String] {
     let components = coordinateString.components(separatedBy: " ")

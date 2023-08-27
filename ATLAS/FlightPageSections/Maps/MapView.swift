@@ -156,23 +156,18 @@ import MapKit
 //
 
 struct MapViewModal: View {
-    @ObservedObject var modelView = MapViewModel()
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
 
     var body: some View {
         VStack {
-            if coreDataModel.loadingFlightPlan {
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
-            } else {
-                MapView(
-                    region: modelView.region,
-                    lineCoordinates: modelView.lineCoordinates,
-                    annotation: modelView.pointsOfInterest,
-                    currentLocation: locationViewModel.currentLocation
-                )
-            }
-        }.Print("coreDataModel.loadingFlightPlan========\(coreDataModel.loadingFlightPlan)")
+            MapView(
+                region: coreDataModel.region,
+                lineCoordinates: coreDataModel.lineCoordinates,
+                annotation: coreDataModel.pointsOfInterest,
+                currentLocation: locationViewModel.currentLocation
+            )
+        }
     }
 }
 

@@ -316,8 +316,7 @@ struct FlightPlanEnrView: View {
                     }.background(Color.white)
                     .roundedCorner(12, corners: [.topLeft, .topRight])
                     
-                    Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(maxWidth: .infinity).padding(.leading, -50).padding(.trailing, -50)
-                        .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    Rectangle().fill(Color.theme.arsenic.opacity(0.36)).frame(height: 0.5).frame(width: proxy.size.width - 32)
                 }.zIndex(10)
                     .padding(.horizontal)
                 

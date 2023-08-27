@@ -6,6 +6,8 @@
 //
 
 import CoreData
+import SwiftUI
+import MapKit
 
 class PersistenceController: ObservableObject {
     static let shared = PersistenceController()
@@ -58,7 +60,6 @@ class CoreDataModelState: ObservableObject {
     
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
-    @Published var loadingFlightPlan: Bool = false
     @Published var tagList: [TagList] = []
     @Published var aircraftArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []
@@ -155,6 +156,13 @@ class CoreDataModelState: ObservableObject {
     
     @Published var dataAISearch: [AISearchList] = []
     @Published var dataAISearchFavorite: [AISearchList] = []
+    
+    // For Map View
+    @Published var dataMap: [WaypointMapList] = []
+    
+    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
+    @Published var lineCoordinates = [CLLocationCoordinate2D]()
+    @Published var pointsOfInterest = [MKAnnotation]()
     
     @MainActor
     func checkAndSyncData() async {
@@ -266,6 +274,8 @@ class CoreDataModelState: ObservableObject {
             self.dataFPEnroute = self.readEnrouteList()
             //        readFlightPlan()
             self.readSummaryInfo()
+            self.dataMap = self.readDataMapList()
+            self.prepareDataForMap()
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -1721,6 +1731,24 @@ class CoreDataModelState: ObservableObject {
         }
         
         return data
+    }
+    
+    func prepareDataForMap() {
+        var pointAnnotation = [MKPointAnnotation]()
+        var locationCoordinate = [CLLocationCoordinate2D]()
+        
+        for item in self.dataMap {
+            let annotation = MKPointAnnotation()
+            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+            annotation.title = item.title
+            annotation.coordinate = coord
+            
+            pointAnnotation.append(annotation)
+            locationCoordinate.append(coord)
+        }
+        
+        self.lineCoordinates = locationCoordinate
+        self.pointsOfInterest = pointAnnotation
     }
     
 //    func checkAndSyncDataFuel() async {
