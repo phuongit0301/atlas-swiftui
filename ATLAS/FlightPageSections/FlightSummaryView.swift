@@ -125,8 +125,8 @@ struct FlightSummaryView: View {
                             .foregroundStyle(Color.black)
                     }.fixedSize(horizontal: true, vertical: false)
                     
-                }.padding(.vertical)
-                    .padding(.horizontal, 30)
+                }.padding(.leading, 30)
+                    .padding(.trailing, 16)
                 // End header
                 List {
                     Section(header:
@@ -381,6 +381,7 @@ struct FlightSummaryView: View {
                         }
                     }// END CREW
                 }.scrollContentBackground(.hidden)
+                    .padding(.top, -8)
                 #if isReference
                     .background(.white)
                 #endif

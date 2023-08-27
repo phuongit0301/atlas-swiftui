@@ -137,7 +137,7 @@ struct FlightPlanArrView: View {
     var body: some View {
         ScrollViewReader { scrollView in
             GeometryReader { proxy in
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 12) {
                     HStack(alignment: .center) {
                         HStack {
                             Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
@@ -155,7 +155,7 @@ struct FlightPlanArrView: View {
                         Text("Arrival")
                             .font(.system(size: 20, weight: .semibold))
                             .padding(.leading, 30)
-                    }.padding(.vertical)
+                    }
                     
                     //scrollable outer list section
                     List {
@@ -840,7 +840,7 @@ struct FlightPlanArrView: View {
                                 .padding(.bottom, 5)
                             }.id("arrEntries")
                         }
-                    }
+                    }.padding(.top, -8)
                     
                     ZStack {
                         VStack {

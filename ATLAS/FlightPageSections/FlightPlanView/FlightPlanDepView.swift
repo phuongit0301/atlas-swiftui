@@ -148,7 +148,7 @@ struct FlightPlanDepView: View {
         
         ScrollViewReader { scrollView in
             GeometryReader { proxy in
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 12) {
                     HStack(alignment: .center) {
                         HStack {
                             Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
@@ -165,7 +165,7 @@ struct FlightPlanDepView: View {
                         Text("Departure")
                             .font(.system(size: 20, weight: .semibold))
                             .padding(.leading, 30)
-                    }.padding(.vertical)
+                    }
 
                     //scrollable outer list section
                     List {
@@ -884,7 +884,7 @@ struct FlightPlanDepView: View {
                         }.onChange(of: coreDataModel.dataDepartureEntries) { _ in
                             coreDataModel.readDepartureEntries()
                         }.id("entries")
-                    }
+                    }.padding(.top, -8)
                     
                     ZStack {
                         VStack {

@@ -1493,7 +1493,7 @@ struct FlightPlanSummaryView: View {
                             .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                         }
-                    }
+                    }.padding(.top, -8)
                     
                     if isEditingArrDelays || isEditingTaxi || isEditingFlightLevel || isEditingTrackShortening || isEditingEnrWx || isEditingReciprocalRwy || isEditingOthers || isEditingZFW || isEditingTOW || isEditingLDW {
                         ZStack {

@@ -28,7 +28,7 @@ struct FlightPlanNOTAMView: View {
     @State private var selectionArr = ""
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .center) {
                 HStack {
                     Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
@@ -58,7 +58,8 @@ struct FlightPlanNOTAMView: View {
                         .font(.system(size: 17, weight: .regular))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }.fixedSize()
-            }.padding()
+            }.padding(.vertical, 7)
+                .padding(.trailing, 16)
             
             //scrollable outer list section
             List {
@@ -211,7 +212,7 @@ struct FlightPlanNOTAMView: View {
                     }
                 }).listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
-            }
+            }.padding(.top, -8)
         }
         .onChange(of: selectionArr) { newValue in
             var temp = [NotamsDataList]()
