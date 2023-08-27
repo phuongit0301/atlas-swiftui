@@ -151,6 +151,7 @@
 		3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */; };
 		3E63FC562A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63FC542A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift */; };
 		3E63FC572A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63FC552A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift */; };
+		3E63FC5A2A9AD172004BD54B /* MagicMountain.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* MagicMountain.plist */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -423,6 +424,7 @@
 		3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTab.swift; sourceTree = "<group>"; };
 		3E63FC542A9A229D004BD54B /* WaypointMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E63FC552A9A229D004BD54B /* WaypointMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E63FC592A9AD172004BD54B /* MagicMountain.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MagicMountain.plist; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -813,6 +815,14 @@
 			path = SectorInfo;
 			sourceTree = "<group>";
 		};
+		3E63FC582A9AD144004BD54B /* Park Information */ = {
+			isa = PBXGroup;
+			children = (
+				3E63FC592A9AD172004BD54B /* MagicMountain.plist */,
+			);
+			path = "Park Information";
+			sourceTree = "<group>";
+		};
 		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,6 +911,7 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
+				3E63FC582A9AD144004BD54B /* Park Information */,
 				3E086D972A9501C200BE00AD /* ATLAS.entitlements */,
 				3E4A36C02A57B3B000027C61 /* Service */,
 				3E3FCC532A2C198A008017FA /* MultipleScene */,
@@ -1288,6 +1299,7 @@
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3E8250632A1BAE0A008F616D /* Inter-Bold.ttf in Resources */,
 				3E8250612A1BAE0A008F616D /* Inter-Thin.ttf in Resources */,
+				3E63FC5A2A9AD172004BD54B /* MagicMountain.plist in Resources */,
 				3E8250602A1BAE0A008F616D /* Inter-Black.ttf in Resources */,
 				3E8250652A1BAE0A008F616D /* Inter-Regular.ttf in Resources */,
 				3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */,
@@ -1709,7 +1721,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = ATLAS/ATLAS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
@@ -1724,6 +1736,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1750,7 +1763,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = ATLAS/ATLAS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
@@ -1765,6 +1778,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

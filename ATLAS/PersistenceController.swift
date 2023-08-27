@@ -179,6 +179,57 @@ class CoreDataModelState: ObservableObject {
                         self.initDataMap(routeData.waypoints)
                     }
                     
+                    if let perfData = data?.perfData {
+                        self.initDataPerfData(perfData)
+                        
+                        self.initDataPerfInfo(perfData)
+                        
+                        self.dataPerfWeight = self.readPerfWeight()
+                        
+                        self.initDataPerfWeight(perfData)
+                    }
+                    
+                    if let fuelData = data?.fuelData {
+                        self.initDataFuelList(fuelData)
+                    }
+                    
+                    if let altnData = data?.altnData {
+                        self.dataAltnList = self.readAltnList()
+                        self.initDataAltn(altnData)
+                    }
+                    
+                    if let notamsData = data?.notamsData {
+                        self.initDataNotams(notamsData)
+                    }
+                    
+                    if let metarTafData = data?.metarTafData {
+                        self.initDataMetarTaf(metarTafData)
+                        self.initDataAltnTaf(metarTafData)
+                    }
+                    if let historicalDelays = response?.historicalDelays {
+                        self.initHistoricalDelays(historicalDelays)
+                    }
+                    
+                    if let projDelays = response?.projDelays {
+                        self.initProjDelays(projDelays)
+                    }
+                    
+                    if let taxi = response?.taxi {
+                        self.initProjTaxi(taxi)
+                    }
+                    
+                    if let trackMiles = response?.trackMiles {
+                        self.initTrackMiles(trackMiles)
+                    }
+                    
+                    if let enrWX = response?.enrWX {
+                        self.initEnrWX(enrWX)
+                    }
+                    
+                    if let flightLevel = response?.flightLevel {
+                        self.initFlightLevel(flightLevel)
+                    }
+                    
                     if let reciprocalRwy = response?.reciprocalRwy {
                         self.initReciprocalRwy(reciprocalRwy)
                     }

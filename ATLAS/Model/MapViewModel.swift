@@ -7,97 +7,91 @@
 //
 import SwiftUI
 import MapKit
-//
-//class MapViewModel: NSObject, ObservableObject {
-//    
-//    @Published var mapView = MKMapView()
-//    
-//    
-//  
-//    func restrictionsInfo(completion: @escaping ([RestrictionInfo]) -> ()) {
-//        guard let url = URL(string: "https://flightplan.romatsa.ro/init/static/zone_restrictionate_uav.json") else {
-//            fatalError("Unable to get geoJSON") }
-//        
-//        downloadData(fromURL: url) { (returnedData) in
-//            if let data = returnedData {
-//                var geoJson = [MKGeoJSONObject]()
-//                do {
-//                    geoJson = try MKGeoJSONDecoder().decode(data)
-//                } catch {
-//                    fatalError("Unable to decode GeoJSON")
-//                }
-//                
-//                
-//                var restrictionsInfo = [RestrictionInfo]()
-//                for item in geoJson {
-//                    if let feature = item as? MKGeoJSONFeature {
-//                        let propData = feature.properties!
-//                        for geo in feature.geometry {
-//                            if geo is MKPolygon {
-//                                let polygonInfo = try? JSONDecoder.init().decode(RestrictionInfo.self, from: propData)
-//                                restrictionsInfo.append(polygonInfo!)
-//                            }
-//                        }
-//                    }
-//                }
-//                DispatchQueue.main.async {
-//                    completion(restrictionsInfo)
-//                }
-//            }
-//        }
-//    }
-//    
-//    
-//    // Decode GeoJSON from the server
-//    func showRestrictedZones(completion: @escaping ([MKOverlay]) -> ()) {
-//        guard let url = URL(string: "https://flightplan.romatsa.ro/init/static/zone_restrictionate_uav.json") else {
-//            fatalError("Unable to get geoJSON") }
-//        
-//        downloadData(fromURL: url) { (returnedData) in
-//            if let data = returnedData {
-//                var geoJson = [MKGeoJSONObject]()
-//                do {
-//                    geoJson = try MKGeoJSONDecoder().decode(data)
-//                } catch {
-//                    fatalError("Unable to decode GeoJSON")
-//                }
-//
-//                var overlays = [MKOverlay]()
-//                for item in geoJson {
-//                    if let feature = item as? MKGeoJSONFeature {
-//                        let propData = feature.properties!
-//                        for geo in feature.geometry {
-//                            if let polygon = geo as? MKPolygon {
-//                                let polygonInfo = try? JSONDecoder.init().decode(RestrictionInfo.self, from: propData)
-//                                polygon.title = polygonInfo?.zone_id
-//                                overlays.append(polygon)
-//                            }
-//                        }
-//                    }
-//                }
-//                DispatchQueue.main.async {
-//                    completion(overlays)
-//                }
-//            }
-//        }
-//    }
-//    
-//    func downloadData( fromURL url: URL, completion: @escaping (_ data: Data?) -> ()) {
-//        URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            guard
-//                let data = data,
-//                error == nil,
-//                let response = response as? HTTPURLResponse,
-//                response.statusCode >= 200 && response.statusCode < 300 else {
-//                print("Error downloading data.")
-//                completion(nil)
-//                return
-//            }
-//            completion(data)
-//        }
-//        .resume()
-//    }
-//}
+
+class Park {
+  var name: String?
+  var boundary: [CLLocationCoordinate2D] = []
+
+  var midCoordinate = CLLocationCoordinate2D()
+  var overlayTopLeftCoordinate = CLLocationCoordinate2D()
+  var overlayTopRightCoordinate = CLLocationCoordinate2D()
+  var overlayBottomLeftCoordinate = CLLocationCoordinate2D()
+  var overlayBottomRightCoordinate: CLLocationCoordinate2D {
+    return CLLocationCoordinate2D(
+      latitude: overlayBottomLeftCoordinate.latitude,
+      longitude: overlayTopRightCoordinate.longitude)
+  }
+
+  var overlayBoundingMapRect: MKMapRect {
+    let topLeft = MKMapPoint(overlayTopLeftCoordinate)
+    let topRight = MKMapPoint(overlayTopRightCoordinate)
+    let bottomLeft = MKMapPoint(overlayBottomLeftCoordinate)
+
+    return MKMapRect(
+      x: topLeft.x,
+      y: topLeft.y,
+      width: fabs(topLeft.x - topRight.x),
+      height: fabs(topLeft.y - bottomLeft.y))
+  }
+
+  init(filename: String) {
+    guard
+      let properties = Park.plist(filename) as? [String: Any],
+      let boundaryPoints = properties["boundary"] as? [String]
+      else { return }
+
+    midCoordinate = Park.parseCoord(dict: properties, fieldName: "midCoord")
+    overlayTopLeftCoordinate = Park.parseCoord(
+      dict: properties,
+      fieldName: "overlayTopLeftCoord")
+    overlayTopRightCoordinate = Park.parseCoord(
+      dict: properties,
+      fieldName: "overlayTopRightCoord")
+    overlayBottomLeftCoordinate = Park.parseCoord(
+      dict: properties,
+      fieldName: "overlayBottomLeftCoord")
+
+    let cgPoints = boundaryPoints.map { NSCoder.cgPoint(for: $0) }
+    boundary = cgPoints.map { CLLocationCoordinate2D(
+      latitude: CLLocationDegrees($0.x),
+      longitude: CLLocationDegrees($0.y))
+    }
+  }
+
+  static func plist(_ plist: String) -> Any? {
+    guard
+      let filePath = Bundle.main.path(forResource: plist, ofType: "plist"),
+      let data = FileManager.default.contents(atPath: filePath)
+      else { return nil }
+
+    do {
+      return try PropertyListSerialization.propertyList(from: data, options: [], format: nil)
+    } catch {
+      return nil
+    }
+  }
+
+  static func parseCoord(dict: [String: Any], fieldName: String) -> CLLocationCoordinate2D {
+    if let coord = dict[fieldName] as? String {
+      let point = NSCoder.cgPoint(for: coord)
+      return CLLocationCoordinate2D(
+        latitude: CLLocationDegrees(point.x),
+        longitude: CLLocationDegrees(point.y))
+    }
+    return CLLocationCoordinate2D()
+  }
+}
+
+
+class CustomMapOverlay: NSObject, MKOverlay {
+  let coordinate: CLLocationCoordinate2D
+  let boundingMapRect: MKMapRect
+
+  init(park: Park) {
+    boundingMapRect = park.overlayBoundingMapRect
+    coordinate = park.midCoordinate
+  }
+}
 
 struct IMapModel: Identifiable, Decodable {
     var id = UUID()
@@ -172,6 +166,26 @@ func convertCoordinates(_ coordinateString: String) -> [String: String] {
     }
     return ["latitude": "0", "longitude": "0"]
 //    return CLLocationCoordinate2D(latitude: 0, longitude: 0)
+}
+
+class ParkMapOverlayView: MKOverlayRenderer {
+  let overlayImage: UIImage
+
+  // 1
+  init(overlay: MKOverlay, overlayImage: UIImage) {
+    self.overlayImage = overlayImage
+    super.init(overlay: overlay)
+  }
+
+  // 2
+  override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+    guard let imageReference = overlayImage.cgImage else { return }
+
+    let rect = self.rect(for: overlay.boundingMapRect)
+    context.scaleBy(x: 1.0, y: -1.0)
+    context.translateBy(x: 0.0, y: -rect.size.height)
+    context.draw(imageReference, in: rect)
+  }
 }
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {

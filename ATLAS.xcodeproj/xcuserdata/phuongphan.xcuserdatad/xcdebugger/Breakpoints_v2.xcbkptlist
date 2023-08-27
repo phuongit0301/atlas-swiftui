@@ -5339,10 +5339,10 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2899"
-            endingLineNumber = "2899"
+            startingLineNumber = "2950"
+            endingLineNumber = "2950"
             landmarkName = "readAISearch(target:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7882,8 +7882,8 @@
             filePath = "ATLAS/Model/MapViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "IMapModel"
             landmarkType = "14">
          </BreakpointContent>

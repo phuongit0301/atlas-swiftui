@@ -175,6 +175,8 @@ struct MapViewModal: View {
     }
 }
 
+let park = Park(filename: "MagicMountain")
+
 struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
     let lineCoordinates: [CLLocationCoordinate2D]
@@ -192,6 +194,9 @@ struct MapView: UIViewRepresentable {
         mapView.addAnnotations(annotation)
         let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
         mapView.addOverlay(polyline)
+        
+        let overlay = CustomMapOverlay(park: park)
+        mapView.addOverlay(overlay)
         
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow
@@ -235,7 +240,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         // Create an annotation view
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "business")
         
-        annotationView.image = UIImage(named: "triangle.inset.filled")
+        annotationView.image = UIImage(systemName: "triangle.inset.filled")
         annotationView.canShowCallout = false
         annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         //        annotationView.isHidden = true
@@ -244,7 +249,12 @@ class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let routePolyline = overlay as? MKPolyline {
+        if overlay is CustomMapOverlay {
+            return ParkMapOverlayView(
+                overlay: overlay,
+                overlayImage: UIImage(imageLiteralResourceName: "overlay")
+            )
+        } else if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
             renderer.strokeColor = UIColor.systemBlue
             renderer.lineWidth = 10

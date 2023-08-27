@@ -7,6 +7,8 @@
 		<dict>
 			<key>CFBundleTypeName</key>
 			<string>MKDirectionsRequest</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.apple.maps.directionsrequest</string>
@@ -106,5 +108,7 @@
 		<string>Inter-SemiBold.ttf</string>
 		<string>Inter-Thin.ttf</string>
 	</array>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <string>NO</string>
 </dict>
 </plist>
