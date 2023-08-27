@@ -23,6 +23,7 @@ struct ATLASApp: App {
     @StateObject var flightPlanDetailModel = FlightPlanDetailModel()
     @StateObject var refModel = ScreenReferenceModel()
     @StateObject var aiSearchModel = AISearchModelState()
+    @StateObject var locationViewModel = LocationViewModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -34,6 +35,10 @@ struct ATLASApp: App {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
                     ContentView()
+                }
+            }.onAppear {
+                if locationViewModel.authorizationStatus == .notDetermined {
+                    locationViewModel.requestPermission()
                 }
             }
             .onAppWentToBackground {

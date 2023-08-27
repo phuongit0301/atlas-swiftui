@@ -58,6 +58,7 @@ class CoreDataModelState: ObservableObject {
     
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
+    @Published var loadingFlightPlan: Bool = false
     @Published var tagList: [TagList] = []
     @Published var aircraftArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []

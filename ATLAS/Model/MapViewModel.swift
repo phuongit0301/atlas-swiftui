@@ -8,89 +8,78 @@
 import SwiftUI
 import MapKit
 
-class Park {
-  var name: String?
-  var boundary: [CLLocationCoordinate2D] = []
-
-  var midCoordinate = CLLocationCoordinate2D()
-  var overlayTopLeftCoordinate = CLLocationCoordinate2D()
-  var overlayTopRightCoordinate = CLLocationCoordinate2D()
-  var overlayBottomLeftCoordinate = CLLocationCoordinate2D()
-  var overlayBottomRightCoordinate: CLLocationCoordinate2D {
-    return CLLocationCoordinate2D(
-      latitude: overlayBottomLeftCoordinate.latitude,
-      longitude: overlayTopRightCoordinate.longitude)
-  }
-
-  var overlayBoundingMapRect: MKMapRect {
-    let topLeft = MKMapPoint(overlayTopLeftCoordinate)
-    let topRight = MKMapPoint(overlayTopRightCoordinate)
-    let bottomLeft = MKMapPoint(overlayBottomLeftCoordinate)
-
-    return MKMapRect(
-      x: topLeft.x,
-      y: topLeft.y,
-      width: fabs(topLeft.x - topRight.x),
-      height: fabs(topLeft.y - bottomLeft.y))
-  }
-
-  init(filename: String) {
-    guard
-      let properties = Park.plist(filename) as? [String: Any],
-      let boundaryPoints = properties["boundary"] as? [String]
-      else { return }
-
-    midCoordinate = Park.parseCoord(dict: properties, fieldName: "midCoord")
-    overlayTopLeftCoordinate = Park.parseCoord(
-      dict: properties,
-      fieldName: "overlayTopLeftCoord")
-    overlayTopRightCoordinate = Park.parseCoord(
-      dict: properties,
-      fieldName: "overlayTopRightCoord")
-    overlayBottomLeftCoordinate = Park.parseCoord(
-      dict: properties,
-      fieldName: "overlayBottomLeftCoord")
-
-    let cgPoints = boundaryPoints.map { NSCoder.cgPoint(for: $0) }
-    boundary = cgPoints.map { CLLocationCoordinate2D(
-      latitude: CLLocationDegrees($0.x),
-      longitude: CLLocationDegrees($0.y))
+class WorldMap {
+    var boundary: [CLLocationCoordinate2D] = []
+    
+    var midCoordinate = CLLocationCoordinate2D()
+    var overlayTopLeftCoordinate = CLLocationCoordinate2D()
+    var overlayTopRightCoordinate = CLLocationCoordinate2D()
+    var overlayBottomLeftCoordinate = CLLocationCoordinate2D()
+    var overlayBottomRightCoordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(
+            latitude: overlayBottomLeftCoordinate.latitude,
+            longitude: overlayTopRightCoordinate.longitude)
     }
-  }
-
-  static func plist(_ plist: String) -> Any? {
-    guard
-      let filePath = Bundle.main.path(forResource: plist, ofType: "plist"),
-      let data = FileManager.default.contents(atPath: filePath)
-      else { return nil }
-
-    do {
-      return try PropertyListSerialization.propertyList(from: data, options: [], format: nil)
-    } catch {
-      return nil
+    
+    var overlayBoundingMapRect: MKMapRect {
+        let topLeft = MKMapPoint(overlayTopLeftCoordinate)
+        let topRight = MKMapPoint(overlayTopRightCoordinate)
+        let bottomLeft = MKMapPoint(overlayBottomLeftCoordinate)
+        
+        return MKMapRect(
+            x: topLeft.x,
+            y: topLeft.y,
+            width: fabs(topLeft.x - topRight.x),
+            height: fabs(topLeft.y - bottomLeft.y))
     }
-  }
-
-  static func parseCoord(dict: [String: Any], fieldName: String) -> CLLocationCoordinate2D {
-    if let coord = dict[fieldName] as? String {
-      let point = NSCoder.cgPoint(for: coord)
-      return CLLocationCoordinate2D(
-        latitude: CLLocationDegrees(point.x),
-        longitude: CLLocationDegrees(point.y))
+    
+    init(filename: String){
+        guard
+            let properties = WorldMap.plist(filename) as? [String: Any]
+        else { return }
+        
+        midCoordinate = WorldMap.parseCoord(dict: properties, fieldName: "midCoord")
+        overlayTopLeftCoordinate = WorldMap.parseCoord(
+            dict: properties,
+            fieldName: "overlayTopLeftCoord")
+        overlayTopRightCoordinate = WorldMap.parseCoord(
+            dict: properties,
+            fieldName: "overlayTopRightCoord")
+        overlayBottomLeftCoordinate = WorldMap.parseCoord(
+            dict: properties,
+            fieldName: "overlayBottomLeftCoord")
     }
-    return CLLocationCoordinate2D()
-  }
+    
+    static func plist(_ plist: String) -> Any? {
+        guard let filePath = Bundle.main.path(forResource: plist, ofType: "plist"),
+              let data = FileManager.default.contents(atPath: filePath) else { return nil }
+        
+        do {
+            return try PropertyListSerialization.propertyList(from: data, options: [], format: nil)
+        } catch {
+            return nil
+        }
+    }
+    
+    static func parseCoord(dict: [String: Any], fieldName: String) -> CLLocationCoordinate2D {
+        if let coord = dict[fieldName] as? String {
+            let point = NSCoder.cgPoint(for: coord)
+            return CLLocationCoordinate2D(
+                latitude: CLLocationDegrees(point.x),
+                longitude: CLLocationDegrees(point.y))
+        }
+        return CLLocationCoordinate2D()
+    }
 }
 
+class MapOverlay: NSObject, MKOverlay{
+    let coordinate: CLLocationCoordinate2D
+    let boundingMapRect: MKMapRect
 
-class CustomMapOverlay: NSObject, MKOverlay {
-  let coordinate: CLLocationCoordinate2D
-  let boundingMapRect: MKMapRect
-
-  init(park: Park) {
-    boundingMapRect = park.overlayBoundingMapRect
-    coordinate = park.midCoordinate
-  }
+    init(worldMap: WorldMap) {
+        boundingMapRect = worldMap.overlayBoundingMapRect
+        coordinate = worldMap.midCoordinate
+    }
 }
 
 struct IMapModel: Identifiable, Decodable {
@@ -114,9 +103,10 @@ class MapViewModel: ObservableObject {
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
     @Published var pointsOfInterest = [MKAnnotation]()
-    @StateObject var coreDataModel = CoreDataModelState()
+    @ObservedObject var coreDataModel = CoreDataModelState()
     
     init() {
+        coreDataModel.loadingFlightPlan = true
         var pointAnnotation = [MKPointAnnotation]()
         var locationCoordinate = [CLLocationCoordinate2D]()
         let dataMap = coreDataModel.readDataMapList()
@@ -133,6 +123,7 @@ class MapViewModel: ObservableObject {
         
         self.lineCoordinates = locationCoordinate
         self.pointsOfInterest = pointAnnotation
+        coreDataModel.loadingFlightPlan = false
     }
 }
 
@@ -168,24 +159,22 @@ func convertCoordinates(_ coordinateString: String) -> [String: String] {
 //    return CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }
 
-class ParkMapOverlayView: MKOverlayRenderer {
-  let overlayImage: UIImage
-
-  // 1
-  init(overlay: MKOverlay, overlayImage: UIImage) {
-    self.overlayImage = overlayImage
-    super.init(overlay: overlay)
-  }
-
-  // 2
-  override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-    guard let imageReference = overlayImage.cgImage else { return }
-
-    let rect = self.rect(for: overlay.boundingMapRect)
-    context.scaleBy(x: 1.0, y: -1.0)
-    context.translateBy(x: 0.0, y: -rect.size.height)
-    context.draw(imageReference, in: rect)
-  }
+class MapOverlayView: MKOverlayRenderer{
+    
+    let overlayImage: UIImage
+    
+    init(overlay: MKOverlay, overlayImage: UIImage){
+        self.overlayImage = overlayImage
+        super.init(overlay: overlay)
+    }
+    
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        guard let imageReference = overlayImage.cgImage else {return}
+        let rect = self.rect(for: overlay.boundingMapRect)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.translateBy(x: 0.0, y: -rect.size.height)
+        context.draw(imageReference, in: rect)
+    }
 }
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {

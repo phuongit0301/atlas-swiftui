@@ -157,25 +157,26 @@ import MapKit
 
 struct MapViewModal: View {
     @ObservedObject var modelView = MapViewModel()
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
 
     var body: some View {
         VStack {
-            MapView(
-                region: modelView.region,
-                lineCoordinates: modelView.lineCoordinates,
-                annotation: modelView.pointsOfInterest,
-                currentLocation: locationViewModel.currentLocation
-            )
-        }.onAppear {
-            if locationViewModel.authorizationStatus == .notDetermined {
-                locationViewModel.requestPermission()
+            if coreDataModel.loadingFlightPlan {
+                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+            } else {
+                MapView(
+                    region: modelView.region,
+                    lineCoordinates: modelView.lineCoordinates,
+                    annotation: modelView.pointsOfInterest,
+                    currentLocation: locationViewModel.currentLocation
+                )
             }
-        }
+        }.Print("coreDataModel.loadingFlightPlan========\(coreDataModel.loadingFlightPlan)")
     }
 }
 
-let park = Park(filename: "MagicMountain")
+let worldMap = WorldMap(filename: "WorldCoordinates")
 
 struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
@@ -192,7 +193,7 @@ struct MapView: UIViewRepresentable {
         mapView.showsScale = true
         
         mapView.addAnnotations(annotation)
-        let overlay = CustomMapOverlay(park: park)
+        let overlay = MapOverlay(worldMap: worldMap)
         mapView.addOverlay(overlay)
         
         let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
@@ -249,10 +250,16 @@ class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is CustomMapOverlay {
-            return ParkMapOverlayView(
+        if overlay is MapOverlay {
+            let imgString = "https://tile.openweathermap.org/map/precipitation_new/3/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c"
+            //convert string to url object (needed to decode image data)
+            let imgUrl = URL(string: imgString)
+            //convert url to data and guard
+            guard let imageData = try? Data(contentsOf: imgUrl!) else  {return  MKOverlayRenderer()}
+
+            return MapOverlayView(
                 overlay: overlay,
-                overlayImage: UIImage(imageLiteralResourceName: "overlay")
+                overlayImage: UIImage(data: imageData)!
             )
         } else if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
