@@ -38,12 +38,12 @@ struct FlightPlanNOTAMSplitView: View {
                         Section(header:
                                     VStack(alignment: .leading) {
                             Text("DEP NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
-                            HStack {
-                                Toggle(isOn: $isSortDateDep) {
-                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }.fixedSize()
-                                Text("Most Recent").font(.system(size: 12, weight: .regular))
-                            }
+//                            HStack {
+//                                Toggle(isOn: $isSortDateDep) {
+//                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
+//                                }.fixedSize()
+//                                Text("Most Recent").font(.system(size: 12, weight: .regular))
+//                            }
                         }
                         ) {
                             ForEach(arrDepNotams, id: \.id) { item in
@@ -76,12 +76,12 @@ struct FlightPlanNOTAMSplitView: View {
                         Section(header:
                                     VStack(alignment: .leading) {
                             Text("ENROUTE NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
-                            HStack {
-                                Toggle(isOn: $isSortDateEnr) {
-                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }.fixedSize()
-                                Text("Most Recent").font(.system(size: 12, weight: .regular))
-                            }
+//                            HStack {
+//                                Toggle(isOn: $isSortDateEnr) {
+//                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
+//                                }.fixedSize()
+//                                Text("Most Recent").font(.system(size: 12, weight: .regular))
+//                            }
                         }
                         ) {
                             ForEach(arrEnrNotams, id: \.id) { item in
@@ -114,12 +114,12 @@ struct FlightPlanNOTAMSplitView: View {
                         Section(header:
                                     VStack(alignment: .leading) {
                             Text("ARR NOTAMS").font(.system(size: 12, weight: .regular)).foregroundStyle(Color.black)
-                            HStack {
-                                Toggle(isOn: $isSortDateArr) {
-                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
-                                }.fixedSize()
-                                Text("Most Recent").font(.system(size: 12, weight: .regular))
-                            }
+//                            HStack {
+//                                Toggle(isOn: $isSortDateArr) {
+//                                    Text("Most Relevant").font(.system(size: 12, weight: .regular))
+//                                }.fixedSize()
+//                                Text("Most Recent").font(.system(size: 12, weight: .regular))
+//                            }
                         }
                         ) {
                             ForEach(arrArrNotams, id: \.id) { item in
@@ -171,7 +171,7 @@ struct FlightPlanNOTAMSplitView: View {
             arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDateDep)
             arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDateArr)
             arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
-        }.background(Color(.systemGroupedBackground))
+        }
     }
     
     func sortNotams(notamsDict: [NotamsDataList], sortKey: Bool) -> [NotamsDataList] {

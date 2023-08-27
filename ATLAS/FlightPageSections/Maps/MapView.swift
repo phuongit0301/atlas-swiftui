@@ -192,11 +192,11 @@ struct MapView: UIViewRepresentable {
         mapView.showsScale = true
         
         mapView.addAnnotations(annotation)
-        let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
-        mapView.addOverlay(polyline)
-        
         let overlay = CustomMapOverlay(park: park)
         mapView.addOverlay(overlay)
+        
+        let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
+        mapView.addOverlay(polyline)
         
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow

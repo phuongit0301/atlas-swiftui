@@ -7660,8 +7660,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1889"
-            endingLineNumber = "1889"
+            startingLineNumber = "1884"
+            endingLineNumber = "1884"
             landmarkName = "setFocusToFalse()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7676,8 +7676,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanSummaryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1667"
-            endingLineNumber = "1667"
+            startingLineNumber = "1662"
+            endingLineNumber = "1662"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>

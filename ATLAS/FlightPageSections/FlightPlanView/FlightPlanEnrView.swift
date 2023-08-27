@@ -488,7 +488,7 @@ struct FlightPlanEnrView: View {
                 updateValues(editedIndex: modalIndex)
             }
             .formSheet(isPresented: $isShowAta) {
-                EnrouteModalWheelTime(isShowing: $isShowEta, selectionOutput: $selectionOutputAta)
+                EnrouteModalWheelTime(isShowing: $isShowAta, selectionOutput: $selectionOutputAta)
             }
             .onChange(of: selectionOutputAta) { value in
                 let formatter = DateFormatter()

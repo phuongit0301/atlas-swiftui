@@ -516,9 +516,9 @@ struct FlightPlanSummaryView: View {
         // MARK: main body
         ScrollViewReader { scrollView in
             GeometryReader { proxy in
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .center) {
-                        HStack {
+                        HStack(spacing: 0) {
                             Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
                             Spacer()
                             Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
@@ -533,21 +533,24 @@ struct FlightPlanSummaryView: View {
                         Text("Summary")
                             .font(.system(size: 20, weight: .semibold))
                         
-                        Spacer().frame(maxWidth: .infinity)
+                        Spacer()
                         
-                        Button(action: {}) {  // todo add the action here, fix design
-                            Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
-                        }
-                        .padding(.vertical, 11)
-                        .padding(.horizontal)
+                        Button(action: {}, label: {
+                            HStack {
+                                Text("Sign-off").foregroundColor(.white).font(.system(size: 17, weight: .regular))
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 8)
+                            }
+                        })
                         .background(Color.theme.philippineGray3)
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(.white, lineWidth: 1)
                         )
-                        
-                    }.padding(.horizontal, 30)
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
+                    }.padding(.leading, 30)
                     
                     //scrollable outer list section
                     List {
@@ -1490,19 +1493,11 @@ struct FlightPlanSummaryView: View {
                             .listRowInsets((EdgeInsets(.init(top: 10, leading: -10, bottom: 10, trailing: 0))))
                             .scrollDisabled(true)
                         }
-                        
-                        // ATC flight plan section
-                        //                Section(header: Text("ATC FLIGHT PLAN").foregroundStyle(Color.black)) {
-                        //                    Text("\(atcFlightPlan)")
-                        //                        .padding(.leading, 25)
-                        //                }
                     }
-                    //                    .keyboardAvoidView()
                     
                     if isEditingArrDelays || isEditingTaxi || isEditingFlightLevel || isEditingTrackShortening || isEditingEnrWx || isEditingReciprocalRwy || isEditingOthers || isEditingZFW || isEditingTOW || isEditingLDW {
                         ZStack {
                             VStack {
-                                // custom keyboard view - todo set position properly - like normal ipad keyboard position
                                 Group {
                                     if isEditingArrDelays {
                                         CustomKeyboardView1(text: $arrDelays, cursorPosition: $cursorPositionArrDelays, currentFocus: $isEditingArrDelays, nextFocus: .constant(false), prevFocus: .constant(false))

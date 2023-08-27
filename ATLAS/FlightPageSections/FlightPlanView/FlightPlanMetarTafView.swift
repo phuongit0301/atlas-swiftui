@@ -25,7 +25,7 @@ struct FlightPlanMETARTAFView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .center) {
                     HStack {
                         Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
@@ -50,7 +50,7 @@ struct FlightPlanMETARTAFView: View {
                             if showLoading {
                                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
                             }
-                            Text("Refresh").font(.system(size: 17))
+                            Text("Refresh").font(.system(size: 17, weight: .regular))
                                 .foregroundColor(Color.white)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
@@ -64,9 +64,7 @@ struct FlightPlanMETARTAFView: View {
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         .disabled(showLoading)
-                    
                 }
-                .padding(.bottom, 10)
                 
                 //scrollable outer list section
                 List {

@@ -110,7 +110,7 @@ class FPModelSplitState: ObservableObject {
 }
 
 func calculateWidth(_ width: CGFloat, _ size: Int) -> CGFloat {
-    return CGFloat((width - CGFloat(100)) / CGFloat(size))
+    return width - CGFloat(100) <= 0 ? 0 : CGFloat((width - CGFloat(100)) / CGFloat(size))
 }
 
 class StepperObject: ObservableObject {
