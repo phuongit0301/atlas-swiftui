@@ -1427,6 +1427,7 @@ struct FlightPlanSummaryView: View {
                             .scrollDisabled(true)
                         }
                     }.padding(.top, -8)
+                        .keyboardAvoidView()
                     
                     Image(uiImage: coreDataModel.image).resizable()
                                         .frame(width: 0, height: 0)
