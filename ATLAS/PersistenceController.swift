@@ -1705,7 +1705,7 @@ class CoreDataModelState: ObservableObject {
     
     func calculatedZFWFuel() -> Int {
         if let item = self.dataPerfWeight.first(where: {$0.weight == "ZFW"}) {
-            let actual = Double(item.unwrappedActual) ?? Double(0)
+            var actual = Double(item.unwrappedActual) ?? Double(0)
             var unwrappedPlanZFW: Double = 0
             var unwrappedZfwChange: Double = 0
             
@@ -1717,7 +1717,11 @@ class CoreDataModelState: ObservableObject {
                 unwrappedZfwChange = temp
             }
             
-            return Int(Double(actual - unwrappedPlanZFW) * Double(unwrappedZfwChange / 1000))
+            if actual == 0 {
+                return 0
+            } else {
+                return Int(Double(actual - unwrappedPlanZFW) * Double(unwrappedZfwChange / 1000))
+            }
         }
         return 0
     }

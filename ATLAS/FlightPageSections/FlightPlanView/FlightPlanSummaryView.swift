@@ -438,6 +438,13 @@ struct FlightPlanSummaryView: View {
             }
             return "\(formatFuelNumber(result))"
         }
+        
+        var formattedAltnBurnoff: String {
+            var result = 0
+            let item = coreDataModel.dataFuelTableList[3]
+            result = Int(item.fuel ?? "0")!
+            return "\(formatFuelNumber(result))"
+        }
 
          
 //        var calculatedZFWFuel: String {
@@ -802,7 +809,6 @@ struct FlightPlanSummaryView: View {
                                     Text($0.unwrappedPlan).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
                                 TableColumn("Actual") { item in
-//                                    CustomField(item: $0)
                                     if item.weight == "ZFW" {
                                         FieldString(name: "zfw", field: $arrZFW, focusedTextField: _isZFWFocused, isEditing: $isEditingZFW, setFocusToFalse: setFocusToFalse)
                                             .onChange(of: arrZFW) { newValue in
@@ -832,9 +838,8 @@ struct FlightPlanSummaryView: View {
                                                     }
                                                 }
                                             }
+                                        }
                                     }
-                                    
-                                }
                                 TableColumn("Max") {
                                     Text($0.unwrappedMax).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                 }
@@ -865,6 +870,8 @@ struct FlightPlanSummaryView: View {
                                     TableColumn("Fuel") {
                                         if $0.unwrappedFirstColumn == "(A) Burnoff" {
                                             Text(calculatedBurnoff).foregroundColor(.black).font(.system(size: 17, weight: .regular))
+                                        } else if $0.unwrappedFirstColumn == "(D) Altn Hold" {
+                                            Text(formattedAltnBurnoff).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                         } else {
                                             Text($0.unwrappedFuel).foregroundColor(.black).font(.system(size: 17, weight: .regular))
                                         }
@@ -886,23 +893,23 @@ struct FlightPlanSummaryView: View {
                                 // row I
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
-//                                        HStack(alignment: .center) {
-//                                            Text("(I) Pilot Extra Fuel")
-//                                                .frame(width: 420, alignment: .leading)
-//                                                .font(.system(size: 15, weight: .medium))
-//                                                .padding(.leading, 26)
-//                                            Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
-//                                                .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-//                                                .font(.system(size: 17, weight: .regular))
-//
-//                                            Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
-//                                                .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
-//                                                .font(.system(size: 17, weight: .regular))
-//
-//                                            Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)).frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
-//                                                .font(.system(size: 17, weight: .regular))
-//                                                .lineLimit(nil)
-//                                        }.padding()
+                                        HStack(alignment: .center) {
+                                            Text("(I) Pilot Extra Fuel")
+                                                .frame(width: 420, alignment: .leading)
+                                                .font(.system(size: 15, weight: .medium))
+                                                .padding(.leading, 26)
+                                            Text(includedExtraFuelTime(includedDelayFuel, includedTrackShorteningFuel, includedEnrWxFuel, includedReciprocalRwyFuel))
+                                                .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
+                                                .font(.system(size: 17, weight: .regular))
+
+                                            Text(includedExtraFuelAmt(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel))
+                                                .frame(width: (proxy.size.width - 600) / 3, alignment: .leading)
+                                                .font(.system(size: 17, weight: .regular))
+
+                                            Text(includedExtraFuelRemarks(includedDelayFuel, includedTaxiFuel, includedFlightLevelFuel, includedEnrWxFuel, includedReciprocalRwyFuel, includedTrackShorteningFuel, includedOthersFuel)).frame(width: (proxy.size.width - 300) / 3, alignment: .leading)
+                                                .font(.system(size: 17, weight: .regular))
+                                                .lineLimit(nil)
+                                        }.padding()
                                     }.background(Color.theme.azure.opacity(0.12))
                                         .frame(width: proxy.size.width)
                                 }.onTapGesture {
