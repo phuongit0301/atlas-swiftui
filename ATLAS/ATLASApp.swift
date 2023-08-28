@@ -68,7 +68,9 @@ struct ATLASApp: App {
                     await coreDataModel.checkAndSyncData()
                     coreDataModel.loading = false
                 }.task {
+                    coreDataModel.loading = true
                     await coreDataModel.initFetchData()
+                    coreDataModel.loading = false
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 

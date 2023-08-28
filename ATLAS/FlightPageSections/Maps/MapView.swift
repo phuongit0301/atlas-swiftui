@@ -158,6 +158,7 @@ import MapKit
 struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
+    @State private var mapType: MKMapType = .mutedStandard
 
     var body: some View {
         VStack {
@@ -165,7 +166,8 @@ struct MapViewModal: View {
                 region: coreDataModel.region,
                 lineCoordinates: coreDataModel.lineCoordinates,
                 annotation: coreDataModel.pointsOfInterest,
-                currentLocation: locationViewModel.currentLocation
+                currentLocation: locationViewModel.currentLocation,
+                mapType: mapType
             )
         }
     }
@@ -178,9 +180,12 @@ struct MapView: UIViewRepresentable {
     let lineCoordinates: [CLLocationCoordinate2D]
     let annotation: [MKAnnotation]
     let currentLocation: CLLocationCoordinate2D
+    let mapType: MKMapType
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
+        mapView.mapType = mapType
 //        mapView.region = region
         mapView.setRegion(region, animated: true)
         
@@ -246,15 +251,9 @@ class Coordinator: NSObject, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MapOverlay {
-            let imgString = "https://tile.openweathermap.org/map/precipitation_new/3/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c"
-            //convert string to url object (needed to decode image data)
-            let imgUrl = URL(string: imgString)
-            //convert url to data and guard
-            guard let imageData = try? Data(contentsOf: imgUrl!) else  {return  MKOverlayRenderer()}
-
             return MapOverlayView(
                 overlay: overlay,
-                overlayImage: UIImage(data: imageData)!
+                overlayImage: parent.coreDataModel.image
             )
         } else if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)

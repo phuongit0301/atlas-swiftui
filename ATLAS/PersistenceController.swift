@@ -163,6 +163,7 @@ class CoreDataModelState: ObservableObject {
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
     @Published var pointsOfInterest = [MKAnnotation]()
+    @Published var image: UIImage = UIImage(imageLiteralResourceName: "overlay")
     
     @MainActor
     func checkAndSyncData() async {
@@ -275,6 +276,7 @@ class CoreDataModelState: ObservableObject {
             //        readFlightPlan()
             self.readSummaryInfo()
             self.dataMap = self.readDataMapList()
+            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
             self.prepareDataForMap()
             self.readSummaryRoute()
             self.readPerfData()
@@ -2985,5 +2987,17 @@ class CoreDataModelState: ObservableObject {
         }
         
         return data
+    }
+    
+    func loadImage(for urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self.image = UIImage(data: data) ?? UIImage(imageLiteralResourceName: "overlay")
+            }
+        }
+        task.resume()
     }
 }

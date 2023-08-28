@@ -1495,6 +1495,9 @@ struct FlightPlanSummaryView: View {
                         }
                     }.padding(.top, -8)
                     
+                    Image(uiImage: coreDataModel.image).resizable()
+                                        .frame(width: 0, height: 0)
+                    
                     if isEditingArrDelays || isEditingTaxi || isEditingFlightLevel || isEditingTrackShortening || isEditingEnrWx || isEditingReciprocalRwy || isEditingOthers || isEditingZFW || isEditingTOW || isEditingLDW {
                         ZStack {
                             VStack {
