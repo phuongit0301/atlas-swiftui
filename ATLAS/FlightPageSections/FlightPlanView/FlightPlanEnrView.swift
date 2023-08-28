@@ -864,7 +864,7 @@ struct FlightPlanEnrView: View {
             }
             
             //oat
-            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
+            let oatDefaultValue = waypointsTable[index].unwrappedOat
             if index <= tocIndex {
                 // Set the default value if waypoint is before TOC
                 waypointsTable[index].oat = oatDefaultValue
@@ -943,7 +943,6 @@ struct FlightPlanEnrView: View {
             }
             
             // adn
-            // Todo: Check Logic
             let oatDefaultValue = waypointsTable[index].unwrappedOat
             let aflDefaultValue = waypointsTable[index].unwrappedAfl
             if index < tocIndex {
@@ -953,9 +952,9 @@ struct FlightPlanEnrView: View {
                 // get ISA = 15 + -2deg per 1000ft
                 if aflDefaultValue != "" {
                     let aflFormatted = Int(aflDefaultValue)! * 100
-                    let isa = 15 + (aflFormatted / 1000) * -2
+                    let isa = 15 + ((aflFormatted / 1000) * -2)
                     // get adn = oat - ISA
-                    let adn = Int(oatDefaultValue) ?? 0 - isa
+                    let adn = (Int(oatDefaultValue) ?? 0) - isa
                     // update value
                     if adn < 0 {
                         waypointsTable[index].adn = "\(adn)"
