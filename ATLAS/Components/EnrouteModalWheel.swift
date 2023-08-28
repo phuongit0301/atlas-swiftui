@@ -156,7 +156,10 @@ struct EnrouteModalWheelOat: View {
             }
             Spacer()
         }.onAppear {
-            if selectionInOut.count > 1 {
+            if selectionInOut.count == 3 {
+                self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(2)) ?? 0
+                self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
+            } else if selectionInOut.count == 2 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
             }
