@@ -943,8 +943,9 @@ struct FlightPlanEnrView: View {
             }
             
             // adn
-            let oatDefaultValue = waypointsTableDefault[index].unwrappedOat
-            let aflDefaultValue = waypointsTableDefault[index].unwrappedAfl
+            // Todo: Check Logic
+            let oatDefaultValue = waypointsTable[index].unwrappedOat
+            let aflDefaultValue = waypointsTable[index].unwrappedAfl
             if index < tocIndex {
                 // Set the default value if waypoint is before TOC
                 waypointsTable[index].adn = "N.A"

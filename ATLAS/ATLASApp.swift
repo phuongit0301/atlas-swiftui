@@ -42,7 +42,9 @@ struct ATLASApp: App {
                 }
             }
             .onAppWentToBackground {
-                coreDataModel.updateFlightPlan()
+                if !coreDataModel.loading && !coreDataModel.loadingInit {
+                    coreDataModel.updateFlightPlan()
+                }
             }
             .environmentObject(network)
                 .environmentObject(tabModelState)

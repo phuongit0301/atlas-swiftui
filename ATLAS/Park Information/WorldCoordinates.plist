@@ -10,26 +10,26 @@
 <plist version="1.0">
     <dict>
         <key>midCoord</key>
-        <string>{12.669581, 105.548465}</string>
+        <string>{0, 0}</string>
         <key>overlayTopLeftCoord</key>
-        <string>{30.114791, 88.849246}</string>
+        <string>{85.0511, -180}</string>
         <key>overlayTopRightCoord</key>
-        <string>{30.114791, 122.247684}</string>
+        <string>{85.0511, 180}</string>
         <key>overlayBottomLeftCoord</key>
-        <string>{-4.775629, 88.849246}</string>
+        <string>{-85.0511, -180}</string>
         <key>overlayBottomRightCoord</key>
-        <string>{-4.775629, 122.247684}</string>
+        <string>{-85.0511, 180}</string>
         <key>boundary</key>
         <array>
-            <string>{-0.633320, 99.770072}</string>
-            <string>{-0.490504, 103.164847}</string>
-            <string>{-0.424588, 106.592581}</string>
-            <string>{8.584852, 105.285208}</string>
-            <string>{16.269052, 103.815638}</string>
-            <string>{16.448259, 100.409877}</string>
-            <string>{17.692754, 87.072475}</string>
-            <string>{7.990207, 90.829799}</string>
-            <string>{-6.864745, 95.444056}</string>
+            <string>{85.0511, -180}</string>
+            <string>{85.0511, 0}</string>
+            <string>{85.0511, 180}</string>
+            <string>{0, 180}</string>
+            <string>{-85.0511, 180}</string>
+            <string>{-85.0511, 0}</string>
+            <string>{-85.0511, -180}</string>
+            <string>{0, -180}</string>
+            <string>{0, 0}</string>
         </array>
     </dict>
 </plist>

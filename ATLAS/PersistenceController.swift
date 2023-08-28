@@ -656,6 +656,9 @@ class CoreDataModelState: ObservableObject {
                     }
                 }
             }
+            
+            self.dataMap = readDataMapList()
+            self.prepareDataForMap()
         }
     }
     

@@ -242,6 +242,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "business")
         
         annotationView.image = UIImage(systemName: "triangle.inset.filled")
+        annotationView.tintColor = UIColor.red
         annotationView.canShowCallout = false
         annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         //        annotationView.isHidden = true
