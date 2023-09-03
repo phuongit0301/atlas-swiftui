@@ -6,13 +6,26 @@
 //
 
 import SwiftUI
+import FirebaseCore
+
+class FBAppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
 
 @main
 struct ATLASApp: App {
+    // register app delegate for Firebase setup
+    @UIApplicationDelegateAdaptor(FBAppDelegate.self) var delegate
+    @AppStorage("uid") var userID: String = ""
+    
     let persistenceController = PersistenceController.shared
     
-    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-//    @ObservedObject var apiManager = APIManager.shared
+    @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
     @StateObject var mainNavModelState = MainNavModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
@@ -34,7 +47,11 @@ struct ATLASApp: App {
                 if coreDataModel.loading || coreDataModel.loadingInit {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
-                    ContentView()
+                    if userID != "" {
+                        ContentView()
+                    } else {
+                        LoginView()
+                    }
                 }
             }.onAppear {
                 if locationViewModel.authorizationStatus == .notDetermined {
