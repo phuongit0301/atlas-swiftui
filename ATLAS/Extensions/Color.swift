@@ -30,6 +30,7 @@ struct ColorTheme {
     let philippineGray2 = Color("PhilippineGray2") //8A8A8E
     let philippineGray3 = Color("PhilippineGray3") //8E8E93
     let lightGray = Color("LightGray") //D4D5D6
+    let lightGray1 = Color("LightGray1") //D1D1D6
     let lavender = Color("Lavender") //D4D5D6
     let azureishWhite = Color("AzureishWhite") //DBE5F1
     let tangerineYellow = Color("TangerineYellow") //FFCC00
@@ -45,4 +46,6 @@ struct ColorTheme {
     let coralRed = Color("CoralRed") //FF453A
     let charlestonGreen = Color("CharlestonGreen") //272729
     let quickSilver = Color("QuickSilver") //A1A1A1
+    let gray = Color("Gray") //BABABC
+    let pictonBlue = Color("PictonBlue") //32ADE6
 }

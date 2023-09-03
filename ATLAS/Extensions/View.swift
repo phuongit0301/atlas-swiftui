@@ -120,7 +120,7 @@ struct TypingText: View {
     let fullText: String
     let typingIntervalRange: ClosedRange<Double>
 
-    init(text: String, typingIntervalRange: ClosedRange<Double> = 0.05...0.15) {
+    init(text: String, typingIntervalRange: ClosedRange<Double> = 0.03...0.05) {
         self.fullText = text
         self.typingIntervalRange = typingIntervalRange
     }
@@ -135,7 +135,7 @@ struct TypingText: View {
                 .onAppear {
                     self.typeText()
                 }
-        }.frame(maxWidth: .infinity)
+        }.frame(maxWidth: .infinity, alignment: .leading)
     }
 
     func typeText() {
@@ -268,7 +268,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             AircraftReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
             
@@ -286,9 +286,9 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.DepartureScreen {
         return AnyView(
-            DepatureReferenceContainer()
+            DepartureReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -298,7 +298,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             EnrouteReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -308,7 +308,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             ArrivalReferenceContainer()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -334,9 +334,9 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
         return AnyView(
-            FlightInformationDetailView()
+            FlightSummaryView(isReference: true)
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -346,8 +346,8 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             FlightPlanNOTAMReferenceView()
                 .navigationBarBackButtonHidden()
-                .navigationBarHidden(true)
-                .breadCrumbNotamRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .navigationBarHidden(true)
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
     }
@@ -356,6 +356,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             ScratchPadView()
                 .navigationBarBackButtonHidden()
+//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
         )
@@ -440,7 +441,6 @@ func getDestinationTable(_ item: ListFlightInformationItem) -> AnyView {
     return AnyView(
         TableDetail(row: item)
             .navigationBarBackButtonHidden()
-            .navigationBarHidden(true)
             .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
             .ignoresSafeArea()
     )
@@ -546,6 +546,7 @@ public struct HasTabbar: ViewModifier {
 }
 
 public struct BreadCrumbNotamRef: ViewModifier {
+    @EnvironmentObject var refState: ScreenReferenceModel
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
     var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
@@ -555,16 +556,18 @@ public struct BreadCrumbNotamRef: ViewModifier {
             HStack {
                 HStack {
                     Button {
-                        dismiss()
+                        refState.isActive = false
+                        refState.selectedItem = nil
+                        refState.isTable = false
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {
-                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                             }
                         }
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                 }.padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
@@ -580,6 +583,7 @@ public struct BreadCrumbNotamRef: ViewModifier {
 }
 
 public struct BreadCrumbRef: ViewModifier {
+    @EnvironmentObject var refState: ScreenReferenceModel
     @Environment(\.dismiss) private var dismiss
     var screenName: NavigationEnumeration
     var parentScreenName: NavigationEnumeration? = NavigationEnumeration.OverviewScreen
@@ -590,25 +594,28 @@ public struct BreadCrumbRef: ViewModifier {
 
                 HStack(alignment: .center) {
                     Button {
-                        dismiss()
+                        refState.isActive = false
+                        refState.selectedItem = nil
+                        refState.isTable = false
                     } label: {
                         HStack {
                             if let parentScreenName = parentScreenName {
-                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                Text(convertScreenNameToString(parentScreenName)).font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                             }
                         }
                     }
                     Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
-                }.padding()
+                    Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
+                }.padding(.vertical)
                 
-                content.padding(.horizontal)
+                content
                 
             }.padding()
                 .background(Color.white)
                 .cornerRadius(8)
-        }.padding()
-            .background(screenName == NavigationEnumeration.FlightInformationDetailScreen ? Color.white : Color.theme.antiFlashWhite)
+        }.padding(.horizontal)
+            .padding(.vertical, 36)
+            .background(Color.theme.antiFlashWhite)
             
     }
 }
@@ -628,11 +635,11 @@ public struct BreadCrumb: ViewModifier {
                                 dismiss()
                             } label: {
                                 HStack {
-                                    Text("Reference").font(.system(size: 11, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                    Text("Reference").font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
                                 }
                             }
                             Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
-                            Text("\(convertScreenNameToString(screenName))").font(.system(size: 11, weight: .semibold)).foregroundColor(.black)
+                            Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                         }.padding()
                         if screenName == NavigationEnumeration.FuelScreen || screenName == NavigationEnumeration.FlightPlanScreen {
                             Rectangle().fill(Color.clear).frame(height: 8)
@@ -645,6 +652,8 @@ public struct BreadCrumb: ViewModifier {
 
 func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
     switch screenName {
+        case .FlightSummaryScreen:
+            return "Flight Summary"
         case .HomeScreen:
             return "Home"
         case .FlightScreen:
@@ -656,7 +665,7 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
         case .FlightPlanScreen:
             return "Flight Plan"
         case .FlightInformationDetailScreen:
-            return "Flight Information"
+            return "Flight Summary"
         case .NotamDetailScreen:
             return "NOTAMs"
         case .AirCraftScreen:

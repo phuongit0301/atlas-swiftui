@@ -2,7 +2,7 @@
 //  FuelTaxiRefList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/07/2023.
+//  Created by phuong phan on 29/07/2023.
 //
 //
 
@@ -16,10 +16,11 @@ extension FuelTaxiRefList {
         return NSFetchRequest<FuelTaxiRefList>(entityName: "FuelTaxiRef")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var date: String?
     @NSManaged public var condition: String?
+    @NSManaged public var date: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var taxiTime: Int
+    @NSManaged public var order: Int16
     @NSManaged public var timesRef: FuelTaxiList?
     
     public var unwrappedDate: String {

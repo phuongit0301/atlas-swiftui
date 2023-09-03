@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct ATLASApp: App {
     let persistenceController = PersistenceController.shared
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-    @ObservedObject var apiManager = APIManager.shared
+//    @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
     @StateObject var mainNavModelState = MainNavModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
@@ -22,6 +21,9 @@ struct ATLASApp: App {
     @StateObject var coreDataModel = CoreDataModelState()
     @StateObject var viewModelSummary = ViewModelSummary()
     @StateObject var flightPlanDetailModel = FlightPlanDetailModel()
+    @StateObject var refModel = ScreenReferenceModel()
+    @StateObject var aiSearchModel = AISearchModelState()
+    @StateObject var locationViewModel = LocationViewModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -29,14 +31,20 @@ struct ATLASApp: App {
     var body: some Scene {
         WindowGroup {
             VStack {
-                if coreDataModel.loading {
+                if coreDataModel.loading || coreDataModel.loadingInit {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
                     ContentView()
                 }
+            }.onAppear {
+                if locationViewModel.authorizationStatus == .notDetermined {
+                    locationViewModel.requestPermission()
+                }
             }
             .onAppWentToBackground {
-                coreDataModel.updateFlightPlan()
+                if !coreDataModel.loading && !coreDataModel.loadingInit {
+                    coreDataModel.updateFlightPlan()
+                }
             }
             .environmentObject(network)
                 .environmentObject(tabModelState)
@@ -49,17 +57,26 @@ struct ATLASApp: App {
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)
+                .environmentObject(refModel)
+                .environmentObject(aiSearchModel)
                 .task {
                     coreDataModel.loading = true
+//                    await coreDataModel.checkAndSyncDataNote()
+//                    await coreDataModel.checkAndSyncData()
+//                    await coreDataModel.checkAndSyncDataFuel()
+//                    await coreDataModel.initFetchData()
+//                    coreDataModel.loading = false
                     await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.checkAndSyncData()
+                    coreDataModel.loading = false
+                }.task {
+                    coreDataModel.loading = true
                     await coreDataModel.initFetchData()
                     coreDataModel.loading = false
                 }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
         }
-        .modelContainer(for: [FuelPageData.self, SDAISearchModel.self])
         .handlesExternalEvents(
             matching: ["sg.accumulus.ios.book-flight", "App-Prefs://root=NOTES"]
         )

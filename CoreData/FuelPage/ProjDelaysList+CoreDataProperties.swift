@@ -2,7 +2,7 @@
 //  ProjDelaysList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/07/2023.
+//  Created by phuong phan on 28/07/2023.
 //
 //
 
@@ -21,11 +21,12 @@ extension ProjDelaysList {
     @NSManaged public var id: UUID?
     @NSManaged public var delays: NSSet?
     
-    public var unwrappedEta: Date? {
+    public var unwrappedEta: Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter.date(from: eta ?? "0000") ?? dateFormatter.date(from: "0000")
+        return dateFormatter.date(from: eta ?? "00:00") ?? dateFormatter.date(from: "00:00")!
     }
+
 }
 
 // MARK: Generated accessors for delays

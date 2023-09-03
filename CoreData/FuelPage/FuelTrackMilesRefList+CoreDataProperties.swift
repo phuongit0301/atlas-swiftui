@@ -2,7 +2,7 @@
 //  FuelTrackMilesRefList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/07/2023.
+//  Created by phuong phan on 30/07/2023.
 //
 //
 
@@ -20,6 +20,7 @@ extension FuelTrackMilesRefList {
     @NSManaged public var id: UUID?
     @NSManaged public var phase: String?
     @NSManaged public var trackMilesDiff: Int
+    @NSManaged public var order: Int16
     @NSManaged public var trackMilesRef: FuelTrackMilesList?
     
     public var unwrappedPhase: String {

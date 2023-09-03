@@ -13,7 +13,6 @@ import QuickLookThumbnailing
 import Foundation
 import CoreML
 import os
-import SwiftData
 
 struct MainView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
@@ -50,10 +49,12 @@ struct MainView: View {
                 BottomTabs()
             }
         } else {
-            NavigationView {
+            NavigationSplitView(columnVisibility: $columnVisibility) {
                 Sidebar()
+            } detail: {
                 HomeView()
             }.accentColor(Color.theme.tuftsBlue)
+                
         }
     }
 }
@@ -70,9 +71,6 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
-    // fuel page swift data initialise
-    @Environment(\.modelContext) private var context
-    @Query var fuelPageData: [FuelPageData]
     @State var loading = false
     
     var body: some View {
@@ -81,25 +79,6 @@ struct ContentView: View {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
             } else {
                 MainView()
-            }
-        }.onAppear {
-            Task {
-                // check if fuel page swift data has data
-                if fuelPageData.first?.projDelays == nil {
-                    loading = true
-                    // add fuel page data to swift data
-                    // fetch api response
-                    @ObservedObject var globalResponse = GlobalResponse.shared
-                    @ObservedObject var apiManager = APIManager.shared
-                    await apiManager.makePostRequest()
-                    let allAPIresponse: processedFuelDataModel = convertAllresponseFromAPI(jsonString: globalResponse.response)
-                    // map response to FuelPageData model class
-                    let fetchedFuelPageData = FuelPageData(projDelays: allAPIresponse.projDelays!, historicalDelays: allAPIresponse.historicalDelays!, taxi: allAPIresponse.taxi!, trackMiles: allAPIresponse.trackMiles!, enrWX: allAPIresponse.enrWX!, flightLevel: allAPIresponse.flightLevel!, reciprocalRwy: allAPIresponse.reciprocalRwy!)
-                    // insert into context and save
-                    context.insert(fetchedFuelPageData)
-                    try? context.save()
-                    loading = false
-                }
             }
         }
     }

@@ -2,7 +2,7 @@
 //  ProjDelaysListRef+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/07/2023.
+//  Created by phuong phan on 28/07/2023.
 //
 //
 
@@ -21,12 +21,13 @@ extension ProjDelaysListRef {
     @NSManaged public var maxdelay: Int
     @NSManaged public var mindelay: Int
     @NSManaged public var time: String?
+    @NSManaged public var order: Int16
     @NSManaged public var delayRef: ProjDelaysList?
     
     public var unwrappedTime: Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter.date(from: time ?? "0000") ?? dateFormatter.date(from: "0000")
+        return dateFormatter.date(from: time ?? "00:00") ?? dateFormatter.date(from: "00:00")
     }
 }
 

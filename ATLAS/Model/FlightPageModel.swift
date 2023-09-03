@@ -65,12 +65,18 @@ struct ListFlightInformationModel {
     }()
 }
 
+class ScreenReferenceModel: ObservableObject {
+    @Published var isActive: Bool = false
+    @Published var selectedItem: ListFlightInformationItem?
+    @Published var isTable: Bool = false
+}
+
 struct ListReferenceModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "Flight Information", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
+            ListFlightInformationItem(name: "Flight Summary", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
             ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
-            ListFlightInformationItem(name: "NOTAMS", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
+            ListFlightInformationItem(name: "NOTAMs", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen, nextScreen: NavigationEnumeration.ArrivalScreen),
@@ -641,3 +647,11 @@ struct IFlightNoteTabs {
 //    }
 
 //}
+
+class EnrouteSection: ObservableObject {
+    @Published var dataDropDown: [String] = ["CLB", "CLB1", "CLB2", "CLB3"]
+}
+
+class NotamSection: ObservableObject {
+    @Published var dataDropDown: [String] = ["Runway", "Taxiway", "Approach/Departure", "Navaid", "Obstacles", "Others"]
+}

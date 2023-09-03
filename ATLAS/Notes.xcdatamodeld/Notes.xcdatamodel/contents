@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22189.1" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" defaultDateTimeInterval="712279380" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="AltnData" representedClassName="AltnDataList" syncable="YES">
         <attribute name="altnRwy" optional="YES" attributeType="String"/>
         <attribute name="comp" optional="YES" attributeType="String"/>
@@ -91,6 +98,7 @@
         <attribute name="gsp" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imt" optional="YES" attributeType="String"/>
+        <attribute name="isSkipped" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="msa" optional="YES" attributeType="String"/>
         <attribute name="oat" optional="YES" attributeType="String"/>
         <attribute name="pdn" optional="YES" attributeType="String"/>
@@ -139,6 +147,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelEnrWX" inverseName="trackMiles" inverseEntity="FuelEnrWX"/>
     </entity>
@@ -180,6 +189,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="flightLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="waypoint" optional="YES" attributeType="String"/>
         <relationship name="flightLevelsRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelFlightLevel" inverseName="flightLevels" inverseEntity="FuelFlightLevel"/>
     </entity>
@@ -194,6 +204,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelReciprocalRwy" inverseName="trackMiles" inverseEntity="FuelReciprocalRwy"/>
     </entity>
@@ -216,6 +227,7 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="taxiTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="timesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTaxi" inverseName="times" inverseEntity="FuelTaxi"/>
     </entity>
@@ -229,6 +241,7 @@
     <entity name="FuelTrackMilesRef" representedClassName="FuelTrackMilesRefList" syncable="YES">
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="phase" optional="YES" attributeType="String"/>
         <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTrackMiles" inverseName="trackMiles" inverseEntity="FuelTrackMiles"/>
@@ -246,8 +259,17 @@
         <attribute name="condition" optional="YES" attributeType="String"/>
         <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="weather" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
+    </entity>
+    <entity name="Map" representedClassName="WaypointMapList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
@@ -259,6 +281,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -332,6 +355,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="maxdelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="mindelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
         <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
     </entity>
@@ -343,6 +367,10 @@
     </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
         <attribute name="blkTime" optional="YES" attributeType="String"/>
+        <attribute name="cm1" optional="YES" attributeType="String"/>
+        <attribute name="cm2" optional="YES" attributeType="String"/>
+        <attribute name="crewCA" optional="YES" attributeType="String"/>
+        <attribute name="crewFO" optional="YES" attributeType="String"/>
         <attribute name="dep" optional="YES" attributeType="String"/>
         <attribute name="depICAO" optional="YES" attributeType="String"/>
         <attribute name="dest" optional="YES" attributeType="String"/>

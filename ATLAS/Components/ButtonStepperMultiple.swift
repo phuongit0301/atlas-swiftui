@@ -1,5 +1,5 @@
 //
-//  CustomStepper.swift
+//  ButtonStepperMultiple.swift
 //  ATLAS
 //
 //  Created by phuong phan on 28/06/2023.

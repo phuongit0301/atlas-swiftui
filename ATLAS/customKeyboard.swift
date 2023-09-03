@@ -36,8 +36,8 @@ struct CustomKeyboardView1: View {
                                 handleInput(character)
                             }) {
                                 Text(character)
-                                    .font(.title)
-                                    .frame(width: 50, height: 50)
+                                    .font(.system(size: 18))
+                                    .frame(width: 30, height: 30)
                                     .background(Color.gray)
                                     .cornerRadius(8)
                                     .foregroundColor(.white)
@@ -57,13 +57,13 @@ struct CustomKeyboardView1: View {
                                 if character == "keyboard.chevron.compact.down.fill" || character == "return" {
                                     VStack {
                                         Image(systemName: character).foregroundColor(Color.white)
-                                    }.frame(width: 50, height: 50)
+                                    }.frame(width: 30, height: 30)
                                         .background(Color.gray)
                                         .cornerRadius(8)
                                 } else {
                                     Text(character)
-                                        .font(.title)
-                                        .frame(width: 50, height: 50)
+                                        .font(.system(size: 18))
+                                        .frame(width: 30, height: 30)
                                         .background(Color.gray)
                                         .cornerRadius(8)
                                         .foregroundColor(.white)
@@ -78,7 +78,11 @@ struct CustomKeyboardView1: View {
 
     private func handleInput(_ character: String) {
         if character == "return" {
-            submit()
+            if nextFocus {
+                submit()
+            } else {
+                currentFocus = false
+            }
         } else if character == "keyboard.chevron.compact.down.fill" {
             currentFocus = false
         }
@@ -204,9 +208,9 @@ struct CustomKeyboardView: View {
     }
 
     private func handleInput(_ character: String) {
-        if character == "↵" {
+        if character == "return" {
             submit()
-        } else if character == "⌨" {
+        } else if character == "keyboard.chevron.compact.down.fill" {
             currentFocus = false
         }
         else if character == "SP" {

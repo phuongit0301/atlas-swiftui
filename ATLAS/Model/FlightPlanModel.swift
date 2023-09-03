@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 enum FlightPlanEnumeration: CustomStringConvertible {
     case SummaryScreen
@@ -42,11 +43,11 @@ struct Tab {
 
 let IFlightPlanTabs = [
     Tab(title: "Summary", screenName: FlightPlanEnumeration.SummaryScreen),
+    Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
+    Tab(title: "METAR / TAF", screenName: FlightPlanEnumeration.METARSScreen),
     Tab(title: "Departure", screenName: FlightPlanEnumeration.DepartureScreen),
     Tab(title: "Enroute", screenName: FlightPlanEnumeration.EnrouteScreen),
     Tab(title: "Arrival", screenName: FlightPlanEnumeration.ArrivalScreen),
-    Tab(title: "NOTAM", screenName: FlightPlanEnumeration.NOTAMScreen),
-    Tab(title: "METAR / TAF", screenName: FlightPlanEnumeration.METARSScreen)
 ]
 //
 //struct IFlightPlanTabs {
@@ -109,7 +110,7 @@ class FPModelSplitState: ObservableObject {
 }
 
 func calculateWidth(_ width: CGFloat, _ size: Int) -> CGFloat {
-    return CGFloat((width - CGFloat(100)) / CGFloat(size))
+    return width - CGFloat(100) <= 0 ? 0 : CGFloat((width - CGFloat(100)) / CGFloat(size))
 }
 
 class StepperObject: ObservableObject {
@@ -157,10 +158,40 @@ struct FieldString: View {
     let name: String
     
     // Dedicated state var for each field
+    @Binding var field: String
+    @FocusState var focusedTextField: Bool
+    @Binding var isEditing: Bool
+    var setFocusToFalse: () -> Void
+    
+    var body: some View {
+        TextField(name.uppercased(), text: $field)
+            .overlay(isEditing ? Rectangle().stroke(Color.red, lineWidth:1) : nil)
+            .font(.system(size: 15))
+            .focused($focusedTextField)
+            .onReceive(Just(focusedTextField)) { newFocused in
+                if newFocused {
+                    setFocusToFalse()
+                    isEditing = true
+                }
+            }
+    }
+}
+
+struct FieldStringDefaultKB: View {
+    // Read the view model, to store the value of the text field
+    @EnvironmentObject var viewModel: ViewModelSummary
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
+    
+    // Index: where in the dictionary the value will be stored
+    let name: String
+    
+    // Dedicated state var for each field
     @State var field: String = ""
     
     var body: some View {
         TextField("Enter remarks (optional)", text: $field)
+            .font(.system(size: 15))
             .onAppear {
                 let item = coreDataModel.dataFuelExtra!
                 
@@ -218,6 +249,90 @@ struct FieldString: View {
             }
     }
 }
+
+//struct FieldString: View {
+//    // Read the view model, to store the value of the text field
+//    @EnvironmentObject var viewModel: ViewModelSummary
+//    @EnvironmentObject var coreDataModel: CoreDataModelState
+//    @EnvironmentObject var persistenceController: PersistenceController
+//
+//    // Index: where in the dictionary the value will be stored
+//    let name: String
+//
+//    // Dedicated state var for each field
+//    @State var field: String = ""
+//    @FocusState var focusedTextField: FocusElement?
+//    @Binding var isEditing: Bool
+//    var setFocusToFalse: () -> Void
+//
+//    var body: some View {
+//        TextField("Enter remarks (optional)", text: $field)
+//            .font(.system(size: 15))
+//            .onAppear {
+//                let item = coreDataModel.dataFuelExtra!
+//
+//                switch name {
+//                    case "remarkArrDelays":
+//                        field = item.unwrappedRemarkArrDelays
+//                    case "remarkTaxi":
+//                        field = item.unwrappedRemarkTaxi
+//                    case "remarkFlightLevel":
+//                        field = item.unwrappedRemarkFlightLevel
+//                    case "remarkTrackShortening":
+//                        field = item.unwrappedRemarkTrackShortening
+//                    case "remarkEnrWx":
+//                        field = item.unwrappedRemarkEnrWx
+//                    case "remarkReciprocalRwy":
+//                        field = item.unwrappedRemarkReciprocalRwy
+//                    case "remarkZFWChange":
+//                        field = item.unwrappedRemarkZFWChange
+//                    case "remarkOthers":
+//                        field = item.unwrappedRemarkOthers
+//                    default:
+//                        field = ""
+//                }
+//            }
+//            .focused($focusedTextField, equals: .remarkArrDelays)
+////            .onReceive(Just(focusedTextField)) { newFocused in
+////                print("newFocused========\(newFocused)")
+//////                if newFocused {
+//////                    setFocusToFalse()
+//////                    isEditing = true
+//////                }
+////            }
+//            .onSubmit {
+//                var item = coreDataModel.dataFuelExtra!
+//
+//                if !coreDataModel.existDataFuelExtra {
+//                    item = FuelExtraList(context: persistenceController.container.viewContext)
+//                }
+//
+//                switch name {
+//                case "remarkArrDelays":
+//                    item.remarkArrDelays = field
+//                case "remarkTaxi":
+//                    item.remarkTaxi = field
+//                case "remarkFlightLevel":
+//                    item.remarkFlightLevel = field
+//                case "remarkTrackShortening":
+//                    item.remarkTrackShortening = field
+//                case "remarkEnrWx":
+//                    item.remarkEnrWx = field
+//                case "remarkReciprocalRwy":
+//                    item.remarkReciprocalRwy = field
+//                case "remarkZFWChange":
+//                    item.remarkZFWChange = field
+//                case "remarkOthers":
+//                    item.remarkOthers = field
+//                default:
+//                    item.remarkArrDelays = field
+//                }
+//
+//                coreDataModel.save()
+//                coreDataModel.readFlightPlan()
+//            }
+//    }
+//}
 
 struct CustomField: View {
     // Read the view model, to store the value of the text field
@@ -367,9 +482,9 @@ struct INotamsDataChildResponseModel: Decodable {
 }
 
 struct INotamsDataResponseModel: Decodable {
-    var depNotams: [INotamsDataChildResponseModel]
+    var depNotams: [String: [INotamsDataChildResponseModel]]
     var enrNotams: [INotamsDataChildResponseModel]
-    var arrNotams: [INotamsDataChildResponseModel]
+    var arrNotams: [String: [INotamsDataChildResponseModel]]
 //    var depNotams: [[String: String]]
 //    var enrNotams: [[String: String]]
 //    var arrNotams: [[String: String]]
@@ -396,12 +511,18 @@ struct IPerfDataResponseModel: Decodable {
     var limLDW: String?
 }
 
+struct IWaypoints: Decodable {
+    var name: String
+    var coord: String
+}
+
 struct ISummaryDataResponseModel: Decodable {
     var routeNo: String?
     var route: String?
     var depRwy: String?
     var arrRwy: String?
     var levels: String?
+    var waypoints: [IWaypoints]
 }
 
 struct IEnrouteDataResponseModel: Decodable {
