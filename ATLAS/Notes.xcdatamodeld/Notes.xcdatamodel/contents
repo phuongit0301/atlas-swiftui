@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" defaultDateTimeInterval="712279380" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="AltnData" representedClassName="AltnDataList" syncable="YES">
+        <attribute name="altnRwy" optional="YES" attributeType="String"/>
+        <attribute name="comp" optional="YES" attributeType="String"/>
+        <attribute name="dist" optional="YES" attributeType="String"/>
+        <attribute name="fl" optional="YES" attributeType="String"/>
+        <attribute name="fuel" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="minima" optional="YES" attributeType="String"/>
+        <attribute name="rte" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="AltnTafData" representedClassName="AltnTafDataList" syncable="YES">
+        <attribute name="altnRwy" optional="YES" attributeType="String"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="taf" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ArrivalATC" representedClassName="ArrivalATCList" syncable="YES">
+        <attribute name="atcArr" optional="YES" attributeType="String"/>
+        <attribute name="atcDest" optional="YES" attributeType="String"/>
+        <attribute name="atcRwy" optional="YES" attributeType="String"/>
+        <attribute name="atcTransLvl" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="ArrivalATIS" representedClassName="ArrivalATISList" syncable="YES">
+        <attribute name="cloud" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dest" optional="YES" attributeType="String"/>
+        <attribute name="dp" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="qnh" optional="YES" attributeType="String"/>
+        <attribute name="remarks" optional="YES" attributeType="String"/>
+        <attribute name="rwy" optional="YES" attributeType="String"/>
+        <attribute name="temp" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="transLvl" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+        <attribute name="wind" optional="YES" attributeType="String"/>
+        <attribute name="wx" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ArrivalEntries" representedClassName="ArrivalEntriesList" syncable="YES">
+        <attribute name="entFuelOnChocks" optional="YES" attributeType="String"/>
+        <attribute name="entLdg" optional="YES" attributeType="String"/>
+        <attribute name="entOn" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="DepartureATC" representedClassName="DepartureATCList" syncable="YES">
+        <attribute name="atcDep" optional="YES" attributeType="String"/>
+        <attribute name="atcFL" optional="YES" attributeType="String"/>
+        <attribute name="atcRte" optional="YES" attributeType="String"/>
+        <attribute name="atcRwy" optional="YES" attributeType="String"/>
+        <attribute name="atcSQ" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DepartureATIS" representedClassName="DepartureATISList" syncable="YES">
+        <attribute name="cloud" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dp" optional="YES" attributeType="String"/>
+        <attribute name="qnh" optional="YES" attributeType="String"/>
+        <attribute name="remarks" optional="YES" attributeType="String"/>
+        <attribute name="rwy" optional="YES" attributeType="String"/>
+        <attribute name="temp" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="translvl" optional="YES" attributeType="String"/>
+        <attribute name="vis" optional="YES" attributeType="String"/>
+        <attribute name="wind" optional="YES" attributeType="String"/>
+        <attribute name="wx" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DepartureEntries" representedClassName="DepartureEntriesList" syncable="YES">
+        <attribute name="entFuelInTanks" optional="YES" attributeType="String"/>
+        <attribute name="entOff" optional="YES" attributeType="String"/>
+        <attribute name="entTakeoff" optional="YES" attributeType="String"/>
+        <attribute name="entTaxi" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Enroute" representedClassName="EnrouteList" syncable="YES">
+        <attribute name="actm" optional="YES" attributeType="String"/>
+        <attribute name="adn" optional="YES" attributeType="String"/>
+        <attribute name="afl" optional="YES" attributeType="String"/>
+        <attribute name="afrm" optional="YES" attributeType="String"/>
+        <attribute name="ata" optional="YES" attributeType="String"/>
+        <attribute name="awind" optional="YES" attributeType="String"/>
+        <attribute name="cord" optional="YES" attributeType="String"/>
+        <attribute name="diff" optional="YES" attributeType="String"/>
+        <attribute name="dis" optional="YES" attributeType="String"/>
+        <attribute name="drm" optional="YES" attributeType="String"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="fdiff" optional="YES" attributeType="String"/>
+        <attribute name="fwind" optional="YES" attributeType="String"/>
+        <attribute name="gsp" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imt" optional="YES" attributeType="String"/>
+        <attribute name="isSkipped" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="msa" optional="YES" attributeType="String"/>
+        <attribute name="oat" optional="YES" attributeType="String"/>
+        <attribute name="pdn" optional="YES" attributeType="String"/>
+        <attribute name="pfl" optional="YES" attributeType="String"/>
+        <attribute name="pfrm" optional="YES" attributeType="String"/>
+        <attribute name="posn" optional="YES" attributeType="String"/>
+        <attribute name="tas" optional="YES" attributeType="String"/>
+        <attribute name="vws" optional="YES" attributeType="String"/>
+        <attribute name="zfrq" optional="YES" attributeType="String"/>
+        <attribute name="ztm" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
+        <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
+        <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelArrivalDelayRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelEnrouteWeatherRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelFlightLevelRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelOtherRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelReciprocalRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelTrackShorteningRemark" optional="YES" attributeType="String"/>
+        <attribute name="fuelZFWChangeRemark" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="perActualLDW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualTOW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="perActualZFW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FuelData" representedClassName="FuelDataList" syncable="YES">
+        <attribute name="altn" optional="YES" attributeType="Binary"/>
+        <attribute name="burnoff" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="cont" optional="YES" attributeType="Binary"/>
+        <attribute name="dispAdd" optional="YES" attributeType="Binary"/>
+        <attribute name="hold" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="planReq" optional="YES" attributeType="Binary"/>
+        <attribute name="taxi" optional="YES" attributeType="Binary"/>
+        <attribute name="topup60" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="FuelEnrWX" representedClassName="FuelEnrWXList" syncable="YES">
+        <attribute name="aveMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="aveNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelEnrWXRef" inverseName="trackMilesRef" inverseEntity="FuelEnrWXRef"/>
+    </entity>
+    <entity name="FuelEnrWXRef" representedClassName="FuelEnrWXRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelEnrWX" inverseName="trackMiles" inverseEntity="FuelEnrWX"/>
+    </entity>
+    <entity name="FuelExtra" representedClassName="FuelExtraList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="includedArrDelays" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedEnrWx" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedFlightLevel" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedOthers" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedReciprocalRwy" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="includedTaxi" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedTrackShortening" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includedZFWchange" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="remarkArrDelays" optional="YES" attributeType="String"/>
+        <attribute name="remarkEnrWx" optional="YES" attributeType="String"/>
+        <attribute name="remarkFlightLevel" optional="YES" attributeType="String"/>
+        <attribute name="remarkOthers" optional="YES" attributeType="String"/>
+        <attribute name="remarkReciprocalRwy" optional="YES" attributeType="String"/>
+        <attribute name="remarkTaxi" optional="YES" attributeType="String"/>
+        <attribute name="remarkTrackShortening" optional="YES" attributeType="String"/>
+        <attribute name="remarkZFWChange" optional="YES" attributeType="String"/>
+        <attribute name="selectedArrDelays" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedEnrWx" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedFlightLevel00" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedFlightLevel000" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedOthers00" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedOthers000" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedReciprocalRwy" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedTaxi" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="selectedTrackShortening" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FuelFlightLevel" representedClassName="FuelFlightLevelList" syncable="YES">
+        <attribute name="aveDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="flightLevels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelFlightLevelRef" inverseName="flightLevelsRef" inverseEntity="FuelFlightLevelRef"/>
+    </entity>
+    <entity name="FuelFlightLevelRef" representedClassName="FuelFlightLevelRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="flightLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="waypoint" optional="YES" attributeType="String"/>
+        <relationship name="flightLevelsRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelFlightLevel" inverseName="flightLevels" inverseEntity="FuelFlightLevel"/>
+    </entity>
+    <entity name="FuelReciprocalRwy" representedClassName="FuelReciprocalRwyList" syncable="YES">
+        <attribute name="aveMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="aveNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelReciprocalRwyRef" inverseName="trackMilesRef" inverseEntity="FuelReciprocalRwyRef"/>
+    </entity>
+    <entity name="FuelReciprocalRwyRef" representedClassName="FuelReciprocalRwyRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelReciprocalRwy" inverseName="trackMiles" inverseEntity="FuelReciprocalRwy"/>
+    </entity>
+    <entity name="FuelTable" representedClassName="FuelTableList" syncable="YES">
+        <attribute name="firstColumn" optional="YES" attributeType="String"/>
+        <attribute name="fuel" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="policyReason" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FuelTaxi" representedClassName="FuelTaxiList" syncable="YES">
+        <attribute name="aveDiff" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="aveTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="ymax" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="times" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelTaxiRef" inverseName="timesRef" inverseEntity="FuelTaxiRef"/>
+    </entity>
+    <entity name="FuelTaxiRef" representedClassName="FuelTaxiRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="taxiTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="timesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTaxi" inverseName="times" inverseEntity="FuelTaxi"/>
+    </entity>
+    <entity name="FuelTrackMiles" representedClassName="FuelTrackMilesList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sumMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sumNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelTrackMilesRef" inverseName="trackMilesRef" inverseEntity="FuelTrackMilesRef"/>
+    </entity>
+    <entity name="FuelTrackMilesRef" representedClassName="FuelTrackMilesRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="phase" optional="YES" attributeType="String"/>
+        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTrackMiles" inverseName="trackMiles" inverseEntity="FuelTrackMiles"/>
+    </entity>
+    <entity name="HistoricalDelays" representedClassName="HistoricalDelaysList" syncable="YES">
+        <attribute name="arrTimeDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="arrTimeDelayWX" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="ymax" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="delays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistorycalDelaysRef" inverseName="delaysRef" inverseEntity="HistorycalDelaysRef"/>
+    </entity>
+    <entity name="HistorycalDelaysRef" representedClassName="HistorycalDelaysRefList" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="weather" optional="YES" attributeType="String"/>
+        <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
+    </entity>
+    <entity name="Map" representedClassName="WaypointMapList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
+        <attribute name="arrAirport" optional="YES" attributeType="String"/>
+        <attribute name="arrMetar" optional="YES" attributeType="String"/>
+        <attribute name="arrTaf" optional="YES" attributeType="String"/>
+        <attribute name="depAirport" optional="YES" attributeType="String"/>
+        <attribute name="depMetar" optional="YES" attributeType="String"/>
+        <attribute name="depTaf" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="notam" optional="YES" attributeType="String"/>
+        <attribute name="rank" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Note" representedClassName="NoteList" syncable="YES">
+        <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDefault" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="target" optional="YES" attributeType="String"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
+    </entity>
+    <entity name="PerfData" representedClassName="PerfDataList" syncable="YES">
+        <attribute name="airMiles" optional="YES" attributeType="String"/>
+        <attribute name="apd" optional="YES" attributeType="String"/>
+        <attribute name="ci" optional="YES" attributeType="String"/>
+        <attribute name="crzComp" optional="YES" attributeType="String"/>
+        <attribute name="fltRules" optional="YES" attributeType="String"/>
+        <attribute name="gndMiles" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limLDW" optional="YES" attributeType="String"/>
+        <attribute name="limTOW" optional="YES" attributeType="String"/>
+        <attribute name="limZFW" optional="YES" attributeType="String"/>
+        <attribute name="lvlChange" optional="YES" attributeType="String"/>
+        <attribute name="maxLDW" optional="YES" attributeType="String"/>
+        <attribute name="maxTOW" optional="YES" attributeType="String"/>
+        <attribute name="maxZFW" optional="YES" attributeType="String"/>
+        <attribute name="planLDW" optional="YES" attributeType="String"/>
+        <attribute name="planTOW" optional="YES" attributeType="String"/>
+        <attribute name="planZFW" optional="YES" attributeType="String"/>
+        <attribute name="zfwChange" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PerfInfo" representedClassName="PerfInfoList" syncable="YES">
+        <attribute name="airMiles" optional="YES" attributeType="String"/>
+        <attribute name="apd" optional="YES" attributeType="String"/>
+        <attribute name="ci" optional="YES" attributeType="String"/>
+        <attribute name="crzComp" optional="YES" attributeType="String"/>
+        <attribute name="fltRules" optional="YES" attributeType="String"/>
+        <attribute name="gndMiles" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lvlChange" optional="YES" attributeType="String"/>
+        <attribute name="zfwChange" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PerfWeight" representedClassName="PerfWeightList" syncable="YES">
+        <attribute name="actual" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limitation" optional="YES" attributeType="String"/>
+        <attribute name="max" optional="YES" attributeType="String"/>
+        <attribute name="plan" optional="YES" attributeType="String"/>
+        <attribute name="weight" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ProjArrivalDelays" representedClassName="ProjArrivalDelaysList" syncable="YES">
+        <attribute name="delays" optional="YES" attributeType="Binary"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="expectedDelay" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="ProjDelays" representedClassName="ProjDelaysList" syncable="YES">
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="expectedDelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="delays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProjDelaysRef" inverseName="delayRef" inverseEntity="ProjDelaysRef"/>
+    </entity>
+    <entity name="ProjDelaysRef" representedClassName="ProjDelaysListRef" syncable="YES">
+        <attribute name="delay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="maxdelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="mindelay" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
+    </entity>
+    <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
+        <attribute name="content" attributeType="String" defaultValueString=""/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="orderNum" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
+        <attribute name="blkTime" optional="YES" attributeType="String"/>
+        <attribute name="cm1" optional="YES" attributeType="String"/>
+        <attribute name="cm2" optional="YES" attributeType="String"/>
+        <attribute name="crewCA" optional="YES" attributeType="String"/>
+        <attribute name="crewFO" optional="YES" attributeType="String"/>
+        <attribute name="dep" optional="YES" attributeType="String"/>
+        <attribute name="depICAO" optional="YES" attributeType="String"/>
+        <attribute name="dest" optional="YES" attributeType="String"/>
+        <attribute name="destICAO" optional="YES" attributeType="String"/>
+        <attribute name="flightDate" optional="YES" attributeType="String"/>
+        <attribute name="fltNo" optional="YES" attributeType="String"/>
+        <attribute name="fltTime" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="planNo" optional="YES" attributeType="String"/>
+        <attribute name="pob" optional="YES" attributeType="String"/>
+        <attribute name="staLocal" optional="YES" attributeType="String"/>
+        <attribute name="staUTC" optional="YES" attributeType="String"/>
+        <attribute name="stdLocal" optional="YES" attributeType="String"/>
+        <attribute name="stdUTC" optional="YES" attributeType="String"/>
+        <attribute name="tailNo" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffArr" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffDep" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="SummaryRoute" representedClassName="SummaryRouteList" syncable="YES">
+        <attribute name="arrRwy" optional="YES" attributeType="String"/>
+        <attribute name="depRwy" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="levels" optional="YES" attributeType="String"/>
+        <attribute name="route" optional="YES" attributeType="String"/>
+        <attribute name="routeNo" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Tag" representedClassName="TagList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="tags" inverseEntity="Note"/>
+    </entity>
+    <entity name="TaxiTimes" representedClassName="TaxiTimesList" syncable="YES">
+        <attribute name="flights3" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="months3" optional="YES" attributeType="Binary"/>
+        <attribute name="week1" optional="YES" attributeType="Binary"/>
+    </entity>
+</model>

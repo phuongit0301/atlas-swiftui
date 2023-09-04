@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   MagicMountain.plist
+   ATLAS
+
+   Created by phuong phan on 27/08/2023.
+   Copyright (c) 2023 ___ORGANIZATIONNAME___. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>midCoord</key>
+        <string>{0, 0}</string>
+        <key>overlayTopLeftCoord</key>
+        <string>{85.0511, -180}</string>
+        <key>overlayTopRightCoord</key>
+        <string>{85.0511, 180}</string>
+        <key>overlayBottomLeftCoord</key>
+        <string>{-85.0511, -180}</string>
+        <key>overlayBottomRightCoord</key>
+        <string>{-85.0511, 180}</string>
+        <key>boundary</key>
+        <array>
+            <string>{85.0511, -180}</string>
+            <string>{85.0511, 0}</string>
+            <string>{85.0511, 180}</string>
+            <string>{0, 180}</string>
+            <string>{-85.0511, 180}</string>
+            <string>{-85.0511, 0}</string>
+            <string>{-85.0511, -180}</string>
+            <string>{0, -180}</string>
+            <string>{0, 0}</string>
+        </array>
+    </dict>
+</plist>
