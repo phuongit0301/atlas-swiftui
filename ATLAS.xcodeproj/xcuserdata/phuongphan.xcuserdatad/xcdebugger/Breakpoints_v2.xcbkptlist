@@ -529,8 +529,8 @@
             filePath = "ATLAS/BottomTabs.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "getDestinationSplit(item:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -545,8 +545,8 @@
             filePath = "ATLAS/BottomTabs.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "getDestinationSplit(item:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -845,8 +845,8 @@
             filePath = "ATLAS/Extensions/View.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "getDestination(_:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1610,8 +1610,8 @@
             filePath = "ATLAS/Extensions/View.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "hideKeyboardWhenTappedAround()"
             landmarkType = "7">
             <Locations>
@@ -1862,8 +1862,8 @@
             filePath = "ATLAS/Extensions/View.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "hideKeyboardWhenTappedAround()"
             landmarkType = "7">
             <Locations>
@@ -4550,99 +4550,6 @@
             endingLineNumber = "48"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/ContentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99 - 6bb1289949cc403d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; SwiftUI.NavigationStack&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt;&gt; in ATLAS.MainView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "196">
-               </Location>
-               <Location
-                  uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99 - 79f972e0d61daa89"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt; in closure #2 () -&gt; SwiftUI.NavigationStack&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt;&gt; in ATLAS.MainView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "104">
-               </Location>
-               <Location
-                  uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99 - d2181622d876ee5b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; SwiftUI.NavigationStack&lt;SwiftUI.NavigationPath, SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt;&gt; in ATLAS.MainView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "132">
-               </Location>
-               <Location
-                  uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99 - b33a4dca23434de5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt; in closure #2 () -&gt; SwiftUI.NavigationStack&lt;SwiftUI.NavigationPath, SwiftUI.TupleView&lt;(ATLAS.HomeViewSplit, ATLAS.BottomTabs)&gt;&gt; in ATLAS.MainView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "104">
-               </Location>
-               <Location
-                  uuid = "144ADE10-CB5A-45C6-94EC-28C4E73E0A99 - 5b482887caaed4fc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ATLAS.MainView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49"
-                  offsetFromSymbolStart = "2336">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8398,6 +8305,38 @@
             endingLineNumber = "954"
             landmarkName = "updateValues(editedIndex:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "20B26DD1-CFE3-4EE2-A64C-D1761D80E296 - 9d0311acfa1f70bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "954"
+                  endingLineNumber = "954"
+                  offsetFromSymbolStart = "22012">
+               </Location>
+               <Location
+                  uuid = "20B26DD1-CFE3-4EE2-A64C-D1761D80E296 - 9d0311acfa1f70bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "954"
+                  endingLineNumber = "954"
+                  offsetFromSymbolStart = "22088">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

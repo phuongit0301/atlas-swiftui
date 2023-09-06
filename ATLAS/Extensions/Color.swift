@@ -14,6 +14,7 @@ extension Color {
 
 struct ColorTheme {
     let cultured = Color("Cultured") //F7F7F7
+    let cultured1 = Color("Cultured1") //F6F6F6
     let eerieBlack = Color("EerieBlack") // 16161D
     let tuftsBlue = Color("TuftsBlue") //3E8BE2
     let aeroBlue = Color("AeroBlue")
@@ -33,6 +34,7 @@ struct ColorTheme {
     let lightGray1 = Color("LightGray1") //D1D1D6
     let lavender = Color("Lavender") //D4D5D6
     let azureishWhite = Color("AzureishWhite") //DBE5F1
+    let azureishWhite1 = Color("AzureishWhite1") //DDEAF7
     let tangerineYellow = Color("TangerineYellow") //FFCC00
     let ufoGreen = Color("UFOGreen") //34C759
     let azure = Color("Azure") //007AFF
@@ -44,8 +46,12 @@ struct ColorTheme {
     let graniteGray = Color("GraniteGray") //636366
     let orangePeel = Color("OrangePeel") //FF9F0A
     let coralRed = Color("CoralRed") //FF453A
+    let coralRed1 = Color("CoralRed1") //FF3B30
     let charlestonGreen = Color("CharlestonGreen") //272729
     let quickSilver = Color("QuickSilver") //A1A1A1
     let gray = Color("Gray") //BABABC
     let pictonBlue = Color("PictonBlue") //32ADE6
+    let silverFoil = Color("SilverFoil") //AEAEB2
+    let lavenderGray = Color("LavenderGray") //C7C7CC
+    let mediumOrchid = Color("MediumOrchid") //AF52DE
 }

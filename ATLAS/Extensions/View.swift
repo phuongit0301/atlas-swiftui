@@ -46,6 +46,10 @@ extension View {
         ModifiedContent(content: self, modifier: HasTabbar())
     }
     
+    func hasMainTabbar() -> some View {
+        ModifiedContent(content: self, modifier: HasMainTabbar())
+    }
+    
     func breadCrumb(_ screenName: NavigationEnumeration = NavigationEnumeration.FlightPlanScreen) -> some View {
         ModifiedContent(content: self, modifier: BreadCrumb(screenName: screenName))
     }
@@ -81,19 +85,6 @@ extension String {
     subscript(offset: Int) -> Character {
         self[index(startIndex, offsetBy: offset)]
     }
-    
-//    func toDateFormat( inputDateFormat inputFormat  : String,  ouputDateFormat outputFormat  : String ) -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = inputFormat
-//        if let date = (dateFormatter.date(from: self) != nil) {
-////            let date = dateFormatter.date(from: self)
-//            dateFormatter.dateFormat = outputFormat
-//            return dateFormatter.string(from: date)
-//        }
-//        else {
-//            return ""
-//        }
-//    }
 }
 
 struct TypeWriterText: View, Animatable {
@@ -159,105 +150,6 @@ struct TypingText: View {
         return interval
     }
 }
-//
-//class Paragrapher: ObservableObject {
-//    //what is the full text when we are done?
-//    //NOTE: this is stored as an array of Strings
-//    //      that we will join element-by-element
-//    //      when the time comes
-//    let fullText: [String]
-//    //how long between showing each element?
-//    let delay: Double
-//
-//    //the text we display to the outside world
-//    @Published var partialText = ""
-//
-//    //are we splitting the fullText by letters or words?
-//    enum ParagraphSplit {
-//        case letters
-//        case words
-//    }
-//    private let splitBy: ParagraphSplit
-//
-//    //used when we rejoin our split text
-//    private let separator: String
-//
-//    //how many elements have we shown so far
-//    private var showTextCount = 0
-//
-//    //reference to our timer
-//    private var timer = Timer()
-//
-//    var textComplete: Bool {
-//        showTextCount == fullText.count
-//    }
-//
-//    init(with fullText: String,
-//         splitBy: ParagraphSplit = .letters,
-//         delayedBy: Double = 0.2) {
-//
-//        //how do we want to split our fullText?
-//        self.splitBy = splitBy
-//
-//        if splitBy == .letters {
-//            //store each letter in our fullText array
-//            self.fullText = fullText.map { String($0) }
-//            //we want no separator between the letters
-//            //when we rejoin
-//            self.separator = ""
-//        } else {
-//            //store each word in our fullText array
-//            self.fullText = fullText.components(separatedBy: .whitespaces)
-//            //rejoin them with a space in between each word
-//            self.separator = " "
-//        }
-//
-//        //how long do we want to wait in between showing each element?
-//        self.delay = delayedBy
-//    }
-//
-//    //start displaying elements on our schedule
-//    func start() {
-//        timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: true) { [self] _ in
-//            //every time the Timer fires...
-//            //increment how many elements we are showing
-//            showTextCount += 1
-//            //create our partialText by joining the appropriate
-//            //number of elements
-//            partialText = fullText[0..<showTextCount].joined(separator: separator)
-//            //if we've got all elements, stop the timer
-//            if showTextCount == fullText.count {
-//                self.stop()
-//            }
-//        }
-//    }
-//
-//    //stop displaying elements
-//    //use: clearText == false to later resume where we left off
-//    //     clearText == true to start over again
-//    func stop(clearText: Bool = false) {
-//        timer.invalidate()
-//        //if we want to clear the text, erase our progress
-//        if clearText {
-//            showTextCount = 0
-//            partialText = ""
-//        }
-//    }
-//
-//    //convenience function for calling stop(clearText: true)
-//    func reset() {
-//        stop(clearText: true)
-//    }
-//
-//    var body: some View {
-//        ScrollView {
-//            Text(self.partialText).font(.custom("Inter-Regular", size: 16))
-//                .foregroundColor(Color.theme.eerieBlack)
-//                .padding(.horizontal, 16)
-//                .padding(.vertical, 12)
-//        }.frame(maxWidth: .infinity, maxHeight: 200)
-//    }
-//}
 
 enum Status {
     case normal
@@ -270,7 +162,6 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(
             AircraftReferenceContainer()
                 .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
                 .ignoresSafeArea()
             
@@ -568,6 +459,18 @@ public struct HasTabbar: ViewModifier {
     }
 }
 
+public struct HasMainTabbar: ViewModifier {
+    @EnvironmentObject var modelState: MainTabModelState
+    
+    public func body(content: Content) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Tabs
+            MainTabbarScrollable(tabbarItems: modelState.tabs, selectedTab: $modelState.selectedTab).previewDisplayName("MainTabBarView")
+            content
+        }.background(Color.theme.sonicSilver.opacity(0.12))
+    }
+}
+
 public struct BreadCrumbNotamRef: ViewModifier {
     @EnvironmentObject var refState: ScreenReferenceModel
     @Environment(\.dismiss) private var dismiss
@@ -790,3 +693,9 @@ extension String {
         
     }
 }
+
+let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+}()

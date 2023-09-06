@@ -27,7 +27,7 @@ struct ATLASApp: App {
     
     @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
-    @StateObject var mainNavModelState = MainNavModelState()
+    @StateObject var mainTabModelState = MainTabModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
     @StateObject var searchModelSplitState = SearchModelSplitState()
     @StateObject var fpModelSplitState = FPModelSplitState()
@@ -66,7 +66,7 @@ struct ATLASApp: App {
             .environmentObject(network)
                 .environmentObject(tabModelState)
                 .environmentObject(sideMenuModelState)
-                .environmentObject(mainNavModelState)
+                .environmentObject(mainTabModelState)
                 .environmentObject(flightNoteModelState)
                 .environmentObject(searchModelSplitState)
                 .environmentObject(flightPlanDetailModel)

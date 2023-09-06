@@ -14,51 +14,6 @@ import Foundation
 import CoreML
 import os
 
-struct MainView: View {
-    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-    @EnvironmentObject var sideMenuState: SideMenuModelState
-    @EnvironmentObject var modelState: TabModelState
-    
-    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
-    
-//    init() {
-//        for family: String in UIFont.familyNames
-//            {
-//                print(family)
-//                for names: String in UIFont.fontNames(forFamilyName: family)
-//                {
-//                    print("== \(names)")
-//                }
-//            }
-//    }
-    //app view wrapper
-    var body: some View {
-        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-//            NavigationSplitView(columnVisibility: $columnVisibility) {
-//                Sidebar()
-//            } detail: {
-//                NavigationStack {
-//                    HomeViewSplit()
-//                    BottomTabs()
-//                }
-//            }.navigationSplitViewStyle(.balanced)
-//                .accentColor(Color.theme.tuftsBlue)
-            NavigationStack {
-                HomeViewSplit()
-                BottomTabs()
-            }
-        } else {
-            NavigationSplitView(columnVisibility: $columnVisibility) {
-                Sidebar()
-            } detail: {
-                HomeView()
-            }.accentColor(Color.theme.tuftsBlue)
-                
-        }
-    }
-}
-
 func toggleSidebar() {
     #if os(iOS)
     #else
@@ -69,6 +24,7 @@ func toggleSidebar() {
 struct ContentView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State var loading = false
@@ -78,7 +34,19 @@ struct ContentView: View {
             if loading || coreDataModel.loading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
             } else {
-                MainView()
+                if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                    NavigationStack {
+                        HomeViewSplit()
+                        BottomTabs()
+                    }
+                } else {
+                    NavigationSplitView(columnVisibility: $columnVisibility) {
+                        Sidebar()
+                    } detail: {
+                        MainView()
+                    }.accentColor(Color.theme.tuftsBlue)
+                        
+                }
             }
         }
     }

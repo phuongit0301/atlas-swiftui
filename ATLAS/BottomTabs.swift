@@ -10,7 +10,6 @@ import SwiftUI
 
 struct BottomTabs: View {
     private var viewModel = TabModelState()
-    @State private var currentScreen = MainScreen.HomeScreen
     @State var selectedItem: BottomMenuItem? = nil
     @Environment(\.sceneSession) private var sceneSession: UISceneSession?
     

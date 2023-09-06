@@ -70,3 +70,12 @@ func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
     let components = Calendar.current.dateComponents([.day, .hour, .minute], from: sDateTime!, to: eDateTime!)
     return "\(String(format:"%02d:%02d", components.hour ?? 0, components.minute ?? 0))"
 }
+
+extension Date {
+    func isBetweeen(startDate: Date, endDate: Date) -> Bool {
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return (min(startDate, endDate) ... max(startDate, endDate)) ~= self
+    }
+}

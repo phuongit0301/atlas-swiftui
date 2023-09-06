@@ -121,14 +121,40 @@ class TabModelState: ObservableObject {
 }
 
 
-enum MainScreen {
-    case HomeScreen, FlightScreen
+enum MainNavigationEnumeration {
+    case HomeSectionView
+    case CalendarSectionView
+    case LogbookSectionView
+    case RecencySectionView
+    case AABBASectionView
+    case ChatSectionView
 }
 
-class MainNavModelState: ObservableObject {
-    @Published var currentScreen: MainScreen
+struct IMainTabs: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+    var screenName: MainNavigationEnumeration
+    var isShowTabbar: Bool = true
+    var isDisabled = false // tabbar top disabled or not
+}
+
+class MainTabModelState: ObservableObject {
+    let Data = [
+        IMainTabs(id: UUID(), name: "Home", screenName: MainNavigationEnumeration.HomeSectionView, isShowTabbar: true, isDisabled: false),
+        IMainTabs(id: UUID(), name: "Calendar", screenName: MainNavigationEnumeration.CalendarSectionView, isShowTabbar: true, isDisabled: false),
+        IMainTabs(id: UUID(), name: "Logbook", screenName: MainNavigationEnumeration.LogbookSectionView, isShowTabbar: true, isDisabled: false),
+        IMainTabs(id: UUID(), name: "Recency", screenName: MainNavigationEnumeration.RecencySectionView, isShowTabbar: true, isDisabled: false),
+        IMainTabs(id: UUID(), name: "AABBA", screenName: MainNavigationEnumeration.AABBASectionView, isShowTabbar: true, isDisabled: false),
+        IMainTabs(id: UUID(), name: "Chat", screenName: MainNavigationEnumeration.ChatSectionView, isShowTabbar: true, isDisabled: true),
+    ]
+    
+    @Published var selectedNav: MainNavigationEnumeration
+    @Published var tabs: [IMainTabs]
+    @Published var selectedTab: IMainTabs
     
     init() {
-        self.currentScreen = MainScreen.HomeScreen
+        self.selectedNav = MainNavigationEnumeration.HomeSectionView
+        self.tabs = Data
+        self.selectedTab = Data[0]
     }
 }
