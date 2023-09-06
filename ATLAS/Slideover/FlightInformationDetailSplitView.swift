@@ -393,8 +393,8 @@ struct FlightInformationDetailSplitView: View {
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: proxy.size.width / 4, alignment: .leading)
                                     HStack {
-                                        Picker("", selection: $selectedFO) {
-                                            ForEach(SummaryDataDropDown.allCases, id: \.self) {
+                                        Picker("Select Event Type", selection: $selectedFO) {
+                                            ForEach(EventDataDropDown.allCases, id: \.self) {
                                                 Text($0.rawValue).tag($0.rawValue)
                                             }
                                         }.pickerStyle(MenuPickerStyle()).fixedSize()

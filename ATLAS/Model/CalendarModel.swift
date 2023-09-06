@@ -54,3 +54,16 @@ class CalendarModel: ObservableObject {
         ]
     }
 }
+
+enum EventDataDropDown: String, CaseIterable, Identifiable {
+    case flight = "Flight"
+    case cop = "COP"
+    case otherEvent = "Other Event"
+    var id: Self { self }
+}
+
+enum ReminderDataDropDown: String, CaseIterable, Identifiable {
+    case before = "24 hours before"
+    case after = "24 hours after"
+    var id: Self { self }
+}

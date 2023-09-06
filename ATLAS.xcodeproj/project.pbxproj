@@ -216,6 +216,7 @@
 		3EE170852AA83207004DA27C /* MainTabbarScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170842AA83207004DA27C /* MainTabbarScrollable.swift */; };
 		3EE170872AA859AC004DA27C /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170862AA859AC004DA27C /* CalendarModel.swift */; };
 		3EE170892AA859F7004DA27C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170882AA859F7004DA27C /* CalendarView.swift */; };
+		3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708A2AA8768E004DA27C /* CommonStepper.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -502,6 +503,7 @@
 		3EE170842AA83207004DA27C /* MainTabbarScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarScrollable.swift; sourceTree = "<group>"; };
 		3EE170862AA859AC004DA27C /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
 		3EE170882AA859F7004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3EE1708A2AA8768E004DA27C /* CommonStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStepper.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 				3EB99CE22A508F220091BC08 /* ModalPickerMultiple.swift */,
 				3E086D742A94914700BE00AD /* FuelModal.swift */,
 				3E086D762A94918F00BE00AD /* MapModal.swift */,
+				3EE1708A2AA8768E004DA27C /* CommonStepper.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1472,6 +1475,7 @@
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
+				3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */,
 				3E086D852A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
