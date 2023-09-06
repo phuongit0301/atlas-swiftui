@@ -243,30 +243,50 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
             
             
             // List Entries
-//            List(entries) { entry in
-//                HStack(alignment: .top) {
-//                    Rectangle().fill(Color.theme.azure.opacity(0.5))
-//                        .frame(width: 4, height: 24)
-//                        .overlay(
-//                            RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
-//                        )
-//                        .cornerRadius(100)
-//                    
-//                    VStack(alignment: .center) {
-//                        HStack {
-//                            Text("234 SIN DXB LIS DXB SIN").font(.system(size: 17, weight: .semibold))
-//                            Spacer()
-//                            Text("\(entry.timestamp, formatter: dateFormatter)").font(.system(size: 15, weight: .regular))
-//                        }
-//                        
-//                        Divider()
-//                    }
-//                }.listRowSeparator(.hidden)
-//                    .listRowInsets(EdgeInsets.init(top: 16, leading: 0, bottom: 16, trailing: 0))
-//            }.listStyle(.insetGrouped)
-//            .scrollContentBackground(.hidden)
+            List(entries) { entry in
+                HStack(alignment: .top) {
+                    Rectangle().fill(eventsOfDate(entry))
+                        .frame(width: 4, height: 24)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
+                        )
+                        .cornerRadius(100)
+                    
+                    VStack(alignment: .center) {
+                        HStack {
+                            Text("234 SIN DXB LIS DXB SIN").font(.system(size: 17, weight: .semibold))
+                            Spacer()
+                            Text("\(entry.timestamp, formatter: dateFormatter)").font(.system(size: 15, weight: .regular))
+                        }
+                        
+                        Divider()
+                    }
+                }.listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets.init(top: 16, leading: 0, bottom: 16, trailing: 0))
+            }.listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
             
         }
+    }
+    
+    func eventsOfDate(_ entry: IEntries) -> Color {
+        if entry.status == 1 {
+            return Color.theme.lavenderGray
+        }
+        
+        if entry.status == 2 {
+            return Color.theme.azure
+        }
+        
+        if entry.status == 3 {
+            return Color.theme.coralRed1
+        }
+        
+        if entry.status == 4 {
+            return Color.theme.mediumOrchid
+        }
+        
+        return Color.clear
     }
 }
 
