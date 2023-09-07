@@ -39,7 +39,8 @@ struct MainTabbarScrollable: View {
             }.cornerRadius(5)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-        }
+        }.zIndex(10)
+            .background(Color.theme.antiFlashWhite)
  
     }
 }

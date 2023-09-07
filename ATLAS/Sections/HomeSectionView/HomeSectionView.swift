@@ -12,7 +12,10 @@ struct HomeSectionView: View {
         GeometryReader { proxy in
             HStack(spacing: 0) {
                 CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width / 3) + 32)
-            }.padding()
+                
+                HomeInformationView()
+            }.padding(.horizontal)
+                .padding(.bottom)
         }
     }
 }

@@ -54,4 +54,6 @@ struct ColorTheme {
     let silverFoil = Color("SilverFoil") //AEAEB2
     let lavenderGray = Color("LavenderGray") //C7C7CC
     let mediumOrchid = Color("MediumOrchid") //AF52DE
+    let vividGamboge = Color("VividGamboge") //FF9500
+    let gainsboro = Color("Gainsboro") //DCDCDC
 }
