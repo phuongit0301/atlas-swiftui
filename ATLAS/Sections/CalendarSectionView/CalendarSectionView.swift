@@ -9,12 +9,14 @@ import SwiftUI
 
 struct CalendarSectionView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct CalendarSectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarSectionView()
+        GeometryReader { proxy in
+            HStack(spacing: 0) {
+                CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3))
+                
+                VStack {
+                    Text("Event")
+                }
+            }
+        }
     }
 }

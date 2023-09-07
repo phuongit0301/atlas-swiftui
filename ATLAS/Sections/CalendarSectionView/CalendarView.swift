@@ -1,13 +1,13 @@
 //
-//  HomeCalendarView.swift
+//  CalendarView.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/09/2023.
+//  Created by phuong phan on 07/09/2023.
 //
 
 import SwiftUI
 
-struct HomeCalendarView: View {
+struct CalendarView: View {
     private var calendar: Calendar
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
@@ -18,7 +18,11 @@ struct HomeCalendarView: View {
     private static var now = Date()
     
     @State private var entries: [IEntries] = CalendarModel().listItem
+    @State private var events: [IEvent] = CalendarModel().listEvent
     @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
+    
+    // Draw BG Event
+    @State var countDate = 1
     
     init(calendar: Calendar) {
         self.calendar = calendar
@@ -31,17 +35,17 @@ struct HomeCalendarView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HomeCalendarViewComponent(
+            CalendarViewComponent(
                 calendar: calendar,
                 date: $selectedDate,
                 entries: $entries,
-                content: { date in
+                content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
                         Button(action: { selectedDate = date }) {
                             VStack {
                                 Text(dayFormatter.string(from: date))
                                     .padding(6)
-                                    // Added to make selection sizes equal on all numbers.
+                                // Added to make selection sizes equal on all numbers.
                                     .frame(width: 33, height: 33)
                                     .foregroundColor(calendar.isDateInToday(date) ? Color.white : .primary)
                                     .background(
@@ -50,10 +54,12 @@ struct HomeCalendarView: View {
                                         : .clear
                                     )
                                     .cornerRadius(100)
-                                
-                                Circle().fill(eventsOfDate(date: date)).frame(width: 8, height: 8)
                             }
                         }.frame(maxWidth: .infinity)
+                        
+                        ForEach(events, id: \.self) {event in
+                            CalendarBg(date: date, event: event, countDate: $countDate)
+                        }
                     }.padding(.bottom)
                         .background(eventsOfRange(date: date))
                 },
@@ -81,14 +87,14 @@ struct HomeCalendarView: View {
                             ) else {
                                 return
                             }
-
+                            
                             selectedDate = newDate
-
+                            
                         } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title2)
-                                .foregroundColor(Color.theme.azure)
-                        }.buttonStyle(PlainButtonStyle())
+                            Image(systemName: "chevron.left").font(.title2).padding(.horizontal)
+                        }
+                        
+                        Spacer()
                         
                         Button {
                             selectedDate = Date.now
@@ -96,9 +102,10 @@ struct HomeCalendarView: View {
                             Text("\(monthFormatter.string(from: date)) (Local Time)")
                                 .foregroundColor(Color.theme.azure)
                                 .font(.system(size: 17, weight: .regular))
-                        }.buttonStyle(PlainButtonStyle())
-                            .padding(.horizontal)
-
+                        }
+                        
+                        Spacer()
+                        
                         Button {
                             guard let newDate = calendar.date(
                                 byAdding: .month,
@@ -107,14 +114,12 @@ struct HomeCalendarView: View {
                             ) else {
                                 return
                             }
-
+                            
                             selectedDate = newDate
-
+                            
                         } label: {
-                            Image(systemName: "chevron.right")
-                                .font(.title2)
-                                .foregroundColor(Color.theme.azure)
-                        }.buttonStyle(PlainButtonStyle())
+                            Image(systemName: "chevron.right").font(.title2).padding(.horizontal)
+                        }
                     }
                 }
             ).equatable()
@@ -126,39 +131,14 @@ struct HomeCalendarView: View {
             .cornerRadius(8)
     }
     
-    func dateHasEvents(date: Date) -> Bool {
-        
+    func numberOfEventsInDate(date: Date) -> Int {
+        var count: Int = 0
         for entry in entries {
             if calendar.isDate(date, inSameDayAs: entry.timestamp) {
-                return true
+                count += 1
             }
         }
-        
-        return false
-    }
-    
-    func eventsOfDate(date: Date) -> Color {
-        for entry in entries {
-            if calendar.isDate(date, inSameDayAs: entry.timestamp) {
-                if entry.status == 1 {
-                    return Color.theme.lavenderGray
-                }
-                
-                if entry.status == 2 {
-                    return Color.theme.azure
-                }
-                
-                if entry.status == 3 {
-                    return Color.theme.coralRed1
-                }
-                
-                if entry.status == 4 {
-                    return Color.theme.mediumOrchid
-                }
-            }
-        }
-        
-        return Color.clear
+        return count
     }
     
     func eventsOfRange(date: Date) -> Color {
@@ -171,27 +151,161 @@ struct HomeCalendarView: View {
     }
 }
 
-// MARK: - Component
-public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
+struct CalendarBg: View {
+    var date: Date
+    @State var event: IEvent?
+    @Binding var countDate: Int
+    
+    var body: some View {
+        var dateHasEvents: [String: Bool] {
+            var isLeftCorner = false
+            var isCenter = false
+            var isRightCorner = false
+            var hasEvent = false
+            
+            let dateFormmater = DateFormatter()
+            dateFormmater.dateFormat = "yyyy-MM-dd"
+            
+            let startDate = dateFormmater.date(from: event!.startDate)
+            let endDate = dateFormmater.date(from: event!.endDate)
+            
+            if date == startDate {
+                isLeftCorner = true
+                hasEvent = true
+            } else if date >= startDate! && date < endDate! {
+                isCenter = true
+                hasEvent = true
+            }
+            
+            if date == endDate {
+                isRightCorner = true
+                hasEvent = true
+            }
+            
+            return ["hasEvent": hasEvent, "isLeftCorner": isLeftCorner, "isCenter": isCenter, "isRightCorner": isRightCorner]
+        }
+        
+        HStack {
+            if dateHasEvents["hasEvent"]! {
+                
+                if dateHasEvents["isCenter"]!  {
+                    HStack(alignment: .center, spacing: 0) {
+                        Text("")
+                            .font(.system(size: 11, weight: .regular))
+                            .padding(.vertical, 4)
+                    }.frame(height: 22)
+                        .frame(maxWidth: .infinity)
+                        .background(bgColor(event!))
+                }
+                
+                if dateHasEvents["isLeftCorner"]! && dateHasEvents["isRightCorner"]! {
+                    HStack(alignment: .center, spacing: 0) {
+                        Text(event?.name ?? "").padding(.vertical, 4)
+                            .font(.system(size: 11, weight: .regular))
+                    }.frame(height: 22)
+                        .frame(maxWidth: .infinity)
+                        .background(bgColor(event!))
+                        .roundedCorner(8, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
+                } else {
+                    if dateHasEvents["isLeftCorner"]! {
+                        HStack(alignment: .center, spacing: 0) {
+                            Text(event?.name ?? "").padding(.vertical, 4)
+                                .font(.system(size: 11, weight: .regular))
+                        }.frame(height: 22)
+                            .frame(maxWidth: .infinity)
+                            .background(bgColor(event!))
+                            .roundedCorner(8, corners: [.topLeft, .bottomLeft])
+                    }
+                    
+                    if dateHasEvents["isRightCorner"]! {
+                        HStack(alignment: .center, spacing: 0) {
+                            Text("").padding(.vertical, 4)
+                        }
+                        .frame(height: 22)
+                            .frame(maxWidth: .infinity)
+                            .background(bgColor(event!))
+                            .roundedCorner(8, corners: [.topRight, .bottomRight])
+                    }
+                }
+                
+            }
+//            else {
+//                if countDate < 7 {
+//                    Text("").padding(.vertical, 4).frame(height: 22)
+//                }
+//            }
+        }
+        .onAppear {
+            var num: Double = 1/7
+            var num2: Double = 8/7
+            print(num.rounded(.up))
+            print(num2.rounded(.up))
+            if countDate == 7 || dateHasEvents["hasEvent"]! {
+                countDate = 1
+            } else {
+                countDate += 1
+            }
+        }
+    }
+    
+    func bgColor(_ event: IEvent) -> Color {
+        if event.status == 1 {
+            return Color.theme.lavenderGray
+        }
+        
+        if event.status == 2 {
+            return Color.theme.azure
+        }
+        
+        if event.status == 3 {
+            return Color.theme.coralRed1
+        }
+        
+        if event.status == 4 {
+            return Color.theme.mediumOrchid
+        }
+        
+        if event.status == 5 || event.status == 6 {
+            return Color.theme.lavenderGray
+        }
+        
+        return Color.clear
+    }
+    
+    func borderColor(_ event: IEvent) -> Color {
+        if event.status == 5 {
+            return Color.theme.azure
+        }
+        
+        if event.status == 6 {
+            return Color.theme.coralRed1
+        }
+        
+        return Color.clear
+    }
+}
+    // MARK: - Component
+public struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
     @Environment(\.colorScheme) var colorScheme
-
+    
     // Injected dependencies
     private var calendar: Calendar
     @Binding private var date: Date
     @Binding private var entries: [IEntries]
-    private let content: (Date) -> Day
+    private let content: (Date, ClosedRange<Date>?) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
     private let title: (Date) -> Title
     
     // Constants
     private let daysInWeek = 7
+    @State private var dateRange: ClosedRange<Date>?
     
     init(
         calendar: Calendar,
         date: Binding<Date>,
         entries: Binding<[IEntries]>,
-        @ViewBuilder content: @escaping (Date) -> Day,
+        @ViewBuilder content: @escaping (Date, ClosedRange<Date>?) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
         @ViewBuilder title: @escaping (Date) -> Title
@@ -213,91 +327,49 @@ public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Tr
             
             Section(header:
                         title(month)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12.5)
-                            .background(Color.theme.cultured1)
-                            .roundedCorner(8, corners: [.topLeft, .topRight])
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12.5)
+                .background(Color.theme.cultured1)
+                .roundedCorner(8, corners: [.topLeft, .topRight])
             ){ }
             
             VStack {
+                
                 LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: daysInWeek)) {
                     ForEach(days.prefix(daysInWeek), id: \.self, content: header)
                 }
                 
                 Divider()
                 
-                LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: daysInWeek), spacing: 0) {
-                    ForEach(days, id: \.self) { date in
-                        if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                            content(date)
-                        } else {
-                            trailing(date)
+                VStack {
+                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: daysInWeek), spacing: 0) {
+                        ForEach(days, id: \.self) { date in
+                            if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                                content(date, dateRange)
+                            } else {
+                                trailing(date)
+                            }
                         }
                     }
                 }
+                
+                
             }
-            .frame(height: 412)
-            .background(Color.theme.cultured1)
+            .background(Color.white)
             .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
-            
-            
-            // List Entries
-            List(entries) { entry in
-                HStack(alignment: .top) {
-                    Rectangle().fill(eventsOfDate(entry))
-                        .frame(width: 4, height: 24)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
-                        )
-                        .cornerRadius(100)
-                    
-                    VStack(alignment: .center) {
-                        HStack {
-                            Text("234 SIN DXB LIS DXB SIN").font(.system(size: 17, weight: .semibold))
-                            Spacer()
-                            Text("\(entry.timestamp, formatter: dateFormatter)").font(.system(size: 15, weight: .regular))
-                        }
-                        
-                        Divider()
-                    }
-                }.listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets.init(top: 16, leading: 0, bottom: 16, trailing: 0))
-            }.listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            
         }
-    }
-    
-    func eventsOfDate(_ entry: IEntries) -> Color {
-        if entry.status == 1 {
-            return Color.theme.lavenderGray
-        }
-        
-        if entry.status == 2 {
-            return Color.theme.azure
-        }
-        
-        if entry.status == 3 {
-            return Color.theme.coralRed1
-        }
-        
-        if entry.status == 4 {
-            return Color.theme.mediumOrchid
-        }
-        
-        return Color.clear
     }
 }
 
 // MARK: - Conformances
-extension HomeCalendarViewComponent: Equatable {
-    public static func == (lhs: HomeCalendarViewComponent<Day, Header, Title, Trailing>, rhs: HomeCalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
+extension CalendarViewComponent: Equatable {
+    public static func == (lhs: CalendarViewComponent<Day, Header, Title, Trailing>, rhs: CalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
         lhs.calendar == rhs.calendar && lhs.date == rhs.date
     }
 }
 
-// MARK: - Helpers
-private extension HomeCalendarViewComponent {
+    // MARK: - Helpers
+private extension CalendarViewComponent {
     func makeDays() -> [Date] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: date),
               let monthFirstWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
@@ -305,7 +377,7 @@ private extension HomeCalendarViewComponent {
         else {
             return []
         }
-
+        
         let dateInterval = DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end)
         return calendar.generateDays(for: dateInterval)
     }
@@ -317,25 +389,25 @@ private extension Calendar {
         matching components: DateComponents
     ) -> [Date] {
         var dates = [dateInterval.start]
-
+        
         enumerateDates(
             startingAfter: dateInterval.start,
             matching: components,
             matchingPolicy: .nextTime
         ) { date, _, stop in
             guard let date = date else { return }
-
+            
             guard date < dateInterval.end else {
                 stop = true
                 return
             }
-
+            
             dates.append(date)
         }
-
+        
         return dates
     }
-
+    
     func generateDays(for dateInterval: DateInterval) -> [Date] {
         generateDates(
             for: dateInterval,
@@ -359,4 +431,3 @@ private extension DateFormatter {
         self.calendar = calendar
     }
 }
-

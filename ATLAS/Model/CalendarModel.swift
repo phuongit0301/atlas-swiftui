@@ -12,12 +12,21 @@ import Foundation
 struct IEntries: Identifiable, Hashable {
     var id = UUID()
     var timestamp: Date
-    var status: Int = 1 // 1: StandBy, 2: Completed, 3: Leave, 4: TODO
+    var status: Int = 1 // 1: StandBy, 2: Completed, 3: Leave, 4: Internal training, 5: InProgress, 6: Rest
+}
+
+struct IEvent: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+    var status: Int = 1 // 1: StandBy, 2: Completed, 3: Leave, 4: Internal training, 5: InProgress, 6: Rest
+    var startDate: String
+    var endDate: String
 }
 
 class CalendarModel: ObservableObject {
     @Published var listItem: [IEntries] = []
     @Published var dateRange: [ClosedRange<Date>] = []
+    @Published var listEvent: [IEvent] = []
     
     init() {
         let dateFormatter = DateFormatter()
@@ -51,6 +60,16 @@ class CalendarModel: ObservableObject {
             IEntries(timestamp: Calendar.current.date(byAdding: .day, value: 8, to: today)!, status: 3),
             IEntries(timestamp: Calendar.current.date(byAdding: .day, value: 9, to: today)!, status: 4),
             IEntries(timestamp: Calendar.current.date(byAdding: .day, value: 10, to: today)!, status: 4)
+        ]
+        
+        listEvent = [
+            IEvent(id: UUID(), name: "COP: 234 SIN DXB LIS DXB SIN", status: 5, startDate: dateFormatter.string(from: today), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)),
+            IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: today), endDate: dateFormatter.string(from: today)),
+            IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)),
+            IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)),
+            IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)),
+            IEvent(id: UUID(), name: "Leave", status: 3, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 13, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 20, to: today)!)),
+            IEvent(id: UUID(), name: "Internal training", status: 4, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 20, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 22, to: today)!)),
         ]
     }
 }
