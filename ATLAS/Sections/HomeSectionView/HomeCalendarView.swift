@@ -1,5 +1,5 @@
 //
-//  CalendarView.swift
+//  HomeCalendarView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 06/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarView: View {
+struct HomeCalendarView: View {
     private var calendar: Calendar
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
@@ -31,7 +31,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            CalendarViewComponent(
+            HomeCalendarViewComponent(
                 calendar: calendar,
                 date: $selectedDate,
                 entries: $entries,
@@ -172,7 +172,7 @@ struct CalendarView: View {
 }
 
 // MARK: - Component
-public struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
+public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
     @Environment(\.colorScheme) var colorScheme
 
     // Injected dependencies
@@ -291,15 +291,15 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
 }
 
 // MARK: - Conformances
-extension CalendarViewComponent: Equatable {
-    public static func == (lhs: CalendarViewComponent<Day, Header, Title, Trailing>, rhs: CalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
+extension HomeCalendarViewComponent: Equatable {
+    public static func == (lhs: HomeCalendarViewComponent<Day, Header, Title, Trailing>, rhs: HomeCalendarViewComponent<Day, Header, Title, Trailing>) -> Bool {
         lhs.calendar == rhs.calendar && lhs.date == rhs.date
     }
 }
 
 // MARK: - Helpers
 
-private extension CalendarViewComponent {
+private extension HomeCalendarViewComponent {
     func makeDays() -> [Date] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: date),
               let monthFirstWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),

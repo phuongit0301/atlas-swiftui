@@ -236,8 +236,7 @@ struct HomeInformationView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundColor(Color.black)
                                 }
-                            }.padding(.top, 17.5)
-                                .padding(.bottom, 9.5)
+                            }.padding(.vertical, 8)
                                 .padding(.horizontal)
                             
                             Divider()
@@ -254,8 +253,7 @@ struct HomeInformationView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundColor(Color.black)
                                 }
-                            }.padding(.top, 9.5)
-                                .padding(.bottom, 17.5)
+                            }.padding(.vertical, 8)
                                 .padding(.horizontal)
                         }.frame(maxWidth: .infinity)
                             .padding(.bottom)
@@ -314,8 +312,7 @@ struct HomeInformationView: View {
                                     Text("922:47 / 900:00")
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundColor(Color.theme.coralRed1)
-                                }.padding(.top)
-                                    .padding(.bottom, 8)
+                                }.padding(.vertical, 8)
                                     .padding(.horizontal)
                                     .frame(alignment: .leading)
                                 
@@ -333,8 +330,7 @@ struct HomeInformationView: View {
                                     Text("922:47 / 900:00")
                                         .font(.system(size: 17, weight: .regular))
                                         .foregroundColor(Color.theme.vividGamboge)
-                                }.padding(.top, 8)
-                                    .padding(.bottom)
+                                }.padding(.vertical, 8)
                                     .padding(.horizontal)
                                     .frame(alignment: .leading)
                             }

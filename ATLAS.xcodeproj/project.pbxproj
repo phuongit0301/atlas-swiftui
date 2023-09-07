@@ -215,7 +215,7 @@
 		3EE170832AA82E38004DA27C /* ChatSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170822AA82E38004DA27C /* ChatSectionView.swift */; };
 		3EE170852AA83207004DA27C /* MainTabbarScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170842AA83207004DA27C /* MainTabbarScrollable.swift */; };
 		3EE170872AA859AC004DA27C /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170862AA859AC004DA27C /* CalendarModel.swift */; };
-		3EE170892AA859F7004DA27C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170882AA859F7004DA27C /* CalendarView.swift */; };
+		3EE170892AA859F7004DA27C /* HomeCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170882AA859F7004DA27C /* HomeCalendarView.swift */; };
 		3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708A2AA8768E004DA27C /* CommonStepper.swift */; };
 		3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
@@ -503,7 +503,7 @@
 		3EE170822AA82E38004DA27C /* ChatSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSectionView.swift; sourceTree = "<group>"; };
 		3EE170842AA83207004DA27C /* MainTabbarScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarScrollable.swift; sourceTree = "<group>"; };
 		3EE170862AA859AC004DA27C /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
-		3EE170882AA859F7004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3EE170882AA859F7004DA27C /* HomeCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarView.swift; sourceTree = "<group>"; };
 		3EE1708A2AA8768E004DA27C /* CommonStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStepper.swift; sourceTree = "<group>"; };
 		3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInformationView.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
@@ -1022,7 +1022,7 @@
 			isa = PBXGroup;
 			children = (
 				3EE170732AA82D7E004DA27C /* HomeSectionView.swift */,
-				3EE170882AA859F7004DA27C /* CalendarView.swift */,
+				3EE170882AA859F7004DA27C /* HomeCalendarView.swift */,
 				3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */,
 			);
 			path = HomeSectionView;
@@ -1616,7 +1616,7 @@
 				3E4A366C2A570B9A00027C61 /* NoteList+CoreDataProperties.swift in Sources */,
 				3E4E101C2A652A2D0026802B /* PreviousSearchReferenceView.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
-				3EE170892AA859F7004DA27C /* CalendarView.swift in Sources */,
+				3EE170892AA859F7004DA27C /* HomeCalendarView.swift in Sources */,
 				3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */,
 				3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
