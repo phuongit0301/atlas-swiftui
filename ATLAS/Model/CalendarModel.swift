@@ -92,8 +92,5 @@ enum CalendarMonthDropDown: String, CaseIterable, Identifiable {
     case year = "Year"
     case week = "Week"
     case day = "Day"
-    case navaid = "Navaid"
-    case obstacles = "Obstacles"
-    case others = "Others"
     var id: Self { self }
 }

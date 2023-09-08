@@ -9,8 +9,8 @@ import SwiftUI
 
 struct EventModalView: View {
     @Binding var showModal: Bool
-    @State private var selectedEvent = ""
-    @State private var selectedReminder = ""
+    @State private var selectedEvent = EventDataDropDown.flight
+    @State private var selectedReminder = ReminderDataDropDown.before
     
     @State var tfEventName: String = ""
     @State private var isAllDay = false
@@ -49,8 +49,6 @@ struct EventModalView: View {
                         Text("Event Type")
 
                         Picker("", selection: $selectedEvent) {
-                            Text("Select Event Type").tag("")
-
                             ForEach(EventDataDropDown.allCases, id: \.self) {
                                 Text($0.rawValue).tag($0.rawValue)
                             }
