@@ -14,6 +14,7 @@ struct CalendarView: View {
     private let weekDayFormatter: DateFormatter
     private let fullFormatter: DateFormatter
     
+    @State private var selected = ""
     @State private var selectedDate = Self.now
     private static var now = Date()
     
@@ -39,6 +40,7 @@ struct CalendarView: View {
                 calendar: calendar,
                 date: $selectedDate,
                 entries: $entries,
+                events: $events,
                 content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
                         Button(action: { selectedDate = date }) {
@@ -60,8 +62,8 @@ struct CalendarView: View {
                         ForEach(events, id: \.self) {event in
                             CalendarBg(date: date, event: event, countDate: $countDate)
                         }
-                    }.padding(.bottom)
-                        .background(eventsOfRange(date: date))
+                    }.frame(height: 103, alignment: .topLeading)
+                    .background(eventsOfRange(date: date))
                 },
                 // assign color for past and future dates
                 trailing: { date in
@@ -74,61 +76,63 @@ struct CalendarView: View {
                     }.padding(.bottom)
                 },
                 header: { date in
-                    Text(weekDayFormatter.string(from: date)).font(.system(size: 10, weight: .semibold))
+                    Text(weekDayFormatter.string(from: date)).font(.system(size: 15, weight: .semibold))
                 },
                 title: { date in
-                    HStack(alignment: .center) {
-                        
-                        Button {
-                            guard let newDate = calendar.date(
-                                byAdding: .month,
-                                value: -1,
-                                to: selectedDate
-                            ) else {
-                                return
-                            }
+                    HStack(alignment: .center, spacing: 0) {
+                        HStack(spacing: 0) {
+                            Button {
+                                guard let newDate = calendar.date(
+                                    byAdding: .month,
+                                    value: -1,
+                                    to: selectedDate
+                                ) else {
+                                    return
+                                }
+                                
+                                selectedDate = newDate
+                                
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .font(.title2).padding(.horizontal)
+                                    .foregroundColor(Color.theme.azure)
+                            }.buttonStyle(PlainButtonStyle())
                             
-                            selectedDate = newDate
-                            
-                        } label: {
-                            Image(systemName: "chevron.left").font(.title2).padding(.horizontal)
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            selectedDate = Date.now
-                        } label: {
                             Text("\(monthFormatter.string(from: date)) (Local Time)")
                                 .foregroundColor(Color.theme.azure)
                                 .font(.system(size: 17, weight: .regular))
+                            
+                            Button {
+                                guard let newDate = calendar.date(
+                                    byAdding: .month,
+                                    value: 1,
+                                    to: selectedDate
+                                ) else {
+                                    return
+                                }
+                                selectedDate = newDate
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .font(.title2).padding(.horizontal)
+                                    .foregroundColor(Color.theme.azure)
+                            }.buttonStyle(PlainButtonStyle())
                         }
                         
                         Spacer()
                         
-                        Button {
-                            guard let newDate = calendar.date(
-                                byAdding: .month,
-                                value: 1,
-                                to: selectedDate
-                            ) else {
-                                return
-                            }
+                        HStack {
+                            Picker("", selection: $selected) {
+                                ForEach(CalendarMonthDropDown.allCases, id: \.self) {
+                                    Text($0.rawValue).tag($0.rawValue)
+                                }
+                            }.pickerStyle(MenuPickerStyle())
                             
-                            selectedDate = newDate
-                            
-                        } label: {
-                            Image(systemName: "chevron.right").font(.title2).padding(.horizontal)
-                        }
-                    }
+                            Text("Today").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
+                        }.padding(.horizontal)
+                    }.background(Color.white)
                 }
             ).equatable()
         }.padding()
-            .background(Color.white)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
-            )
-            .cornerRadius(8)
     }
     
     func numberOfEventsInDate(date: Date) -> Int {
@@ -187,7 +191,6 @@ struct CalendarBg: View {
         
         HStack {
             if dateHasEvents["hasEvent"]! {
-                
                 if dateHasEvents["isCenter"]!  {
                     HStack(alignment: .center, spacing: 0) {
                         Text("")
@@ -197,7 +200,7 @@ struct CalendarBg: View {
                         .frame(maxWidth: .infinity)
                         .background(bgColor(event!))
                 }
-                
+
                 if dateHasEvents["isLeftCorner"]! && dateHasEvents["isRightCorner"]! {
                     HStack(alignment: .center, spacing: 0) {
                         Text(event?.name ?? "").padding(.vertical, 4)
@@ -216,7 +219,7 @@ struct CalendarBg: View {
                             .background(bgColor(event!))
                             .roundedCorner(8, corners: [.topLeft, .bottomLeft])
                     }
-                    
+
                     if dateHasEvents["isRightCorner"]! {
                         HStack(alignment: .center, spacing: 0) {
                             Text("").padding(.vertical, 4)
@@ -229,17 +232,18 @@ struct CalendarBg: View {
                 }
                 
             }
-//            else {
+            else {
+                Spacer()
 //                if countDate < 7 {
 //                    Text("").padding(.vertical, 4).frame(height: 22)
 //                }
-//            }
+            }
         }
         .onAppear {
-            var num: Double = 1/7
-            var num2: Double = 8/7
-            print(num.rounded(.up))
-            print(num2.rounded(.up))
+//            var num: Double = 1/7
+//            var num2: Double = 8/7
+//            print(num.rounded(.up))
+//            print(num2.rounded(.up))
             if countDate == 7 || dateHasEvents["hasEvent"]! {
                 countDate = 1
             } else {
@@ -292,6 +296,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     private var calendar: Calendar
     @Binding private var date: Date
     @Binding private var entries: [IEntries]
+    @Binding private var events: [IEvent]
     private let content: (Date, ClosedRange<Date>?) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
@@ -305,6 +310,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
         calendar: Calendar,
         date: Binding<Date>,
         entries: Binding<[IEntries]>,
+        events: Binding<[IEvent]>,
         @ViewBuilder content: @escaping (Date, ClosedRange<Date>?) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
@@ -313,6 +319,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
         self.calendar = calendar
         self._date = date
         self._entries = entries
+        self._events = events
         self.content = content
         self.trailing = trailing
         self.header = header
@@ -322,22 +329,25 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     public var body: some View {
         let month = date.startOfMonth(using: calendar)
         let days = makeDays()
+        let temp = countEventByRow(events, days)
         
         VStack(spacing: 0) {
-            
             Section(header:
                         title(month)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12.5)
-                .background(Color.theme.cultured1)
+                .background(Color.white)
                 .roundedCorner(8, corners: [.topLeft, .topRight])
             ){ }
             
-            VStack {
-                
-                LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: daysInWeek)) {
-                    ForEach(days.prefix(daysInWeek), id: \.self, content: header)
-                }
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: daysInWeek)) {
+                        ForEach(days.prefix(daysInWeek), id: \.self, content: header)
+                    }
+                }.padding(.vertical, 8)
+                .background(Color.theme.cultured1)
+                    
                 
                 Divider()
                 
@@ -351,10 +361,10 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                             }
                         }
                     }
-                }
-                
-                
+                }.frame(alignment: .topLeading)
+                Spacer()
             }
+            .frame(maxHeight: .infinity)
             .background(Color.white)
             .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
         }
@@ -380,6 +390,42 @@ private extension CalendarViewComponent {
         
         let dateInterval = DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end)
         return calendar.generateDays(for: dateInterval)
+    }
+}
+
+private extension CalendarViewComponent {
+    func countEventByRow(_ events: [IEvent], _ days: [Date]) -> [Int: Int] {
+//        let temp[Int: Int] = [:]
+        
+        let dateFormmater = DateFormatter()
+        dateFormmater.dateFormat = "yyyy-MM-dd"
+        var tempIndex = [String: Int]()
+        var countEventByRow = [Int: Int]()
+        
+        for row in days {
+            for event in events {
+                let startDate = dateFormmater.date(from: event.startDate)
+                let endDate = dateFormmater.date(from: event.endDate)
+                let dateString = dateFormmater.string(from: row)
+                
+                if row >= startDate! && row <= endDate! {
+                    if tempIndex[dateString] != nil {
+                        tempIndex.updateValue(tempIndex[dateString]! + 1, forKey: dateString)
+                    } else {
+                        tempIndex[dateString] = 1
+                    }
+                }
+            }
+        }
+        
+        for (index, row) in tempIndex.enumerated() {
+            let num: Double = Double(index + 1)/7
+            let rowIndex = num.rounded(.up)
+            
+            
+        }
+        
+        return [1: 1]
     }
 }
 

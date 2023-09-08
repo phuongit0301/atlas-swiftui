@@ -86,3 +86,14 @@ enum ReminderDataDropDown: String, CaseIterable, Identifiable {
     case after = "24 hours after"
     var id: Self { self }
 }
+
+enum CalendarMonthDropDown: String, CaseIterable, Identifiable {
+    case month = "Month"
+    case year = "Year"
+    case week = "Week"
+    case day = "Day"
+    case navaid = "Navaid"
+    case obstacles = "Obstacles"
+    case others = "Others"
+    var id: Self { self }
+}

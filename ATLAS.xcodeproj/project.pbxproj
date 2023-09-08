@@ -219,6 +219,7 @@
 		3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708A2AA8768E004DA27C /* CommonStepper.swift */; };
 		3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */; };
 		3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708E2AA9B525004DA27C /* CalendarView.swift */; };
+		3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170902AA9EC07004DA27C /* EventModalView.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -508,6 +509,7 @@
 		3EE1708A2AA8768E004DA27C /* CommonStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStepper.swift; sourceTree = "<group>"; };
 		3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInformationView.swift; sourceTree = "<group>"; };
 		3EE1708E2AA9B525004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3EE170902AA9EC07004DA27C /* EventModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModalView.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -1035,6 +1037,7 @@
 			children = (
 				3EE170762AA82DF8004DA27C /* CalendarSectionView.swift */,
 				3EE1708E2AA9B525004DA27C /* CalendarView.swift */,
+				3EE170902AA9EC07004DA27C /* EventModalView.swift */,
 			);
 			path = CalendarSectionView;
 			sourceTree = "<group>";
@@ -1648,6 +1651,7 @@
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
 				3E086D772A94918F00BE00AD /* MapModal.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
+				3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */,
 				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3EB99CE12A4FC7060091BC08 /* ButtonStepper.swift in Sources */,
 				3EFA5F6A2A4A814F001ED6CF /* ScratchPadView.swift in Sources */,
