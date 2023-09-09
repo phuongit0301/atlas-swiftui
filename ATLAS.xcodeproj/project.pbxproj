@@ -220,6 +220,7 @@
 		3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */; };
 		3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708E2AA9B525004DA27C /* CalendarView.swift */; };
 		3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170902AA9EC07004DA27C /* EventModalView.swift */; };
+		3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -510,6 +511,7 @@
 		3EE1708C2AA95FBC004DA27C /* HomeInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInformationView.swift; sourceTree = "<group>"; };
 		3EE1708E2AA9B525004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3EE170902AA9EC07004DA27C /* EventModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModalView.swift; sourceTree = "<group>"; };
+		3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInformationView.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 				3EE170762AA82DF8004DA27C /* CalendarSectionView.swift */,
 				3EE1708E2AA9B525004DA27C /* CalendarView.swift */,
 				3EE170902AA9EC07004DA27C /* EventModalView.swift */,
+				3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */,
 			);
 			path = CalendarSectionView;
 			sourceTree = "<group>";
@@ -1680,6 +1683,7 @@
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
 				3E4A36C22A57B3C700027C61 /* RemoteService.swift in Sources */,
 				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
+				3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */,
 				C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */,

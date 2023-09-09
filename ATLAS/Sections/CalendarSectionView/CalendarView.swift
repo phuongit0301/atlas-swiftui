@@ -74,6 +74,7 @@ struct CalendarView: View {
                             .frame(width: 33, height: 33)
                         Circle().fill(Color.clear).frame(width: 8, height: 8)
                     }.padding(.bottom)
+                        .frame(height: 103, alignment: .topLeading)
                 },
                 header: { date in
                     Text(weekDayFormatter.string(from: date)).font(.system(size: 15, weight: .semibold))
@@ -132,7 +133,8 @@ struct CalendarView: View {
                     }.background(Color.white)
                 }
             ).equatable()
-        }.padding()
+        }.padding(.horizontal)
+            .padding(.vertical, 8)
     }
     
     func numberOfEventsInDate(date: Date) -> Int {
@@ -329,7 +331,9 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     public var body: some View {
         let month = date.startOfMonth(using: calendar)
         let days = makeDays()
-        let temp = countEventByRow(events, days)
+        let daysByRows = prepareDays(days)
+//        let temp = countEventByRow(events, days)
+        let rows = Int(days.count / 7)
         
         VStack(spacing: 0) {
             Section(header:
@@ -361,8 +365,8 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                             }
                         }
                     }
-                }.frame(alignment: .topLeading)
-                Spacer()
+                }
+                
             }
             .frame(maxHeight: .infinity)
             .background(Color.white)
@@ -426,6 +430,27 @@ private extension CalendarViewComponent {
         }
         
         return [1: 1]
+    }
+}
+
+private extension CalendarViewComponent {
+    func prepareDays(_ days: [Date]) -> [Int: [Date]] {
+        var response: Dictionary<Int, [Date]> = [Int: [Date]]()
+        
+        for (index, row) in days.enumerated() {
+            let num: Double = Double(index + 1)/7
+            
+            let rowIndex = num.rounded(.up)
+            let parseRowIndex = Int(rowIndex)
+            
+            if response[parseRowIndex] != nil {
+                response[parseRowIndex]!.append(row)
+            } else {
+                response.updateValue([row], forKey: parseRowIndex)
+            }
+        }
+        
+        return response
     }
 }
 

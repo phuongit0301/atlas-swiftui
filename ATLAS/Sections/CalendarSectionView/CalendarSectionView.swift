@@ -33,9 +33,7 @@ struct CalendarSectionView: View {
                 HStack(spacing: 0) {
                     CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3))
                     
-                    VStack {
-                        Text("Event")
-                    }
+                    CalendarInformationView()
                 }
             }// end VStack
             .background(Color.theme.antiFlashWhite)
