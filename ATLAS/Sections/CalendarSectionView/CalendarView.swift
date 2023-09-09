@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     private var calendar: Calendar
+    
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
     private let weekDayFormatter: DateFormatter
@@ -19,7 +20,7 @@ struct CalendarView: View {
     private static var now = Date()
     
     @State private var entries: [IEntries] = CalendarModel().listItem
-    @State private var events: [IEvent] = CalendarModel().listEvent
+    @EnvironmentObject var calendarModel: CalendarModel
     @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
     
     // Draw BG Event
@@ -40,7 +41,7 @@ struct CalendarView: View {
                 calendar: calendar,
                 date: $selectedDate,
                 entries: $entries,
-                events: $events,
+                events: $calendarModel.listEvent,
                 content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
                         Button(action: { selectedDate = date }) {
@@ -59,7 +60,7 @@ struct CalendarView: View {
                             }
                         }.frame(maxWidth: .infinity)
                         
-                        ForEach(events, id: \.self) {event in
+                        ForEach(calendarModel.listEvent, id: \.self) {event in
                             CalendarBg(date: date, event: event, countDate: $countDate)
                         }
                     }.frame(height: 103, alignment: .topLeading)
@@ -205,7 +206,9 @@ struct CalendarBg: View {
 
                 if dateHasEvents["isLeftCorner"]! && dateHasEvents["isRightCorner"]! {
                     HStack(alignment: .center, spacing: 0) {
-                        Text(event?.name ?? "").padding(.vertical, 4)
+                        Text(event?.name ?? "")
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 8)
                             .font(.system(size: 11, weight: .regular))
                     }.frame(height: 22)
                         .frame(maxWidth: .infinity)
@@ -214,7 +217,9 @@ struct CalendarBg: View {
                 } else {
                     if dateHasEvents["isLeftCorner"]! {
                         HStack(alignment: .center, spacing: 0) {
-                            Text(event?.name ?? "").padding(.vertical, 4)
+                            Text(event?.name ?? "")
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 8)
                                 .font(.system(size: 11, weight: .regular))
                         }.frame(height: 22)
                             .frame(maxWidth: .infinity)
@@ -255,35 +260,32 @@ struct CalendarBg: View {
     }
     
     func bgColor(_ event: IEvent) -> Color {
-        if event.status == 1 {
+        if event.name.contains("Standby") {
             return Color.theme.lavenderGray
         }
         
-        if event.status == 2 {
-            return Color.theme.azure
+        if event.name.contains("COP") || event.name.contains("Rest") {
+//            return Color.clear
+            return Color.yellow
         }
         
-        if event.status == 3 {
+        if event.name.contains("Leave") {
             return Color.theme.coralRed1
         }
         
-        if event.status == 4 {
+        if event.name.contains("Internal training") {
             return Color.theme.mediumOrchid
         }
-        
-        if event.status == 5 || event.status == 6 {
-            return Color.theme.lavenderGray
-        }
-        
-        return Color.clear
+
+        return Color.theme.azure
     }
     
     func borderColor(_ event: IEvent) -> Color {
-        if event.status == 5 {
+        if event.name.contains("COP") {
             return Color.theme.azure
         }
         
-        if event.status == 6 {
+        if event.name.contains("Rest") {
             return Color.theme.coralRed1
         }
         
@@ -367,6 +369,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                     }
                 }
                 
+                Spacer()
             }
             .frame(maxHeight: .infinity)
             .background(Color.white)

@@ -221,6 +221,8 @@
 		3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1708E2AA9B525004DA27C /* CalendarView.swift */; };
 		3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170902AA9EC07004DA27C /* EventModalView.swift */; };
 		3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */; };
+		3EE170962AAC2138004DA27C /* iCalendarParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE170952AAC2138004DA27C /* iCalendarParser */; };
+		3EE1709A2AAC25DB004DA27C /* example.ics in Resources */ = {isa = PBXBuildFile; fileRef = 3EE170992AAC25DB004DA27C /* example.ics */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -231,6 +233,7 @@
 		3EECB8602A716481009D4971 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3EECB85F2A716481009D4971 /* FirebaseAuth */; };
 		3EECB8622A716481009D4971 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3EECB8612A716481009D4971 /* FirebaseAuthCombine-Community */; };
 		3EECB8642A716638009D4971 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8632A716638009D4971 /* LoginView.swift */; };
+		3EF221922AAC5738000B8FFB /* example1.ics in Resources */ = {isa = PBXBuildFile; fileRef = 3EF221912AAC5738000B8FFB /* example1.ics */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
@@ -512,6 +515,7 @@
 		3EE1708E2AA9B525004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3EE170902AA9EC07004DA27C /* EventModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModalView.swift; sourceTree = "<group>"; };
 		3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInformationView.swift; sourceTree = "<group>"; };
+		3EE170992AAC25DB004DA27C /* example.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.ics; path = ../../../../../Documents/example.ics; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -519,6 +523,7 @@
 		3EECB8582A6FAC9B009D4971 /* DateTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerView.swift; sourceTree = "<group>"; };
 		3EECB85A2A716362009D4971 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3EECB8632A716638009D4971 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3EF221912AAC5738000B8FFB /* example1.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example1.ics; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -572,6 +577,7 @@
 				3EECB85E2A716481009D4971 /* FirebaseAppDistribution-Beta in Frameworks */,
 				3EECB8622A716481009D4971 /* FirebaseAuthCombine-Community in Frameworks */,
 				3EECB8602A716481009D4971 /* FirebaseAuth in Frameworks */,
+				3EE170962AAC2138004DA27C /* iCalendarParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +954,8 @@
 		3ED7546A2A11E1BA003072A1 /* ATLAS */ = {
 			isa = PBXGroup;
 			children = (
+				3EF221912AAC5738000B8FFB /* example1.ics */,
+				3EE170992AAC25DB004DA27C /* example.ics */,
 				3EE170712AA82D59004DA27C /* Sections */,
 				3E63FC582A9AD144004BD54B /* Park Information */,
 				3E086D972A9501C200BE00AD /* ATLAS.entitlements */,
@@ -1311,6 +1319,7 @@
 				3EECB85D2A716481009D4971 /* FirebaseAppDistribution-Beta */,
 				3EECB85F2A716481009D4971 /* FirebaseAuth */,
 				3EECB8612A716481009D4971 /* FirebaseAuthCombine-Community */,
+				3EE170952AAC2138004DA27C /* iCalendarParser */,
 			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
@@ -1387,6 +1396,7 @@
 			packageReferences = (
 				3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */,
 			);
 			productRefGroup = 3ED754692A11E1BA003072A1 /* Products */;
 			projectDirPath = "";
@@ -1406,6 +1416,7 @@
 			files = (
 				3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */,
 				3E8250642A1BAE0A008F616D /* Inter-Light.ttf in Resources */,
+				3EE1709A2AAC25DB004DA27C /* example.ics in Resources */,
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3E8250632A1BAE0A008F616D /* Inter-Bold.ttf in Resources */,
 				3E8250612A1BAE0A008F616D /* Inter-Thin.ttf in Resources */,
@@ -1416,6 +1427,7 @@
 				3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */,
 				3E8250662A1BAE0A008F616D /* Inter-ExtraLight.ttf in Resources */,
 				3E8250622A1BAE0A008F616D /* Inter-SemiBold.ttf in Resources */,
+				3EF221922AAC5738000B8FFB /* example1.ics in Resources */,
 				3E8250672A1BAE0A008F616D /* Inter-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2046,6 +2058,14 @@
 				kind = branch;
 			};
 		};
+		3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmail-me/iCalendarParser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 		3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2057,6 +2077,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3EE170952AAC2138004DA27C /* iCalendarParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */;
+			productName = iCalendarParser;
+		};
 		3EECB85D2A716481009D4971 /* FirebaseAppDistribution-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

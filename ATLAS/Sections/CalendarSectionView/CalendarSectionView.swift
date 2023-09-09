@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import iCalendarParser
 
 struct CalendarSectionView: View {
     @State var showModal = false
+    @EnvironmentObject var calendarModel: CalendarModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -19,7 +21,40 @@ struct CalendarSectionView: View {
                     Spacer()
                     
                     Button(action: {
-                        self.showModal.toggle()
+//                        self.showModal.toggle()
+                        Task {
+                            if let filepath = Bundle.main.path(forResource: "example", ofType: "ics") {
+                                do {
+                                    let contents = try String(contentsOfFile: filepath)
+                                    let parser = ICParser()
+                                    let calendar: ICalendar? = parser.calendar(from: contents)
+                                    
+                                    if calendar != nil {
+                                        var temp = [IEvent]()
+                                        let dateFormatter = DateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        dateFormatter.timeZone = TimeZone.current
+                                        dateFormatter.locale = Locale.current
+                                        dateFormatter.calendar = Calendar(identifier: .gregorian)
+                                        
+                                        for event in calendar!.events {
+                                            let startDate = dateFormatter.string(from: event.dtStart!.date)
+//                                            let dtEndDate = Calendar.current.date(byAdding: .day, value: -1, to: event.dtEnd!.date)
+                                            let endDate = dateFormatter.string(from: event.dtEnd!.date)
+                                            temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: endDate))
+                                        }
+                                        
+                                        calendarModel.listEvent = temp
+                                    }
+                                } catch {
+                                    // contents could not be loaded
+                                }
+                            } else {
+                                print("Error read file ics")
+                            }
+
+                        }
+                        
                     }, label: {
                         Text("Add Event").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
                     }).padding(.vertical, 11)

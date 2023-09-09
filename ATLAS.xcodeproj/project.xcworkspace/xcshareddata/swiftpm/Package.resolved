@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "icalendarparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dmail-me/iCalendarParser.git",
+      "state" : {
+        "revision" : "1765d2fbb26f2b5c6ab9a2b56ddbc757d6b0a0c9",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "interop-ios-for-google-sdks",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/interop-ios-for-google-sdks.git",

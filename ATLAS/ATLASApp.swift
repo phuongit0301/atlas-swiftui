@@ -37,6 +37,7 @@ struct ATLASApp: App {
     @StateObject var refModel = ScreenReferenceModel()
     @StateObject var aiSearchModel = AISearchModelState()
     @StateObject var locationViewModel = LocationViewModel()
+    @StateObject var calendarModel = CalendarModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -76,6 +77,7 @@ struct ATLASApp: App {
                 .environmentObject(persistenceController)
                 .environmentObject(refModel)
                 .environmentObject(aiSearchModel)
+                .environmentObject(calendarModel)
                 .task {
                     coreDataModel.loading = true
 //                    await coreDataModel.checkAndSyncDataNote()
