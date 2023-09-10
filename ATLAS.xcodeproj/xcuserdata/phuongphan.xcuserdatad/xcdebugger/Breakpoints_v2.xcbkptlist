@@ -8371,5 +8371,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0FF75BC7-D725-446A-8233-9473F9B16F2A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Sections/CalendarSectionView/CalendarView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "554"
+            endingLineNumber = "554"
+            landmarkName = "countEventByRow(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "11360EB5-6BAB-49E0-9685-44BF0EB19BC7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/Sections/CalendarSectionView/CalendarView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
+            landmarkName = "countEventByRow(_:_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "11360EB5-6BAB-49E0-9685-44BF0EB19BC7 - ca827eeeee2aad0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[2] = Dead&gt; of ATLAS.CalendarViewComponent.countEventByRow(Swift.Array&lt;ATLAS.IEvent&gt;, Swift.Array&lt;Foundation.Date&gt;) -&gt; Swift.Dictionary&lt;Swift.Int, Swift.Array&lt;Any&gt;&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Sections/CalendarSectionView/CalendarView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "416"
+                  endingLineNumber = "416"
+                  offsetFromSymbolStart = "1156">
+               </Location>
+               <Location
+                  uuid = "11360EB5-6BAB-49E0-9685-44BF0EB19BC7 - ca827eeeee2aad0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[2] = Dead&gt; of ATLAS.CalendarViewComponent.countEventByRow(Swift.Array&lt;ATLAS.IEvent&gt;, Swift.Array&lt;Foundation.Date&gt;) -&gt; Swift.Dictionary&lt;Swift.Int, Swift.Array&lt;Any&gt;&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Sections/CalendarSectionView/CalendarView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "416"
+                  endingLineNumber = "416"
+                  offsetFromSymbolStart = "1228">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

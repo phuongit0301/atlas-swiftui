@@ -40,10 +40,17 @@ struct CalendarSectionView: View {
                                         for event in calendar!.events {
                                             let startDate = dateFormatter.string(from: event.dtStart!.date)
 //                                            let dtEndDate = Calendar.current.date(byAdding: .day, value: -1, to: event.dtEnd!.date)
-                                            let endDate = dateFormatter.string(from: event.dtEnd!.date)
-                                            temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: endDate))
+                                            let dtEndDate = dateFormatter.string(from: event.dtEnd!.date)
+                                            
+                                            if startDate < dtEndDate {
+                                                let endDate = dateFormatter.string(for: Calendar.current.date(byAdding: .day, value: -1, to: event.dtEnd!.date))
+                                                temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: endDate!))
+                                            } else {
+                                                temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: dtEndDate))
+                                            }
+                                            
                                         }
-                                        
+
                                         calendarModel.listEvent = temp
                                     }
                                 } catch {

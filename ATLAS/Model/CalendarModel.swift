@@ -66,6 +66,7 @@ class CalendarModel: ObservableObject {
             IEvent(id: UUID(), name: "COP: 234 SIN DXB LIS DXB SIN", status: 5, startDate: dateFormatter.string(from: today), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)),
             IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: today), endDate: dateFormatter.string(from: today)),
             IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)),
+            IEvent(id: UUID(), name: "Leave", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)),
             IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)),
             IEvent(id: UUID(), name: "EK231 SIN-DXB", status: 2, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)),
             IEvent(id: UUID(), name: "Leave", status: 3, startDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 13, to: today)!), endDate: dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 20, to: today)!)),
@@ -94,3 +95,12 @@ enum CalendarMonthDropDown: String, CaseIterable, Identifiable {
     case day = "Day"
     var id: Self { self }
 }
+
+struct IEventByRow: Identifiable, Hashable {
+    var id = UUID()
+    var column: Int = 0
+    var startDate: Date
+    var name: String
+//    var endDate?: Date
+}
+                
