@@ -22,6 +22,9 @@ extension EventList {
     @NSManaged public var endDate: String?
     @NSManaged public var name: String?
     @NSManaged public var location: String?
+    @NSManaged public var type: String?
+    @NSManaged public var dep: String?
+    @NSManaged public var dest: String?
     
     public var unwrappedStartDate: String {
         startDate ?? ""
@@ -37,6 +40,18 @@ extension EventList {
     
     public var unwrappedLocation: String {
         location ?? ""
+    }
+    
+    public var unwrappedType: String {
+        type ?? ""
+    }
+    
+    public var unwrappedDep: String {
+        dep ?? ""
+    }
+    
+    public var unwrappedDest: String {
+        dest ?? ""
     }
 }
 

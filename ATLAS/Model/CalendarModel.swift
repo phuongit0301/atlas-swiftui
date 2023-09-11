@@ -27,6 +27,7 @@ class CalendarModel: ObservableObject {
     @Published var listItem: [IEntries] = []
     @Published var dateRange: [ClosedRange<Date>] = []
     @Published var listEvent: [IEvent] = []
+    @Published var selectedEvent: EventList?
     
     init() {
         let dateFormatter = DateFormatter()

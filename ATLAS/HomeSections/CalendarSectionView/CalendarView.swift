@@ -20,7 +20,6 @@ struct CalendarView: View {
     private static var now = Date()
     
     @State private var entries: [IEntries] = CalendarModel().listItem
-//    @EnvironmentObject var calendarModel: CalendarModel
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
@@ -160,6 +159,8 @@ struct CalendarView: View {
     // MARK: - Component
 public struct CalendarViewComponent<Day: View, Header: View, Title: View, Trailing: View>: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var calendarModel: CalendarModel
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     // Injected dependencies
     private var calendar: Calendar
@@ -171,6 +172,11 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     private let header: (Date) -> Header
     private let title: (Date) -> Title
     
+    @State private var days: [Date] = []
+    @State private var daysByRows = [Int: [Date]]()
+    @State private var eventByRow = [String: Any]()
+    @State private var rows = 1
+    @State private var showLoading = true
     // Constants
     private let daysInWeek = 7
     @State private var dateRange: ClosedRange<Date>?
@@ -197,88 +203,117 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     
     public var body: some View {
         let month = date.startOfMonth(using: calendar)
-        let days = makeDays()
-        let daysByRows = prepareDays(days)
-        let eventByRow = countEventByRow(events, days)
-        let rows = Int(days.count / 7)
         
         GeometryReader { reader in
             VStack(spacing: 0) {
-                Section(header:
-                            title(month)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12.5)
-                    .background(Color.white)
-                    .roundedCorner(8, corners: [.topLeft, .topRight])
-                ){ }
-                
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        ForEach(days.prefix(daysInWeek), id: \.self, content: header)
-                    }.padding(.vertical, 8)
-                        .background(Color.theme.cultured1)
-                    
-                    
-                    Divider()
-                    
-                    ForEach(0..<rows, id: \.self) { index in
+                if showLoading {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
+                } else {
+                    VStack(spacing: 0) {
+                        Section(header:
+                                    title(month)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12.5)
+                            .background(Color.white)
+                            .roundedCorner(8, corners: [.topLeft, .topRight])
+                        ){ }
                         
-                        ZStack(alignment: .leading) {
+                        VStack(spacing: 0) {
                             HStack(spacing: 0) {
-                                ForEach(daysByRows[index + 1]!, id: \.self) { date in
-                                    if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                                        content(date, dateRange)
-                                    } else {
-                                        trailing(date)
-                                    }
-                                }
-                            }
+                                ForEach(days.prefix(daysInWeek), id: \.self, content: header)
+                            }.padding(.vertical, 8)
+                                .background(Color.theme.cultured1)
                             
                             
-                            if let events = eventByRow["\(index + 1)"] as? [String: Any] {
-                                VStack(spacing: 0) {
-                                    Text("").frame(height: 35)
-                                    
-                                    ForEach(Array(events.keys), id: \.self) { eventKey in
-                                        HStack(alignment: .top, spacing: 0) {
-                                            if let event = events[eventKey] as? [String: Any] {
-                                                HStack(spacing: 0) {
-                                                    if (event["space"] as? Int ?? 0) > 0 {
-                                                        Text("").frame(width: calculateWidth1(Int(reader.frame(in: .named("cellWidth")).width) / 7, event["space"] as? Int))
-                                                    }
-                                                    HStack(spacing: 0) {
-                                                        Text("\((event["name"] as? String)!)")
-                                                            .font(.system(size: 11, weight: .regular))
-                                                            .foregroundColor(textColor((event["name"] as? String)!))
-                                                            .lineLimit(1)
-                                                            .padding(.horizontal, 8)
-                                                        
-                                                        Spacer()
-                                                    }
-                                                    .frame(width: calculateWidth((Int(reader.frame(in: .named("cellWidth")).width)) / 7, event["column"] as? Int), height: 17)
-                                                    .background(bgColor((event["name"] as? String)!))
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 4)
-                                                            .stroke(borderColor((event["name"] as? String)!), lineWidth: 1)
-                                                    )
-                                                    .cornerRadius(4)
-                                                }.padding(.trailing, -12)
+                            Divider()
+                            
+                            ForEach(0..<rows, id: \.self) { index in
+                                
+                                ZStack(alignment: .leading) {
+                                    HStack(spacing: 0) {
+                                        ForEach(daysByRows[index + 1]!, id: \.self) { date in
+                                            if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                                                content(date, dateRange)
+                                            } else {
+                                                trailing(date)
                                             }
-                                            
-                                            Spacer()
-                                        }.frame(maxWidth: .infinity)
-                                        .frame(alignment: .leading)
+                                        }
                                     }
-                                }
+                                    
+                                    
+                                    if let events = eventByRow["\(index + 1)"] as? [String: Any] {
+                                        VStack(spacing: 0) {
+                                            Text("").frame(height: 35)
+                                            
+                                            ForEach(Array(events.keys), id: \.self) { eventKey in
+                                                HStack(alignment: .top, spacing: 0) {
+                                                    if let event = events[eventKey] as? [String: Any] {
+                                                        HStack(spacing: 0) {
+                                                            if (event["space"] as? Int ?? 0) > 0 {
+                                                                Text("").frame(width: calculateWidth1(Int(reader.frame(in: .named("cellWidth")).width) / 7, event["space"] as? Int))
+                                                            }
+                                                            HStack(spacing: 0) {
+                                                                Text("\((event["name"] as? String)!)")
+                                                                    .font(.system(size: 11, weight: .regular))
+                                                                    .foregroundColor(textColor((event["name"] as? String)!))
+                                                                    .lineLimit(1)
+                                                                    .padding(.horizontal, 8)
+                                                                
+                                                                Spacer()
+                                                            }
+                                                            .frame(width: calculateWidth((Int(reader.frame(in: .named("cellWidth")).width)) / 7, event["column"] as? Int), height: 17)
+                                                            .background(bgColor((event["name"] as? String)!))
+                                                            .overlay(
+                                                                RoundedRectangle(cornerRadius: 4)
+                                                                    .stroke(borderColor((event["name"] as? String)!), lineWidth: 1)
+                                                            )
+                                                            .cornerRadius(4)
+                                                            .onTapGesture {
+                                                                if self.events.count > 0 {
+                                                                    if let item = self.events.first(where: {eventKey == "\(String(describing: $0.id))"}) {
+                                                                        self.calendarModel.selectedEvent = item
+                                                                    }
+                                                                }
+                                                            }
+                                                        }.padding(.trailing, -12)
+                                                    }
+                                                    
+                                                    Spacer()
+                                                }.frame(maxWidth: .infinity)
+                                                .frame(alignment: .leading)
+                                            }
+                                        }
+                                    }
+                                }.frame(maxWidth: .infinity)
                             }
-                        }.frame(maxWidth: .infinity)
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .background(Color.white)
+                        .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
                     }
-                    Spacer()
                 }
-                .frame(maxHeight: .infinity, alignment: .top)
-                .background(Color.white)
-                .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
+            }// End VStack
+            .onAppear {
+                Task {
+                    showLoading = true
+                    self.days = makeDays()
+                    self.daysByRows = prepareDays(days)
+                    self.eventByRow = countEventByRow(events, days)
+                    self.rows = Int(days.count / 7)
+                    showLoading = false
+                }
+                
             }
+            .onChange(of: coreDataModel.dataEvents) { _ in
+                Task {
+                    self.days = makeDays()
+                    self.daysByRows = prepareDays(days)
+                    self.eventByRow = countEventByRow(events, days)
+                    self.rows = Int(days.count / 7)
+                }
+            }
+            
         }
     }
     
