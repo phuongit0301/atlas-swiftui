@@ -44,40 +44,37 @@ struct CalendarView: View {
                 events: $calendarModel.listEvent,
                 content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
-                        Button(action: { selectedDate = date }) {
-                            VStack {
+                        Button(action: {
+                            selectedDate = date
+                        }, label: {
+                            HStack(alignment: .center) {
                                 Text(dayFormatter.string(from: date))
-                                    .padding(6)
-                                    // Added to make selection sizes equal on all numbers.
-                                    .frame(width: 33, height: 35)
+                                    .frame(width: 32, height: 32)
                                     .foregroundColor(calendar.isDateInToday(date) ? Color.white : .primary)
                                     .background(
                                         calendar.isDateInToday(date) ? Color.theme.azure
                                         : calendar.isDate(date, inSameDayAs: selectedDate) ? .blue
                                         : .clear
                                     ).cornerRadius(100)
-                            }.frame(width: 33, height: 35, alignment: .center)
-                        }.frame(maxWidth: .infinity)
-                        
-//                        ForEach(calendarModel.listEvent, id: \.self) {event in
-//                            CalendarBg(date: date, event: event, countDate: $countDate)
-//                        }
-                    }.frame(height: 103, alignment: .topLeading)
-                        .coordinateSpace(name: dayFormatter.string(from: date))
+                            }.frame(height: 35)
+                        }).buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity)
+
+                    }.frame(height: 103, alignment: .top)
                     .background(eventsOfRange(date: date))
                 },
                 // assign color for past and future dates
                 trailing: { date in
-                    VStack {
+                    VStack(alignment: .center, spacing: 0) {
                         Text(dayFormatter.string(from: date))
                             .foregroundColor(.secondary)
                             .padding(6)
                             .frame(width: 33, height: 33)
-                    }.frame(height: 103, alignment: .center)
+                    }.frame(height: 103, alignment: .top)
                         .frame(maxWidth: .infinity)
                 },
                 header: { date in
-                    Text(weekDayFormatter.string(from: date)).font(.system(size: 15, weight: .semibold))
+                    Text(weekDayFormatter.string(from: date)).font(.system(size: 15, weight: .semibold)).frame(maxWidth: .infinity)
                 },
                 title: { date in
                     HStack(alignment: .center, spacing: 0) {
@@ -135,6 +132,7 @@ struct CalendarView: View {
             ).equatable()
         }.padding(.horizontal)
             .padding(.vertical, 8)
+            .coordinateSpace(name: "cellWidth")
     }
     
     func numberOfEventsInDate(date: Date) -> Int {
@@ -154,141 +152,6 @@ struct CalendarView: View {
             }
         }
         return Color.clear;
-    }
-}
-
-struct CalendarBg: View {
-    var date: Date
-    @State var event: IEvent?
-    @Binding var countDate: Int
-    
-    var body: some View {
-        var dateHasEvents: [String: Bool] {
-            var isLeftCorner = false
-            var isCenter = false
-            var isRightCorner = false
-            var hasEvent = false
-            
-            let dateFormmater = DateFormatter()
-            dateFormmater.dateFormat = "yyyy-MM-dd"
-            
-            let startDate = dateFormmater.date(from: event!.startDate)
-            let endDate = dateFormmater.date(from: event!.endDate)
-            
-            if date == startDate {
-                isLeftCorner = true
-                hasEvent = true
-            } else if date >= startDate! && date < endDate! {
-                isCenter = true
-                hasEvent = true
-            }
-            
-            if date == endDate {
-                isRightCorner = true
-                hasEvent = true
-            }
-            
-            return ["hasEvent": hasEvent, "isLeftCorner": isLeftCorner, "isCenter": isCenter, "isRightCorner": isRightCorner]
-        }
-        
-        HStack {
-            if dateHasEvents["hasEvent"]! {
-                if dateHasEvents["isCenter"]!  {
-                    HStack(alignment: .center, spacing: 0) {
-                        Text("")
-                            .font(.system(size: 11, weight: .regular))
-                            .padding(.vertical, 4)
-                    }.frame(height: 22)
-                        .frame(maxWidth: .infinity)
-                        .background(bgColor(event!))
-                }
-
-                if dateHasEvents["isLeftCorner"]! && dateHasEvents["isRightCorner"]! {
-                    HStack(alignment: .center, spacing: 0) {
-                        Text(event?.name ?? "")
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 8)
-                            .font(.system(size: 11, weight: .regular))
-                    }.frame(height: 22)
-                        .frame(maxWidth: .infinity)
-                        .background(bgColor(event!))
-                        .roundedCorner(8, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
-                } else {
-                    if dateHasEvents["isLeftCorner"]! {
-                        HStack(alignment: .center, spacing: 0) {
-                            Text(event?.name ?? "")
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, 8)
-                                .font(.system(size: 11, weight: .regular))
-                        }.frame(height: 22)
-                            .frame(maxWidth: .infinity)
-                            .background(bgColor(event!))
-                            .roundedCorner(8, corners: [.topLeft, .bottomLeft])
-                    }
-
-                    if dateHasEvents["isRightCorner"]! {
-                        HStack(alignment: .center, spacing: 0) {
-                            Text("").padding(.vertical, 4)
-                        }
-                        .frame(height: 22)
-                            .frame(maxWidth: .infinity)
-                            .background(bgColor(event!))
-                            .roundedCorner(8, corners: [.topRight, .bottomRight])
-                    }
-                }
-                
-            }
-            else {
-                Spacer()
-//                if countDate < 7 {
-//                    Text("").padding(.vertical, 4).frame(height: 22)
-//                }
-            }
-        }
-        .onAppear {
-//            var num: Double = 1/7
-//            var num2: Double = 8/7
-//            print(num.rounded(.up))
-//            print(num2.rounded(.up))
-            if countDate == 7 || dateHasEvents["hasEvent"]! {
-                countDate = 1
-            } else {
-                countDate += 1
-            }
-        }
-    }
-    
-    func bgColor(_ event: IEvent) -> Color {
-        if event.name.contains("Standby") {
-            return Color.theme.lavenderGray
-        }
-        
-        if event.name.contains("COP") || event.name.contains("Rest") {
-//            return Color.clear
-            return Color.yellow
-        }
-        
-        if event.name.contains("Leave") {
-            return Color.theme.coralRed1
-        }
-        
-        if event.name.contains("Internal training") {
-            return Color.theme.mediumOrchid
-        }
-
-        return Color.theme.azure
-    }
-    
-    func borderColor(_ event: IEvent) -> Color {
-        if event.name.contains("COP") {
-            return Color.theme.azure
-        }
-        
-        if event.name.contains("Rest") {
-            return Color.theme.coralRed1
-        }
-        
-        return Color.clear
     }
 }
 
@@ -337,101 +200,98 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
         let eventByRow = countEventByRow(events, days)
         let rows = Int(days.count / 7)
         
-        VStack(spacing: 0) {
-            Section(header:
-                        title(month)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12.5)
-                .background(Color.white)
-                .roundedCorner(8, corners: [.topLeft, .topRight])
-            ){ }
-            
+        GeometryReader { reader in
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    ForEach(days.prefix(daysInWeek), id: \.self, content: header)
-                }.padding(.vertical, 8)
-                    .background(Color.theme.cultured1)
+                Section(header:
+                            title(month)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12.5)
+                    .background(Color.white)
+                    .roundedCorner(8, corners: [.topLeft, .topRight])
+                ){ }
                 
-                
-                Divider()
-                
-                
-//                    VStack(alignment: .leading) {
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        ForEach(days.prefix(daysInWeek), id: \.self, content: header)
+                    }.padding(.vertical, 8)
+                        .background(Color.theme.cultured1)
+                    
+                    
+                    Divider()
+                    
+                    ForEach(0..<rows, id: \.self) { index in
                         
-                        ForEach(0..<rows, id: \.self) { index in
-//                            GeometryReader { reader in
-                                ZStack(alignment: .leading) {
-                                    HStack(spacing: 0) {
-                                        ForEach(daysByRows[index + 1]!, id: \.self) { date in
-                                            if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                                                content(date, dateRange)
-                                            } else {
-                                                trailing(date)
-                                            }
-                                        }
+                        ZStack(alignment: .leading) {
+                            HStack(spacing: 0) {
+                                ForEach(daysByRows[index + 1]!, id: \.self) { date in
+                                    if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                                        content(date, dateRange)
+                                    } else {
+                                        trailing(date)
                                     }
+                                }
+                            }
+                            
+                            
+                            if let events = eventByRow["\(index + 1)"] as? [String: Any] {
+                                VStack(spacing: 0) {
+                                    Text("").frame(height: 35)
                                     
-                                    
-                                    if let events = eventByRow["\(index + 1)"] as? [String: Any] {
-                                        VStack(alignment: .leading) {
-                                            Text("").frame(height: 33)
-                                            
-                                            ForEach(Array(events.keys), id: \.self) { eventKey in
-                                                HStack {
-                                                    if let event = events[eventKey] as? [String: Any] {
-                                                        if (event["space"] as? Int ?? 0) > 0 {
-                                                            Text("").frame(width: calculateWidth1(event["space"] as? Int))
-                                                        }
-                                                        HStack {
-                                                            Text("\((event["name"] as? String)!)")
-                                                                .font(.system(size: 11, weight: .regular))
-                                                                .foregroundColor(textColor((event["name"] as? String)!))
-                                                                .lineLimit(1)
-                                                        }.frame(maxWidth: calculateWidth(event["column"] as? Int))
-                                                            .frame(height: 17)
-                                                            .background(bgColor((event["name"] as? String)!))
-                                                            .overlay(
-                                                                    RoundedRectangle(cornerRadius: 8)
-                                                                        .stroke(borderColor((event["name"] as? String)!), lineWidth: 1)
-                                                                )
-                                                            .cornerRadius(8)
-                                                        //                                                        .position(x: reader.frame(in: .named("\(event["startDate"] as? String)")).minX, y: reader.frame(in: .named("\(event["startDate"] as? String)")).minY)
-                                                        //                                                        .Print("\(event["startDate"] as? String)")
-                                                        //                                                            .Print(reader.frame(in: .named("\(event["startDate"] as? String)")).mi)
-                                                        //                                                        .Print(reader.frame(in: .named("\(event["startDate"] as? String)")).minY)
-                                                        //                                                    .position(x: calculateXOffset(event["space"] as? Int), y: calculateYOffset(event["rowNum"] as? Int))
-                                                        
-                                                        //                                                .position(x: calculateXOffset(event["space"] as? Int), y: calculateYOffset(event["rowNum"] as? Int))
+                                    ForEach(Array(events.keys), id: \.self) { eventKey in
+                                        HStack(alignment: .top, spacing: 0) {
+                                            if let event = events[eventKey] as? [String: Any] {
+                                                HStack(spacing: 0) {
+                                                    if (event["space"] as? Int ?? 0) > 0 {
+                                                        Text("").frame(width: calculateWidth1(Int(reader.frame(in: .named("cellWidth")).width) / 7, event["space"] as? Int))
                                                     }
-                                                }
+                                                    HStack(spacing: 0) {
+                                                        Text("\((event["name"] as? String)!)")
+                                                            .font(.system(size: 11, weight: .regular))
+                                                            .foregroundColor(textColor((event["name"] as? String)!))
+                                                            .lineLimit(1)
+                                                            .padding(.horizontal, 8)
+                                                        
+                                                        Spacer()
+                                                    }
+                                                    .frame(width: calculateWidth((Int(reader.frame(in: .named("cellWidth")).width)) / 7, event["column"] as? Int), height: 17)
+                                                    .background(bgColor((event["name"] as? String)!))
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 4)
+                                                            .stroke(borderColor((event["name"] as? String)!), lineWidth: 1)
+                                                    )
+                                                    .cornerRadius(4)
+                                                }.padding(.trailing, -12)
                                             }
-                                        }
+                                            
+                                            Spacer()
+                                        }.frame(maxWidth: .infinity)
+                                        .frame(alignment: .leading)
                                     }
-                                }.frame(maxWidth: .infinity)
-//                            }
-                
-//                    }
+                                }
+                            }
+                        }.frame(maxWidth: .infinity)
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .frame(maxHeight: .infinity, alignment: .top)
+                .background(Color.white)
+                .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
             }
-            .frame(maxHeight: .infinity)
-            .background(Color.white)
-            .roundedCorner(8, corners: [.bottomLeft, .bottomRight])
         }
     }
     
-    func calculateWidth1(_ width: Int?) -> CGFloat {
-        if let width = width {
-            return CGFloat(width * 130)
+    func calculateWidth1(_ currentWidth: Int?, _ space: Int?) -> CGFloat {
+        if let space = space, let currentWidth = currentWidth {
+            return CGFloat(currentWidth * space)
         }
         return CGFloat(0)
     }
     
-    func calculateWidth(_ width: Int?) -> CGFloat {
-        if let width = width {
-            return CGFloat(width * 150)
+    func calculateWidth(_ currentWidth: Int?, _ column: Int?) -> CGFloat {
+        if let column = column, let currentWidth = currentWidth {
+            return CGFloat(currentWidth * column)
         }
-        return CGFloat(150)
+        return CGFloat(120)
     }
     
     func calculateXOffset(_ rowNum: Int?) -> CGFloat {

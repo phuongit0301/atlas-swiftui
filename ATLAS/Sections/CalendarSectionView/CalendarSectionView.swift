@@ -21,7 +21,6 @@ struct CalendarSectionView: View {
                     Spacer()
                     
                     Button(action: {
-//                        self.showModal.toggle()
                         Task {
                             if let filepath = Bundle.main.path(forResource: "example", ofType: "ics") {
                                 do {
@@ -63,6 +62,17 @@ struct CalendarSectionView: View {
                         }
                         
                     }, label: {
+                        Text("Sync Calendar").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
+                    }).padding(.vertical, 11)
+                        .padding(.horizontal)
+                        .background(Color.theme.azure)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
+                        .cornerRadius(8)
+                        .buttonStyle(PlainButtonStyle())
+                    
+                    Button(action: {
+                        self.showModal.toggle()
+                    }, label: {
                         Text("Add Event").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
                     }).padding(.vertical, 11)
                         .padding(.horizontal)
@@ -73,7 +83,7 @@ struct CalendarSectionView: View {
                 }.padding(.horizontal)
                 
                 HStack(spacing: 0) {
-                    CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3))
+                    CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3) + 64)
                     
                     CalendarInformationView()
                 }
