@@ -8,6 +8,7 @@
 import CoreData
 import SwiftUI
 import MapKit
+import iCalendarParser
 
 class PersistenceController: ObservableObject {
     static let shared = PersistenceController()
@@ -70,6 +71,7 @@ class CoreDataModelState: ObservableObject {
     @Published var enrouteRefArray: [NoteList] = []
     @Published var arrivalRefArray: [NoteList] = []
     @Published var dataFlightPlan: FlightPlanList?
+    @Published var dataEvents: [EventList] = []
     
     // For summary info
     @Published var dataSummaryInfo: SummaryInfoList!
@@ -243,6 +245,10 @@ class CoreDataModelState: ObservableObject {
                     if let reciprocalRwy = response?.reciprocalRwy {
                         self.initReciprocalRwy(reciprocalRwy)
                     }
+                    
+                    // For init Calendar
+                    self.initDataEvent()
+                    
                     self.loadingInit = false
                     print("Fetch data")
                 }
@@ -308,6 +314,9 @@ class CoreDataModelState: ObservableObject {
             // For AISearch
             self.dataAISearch = self.readAISearch()
             self.dataAISearchFavorite = self.readAISearch(target: true)
+            
+            // For Calendar
+            self.dataEvents = self.readEvents()
         }
     }
     
@@ -660,6 +669,84 @@ class CoreDataModelState: ObservableObject {
             self.dataMap = readDataMapList()
             self.prepareDataForMap()
         }
+    }
+    
+    func initDataEvent() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let today = Date()
+        
+        let event1 = EventList(context: service.container.viewContext)
+        event1.id = UUID()
+        event1.name = "COP: 234 SIN DXB LIS DXB SIN"
+        event1.status = 5
+        event1.startDate = dateFormatter.string(from: today)
+        event1.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
+        
+        let event2 = EventList(context: service.container.viewContext)
+        event2.id = UUID()
+        event2.name = "EK231 SIN-DXB"
+        event2.status = 2
+        event2.startDate = dateFormatter.string(from: today)
+        event2.endDate = dateFormatter.string(from: today)
+        
+        let event3 = EventList(context: service.container.viewContext)
+        event3.id = UUID()
+        event3.name = "EK231 SIN-DXB"
+        event3.status = 2
+        event3.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
+        event3.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
+        
+        let event4 = EventList(context: service.container.viewContext)
+        event4.id = UUID()
+        event4.name = "Rest"
+        event4.status = 2
+        event4.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
+        event4.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
+        
+        let event5 = EventList(context: service.container.viewContext)
+        event5.id = UUID()
+        event5.name = "EK231 SIN-DXB"
+        event5.status = 2
+        event5.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)
+        event5.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)
+        
+        let event6 = EventList(context: service.container.viewContext)
+        event6.id = UUID()
+        event6.name = "EK231 SIN-DXB"
+        event6.status = 2
+        event6.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
+        event6.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
+        
+        let event7 = EventList(context: service.container.viewContext)
+        event7.id = UUID()
+        event7.name = "Leave"
+        event7.status = 3
+        event7.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 13, to: today)!)
+        event7.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 20, to: today)!)
+        
+        let event8 = EventList(context: service.container.viewContext)
+        event8.id = UUID()
+        event8.name = "Internal training"
+        event8.status = 3
+        event8.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 21, to: today)!)
+        event8.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 23, to: today)!)
+        
+        service.container.viewContext.performAndWait {
+            do {
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+                print("saved calendar successfully")
+            } catch {
+                // Something went wrong 😭
+                print("Failed to save: \(error)")
+                // Rollback any changes in the managed object context
+                service.container.viewContext.rollback()
+                
+            }
+        }
+        
+        self.dataEvents = self.readEvents()
     }
     
     func initDataPerfData(_ perfData: IPerfDataResponseModel) {
@@ -1061,6 +1148,93 @@ class CoreDataModelState: ObservableObject {
             print("Delete to Altn Taf successfully")
         } catch {
             print("Failed to Altn Taf update: \(error)")
+        }
+    }
+    
+    func syncDataEvent() async {
+        if let filepath = Bundle.main.path(forResource: "example", ofType: "ics") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                let parser = ICParser()
+                let calendar: ICalendar? = parser.calendar(from: contents)
+                
+                if calendar != nil {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    dateFormatter.timeZone = TimeZone.current
+                    dateFormatter.locale = Locale.current
+                    dateFormatter.calendar = Calendar(identifier: .gregorian)
+                    
+                    let fetchRequest: NSFetchRequest<EventList>
+                    fetchRequest = EventList.fetchRequest()
+                    fetchRequest.includesPropertyValues = false
+                    
+                    // Fetch old data to remove them after insert new data
+                    let objects = try service.container.viewContext.fetch(fetchRequest)
+                    
+                    service.container.viewContext.performAndWait {
+                        for item in calendar!.events {
+                            let startDate = dateFormatter.string(from: item.dtStart!.date)
+                            let dtEndDate = dateFormatter.string(from: item.dtEnd!.date)
+                            
+                            if startDate < dtEndDate {
+                                let endDate = dateFormatter.string(for: Calendar.current.date(byAdding: .day, value: -1, to: item.dtEnd!.date))
+                                
+                                do {
+                                    let event = EventList(context: service.container.viewContext)
+                                    event.id = UUID()
+                                    event.name = item.summary!
+                                    event.status = 5
+                                    event.startDate = startDate
+                                    event.endDate = endDate
+                                    try service.container.viewContext.save()
+                                    print("saved event successfully")
+                                } catch {
+                                    print("Failed to event save: \(error)")
+                                    // Rollback any changes in the managed object context
+                                    service.container.viewContext.rollback()
+                                }
+
+                            } else {
+                                
+                                do {
+                                    let event = EventList(context: service.container.viewContext)
+                                    event.id = UUID()
+                                    event.name = item.summary!
+                                    event.status = 5
+                                    event.startDate = startDate
+                                    event.endDate = dtEndDate
+                                    try service.container.viewContext.save()
+                                    print("saved event successfully")
+                                } catch {
+                                    print("Failed to event save: \(error)")
+                                    // Rollback any changes in the managed object context
+                                    service.container.viewContext.rollback()
+                                }
+                            }
+                            
+                        }
+                        
+                        do {
+                            // Delete the objects
+                            for object in objects {
+                                service.container.viewContext.delete(object)
+                            }
+                            
+                            // Save the deletions to the persistent store
+                            try service.container.viewContext.save()
+                        } catch {
+                            print("Failed to delete event : \(error)")
+                        }
+                        
+                        self.dataEvents = readEvents()
+                    }
+                }
+            } catch {
+                // contents could not be loaded
+            }
+        } else {
+            print("Error read file ics")
         }
     }
     
@@ -2991,6 +3165,23 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch AISearch from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readEvents() -> [EventList] {
+        var data: [EventList] = []
+        
+        let request: NSFetchRequest<EventList> = EventList.fetchRequest()
+        
+        do {
+            let response: [EventList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Event from Core Data.")
         }
         
         return data

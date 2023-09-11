@@ -10,7 +10,8 @@ import iCalendarParser
 
 struct CalendarSectionView: View {
     @State var showModal = false
-    @EnvironmentObject var calendarModel: CalendarModel
+    @State var showLoading = false
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var body: some View {
         GeometryReader { proxy in
@@ -22,53 +23,26 @@ struct CalendarSectionView: View {
                     
                     Button(action: {
                         Task {
-                            if let filepath = Bundle.main.path(forResource: "example", ofType: "ics") {
-                                do {
-                                    let contents = try String(contentsOfFile: filepath)
-                                    let parser = ICParser()
-                                    let calendar: ICalendar? = parser.calendar(from: contents)
-                                    
-                                    if calendar != nil {
-                                        var temp = [IEvent]()
-                                        let dateFormatter = DateFormatter()
-                                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        dateFormatter.timeZone = TimeZone.current
-                                        dateFormatter.locale = Locale.current
-                                        dateFormatter.calendar = Calendar(identifier: .gregorian)
-                                        
-                                        for event in calendar!.events {
-                                            let startDate = dateFormatter.string(from: event.dtStart!.date)
-//                                            let dtEndDate = Calendar.current.date(byAdding: .day, value: -1, to: event.dtEnd!.date)
-                                            let dtEndDate = dateFormatter.string(from: event.dtEnd!.date)
-                                            
-                                            if startDate < dtEndDate {
-                                                let endDate = dateFormatter.string(for: Calendar.current.date(byAdding: .day, value: -1, to: event.dtEnd!.date))
-                                                temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: endDate!))
-                                            } else {
-                                                temp.append(IEvent(id: UUID(), name: event.summary!, startDate: startDate, endDate: dtEndDate))
-                                            }
-                                            
-                                        }
-
-                                        calendarModel.listEvent = temp
-                                    }
-                                } catch {
-                                    // contents could not be loaded
-                                }
-                            } else {
-                                print("Error read file ics")
+                            showLoading = true
+                            await coreDataModel.syncDataEvent()
+                            showLoading = false
+                        }
+                    }, label: {
+                        HStack {
+                            Text("Sync Calendar").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
+                            
+                            if showLoading {
+                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
                             }
-
                         }
                         
-                    }, label: {
-                        Text("Sync Calendar").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
                     }).padding(.vertical, 11)
                         .padding(.horizontal)
                         .background(Color.theme.azure)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
                         .cornerRadius(8)
                         .buttonStyle(PlainButtonStyle())
+                        .disabled(showLoading)
                     
                     Button(action: {
                         self.showModal.toggle()

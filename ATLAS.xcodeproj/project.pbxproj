@@ -234,6 +234,8 @@
 		3EECB8622A716481009D4971 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3EECB8612A716481009D4971 /* FirebaseAuthCombine-Community */; };
 		3EECB8642A716638009D4971 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8632A716638009D4971 /* LoginView.swift */; };
 		3EF221922AAC5738000B8FFB /* example1.ics in Resources */ = {isa = PBXBuildFile; fileRef = 3EF221912AAC5738000B8FFB /* example1.ics */; };
+		3EF2219E2AAECA63000B8FFB /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2219C2AAECA63000B8FFB /* EventList+CoreDataClass.swift */; };
+		3EF2219F2AAECA63000B8FFB /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2219D2AAECA63000B8FFB /* EventList+CoreDataProperties.swift */; };
 		3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF93D4F2A3025550043E91E /* MeasureSize.swift */; };
 		3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */; };
 		3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */; };
@@ -524,6 +526,8 @@
 		3EECB85A2A716362009D4971 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3EECB8632A716638009D4971 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3EF221912AAC5738000B8FFB /* example1.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example1.ics; sourceTree = "<group>"; };
+		3EF2219C2AAECA63000B8FFB /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EF2219D2AAECA63000B8FFB /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EF93D4F2A3025550043E91E /* MeasureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureSize.swift; sourceTree = "<group>"; };
 		3EFA5EE82A3C03D1001ED6CF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		3EFA5EEA2A3C04CC001ED6CF /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -1085,6 +1089,15 @@
 			path = ChatSectionView;
 			sourceTree = "<group>";
 		};
+		3EF221932AAEBFEC000B8FFB /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				3EF2219C2AAECA63000B8FFB /* EventList+CoreDataClass.swift */,
+				3EF2219D2AAECA63000B8FFB /* EventList+CoreDataProperties.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		3EFA5EFD2A408B20001ED6CF /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -1147,6 +1160,7 @@
 		C56AF50F2A565EEB00BD07A1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3EF221932AAEBFEC000B8FFB /* Calendar */,
 				3E870BAE2A7484AC0036DE3B /* AISearch */,
 				C56AF5122A565FE900BD07A1 /* FlightNotes_Reference */,
 				C56AF5112A565FC900BD07A1 /* FuelPage */,
@@ -1529,6 +1543,7 @@
 				3E086D8D2A94E4C500BE00AD /* EnrouteList+CoreDataClass.swift in Sources */,
 				3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */,
 				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
+				3EF2219F2AAECA63000B8FFB /* EventList+CoreDataProperties.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
@@ -1649,6 +1664,7 @@
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3E4A374D2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
+				3EF2219E2AAECA63000B8FFB /* EventList+CoreDataClass.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
 				3E4A36D52A5AA04400027C61 /* TaxiTimesList+CoreDataClass.swift in Sources */,
 				C5A8DE082A4E931D0045EB32 /* reciprocalRwyChart.swift in Sources */,

@@ -20,7 +20,9 @@ struct CalendarView: View {
     private static var now = Date()
     
     @State private var entries: [IEntries] = CalendarModel().listItem
-    @EnvironmentObject var calendarModel: CalendarModel
+//    @EnvironmentObject var calendarModel: CalendarModel
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    
     @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
     
     // Draw BG Event
@@ -41,7 +43,7 @@ struct CalendarView: View {
                 calendar: calendar,
                 date: $selectedDate,
                 entries: $entries,
-                events: $calendarModel.listEvent,
+                events: $coreDataModel.dataEvents,
                 content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
                         Button(action: {
@@ -163,7 +165,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     private var calendar: Calendar
     @Binding private var date: Date
     @Binding private var entries: [IEntries]
-    @Binding private var events: [IEvent]
+    @Binding private var events: [EventList]
     private let content: (Date, ClosedRange<Date>?) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
@@ -177,7 +179,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
         calendar: Calendar,
         date: Binding<Date>,
         entries: Binding<[IEntries]>,
-        events: Binding<[IEvent]>,
+        events: Binding<[EventList]>,
         @ViewBuilder content: @escaping (Date, ClosedRange<Date>?) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
@@ -380,7 +382,7 @@ private extension CalendarViewComponent {
 }
 
 private extension CalendarViewComponent {
-    func countEventByRow(_ events: [IEvent], _ days: [Date]) -> [String: Any] {
+    func countEventByRow(_ events: [EventList], _ days: [Date]) -> [String: Any] {
         
         let dateFormmater = DateFormatter()
         dateFormmater.dateFormat = "yyyy-MM-dd"
@@ -395,8 +397,8 @@ private extension CalendarViewComponent {
                     space = 0
                 }
                 
-                let startDate = dateFormmater.date(from: event.startDate)
-                let endDate = dateFormmater.date(from: event.endDate)
+                let startDate = dateFormmater.date(from: event.unwrappedStartDate)
+                let endDate = dateFormmater.date(from: event.unwrappedEndDate)
                 let dateString = dateFormmater.string(from: row)
                 
                 let num: Double = Double(index + 1)/7

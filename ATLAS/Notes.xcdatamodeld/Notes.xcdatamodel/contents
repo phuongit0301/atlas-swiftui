@@ -110,6 +110,14 @@
         <attribute name="zfrq" optional="YES" attributeType="String"/>
         <attribute name="ztm" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Event" representedClassName="EventList" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="startDate" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
         <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
         <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
