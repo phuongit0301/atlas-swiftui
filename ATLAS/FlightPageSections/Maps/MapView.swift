@@ -9,171 +9,370 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
-//struct AnnotatedItem: MKAnnotation {
-//    let id = UUID()
-//    var name: String
-//    var coordinate: CLLocationCoordinate2D
-//}
-//
-//struct MapViewModal: View {
-//
-//    @StateObject var locationViewModel = LocationViewModel()
-//    @State private var mapType: MKMapType = .standard
-//
-////    var parent = MapView(mapType: $mapType)
-//
-//    var body: some View {
-//        VStack {
-//            MapView(mapType: $mapType)
-//                .ignoresSafeArea()
-//                .overlay {
-//
-//                    Button(action: {
-//                        var parent = MapView(mapType: $mapType)
-//                        parent.testFunc()
-//                    }) {
-//                        VStack {
-//                            Spacer()
-//                            HStack {
-//                                Spacer()
-//                                ZStack {
-//                                    RoundedRectangle(cornerRadius: 5)
-//                                        .frame(width: 40, height: 40)
-//                                        .foregroundColor(.white)
-//
-//                                    Image(systemName: "map.fill")
-//                                        .font(.system(size: 30))
-//                                        .foregroundColor(.gray)
-//
-//                                }
-//                                .padding(.trailing, 10)
-//                            }
-//                            Spacer()
-//                        }
-//                    }
-//                }
-//        }
-//        .onAppear {
-//            if locationViewModel.authorizationStatus == .notDetermined {
-//                locationViewModel.requestPermission()
-//            }
-//        }
-//    }
-//}
-//
-//struct MapView: UIViewRepresentable {
-//    @Binding var mapType: MKMapType
-//
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//
-//    class Coordinator: NSObject, MKMapViewDelegate {
-//        var parent: MapView
-//
-//        init(_ parent: MapView) {
-//            self.parent = parent
-//        }
-//
-//        func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-//            //print(mapView.centerCoordinate)
-//        }
-//
-//        func mapView(_ mapView: MKMapView,
-//                     didUpdate userLocation: MKUserLocation) {
-//            print("User location\(userLocation.coordinate)")
-//        }
-//
-//        func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-//            print("Map will start loading")
-//        }
-//
-//        func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//            print("Map did finish loading")
-//        }
-//
-//        func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-//            print("Map will start locating user")
-//        }
-//
-//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
-//            view.canShowCallout = true
-//            return view
-//        }
-//    }
-//
-//    func makeUIView(context: Context) -> MKMapView {
-//
-//        let region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: -37.8136, longitude: 144.9631), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//
-//        let mapView = MKMapView()
-//        mapView.delegate = context.coordinator
-//        mapView.region = region
-//
-//        mapView.showsScale = true
-//        mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
-//        mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
-//
-//        mapView.showsUserLocation = true
-//        //mapView.showsCompass = false
-//
-//        return mapView
-//    }
-//
-//    func updateUIView(_ view: MKMapView, context: Context) {
-//        view.mapType = mapType
-//    }
-//
-//    func testFunc()  {
-//        print("Toggle Compass")
-//    }
-//}
-//
-//class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-//    @Published var authorizationStatus: CLAuthorizationStatus
-//
-//    private let locationManager: CLLocationManager
-//
-//    override init() {
-//        locationManager = CLLocationManager()
-//        authorizationStatus = locationManager.authorizationStatus
-//
-//        super.init()
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.startUpdatingLocation()
-//    }
-//
-//    func requestPermission() {
-//        locationManager.requestWhenInUseAuthorization()
-//    }
-//
-//    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-//        authorizationStatus = manager.authorizationStatus
-//    }
-//}
-//
+let mapView = MKMapView(frame: UIScreen.main.bounds)
+let worldMap = WorldMap(filename: "WorldCoordinates")
 
 struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
     @State private var mapType: MKMapType = .mutedStandard
+    @State var tfRoute: String = ""
+    
+    @State private var showRoute = false
+    @State private var showLayer = false
+    @State private var showIcon = false
+    
+    @State var selectedTraffic = false
+    @State var selectedWeather = false
+    @State var selectedAABBA = false
+    
+    @State private var showPopoverEye = false
+    @State private var showPopoverWind = false
+    @State private var showPopoverWater = false
+    @State private var showPopoverAirplane = false
+    @State private var showPopoverClock = false
+    @State private var showPopoverExclamationMark = false
+    @State private var showPopoverInfo = false
+    @State private var showPopoverQuestionMark = false
 
     var body: some View {
-        VStack {
-            MapView(
-                region: coreDataModel.region,
-                lineCoordinates: coreDataModel.lineCoordinates,
-                annotation: coreDataModel.pointsOfInterest,
-                currentLocation: locationViewModel.currentLocation,
-                mapType: mapType
-            )
+        if coreDataModel.imageLoading {
+            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
+        } else {
+            ZStack(alignment: .top) {
+                MapView(
+                    region: coreDataModel.region,
+                    lineCoordinates: coreDataModel.lineCoordinates,
+                    annotation: coreDataModel.pointsOfInterest,
+                    currentLocation: locationViewModel.currentLocation,
+                    mapType: mapType
+                ).overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
+                    .cornerRadius(8)
+                
+                VStack {
+                    HStack(alignment: .top) {
+                        Button(action: {
+                            self.showRoute.toggle()
+                            self.showLayer = false
+                        }, label: {
+                            Text("SIN - BER")
+                                .font(.system(size: 17, weight: .semibold)).foregroundColor(showRoute ? Color.white : Color.black)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal)
+                        }).frame(alignment: .center)
+                            .background(showRoute ? Color.theme.azure : Color.white)
+                            .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.theme.azure, lineWidth: 1))
+                            .cornerRadius(24)
+                            .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            self.showLayer.toggle()
+                            self.showRoute = false
+                        }, label: {
+                            Image(systemName: "square.3.layers.3d")
+                                .foregroundColor(showLayer ? Color.white : Color.theme.azure)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(11)
+                        }).frame(width: 44, height: 44, alignment: .center)
+                            .background(showLayer ? Color.theme.azure : Color.white)
+                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.azure, lineWidth: 1))
+                            .cornerRadius(100)
+                            .buttonStyle(PlainButtonStyle())
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            self.showIcon = false
+                        }, label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(Color.white)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                        }).frame(width: 44, height: 44, alignment: .center)
+                            .background(Color.theme.azure)
+                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.azure, lineWidth: 1))
+                            .cornerRadius(100)
+                            .buttonStyle(PlainButtonStyle())
+                    }
+                    
+                    HStack(alignment: .top) {
+                        if showRoute && !showLayer {
+                            HStack {
+                                HStack {
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            Text("Enter Route")
+                                                .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                                .padding(.vertical, 8)
+                                            
+                                            Divider().padding(.horizontal, -16)
+                                            
+                                            TextField("Enter waypoint(s) route must pass through", text: $tfRoute)
+                                                .font(.system(size: 15)).frame(maxWidth: .infinity)
+                                        }.padding()
+                                    }.background(Color.white)
+                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
+                                        .cornerRadius(8)
+                                    
+                                }.padding()
+                                .background(Color.theme.brightGray1.opacity(0.5))
+                                    .frame(width: 373)
+                                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.theme.azure, lineWidth: 0))
+                                    .cornerRadius(20)
+                                
+                                Spacer()
+                            }
+                        }
+                        
+                        if showLayer && !showRoute {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Select Layer")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .foregroundColor(Color.black)
+                                        .padding(.horizontal)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Button(action: {
+                                        self.selectedTraffic.toggle()
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(Color.theme.azure.opacity(self.selectedTraffic ? 1 : 0))
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                            
+                                            Text("Traffic").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                        }
+                                    })
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                        
+                                    Button(action: {
+                                        self.selectedWeather.toggle()
+                                        self.updateMapOverlayViews()
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(Color.theme.azure.opacity(self.selectedWeather ? 1 : 0))
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                            
+                                            Text("Weather").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                        }
+                                    })
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                        
+                                    Button(action: {
+                                        self.selectedAABBA.toggle()
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(Color.theme.azure.opacity(self.selectedAABBA ? 1 : 0))
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                            
+                                            Text("AABBA").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
+                                        }
+                                    })
+                                }.padding()
+                                    .frame(width: 194)
+                                    .background(Color.theme.philippineSilver.opacity(0.82))
+                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.philippineSilver, lineWidth: 0))
+                                    .cornerRadius(8)
+                                
+                                Spacer()
+                            }// End HStack
+                        }
+                        
+                        if showIcon {
+                            HStack {
+                                Spacer()
+                                
+                                VStack(spacing: 4) {
+                                    Button(action: {
+                                        self.showPopoverEye.toggle()
+                                    }, label: {
+                                        Image(systemName: "eye.trianglebadge.exclamationmark")
+                                            .foregroundColor(Color.theme.tangerineYellow)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.tangerineYellow.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.tangerineYellow, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverEye) {
+                                            VStack {
+                                                Text("Eye").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                            
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverWind.toggle()
+                                    }, label: {
+                                        Image(systemName: "wind")
+                                            .foregroundColor(Color.theme.blueJeans)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.blueJeans.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.blueJeans, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverWind) {
+                                            VStack {
+                                                Text("Wind").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverWater.toggle()
+                                    }, label: {
+                                        Image(systemName: "water.waves")
+                                            .foregroundColor(Color.theme.coralRed1)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.coralRed1.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverWater) {
+                                            VStack {
+                                                Text("Water").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverAirplane.toggle()
+                                    }, label: {
+                                        Image(systemName: "airplane.arrival")
+                                            .foregroundColor(Color.theme.vividGamboge)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.vividGamboge.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.vividGamboge, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverAirplane) {
+                                            VStack {
+                                                Text("Airplane").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverClock.toggle()
+                                    }, label: {
+                                        Image(systemName: "clock.badge.exclamationmark.fill")
+                                            .foregroundColor(Color.theme.cafeAuLait)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.cafeAuLait.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.cafeAuLait, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverClock) {
+                                            VStack {
+                                                Text("Airplane").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverExclamationMark.toggle()
+                                    }, label: {
+                                        Image(systemName: "exclamationmark.triangle")
+                                            .foregroundColor(Color.theme.coralRed1)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.coralRed1.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverExclamationMark) {
+                                            VStack {
+                                                Text("ExclamationMark").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverInfo.toggle()
+                                    }, label: {
+                                        Image(systemName: "info.bubble")
+                                            .foregroundColor(Color.theme.iris)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.iris.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.iris, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverInfo) {
+                                            VStack {
+                                                Text("Info").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                    Button(action: {
+                                        self.showPopoverQuestionMark.toggle()
+                                    }, label: {
+                                        Image(systemName: "questionmark.bubble")
+                                            .foregroundColor(Color.theme.mediumOrchid)
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                    }).buttonStyle(PlainButtonStyle())
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .background(Color.theme.mediumOrchid.opacity(0.15))
+                                        .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.mediumOrchid, lineWidth: 0))
+                                        .cornerRadius(100)
+                                        .popover(isPresented: $showPopoverQuestionMark) {
+                                            VStack {
+                                                Text("Info").foregroundColor(Color.black)
+                                            }.frame(width: 318, height: 318)
+                                        }
+                                    
+                                }.padding(.vertical, 8)
+                                    .padding(.horizontal, 4)
+                                    .frame(width: 48)
+                                    .background(Color.white.opacity(0.2))
+                                    .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.white, lineWidth: 0))
+                                    .cornerRadius(40)
+                            }
+                        }
+                        
+                    }
+                    
+                }// End VStack
+                .padding()
+                
+            }.padding()
         }
+        
     }
+    
+    func updateMapOverlayViews() {
+//      mapView.removeAnnotations(mapView.annotations)
+      mapView.removeOverlays(mapView.overlays)
+//        mapView.showsTraffic = selectedTraffic
+//      if selectedWeather { addBoundary() }
+      if selectedWeather { addOverlay() }
+//      if mapCharacterLocation { addCharacterLocation() }
+//      if mapRoute { addRoute() }
+    }
+    
+    func addOverlay() {
+        let overlay = MapOverlay(worldMap: worldMap)
+        mapView.addOverlay(overlay)
+    }
+    
 }
-
-let worldMap = WorldMap(filename: "WorldCoordinates")
 
 struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
@@ -184,7 +383,7 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
+//        let mapView = MKMapView()
         mapView.mapType = mapType
 //        mapView.region = region
         mapView.setRegion(region, animated: true)
@@ -193,8 +392,8 @@ struct MapView: UIViewRepresentable {
         mapView.showsScale = true
         
         mapView.addAnnotations(annotation)
-        let overlay = MapOverlay(worldMap: worldMap)
-        mapView.addOverlay(overlay)
+//        let overlay = MapOverlay(worldMap: worldMap)
+//        mapView.addOverlay(overlay)
         
         let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
         mapView.addOverlay(polyline)

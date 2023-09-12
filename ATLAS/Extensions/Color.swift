@@ -27,9 +27,11 @@ struct ColorTheme {
     let pastelOrange = Color("PastelOrange") //FBBB3D
     let alizarinCrimson = Color("AlizarinCrimson") //DF2D3B
     let brightGray = Color("BrightGray") //EBEBEB
+    let brightGray1 = Color("BrightGray1") //EFEFEF
     let philippineGray = Color("PhilippineGray") //919191
     let philippineGray2 = Color("PhilippineGray2") //8A8A8E
     let philippineGray3 = Color("PhilippineGray3") //8E8E93
+    let philippineSilver = Color("PhilippineSilver") //B3B3B3
     let lightGray = Color("LightGray") //D4D5D6
     let lightGray1 = Color("LightGray1") //D1D1D6
     let lavender = Color("Lavender") //D4D5D6
@@ -56,4 +58,8 @@ struct ColorTheme {
     let mediumOrchid = Color("MediumOrchid") //AF52DE
     let vividGamboge = Color("VividGamboge") //FF9500
     let gainsboro = Color("Gainsboro") //DCDCDC
+    let blueJeans = Color("BlueJeans") //55BEF0
+    let cafeAuLait = Color("CafeAuLait") //A2845E
+    let iris = Color("Iris") //5856D6
+    let onyx = Color("Onyx") //383838
 }
