@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  HomeFlightSectionView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 20/05/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct HomeView: View {
+struct HomeFlightSectionView: View {
     var viewInformationModel = ListFlightInformationModel()
     @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
@@ -98,9 +98,9 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
+struct HomeFlightSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeFlightSectionView()
             .environmentObject(SideMenuModelState())
             .environmentObject(TabModelState())
     }

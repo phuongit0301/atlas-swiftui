@@ -160,13 +160,20 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAISearchFavorite: [AISearchList] = []
     
     // For Map View
-    @Published var dataMap: [WaypointMapList] = []
+    @Published var dataWaypointMap: [WaypointMapList] = []
+    @Published var dataAirportMap: [AirportMapList] = []
+    @Published var dataTrafficMap: [TrafficMapList] = []
+    @Published var dataAabbaMap: [AabbaMapList] = []
     
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
     @Published var pointsOfInterest = [MKAnnotation]()
     @Published var image: UIImage!
     @Published var imageLoading = true
+    
+    init() {
+        
+    }
     
     @MainActor
     func checkAndSyncData() async {
@@ -189,7 +196,12 @@ class CoreDataModelState: ObservableObject {
                     
                     if let routeData = data?.routeData {
                         self.initDataSummaryRoute(routeData)
-                        self.initDataMap(routeData.waypoints)
+//                        self.initDataWaypoint(routeData.waypoints)
+                        let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
+                        let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
+                        
+                        self.initDataWaypoint(waypointData)
+                        self.initDataAirport(airportData)
                     }
                     
                     if let perfData = data?.perfData {
@@ -282,9 +294,10 @@ class CoreDataModelState: ObservableObject {
             self.dataFPEnroute = self.readEnrouteList()
             //        readFlightPlan()
             self.readSummaryInfo()
-            self.dataMap = self.readDataMapList()
+            self.dataWaypointMap = self.readDataWaypontMapList()
             self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694480400/8000/2/0_1.png")
-            self.prepareDataForMap()
+            self.prepareDataForWaypointMap()
+            self.prepareDataForAirportMap()
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -643,23 +656,22 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataMap(_ dataWaypoints: [IWaypoints]) {
-        if dataWaypoints.count > 0 {
-            dataWaypoints.forEach { item in
-                let coord = convertCoordinates(item.coord)
+    func initDataWaypoint(_ data: IWaypointDataJson) {
+        if data.waypoints_data.count > 0 {
+            data.waypoints_data.forEach { item in
                 let newObj = WaypointMapList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
-                newObj.title = item.name
-                newObj.latitude = coord["latitude"]
-                newObj.longitude = coord["longitude"]
+                newObj.name = item.waypoint_id
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
                 
                 service.container.viewContext.performAndWait {
                     do {
                         try service.container.viewContext.save()
-                        print("saved data maps successfully")
+                        print("saved waypoint data successfully")
                     } catch {
-                        print("Failed to perf weight save: \(error)")
+                        print("Failed to waypoint data save: \(error)")
                         // Rollback any changes in the managed object context
                         service.container.viewContext.rollback()
                         
@@ -667,8 +679,99 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             
-            self.dataMap = readDataMapList()
-            self.prepareDataForMap()
+            self.dataWaypointMap = readDataWaypontMapList()
+            self.prepareDataForWaypointMap()
+        }
+    }
+    
+    func initDataAirport(_ data: IAirportDataJson) {
+        if data.airport_data.count > 0 {
+            data.airport_data.forEach { item in
+                let newObj = AirportMapList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.name = item.airport_id
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data airport successfully")
+                    } catch {
+                        print("Failed to data airport save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+            self.dataAirportMap = readDataAirportMapList()
+            self.prepareDataForAirportMap()
+        }
+    }
+    
+    func initDataTraffic(_ data: [ITrafficeData]) {
+        if data.count > 0 {
+            data.forEach { item in
+                let newObj = TrafficMapList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.colour = item.colour
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.callsign = item.callsign
+                newObj.trueTrack = item.true_track
+                newObj.baroAltitude = item.baro_altitude
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data traffic successfully")
+                    } catch {
+                        print("Failed to data traffic save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+//            self.dataMap = readDataMapList()
+//            self.prepareDataForMap()
+        }
+    }
+    
+    func initDataAabba(_ data: [IAabbaData]) {
+        if data.count > 0 {
+            data.forEach { item in
+                let newObj = AabbaMapList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.userId = item.user_id
+                newObj.postDate = item.post_date
+                newObj.postTitle = item.post_title
+                newObj.postText = item.post_text
+                newObj.latitude = item.latitude
+                newObj.longitude = item.longitude
+                newObj.category = item.category
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data aabba successfully")
+                    } catch {
+                        print("Failed to data aabba save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+//            self.dataMap = readDataMapList()
+//            self.prepareDataForMap()
         }
     }
     
@@ -1901,7 +2004,7 @@ class CoreDataModelState: ObservableObject {
         return 0
     }
     
-    func readDataMapList() -> [WaypointMapList] {
+    func readDataWaypontMapList() -> [WaypointMapList] {
         var data: [WaypointMapList] = []
         
         let request: NSFetchRequest<WaypointMapList> = WaypointMapList.fetchRequest()
@@ -1917,14 +2020,80 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func prepareDataForMap() {
+    func readDataAirportMapList() -> [AirportMapList] {
+        var data: [AirportMapList] = []
+        
+        let request: NSFetchRequest<AirportMapList> = AirportMapList.fetchRequest()
+        do {
+            let response: [AirportMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Airport List from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataTrafficMapList() -> [TrafficMapList] {
+        var data: [TrafficMapList] = []
+        
+        let request: NSFetchRequest<TrafficMapList> = TrafficMapList.fetchRequest()
+        do {
+            let response: [TrafficMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Traffic List from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataAabbaMapList() -> [AabbaMapList] {
+        var data: [AabbaMapList] = []
+        
+        let request: NSFetchRequest<AabbaMapList> = AabbaMapList.fetchRequest()
+        do {
+            let response: [AabbaMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Traffic List from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func prepareDataForWaypointMap() {
         var pointAnnotation = [MKPointAnnotation]()
         var locationCoordinate = [CLLocationCoordinate2D]()
         
-        for item in self.dataMap {
+        for item in self.dataWaypointMap {
             let annotation = MKPointAnnotation()
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            annotation.title = item.title
+            annotation.title = item.name
+            annotation.coordinate = coord
+            
+            pointAnnotation.append(annotation)
+            locationCoordinate.append(coord)
+        }
+        
+        self.lineCoordinates = locationCoordinate
+        self.pointsOfInterest = pointAnnotation
+    }
+    
+    func prepareDataForAirportMap() {
+        var pointAnnotation = [MKPointAnnotation]()
+        var locationCoordinate = [CLLocationCoordinate2D]()
+        
+        for item in self.dataWaypointMap {
+            let annotation = MKPointAnnotation()
+            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+            annotation.title = item.name
             annotation.coordinate = coord
             
             pointAnnotation.append(annotation)

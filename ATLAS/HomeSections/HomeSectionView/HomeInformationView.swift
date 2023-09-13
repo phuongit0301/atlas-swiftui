@@ -71,49 +71,53 @@ struct HomeInformationView: View {
                                 
                                 Divider()
                                 
-                                HStack {
-                                    Text("29/09/23 LIS-DXB HHMM-HHMM")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                    
-                                    Spacer()
-                                    
+                                NavigationLink(destination: HomeFlightSectionView()) {
                                     HStack {
-                                        Text("EK424 / E-IHAL")
+                                        Text("29/09/23 LIS-DXB HHMM-HHMM")
                                             .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(Color.black)
                                         
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                            .frame(width: 11, height: 22)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                }.padding(.vertical, 11)
-                                    .padding(.horizontal)
+                                        Spacer()
+                                        
+                                        HStack {
+                                            Text("EK424 / E-IHAL")
+                                                .font(.system(size: 17, weight: .regular))
+                                                .foregroundColor(Color.black)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                .frame(width: 11, height: 22)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        }
+                                    }.padding(.vertical, 11)
+                                        .padding(.horizontal)
+                                }
                                 
                                 Divider()
                                 
-                                HStack {
-                                    Text("01/10/23 DXB-SIN HHMM-HHMM ")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                    
-                                    Spacer()
-                                    
+                                NavigationLink(destination: HomeFlightSectionView()) {
                                     HStack {
-                                        Text("EK232 / S-WLW")
+                                        Text("01/10/23 DXB-SIN HHMM-HHMM ")
                                             .font(.system(size: 17, weight: .regular))
                                             .foregroundColor(Color.black)
                                         
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                            .frame(width: 11, height: 22)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                }.padding(.vertical, 11)
-                                    .padding(.horizontal)
+                                        Spacer()
+                                        
+                                        HStack {
+                                            Text("EK232 / S-WLW")
+                                                .font(.system(size: 17, weight: .regular))
+                                                .foregroundColor(Color.black)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                .frame(width: 11, height: 22)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        }
+                                    }.padding(.vertical, 11)
+                                        .padding(.horizontal)
+                                }
                             }
                             
                             Group {

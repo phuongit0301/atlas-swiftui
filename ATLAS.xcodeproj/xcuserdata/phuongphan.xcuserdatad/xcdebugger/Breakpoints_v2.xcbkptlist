@@ -5216,8 +5216,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "checkAndSyncData()"
             landmarkType = "7">
             <Locations>
@@ -5339,8 +5339,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "checkAndSyncData()"
             landmarkType = "7">
             <Locations>
@@ -5411,8 +5411,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3159"
-            endingLineNumber = "3159"
+            startingLineNumber = "3328"
+            endingLineNumber = "3328"
             landmarkName = "readAISearch(target:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8556,8 +8556,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "addOverlay()"
             landmarkType = "7">
             <Locations>
@@ -8604,8 +8604,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "updateMapOverlayViews()"
             landmarkType = "7">
             <Locations>

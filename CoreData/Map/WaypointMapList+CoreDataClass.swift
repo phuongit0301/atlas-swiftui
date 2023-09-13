@@ -2,7 +2,7 @@
 //  WaypointMapList+CoreDataClass.swift
 //  ATLAS
 //
-//  Created by phuong phan on 26/08/2023.
+//  Created by phuong phan on 13/09/2023.
 //
 //
 

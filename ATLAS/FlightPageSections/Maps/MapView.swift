@@ -83,7 +83,7 @@ struct MapViewModal: View {
                         Spacer()
                         
                         Button(action: {
-                            self.showIcon = false
+                            self.showIcon.toggle()
                         }, label: {
                             Image(systemName: "plus")
                                 .foregroundColor(Color.white)
@@ -116,9 +116,8 @@ struct MapViewModal: View {
                                         .cornerRadius(8)
                                     
                                 }.padding()
-                                .background(Color.theme.brightGray1.opacity(0.5))
                                     .frame(width: 373)
-                                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.theme.azure, lineWidth: 0))
+                                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
                                     .cornerRadius(20)
                                 
                                 Spacer()
@@ -180,8 +179,7 @@ struct MapViewModal: View {
                                     })
                                 }.padding()
                                     .frame(width: 194)
-                                    .background(Color.theme.philippineSilver.opacity(0.82))
-                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.philippineSilver, lineWidth: 0))
+                                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
                                     .cornerRadius(8)
                                 
                                 Spacer()
@@ -341,7 +339,7 @@ struct MapViewModal: View {
                                 }.padding(.vertical, 8)
                                     .padding(.horizontal, 4)
                                     .frame(width: 48)
-                                    .background(Color.white.opacity(0.2))
+                                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 40))
                                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.white, lineWidth: 0))
                                     .cornerRadius(40)
                             }
@@ -390,6 +388,7 @@ struct MapView: UIViewRepresentable {
         
         mapView.showsUserLocation = false
         mapView.showsScale = true
+        mapView.showsTraffic = true
         
         mapView.addAnnotations(annotation)
 //        let overlay = MapOverlay(worldMap: worldMap)
@@ -409,6 +408,7 @@ struct MapView: UIViewRepresentable {
             view.removeAnnotations(view.annotations)
             view.addAnnotations(annotation)
         }
+        
         view.showsUserLocation = true
         view.setCenter(currentLocation, animated: true)
     }
@@ -438,12 +438,12 @@ class Coordinator: NSObject, MKMapViewDelegate {
         }
         
         // Create an annotation view
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "business")
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customView")
         
-        annotationView.image = UIImage(systemName: "triangle.inset.filled")
         annotationView.tintColor = UIColor.red
         annotationView.canShowCallout = false
-        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        annotationView.image = UIImage(systemName: "triangle.inset.filled")
+//        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         //        annotationView.isHidden = true
         return annotationView
         
@@ -457,8 +457,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
             )
         } else if let routePolyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: routePolyline)
-            renderer.strokeColor = UIColor.systemBlue
-            renderer.lineWidth = 10
+            renderer.strokeColor = UIColor.black
+            renderer.lineWidth = 1
             return renderer
         }
         return MKOverlayRenderer()

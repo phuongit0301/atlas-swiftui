@@ -511,6 +511,46 @@ struct IPerfDataResponseModel: Decodable {
     var limLDW: String?
 }
 
+// For Map
+struct IWaypointData: Decodable {
+    var waypoint_id: String
+    var lat: String
+    var long: String
+}
+
+struct IWaypointDataJson: Decodable {
+    var waypoints_data: [IWaypointData]
+}
+
+struct IAirportData: Decodable {
+    var airport_id: String
+    var lat: String
+    var long: String
+}
+
+struct IAirportDataJson: Decodable {
+    var airport_data: [IAirportData]
+}
+
+struct ITrafficeData: Decodable {
+    var callsign: String
+    var lat: String
+    var long: String
+    var true_track: String
+    var baro_altitude: String
+    var colour: String
+}
+
+struct IAabbaData: Decodable {
+    var user_id: String
+    var post_date: String
+    var post_title: String
+    var post_text: String
+    var latitude: String
+    var longitude: String
+    var category: String
+}
+
 struct IWaypoints: Decodable {
     var name: String
     var coord: String

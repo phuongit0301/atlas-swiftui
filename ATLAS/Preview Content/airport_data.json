@@ -1,0 +1,84 @@
+{
+    "airport_data": [
+        {
+            "airport_id": "WIBS",
+            "lat": "1.37",
+            "long": "102.14"
+        },
+        {
+            "airport_id": "WIBT",
+            "lat": "1.0527",
+            "long": "103.393"
+        },
+        {
+            "airport_id": "WIDD",
+            "lat": "1.12103",
+            "long": "104.119"
+        },
+        {
+            "airport_id": "WIDN",
+            "lat": "0.922683",
+            "long": "104.532"
+        },
+        {
+            "airport_id": "WIDS",
+            "lat": "-0.479189",
+            "long": "104.579"
+        },
+        {
+            "airport_id": "WIOM",
+            "lat": "3.34812",
+            "long": "106.258"
+        },
+        {
+            "airport_id": "WIPR",
+            "lat": "-0.352808",
+            "long": "102.335"
+        },
+        {
+            "airport_id": "WMAU",
+            "lat": "2.383",
+            "long": "103.867"
+        },
+        {
+            "airport_id": "WMBT",
+            "lat": "2.81818",
+            "long": "104.16"
+        },
+        {
+            "airport_id": "WMKJ",
+            "lat": "1.64131",
+            "long": "103.67"
+        },
+        {
+            "airport_id": "WMKK",
+            "lat": "2.74558",
+            "long": "101.71"
+        },
+        {
+            "airport_id": "WMKM",
+            "lat": "2.26336",
+            "long": "102.252"
+        },
+        {
+            "airport_id": "WSAP",
+            "lat": "1.36042",
+            "long": "103.91"
+        },
+        {
+            "airport_id": "WSAT",
+            "lat": "1.38726",
+            "long": "103.709"
+        },
+        {
+            "airport_id": "WSSL",
+            "lat": "1.41695",
+            "long": "103.868"
+        },
+        {
+            "airport_id": "WSSS",
+            "lat": "1.35019",
+            "long": "103.994"
+        }
+    ]
+}

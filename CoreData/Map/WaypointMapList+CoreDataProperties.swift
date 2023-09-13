@@ -2,7 +2,7 @@
 //  WaypointMapList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 26/08/2023.
+//  Created by phuong phan on 13/09/2023.
 //
 //
 
@@ -13,13 +13,13 @@ import CoreData
 extension WaypointMapList {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<WaypointMapList> {
-        return NSFetchRequest<WaypointMapList>(entityName: "Map")
+        return NSFetchRequest<WaypointMapList>(entityName: "WaypointMap")
     }
 
     @NSManaged public var id: UUID?
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
-    @NSManaged public var title: String?
+    @NSManaged public var name: String?
     
     public var unwrappedLatitude: String {
         latitude ?? ""
@@ -29,10 +29,9 @@ extension WaypointMapList {
         longitude ?? ""
     }
     
-    public var unwrappedTitle: String {
-        title ?? ""
+    public var unwrappedName: String {
+        name ?? ""
     }
-    
 }
 
 extension WaypointMapList : Identifiable {

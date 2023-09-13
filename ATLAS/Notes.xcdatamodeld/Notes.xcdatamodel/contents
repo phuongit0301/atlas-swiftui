@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AabbaMap" representedClassName="AabbaMapList" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="postDate" optional="YES" attributeType="String"/>
+        <attribute name="postText" optional="YES" attributeType="String"/>
+        <attribute name="postTitle" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="AirportMap" representedClassName="AirportMapList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
         <attribute name="answer" optional="YES" attributeType="String"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" defaultDateTimeInterval="712279380" usesScalarValueType="NO"/>
@@ -276,12 +292,6 @@
         <attribute name="weather" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
-    <entity name="Map" representedClassName="WaypointMapList" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="latitude" optional="YES" attributeType="String"/>
-        <attribute name="longitude" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
         <attribute name="arrMetar" optional="YES" attributeType="String"/>
@@ -419,5 +429,20 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="months3" optional="YES" attributeType="Binary"/>
         <attribute name="week1" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="TrafficMap" representedClassName="TrafficMapList" syncable="YES">
+        <attribute name="baroAltitude" optional="YES" attributeType="String"/>
+        <attribute name="callsign" optional="YES" attributeType="String"/>
+        <attribute name="colour" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="trueTrack" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="WaypointMap" representedClassName="WaypointMapList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
 </model>

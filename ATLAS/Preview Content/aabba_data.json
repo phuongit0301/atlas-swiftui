@@ -1,0 +1,40 @@
+{
+    "aabba_data": [
+        {
+            "user_id": "abc123",
+            "post_date": "2023-09-05 01:00:00",
+            "post_title": "Delay at Airport",
+            "post_text": "Stuck for 5 mins",
+            "latitude": "25.2548",
+            "longitude": "55.3626",
+            "category": "General"
+        },
+        {
+            "user_id": "abc123",
+            "post_date": "2023-09-05 01:00:00",
+            "post_title": "Air Turbulence",
+            "post_text": "Pilots please beware",
+            "latitude": "1.382919",
+            "longitude": "104.0326",
+            "category": "Turbulence"
+        },
+        {
+            "user_id": "abc123",
+            "post_date": "2023-09-13 11:00:00",
+            "post_title": "Crane on building",
+            "post_text": "Big Crane",
+            "latitude": "1.371128",
+            "longitude": "103.958381",
+            "category": "Hazard"
+        },
+        {
+            "user_id": "abc123",
+            "post_date": "2023-09-13 12:00:00",
+            "post_title": "UFO",
+            "post_text": "Flying at 5000 ft",
+            "latitude": "1.385414",
+            "longitude": "103.981346",
+            "category": "Hazard"
+        }
+    ]
+}
