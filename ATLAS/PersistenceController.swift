@@ -200,10 +200,12 @@ class CoreDataModelState: ObservableObject {
                         let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
                         let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
                         let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
+                        let dataAabba: [IAabbaData] = self.remoteService.load("aabba_data.json")
                         
                         self.initDataWaypoint(waypointData)
                         self.initDataAirport(airportData)
                         self.initDataTraffic(trafficData)
+                        self.initDataAabba(dataAabba)
                     }
                     
                     if let perfData = data?.perfData {
@@ -299,6 +301,7 @@ class CoreDataModelState: ObservableObject {
             self.dataWaypointMap = self.readDataWaypontMapList()
             self.dataAirportMap = self.readDataAirportMapList()
             self.dataTrafficMap = self.readDataTrafficMapList()
+            self.dataAabbaMap = self.readDataAabbaMapList()
 //            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694480400/8000/2/0_1.png")
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
@@ -713,7 +716,6 @@ class CoreDataModelState: ObservableObject {
             }
             
             self.dataAirportMap = readDataAirportMapList()
-//            self.prepareDataForAirportMap()
         }
     }
     
@@ -743,8 +745,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             
-//            self.dataMap = readDataMapList()
-//            self.prepareDataForMap()
+            self.dataTrafficMap = readDataTrafficMapList()
         }
     }
     
@@ -775,8 +776,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             
-//            self.dataMap = readDataMapList()
-//            self.prepareDataForMap()
+            self.dataAabbaMap = readDataAabbaMapList()
         }
     }
     

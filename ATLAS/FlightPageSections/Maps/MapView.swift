@@ -175,6 +175,7 @@ struct MapViewModal: View {
                                         Group {
                                             Button(action: {
                                                 self.selectedAABBA.toggle()
+                                                self.updateMapOverlayViews()
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -407,6 +408,7 @@ struct MapViewModal: View {
       if selectedWaypoint { addWaypoint() }
       if selectedAirport { addAirport() }
       if selectedTraffic { addTraffic() }
+      if selectedAABBA { addAabba() }
 //      if mapRoute { addRoute() }
     }
     
@@ -432,7 +434,7 @@ struct MapViewModal: View {
     
     func addAirport() {
         for item in coreDataModel.dataAirportMap {
-            mapView.addOverlay(CircleAnnotation(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue, name: item.unwrappedName, color: .red))
+            mapView.addOverlay(CircleAnnotation(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue, name: item.unwrappedName, color: .black))
         }
     }
     
@@ -441,6 +443,36 @@ struct MapViewModal: View {
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
             
             let annotation = CustomAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: "", image: UIImage(systemName: "airplane"))
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
+    func addAabba() {
+        var defaultImage = UIImage(named: "icon_weather_overlay")
+        
+        for item in coreDataModel.dataAabbaMap {
+            if item.unwrappedCategory == "Turbulence" {
+                defaultImage = UIImage(named: "icon_turbulence_overlay")
+            } else if item.unwrappedCategory == "Visibility" {
+                defaultImage = UIImage(named: "icon_visibility_overlay")
+            } else if item.unwrappedCategory == "Wind" {
+                defaultImage = UIImage(named: "icon_wind_overlay")
+            } else if item.unwrappedCategory == "Runway" {
+                defaultImage = UIImage(named: "icon_runway_overlay")
+            } else if item.unwrappedCategory == "Congestion" {
+                defaultImage = UIImage(named: "icon_congestion_overlay")
+            } else if item.unwrappedCategory == "Hazard" {
+                defaultImage = UIImage(named: "icon_hazard_overlay")
+            } else if item.unwrappedCategory == "General" {
+                defaultImage = UIImage(named: "icon_general_overlay")
+            } else if item.unwrappedCategory == "Ask AABBA" {
+                defaultImage = UIImage(named: "icon_ask_overlay")
+            }
+            
+            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+            
+            let annotation = CustomAnnotation(coordinate: coord, title: item.unwrappedPostTitle, subtitle: "", image: defaultImage)
+            
             mapView.addAnnotation(annotation)
         }
     }

@@ -543,12 +543,18 @@ struct ITrafficData: Decodable {
 
 struct IAabbaData: Decodable {
     var user_id: String
+    var post_id: String
     var post_date: String
     var post_title: String
     var post_text: String
+    var upvote_count: String
+    var comment_count: String
     var latitude: String
     var longitude: String
     var category: String
+    var location: String
+    var username: String
+    var comments: String
 }
 
 struct IWaypoints: Decodable {
