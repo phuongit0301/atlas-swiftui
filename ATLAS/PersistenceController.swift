@@ -295,9 +295,11 @@ class CoreDataModelState: ObservableObject {
             //        readFlightPlan()
             self.readSummaryInfo()
             self.dataWaypointMap = self.readDataWaypontMapList()
-            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694480400/8000/2/0_1.png")
-            self.prepareDataForWaypointMap()
-            self.prepareDataForAirportMap()
+            self.dataAirportMap = self.readDataAirportMapList()
+//            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694480400/8000/2/0_1.png")
+            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
+//            self.prepareDataForWaypointMap()
+//            self.prepareDataForAirportMap()
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -680,7 +682,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             self.dataWaypointMap = readDataWaypontMapList()
-            self.prepareDataForWaypointMap()
+//            self.prepareDataForWaypointMap()
         }
     }
     
@@ -708,7 +710,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             self.dataAirportMap = readDataAirportMapList()
-            self.prepareDataForAirportMap()
+//            self.prepareDataForAirportMap()
         }
     }
     
@@ -2068,42 +2070,47 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func prepareDataForWaypointMap() {
-        var pointAnnotation = [MKPointAnnotation]()
-        var locationCoordinate = [CLLocationCoordinate2D]()
-        
-        for item in self.dataWaypointMap {
-            let annotation = MKPointAnnotation()
-            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            annotation.title = item.name
-            annotation.coordinate = coord
-            
-            pointAnnotation.append(annotation)
-            locationCoordinate.append(coord)
-        }
-        
-        self.lineCoordinates = locationCoordinate
-        self.pointsOfInterest = pointAnnotation
-    }
+//    func prepareDataForWaypointMap() {
+//        var pointAnnotation = [CustomAnnotation]()
+//        var locationCoordinate = [CLLocationCoordinate2D]()
+//
+//        for item in self.dataWaypointMap {
+////            let annotation = MKPointAnnotation()
+////            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+////            annotation.title = item.name
+////            annotation.coordinate = coord
+////            annotationView.image = UIImage(systemName: "triangle.inset.filled")
+//
+//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+//
+//            let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(imageLiteralResourceName: "icon_profile"))
+//
+//            pointAnnotation.append(annotation)
+//            locationCoordinate.append(coord)
+//        }
+//
+//        self.lineCoordinates = locationCoordinate
+//        self.pointsOfInterest = pointAnnotation
+//    }
     
-    func prepareDataForAirportMap() {
-        var pointAnnotation = [MKPointAnnotation]()
-        var locationCoordinate = [CLLocationCoordinate2D]()
-        
-        for item in self.dataWaypointMap {
-            let annotation = MKPointAnnotation()
-            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            annotation.title = item.name
-            annotation.coordinate = coord
-            
-            pointAnnotation.append(annotation)
-            locationCoordinate.append(coord)
-        }
-        
-        self.lineCoordinates = locationCoordinate
-        self.pointsOfInterest = pointAnnotation
-    }
-    
+//    func prepareDataForAirportMap() {
+//        var pointAnnotation = [MKPointAnnotation]()
+//        var locationCoordinate = [CLLocationCoordinate2D]()
+//
+//        for item in self.dataWaypointMap {
+//            let annotation = MKPointAnnotation()
+//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+//            annotation.title = item.name
+//            annotation.coordinate = coord
+//
+//            pointAnnotation.append(annotation)
+//            locationCoordinate.append(coord)
+//        }
+//
+//        self.lineCoordinates = locationCoordinate
+//        self.pointsOfInterest = pointAnnotation
+//    }
+//
 //    func checkAndSyncDataFuel() async {
 //        print("Sync")
 //        await remoteService.getFuelData(completion: { response in

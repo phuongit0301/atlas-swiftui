@@ -20,7 +20,18 @@ extension AirportMapList {
     @NSManaged public var name: String?
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
-
+    
+    public var unwrappedName: String {
+        name ?? ""
+    }
+    
+    public var unwrappedLatitude: String {
+        latitude ?? ""
+    }
+    
+    public var unwrappedLongitude: String {
+        longitude ?? ""
+    }
 }
 
 extension AirportMapList : Identifiable {

@@ -1,40 +1,98 @@
 {
-    "aabba_data": [
-        {
-            "user_id": "abc123",
-            "post_date": "2023-09-05 01:00:00",
-            "post_title": "Delay at Airport",
-            "post_text": "Stuck for 5 mins",
-            "latitude": "25.2548",
-            "longitude": "55.3626",
-            "category": "General"
-        },
-        {
-            "user_id": "abc123",
-            "post_date": "2023-09-05 01:00:00",
-            "post_title": "Air Turbulence",
-            "post_text": "Pilots please beware",
-            "latitude": "1.382919",
-            "longitude": "104.0326",
-            "category": "Turbulence"
-        },
-        {
-            "user_id": "abc123",
-            "post_date": "2023-09-13 11:00:00",
-            "post_title": "Crane on building",
-            "post_text": "Big Crane",
-            "latitude": "1.371128",
-            "longitude": "103.958381",
-            "category": "Hazard"
-        },
-        {
-            "user_id": "abc123",
-            "post_date": "2023-09-13 12:00:00",
-            "post_title": "UFO",
-            "post_text": "Flying at 5000 ft",
-            "latitude": "1.385414",
-            "longitude": "103.981346",
-            "category": "Hazard"
-        }
-    ]
+   "aabba data":[
+      [
+         {
+            "post_id":"2",
+            "user_id":"abc123",
+            "post_date":"2023-09-05 01:00:00",
+            "post_title":"Air Turbulence",
+            "post_text":"Pilots please beware",
+            "upvote_count":"1",
+            "comment_count":"1",
+            "latitude":"1.382919",
+            "longitude":"104.0326",
+            "category":"Turbulence",
+            "location":"WSSS",
+            "username":"Adil_Accumulus",
+            "comments":"[{\"comment_id\": \"2\", \"post_id\": \"2\", \"user_id\": \"abc123\", \"comment_date\": \"2023-09-05 04:00:00\", \"comment_text\": \"This is the comment\", \"username\": \"Adil_Accumulus\"}, {\"comment_id\": \"6\", \"post_id\": \"2\", \"user_id\": \"abc122\", \"comment_date\": \"2023-09-06 13:00:00\", \"comment_text\": \"Had a rough time flying over\", \"username\": \"Nasrun360\"}]"
+         },
+         {
+            "post_id":"3",
+            "user_id":"abc123",
+            "post_date":"2023-09-13 11:00:00",
+            "post_title":"Crane on building",
+            "post_text":"Big Crane",
+            "upvote_count":"1",
+            "comment_count":"1",
+            "latitude":"1.371128",
+            "longitude":"103.958381",
+            "category":"Hazard",
+            "location":"WSSS",
+            "username":"Adil_Accumulus",
+            "comments":"[]"
+         },
+         {
+            "post_id":"4",
+            "user_id":"abc123",
+            "post_date":"2023-09-13 12:00:00",
+            "post_title":"UFO",
+            "post_text":"Flying at 5000 ft",
+            "upvote_count":"1",
+            "comment_count":"1",
+            "latitude":"1.385414",
+            "longitude":"103.981346",
+            "category":"Hazard",
+            "location":"WSSS",
+            "username":"Adil_Accumulus",
+            "comments":"[{\"comment_id\": \"3\", \"post_id\": \"4\", \"user_id\": \"abc122\", \"comment_date\": \"2023-09-13 13:00:00\", \"comment_text\": \"ET is in town\", \"username\": \"Nasrun360\"}]"
+         },
+         {
+            "post_id":"5",
+            "user_id":"abc123",
+            "post_date":"2023-09-09 14:00:00",
+            "post_title":"This runway has resurfaced",
+            "post_text":"Smooth landing",
+            "upvote_count":"0",
+            "comment_count":"0",
+            "latitude":"1.354049",
+            "longitude":"103.9956",
+            "category":"Runway",
+            "location":"WSSS",
+            "username":"Adil_Accumulus",
+            "comments":"[{\"comment_id\": \"4\", \"post_id\": \"5\", \"user_id\": \"abc123\", \"comment_date\": \"2023-09-14 04:00:00\", \"comment_text\": \"Yeap clean landing\", \"username\": \"Adil_Accumulus\"}]"
+         },
+         {
+            "post_id":"6",
+            "user_id":"abc123",
+            "post_date":"2023-09-10 17:00:00",
+            "post_title":"Strong wind",
+            "post_text":"Pilots please beware",
+            "upvote_count":"0",
+            "comment_count":"0",
+            "latitude":"1.307848",
+            "longitude":"103.94509",
+            "category":"Turbulence",
+            "location":"WSSS",
+            "username":"Adil_Accumulus",
+            "comments":"[]"
+         }
+      ],
+      [
+         {
+            "post_id":"7",
+            "user_id":"abc123",
+            "post_date":"2023-09-05 01:00:00",
+            "post_title":"Forest fires",
+            "post_text":"Forest fires been going on for 24h around here. Any visibility issue here?",
+            "upvote_count":"10",
+            "comment_count":"1",
+            "latitude":"35.666667",
+            "longitude":"140.15",
+            "category":"Hazard",
+            "location":"NYLON",
+            "username":"Adil_Accumulus",
+            "comments":"[{\"comment_id\": \"5\", \"post_id\": \"7\", \"user_id\": \"abc122\", \"comment_date\": \"2023-09-06 13:00:00\", \"comment_text\": \"Negative, winds blowing smoke in another direction\", \"username\": \"Nasrun360\"}]"
+         }
+      ]
+   ]
 }
