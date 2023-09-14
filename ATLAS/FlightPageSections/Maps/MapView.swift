@@ -116,8 +116,8 @@ struct MapViewModal: View {
                                                     .font(.system(size: 15))
                                                     .onSubmit {
                                                         if tfRoute != "" {
-                                                            addRoute()
                                                             selectedAddRoute = true
+                                                            updateMapOverlayViews()
                                                         }
                                                     }
                                             }.padding()
@@ -424,19 +424,19 @@ struct MapViewModal: View {
     
     func addRoute() {
         let payload = extractFiveLetterWords(from: tfRoute)
-        
+        print("payload======\(payload)")
         var locationCoordinate = [CLLocationCoordinate2D]()
         
-        for itemWaypoint in coreDataModel.dataWaypointMap {
-            if let itemExists = payload.first(where: {$0 == itemWaypoint.unwrappedName}) {
-                let coord = CLLocationCoordinate2D(latitude: (itemWaypoint.latitude! as NSString).doubleValue, longitude: (itemWaypoint.longitude! as NSString).doubleValue)
-                let annotation = CustomAnnotation(coordinate: coord, title: itemWaypoint.name, subtitle: "", image: UIImage(systemName: "triangle.fill"))
+        for item in payload {
+            if let itemExists = coreDataModel.dataWaypointMap.first(where: {$0.unwrappedName == item}) {
+                let coord = CLLocationCoordinate2D(latitude: (itemExists.latitude! as NSString).doubleValue, longitude: (itemExists.longitude! as NSString).doubleValue)
+                let annotation = CustomAnnotation(coordinate: coord, title: itemExists.name, subtitle: "", image: UIImage(systemName: "triangle.fill"))
                 
                 locationCoordinate.append(coord)
                 mapView.addAnnotation(annotation)
             }
         }
-        
+        print("locationCoordinate==========\(locationCoordinate)")
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
     }
@@ -445,7 +445,7 @@ struct MapViewModal: View {
         for item in coreDataModel.dataWaypointMap {
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
             
-            let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(systemName: "triangle.inset.filled"))
+            let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(systemName: "triangle"))
             
             mapView.addAnnotation(annotation)
         }
