@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var modelState: MainTabModelState
-    
+
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 0) {

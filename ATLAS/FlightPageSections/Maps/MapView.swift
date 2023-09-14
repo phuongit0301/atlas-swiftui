@@ -113,7 +113,13 @@ struct MapViewModal: View {
                                                 Divider().padding(.horizontal, -16)
                                                 
                                                 TextField("Enter waypoint(s) route must pass through", text: $tfRoute)
-                                                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                                                    .font(.system(size: 15))
+                                                    .onSubmit {
+                                                        if tfRoute != "" {
+                                                            addRoute()
+                                                            selectedAddRoute = true
+                                                        }
+                                                    }
                                             }.padding()
                                         }.background(Color.white)
                                             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
@@ -402,14 +408,13 @@ struct MapViewModal: View {
     func updateMapOverlayViews() {
       mapView.removeAnnotations(mapView.annotations)
       mapView.removeOverlays(mapView.overlays)
-//        mapView.showsTraffic = selectedTraffic
-      if selectedAddRoute { addRoute() }
+
       if selectedWeather { addOverlay() }
       if selectedWaypoint { addWaypoint() }
       if selectedAirport { addAirport() }
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
-//      if mapRoute { addRoute() }
+      if selectedAddRoute { addRoute() }
     }
     
     func addOverlay() {
@@ -418,7 +423,21 @@ struct MapViewModal: View {
     }
     
     func addRoute() {
-        let polyline = MKPolyline(coordinates: coreDataModel.lineCoordinates, count: coreDataModel.lineCoordinates.count)
+        let payload = extractFiveLetterWords(from: tfRoute)
+        
+        var locationCoordinate = [CLLocationCoordinate2D]()
+        
+        for itemWaypoint in coreDataModel.dataWaypointMap {
+            if let itemExists = payload.first(where: {$0 == itemWaypoint.unwrappedName}) {
+                let coord = CLLocationCoordinate2D(latitude: (itemWaypoint.latitude! as NSString).doubleValue, longitude: (itemWaypoint.longitude! as NSString).doubleValue)
+                let annotation = CustomAnnotation(coordinate: coord, title: itemWaypoint.name, subtitle: "", image: UIImage(systemName: "triangle.fill"))
+                
+                locationCoordinate.append(coord)
+                mapView.addAnnotation(annotation)
+            }
+        }
+        
+        let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
     }
     
@@ -475,6 +494,23 @@ struct MapViewModal: View {
             
             mapView.addAnnotation(annotation)
         }
+    }
+    
+    func extractFiveLetterWords(from input: String) -> [String] {
+        let pattern = "\\b[A-Z]{5}\\b"
+        
+        if let regex = try? NSRegularExpression(pattern: pattern) {
+            let range = NSRange(input.startIndex..<input.endIndex, in: input)
+            let matches = regex.matches(in: input, options: [], range: range)
+            
+            return matches.map { match in
+                let start = input.index(input.startIndex, offsetBy: match.range.lowerBound)
+                let end = input.index(input.startIndex, offsetBy: match.range.upperBound)
+                return String(input[start..<end])
+            }
+        }
+        
+        return []
     }
 }
 
