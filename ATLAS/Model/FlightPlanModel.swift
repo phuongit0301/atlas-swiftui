@@ -557,6 +557,17 @@ struct IAabbaData: Decodable {
     var comments: String
 }
 
+struct IRouteSelected: Decodable {
+    var airportID: String
+    var lat: String
+    var long: String
+    var selection: String
+    var colour: String
+    var notams: [String]
+    var metar: String
+    var taf: String
+}
+
 struct IWaypoints: Decodable {
     var name: String
     var coord: String

@@ -13,7 +13,6 @@ class CustomAnnotationView: MKAnnotationView {
       super.init(coder: aDecoder)
     }
 
-    // 2
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
       super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
       guard let attractionAnnotation = self.annotation as? CustomAnnotation else { return }

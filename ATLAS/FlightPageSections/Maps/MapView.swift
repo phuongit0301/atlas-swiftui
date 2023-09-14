@@ -424,19 +424,33 @@ struct MapViewModal: View {
     
     func addRoute() {
         let payload = extractFiveLetterWords(from: tfRoute)
-        print("payload======\(payload)")
+        
         var locationCoordinate = [CLLocationCoordinate2D]()
+        
+        //get start and end route
+        let departureLatLong = extractLatLong(forSelection: "departure", inDictionaries: coreDataModel.dataRouteSelected)
+        let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataRouteSelected)
+        
+        let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]!, longitude: departureLatLong["longitude"]!)
+        let firstAnnotation = CustomAnnotation(coordinate: firstCoord, title: "first", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        locationCoordinate.append(firstCoord)
+        mapView.addAnnotation(firstAnnotation)
         
         for item in payload {
             if let itemExists = coreDataModel.dataWaypointMap.first(where: {$0.unwrappedName == item}) {
                 let coord = CLLocationCoordinate2D(latitude: (itemExists.latitude! as NSString).doubleValue, longitude: (itemExists.longitude! as NSString).doubleValue)
-                let annotation = CustomAnnotation(coordinate: coord, title: itemExists.name, subtitle: "", image: UIImage(systemName: "triangle.fill"))
+                let annotation = CustomAnnotation(coordinate: coord, title: itemExists.name, subtitle: "", image: UIImage(named: "icon_triangle_fill"))
                 
                 locationCoordinate.append(coord)
                 mapView.addAnnotation(annotation)
             }
         }
-        print("locationCoordinate==========\(locationCoordinate)")
+        
+        let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]!, longitude: arrivalLatLong["longitude"]!)
+        let lastAnnotation = CustomAnnotation(coordinate: lastCoord, title: "last", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        locationCoordinate.append(lastCoord)
+        mapView.addAnnotation(lastAnnotation)
+        
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
     }
@@ -511,6 +525,21 @@ struct MapViewModal: View {
         }
         
         return []
+    }
+    
+    func extractLatLong(forSelection selection: String, inDictionaries dictionaries: [IRouteSelected]) -> [String: Double] {
+        var latLongValues: [String: Double] = [String: Double]()
+        
+        for dictionary in dictionaries {
+            if dictionary.selection.lowercased() == selection.lowercased() {
+                if let lat = Double(dictionary.lat), let long = Double(dictionary.long) {
+                    latLongValues["latitude"] = lat
+                    latLongValues["longitude"] = long
+                }
+            }
+        }
+        
+        return latLongValues
     }
 }
 
