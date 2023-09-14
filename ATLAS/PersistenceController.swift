@@ -199,34 +199,36 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataWaypoint(routeData.waypoints)
                         let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
                         let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
+                        let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
                         
                         self.initDataWaypoint(waypointData)
                         self.initDataAirport(airportData)
+                        self.initDataTraffic(trafficData)
                     }
                     
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
-                        
+
                         self.initDataPerfInfo(perfData)
-                        
+
                         self.dataPerfWeight = self.readPerfWeight()
-                        
+
                         self.initDataPerfWeight(perfData)
                     }
-                    
+
                     if let fuelData = data?.fuelData {
                         self.initDataFuelList(fuelData)
                     }
-                    
+
                     if let altnData = data?.altnData {
                         self.dataAltnList = self.readAltnList()
                         self.initDataAltn(altnData)
                     }
-                    
+
                     if let notamsData = data?.notamsData {
                         self.initDataNotams(notamsData)
                     }
-                    
+
                     if let metarTafData = data?.metarTafData {
                         self.initDataMetarTaf(metarTafData)
                         self.initDataAltnTaf(metarTafData)
@@ -234,31 +236,31 @@ class CoreDataModelState: ObservableObject {
                     if let historicalDelays = response?.historicalDelays {
                         self.initHistoricalDelays(historicalDelays)
                     }
-                    
+
                     if let projDelays = response?.projDelays {
                         self.initProjDelays(projDelays)
                     }
-                    
+
                     if let taxi = response?.taxi {
                         self.initProjTaxi(taxi)
                     }
-                    
+
                     if let trackMiles = response?.trackMiles {
                         self.initTrackMiles(trackMiles)
                     }
-                    
+
                     if let enrWX = response?.enrWX {
                         self.initEnrWX(enrWX)
                     }
-                    
+
                     if let flightLevel = response?.flightLevel {
                         self.initFlightLevel(flightLevel)
                     }
-                    
+
                     if let reciprocalRwy = response?.reciprocalRwy {
                         self.initReciprocalRwy(reciprocalRwy)
                     }
-                    
+
                     // For init Calendar
                     self.initDataEvent()
                     
@@ -296,6 +298,7 @@ class CoreDataModelState: ObservableObject {
             self.readSummaryInfo()
             self.dataWaypointMap = self.readDataWaypontMapList()
             self.dataAirportMap = self.readDataAirportMapList()
+            self.dataTrafficMap = self.readDataTrafficMapList()
 //            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694480400/8000/2/0_1.png")
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
@@ -714,7 +717,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataTraffic(_ data: [ITrafficeData]) {
+    func initDataTraffic(_ data: [ITrafficData]) {
         if data.count > 0 {
             data.forEach { item in
                 let newObj = TrafficMapList(context: service.container.viewContext)

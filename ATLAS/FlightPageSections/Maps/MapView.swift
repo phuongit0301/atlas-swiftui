@@ -141,6 +141,7 @@ struct MapViewModal: View {
                                             
                                             Button(action: {
                                                 self.selectedTraffic.toggle()
+                                                self.updateMapOverlayViews()
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -405,6 +406,7 @@ struct MapViewModal: View {
       if selectedWeather { addOverlay() }
       if selectedWaypoint { addWaypoint() }
       if selectedAirport { addAirport() }
+      if selectedTraffic { addTraffic() }
 //      if mapRoute { addRoute() }
     }
     
@@ -431,6 +433,15 @@ struct MapViewModal: View {
     func addAirport() {
         for item in coreDataModel.dataAirportMap {
             mapView.addOverlay(CircleAnnotation(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue, name: item.unwrappedName, color: .red))
+        }
+    }
+    
+    func addTraffic() {
+        for item in coreDataModel.dataTrafficMap {
+            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+            
+            let annotation = CustomAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: "", image: UIImage(systemName: "airplane"))
+            mapView.addAnnotation(annotation)
         }
     }
 }
@@ -493,7 +504,6 @@ class Coordinator: NSObject, MKMapViewDelegate {
         // Create an annotation view
         let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
         
-        annotationView.tintColor = UIColor.red
         annotationView.canShowCallout = true
         return annotationView
         

@@ -23,7 +23,30 @@ extension TrafficMapList {
     @NSManaged public var trueTrack: String?
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
-
+    
+    public var unwrappedCallsign: String {
+        callsign ?? ""
+    }
+    
+    public var unwrappedColour: String {
+        colour ?? ""
+    }
+    
+    public var unwrappedBaroAltitude: String {
+        baroAltitude ?? ""
+    }
+    
+    public var unwrappedTrueTrack: String {
+        trueTrack ?? ""
+    }
+    
+    public var unwrappedLatitude: String {
+        latitude ?? ""
+    }
+    
+    public var unwrappedLongitude: String {
+        longitude ?? ""
+    }
 }
 
 extension TrafficMapList : Identifiable {

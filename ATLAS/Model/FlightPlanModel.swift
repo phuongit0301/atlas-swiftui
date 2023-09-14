@@ -532,7 +532,7 @@ struct IAirportDataJson: Decodable {
     var airport_data: [IAirportData]
 }
 
-struct ITrafficeData: Decodable {
+struct ITrafficData: Decodable {
     var callsign: String
     var lat: String
     var long: String
