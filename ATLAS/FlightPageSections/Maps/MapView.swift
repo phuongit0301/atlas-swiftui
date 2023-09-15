@@ -432,14 +432,14 @@ struct MapViewModal: View {
         let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataRouteSelected)
         
         let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]!, longitude: departureLatLong["longitude"]!)
-        let firstAnnotation = CustomAnnotation(coordinate: firstCoord, title: "first", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: "first", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
         locationCoordinate.append(firstCoord)
         mapView.addAnnotation(firstAnnotation)
         
         for item in payload {
             if let itemExists = coreDataModel.dataWaypointMap.first(where: {$0.unwrappedName == item}) {
                 let coord = CLLocationCoordinate2D(latitude: (itemExists.latitude! as NSString).doubleValue, longitude: (itemExists.longitude! as NSString).doubleValue)
-                let annotation = CustomAnnotation(coordinate: coord, title: itemExists.name, subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+                let annotation = CustomRouteAnnotation(coordinate: coord, title: itemExists.name, subtitle: "", image: UIImage(named: "icon_triangle_fill"))
                 
                 locationCoordinate.append(coord)
                 mapView.addAnnotation(annotation)
@@ -447,7 +447,7 @@ struct MapViewModal: View {
         }
         
         let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]!, longitude: arrivalLatLong["longitude"]!)
-        let lastAnnotation = CustomAnnotation(coordinate: lastCoord, title: "last", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: "last", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
         locationCoordinate.append(lastCoord)
         mapView.addAnnotation(lastAnnotation)
         
@@ -561,19 +561,8 @@ struct MapView: UIViewRepresentable {
         mapView.showsScale = true
         mapView.showsTraffic = true
         
-//        for item in dataWaypointMap {
-//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-//
-//            let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(systemName: "triangle.inset.filled"))
-//
-//            mapView.addAnnotation(annotation)
-//        }
-//        let overlay = MapOverlay(worldMap: worldMap)
-//        mapView.addOverlay(overlay)
-        
-//        let polyline = MKPolyline(coordinates: lineCoordinates, count: lineCoordinates.count)
-//        mapView.addOverlay(polyline)
-        
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
+        mapView.register(CustomRouteAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomRouteAnnotationView")
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow
         
@@ -599,11 +588,22 @@ class Coordinator: NSObject, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Create an annotation view
-        let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "Custom")
-        
-        annotationView.canShowCallout = true
-        return annotationView
-        
+        if annotation is CustomRouteAnnotation {
+            print("CustomRouteAnnotation")
+            let annotationView = CustomRouteAnnotationView(annotation: annotation, reuseIdentifier: "CustomRouteAnnotationView")
+            annotationView.canShowCallout = true
+
+            let customView = MapCardView()
+            let callout = MapCalloutView(rootView: AnyView(customView))
+
+            annotationView.detailCalloutAccessoryView = callout
+
+            return annotationView
+        } else {
+            let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
+            annotationView.canShowCallout = true
+            return annotationView
+        }
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
