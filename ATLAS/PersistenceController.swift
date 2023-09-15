@@ -162,9 +162,9 @@ class CoreDataModelState: ObservableObject {
     // For Map View
     @Published var dataWaypointMap: [WaypointMapList] = []
     @Published var dataAirportMap: [AirportMapList] = []
+    @Published var dataAirportColorMap: [AirportMapColorList] = []
     @Published var dataTrafficMap: [TrafficMapList] = []
     @Published var dataAabbaMap: [AabbaMapList] = []
-    @Published var dataRouteSelected: [IRouteSelected] = []
     
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
@@ -200,11 +200,13 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataWaypoint(routeData.waypoints)
                         let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
                         let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
+                        let airportDataColor: [IAirportColor] = self.remoteService.load("airport_data_color.json")
                         let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
-                        let dataAabba: [IAabbaData] = self.remoteService.load("aabba_data.json")
+                        let dataAabba: IAabbaDataJson = self.remoteService.load("aabba_data.json")
                         
                         self.initDataWaypoint(waypointData)
                         self.initDataAirport(airportData)
+                        self.initDataAirportColor(airportDataColor)
                         self.initDataTraffic(trafficData)
                         self.initDataAabba(dataAabba)
                     }
@@ -301,11 +303,11 @@ class CoreDataModelState: ObservableObject {
             self.readSummaryInfo()
             self.dataWaypointMap = self.readDataWaypontMapList()
             self.dataAirportMap = self.readDataAirportMapList()
+            self.dataAirportColorMap = self.readDataAirportMapColorList()
             self.dataTrafficMap = self.readDataTrafficMapList()
             self.dataAabbaMap = self.readDataAabbaMapList()
-            self.dataRouteSelected = self.remoteService.load("airport_data_color.json")
-            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
-//            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
+//            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
+            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
             self.readSummaryRoute()
@@ -721,6 +723,38 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataAirportColor(_ data: [IAirportColor]) {
+        if data.count > 0 {
+            data.forEach { item in
+                let newObj = AirportMapColorList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.airportId = item.airportID
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.selection = item.selection
+                newObj.colour = item.colour
+//                newObj.notams = item.notams
+                newObj.metar = item.metar
+                newObj.taf = item.taf
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data airport color successfully")
+                    } catch {
+                        print("Failed to data airport color save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+            self.dataAirportColorMap = readDataAirportMapColorList()
+        }
+    }
+    
     func initDataTraffic(_ data: [ITrafficData]) {
         if data.count > 0 {
             data.forEach { item in
@@ -751,9 +785,9 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAabba(_ data: [IAabbaData]) {
-        if data.count > 0 {
-            data.forEach { item in
+    func initDataAabba(_ data: IAabbaDataJson) {
+        if data.aabba_data.count > 0 {
+            data.aabba_data.forEach { item in
                 let newObj = AabbaMapList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
@@ -2038,6 +2072,22 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch Airport List from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataAirportMapColorList() -> [AirportMapColorList] {
+        var data: [AirportMapColorList] = []
+        
+        let request: NSFetchRequest<AirportMapColorList> = AirportMapColorList.fetchRequest()
+        do {
+            let response: [AirportMapColorList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Airport List Color from Core Data.")
         }
         
         return data

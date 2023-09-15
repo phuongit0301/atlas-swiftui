@@ -557,7 +557,11 @@ struct IAabbaData: Decodable {
     var comments: String
 }
 
-struct IRouteSelected: Decodable {
+struct IAabbaDataJson: Decodable {
+    var aabba_data: [IAabbaData]
+}
+
+struct IAirportColor: Decodable {
     var airportID: String
     var lat: String
     var long: String

@@ -411,7 +411,7 @@ struct MapViewModal: View {
 
       if selectedWeather { addOverlay() }
       if selectedWaypoint { addWaypoint() }
-      if selectedAirport { addAirport() }
+      if selectedAirport { addAirportColor() }
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
       if selectedAddRoute { addRoute() }
@@ -428,11 +428,22 @@ struct MapViewModal: View {
         var locationCoordinate = [CLLocationCoordinate2D]()
         
         //get start and end route
-        let departureLatLong = extractLatLong(forSelection: "departure", inDictionaries: coreDataModel.dataRouteSelected)
-        let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataRouteSelected)
+        let departureLatLong = extractLatLong(forSelection: "departure", inDictionaries: coreDataModel.dataAirportColorMap)
+        let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataAirportColorMap)
         
-        let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]!, longitude: departureLatLong["longitude"]!)
-        let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: "first", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]! as! CLLocationDegrees, longitude: departureLatLong["longitude"]! as! CLLocationDegrees)
+        var firstImage = UIImage(named: "icon_circle_black")
+        let firstColorName = departureLatLong["colour"] as? String ?? "black"
+        
+        if firstColorName.lowercased() == "green" {
+            firstImage = UIImage(named: "icon_circle_green")
+        } else if firstColorName.lowercased() == "amber" {
+            firstImage = UIImage(named: "icon_circle_amber")
+        } else if firstColorName.lowercased() == "red" {
+            firstImage = UIImage(named: "icon_circle_red")
+        }
+        
+        let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: departureLatLong["name"] as? String, subtitle: "", image: firstImage)
         locationCoordinate.append(firstCoord)
         mapView.addAnnotation(firstAnnotation)
         
@@ -446,8 +457,19 @@ struct MapViewModal: View {
             }
         }
         
-        let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]!, longitude: arrivalLatLong["longitude"]!)
-        let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: "last", subtitle: "", image: UIImage(named: "icon_triangle_fill"))
+        let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]! as! CLLocationDegrees, longitude: arrivalLatLong["longitude"]! as! CLLocationDegrees)
+        var lastImage = UIImage(named: "icon_circle_black")
+        let lastColorName = arrivalLatLong["colour"] as? String ?? "black"
+        
+        if lastColorName.lowercased() == "green" {
+            lastImage = UIImage(named: "icon_circle_green")
+        } else if lastColorName.lowercased() == "amber" {
+            lastImage = UIImage(named: "icon_circle_amber")
+        } else if lastColorName.lowercased() == "red" {
+            lastImage = UIImage(named: "icon_circle_red")
+        }
+        
+        let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: arrivalLatLong["name"] as? String, subtitle: "", image:lastImage)
         locationCoordinate.append(lastCoord)
         mapView.addAnnotation(lastAnnotation)
         
@@ -465,17 +487,56 @@ struct MapViewModal: View {
         }
     }
     
-    func addAirport() {
+    func addAirport(_ airportIds: [String]) {
         for item in coreDataModel.dataAirportMap {
-            mapView.addOverlay(CircleAnnotation(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue, name: item.unwrappedName, color: .black))
+            if airportIds.count > 0 && item.unwrappedName != "" {
+                if !airportIds.contains(item.unwrappedName) {
+                    let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
+                    
+                    let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(systemName: "circle"))
+                    
+                    mapView.addAnnotation(annotation)
+                }
+                
+            }
+            
         }
+    }
+    
+    func addAirportColor() {
+        var airportIds = [String]()
+        
+        for item in coreDataModel.dataAirportColorMap {
+            let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
+            
+            var image = UIImage(named: "icon_circle_black")
+            let colorName = item.colour ?? "black"
+            
+            if colorName.lowercased() == "green" {
+                image = UIImage(named: "icon_circle_green")
+            } else if colorName.lowercased() == "amber" {
+                image = UIImage(named: "icon_circle_amber")
+            } else if colorName.lowercased() == "red" {
+                image = UIImage(named: "icon_circle_red")
+            }
+            
+            let annotation = CustomAnnotation(coordinate: coord, title: item.airportId, subtitle: "", image: image)
+            
+            if let id = item.airportId {
+                airportIds.append(id)
+            }
+            
+            mapView.addAnnotation(annotation)
+        }
+        
+        addAirport(airportIds)
     }
     
     func addTraffic() {
         for item in coreDataModel.dataTrafficMap {
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
             
-            let annotation = CustomAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: "", image: UIImage(systemName: "airplane"))
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: item.trueTrack, image: UIImage(systemName: "airplane"))
             mapView.addAnnotation(annotation)
         }
     }
@@ -527,14 +588,16 @@ struct MapViewModal: View {
         return []
     }
     
-    func extractLatLong(forSelection selection: String, inDictionaries dictionaries: [IRouteSelected]) -> [String: Double] {
-        var latLongValues: [String: Double] = [String: Double]()
+    func extractLatLong(forSelection selection: String, inDictionaries dictionaries: [AirportMapColorList]) -> [String: Any] {
+        var latLongValues: [String: Any] = [String: Any]()
         
         for dictionary in dictionaries {
-            if dictionary.selection.lowercased() == selection.lowercased() {
-                if let lat = Double(dictionary.lat), let long = Double(dictionary.long) {
+            if dictionary.selection?.lowercased() == selection.lowercased() {
+                if let lat = Double(dictionary.latitude!), let long = Double(dictionary.longitude!) {
                     latLongValues["latitude"] = lat
                     latLongValues["longitude"] = long
+                    latLongValues["name"] = dictionary.airportId
+                    latLongValues["colour"] = dictionary.colour
                 }
             }
         }
@@ -563,6 +626,7 @@ struct MapView: UIViewRepresentable {
         
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
         mapView.register(CustomRouteAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomRouteAnnotationView")
+        mapView.register(CustomTrafficAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomTrafficAnnotationView")
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow
         
@@ -589,19 +653,31 @@ class Coordinator: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Create an annotation view
         if annotation is CustomRouteAnnotation {
-            print("CustomRouteAnnotation")
             let annotationView = CustomRouteAnnotationView(annotation: annotation, reuseIdentifier: "CustomRouteAnnotationView")
             annotationView.canShowCallout = true
 
             let customView = MapCardView()
             let callout = MapCalloutView(rootView: AnyView(customView))
-
             annotationView.detailCalloutAccessoryView = callout
-
+            
+            return annotationView
+        } else if annotation is CustomTrafficAnnotation {
+            let annotationView = CustomTrafficAnnotationView(annotation: annotation, reuseIdentifier: "CustomTrafficAnnotationView")
+            annotationView.canShowCallout = true
+            annotationView.transform = CGAffineTransform(rotationAngle: CGFloat((annotation.subtitle!! as NSString).doubleValue))
             return annotationView
         } else {
             let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
             annotationView.canShowCallout = true
+            
+            // Add Title beside icons
+            let annotationLabel = UILabel(frame: CGRect(x: 10, y: -5, width: 105, height: 30))
+            annotationLabel.numberOfLines = 1
+            annotationLabel.textAlignment = .center
+            annotationLabel.text = annotation.title!!
+            
+            annotationView.addSubview(annotationLabel)
+            
             return annotationView
         }
     }
