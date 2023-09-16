@@ -62,4 +62,5 @@ struct ColorTheme {
     let cafeAuLait = Color("CafeAuLait") //A2845E
     let iris = Color("Iris") //5856D6
     let onyx = Color("Onyx") //383838
+    let seaSerpent = Color("SeaSerpent") //66D4CF
 }

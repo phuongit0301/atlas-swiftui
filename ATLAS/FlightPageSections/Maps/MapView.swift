@@ -29,9 +29,11 @@ struct MapViewModal: View {
     @State var selectedWaypoint = true
     @State var selectedAirport = true
     
+    @State private var showPopoverSea = false
+    @State private var showPopoverWater = false
+    
     @State private var showPopoverEye = false
     @State private var showPopoverWind = false
-    @State private var showPopoverWater = false
     @State private var showPopoverAirplane = false
     @State private var showPopoverClock = false
     @State private var showPopoverExclamationMark = false
@@ -93,6 +95,7 @@ struct MapViewModal: View {
                                     .foregroundColor(Color.white)
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
+                                    .rotationEffect(.degrees(showIcon ? 45 : 0))
                             }).frame(width: 44, height: 44, alignment: .center)
                                 .background(Color.theme.azure)
                                 .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.azure, lineWidth: 1))
@@ -240,17 +243,69 @@ struct MapViewModal: View {
                                     
                                     VStack(spacing: 4) {
                                         Button(action: {
+                                            self.showPopoverSea.toggle()
+                                        }, label: {
+                                            HStack {
+                                                Text("Weather").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "cloud.sun.rain")
+                                                    .foregroundColor(Color.theme.seaSerpent)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.seaSerpent.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.seaSerpent, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
+                                        }).buttonStyle(PlainButtonStyle())
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
+                                            .popover(isPresented: $showPopoverSea) {
+                                                VStack {
+                                                    Text("Sea").foregroundColor(Color.black)
+                                                }.frame(width: 318, height: 318)
+                                                
+                                            }
+                                        
+                                        Button(action: {
+                                            self.showPopoverWater.toggle()
+                                        }, label: {
+                                            HStack {
+                                                Text("Turbulence").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "water.waves")
+                                                    .foregroundColor(Color.theme.coralRed1)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.coralRed1.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
+                                        }).buttonStyle(PlainButtonStyle())
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
+                                            .popover(isPresented: $showPopoverWater) {
+                                                VStack {
+                                                    Text("Water").foregroundColor(Color.black)
+                                                }.frame(width: 318, height: 318)
+                                            }
+                                        
+                                        Button(action: {
                                             self.showPopoverEye.toggle()
                                         }, label: {
-                                            Image(systemName: "eye.trianglebadge.exclamationmark")
-                                                .foregroundColor(Color.theme.tangerineYellow)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Visibility").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "eye.trianglebadge.exclamationmark")
+                                                    .foregroundColor(Color.theme.tangerineYellow)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.tangerineYellow.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.tangerineYellow, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.tangerineYellow.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.tangerineYellow, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverEye) {
                                                 VStack {
                                                     Text("Eye").foregroundColor(Color.black)
@@ -261,15 +316,20 @@ struct MapViewModal: View {
                                         Button(action: {
                                             self.showPopoverWind.toggle()
                                         }, label: {
-                                            Image(systemName: "wind")
-                                                .foregroundColor(Color.theme.blueJeans)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Wind").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "wind")
+                                                    .foregroundColor(Color.theme.blueJeans)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.blueJeans.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.blueJeans, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.blueJeans.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.blueJeans, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverWind) {
                                                 VStack {
                                                     Text("Wind").foregroundColor(Color.black)
@@ -277,35 +337,22 @@ struct MapViewModal: View {
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverWater.toggle()
-                                        }, label: {
-                                            Image(systemName: "water.waves")
-                                                .foregroundColor(Color.theme.coralRed1)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.coralRed1.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 0))
-                                            .cornerRadius(100)
-                                            .popover(isPresented: $showPopoverWater) {
-                                                VStack {
-                                                    Text("Water").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
-                                            }
-                                        
-                                        Button(action: {
                                             self.showPopoverAirplane.toggle()
                                         }, label: {
-                                            Image(systemName: "airplane.arrival")
-                                                .foregroundColor(Color.theme.vividGamboge)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Runway").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "airplane.arrival")
+                                                    .foregroundColor(Color.theme.vividGamboge)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.vividGamboge.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.vividGamboge, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.vividGamboge.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.vividGamboge, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverAirplane) {
                                                 VStack {
                                                     Text("Airplane").foregroundColor(Color.black)
@@ -315,33 +362,45 @@ struct MapViewModal: View {
                                         Button(action: {
                                             self.showPopoverClock.toggle()
                                         }, label: {
-                                            Image(systemName: "clock.badge.exclamationmark.fill")
-                                                .foregroundColor(Color.theme.cafeAuLait)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Congestion").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "clock.badge.exclamationmark.fill")
+                                                    .foregroundColor(Color.theme.cafeAuLait)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.cafeAuLait.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.cafeAuLait, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.cafeAuLait.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.cafeAuLait, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverClock) {
                                                 VStack {
                                                     Text("Airplane").foregroundColor(Color.black)
                                                 }.frame(width: 318, height: 318)
                                             }
                                         
+                                        Divider().frame(width: 72, alignment: .trailing)
+                                        
                                         Button(action: {
                                             self.showPopoverExclamationMark.toggle()
                                         }, label: {
-                                            Image(systemName: "exclamationmark.triangle")
-                                                .foregroundColor(Color.theme.coralRed1)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Hazard").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "exclamationmark.triangle")
+                                                    .foregroundColor(Color.theme.coralRed1)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.coralRed1.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.coralRed1.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.coralRed1, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverExclamationMark) {
                                                 VStack {
                                                     Text("ExclamationMark").foregroundColor(Color.black)
@@ -351,15 +410,20 @@ struct MapViewModal: View {
                                         Button(action: {
                                             self.showPopoverInfo.toggle()
                                         }, label: {
-                                            Image(systemName: "info.bubble")
-                                                .foregroundColor(Color.theme.iris)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("General").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "info.bubble")
+                                                    .foregroundColor(Color.theme.iris)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.iris.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.iris, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.iris.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.iris, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverInfo) {
                                                 VStack {
                                                     Text("Info").foregroundColor(Color.black)
@@ -369,15 +433,20 @@ struct MapViewModal: View {
                                         Button(action: {
                                             self.showPopoverQuestionMark.toggle()
                                         }, label: {
-                                            Image(systemName: "questionmark.bubble")
-                                                .foregroundColor(Color.theme.mediumOrchid)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+                                            HStack {
+                                                Text("Ask AABBA").font(.system(size: 11, weight: .regular))
+                                                Image(systemName: "questionmark.bubble")
+                                                    .foregroundColor(Color.theme.mediumOrchid)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color.theme.mediumOrchid.opacity(0.15))
+                                                    .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.mediumOrchid, lineWidth: 1))
+                                                    .cornerRadius(100)
+                                            }
                                         }).buttonStyle(PlainButtonStyle())
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                            .background(Color.theme.mediumOrchid.opacity(0.15))
-                                            .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.mediumOrchid, lineWidth: 0))
-                                            .cornerRadius(100)
+                                            .frame(width: 116, height: 40, alignment: .trailing)
+                                            .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverQuestionMark) {
                                                 VStack {
                                                     Text("Info").foregroundColor(Color.black)
@@ -386,10 +455,10 @@ struct MapViewModal: View {
                                         
                                     }.padding(.vertical, 8)
                                         .padding(.horizontal, 4)
-                                        .frame(width: 48)
-                                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 40))
-                                        .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.white, lineWidth: 0))
-                                        .cornerRadius(40)
+                                        .frame(width: 120)
+                                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+                                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white, lineWidth: 0))
+                                        .cornerRadius(16)
                                 }
                             }
                             
@@ -540,7 +609,7 @@ struct MapViewModal: View {
             if item.colour == "unfilled" {
                 defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
             }
-            let annotation = CustomTrafficAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: item.trueTrack, image: defaultImage)
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: item.trueTrack, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
             mapView.addAnnotation(annotation)
         }
     }
@@ -679,12 +748,11 @@ class Coordinator: NSObject, MKMapViewDelegate {
         } else if annotation is CustomTrafficAnnotation {
             let annotationView = CustomTrafficAnnotationView(annotation: annotation, reuseIdentifier: "CustomTrafficAnnotationView")
             annotationView.canShowCallout = true
-            annotationView.transform = CGAffineTransform(rotationAngle: CGFloat((annotation.subtitle!! as NSString).doubleValue))
+            annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
             return annotationView
         } else if annotation is CustomAabbaAnnotation {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")
             annotationView.canShowCallout = true
-            annotationView.transform = CGAffineTransform(rotationAngle: CGFloat((annotation.subtitle!! as NSString).doubleValue))
             return annotationView
         } else {
             let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
@@ -701,6 +769,34 @@ class Coordinator: NSObject, MKMapViewDelegate {
             
             return annotationView
         }
+    }
+    
+    // For selected annotation
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // Calculate the angle by which the annotation view is rotated
+        if view is CustomTrafficAnnotationView {
+            let annotationView = view.annotation as? CustomTrafficAnnotation
+            
+//            let calloutOffset = CGPoint(x: view.frame.midX, y: view.frame.midY)
+            // Calculate the angle by which the annotation view is rotated
+            let rotationAngle = annotationView?.rotationAngle
+            // Apply the inverse rotation to the callout view
+            let calloutOffset = CGPoint(x: -sin(rotationAngle!) * view.frame.midX, y: -cos(rotationAngle!) * view.frame.midY)
+                                                    
+            view.calloutOffset = calloutOffset
+            view.detailCalloutAccessoryView?.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
+            // Adjust the transform of the callout view to cancel the annotation rotation
+//            view.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
+        }
+//
+//
+//        let rotationAngle = annotationView.rotate
+//
+//        // Apply the inverse rotation to the callout view
+//        view.calloutOffset = CGPoint(x: -sin(rotationAngle) * calloutOffset, y: -cos(rotationAngle) * calloutOffset)
+//
+//        // Adjust the transform of the callout view to cancel the annotation rotation
+//        view.calloutView?.transform = CGAffineTransform(rotationAngle: -rotationAngle)
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

@@ -17,12 +17,14 @@ class CustomTrafficAnnotation: NSObject, MKAnnotation {
     let subtitle: String?
     let image: UIImage?
     let trueTrack: CGFloat?
+    let rotationAngle: CGFloat?
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, image: UIImage?, trueTrack: CGFloat? = 0) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, image: UIImage?, trueTrack: CGFloat? = 0, rotationAngle: CGFloat? = 0) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.trueTrack = trueTrack
+        self.rotationAngle = rotationAngle
     }
 }
