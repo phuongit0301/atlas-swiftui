@@ -23,7 +23,6 @@ struct CardTextField: View {
 
 struct MapCardView: View {
     var payload: IAabbaData?
-    var hidePopover: () -> Void
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -35,7 +34,7 @@ struct MapCardView: View {
                         Spacer()
                         
                         Button(action: {
-                            hidePopover()
+                            //todo
                         }, label: {
                             HStack {
                                 Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold))

@@ -745,6 +745,10 @@ class Coordinator: NSObject, MKMapViewDelegate {
         if annotation is CustomRouteAnnotation {
             let annotationView = CustomRouteAnnotationView(annotation: annotation, reuseIdentifier: "CustomRouteAnnotationView")
             annotationView.canShowCallout = true
+
+//            let customView = MapCardView()
+//            let callout = MapCalloutView(rootView: AnyView(customView))
+//            annotationView.detailCalloutAccessoryView = callout
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -15, width: 105, height: 30))
@@ -781,17 +785,16 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationLabel.layer.borderColor = UIColor.black.cgColor
 
             annotationView.addSubview(annotationLabel)
-            annotationView.displayPriority = .required
             
-//            let itemAabba = parent.dataAabbaMap[(annotation as! CustomAabbaAnnotation).index ?? 0]
-//
-//            let customView = MapCardView(payload: itemAabba)
-//
-//            let callout = MapCalloutView(rootView: AnyView(customView))
-//
-//            annotationView.detailCalloutAccessoryView = callout
+            let itemAabba = parent.dataAabbaMap[(annotation as! CustomAabbaAnnotation).index ?? 0]
+
+            let customView = MapCardView(payload: itemAabba)
+
+            let callout = MapCalloutView(rootView: AnyView(customView))
+
+            annotationView.detailCalloutAccessoryView = callout
             
-            annotationView.canShowCallout = false
+            annotationView.canShowCallout = true
             return annotationView
         } else if annotation is CustomWaypointAnnotation {
             let annotationView = CustomWaypointAnnotationView(annotation: annotation, reuseIdentifier: "CustomWaypointAnnotationView")
@@ -824,11 +827,11 @@ class Coordinator: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Calculate the angle by which the annotation view is rotated
         if view is CustomTrafficAnnotationView {
-            let annotationView = view.annotation as? CustomTrafficAnnotation
+            let annotation = view.annotation as? CustomTrafficAnnotation
             
 //            let calloutOffset = CGPoint(x: view.frame.midX, y: view.frame.midY)
             // Calculate the angle by which the annotation view is rotated
-            let rotationAngle = annotationView?.rotationAngle
+            let rotationAngle = annotation?.rotationAngle
             // Apply the inverse rotation to the callout view
             let calloutOffset = CGPoint(x: -sin(rotationAngle!) * view.frame.midX, y: -cos(rotationAngle!) * view.frame.midY)
                                                     
@@ -837,43 +840,16 @@ class Coordinator: NSObject, MKMapViewDelegate {
             // Adjust the transform of the callout view to cancel the annotation rotation
 //            view.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
         } else if view is CustomAabbaAnnotationView {
-            //
-            let annotation = view.annotation as? CustomAabbaAnnotation
-            let itemAabba = parent.dataAabbaMap[annotation?.index ?? 0]
+            let annotationView = view.annotation as? CustomAabbaAnnotation
+            annotationView?.setValue("", forKey: "title")
             
-            //            annotationView?.setValue("", forKey: "title")
-            let customView = MapCardView(payload: itemAabba, hidePopover: hidePopover)
-            
-            let callout = MapCalloutView(rootView: AnyView(customView))
-            
-            //            annotationView.detailCalloutAccessoryView = callout
-            view.addSubview(callout)
-            
-            view.addConstraints([
-                NSLayoutConstraint(item: callout,
-                                   attribute: .centerX,
-                                   relatedBy: .equal,
-                                   toItem: view,
-                                   attribute: .centerX,
-                                   multiplier: 1.0,
-                                   constant: 0
-                                  ),
-                NSLayoutConstraint(item: callout,
-                                   attribute: .bottom,
-                                   relatedBy: .equal,
-                                   toItem: view,
-                                   attribute: .top,
-                                   multiplier: 1.0,
-                                   constant: 0.0
-                                  )
-            ])
-            
-            callout.alpha = 0.0
-            callout.contentScaleFactor = 0.0
-            UIView.animate(withDuration: 0.5) {
-                callout.alpha = 1.0
-                callout.contentScaleFactor = 1.0
-            }
+//            let itemAabba = parent.dataAabbaMap[annotationView?.index ?? 0]
+//
+//            let customView = MapCardView(payload: itemAabba)
+//
+//            let callout = MapCalloutView(rootView: AnyView(customView))
+////            annotation.setValue(<#T##Any?#>, forKey: <#T##String#>)
+//            view.detailCalloutAccessoryView = callout
         }
 //
 //
@@ -914,13 +890,5 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return circleView
         }
         return MKOverlayRenderer()
-    }
-    
-    func hidePopover() {
-        
-        for annotation in selectedAnnotations {
-            mapView.deselectAnnotation(annotation, animated: false) // better to animate selection, since deselection could be many
-        }
-
     }
 }
