@@ -1,5 +1,4 @@
-{
-   "traffic_data":[
+[
       {
          "callsign":"AIQ3343",
          "long":"100.6804",
@@ -385,4 +384,3 @@
          "colour":"filled"
       }
    ]
-}

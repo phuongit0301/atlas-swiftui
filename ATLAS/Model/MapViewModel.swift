@@ -218,3 +218,51 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         currentLocation.longitude = log
     }
 }
+
+enum WaypointDataDropDown: String, CaseIterable, Identifiable {
+    case waypoint1 = "Waypoint 1"
+    case waypoint2 = "Waypoint 2"
+    case waypoint3 = "Waypoint 3"
+    
+    var id: Self { self }
+}
+
+enum FlightLevelDataDropDown: String, CaseIterable, Identifiable {
+    case level1 = "Flight Level 1"
+    case level2 = "Flight Level 2"
+    case level3 = "Flight Level 3"
+    
+    var id: Self { self }
+}
+
+enum StationDataDropDown: String, CaseIterable, Identifiable {
+    case item1 = "Station 1"
+    case item2 = "Station 2"
+    case item3 = "Station 3"
+    
+    var id: Self { self }
+}
+
+enum ModerateDataDropDown: String, CaseIterable, Identifiable {
+    case item1 = "Moderate 1"
+    case item2 = "Moderate 2"
+    case item3 = "Moderate 3"
+    
+    var id: Self { self }
+}
+
+enum RunwayDataDropDown: String, CaseIterable, Identifiable {
+    case item1 = "5nm"
+    case item2 = "10nm"
+    case item3 = "15nm"
+    
+    var id: Self { self }
+}
+
+enum TimeDataDropDown: String, CaseIterable, Identifiable {
+    case item1 = "20 mins"
+    case item2 = "25 mins"
+    case item3 = "30 mins"
+    
+    var id: Self { self }
+}

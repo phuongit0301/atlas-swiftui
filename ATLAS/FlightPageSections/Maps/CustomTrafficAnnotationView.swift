@@ -35,7 +35,7 @@ class CustomTrafficAnnotationView: MKAnnotationView {
     
     //    func update(for annotation: MKAnnotation?) {
     //       guard let annotation = annotation as? CustomRouteAnnotation else { return }
-    //       
+    //
     //        markerTintColor = UIColor(Color(annotation.colour!))
     //   }
 }

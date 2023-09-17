@@ -12,6 +12,12 @@ import MapKit
 let mapView = MKMapView(frame: UIScreen.main.bounds)
 let worldMap = WorldMap(filename: "WorldCoordinates")
 
+struct SRoute {
+    let name: String
+    let latitude: String
+    let longitude: String
+}
+
 struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
@@ -39,6 +45,9 @@ struct MapViewModal: View {
     @State private var showPopoverExclamationMark = false
     @State private var showPopoverInfo = false
     @State private var showPopoverQuestionMark = false
+    
+    //Variable for verify data exists in Route Direction or not
+    @State private var routeDatas = [SRoute]()
 
     var body: some View {
         VStack {
@@ -61,10 +70,12 @@ struct MapViewModal: View {
                                 self.showRoute.toggle()
                                 self.showLayer = false
                             }, label: {
-                                Text("SIN - BER")
-                                    .font(.system(size: 17, weight: .semibold)).foregroundColor(showRoute ? Color.white : Color.black)
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal)
+                                HStack {
+                                    Text("SIN - BER")
+                                        .font(.system(size: 17, weight: .semibold)).foregroundColor(showRoute ? Color.white : Color.black)
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal)
+                                }.contentShape(Rectangle())
                             }).frame(alignment: .center)
                                 .background(showRoute ? Color.theme.azure : Color.white)
                                 .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.theme.azure, lineWidth: 1))
@@ -75,27 +86,34 @@ struct MapViewModal: View {
                                 self.showLayer.toggle()
                                 self.showRoute = false
                             }, label: {
-                                Image(systemName: "square.3.layers.3d")
-                                    .foregroundColor(showLayer ? Color.white : Color.theme.azure)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                                    .padding(11)
+                                HStack {
+                                    Image(systemName: "square.3.layers.3d")
+                                        .foregroundColor(showLayer ? Color.white : Color.theme.azure)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(11)
+                                }.frame(width: 44, height: 44, alignment: .center)
+                                    .contentShape(Rectangle())
                             }).frame(width: 44, height: 44, alignment: .center)
                                 .background(showLayer ? Color.theme.azure : Color.white)
                                 .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.azure, lineWidth: 1))
                                 .cornerRadius(100)
                                 .buttonStyle(PlainButtonStyle())
+                                
                             
                             Spacer()
                             
                             Button(action: {
                                 self.showIcon.toggle()
                             }, label: {
-                                Image(systemName: "plus")
-                                    .foregroundColor(Color.white)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                                    .rotationEffect(.degrees(showIcon ? 45 : 0))
+                                HStack {
+                                    Image(systemName: "plus")
+                                        .foregroundColor(Color.white)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                        .rotationEffect(.degrees(showIcon ? 45 : 0))
+                                }.frame(width: 44, height: 44, alignment: .center)
+                                .contentShape(Rectangle())
                             }).frame(width: 44, height: 44, alignment: .center)
                                 .background(Color.theme.azure)
                                 .overlay(RoundedRectangle(cornerRadius: 100).stroke(Color.theme.azure, lineWidth: 1))
@@ -120,6 +138,10 @@ struct MapViewModal: View {
                                                     .onSubmit {
                                                         if tfRoute != "" {
                                                             selectedAddRoute = true
+                                                            updateMapOverlayViews()
+                                                        } else {
+                                                            selectedAddRoute = false
+                                                            routeDatas = []
                                                             updateMapOverlayViews()
                                                         }
                                                     }
@@ -159,7 +181,7 @@ struct MapViewModal: View {
                                                         .aspectRatio(contentMode: .fit)
                                                     
                                                     Text("Traffic").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                                                }
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
                                             })
                                             
                                             Divider().padding(.horizontal, -16)
@@ -175,7 +197,7 @@ struct MapViewModal: View {
                                                         .aspectRatio(contentMode: .fit)
                                                     
                                                     Text("Weather").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                                                }
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
                                             })
                                             
                                             Divider().padding(.horizontal, -16)
@@ -193,7 +215,7 @@ struct MapViewModal: View {
                                                         .aspectRatio(contentMode: .fit)
                                                     
                                                     Text("AABBA").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                                                }
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
                                             })
                                             
                                             Divider().padding(.horizontal, -16)
@@ -209,7 +231,7 @@ struct MapViewModal: View {
                                                         .aspectRatio(contentMode: .fit)
                                                     
                                                     Text("Waypoint").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                                                }
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
                                             }).buttonStyle(PlainButtonStyle())
                                             
                                             Divider().padding(.horizontal, -16)
@@ -225,7 +247,7 @@ struct MapViewModal: View {
                                                         .aspectRatio(contentMode: .fit)
                                                     
                                                     Text("Airport").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.theme.azure)
-                                                }
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
                                             }).buttonStyle(PlainButtonStyle())
                                         }
                                     }.padding()
@@ -260,10 +282,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverSea) {
-                                                VStack {
-                                                    Text("Sea").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
-                                                
+                                                WeatherPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -284,9 +303,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverWater) {
-                                                VStack {
-                                                    Text("Water").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                TurbulencePopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -307,10 +324,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverEye) {
-                                                VStack {
-                                                    Text("Eye").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
-                                                
+                                                VisibilityPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -331,9 +345,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverWind) {
-                                                VStack {
-                                                    Text("Wind").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                WindPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -354,9 +366,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverAirplane) {
-                                                VStack {
-                                                    Text("Airplane").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                RunwayPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -377,9 +387,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverClock) {
-                                                VStack {
-                                                    Text("Airplane").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                CongestionPopoverView().frame(width: 360)
                                             }
                                         
                                         Divider().frame(width: 72, alignment: .trailing)
@@ -402,9 +410,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverExclamationMark) {
-                                                VStack {
-                                                    Text("ExclamationMark").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                               HazardPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -425,9 +431,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverInfo) {
-                                                VStack {
-                                                    Text("Info").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                GeneralPopoverView().frame(width: 360)
                                             }
                                         
                                         Button(action: {
@@ -448,9 +452,7 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverQuestionMark) {
-                                                VStack {
-                                                    Text("Info").foregroundColor(Color.black)
-                                                }.frame(width: 318, height: 318)
+                                                AskAabbaPopoverView().frame(width: 318)
                                             }
                                         
                                     }.padding(.vertical, 8)
@@ -479,11 +481,11 @@ struct MapViewModal: View {
       mapView.removeOverlays(mapView.overlays)
 
       if selectedWeather { addOverlay() }
+      if selectedAddRoute { addRoute() }
       if selectedWaypoint { addWaypoint() }
       if selectedAirport { addAirportColor() }
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
-      if selectedAddRoute { addRoute() }
     }
     
     func addOverlay() {
@@ -516,6 +518,9 @@ struct MapViewModal: View {
         locationCoordinate.append(firstCoord)
         mapView.addAnnotation(firstAnnotation)
         
+        //Append data to route
+        routeDatas.append(SRoute(name: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: departureLatLong["latitude"] as? String ?? "0", longitude: departureLatLong["longitude"] as? String ?? "0"))
+        
         for item in payload {
             if let itemExists = coreDataModel.dataWaypointMap.first(where: {$0.unwrappedName == item}) {
                 let coord = CLLocationCoordinate2D(latitude: (itemExists.latitude! as NSString).doubleValue, longitude: (itemExists.longitude! as NSString).doubleValue)
@@ -523,6 +528,9 @@ struct MapViewModal: View {
                 
                 locationCoordinate.append(coord)
                 mapView.addAnnotation(annotation)
+                
+                //Append data to route
+                routeDatas.append(SRoute(name:  itemExists.name!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: ((itemExists.latitude! as NSString) as String), longitude: ((itemExists.longitude! as NSString) as String)))
             }
         }
         
@@ -542,17 +550,32 @@ struct MapViewModal: View {
         locationCoordinate.append(lastCoord)
         mapView.addAnnotation(lastAnnotation)
         
+        //Append data to route
+        routeDatas.append(SRoute(name: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: arrivalLatLong["latitude"] as? String ?? "0", longitude: arrivalLatLong["longitude"] as? String ?? "0"))
+        
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
     }
     
     func addWaypoint() {
         for item in coreDataModel.dataWaypointMap {
-            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            
-            let annotation = CustomAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle"))
-            
-            mapView.addAnnotation(annotation)
+            if routeDatas.count > 0 {
+                let itemExist = routeDatas.first(where: {$0.name == item.unwrappedName && $0.latitude == item.unwrappedLatitude && $0.longitude == item.unwrappedLongitude})
+                
+                if (itemExist == nil) {
+                    let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+                    
+                    let annotation = CustomWaypointAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle"))
+                    
+                    mapView.addAnnotation(annotation)
+                }
+            } else {
+                let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
+                
+                let annotation = CustomWaypointAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle"))
+                
+                mapView.addAnnotation(annotation)
+            }
         }
     }
     
@@ -701,6 +724,7 @@ struct MapView: UIViewRepresentable {
         mapView.register(CustomRouteAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomRouteAnnotationView")
         mapView.register(CustomTrafficAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomTrafficAnnotationView")
         mapView.register(CustomAabbaAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAabbaAnnotationView")
+        mapView.register(CustomWaypointAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomWaypointAnnotationView")
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow
         
@@ -735,7 +759,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationView.detailCalloutAccessoryView = callout
             
             // Add Title beside icons
-            let annotationLabel = UILabel(frame: CGRect(x: 15, y: 0, width: 105, height: 30))
+            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -15, width: 105, height: 30))
             annotationLabel.numberOfLines = 1
             annotationLabel.textAlignment = .left
             annotationLabel.text = annotation.title!!
@@ -754,12 +778,22 @@ class Coordinator: NSObject, MKMapViewDelegate {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")
             annotationView.canShowCallout = true
             return annotationView
+        } else if annotation is CustomWaypointAnnotation {
+            let annotationView = CustomWaypointAnnotationView(annotation: annotation, reuseIdentifier: "CustomWaypointAnnotationView")
+            let annotationLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 105, height: 30))
+            annotationLabel.numberOfLines = 1
+            annotationLabel.textAlignment = .left
+            annotationLabel.text = annotation.title!!
+            annotationLabel.font = UIFont.systemFont(ofSize: 10)
+            
+            annotationView.addSubview(annotationLabel)
+            return annotationView
         } else {
             let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
             annotationView.canShowCallout = true
             
             // Add Title beside icons
-            let annotationLabel = UILabel(frame: CGRect(x: 20, y: -5, width: 105, height: 30))
+            let annotationLabel = UILabel(frame: CGRect(x: 20, y: -10, width: 105, height: 30))
             annotationLabel.numberOfLines = 1
             annotationLabel.textAlignment = .left
             annotationLabel.text = annotation.title!!
