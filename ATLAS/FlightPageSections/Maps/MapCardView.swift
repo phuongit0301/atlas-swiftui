@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct CardTextField: View {
     let index: Int
@@ -22,9 +23,10 @@ struct CardTextField: View {
 
 struct MapCardView: View {
     var payload: IAabbaData?
+    var hidePopover: () -> Void
     
     var body: some View {
-        ScrollView(.vertical, showIndicators: false) {
+        ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(alignment: .leading, spacing: 8) {
                 HStack {
                     HStack {
@@ -33,10 +35,12 @@ struct MapCardView: View {
                         Spacer()
                         
                         Button(action: {
-                            // Todo
+                            hidePopover()
                         }, label: {
-                            Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold))
-                                .foregroundColor(Color.theme.azure)
+                            HStack {
+                                Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold))
+                                    .foregroundColor(Color.theme.azure)
+                            }.contentShape(Rectangle())
                         })
                     }
                     
