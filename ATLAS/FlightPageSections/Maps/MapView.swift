@@ -59,6 +59,7 @@ struct MapViewModal: View {
                         region: coreDataModel.region,
                         lineCoordinates: coreDataModel.lineCoordinates,
                         dataWaypointMap: coreDataModel.dataWaypointMap,
+                        dataAabbaMap: coreDataModel.dataAabbaMap,
                         currentLocation: locationViewModel.currentLocation,
                         mapType: mapType
                     ).overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
@@ -638,33 +639,23 @@ struct MapViewModal: View {
     }
     
     func addAabba() {
-        var defaultImage = UIImage(named: "icon_weather_overlay")
+//        var defaultImage = UIImage(named: "icon_weather_overlay")
         
-        for item in coreDataModel.dataAabbaMap {
-            if item.unwrappedCategory == "Turbulence" {
-                defaultImage = UIImage(named: "icon_turbulence_overlay")
-            } else if item.unwrappedCategory == "Visibility" {
-                defaultImage = UIImage(named: "icon_visibility_overlay")
-            } else if item.unwrappedCategory == "Wind" {
-                defaultImage = UIImage(named: "icon_wind_overlay")
-            } else if item.unwrappedCategory == "Runway" {
-                defaultImage = UIImage(named: "icon_runway_overlay")
-            } else if item.unwrappedCategory == "Congestion" {
-                defaultImage = UIImage(named: "icon_congestion_overlay")
-            } else if item.unwrappedCategory == "Hazard" {
-                defaultImage = UIImage(named: "icon_hazard_overlay")
-            } else if item.unwrappedCategory == "General" {
-                defaultImage = UIImage(named: "icon_general_overlay")
-            } else if item.unwrappedCategory == "Ask AABBA" {
-                defaultImage = UIImage(named: "icon_ask_overlay")
-            }
-            
-            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            
-            let annotation = CustomAabbaAnnotation(coordinate: coord, title: item.unwrappedPostTitle, subtitle: "", image: defaultImage)
-            
+        for(index, item) in coreDataModel.dataAabbaMap.enumerated() {
+            let coord = CLLocationCoordinate2D(latitude: (item.lat as NSString).doubleValue, longitude: (item.long as NSString).doubleValue)
+
+            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String(item.post_count), subtitle: "", index: index)
+
             mapView.addAnnotation(annotation)
         }
+            
+//            print("key========\(key)")
+//            let dataKey = coreDataModel.dataAabbaMap[key] as? [IAabbaData]
+//            let coord = CLLocationCoordinate2D(latitude: (coreDataModel.dataAabbaMap[key]!.lat as NSString).doubleValue, longitude: (coreDataModel.dataAabbaMap[key]!.long as NSString).doubleValue)
+//
+//            let annotation = CustomAabbaAnnotation(coordinate: coord, title: coreDataModel.dataAabbaMap[key]?.post_count, subtitle: "", image: defaultImage)
+//
+//            mapView.addAnnotation(annotation)
     }
     
     func extractFiveLetterWords(from input: String) -> [String] {
@@ -706,6 +697,7 @@ struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
     let lineCoordinates: [CLLocationCoordinate2D]
     let dataWaypointMap: [WaypointMapList]
+    let dataAabbaMap: [IAabbaData]
     let currentLocation: CLLocationCoordinate2D
     let mapType: MKMapType
     @EnvironmentObject var coreDataModel: CoreDataModelState
@@ -754,9 +746,9 @@ class Coordinator: NSObject, MKMapViewDelegate {
             let annotationView = CustomRouteAnnotationView(annotation: annotation, reuseIdentifier: "CustomRouteAnnotationView")
             annotationView.canShowCallout = true
 
-            let customView = MapCardView()
-            let callout = MapCalloutView(rootView: AnyView(customView))
-            annotationView.detailCalloutAccessoryView = callout
+//            let customView = MapCardView()
+//            let callout = MapCalloutView(rootView: AnyView(customView))
+//            annotationView.detailCalloutAccessoryView = callout
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -15, width: 105, height: 30))
@@ -776,6 +768,32 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return annotationView
         } else if annotation is CustomAabbaAnnotation {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")
+            
+            let width: CGFloat = 29.0
+            let height: CGFloat = 29.0
+            let selectedAnnotation = annotationView.annotation
+            
+            let annotationLabel = UILabel()
+            annotationLabel.text = selectedAnnotation?.title ?? ""
+            annotationLabel.textColor = .black
+            annotationLabel.textAlignment = .center
+            annotationLabel.font = UIFont.systemFont(ofSize: 14.0)
+            annotationLabel.bounds = CGRectMake(0.0, 0.0, width, height)
+            annotationLabel.layer.cornerRadius = 16
+            annotationLabel.layer.borderWidth = 2.0
+            annotationLabel.layer.backgroundColor = UIColor.white.cgColor
+            annotationLabel.layer.borderColor = UIColor.black.cgColor
+
+            annotationView.addSubview(annotationLabel)
+            annotationView.displayPriority = .required
+            
+            let itemAabba = parent.dataAabbaMap[(annotation as! CustomAabbaAnnotation).index ?? 0]
+            
+            let customView = MapCardView(payload: itemAabba)
+            
+            let callout = MapCalloutView(rootView: AnyView(customView))
+            annotationView.detailCalloutAccessoryView = callout
+            
             annotationView.canShowCallout = true
             return annotationView
         } else if annotation is CustomWaypointAnnotation {
@@ -821,6 +839,9 @@ class Coordinator: NSObject, MKMapViewDelegate {
             view.detailCalloutAccessoryView?.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
             // Adjust the transform of the callout view to cancel the annotation rotation
 //            view.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
+        } else if view is CustomAabbaAnnotationView {
+            let annotationView = view.annotation as? CustomAabbaAnnotation
+            annotationView?.setValue("", forKey: "title")
         }
 //
 //

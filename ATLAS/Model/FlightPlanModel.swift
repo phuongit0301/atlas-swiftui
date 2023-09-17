@@ -541,24 +541,38 @@ struct ITrafficData: Decodable {
     var colour: String
 }
 
-struct IAabbaData: Decodable {
-    var user_id: String
+struct IAabbaPostCommentData: Decodable {
+    var comment_id: String
     var post_id: String
+    var user_id: String
+    var comment_date: String
+    var comment_text: String
+    var username: String
+}
+
+struct IAabbaPostData: Decodable {
+    var post_id: String
+    var user_id: String
     var post_date: String
     var post_title: String
     var post_text: String
     var upvote_count: String
     var comment_count: String
-    var latitude: String
-    var longitude: String
     var category: String
-    var location: String
     var username: String
-    var comments: String
+    var comments: [IAabbaPostCommentData]
+}
+
+struct IAabbaData: Decodable {
+    var name: String
+    var lat: String
+    var long: String
+    var post_count: Int
+    var posts: [IAabbaPostData]
 }
 
 struct IAabbaDataJson: Decodable {
-    var aabba_data: [IAabbaData]
+    var aabba_data: [String: [IAabbaData]]
 }
 
 struct IAirportColor: Decodable {

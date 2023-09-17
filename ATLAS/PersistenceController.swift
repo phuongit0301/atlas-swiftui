@@ -164,7 +164,8 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAirportMap: [AirportMapList] = []
     @Published var dataAirportColorMap: [AirportMapColorList] = []
     @Published var dataTrafficMap: [TrafficMapList] = []
-    @Published var dataAabbaMap: [AabbaMapList] = []
+//    @Published var dataAabbaMap: [AabbaMapList] = []
+    @Published var dataAabbaMap = [IAabbaData]() //Todo: Change to Core data
     
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
@@ -202,13 +203,13 @@ class CoreDataModelState: ObservableObject {
                         let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
                         let airportDataColor: [IAirportColor] = self.remoteService.load("airport_data_color.json")
                         let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
-                        let dataAabba: IAabbaDataJson = self.remoteService.load("aabba_data.json")
+//                        let dataAabba: [String: [IAabbaData]] = self.remoteService.load("aabba_data.json")
                         
                         self.initDataWaypoint(waypointData)
                         self.initDataAirport(airportData)
                         self.initDataAirportColor(airportDataColor)
                         self.initDataTraffic(trafficData)
-                        self.initDataAabba(dataAabba)
+//                        self.initDataAabba(dataAabba) // Todo: reopen and change logic to core data
                     }
                     
                     if let perfData = data?.perfData {
@@ -305,7 +306,8 @@ class CoreDataModelState: ObservableObject {
             self.dataAirportMap = self.readDataAirportMapList()
             self.dataAirportColorMap = self.readDataAirportMapColorList()
             self.dataTrafficMap = self.readDataTrafficMapList()
-            self.dataAabbaMap = self.readDataAabbaMapList()
+//            self.dataAabbaMap = self.readDataAabbaMapList() //todo: reopen to fetch data from core data
+            self.dataAabbaMap = self.remoteService.load("aabba_data.json")
 //            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
@@ -786,34 +788,34 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataAabba(_ data: IAabbaDataJson) {
-        if data.aabba_data.count > 0 {
-            data.aabba_data.forEach { item in
-                let newObj = AabbaMapList(context: service.container.viewContext)
-                
-                newObj.id = UUID()
-                newObj.userId = item.user_id
-                newObj.postDate = item.post_date
-                newObj.postTitle = item.post_title
-                newObj.postText = item.post_text
-                newObj.latitude = item.latitude
-                newObj.longitude = item.longitude
-                newObj.category = item.category
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved data aabba successfully")
-                    } catch {
-                        print("Failed to data aabba save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
-                    }
-                }
-            }
-            
-            self.dataAabbaMap = readDataAabbaMapList()
-        }
+//        if data.aabba_data.count > 0 {
+//            for(key, item) in data.aabba_data {
+//                let newObj = AabbaMapList(context: service.container.viewContext)
+//
+//                newObj.id = UUID()
+//                newObj.userId = item.user_id
+//                newObj.postDate = item.post_date
+//                newObj.postTitle = item.post_title
+//                newObj.postText = item.post_text
+//                newObj.latitude = item.latitude
+//                newObj.longitude = item.longitude
+//                newObj.category = item.category
+//
+//                service.container.viewContext.performAndWait {
+//                    do {
+//                        try service.container.viewContext.save()
+//                        print("saved data aabba successfully")
+//                    } catch {
+//                        print("Failed to data aabba save: \(error)")
+//                        // Rollback any changes in the managed object context
+//                        service.container.viewContext.rollback()
+//
+//                    }
+//                }
+//            }
+//
+//            self.dataAabbaMap = readDataAabbaMapList()
+//        }
     }
     
     func initDataEvent() {

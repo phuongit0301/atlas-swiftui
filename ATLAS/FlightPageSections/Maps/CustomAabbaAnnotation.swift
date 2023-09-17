@@ -13,14 +13,14 @@ class CustomAabbaAnnotation: NSObject, MKAnnotation {
     
     // This property must be key-value observable, which the `@objc dynamic` attributes provide.
     let coordinate: CLLocationCoordinate2D
-    let title: String?
+    var title: String?
     let subtitle: String?
-    let image: UIImage?
+    let index: Int?
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, image: UIImage?) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, index: Int?) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
-        self.image = image
+        self.index = index
     }
 }

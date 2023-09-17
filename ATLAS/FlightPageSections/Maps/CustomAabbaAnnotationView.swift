@@ -19,7 +19,7 @@ class CustomAabbaAnnotationView: MKAnnotationView {
       super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
       guard let attractionAnnotation = self.annotation as? CustomAabbaAnnotation else { return }
 
-      image = attractionAnnotation.image
+//      image = attractionAnnotation.image
     }
     
 //    func update(for annotation: MKAnnotation?) {
