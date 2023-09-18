@@ -41,10 +41,7 @@ struct FlightLevelButtonTimeStepper: View {
                 Text("\(value)").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
                 
                 VStack(spacing: 0) {
-                    Image(systemName: "chevron.up")
-                        .foregroundColor(Color.theme.azure)
-                        .font(.system(size: 12, weight: .medium))
-                    Image(systemName: "chevron.down")
+                    Image(systemName: "chevron.up.chevron.down")
                         .foregroundColor(Color.theme.azure)
                         .font(.system(size: 12, weight: .medium))
                 }

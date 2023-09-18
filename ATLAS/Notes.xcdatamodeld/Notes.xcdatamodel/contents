@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AabbaComment" representedClassName="AabbaCommentList" syncable="YES">
+        <attribute name="commentDate" optional="YES" attributeType="String"/>
+        <attribute name="commentId" optional="YES" attributeType="String"/>
+        <attribute name="commentText" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="postId" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaPost" inverseName="comments" inverseEntity="AabbaPost"/>
+    </entity>
     <entity name="AabbaMap" representedClassName="AabbaMapList" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="commentCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="comments" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="latitude" optional="YES" attributeType="String"/>
-        <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="postCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaPost" inverseName="list" inverseEntity="AabbaPost"/>
+    </entity>
+    <entity name="AabbaPost" representedClassName="AabbaPostList" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="commentCount" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="postDate" optional="YES" attributeType="String"/>
         <attribute name="postId" optional="YES" attributeType="String"/>
         <attribute name="postText" optional="YES" attributeType="String"/>
         <attribute name="postTitle" optional="YES" attributeType="String"/>
-        <attribute name="upvoteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="postUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="upvoteCount" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
-        <attribute name="username" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaComment" inverseName="posts" inverseEntity="AabbaComment"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AabbaMap" inverseName="posts" inverseEntity="AabbaMap"/>
     </entity>
     <entity name="AirportMap" representedClassName="AirportMapList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

@@ -26,16 +26,17 @@ struct WeatherPopoverView: View {
                 }) {
                     Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure)
                 }
-                Spacer()
-                
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
                 
                 Spacer()
+                
+                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
+                
+                Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             

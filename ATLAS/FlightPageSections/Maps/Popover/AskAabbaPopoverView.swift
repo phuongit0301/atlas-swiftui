@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AskAabbaPopoverView: View {
     @Binding var isShowing: Bool
-    @State var selectedStation: StationDataDropDown = StationDataDropDown.item1
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State var selectedStation: String = ""
     @State var tfPost: String = ""
     
     var body: some View {
@@ -22,20 +23,21 @@ struct AskAabbaPopoverView: View {
                 }
                 Spacer()
                 
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure).foregroundColor(Color.black)
-                
+                Text("Ask Aabba").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
+
                 Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
             Picker("", selection: $selectedStation) {
-                ForEach(StationDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+                Text("Select Station").tag("").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                ForEach(coreDataModel.dataAirportColorMap, id: \.self) {
+                    Text($0.airportId ?? "").tag($0.airportId)
                 }
             }.pickerStyle(MenuPickerStyle())
                 .padding(.leading, -12)

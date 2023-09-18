@@ -647,20 +647,12 @@ struct MapViewModal: View {
 //        var defaultImage = UIImage(named: "icon_weather_overlay")
         
         for(index, item) in coreDataModel.dataAabbaMap.enumerated() {
-            let coord = CLLocationCoordinate2D(latitude: (item.lat as NSString).doubleValue, longitude: (item.long as NSString).doubleValue)
+            let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
 
-            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String(item.post_count), subtitle: "", index: index)
+            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String(item.postCount), subtitle: "", index: index)
 
             mapView.addAnnotation(annotation)
         }
-            
-//            print("key========\(key)")
-//            let dataKey = coreDataModel.dataAabbaMap[key] as? [IAabbaData]
-//            let coord = CLLocationCoordinate2D(latitude: (coreDataModel.dataAabbaMap[key]!.lat as NSString).doubleValue, longitude: (coreDataModel.dataAabbaMap[key]!.long as NSString).doubleValue)
-//
-//            let annotation = CustomAabbaAnnotation(coordinate: coord, title: coreDataModel.dataAabbaMap[key]?.post_count, subtitle: "", image: defaultImage)
-//
-//            mapView.addAnnotation(annotation)
     }
     
     func extractFiveLetterWords(from input: String) -> [String] {
@@ -702,7 +694,7 @@ struct MapView: UIViewRepresentable {
     let region: MKCoordinateRegion
     let lineCoordinates: [CLLocationCoordinate2D]
     let dataWaypointMap: [WaypointMapList]
-    let dataAabbaMap: [IAabbaData]
+    let dataAabbaMap: [AabbaMapList]
     let currentLocation: CLLocationCoordinate2D
     let mapType: MKMapType
     @EnvironmentObject var coreDataModel: CoreDataModelState

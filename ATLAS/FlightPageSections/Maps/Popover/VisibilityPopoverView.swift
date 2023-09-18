@@ -10,7 +10,7 @@ import SwiftUI
 struct VisibilityPopoverView: View {
     @Binding var isShowing: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @State var selectedStation: String?
+    @State var selectedStation: String = ""
     @State var selectedRunway: RunwayDataDropDown = RunwayDataDropDown.item1
     @State var tfPost: String = ""
     
@@ -24,14 +24,14 @@ struct VisibilityPopoverView: View {
                 }
                 Spacer()
                 
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                Text("Visibility").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
                 
                 Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
@@ -63,10 +63,5 @@ struct VisibilityPopoverView: View {
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
             }
         }.padding()
-            .onAppear() {
-                if coreDataModel.dataAirportColorMap.count > 0 {
-                    selectedStation = coreDataModel.dataAirportColorMap.first?.airportId
-                }
-            }
     }
 }

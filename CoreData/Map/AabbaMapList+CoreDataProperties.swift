@@ -2,7 +2,7 @@
 //  AabbaMapList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 14/09/2023.
+//  Created by phuong phan on 18/09/2023.
 //
 //
 
@@ -17,31 +17,11 @@ extension AabbaMapList {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var userId: String?
-    @NSManaged public var postDate: String?
-    @NSManaged public var postTitle: String?
-    @NSManaged public var postText: String?
+    @NSManaged public var postCount: Int16
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
-    @NSManaged public var category: String?
-    @NSManaged public var postId: String?
-    @NSManaged public var upvoteCount: Int32
-    @NSManaged public var commentCount: Int32
-    @NSManaged public var location: String?
-    @NSManaged public var username: String?
-    @NSManaged public var comments: String?
-    
-    public var unwrappedUserId: String {
-        userId ?? ""
-    }
-    
-    public var unwrappedPostDate: String {
-        postDate ?? ""
-    }
-    
-    public var unwrappedPostTitle: String {
-        postTitle ?? ""
-    }
+    @NSManaged public var name: String?
+    @NSManaged public var posts: NSSet?
     
     public var unwrappedLatitude: String {
         latitude ?? ""
@@ -51,25 +31,27 @@ extension AabbaMapList {
         longitude ?? ""
     }
     
-    public var unwrappedCategory: String {
-        category ?? ""
+    public var unwrappedName: String {
+        name ?? ""
     }
     
-    public var unwrappedPostId: String {
-        postId ?? ""
-    }
-    
-    public var unwrappedLocation: String {
-        location ?? ""
-    }
-    
-    public var unwrappedUsername: String {
-        username ?? ""
-    }
-    
-    public var unwrappedComments: String {
-        comments ?? ""
-    }
+}
+
+// MARK: Generated accessors for posts
+extension AabbaMapList {
+
+    @objc(addPostsObject:)
+    @NSManaged public func addToPosts(_ value: AabbaPostList)
+
+    @objc(removePostsObject:)
+    @NSManaged public func removeFromPosts(_ value: AabbaPostList)
+
+    @objc(addPosts:)
+    @NSManaged public func addToPosts(_ values: NSSet)
+
+    @objc(removePosts:)
+    @NSManaged public func removeFromPosts(_ values: NSSet)
+
 }
 
 extension AabbaMapList : Identifiable {

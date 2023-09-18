@@ -10,7 +10,7 @@ import SwiftUI
 struct RunwayPopoverView: View {
     @Binding var isShowing: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @State var selectedStation: String?
+    @State var selectedStation: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,16 +20,17 @@ struct RunwayPopoverView: View {
                 }) {
                     Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure)
                 }
-                Spacer()
-                
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
                 
                 Spacer()
+                
+                Text("Runway").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
+                
+                Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
@@ -113,11 +114,5 @@ struct RunwayPopoverView: View {
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
             }.frame(maxWidth: .infinity)
         }.padding()
-            .padding()
-                .onAppear() {
-                    if coreDataModel.dataAirportColorMap.count > 0 {
-                        selectedStation = coreDataModel.dataAirportColorMap.first?.airportId
-                    }
-                }
     }
 }

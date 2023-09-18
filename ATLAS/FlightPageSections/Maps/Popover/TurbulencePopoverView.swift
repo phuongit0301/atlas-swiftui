@@ -28,14 +28,14 @@ struct TurbulencePopoverView: View {
                 }
                 Spacer()
                 
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                Text("Turbulence").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
                 
                 Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             

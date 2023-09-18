@@ -10,7 +10,7 @@ import SwiftUI
 struct CongestionPopoverView: View {
     @Binding var isShowing: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @State var selectedStation: String?
+    @State var selectedStation: String = ""
     @State var selectedTime: TimeDataDropDown = TimeDataDropDown.item1
     @State var tfPost: String = ""
     
@@ -24,14 +24,14 @@ struct CongestionPopoverView: View {
                 }
                 Spacer()
                 
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                Text("Congestion").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
                 
                 Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             

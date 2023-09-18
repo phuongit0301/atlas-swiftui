@@ -3,7 +3,7 @@
      "name":"VTBS",
      "lat":"13.6811",
      "long":"100.747",
-     "post_count":3,
+     "post_count": 9,
      "posts":[
         {
            "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
@@ -47,7 +47,7 @@
            "post_title":"Runway conditions",
            "post_text":"Bumpy runway",
            "upvote_count":"6",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -96,7 +96,7 @@
            "post_title":"Runway conditions",
            "post_text":"Bumpy runway",
            "upvote_count":"6",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -165,7 +165,7 @@
      "name":"WSSS",
      "lat":"1.35019",
      "long":"103.994",
-     "post_count":4,
+     "post_count":5,
      "posts":[
         {
            "post_id":"0c08b1db-8bb5-4f59-b11b-617337eeb9b0",
@@ -174,7 +174,7 @@
            "post_title":"Strong Wind",
            "post_text":"Wind direction from the north",
            "upvote_count":"7",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -188,7 +188,7 @@
            "post_title":"This runway has resurfaced",
            "post_text":"Smooth landing",
            "upvote_count":"0",
-           "comment_count":"2",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -202,7 +202,7 @@
            "post_title":"This runway has resurfaced",
            "post_text":"Smooth landing",
            "upvote_count":"6",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -216,7 +216,7 @@
            "post_title":"Air Turbulence",
            "post_text":"Pilots please beware",
            "upvote_count":"1",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Turbulence",
            "comments":[
               
@@ -230,7 +230,7 @@
            "post_title":"Strong Wind",
            "post_text":"Wind direction from the north",
            "upvote_count":"7",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Runway",
            "comments":[
               
@@ -303,7 +303,7 @@
            "post_title":"Strong Wind",
            "post_text":"Wind direction from the north",
            "upvote_count":"5",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Wind",
            "comments":[
               
@@ -317,7 +317,7 @@
            "post_title":"Strong Wind",
            "post_text":"Wind direction from the north",
            "upvote_count":"9",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Hazard",
            "comments":[
               
@@ -331,7 +331,7 @@
            "post_title":"Strong Wind",
            "post_text":"Wind direction from the north",
            "upvote_count":"5",
-           "comment_count":"1",
+           "comment_count":"0",
            "category":"Wind",
            "comments":[
               

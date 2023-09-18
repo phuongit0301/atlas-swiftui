@@ -22,7 +22,7 @@ struct CardTextField: View {
 }
 
 struct MapCardView: View {
-    var payload: IAabbaData?
+    var payload: AabbaMapList?
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -46,29 +46,29 @@ struct MapCardView: View {
                 }.background(Color.white.opacity(0.75))
                     .roundedCorner(14, corners: [.topLeft, .topRight])
                 
-                if let posts = payload?.posts {
+                if let posts = payload?.posts?.allObjects as? [AabbaPostList] {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(posts.indices) {index in
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
-                                    Text(posts[index].category)
+                                    Text(posts[index].unwrappedCategory)
                                         .font(Font.custom("SF Pro", size: 11))
                                         .foregroundColor(Color.white)
                                 }.padding(.horizontal, 12)
                                     .padding(.vertical, 4)
-                                    .background(handleColor(posts[index].category))
+                                    .background(handleColor(posts[index].unwrappedCategory))
                                     .cornerRadius(12)
                                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
                                 
-                                Text(posts[index].post_title)
+                                Text(posts[index].unwrappedPostTitle)
                                     .font(Font.custom("SF Pro", size: 15))
                                     .foregroundColor(.black)
                                 
                                 HStack {
-                                    Text(posts[index].username)
+                                    Text(posts[index].unwrappedUserName)
                                         .font(Font.custom("SF Pro", size: 11))
                                         .foregroundColor(Color.theme.azure)
-                                    Text("Posted \(posts[index].post_date)")
+                                    Text("Posted \(posts[index].unwrappedPostDate)")
                                         .font(Font.custom("SF Pro", size: 11))
                                         .foregroundColor(Color.theme.arsenic.opacity(0.6))
                                     
@@ -82,7 +82,7 @@ struct MapCardView: View {
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                         
-                                        Text(posts[index].upvote_count)
+                                        Text(posts[index].unwrappedUpvoteCount)
                                             .font(Font.custom("SF Pro", size: 13).weight(.medium))
                                             .foregroundColor(.black)
                                     }
@@ -95,25 +95,25 @@ struct MapCardView: View {
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                         
-                                        Text(posts[index].comment_count)
+                                        Text(posts[index].unwrappedCommentCount)
                                             .font(Font.custom("SF Pro", size: 13).weight(.medium))
                                             .foregroundColor(.black)
                                     }
                                 }
                                 
                                 // Get first comment and show
-                                if (posts[index].comment_count as NSString).integerValue > 0 {
-                                    if let firstComment = posts[index].comments.first {
+                                if (posts[index].unwrappedCommentCount as NSString).integerValue > 0 {
+                                    if let comments = posts[index].comments?.allObjects as? [AabbaCommentList], let firstComment = comments.first {
                                         VStack(alignment: .leading, spacing: 4) {
                                             HStack {
-                                                Text(firstComment.username)
+                                                Text(firstComment.unwrappedUserName)
                                                     .font(Font.custom("SF Pro", size: 11))
                                                     .foregroundColor(Color.theme.azure)
-                                                Text("Posted \(firstComment.comment_date)")
+                                                Text("Posted \(firstComment.unwrappedCommentDate)")
                                                     .font(Font.custom("SF Pro", size: 11))
                                                     .foregroundColor(Color.theme.arsenic.opacity(0.6))
                                             }
-                                            Text(firstComment.comment_text)
+                                            Text(firstComment.unwrappedCommentText)
                                                 .font(Font.custom("SF Pro", size: 13))
                                                 .foregroundColor(Color.black)
                                         }.frame(maxWidth: .infinity, alignment: .leading)

@@ -10,7 +10,7 @@ import SwiftUI
 struct HazardPopoverView: View {
     @Binding var isShowing: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @State var selectedStation: String?
+    @State var selectedStation: String = ""
     @State var selectedRunway: RunwayDataDropDown = RunwayDataDropDown.item1
     @State var tfPost: String = ""
     
@@ -24,14 +24,14 @@ struct HazardPopoverView: View {
                 }
                 Spacer()
                 
-                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                
+                Text("Hazard").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
+              
                 Spacer()
+                
                 Button(action: {
-                    self.isShowing = false
                 }) {
                     Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
-                }
+                }.opacity(0)
             }.background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
