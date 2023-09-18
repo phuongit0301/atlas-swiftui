@@ -8,26 +8,46 @@
 import SwiftUI
 
 struct WindPopoverView: View {
-    @State var selectedStation: StationDataDropDown = StationDataDropDown.item1
-    @State var selectedRunway: RunwayDataDropDown = RunwayDataDropDown.item1
-    @State var tfWind1: String = ""
-    @State var tfWind2: String = ""
-    @State var tfWind3: String = ""
-    @State var tfPost: String = ""
+    @Binding var isShowing: Bool
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State var selectedStation: String?
     
     var body: some View {
         VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure)
+                }
+                Spacer()
+                
+                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                
+                Spacer()
+                Button(action: {
+                    self.isShowing = false
+                }) {
+                    Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                }
+            }.background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
+            
             Picker("", selection: $selectedStation) {
-                ForEach(StationDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+                Text("Select Station").tag("").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                ForEach(coreDataModel.dataAirportColorMap, id: \.self) {
+                    Text($0.airportId ?? "").tag($0.airportId)
                 }
             }.pickerStyle(MenuPickerStyle())
                 .padding(.leading, -12)
             
             HStack {
-                TextField("Gusty Winds", text: $tfWind1)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Gusty")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
+                
+                Spacer()
                 
                 Button(action: {
                     //Todo
@@ -38,14 +58,17 @@ struct WindPopoverView: View {
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
                     .cornerRadius(12)
-            }
+            }.frame(maxWidth: .infinity)
             
             Divider().padding(.horizontal, -16)
             
             HStack {
-                TextField("Updrafts", text: $tfWind2)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Tailwinds")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
+                
+                Spacer()
                 
                 Button(action: {
                     //Todo
@@ -56,14 +79,17 @@ struct WindPopoverView: View {
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
                     .cornerRadius(12)
-            }
+            }.frame(maxWidth: .infinity)
             
             Divider().padding(.horizontal, -16)
             
             HStack {
-                TextField("Cross-tail", text: $tfWind3)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Cross-tail")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
+                
+                Spacer()
                 
                 Button(action: {
                     //Todo
@@ -74,14 +100,17 @@ struct WindPopoverView: View {
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
                     .cornerRadius(12)
-            }
+            }.frame(maxWidth: .infinity)
             
             Divider().padding(.horizontal, -16)
             
             HStack {
-                TextField("Write Post", text: $tfPost)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Updrafts")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
+                
+                Spacer()
                 
                 Button(action: {
                     //Todo
@@ -92,7 +121,7 @@ struct WindPopoverView: View {
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
                     .cornerRadius(12)
-            }
+            }.frame(maxWidth: .infinity)
             
         }.padding()
     }

@@ -8,23 +8,43 @@
 import SwiftUI
 
 struct RunwayPopoverView: View {
-    @State var selectedStation: StationDataDropDown = StationDataDropDown.item1
-    @State var selectedRunway: RunwayDataDropDown = RunwayDataDropDown.item1
-    @State var tfRunway: String = ""
-    @State var tfPost: String = ""
+    @Binding var isShowing: Bool
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State var selectedStation: String?
     
     var body: some View {
         VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure)
+                }
+                Spacer()
+                
+                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                
+                Spacer()
+                Button(action: {
+                    self.isShowing = false
+                }) {
+                    Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                }
+            }.background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
+            
             Picker("", selection: $selectedStation) {
-                ForEach(StationDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+                Text("Select Station").tag("").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                ForEach(coreDataModel.dataAirportColorMap, id: \.self) {
+                    Text($0.airportId ?? "").tag($0.airportId)
                 }
             }.pickerStyle(MenuPickerStyle())
                 .padding(.leading, -12)
             
             HStack {
-                TextField("Wet Surface", text: $tfRunway)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Dry")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
                 
                 Spacer()
@@ -37,14 +57,15 @@ struct RunwayPopoverView: View {
                     .padding(.horizontal, 24)
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
-            }
-            
-            Divider().padding(.horizontal, -16)
+            }.frame(maxWidth: .infinity)
             
             HStack {
-                TextField("Write Post", text: $tfPost)
-                    .font(.system(size: 15)).frame(maxWidth: .infinity)
+                Text("Damp")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
                     .frame(height: 44)
+                
+                Spacer()
                 
                 Button(action: {
                     //Todo
@@ -54,9 +75,49 @@ struct RunwayPopoverView: View {
                     .padding(.horizontal, 24)
                     .background(Color.theme.philippineGray3)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
-                    .cornerRadius(12)
-            }
+            }.frame(maxWidth: .infinity)
             
+            HStack {
+                Text("Wet")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
+                    .frame(height: 44)
+                
+                Spacer()
+                
+                Button(action: {
+                    //Todo
+                }, label: {
+                    Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
+                }).padding(.vertical, 4)
+                    .padding(.horizontal, 24)
+                    .background(Color.theme.philippineGray3)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
+            }.frame(maxWidth: .infinity)
+            
+            HStack {
+                Text("Slippery")
+                    .foregroundColor(Color.black)
+                    .font(.system(size: 15))
+                    .frame(height: 44)
+                
+                Spacer()
+                
+                Button(action: {
+                    //Todo
+                }, label: {
+                    Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
+                }).padding(.vertical, 4)
+                    .padding(.horizontal, 24)
+                    .background(Color.theme.philippineGray3)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
+            }.frame(maxWidth: .infinity)
         }.padding()
+            .padding()
+                .onAppear() {
+                    if coreDataModel.dataAirportColorMap.count > 0 {
+                        selectedStation = coreDataModel.dataAirportColorMap.first?.airportId
+                    }
+                }
     }
 }

@@ -259,6 +259,8 @@
 		3EEBE6962AB6816A00421AFF /* GeneralPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6952AB6816A00421AFF /* GeneralPopoverView.swift */; };
 		3EEBE6982AB6AAA300421AFF /* CustomWaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6972AB6AAA300421AFF /* CustomWaypointAnnotationView.swift */; };
 		3EEBE69A2AB6AAB700421AFF /* CustomWaypointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6992AB6AAB700421AFF /* CustomWaypointAnnotation.swift */; };
+		3EEBE69E2AB7F69D00421AFF /* CustomAirportAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE69D2AB7F69D00421AFF /* CustomAirportAnnotation.swift */; };
+		3EEBE6A02AB7F6AB00421AFF /* CustomAirportAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE69F2AB7F6AA00421AFF /* CustomAirportAnnotationView.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -596,6 +598,8 @@
 		3EEBE6952AB6816A00421AFF /* GeneralPopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPopoverView.swift; sourceTree = "<group>"; };
 		3EEBE6972AB6AAA300421AFF /* CustomWaypointAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWaypointAnnotationView.swift; sourceTree = "<group>"; };
 		3EEBE6992AB6AAB700421AFF /* CustomWaypointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWaypointAnnotation.swift; sourceTree = "<group>"; };
+		3EEBE69D2AB7F69D00421AFF /* CustomAirportAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAirportAnnotation.swift; sourceTree = "<group>"; };
+		3EEBE69F2AB7F6AA00421AFF /* CustomAirportAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAirportAnnotationView.swift; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -707,11 +711,13 @@
 				3EEBE6822AB6745700421AFF /* Popover */,
 				3E086D792A94920900BE00AD /* MapView.swift */,
 				3EEBE6622AB1FA0400421AFF /* CustomAnnotationView.swift */,
+				3EEBE69F2AB7F6AA00421AFF /* CustomAirportAnnotationView.swift */,
 				3EEBE6972AB6AAA300421AFF /* CustomWaypointAnnotationView.swift */,
 				3EEBE6742AB3EBCA00421AFF /* CustomRouteAnnotationView.swift */,
 				3EEBE67E2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift */,
 				3EEBE67A2AB46A8C00421AFF /* CustomTrafficAnnotationView.swift */,
 				3EEBE6642AB1FCEC00421AFF /* CustomAnnotation.swift */,
+				3EEBE69D2AB7F69D00421AFF /* CustomAirportAnnotation.swift */,
 				3EEBE6702AB3547C00421AFF /* CustomRouteAnnotation.swift */,
 				3EEBE6802AB58A4300421AFF /* CustomAabbaAnnotation.swift */,
 				3EEBE6992AB6AAB700421AFF /* CustomWaypointAnnotation.swift */,
@@ -1768,6 +1774,7 @@
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
+				3EEBE6A02AB7F6AB00421AFF /* CustomAirportAnnotationView.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
 				3EEBE6942AB6812C00421AFF /* HazardPopoverView.swift in Sources */,
 				3E4E102A2A6567B90026802B /* ScratchPadSplitForm.swift in Sources */,
@@ -1868,6 +1875,7 @@
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E766FAD2A5F92FA00B11616 /* PreviousSearchView.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
+				3EEBE69E2AB7F69D00421AFF /* CustomAirportAnnotation.swift in Sources */,
 				3E4A36CB2A595B4A00027C61 /* FlightPlanList+CoreDataClass.swift in Sources */,
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,

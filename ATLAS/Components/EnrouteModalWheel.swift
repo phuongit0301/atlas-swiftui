@@ -366,3 +366,49 @@ struct EnrouteModalWheelAfrm: View {
         }
     }
 }
+
+// For Map View
+struct RunwayModalWheelAfrm: View {
+    @Binding var isShowing: Bool
+    @Binding var selectionInOut: String
+    @State var items: ClosedRange<Int> = 0...10
+    @State private var selection = 0
+    
+    var body: some View {
+        VStack {
+            HStack(alignment: .center) {
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                }
+                Spacer()
+                
+                Text("Update").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                
+                Spacer()
+                Button(action: {
+                    self.selectionInOut = "\(selection)"
+                    self.isShowing = false
+                }) {
+                    Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                }
+            }.padding()
+                .background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
+            
+            HStack {
+                Picker(selection: $selection, label: Text("")) {
+                    ForEach(items, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                    .labelsHidden()
+                
+                Picker(selection: $selection, label: Text("")) {
+                }
+                Spacer()
+            }
+        }
+    }
+}

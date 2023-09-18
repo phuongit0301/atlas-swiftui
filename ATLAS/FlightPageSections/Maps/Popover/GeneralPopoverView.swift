@@ -8,15 +8,37 @@
 import SwiftUI
 
 struct GeneralPopoverView: View {
-    @State var selectedStation: StationDataDropDown = StationDataDropDown.item1
+    @Binding var isShowing: Bool
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @State var selectedStation: String?
     @State var selectedRunway: RunwayDataDropDown = RunwayDataDropDown.item1
     @State var tfPost: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure).foregroundColor(Color.theme.azure)
+                }
+                Spacer()
+                
+                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure).foregroundColor(Color.black)
+                
+                Spacer()
+                Button(action: {
+                    self.isShowing = false
+                }) {
+                    Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure).foregroundColor(Color.theme.azure)
+                }
+            }.background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
+            
             Picker("", selection: $selectedStation) {
-                ForEach(StationDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+                Text("Select Station").tag("").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                ForEach(coreDataModel.dataAirportColorMap, id: \.self) {
+                    Text($0.airportId ?? "").tag($0.airportId)
                 }
             }.pickerStyle(MenuPickerStyle())
                 .padding(.leading, -12)

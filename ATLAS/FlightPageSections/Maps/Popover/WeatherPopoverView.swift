@@ -8,25 +8,48 @@
 import SwiftUI
 
 struct WeatherPopoverView: View {
-    @State var selectedWaypoint: WaypointDataDropDown = WaypointDataDropDown.waypoint1
-    @State var selectedFlightLevel: FlightLevelDataDropDown = FlightLevelDataDropDown.level1
+    @Binding var isShowing: Bool
+    @EnvironmentObject var mapIconModel: MapIconModel
+    @State var selectedWaypoint: String = ""
+    @State var selectedWaypointIndex: Int = 0
+    @State var flightLevel: String = "0000"
     @State var tfPost: String = ""
+    @State private var selectionOutputFlight = "Select Flight Level"
+    @State var isShowFlightModal = false
+    
     
     var body: some View {
         VStack(alignment: .leading) {
-            Picker("", selection: $selectedWaypoint) {
-                ForEach(WaypointDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+            HStack(alignment: .center) {
+                Button(action: {
+                    self.isShowing.toggle()
+                }) {
+                    Text("Cancel").font(Font.custom("SF Pro", size: 15).weight(.regular)).foregroundColor(Color.theme.azure)
                 }
-            }.pickerStyle(MenuPickerStyle())
-                .padding(.leading, -12)
+                Spacer()
+                
+                Text("Weather").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                
+                Spacer()
+                Button(action: {
+                    self.isShowing = false
+                }) {
+                    Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.theme.azure)
+                }
+            }.background(.white)
+                .roundedCorner(12, corners: [.topLeft, .topRight])
             
-            Picker("", selection: $selectedFlightLevel) {
-                ForEach(FlightLevelDataDropDown.allCases, id: \.self) {
-                    Text($0.rawValue).tag($0.rawValue)
+            Picker(selection: $selectedWaypointIndex, label: Text(selectedWaypoint).font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)) {
+                Text("Select Waypoint").tag("").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                ForEach(mapIconModel.dataWaypoint, id: \.self) {
+                    Text($0).tag($0).font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
                 }
             }.pickerStyle(MenuPickerStyle())
-                .padding(.leading, -12)
+            .padding(.leading, -12)
+        
+            HStack {
+                FlightLevelButtonTimeStepper(onToggle: onFlight, value: selectionOutputFlight, index: .constant(0)).fixedSize().id(UUID())
+            }
             
             HStack {
                 TextField("Write Post", text: $tfPost)
@@ -45,5 +68,15 @@ struct WeatherPopoverView: View {
             }
             
         }.padding()
+            .onAppear {
+                selectedWaypoint = mapIconModel.dataWaypoint.first ?? ""
+            }
+            .formSheet(isPresented: $isShowFlightModal) {
+                EnrouteModalWheelAfl(isShowing: $isShowFlightModal, selectionInOut: $selectionOutputFlight, defaultValue: .constant("00"))
+            }
+    }
+    
+    func onFlight(_ index: Int) {
+        self.isShowFlightModal.toggle()
     }
 }

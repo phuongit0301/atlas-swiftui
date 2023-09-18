@@ -21,6 +21,7 @@ struct SRoute {
 struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
+    @EnvironmentObject var mapIconModel: MapIconModel
     @State private var mapType: MKMapType = .mutedStandard
     @State var tfRoute: String = ""
     
@@ -35,16 +36,16 @@ struct MapViewModal: View {
     @State var selectedWaypoint = true
     @State var selectedAirport = true
     
-    @State private var showPopoverSea = false
-    @State private var showPopoverWater = false
+    @State private var showPopoverWeather = false
+    @State private var showPopoverTurbulence = false
     
-    @State private var showPopoverEye = false
+    @State private var showPopoverVisibility = false
     @State private var showPopoverWind = false
-    @State private var showPopoverAirplane = false
-    @State private var showPopoverClock = false
-    @State private var showPopoverExclamationMark = false
-    @State private var showPopoverInfo = false
-    @State private var showPopoverQuestionMark = false
+    @State private var showPopoverRunway = false
+    @State private var showPopoverCongestion = false
+    @State private var showPopoverHazard = false
+    @State private var showPopoverGeneral = false
+    @State private var showPopoverAskAABBA = false
     
     //Variable for verify data exists in Route Direction or not
     @State private var routeDatas = [SRoute]()
@@ -266,7 +267,7 @@ struct MapViewModal: View {
                                     
                                     VStack(spacing: 4) {
                                         Button(action: {
-                                            self.showPopoverSea.toggle()
+                                            self.showPopoverWeather.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Weather").font(.system(size: 11, weight: .regular))
@@ -282,12 +283,12 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverSea) {
-                                                WeatherPopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverWeather) {
+                                                WeatherPopoverView(isShowing: $showPopoverWeather).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverWater.toggle()
+                                            self.showPopoverTurbulence.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Turbulence").font(.system(size: 11, weight: .regular))
@@ -303,12 +304,12 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverWater) {
-                                                TurbulencePopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverTurbulence) {
+                                                TurbulencePopoverView(isShowing: $showPopoverTurbulence).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverEye.toggle()
+                                            self.showPopoverVisibility.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Visibility").font(.system(size: 11, weight: .regular))
@@ -324,8 +325,8 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverEye) {
-                                                VisibilityPopoverView().frame(width: 360).interactiveDismissDisabled()
+                                            .popover(isPresented: $showPopoverVisibility) {
+                                                VisibilityPopoverView(isShowing: $showPopoverVisibility).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
@@ -346,11 +347,11 @@ struct MapViewModal: View {
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
                                             .popover(isPresented: $showPopoverWind) {
-                                                WindPopoverView().frame(width: 360)
+                                                WindPopoverView(isShowing: $showPopoverWind).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverAirplane.toggle()
+                                            self.showPopoverRunway.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Runway").font(.system(size: 11, weight: .regular))
@@ -366,12 +367,12 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverAirplane) {
-                                                RunwayPopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverRunway) {
+                                                RunwayPopoverView(isShowing: $showPopoverRunway).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverClock.toggle()
+                                            self.showPopoverCongestion.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Congestion").font(.system(size: 11, weight: .regular))
@@ -387,14 +388,14 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverClock) {
-                                                CongestionPopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverCongestion) {
+                                                CongestionPopoverView(isShowing: $showPopoverCongestion).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Divider().frame(width: 72, alignment: .trailing)
                                         
                                         Button(action: {
-                                            self.showPopoverExclamationMark.toggle()
+                                            self.showPopoverHazard.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Hazard").font(.system(size: 11, weight: .regular))
@@ -410,12 +411,12 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverExclamationMark) {
-                                               HazardPopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverHazard) {
+                                                HazardPopoverView(isShowing: $showPopoverHazard).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverInfo.toggle()
+                                            self.showPopoverGeneral.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("General").font(.system(size: 11, weight: .regular))
@@ -431,12 +432,12 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverInfo) {
-                                                GeneralPopoverView().frame(width: 360)
+                                            .popover(isPresented: $showPopoverGeneral) {
+                                                GeneralPopoverView(isShowing: $showPopoverGeneral).frame(width: 360).interactiveDismissDisabled()
                                             }
                                         
                                         Button(action: {
-                                            self.showPopoverQuestionMark.toggle()
+                                            self.showPopoverAskAABBA.toggle()
                                         }, label: {
                                             HStack {
                                                 Text("Ask AABBA").font(.system(size: 11, weight: .regular))
@@ -452,8 +453,8 @@ struct MapViewModal: View {
                                         }).buttonStyle(PlainButtonStyle())
                                             .frame(width: 116, height: 40, alignment: .trailing)
                                             .padding(.trailing, 8)
-                                            .popover(isPresented: $showPopoverQuestionMark) {
-                                                AskAabbaPopoverView().frame(width: 318)
+                                            .popover(isPresented: $showPopoverAskAABBA) {
+                                                AskAabbaPopoverView(isShowing: $showPopoverAskAABBA).frame(width: 318).interactiveDismissDisabled()
                                             }
                                         
                                     }.padding(.vertical, 8)
@@ -496,7 +497,7 @@ struct MapViewModal: View {
     
     func addRoute() {
         let payload = extractFiveLetterWords(from: tfRoute)
-        
+        var dataWaypoint: [String] = []
         var locationCoordinate = [CLLocationCoordinate2D]()
         
         //get start and end route
@@ -530,6 +531,8 @@ struct MapViewModal: View {
                 locationCoordinate.append(coord)
                 mapView.addAnnotation(annotation)
                 
+                //Append data wheel picker for popover icons
+                dataWaypoint.append(item)
                 //Append data to route
                 routeDatas.append(SRoute(name:  itemExists.name!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: ((itemExists.latitude! as NSString) as String), longitude: ((itemExists.longitude! as NSString) as String)))
             }
@@ -556,6 +559,8 @@ struct MapViewModal: View {
         
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
+        
+        mapIconModel.dataWaypoint = dataWaypoint
     }
     
     func addWaypoint() {
@@ -586,7 +591,7 @@ struct MapViewModal: View {
                 if !airportIds.contains(item.unwrappedName) {
                     let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
                     
-                    let annotation = CustomAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
+                    let annotation = CustomAirportAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
                     
                     mapView.addAnnotation(annotation)
                 }
@@ -717,6 +722,7 @@ struct MapView: UIViewRepresentable {
         mapView.register(CustomTrafficAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomTrafficAnnotationView")
         mapView.register(CustomAabbaAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAabbaAnnotationView")
         mapView.register(CustomWaypointAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomWaypointAnnotationView")
+        mapView.register(CustomAirportAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAirportAnnotationView")
         mapView.delegate = context.coordinator
         mapView.userTrackingMode = MKUserTrackingMode.follow
         
@@ -744,14 +750,14 @@ class Coordinator: NSObject, MKMapViewDelegate {
         // Create an annotation view
         if annotation is CustomRouteAnnotation {
             let annotationView = CustomRouteAnnotationView(annotation: annotation, reuseIdentifier: "CustomRouteAnnotationView")
-            annotationView.canShowCallout = true
+            annotationView.canShowCallout = false
 
 //            let customView = MapCardView()
 //            let callout = MapCalloutView(rootView: AnyView(customView))
 //            annotationView.detailCalloutAccessoryView = callout
             
             // Add Title beside icons
-            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -15, width: 105, height: 30))
+            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
             annotationLabel.numberOfLines = 1
             annotationLabel.textAlignment = .left
             annotationLabel.text = annotation.title!!
@@ -798,7 +804,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return annotationView
         } else if annotation is CustomWaypointAnnotation {
             let annotationView = CustomWaypointAnnotationView(annotation: annotation, reuseIdentifier: "CustomWaypointAnnotationView")
-            let annotationLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 105, height: 30))
+            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
             annotationLabel.numberOfLines = 1
             annotationLabel.textAlignment = .left
             annotationLabel.text = annotation.title!!
@@ -806,12 +812,26 @@ class Coordinator: NSObject, MKMapViewDelegate {
             
             annotationView.addSubview(annotationLabel)
             return annotationView
+        }  else if annotation is CustomAirportAnnotation {
+            let annotationView = CustomAirportAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportAnnotationView")
+            annotationView.canShowCallout = false
+            
+            // Add Title beside icons
+            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
+            annotationLabel.numberOfLines = 1
+            annotationLabel.textAlignment = .left
+            annotationLabel.text = annotation.title!!
+            annotationLabel.font = UIFont.systemFont(ofSize: 10)
+            
+            annotationView.addSubview(annotationLabel)
+            
+            return annotationView
         } else {
             let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
             annotationView.canShowCallout = true
             
             // Add Title beside icons
-            let annotationLabel = UILabel(frame: CGRect(x: 20, y: -10, width: 105, height: 30))
+            let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
             annotationLabel.numberOfLines = 1
             annotationLabel.textAlignment = .left
             annotationLabel.text = annotation.title!!

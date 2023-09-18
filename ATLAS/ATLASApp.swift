@@ -38,6 +38,7 @@ struct ATLASApp: App {
     @StateObject var aiSearchModel = AISearchModelState()
     @StateObject var locationViewModel = LocationViewModel()
     @StateObject var calendarModel = CalendarModel()
+    @StateObject var mapIconModel = MapIconModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -78,6 +79,7 @@ struct ATLASApp: App {
                 .environmentObject(refModel)
                 .environmentObject(aiSearchModel)
                 .environmentObject(calendarModel)
+                .environmentObject(mapIconModel)
                 .task {
                     coreDataModel.loading = true
 //                    await coreDataModel.checkAndSyncDataNote()

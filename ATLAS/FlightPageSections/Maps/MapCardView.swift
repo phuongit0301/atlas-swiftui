@@ -101,7 +101,28 @@ struct MapCardView: View {
                                     }
                                 }
                                 
-                                CardTextField(index: index)
+                                // Get first comment and show
+                                if (posts[index].comment_count as NSString).integerValue > 0 {
+                                    if let firstComment = posts[index].comments.first {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            HStack {
+                                                Text(firstComment.username)
+                                                    .font(Font.custom("SF Pro", size: 11))
+                                                    .foregroundColor(Color.theme.azure)
+                                                Text("Posted \(firstComment.comment_date)")
+                                                    .font(Font.custom("SF Pro", size: 11))
+                                                    .foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                            }
+                                            Text(firstComment.comment_text)
+                                                .font(Font.custom("SF Pro", size: 13))
+                                                .foregroundColor(Color.black)
+                                        }.frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(8)
+                                            .background(Color.theme.antiFlashWhite)
+                                            .cornerRadius(8)
+                                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.arsenic.opacity(0.36), lineWidth: 0))
+                                    }
+                                }
                             }.padding(.horizontal, 8)
                                 .padding(.vertical, 8)
                                 .background(Color.white)

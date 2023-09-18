@@ -28,3 +28,27 @@ struct EnrouteButtonTimeStepper: View {
         }).buttonStyle(.plain)
     }
 }
+
+// For Map
+struct FlightLevelButtonTimeStepper: View {
+    @State var onToggle: (_ index: Int) -> Void
+    @State var value: String = "0000"
+    @Binding var index: Int
+    
+    var body: some View {
+        Button(action: { onToggle(index) }, label: {
+            HStack(spacing: 4) {
+                Text("\(value)").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                
+                VStack(spacing: 0) {
+                    Image(systemName: "chevron.up")
+                        .foregroundColor(Color.theme.azure)
+                        .font(.system(size: 12, weight: .medium))
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(Color.theme.azure)
+                        .font(.system(size: 12, weight: .medium))
+                }
+            }
+        }).buttonStyle(.plain)
+    }
+}

@@ -244,17 +244,24 @@ enum StationDataDropDown: String, CaseIterable, Identifiable {
 }
 
 enum ModerateDataDropDown: String, CaseIterable, Identifiable {
-    case item1 = "Moderate 1"
-    case item2 = "Moderate 2"
-    case item3 = "Moderate 3"
+    case item1 = "Light"
+    case item2 = "Moderate"
+    case item3 = "Severe"
     
     var id: Self { self }
 }
 
 enum RunwayDataDropDown: String, CaseIterable, Identifiable {
-    case item1 = "5nm"
-    case item2 = "10nm"
-    case item3 = "15nm"
+    case item1 = "1"
+    case item2 = "2"
+    case item3 = "3"
+    case item4 = "4"
+    case item5 = "5"
+    case item6 = "6"
+    case item7 = "7"
+    case item8 = "8"
+    case item9 = "9"
+    case item10 = "10"
     
     var id: Self { self }
 }
@@ -265,4 +272,8 @@ enum TimeDataDropDown: String, CaseIterable, Identifiable {
     case item3 = "30 mins"
     
     var id: Self { self }
+}
+
+class MapIconModel: ObservableObject {
+    @Published var dataWaypoint: [String] = []
 }
