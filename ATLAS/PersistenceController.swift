@@ -209,7 +209,7 @@ class CoreDataModelState: ObservableObject {
                         self.initDataAirport(airportData)
                         self.initDataAirportColor(airportDataColor)
                         self.initDataTraffic(trafficData)
-                        self.initDataAabba(dataAabba) // Todo: reopen and change logic to core data
+                        self.initDataAabba(dataAabba)
                     }
                     
                     if let perfData = data?.perfData {

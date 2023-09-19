@@ -2,7 +2,7 @@
 //  AabbaMapList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 18/09/2023.
+//  Created by phuong phan on 19/09/2023.
 //
 //
 
@@ -34,7 +34,6 @@ extension AabbaMapList {
     public var unwrappedName: String {
         name ?? ""
     }
-    
 }
 
 // MARK: Generated accessors for posts

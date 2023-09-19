@@ -784,9 +784,10 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
             annotationView.addSubview(annotationLabel)
             
-            let itemAabba = parent.dataAabbaMap[(annotation as! CustomAabbaAnnotation).index ?? 0]
+            let index = (annotation as! CustomAabbaAnnotation).index ?? 0
+            let itemAabba = parent.dataAabbaMap[index]
 
-            let customView = MapCardView(payload: itemAabba)
+            let customView = MapCardView(payload: itemAabba, parentAabbaIndex: index)
 
             let callout = MapCalloutView(rootView: AnyView(customView))
 

@@ -2,7 +2,7 @@
 //  AabbaPostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 18/09/2023.
+//  Created by phuong phan on 19/09/2023.
 //
 //
 
@@ -81,6 +81,7 @@ extension AabbaPostList {
 
     @objc(removeComments:)
     @NSManaged public func removeFromComments(_ values: NSSet)
+
 }
 
 extension AabbaPostList : Identifiable {
