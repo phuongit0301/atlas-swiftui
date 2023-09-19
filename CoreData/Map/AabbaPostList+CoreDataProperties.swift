@@ -27,9 +27,10 @@ extension AabbaPostList {
     @NSManaged public var category: String?
     @NSManaged public var userName: String?
     @NSManaged public var postUpdated: Date?
+    @NSManaged public var location: String?
     @NSManaged public var comments: NSSet?
     @NSManaged public var list: AabbaMapList?
-    
+
     public var unwrappedPostId: String {
         postId ?? ""
     }
@@ -64,6 +65,10 @@ extension AabbaPostList {
     
     public var unwrappedUserName: String {
         userName ?? ""
+    }
+    
+    public var unwrappedLocation: String {
+        location ?? ""
     }
 }
 

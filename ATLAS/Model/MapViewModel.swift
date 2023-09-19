@@ -244,9 +244,9 @@ enum StationDataDropDown: String, CaseIterable, Identifiable {
 }
 
 enum ModerateDataDropDown: String, CaseIterable, Identifiable {
-    case item1 = "Light"
-    case item2 = "Moderate"
-    case item3 = "Severe"
+    case fight
+    case moderate
+    case severe
     
     var id: Self { self }
 }
@@ -262,14 +262,6 @@ enum RunwayDataDropDown: String, CaseIterable, Identifiable {
     case item8 = "8"
     case item9 = "9"
     case item10 = "10"
-    
-    var id: Self { self }
-}
-
-enum TimeDataDropDown: String, CaseIterable, Identifiable {
-    case item1 = "20 mins"
-    case item2 = "25 mins"
-    case item3 = "30 mins"
     
     var id: Self { self }
 }

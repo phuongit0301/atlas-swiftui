@@ -184,6 +184,7 @@ struct ModalCommentView: View {
                                     
                                     coreDataModel.save()
                                     
+                                    tfComment = ""
                                     coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
                                 }
                             }, label: {

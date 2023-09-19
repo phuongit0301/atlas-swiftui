@@ -14,9 +14,11 @@ struct MapPostView: View {
     @State private var showModal = false
     @State private var postIndex = 0
     
+    let dateFormatter = DateFormatter()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(posts.indices) {index in
+            ForEach(0..<posts.count, id: \.self) {index in
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text(posts[index].unwrappedCategory)
@@ -83,7 +85,7 @@ struct MapPostView: View {
                     
                     // Get first comment and show
                     if (posts[index].unwrappedCommentCount as NSString).integerValue > 0 {
-                        if let comments = posts[index].comments?.allObjects as? [AabbaCommentList], let firstComment = comments.first {
+                        if let firstComment = sortComment(comments: (posts[index].comments?.allObjects as? [AabbaCommentList])!).first {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
                                     Text(firstComment.unwrappedUserName)
@@ -110,6 +112,11 @@ struct MapPostView: View {
         }.sheet(isPresented: $showModal) {
             ModalCommentView(isShowing: $showModal, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
         }
+    }
+    
+    func sortComment(comments: [AabbaCommentList]) -> [AabbaCommentList] {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return (comments.sorted(by: { dateFormatter.date(from: $0.unwrappedCommentDate)?.compare(dateFormatter.date(from: $1.unwrappedCommentDate)!) == .orderedDescending }))
     }
 }
 

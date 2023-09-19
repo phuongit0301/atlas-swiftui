@@ -22,6 +22,7 @@
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="commentCount" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="postDate" optional="YES" attributeType="String"/>
         <attribute name="postId" optional="YES" attributeType="String"/>
         <attribute name="postText" optional="YES" attributeType="String"/>

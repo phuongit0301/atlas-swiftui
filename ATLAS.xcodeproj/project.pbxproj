@@ -266,8 +266,8 @@
 		3EEBE6C52AB893B800421AFF /* ModalCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6C42AB893B800421AFF /* ModalCommentView.swift */; };
 		3EEBE6D22AB93BF800421AFF /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6CE2AB93BF800421AFF /* AabbaMapList+CoreDataClass.swift */; };
 		3EEBE6D32AB93BF800421AFF /* AabbaMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6CF2AB93BF800421AFF /* AabbaMapList+CoreDataProperties.swift */; };
-		3EEBE6D42AB93BF800421AFF /* AabbaPostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6D02AB93BF800421AFF /* AabbaPostList+CoreDataClass.swift */; };
-		3EEBE6D52AB93BF800421AFF /* AabbaPostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6D12AB93BF800421AFF /* AabbaPostList+CoreDataProperties.swift */; };
+		3EEBE6D92AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6D72AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift */; };
+		3EEBE6DA2AB97A6100421AFF /* AabbaPostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6D82AB97A6100421AFF /* AabbaPostList+CoreDataProperties.swift */; };
 		3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */; };
 		3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */; };
 		3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */; };
@@ -612,8 +612,8 @@
 		3EEBE6C42AB893B800421AFF /* ModalCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalCommentView.swift; sourceTree = "<group>"; };
 		3EEBE6CE2AB93BF800421AFF /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EEBE6CF2AB93BF800421AFF /* AabbaMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3EEBE6D02AB93BF800421AFF /* AabbaPostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaPostList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EEBE6D12AB93BF800421AFF /* AabbaPostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaPostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EEBE6D72AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaPostList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EEBE6D82AB97A6100421AFF /* AabbaPostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaPostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EECB8502A6AB139009D4971 /* ButtonDateStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDateStepper.swift; sourceTree = "<group>"; };
 		3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDestinationSplit.swift; sourceTree = "<group>"; };
 		3EECB8542A6D7D6E009D4971 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
@@ -1221,8 +1221,8 @@
 			children = (
 				3EEBE6CE2AB93BF800421AFF /* AabbaMapList+CoreDataClass.swift */,
 				3EEBE6CF2AB93BF800421AFF /* AabbaMapList+CoreDataProperties.swift */,
-				3EEBE6D02AB93BF800421AFF /* AabbaPostList+CoreDataClass.swift */,
-				3EEBE6D12AB93BF800421AFF /* AabbaPostList+CoreDataProperties.swift */,
+				3EEBE6D72AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift */,
+				3EEBE6D82AB97A6100421AFF /* AabbaPostList+CoreDataProperties.swift */,
 				3EEBE6A52AB873C700421AFF /* AabbaCommentList+CoreDataClass.swift */,
 				3EEBE6A62AB873C700421AFF /* AabbaCommentList+CoreDataProperties.swift */,
 				3EEBE6762AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift */,
@@ -1670,7 +1670,6 @@
 				3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */,
 				3E4A371F2A5C361500027C61 /* HistoricalDelaysList+CoreDataClass.swift in Sources */,
 				3EEBE6572AB1B1E800421AFF /* TrafficMapList+CoreDataClass.swift in Sources */,
-				3EEBE6D42AB93BF800421AFF /* AabbaPostList+CoreDataClass.swift in Sources */,
 				3E766FA92A5F917100B11616 /* AISearchModel.swift in Sources */,
 				3E4A37742A5CD18C00027C61 /* FuelFlightLevelList+CoreDataProperties.swift in Sources */,
 				3E4E10182A63E6F60026802B /* AISearchDetailView.swift in Sources */,
@@ -1756,6 +1755,7 @@
 				3E086D822A94957E00BE00AD /* SummaryInfoList+CoreDataProperties.swift in Sources */,
 				3E086D8D2A94E4C500BE00AD /* EnrouteList+CoreDataClass.swift in Sources */,
 				3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */,
+				3EEBE6D92AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift in Sources */,
 				3EFA5F582A494158001ED6CF /* TagItem.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
@@ -1821,7 +1821,7 @@
 				3E870BB62A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift in Sources */,
 				3EE170772AA82DF8004DA27C /* CalendarSectionView.swift in Sources */,
 				3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */,
-				3EEBE6D52AB93BF800421AFF /* AabbaPostList+CoreDataProperties.swift in Sources */,
+				3EEBE6DA2AB97A6100421AFF /* AabbaPostList+CoreDataProperties.swift in Sources */,
 				C580EA282A482F8800E3E8D6 /* FlightPlanMetarTafView.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
 				3E4A368F2A570BA800027C61 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
