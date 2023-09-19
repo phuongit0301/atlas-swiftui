@@ -475,6 +475,8 @@ struct MapViewModal: View {
             }
         }.onAppear {
             updateMapOverlayViews()
+        }.onChange(of: mapIconModel.num) { _ in
+            coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
         }
     }
     

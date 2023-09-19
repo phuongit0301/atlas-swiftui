@@ -10,6 +10,7 @@ import SwiftUI
 struct ModalCommentView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
     @Binding var parentIndex: Int
@@ -185,7 +186,7 @@ struct ModalCommentView: View {
                                     coreDataModel.save()
                                     
                                     tfComment = ""
-                                    coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+                                    mapIconModel.num += 1
                                 }
                             }, label: {
                                 Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)

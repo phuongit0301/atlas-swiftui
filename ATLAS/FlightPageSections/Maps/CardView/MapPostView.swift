@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MapPostView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
+    
     let posts: [AabbaPostList]
     @Binding var parentIndex: Int
     
@@ -47,15 +50,22 @@ struct MapPostView: View {
                     Divider()
                     
                     HStack {
-                        HStack {
-                            Image("icon_arrowshape_up")
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
+                        Button(action: {
+                            posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                            coreDataModel.save()
                             
-                            Text(posts[index].unwrappedUpvoteCount)
-                                .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                .foregroundColor(.black)
-                        }
+                            mapIconModel.num += 1
+                        }, label:  {
+                            HStack {
+                                Image("icon_arrowshape_up")
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fit)
+                                
+                                Text(posts[index].unwrappedUpvoteCount)
+                                    .font(Font.custom("SF Pro", size: 13).weight(.medium))
+                                    .foregroundColor(.black)
+                            }
+                        })
                         
                         Spacer()
                         
@@ -84,7 +94,7 @@ struct MapPostView: View {
                     }
                     
                     // Get first comment and show
-                    if (posts[index].unwrappedCommentCount as NSString).integerValue > 0 {
+                    if let comments = posts[index].comments, comments.count > 0 {
                         if let firstComment = sortComment(comments: (posts[index].comments?.allObjects as? [AabbaCommentList])!).first {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
