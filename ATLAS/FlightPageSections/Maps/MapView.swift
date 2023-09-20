@@ -657,8 +657,8 @@ struct MapViewModal: View {
         
         for(index, item) in coreDataModel.dataAabbaMap.enumerated() {
             let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
-
-            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String(item.postCount), subtitle: "", index: index)
+            
+            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String((item.postCount as? NSString)!.integerValue + 1), subtitle: "", index: index)
 
             mapView.addAnnotation(annotation)
         }

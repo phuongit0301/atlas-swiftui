@@ -2,7 +2,7 @@
 //  TrafficMapList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 13/09/2023.
+//  Created by phuong phan on 20/09/2023.
 //
 //
 
@@ -16,13 +16,14 @@ extension TrafficMapList {
         return NSFetchRequest<TrafficMapList>(entityName: "TrafficMap")
     }
 
-    @NSManaged public var id: UUID?
+    @NSManaged public var baroAltitude: String?
     @NSManaged public var callsign: String?
     @NSManaged public var colour: String?
-    @NSManaged public var baroAltitude: String?
-    @NSManaged public var trueTrack: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
+    @NSManaged public var trueTrack: String?
+    @NSManaged public var aircraftType: String?
     
     public var unwrappedCallsign: String {
         callsign ?? ""
@@ -46,6 +47,10 @@ extension TrafficMapList {
     
     public var unwrappedLongitude: String {
         longitude ?? ""
+    }
+    
+    public var unwrappedaircraftType: String {
+        aircraftType ?? ""
     }
 }
 

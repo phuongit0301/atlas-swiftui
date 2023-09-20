@@ -71,7 +71,7 @@ struct AskAabbaPopoverView: View {
                             newPost.comments = NSSet(array: [AabbaCommentList]())
                             
                             if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
-                                dataExist?.postCount += 1
+                                dataExist?.postCount = "\((dataExist?.postCount as! Int) + 1)"
                                 dataExist?.posts = NSSet(array: oldPosts + [newPost])
                             }
                             

@@ -15,7 +15,7 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="postCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="postCount" optional="YES" attributeType="String"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaPost" inverseName="list" inverseEntity="AabbaPost"/>
     </entity>
     <entity name="AabbaPost" representedClassName="AabbaPostList" syncable="YES">
@@ -466,6 +466,7 @@
         <attribute name="week1" optional="YES" attributeType="Binary"/>
     </entity>
     <entity name="TrafficMap" representedClassName="TrafficMapList" syncable="YES">
+        <attribute name="aircraftType" optional="YES" attributeType="String"/>
         <attribute name="baroAltitude" optional="YES" attributeType="String"/>
         <attribute name="callsign" optional="YES" attributeType="String"/>
         <attribute name="colour" optional="YES" attributeType="String"/>

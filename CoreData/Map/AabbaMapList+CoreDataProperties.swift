@@ -2,7 +2,7 @@
 //  AabbaMapList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 19/09/2023.
+//  Created by phuong phan on 20/09/2023.
 //
 //
 
@@ -17,11 +17,15 @@ extension AabbaMapList {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var postCount: Int16
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
     @NSManaged public var name: String?
+    @NSManaged public var postCount: String?
     @NSManaged public var posts: NSSet?
+    
+    public var unwrappedPostCount: String {
+        postCount ?? ""
+    }
     
     public var unwrappedLatitude: String {
         latitude ?? ""
@@ -34,6 +38,7 @@ extension AabbaMapList {
     public var unwrappedName: String {
         name ?? ""
     }
+    
 }
 
 // MARK: Generated accessors for posts

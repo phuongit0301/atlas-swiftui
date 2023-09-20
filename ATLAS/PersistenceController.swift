@@ -186,32 +186,50 @@ class CoreDataModelState: ObservableObject {
             Task {
                 let data = await remoteService.getFlightPlanData()
                 let response = await remoteService.getFuelData()
+                let responseMap = await remoteService.getMapData()
                 
                 DispatchQueue.main.async {
                     if let waypointsData = data?.waypointsData {
                         self.initDataEnroute(waypointsData)
                     }
-                    
+
                     if let infoData = data?.infoData {
                         self.initDataSummaryInfo(infoData)
                     }
                     
                     if let routeData = data?.routeData {
                         self.initDataSummaryRoute(routeData)
-//                        self.initDataWaypoint(routeData.waypoints)
-                        let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
-                        let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
-                        let airportDataColor: [IAirportColor] = self.remoteService.load("airport_data_color.json")
-                        let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
-                        let dataAabba: [IAabbaData] = self.remoteService.load("aabba_data.json")
-                        
-                        self.initDataWaypoint(waypointData)
-                        self.initDataAirport(airportData)
-                        self.initDataAirportColor(airportDataColor)
-                        self.initDataTraffic(trafficData)
-                        self.initDataAabba(dataAabba)
+////                        self.initDataWaypoint(routeData.waypoints)
+//                        let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
+//                        let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
+//                        let airportDataColor: [IAirportColor] = self.remoteService.load("airport_data_color.json")
+//                        let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
+//                        let dataAabba: [IAabbaData] = self.remoteService.load("aabba_data.json")
+//
+//                        self.initDataWaypoint(waypointData)
+//                        self.initDataAirport(airportData)
+//                        self.initDataAirportColor(airportDataColor)
+//                        self.initDataTraffic(trafficData)
+//                        self.initDataAabba(dataAabba)
                     }
                     
+                    if let trafficData = responseMap?.traffic_data {
+                        self.initDataTraffic(trafficData)
+                    }
+                    
+                    if let aabbaData = responseMap?.aabba_data {
+                        self.initDataAabba(aabbaData)
+                    }
+                    
+                    if let waypointData = responseMap?.all_waypoints_data {
+                        self.initDataWaypoint(waypointData)
+                    }
+                    
+                    if let airportData = responseMap?.all_airports_data {
+                        self.initDataAirport(airportData)
+                        self.initDataAirportColor(airportData)
+                    }
+//
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
 
@@ -669,9 +687,9 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataWaypoint(_ data: IWaypointDataJson) {
-        if data.waypoints_data.count > 0 {
-            data.waypoints_data.forEach { item in
+    func initDataWaypoint(_ data: [IWaypointData]) {
+        if data.count > 0 {
+            data.forEach { item in
                 let newObj = WaypointMapList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
@@ -697,9 +715,9 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirport(_ data: IAirportDataJson) {
-        if data.airport_data.count > 0 {
-            data.airport_data.forEach { item in
+    func initDataAirport(_ data: [IAirportData]) {
+        if data.count > 0 {
+            data.forEach { item in
                 let newObj = AirportMapList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
@@ -724,7 +742,14 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirportColor(_ data: [IAirportColor]) {
+    func initDataAirportColor(_ data: [IAirportData]) {
+        let depAirport = "VTBS"
+        let arrAirport = "WSSS"
+        let enrAirports = ["WMKK", "WMKP"]
+        let altnAirports = ["WMKJ", "WIDD"]
+        
+        let airportInformation = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
+        
         if data.count > 0 {
             data.forEach { item in
                 let newObj = AirportMapColorList(context: service.container.viewContext)
@@ -756,6 +781,41 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func extractAirportInformation(allAirportsData: [IAirportData], depAirport: String, arrAirport: String, enrAirports: [String], altnAirports: [String]) -> [IAirportColor] {
+        var airportInfo: [[String: Any]] = []
+        
+        for airportData in allAirportsData {
+            if let airportID = airportData["airport_id"],
+               let lat = airportData["lat"],
+               let long = airportData["long"] {
+                
+                var airportEntry: [String: Any] = [
+                    "airportID": airportID,
+                    "lat": lat,
+                    "long": long,
+                    "notams": [],
+                    "metar": "",
+                    "taf": ""
+                ]
+                
+                if airportID == depAirport {
+                    airportEntry["selection"] = "Departure"
+                    airportEntry["colour"] = "blue"
+                } else if airportID == arrAirport {
+                    airportEntry["selection"] = "Arrival"
+                    airportEntry["colour"] = "blue"
+                } else if enrAirports.contains(airportID) || altnAirports.contains(airportID) {
+                    airportEntry["selection"] = "ALTN"
+                    airportEntry["colour"] = "green"
+                }
+                
+                airportInfo.append(airportEntry)
+            }
+        }
+        
+        return airportInfo
+    }
+    
     func initDataTraffic(_ data: [ITrafficData]) {
         if data.count > 0 {
             data.forEach { item in
@@ -768,6 +828,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.callsign = item.callsign
                 newObj.trueTrack = item.true_track
                 newObj.baroAltitude = item.baro_altitude
+                newObj.aircraftType = item.aircraft_type
                 
                 service.container.viewContext.performAndWait {
                     do {
@@ -791,7 +852,7 @@ class CoreDataModelState: ObservableObject {
             for item in data {
                 var posts = [AabbaPostList]()
                 
-                if item.post_count > 0 {
+                if (item.post_count as? NSString)!.integerValue > 0 {
                     for post in item.posts {
                         var comments = [AabbaCommentList]()
                         
@@ -830,7 +891,7 @@ class CoreDataModelState: ObservableObject {
                 let newObj = AabbaMapList(context: service.container.viewContext)
 
                 newObj.id = UUID()
-                newObj.postCount = Int16(item.post_count)
+                newObj.postCount = item.post_count
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name

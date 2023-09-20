@@ -568,7 +568,7 @@ struct IAabbaData: Decodable {
     var name: String
     var lat: String
     var long: String
-    var post_count: Int
+    var post_count: String
     var posts: [IAabbaPostData]
 }
 

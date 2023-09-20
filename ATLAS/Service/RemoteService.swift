@@ -135,7 +135,7 @@ class RemoteService: ObservableObject {
         return nil
     }
     
-    func getMapData() async -> IFuelDataModel?  {
+    func getMapData() async -> IMapDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -149,7 +149,7 @@ class RemoteService: ObservableObject {
                 "enrAirports": ["WMKP", "WMKK"],
                 "altnAirports": ["WMKJ", "WIDD"],
                 "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
-            ]
+            ] as [String : Any]
             
             do {
                 // Convert the request body to JSON data
@@ -163,7 +163,7 @@ class RemoteService: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
                 do {
-                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
+                    let decodedSearch = try JSONDecoder().decode(IMapDataModel.self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)
