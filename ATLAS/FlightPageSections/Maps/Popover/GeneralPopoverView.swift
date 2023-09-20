@@ -10,6 +10,7 @@ import SwiftUI
 struct GeneralPopoverView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
@@ -50,24 +51,34 @@ struct GeneralPopoverView: View {
                     .frame(height: 44)
                 
                 Button(action: {
-                    if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "General"
-                        newPost.postText = tfPost
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "General"
-                        newPost.location = selectedStation?.airportId
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
                         
-                        isShowing = false
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "General"
+                            newPost.postText = tfPost
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "General"
+                            newPost.location = selectedStation?.airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)

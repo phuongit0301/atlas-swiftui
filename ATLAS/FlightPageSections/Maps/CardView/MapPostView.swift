@@ -20,28 +20,31 @@ struct MapPostView: View {
     let dateFormatter = DateFormatter()
     
     var body: some View {
+        
+        let postSort = sortPost(posts: posts)
+        
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(0..<posts.count, id: \.self) {index in
+            ForEach(0..<postSort.count, id: \.self) {index in
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text(posts[index].unwrappedCategory)
+                        Text(postSort[index].unwrappedCategory)
                             .font(Font.custom("SF Pro", size: 11))
                             .foregroundColor(Color.white)
                     }.padding(.horizontal, 12)
                         .padding(.vertical, 4)
-                        .background(handleColor(posts[index].unwrappedCategory))
+                        .background(handleColor(postSort[index].unwrappedCategory))
                         .cornerRadius(12)
                         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
                     
-                    Text(posts[index].unwrappedPostTitle)
+                    Text(postSort[index].unwrappedPostTitle)
                         .font(Font.custom("SF Pro", size: 15))
                         .foregroundColor(.black)
                     
                     HStack {
-                        Text(posts[index].unwrappedUserName)
+                        Text(postSort[index].unwrappedUserName)
                             .font(Font.custom("SF Pro", size: 11))
                             .foregroundColor(Color.theme.azure)
-                        Text("Posted \(posts[index].unwrappedPostDate)")
+                        Text("Posted \(postSort[index].unwrappedPostDate)")
                             .font(Font.custom("SF Pro", size: 11))
                             .foregroundColor(Color.theme.arsenic.opacity(0.6))
                         
@@ -51,7 +54,7 @@ struct MapPostView: View {
                     
                     HStack {
                         Button(action: {
-                            posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                            postSort[index].upvoteCount = "\(((postSort[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
                             coreDataModel.save()
                             
                             mapIconModel.num += 1
@@ -79,7 +82,7 @@ struct MapPostView: View {
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
                                 
-                                if let comments = posts[index].comments {
+                                if let comments = postSort[index].comments {
                                     Text("\(comments.count)")
                                         .font(Font.custom("SF Pro", size: 13).weight(.medium))
                                         .foregroundColor(.black)
@@ -94,8 +97,8 @@ struct MapPostView: View {
                     }
                     
                     // Get first comment and show
-                    if let comments = posts[index].comments, comments.count > 0 {
-                        if let firstComment = sortComment(comments: (posts[index].comments?.allObjects as? [AabbaCommentList])!).first {
+                    if let comments = postSort[index].comments, comments.count > 0 {
+                        if let firstComment = sortComment(comments: (postSort[index].comments?.allObjects as? [AabbaCommentList])!).first {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
                                     Text(firstComment.unwrappedUserName)
@@ -127,6 +130,11 @@ struct MapPostView: View {
     func sortComment(comments: [AabbaCommentList]) -> [AabbaCommentList] {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return (comments.sorted(by: { dateFormatter.date(from: $0.unwrappedCommentDate)?.compare(dateFormatter.date(from: $1.unwrappedCommentDate)!) == .orderedDescending }))
+    }
+    
+    func sortPost(posts: [AabbaPostList]) -> [AabbaPostList] {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return (posts.sorted(by: { dateFormatter.date(from: $0.unwrappedPostDate)?.compare(dateFormatter.date(from: $1.unwrappedPostDate)!) == .orderedDescending }))
     }
 }
 

@@ -135,6 +135,45 @@ class RemoteService: ObservableObject {
         return nil
     }
     
+    func getMapData() async -> IFuelDataModel?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "depAirport": "VTBS",
+                "arrAirport": "WSSS",
+                "enrAirports": ["WMKP", "WMKK"],
+                "altnAirports": ["WMKJ", "WIDD"],
+                "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
+            ]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
     func updateFuelData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_update_flightPlan_data") else { fatalError("Missing URL") }
             //make request

@@ -10,6 +10,7 @@ import SwiftUI
 struct RunwayPopoverView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
@@ -53,24 +54,34 @@ struct RunwayPopoverView: View {
                 Spacer()
                 
                 Button(action: {
-                    if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "Runway condition"
-                        newPost.postText = "Dry"
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "Runway"
-                        newPost.location = selectedStation?.airportId
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
-
-                        isShowing = false
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
+                        
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Runway condition"
+                            newPost.postText = "Dry"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Runway"
+                            newPost.location = selectedStation?.airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
@@ -89,24 +100,34 @@ struct RunwayPopoverView: View {
                 Spacer()
                 
                 Button(action: {
-                    if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "Runway condition"
-                        newPost.postText = "Damp"
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "Runway"
-                        newPost.location = selectedStation?.airportId
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
-
-                        isShowing = false
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
+                        
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Runway condition"
+                            newPost.postText = "Damp"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Runway"
+                            newPost.location = selectedStation?.airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
@@ -125,24 +146,34 @@ struct RunwayPopoverView: View {
                 Spacer()
                 
                 Button(action: {
-                    if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "Runway condition"
-                        newPost.postText = "Wet"
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "Runway"
-                        newPost.location = selectedStation?.airportId
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
-
-                        isShowing = false
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
+                        
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Runway condition"
+                            newPost.postText = "Wet"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Runway"
+                            newPost.location = selectedStation?.airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
@@ -161,24 +192,35 @@ struct RunwayPopoverView: View {
                 Spacer()
                 
                 Button(action: {
-                    if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "Runway condition"
-                        newPost.postText = "Slippery"
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "Runway"
-                        newPost.location = selectedStation?.airportId
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
-
-                        isShowing = false
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
+                        
+                        if dataExist != nil {
+                            
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Runway condition"
+                            newPost.postText = "Slippery"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Runway"
+                            newPost.location = selectedStation?.airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)

@@ -10,6 +10,7 @@ import SwiftUI
 struct VisibilityPopoverView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
@@ -39,8 +40,9 @@ struct VisibilityPopoverView: View {
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
             Picker("", selection: $selectedStation) {
+                Text("Select Station").tag("")
                 ForEach(coreDataModel.dataAirportColorMap, id: \.self) {
-                    Text($0.airportId ?? "").tag($0)
+                    Text($0.airportId ?? "").tag($0 as AirportMapColorList?)
                 }
             }.pickerStyle(MenuPickerStyle())
                 .padding(.leading, -12)
@@ -57,34 +59,36 @@ struct VisibilityPopoverView: View {
                 }.pickerStyle(MenuPickerStyle())
                 
                 Button(action: {
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                    newPost.id = UUID()
-                    newPost.postId = ""
-                    newPost.userId = "abc122" // Todo: Change to user login
-                    newPost.postDate = dateFormatter.string(from: Date())
-                    newPost.postTitle = "Runway Visibility"
-                    newPost.postText = "\(selectedRunway)nm"
-                    newPost.upvoteCount = "0"
-                    newPost.commentCount = "0"
-                    newPost.category = "Visibility"
-                    newPost.location = selectedStation?.airportId
-                    newPost.postUpdated = Date()
-                    newPost.comments = NSSet(array: [AabbaCommentList]())
+                    if validate(), let airportId = selectedStation?.airportId {
+                        let dataExist = coreDataModel.findOneAabba(name: airportId)
+                        
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Runway Visibility"
+                            newPost.postText = "\(selectedRunway)nm"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Visibility"
+                            newPost.location = airportId
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
+                    }
                     
-                    let newObj = AabbaMapList(context: persistenceController.container.viewContext)
-
-                    newObj.id = UUID()
-                    newObj.postCount = 0
-                    newObj.latitude = selectedStation?.unwrappedLatitude
-                    newObj.longitude = selectedStation?.unwrappedLongitude
-                    newObj.name = selectedStation?.unwrappedAirportId
-                    newObj.posts = NSSet(array: [newPost])
-                    
-                    coreDataModel.save()
-                    isShowing = false
-                    
-                    coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
                 }).padding(.vertical, 4)
@@ -93,5 +97,13 @@ struct VisibilityPopoverView: View {
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.coralRed1, lineWidth: 0))
             }
         }.padding()
+        
+    }
+    
+    func validate() -> Bool {
+        if selectedStation != nil {
+            return true
+        }
+        return false
     }
 }

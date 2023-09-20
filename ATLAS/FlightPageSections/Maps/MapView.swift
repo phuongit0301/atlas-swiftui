@@ -478,6 +478,13 @@ struct MapViewModal: View {
         }.onChange(of: mapIconModel.num) { _ in
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
         }
+        .onChange(of: mapIconModel.numAabba) { _ in
+            coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+            updateMapOverlayViews()
+        }
+        .sheet(isPresented: $mapIconModel.showModal) {
+            MapAirportCardView().interactiveDismissDisabled(true)
+        }
     }
     
     func updateMapOverlayViews() {
@@ -700,6 +707,7 @@ struct MapView: UIViewRepresentable {
     let currentLocation: CLLocationCoordinate2D
     let mapType: MKMapType
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     func makeUIView(context: Context) -> MKMapView {
 //        let mapView = MKMapView()
@@ -717,8 +725,9 @@ struct MapView: UIViewRepresentable {
         mapView.register(CustomAabbaAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAabbaAnnotationView")
         mapView.register(CustomWaypointAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomWaypointAnnotationView")
         mapView.register(CustomAirportAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAirportAnnotationView")
+        mapView.register(CustomAirportColorAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAirportColorAnnotationView")
         mapView.delegate = context.coordinator
-        mapView.userTrackingMode = MKUserTrackingMode.follow
+//        mapView.userTrackingMode = MKUserTrackingMode.follow
         
         return mapView
     }
@@ -783,7 +792,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationLabel.layer.borderWidth = 2.0
             annotationLabel.layer.backgroundColor = UIColor.white.cgColor
             annotationLabel.layer.borderColor = UIColor.black.cgColor
-
+            
+            annotationView.centerOffset.x = -30
             annotationView.addSubview(annotationLabel)
             
             let index = (annotation as! CustomAabbaAnnotation).index ?? 0
@@ -823,7 +833,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return annotationView
         } else {
             let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
-            annotationView.canShowCallout = true
+//            annotationView.canShowCallout = true
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
@@ -832,7 +842,13 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationLabel.text = annotation.title!!
             annotationLabel.font = UIFont.systemFont(ofSize: 10)
             
+//            let customView = MapAirportCardView(coreDataModel: parent.coreDataModel, notamSection: parent.notamSection).environmentObject(CoreDataModelState())
+//
+//            let callout = MapCalloutView(rootView: AnyView(customView))
+//            let uiView = UIHostingController(rootView: customView).view
+            
             annotationView.addSubview(annotationLabel)
+//            annotationView.detailCalloutAccessoryView = callout
             
             return annotationView
         }
@@ -865,6 +881,10 @@ class Coordinator: NSObject, MKMapViewDelegate {
 //            let callout = MapCalloutView(rootView: AnyView(customView))
 ////            annotation.setValue(<#T##Any?#>, forKey: <#T##String#>)
 //            view.detailCalloutAccessoryView = callout
+        } else if view is CustomAnnotationView {
+            let annotationView = view.annotation as? CustomAnnotation
+            parent.mapIconModel.showModal = true
+            parent.mapIconModel.titleModal = annotationView?.title ?? ""
         }
 //
 //

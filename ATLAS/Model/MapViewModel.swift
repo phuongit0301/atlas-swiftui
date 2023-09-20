@@ -269,4 +269,8 @@ enum RunwayDataDropDown: String, CaseIterable, Identifiable {
 class MapIconModel: ObservableObject {
     @Published var dataWaypoint: [String] = []
     @Published var num: Int = 1 // For reload data when update or add new comment, vote
+    @Published var numAabba: Int = 1 // For reload Map when update or add new comment, vote
+    @Published var showModal: Bool = false
+    @Published var titleModal: String = ""
 }
+

@@ -814,6 +814,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.id = UUID()
                         newPost.postId = post.post_id
                         newPost.userId = post.user_id
+                        newPost.userName = post.username
                         newPost.postDate = post.post_date
                         newPost.postTitle = post.post_title
                         newPost.postText = post.post_text
@@ -3468,5 +3469,23 @@ class CoreDataModelState: ObservableObject {
             }
         }
         task.resume()
+    }
+    
+    func findOneAabba(name: String = "") -> AabbaMapList? {
+        var data: AabbaMapList?
+        
+        let request: NSFetchRequest<AabbaMapList> = AabbaMapList.fetchRequest()
+        request.predicate = NSPredicate(format: "name == %@", name)
+        
+        do {
+            let response: [AabbaMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch AISearch from Core Data.")
+        }
+        
+        return data
     }
 }

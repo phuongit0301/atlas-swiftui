@@ -10,9 +10,9 @@ import SwiftUI
 struct TurbulencePopoverView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
-    @EnvironmentObject var mapIconModel: MapIconModel
     @State var selectedWaypoint: String = ""
     
     @State var selectedModerate: ModerateDataDropDown = .fight
@@ -68,23 +68,33 @@ struct TurbulencePopoverView: View {
                 
                 Button(action: {
                     if validate() {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = ""
-                        newPost.userId = "abc122" // Todo: Change to user login
-                        newPost.postDate = dateFormatter.string(from: Date())
-                        newPost.postTitle = "Ride Report"
-                        newPost.postText = "\(selectionOutputFlight) \(selectedModerate.rawValue.capitalized)"
-                        newPost.upvoteCount = "0"
-                        newPost.commentCount = "0"
-                        newPost.category = "Turbulence"
-                        newPost.location = selectedWaypoint
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: [AabbaCommentList]())
-                        coreDataModel.save()
-
-                        isShowing = false
+                        let dataExist = coreDataModel.findOneAabba(name: selectedWaypoint)
+                        
+                        if dataExist != nil {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = ""
+                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postDate = dateFormatter.string(from: Date())
+                            newPost.postTitle = "Ride Report"
+                            newPost.postText = "\(selectionOutputFlight) \(selectedModerate.rawValue.capitalized)"
+                            newPost.upvoteCount = "0"
+                            newPost.commentCount = "0"
+                            newPost.category = "Turbulence"
+                            newPost.location = selectedWaypoint
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                            
+                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                dataExist?.postCount += 1
+                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            }
+                            
+                            coreDataModel.save()
+                            mapIconModel.numAabba += 1
+                            isShowing = false
+                        }
                     }
                 }, label: {
                     Text("Post").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)

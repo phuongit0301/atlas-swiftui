@@ -534,6 +534,7 @@ struct IAirportDataJson: Decodable {
 
 struct ITrafficData: Decodable {
     var callsign: String
+    var aircraft_type: String
     var lat: String
     var long: String
     var true_track: String
@@ -584,6 +585,13 @@ struct IAirportColor: Decodable {
     var notams: [String]
     var metar: String
     var taf: String
+}
+
+struct IMapDataModel: Decodable {
+    let traffic_data: [ITrafficData]
+    let aabba_data: [IAabbaData]
+    let all_waypoints_data: [IWaypointData]
+    let all_airports_data: [IAirportData]
 }
 
 struct IWaypoints: Decodable {

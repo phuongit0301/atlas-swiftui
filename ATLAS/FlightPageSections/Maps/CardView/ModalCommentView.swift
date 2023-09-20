@@ -76,15 +76,23 @@ struct ModalCommentView: View {
                         Divider()
                         
                         HStack {
-                            HStack {
-                                Image("icon_arrowshape_up")
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
+                            Button(action: {
+                                post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+//                                posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                coreDataModel.save()
                                 
-                                Text(post.unwrappedUpvoteCount)
-                                    .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                    .foregroundColor(.black)
-                            }
+                                mapIconModel.num += 1
+                            }, label:  {
+                                HStack {
+                                    Image("icon_arrowshape_up")
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                    
+                                    Text(post.unwrappedUpvoteCount)
+                                        .font(Font.custom("SF Pro", size: 13).weight(.medium))
+                                        .foregroundColor(.black)
+                                }
+                            })
                             
                             Spacer()
                             
@@ -131,26 +139,26 @@ struct ModalCommentView: View {
                                                 .cornerRadius(8)
                                                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.arsenic.opacity(0.36), lineWidth: 0))
                                             
-                                            HStack {
-                                                Image("icon_arrowshape_up")
-                                                    .scaledToFit()
-                                                    .aspectRatio(contentMode: .fit)
-                                                
-                                                Text(post.unwrappedUpvoteCount)
-                                                    .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                                    .foregroundColor(.black)
-                                            }
-                                            
-                                            HStack {
-                                                Image(systemName: "arrowshape.turn.up.left")
-                                                    .foregroundColor(Color.theme.azure)
-                                                    .scaledToFit()
-                                                    .aspectRatio(contentMode: .fit)
-                                                
-                                                Text("Reply")
-                                                    .font(Font.custom("SF Pro", size: 13).weight(.regular))
-                                                    .foregroundColor(.black)
-                                            }
+//                                            HStack {
+//                                                Image("icon_arrowshape_up")
+//                                                    .scaledToFit()
+//                                                    .aspectRatio(contentMode: .fit)
+//
+//                                                Text(post.unwrappedUpvoteCount)
+//                                                    .font(Font.custom("SF Pro", size: 13).weight(.medium))
+//                                                    .foregroundColor(.black)
+//                                            }
+//
+//                                            HStack {
+//                                                Image(systemName: "arrowshape.turn.up.left")
+//                                                    .foregroundColor(Color.theme.azure)
+//                                                    .scaledToFit()
+//                                                    .aspectRatio(contentMode: .fit)
+//
+//                                                Text("Reply")
+//                                                    .font(Font.custom("SF Pro", size: 13).weight(.regular))
+//                                                    .foregroundColor(.black)
+//                                            }
                                         }.padding(.bottom)
                                         
                                     }
