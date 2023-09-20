@@ -211,25 +211,25 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataAirportColor(airportDataColor)
 //                        self.initDataTraffic(trafficData)
 //                        self.initDataAabba(dataAabba)
-                    }
+//                    }
                     
                     if let trafficData = responseMap?.traffic_data {
                         self.initDataTraffic(trafficData)
                     }
-                    
+
                     if let aabbaData = responseMap?.aabba_data {
                         self.initDataAabba(aabbaData)
                     }
-                    
+
                     if let waypointData = responseMap?.all_waypoints_data {
                         self.initDataWaypoint(waypointData)
                     }
-                    
+
                     if let airportData = responseMap?.all_airports_data {
                         self.initDataAirport(airportData)
                         self.initDataAirportColor(airportData)
                     }
-//
+
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
 
@@ -748,10 +748,10 @@ class CoreDataModelState: ObservableObject {
         let enrAirports = ["WMKK", "WMKP"]
         let altnAirports = ["WMKJ", "WIDD"]
         
-        let airportInformation = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
+        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
         
-        if data.count > 0 {
-            data.forEach { item in
+        if airportInformation.count > 0 {
+            airportInformation.forEach { item in
                 let newObj = AirportMapColorList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
@@ -782,34 +782,21 @@ class CoreDataModelState: ObservableObject {
     }
     
     func extractAirportInformation(allAirportsData: [IAirportData], depAirport: String, arrAirport: String, enrAirports: [String], altnAirports: [String]) -> [IAirportColor] {
-        var airportInfo: [[String: Any]] = []
+        var airportInfo: [IAirportColor] = []
         
         for airportData in allAirportsData {
-            if let airportID = airportData["airport_id"],
-               let lat = airportData["lat"],
-               let long = airportData["long"] {
-                
-                var airportEntry: [String: Any] = [
-                    "airportID": airportID,
-                    "lat": lat,
-                    "long": long,
-                    "notams": [],
-                    "metar": "",
-                    "taf": ""
-                ]
-                
-                if airportID == depAirport {
-                    airportEntry["selection"] = "Departure"
-                    airportEntry["colour"] = "blue"
-                } else if airportID == arrAirport {
-                    airportEntry["selection"] = "Arrival"
-                    airportEntry["colour"] = "blue"
-                } else if enrAirports.contains(airportID) || altnAirports.contains(airportID) {
-                    airportEntry["selection"] = "ALTN"
-                    airportEntry["colour"] = "green"
-                }
-                
-                airportInfo.append(airportEntry)
+            if airportData.airport_id == depAirport {
+                airportInfo.append(
+                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Departure", colour: "blue", notams: [], metar: "", taf: "")
+                )
+            } else if airportData.airport_id == arrAirport {
+                airportInfo.append(
+                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Arrival", colour: "blue", notams: [], metar: "", taf: "")
+                )
+            } else if enrAirports.contains(airportData.airport_id) || altnAirports.contains(airportData.airport_id) {
+                airportInfo.append(
+                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "ALTN", colour: "green", notams: [], metar: "", taf: "")
+                )
             }
         }
         
