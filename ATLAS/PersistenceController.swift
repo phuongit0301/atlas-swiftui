@@ -211,7 +211,7 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataAirportColor(airportDataColor)
 //                        self.initDataTraffic(trafficData)
 //                        self.initDataAabba(dataAabba)
-//                    }
+                    }
                     
                     if let trafficData = responseMap?.traffic_data {
                         self.initDataTraffic(trafficData)

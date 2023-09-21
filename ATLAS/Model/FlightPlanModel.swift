@@ -532,7 +532,7 @@ struct IAirportDataJson: Decodable {
     var airport_data: [IAirportData]
 }
 
-struct ITrafficData: Decodable {
+struct ITrafficData: Codable {
     var callsign: String
     var aircraft_type: String
     var lat: String
@@ -542,7 +542,7 @@ struct ITrafficData: Decodable {
     var colour: String
 }
 
-struct IAabbaPostCommentData: Decodable {
+struct IAabbaPostCommentData: Codable {
     var comment_id: String
     var post_id: String
     var user_id: String
@@ -551,7 +551,7 @@ struct IAabbaPostCommentData: Decodable {
     var username: String
 }
 
-struct IAabbaPostData: Decodable {
+struct IAabbaPostData: Codable {
     var post_id: String
     var user_id: String
     var post_date: String
@@ -564,7 +564,7 @@ struct IAabbaPostData: Decodable {
     var comments: [IAabbaPostCommentData]
 }
 
-struct IAabbaData: Decodable {
+struct IAabbaData: Codable {
     var name: String
     var lat: String
     var long: String
@@ -572,9 +572,14 @@ struct IAabbaData: Decodable {
     var posts: [IAabbaPostData]
 }
 
-struct IAabbaDataJson: Decodable {
+struct IAabbaDataJson: Codable {
     var aabba_data: [String: [IAabbaData]]
 }
+
+struct IAabbaDataJsonRequest: Codable {
+    var aabba_data: [IAabbaData]
+}
+
 
 struct IAirportColor: Decodable {
     var airportID: String

@@ -24,6 +24,7 @@ struct ATLASApp: App {
     @AppStorage("uid") var userID: String = ""
     
     let persistenceController = PersistenceController.shared
+    let remoteServiceController = RemoteService.shared
     
     @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
@@ -76,6 +77,7 @@ struct ATLASApp: App {
                 .environmentObject(fpModelSplitState)
                 .environmentObject(coreDataModel)
                 .environmentObject(persistenceController)
+                .environmentObject(remoteServiceController)
                 .environmentObject(refModel)
                 .environmentObject(aiSearchModel)
                 .environmentObject(calendarModel)

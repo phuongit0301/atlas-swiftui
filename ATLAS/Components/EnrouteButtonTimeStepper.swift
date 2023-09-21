@@ -15,7 +15,7 @@ struct EnrouteButtonTimeStepper: View {
     var body: some View {
         Button(action: { onToggle(index) }, label: {
             HStack {
-                Text("\(value)").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                Text("\(value)").font(.system(size: 20, weight: .regular)).foregroundColor(Color.theme.azure)
                     .padding(.trailing, 8)
                 
                 Spacer()
@@ -24,7 +24,7 @@ struct EnrouteButtonTimeStepper: View {
                     Image(systemName: "chevron.up").foregroundColor(Color.theme.azure)
                     Image(systemName: "chevron.down").foregroundColor(Color.theme.azure)
                 }
-            }
+            }.contentShape(Rectangle())
         }).buttonStyle(.plain)
     }
 }
