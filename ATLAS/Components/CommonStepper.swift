@@ -14,16 +14,10 @@ struct CommonStepper: View {
     
     var body: some View {
         Button(action: { onToggle() }, label: {
-            HStack {
+            HStack(spacing: 4) {
                 Text("\(value)\(suffix ?? "")").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                    .padding(.trailing, 16)
                 
-                Spacer()
-                
-                VStack {
-                    Image(systemName: "chevron.up").foregroundColor(Color.theme.azure)
-                    Image(systemName: "chevron.down").foregroundColor(Color.theme.azure)
-                }
+                Image(systemName: "chevron.up.chevron.down").foregroundColor(Color.theme.azure).font(.system(size: 13))
             }
         }).buttonStyle(.plain)
     }

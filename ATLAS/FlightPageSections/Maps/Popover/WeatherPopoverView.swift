@@ -75,33 +75,29 @@ struct WeatherPopoverView: View {
                                 let postCount = "\((dataExist?.postCount as? NSString)!.integerValue + 1)"
                                 let postDate = dateFormatter.string(from: Date())
                                 
-//                                let payloadPosts: IAabbaPostData = [
-//                                    "post_id": UUID().uuidString,
-//                                    "user_id": "abc123",
-//                                    "post_date": postDate,
-//                                    "post_title": "Weather Observation",
-//                                    "post_text": "\(selectionOutputFlight) \(tfPost)",
-//                                    "upvote_count": "0",
-//                                    "comment_count": "0",
-//                                    "category": "Weather",
-//                                    "comments": [String](),
-//                                    "username": "Adil_Accumulus",
-//                                    "location": selectedWaypoint
-//                                ]
+                                let payloadPosts: [String: Any] = [
+                                    "post_id": UUID().uuidString,
+                                    "user_id": "abc123",
+                                    "post_date": postDate,
+                                    "post_title": "Weather Observation",
+                                    "post_text": "\(selectionOutputFlight) \(tfPost)",
+                                    "upvote_count": "0",
+                                    "comment_count": "0",
+                                    "category": "Weather",
+                                    "comments": [String](),
+                                    "username": "Adil_Accumulus",
+                                    "location": selectedWaypoint
+                                ]
                                 
-                                let payloadPosts: IAabbaPostData = IAabbaPostData(post_id: UUID().uuidString, user_id: UUID().uuidString, post_date: postDate, post_title: "Weather Observation", post_text: "\(selectionOutputFlight) \(tfPost)", upvote_count: "0", comment_count: "0", category: "Weather", username: "Adil_Accumulus", comments: [IAabbaPostCommentData]())
+                                let payloadPost: [String: Any] = [
+                                    "name": dataExist?.unwrappedName ?? "",
+                                    "lat": dataExist?.unwrappedLatitude ?? "",
+                                    "long": dataExist?.unwrappedLongitude ?? "",
+                                    "post_count": postCount,
+                                    "posts": [payloadPosts]
+                                ]
                                 
-//                                let payloadPost: [IAabbaData] = [
-//                                    "name": dataExist?.unwrappedName ?? "",
-//                                    "lat": dataExist?.unwrappedLatitude ?? "",
-//                                    "long": dataExist?.unwrappedLongitude ?? "",
-//                                    "post_count": postCount,
-//                                    "posts": [payloadPosts]
-//                                ]
-                                
-                                let payloadPost = IAabbaData(name: dataExist?.unwrappedName ?? "", lat: dataExist?.unwrappedLatitude ?? "", long: dataExist?.unwrappedLongitude ?? "", post_count: postCount, posts: [payloadPosts])
-                                
-                                let payload: IAabbaDataJsonRequest = IAabbaDataJsonRequest(aabba_data: [payloadPost])
+                                let payload = ["aabba_data": [payloadPost]]
                                 
                                 await remoteService.updateMapData(payload, completion: { success in
                                     if(success) {

@@ -205,23 +205,17 @@ class RemoteService: ObservableObject {
             }
     }
     
-    func updateMapData(_ parameters: IAabbaDataJsonRequest, completion: @escaping (_ success: Bool) -> Void) async  {
+    func updateMapData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_update_map_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
-            
-        guard let postData = try? JSONEncoder().encode(parameters) else {
-            print("Error: Trying to convert model to JSON data")
-            return
-        }
-//            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+
+            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
 //            let convertedString = String(data: postData!, encoding: .utf8)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             request.httpBody = postData
        
-            
-        
         print("parameters----------->\(postData)")
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {

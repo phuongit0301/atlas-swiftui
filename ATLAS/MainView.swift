@@ -31,7 +31,7 @@ struct MainView: View {
                                     .toolbar(.hidden, for: .tabBar)
                                     .ignoresSafeArea()
                             case MainNavigationEnumeration.LogbookSectionView:
-                                RecencySectionView()
+                                LogbookSectionView()
                                     .tag(MainNavigationEnumeration.LogbookSectionView)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .toolbar(.hidden, for: .tabBar)

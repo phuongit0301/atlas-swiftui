@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct LogbookSectionView: View {
+    @State var selectedTab: LogbookEnumeration = ILogbookTabs.first?.screenName ?? LogbookEnumeration.OverviewScreen
+        
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 0) {
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    switch selectedTab {
+                        case .OverviewScreen:
+                            OverviewSubSectionView()
+                        case .EntriesScreen:
+                            EntriesSubSectionView()
+                        case .LimitationsScreen:
+                            LimitationsSubSectionView()
+                    }
+                    
+                    Spacer()
+                    
+                    LogbookSegmented(preselected: $selectedTab, options: ILogbookTabs, geoWidth: proxy.size.width)
+                }.frame(maxHeight: .infinity)
+                    
+            }
+        }
     }
 }
 
