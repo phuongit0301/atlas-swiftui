@@ -20,7 +20,18 @@ extension RecencyList {
     @NSManaged public var recencyType: String?
     @NSManaged public var expiredDate: String?
     @NSManaged public var requirement: String?
-
+    
+    public var unwrappedRecencyType: String {
+        recencyType ?? ""
+    }
+    
+    public var unwrappedExpiredDate: String {
+        expiredDate ?? ""
+    }
+    
+    public var unwrappedRequirement: String {
+        requirement ?? ""
+    }
 }
 
 extension RecencyList : Identifiable {

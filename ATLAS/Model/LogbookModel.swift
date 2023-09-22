@@ -85,6 +85,59 @@ struct ILogbookJson: Decodable {
     var limitation_data: [ILogbookLimitationData]
 }
 
+struct IRecencyData: Decodable {
+    var id: String
+    var recency_type: String
+    var recency: String
+}
+
+struct IVisaData: Decodable {
+    var id: String
+    var visa: String
+    var expiry: String
+}
+
+struct IExpiryData: Decodable {
+    var id: String
+    var medical: String
+    var sep: String
+    var base_check: String
+    var line_check: String
+    var instructor_rating: String
+    var examiner_rating: String
+    var passport: String
+}
+
+
+struct IRecencyJson: Decodable {
+    var recency_data: [IRecencyData]
+    var expiry_data: [[String: String]]
+    var visa_data: [IVisaData]
+}
+
+struct LogbookEntryTotal {
+    let aircraftType: String
+    let pic: String
+    let picUs: String
+    let p1: String
+    let p2: String
+    let instr: String
+    let exam: String
+    let date: Date
+}
+
+struct ILobookTotalTimeData: Decodable {
+    var aircraftType: String
+    var pic: Int
+    var picUUs: Int
+    var p1: Int
+    var p2: Int
+    var instr: Int
+    var exam: Int
+    var date: Date
+    var totalTime: Int
+}
+
 class LogbookDropDown: ObservableObject {
     @Published var dataDayNight: [String] = ["Day and Night", "Day", "Night"]
 }

@@ -19,7 +19,14 @@ extension RecencyExpiryList {
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var expiredDate: String?
-
+    
+    public var unwrappedName: String {
+        name ?? ""
+    }
+    
+    public var unwrappedExpiredDate: String {
+        expiredDate ?? ""
+    }
 }
 
 extension RecencyExpiryList : Identifiable {

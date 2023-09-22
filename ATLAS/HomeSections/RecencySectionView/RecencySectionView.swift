@@ -15,40 +15,12 @@ struct IDataExpiringSoon: Identifiable, Hashable {
     var remark: String
 }
 
-struct IDataRecency: Identifiable, Hashable {
-    var id = UUID()
-    var type: String
-    var model: String
-    var expireDate: String
-    var requirement: String
-}
-
-struct IDataDocument: Identifiable, Hashable {
-    var id = UUID()
-    var document: String
-    var expireDate: String
-    var requirement: String
-    var remak: String
-}
-
 let MOCK_DATA_EXPIRING_SOON = [
     IDataExpiringSoon(id: UUID(), item: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "XXXXXXXXXXXXXXXXXXXXX", remark: "XXXXXXXXXXXXXXXXXXXXX"),
 ]
 
-let MOCK_DATA_RECENCY = [
-    IDataRecency(id: UUID(), type: "Landing", model: "B737", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days"),
-    IDataRecency(id: UUID(), type: "Landing", model: "B737", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days"),
-]
-
-
-let MOCK_DATA_DOCUMENT = [
-    IDataDocument(id: UUID(), document: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days", remak: "XXXXXXXXXXXXXXXXXXXXX"),
-    IDataDocument(id: UUID(), document: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days", remak: "XXXXXXXXXXXXXXXXXXXXX"),
-    IDataDocument(id: UUID(), document: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days", remak: "XXXXXXXXXXXXXXXXXXXXX"),
-    IDataDocument(id: UUID(), document: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "3 landings in 90 days", remak: "XXXXXXXXXXXXXXXXXXXXX"),
-]
-
 struct RecencySectionView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var recencySection = RecencySection()
     
     @State var isCollapse = false
@@ -89,21 +61,21 @@ struct RecencySectionView: View {
                                 
                                 Spacer()
                                 
-                                HStack {
-                                    Picker("", selection: $selectedPicker) {
-                                        Text("Show All").tag("")
-                                        ForEach(recencySection.dataItemDropDown, id: \.self) {
-                                            Text($0).tag($0)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                    
-                                    Picker("", selection: $selectedPicker) {
-                                        Text("Show All").tag("")
-                                        ForEach(recencySection.dataExpiringDropDown, id: \.self) {
-                                            Text($0).tag($0)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                }
+//                                HStack {
+//                                    Picker("", selection: $selectedPicker) {
+//                                        Text("Show All").tag("")
+//                                        ForEach(recencySection.dataItemDropDown, id: \.self) {
+//                                            Text($0).tag($0)
+//                                        }
+//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+//
+//                                    Picker("", selection: $selectedPicker) {
+//                                        Text("Show All").tag("")
+//                                        ForEach(recencySection.dataExpiringDropDown, id: \.self) {
+//                                            Text($0).tag($0)
+//                                        }
+//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+//                                }
                             }.contentShape(Rectangle())
                                 .padding()
                             
@@ -190,14 +162,14 @@ struct RecencySectionView: View {
                                 
                                 Spacer()
                                 
-                                HStack {
-                                    Picker("", selection: $selectedExpirySoon) {
-                                        Text("Expiry (Soonest)").tag("")
-                                        ForEach(recencySection.dataExpirySoonDropDown, id: \.self) {
-                                            Text($0).tag($0)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                }
+//                                HStack {
+//                                    Picker("", selection: $selectedExpirySoon) {
+//                                        Text("Expiry (Soonest)").tag("")
+//                                        ForEach(recencySection.dataExpirySoonDropDown, id: \.self) {
+//                                            Text($0).tag($0)
+//                                        }
+//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+//                                }
                             }.contentShape(Rectangle())
                                 .padding()
                             
@@ -228,24 +200,24 @@ struct RecencySectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(MOCK_DATA_RECENCY.indices, id: \.self) {index in
+                                        ForEach(coreDataModel.dataRecency.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(MOCK_DATA_RECENCY[index].type)
+                                                    Text(coreDataModel.dataRecency[index].unwrappedRecencyType)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_RECENCY[index].model)
+                                                    Text("B737")
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_RECENCY[index].expireDate)
+                                                    Text(coreDataModel.dataRecency[index].unwrappedExpiredDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
                                                     HStack(alignment: .top) {
                                                         VStack(alignment: .leading, spacing: 16) {
-                                                            Text(MOCK_DATA_RECENCY[index].requirement)
+                                                            Text(coreDataModel.dataRecency[index].unwrappedRequirement)
                                                                 .font(.system(size: 17, weight: .regular))
                                                                 .frame(alignment: .leading)
                                                             Text("2/3 landings in 49/90 days")
@@ -260,7 +232,7 @@ struct RecencySectionView: View {
                                                 
                                             }
                                             
-                                            if index + 1 < MOCK_DATA_RECENCY.count {
+                                            if index + 1 < coreDataModel.dataRecency.count {
                                                 Divider().padding(.horizontal, -16)
                                             }
                                         }
@@ -301,12 +273,12 @@ struct RecencySectionView: View {
                                 }.contentShape(Rectangle())
                                 
                                 HStack(spacing: 16) {
-                                    Picker("", selection: $selectedExpirySoon) {
-                                        Text("Expiry (Soonest)").tag("")
-                                        ForEach(recencySection.dataRecencyDropDown, id: \.self) {
-                                            Text($0).tag($0)
-                                        }
-                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+//                                    Picker("", selection: $selectedExpirySoon) {
+//                                        Text("Expiry (Soonest)").tag("")
+//                                        ForEach(recencySection.dataRecencyDropDown, id: \.self) {
+//                                            Text($0).tag($0)
+//                                        }
+//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
                                     
                                     Button(action: {
                                         // ToDo
@@ -354,22 +326,22 @@ struct RecencySectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(MOCK_DATA_DOCUMENT.indices, id: \.self) {index in
+                                        ForEach(coreDataModel.dataRecencyExpiry.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(MOCK_DATA_DOCUMENT[index].document)
+                                                    Text(coreDataModel.dataRecencyExpiry[index].unwrappedName)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_DOCUMENT[index].expireDate)
+                                                    Text(coreDataModel.dataRecencyExpiry[index].unwrappedExpiredDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_DOCUMENT[index].requirement)
+                                                    Text("XXXXXXXXXXXXXXXXXXXXX")
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_DOCUMENT[index].requirement)
+                                                    Text("XXXXXXXXXXXXXXXXXXXXX")
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
@@ -377,7 +349,7 @@ struct RecencySectionView: View {
                                                 
                                             }
                                             
-                                            if index + 1 < MOCK_DATA_DOCUMENT.count {
+                                            if index + 1 < coreDataModel.dataRecencyExpiry.count {
                                                 Divider().padding(.horizontal, -16)
                                             }
                                         }
