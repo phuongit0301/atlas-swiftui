@@ -43,13 +43,16 @@ struct OverviewSubSectionView: View {
     @Environment(\.calendar) var calendar
     @Environment(\.timeZone) var timeZone
     
+    @ObservedObject var logbookDropDown = LogbookDropDown()
     let formatter = DateFormatter()
     @State var isCollapse = false
     @State private var selectedDates: Set<DateComponents> = []
     @State private var selectedDatesFormatted: Set<DateComponents> = []
     
     @State private var selectedDate: String = "Selected Date"
-    @State private var formattedDates: String = "Day and Night"
+    @State private var selectedStartDate: String = ""
+    @State private var selectedEndDate: String = ""
+    @State private var selectedDayNight: String = ""
     @State private var selectedAircraft = ""
     @State private var isShowModal: Bool = false
     @State private var isShowDateModal: Bool = false
@@ -164,7 +167,11 @@ struct OverviewSubSectionView: View {
                                         }
                                     }.pickerStyle(MenuPickerStyle()).fixedSize()
                                     
-                                    CommonStepper(onToggle: onToggle, value: $formattedDates, suffix: "").fixedSize()
+                                    Picker("", selection: $selectedDayNight) {
+                                        ForEach(logbookDropDown.dataDayNight, id: \.self) {
+                                            Text($0).tag($0)
+                                        }
+                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
                                 }
                             }.contentShape(Rectangle())
                                 .padding()
@@ -324,19 +331,11 @@ struct OverviewSubSectionView: View {
                 MultiDatePicker("Dates Available", selection: $selectedDates, in: .now...)
             }
             .sheet(isPresented: $isShowDateModal) {
-                ModalDateRangeView(isShowing: $isShowDateModal, selectedDate: $selectedDate)
+                ModalDateRangeView(isShowing: $isShowDateModal, selectedDate: $selectedDate, selectedStartDate: $selectedStartDate, selectedEndDate: $selectedEndDate)
             }
-            .onChange(of: selectedDates, perform: { _ in
-                if (selectedDates.count == 2) {
-                    selectedDatesFormatted = selectedDates
-                    let temp = Array(selectedDates)
-                    let fromDate = Calendar.current.date(from: selectedDates.first!)
-                    let toDate = Calendar.current.date(from: temp[1])
-                    selectedDates = datesRange(from: fromDate!, to: toDate!)
-                    
-                    formatSelectedDates()
-                }
-            })
+            .onAppear {
+                selectedDayNight = logbookDropDown.dataDayNight.first ?? ""
+            }
         }// End GeometryReader
     }
     
@@ -363,18 +362,6 @@ struct OverviewSubSectionView: View {
         }
 
         return array
-    }
-    
-    private func formatSelectedDates() {
-        formatter.dateFormat = "dd-MM-YY"
-        let dates = selectedDatesFormatted
-            .compactMap { date in
-                Calendar.current.date(from: date)
-            }
-            .map { date in
-                formatter.string(from: date)
-            }
-        formattedDates = dates.joined(separator: " to ")
     }
     
     func fontColor(_ color: String) -> Color {

@@ -24,6 +24,7 @@ let MOCK_DATA_LIMITATION = [
 ]
 
 struct LimitationsSubSectionView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State var isCollapse = false
     
@@ -72,24 +73,25 @@ struct LimitationsSubSectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(MOCK_DATA_LIMITATION.indices, id: \.self) {index in
+                                        ForEach(coreDataModel.dataLogbookLimitation.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(MOCK_DATA_LIMITATION[index].name)
+                                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedLimitation)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_LIMITATION[index].period)
+                                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedLimitationPeriod)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_LIMITATION[index].status)
+                                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedLimitationStatus)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
-                                                }.foregroundColor(fontColor(MOCK_DATA_LIMITATION[index].color))
+                                                }.foregroundColor(Color.black)
+//                                                .foregroundColor(fontColor(coreDataModel.dataLogbookLimitation[index].color))
                                             }
                                             
-                                            if index + 1 < MOCK_DATA_LIMITATION.count {
+                                            if index + 1 < coreDataModel.dataLogbookLimitation.count {
                                                 Divider().padding(.horizontal, -16)
                                             }
                                         }

@@ -10,10 +10,12 @@ import SwiftUI
 struct WindPopoverView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
+    @State var isUpdating = false
     
     let dateFormatter = DateFormatter()
     
@@ -105,32 +107,70 @@ struct WindPopoverView: View {
                 
                 Button(action: {
                     if validate(), let airportId = selectedStation?.airportId {
-                        let dataExist = coreDataModel.findOneAabba(name: airportId)
-                        
-                        if dataExist != nil {
-                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            let newPost = AabbaPostList(context: persistenceController.container.viewContext)
-                            newPost.id = UUID()
-                            newPost.postId = ""
-                            newPost.userId = "abc122" // Todo: Change to user login
-                            newPost.postDate = dateFormatter.string(from: Date())
-                            newPost.postTitle = "Runway wind"
-                            newPost.postText = "Tailwinds"
-                            newPost.upvoteCount = "0"
-                            newPost.commentCount = "0"
-                            newPost.category = "Wind"
-                            newPost.location = selectedStation?.airportId
-                            newPost.postUpdated = Date()
-                            newPost.comments = NSSet(array: [AabbaCommentList]())
+                        Task {
+                            let dataExist = coreDataModel.findOneAabba(name: airportId)
                             
-                            if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
-                                dataExist?.postCount = "\((dataExist?.postCount as! Int) + 1)"
-                                dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                            if dataExist != nil {
+                                isUpdating = true
+                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                
+                                let postCount = "\((dataExist?.postCount as? NSString)!.integerValue + 1)"
+                                let postDate = dateFormatter.string(from: Date())
+                                
+                                let payloadPosts: [String: Any] = [
+                                    "post_id": UUID().uuidString,
+                                    "user_id": "abc123",
+                                    "post_date": postDate,
+                                    "post_title": "Runway wind",
+                                    "post_text": "Tailwinds",
+                                    "upvote_count": "0",
+                                    "comment_count": "0",
+                                    "category": "Wind",
+                                    "comments": [String](),
+                                    "username": "Nasrun360",
+                                    "location": dataExist?.unwrappedName ?? ""
+                                ]
+                                
+                                let payloadPost: [String: Any] = [
+                                    "name": dataExist?.unwrappedName ?? "",
+                                    "lat": dataExist?.unwrappedLatitude ?? "",
+                                    "long": dataExist?.unwrappedLongitude ?? "",
+                                    "post_count": postCount,
+                                    "posts": [payloadPosts]
+                                ]
+                                
+                                let payload = ["aabba_data": [payloadPost]]
+                                
+                                await remoteService.updateMapData(payload, completion: { success in
+                                    if(success) {
+                                        
+                                        let newPost = AabbaPostList(context: persistenceController.container.viewContext)
+                                        newPost.id = UUID()
+                                        newPost.postId = ""
+                                        newPost.userId = "abc122" // Todo: Change to user login
+                                        newPost.postDate = postDate
+                                        newPost.postTitle = "Runway wind"
+                                        newPost.postText = "Tailwinds"
+                                        newPost.upvoteCount = "0"
+                                        newPost.commentCount = "0"
+                                        newPost.category = "Wind"
+                                        newPost.location = selectedStation?.airportId
+                                        newPost.postUpdated = Date()
+                                        newPost.comments = NSSet(array: [AabbaCommentList]())
+                                        
+                                        if let oldPosts = dataExist?.posts?.allObjects as? [AabbaPostList] {
+                                            dataExist?.postCount = postCount
+                                            dataExist?.posts = NSSet(array: oldPosts + [newPost])
+                                        }
+                                        
+                                        coreDataModel.save()
+                                        mapIconModel.numAabba += 1
+                                        isShowing = false
+                                    }
+                                    
+                                    isUpdating = false
+                                })
                             }
-                            
-                            coreDataModel.save()
-                            mapIconModel.numAabba += 1
-                            isShowing = false
                         }
                     }
                 }, label: {

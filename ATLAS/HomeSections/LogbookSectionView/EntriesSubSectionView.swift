@@ -7,37 +7,15 @@
 
 import SwiftUI
 
-struct IDataSub: Identifiable, Hashable {
-    var id = UUID()
-    var date: String
-    var aircraftType: String
-    var aircraft: String
-    var dep: String
-    var dest: String
-    var picDay: String
-    var picUsDay: String
-    var p1Day: String
-    var p2Day: String
-    var picNight: String
-    var picUsNight: String
-    var p1Night: String
-    var p2Night: String
-    var comments: String
-    var signature: String
-}
-
-let MOCK_DATA_SUB = [
-    IDataSub(id: UUID(), date: "DD/MM/YY", aircraftType: "XXXX-XXXXXXXX", aircraft: "XXXXXXXX", dep: "XXX", dest: "XXX", picDay: "XX:XX:XX", picUsDay: "XX:XX:XX", p1Day: "XX:XX:XX", p2Day: "XX:XX:XX", picNight: "XX:XX:XX", picUsNight: "XX:XX:XX", p1Night: "XX:XX:XX", p2Night: "XX:XX:XX", comments: "XXXXXXXXXXXXXXXXXXXXXXXXX", signature: "Not Signed"),
-    IDataSub(id: UUID(), date: "DD/MM/YY", aircraftType: "XXXX-XXXXXXXX", aircraft: "XXXXXXXX", dep: "XXX", dest: "XXX", picDay: "XX:XX:XX", picUsDay: "XX:XX:XX", p1Day: "XX:XX:XX", p2Day: "XX:XX:XX", picNight: "XX:XX:XX", picUsNight: "XX:XX:XX", p1Night: "XX:XX:XX", p2Night: "XX:XX:XX", comments: "XXXXXXXXXXXXXXXXXXXXXXXXX", signature: "Signed"),
-    IDataSub(id: UUID(), date: "DD/MM/YY", aircraftType: "XXXX-XXXXXXXX", aircraft: "XXXXXXXX", dep: "XXX", dest: "XXX", picDay: "XX:XX:XX", picUsDay: "XX:XX:XX", p1Day: "XX:XX:XX", p2Day: "XX:XX:XX", picNight: "XX:XX:XX", picUsNight: "XX:XX:XX", p1Night: "XX:XX:XX", p2Night: "XX:XX:XX", comments: "XXXXXXXXXXXXXXXXXXXXXXXXX", signature: "Signed"),
-    IDataSub(id: UUID(), date: "DD/MM/YY", aircraftType: "XXXX-XXXXXXXX", aircraft: "XXXXXXXX", dep: "XXX", dest: "XXX", picDay: "XX:XX:XX", picUsDay: "XX:XX:XX", p1Day: "XX:XX:XX", p2Day: "XX:XX:XX", picNight: "XX:XX:XX", picUsNight: "XX:XX:XX", p1Night: "XX:XX:XX", p2Night: "XX:XX:XX", comments: "XXXXXXXXXXXXXXXXXXXXXXXXX", signature: "Signed"),
-]
-
 struct EntriesSubSectionView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State var isCollapse = false
     @State private var isShowDateModal: Bool = false
     @State private var selectedDate: String = "Selected Date"
+    @State private var selectedStartDate: String = ""
+    @State private var selectedEndDate: String = ""
+    @State private var dataLogbookEntries = [LogbookEntriesList]()
     
     var body: some View {
         GeometryReader { proxy in
@@ -159,60 +137,60 @@ struct EntriesSubSectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(MOCK_DATA_SUB.indices, id: \.self) {index in
+                                        ForEach(dataLogbookEntries.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(MOCK_DATA_SUB[index].date)
+                                                    Text(dataLogbookEntries[index].unwrappedDate)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].aircraftType)
+                                                    Text(dataLogbookEntries[index].unwrappedAircraftType)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].aircraft)
+                                                    Text(dataLogbookEntries[index].unwrappedAircraft)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].dep)
+                                                    Text(dataLogbookEntries[index].unwrappedDeparture)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].dest)
+                                                    Text(dataLogbookEntries[index].unwrappedDestination)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].picDay)
+                                                    Text(dataLogbookEntries[index].unwrappedPicDay)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                 }.frame(height: 44, alignment: .center)
                                                 
                                                 Group {
-                                                    Text(MOCK_DATA_SUB[index].picUsDay)
+                                                    Text(dataLogbookEntries[index].unwrappedPicUUsDay)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].p1Day)
+                                                    Text(dataLogbookEntries[index].unwrappedP1Day)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].p2Day)
+                                                    Text(dataLogbookEntries[index].unwrappedP2Day)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].picNight)
+                                                    Text(dataLogbookEntries[index].unwrappedPicNight)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].picUsNight)
+                                                    Text(dataLogbookEntries[index].unwrappedPicUUsNight)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].p1Night)
+                                                    Text(dataLogbookEntries[index].unwrappedP1Night)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].p2Night)
+                                                    Text(dataLogbookEntries[index].unwrappedP2Night)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                 }.frame(height: 44, alignment: .center)
@@ -220,19 +198,19 @@ struct EntriesSubSectionView: View {
                                             
                                             GridRow {
                                                 Group {
-                                                    Text(MOCK_DATA_SUB[index].comments)
+                                                    Text(dataLogbookEntries[index].unwrappedComments)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                         .gridCellColumns(7)
                                                     
-                                                    Text(MOCK_DATA_SUB[index].signature)
+                                                    Text(dataLogbookEntries[index].unwrappedSignature)
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                         .gridCellColumns(6)
                                                 }.frame(height: 44, alignment: .center)
                                             }
                                             
-                                            if index + 1 < MOCK_DATA_SUB.count {
+                                            if index + 1 < dataLogbookEntries.count {
                                                 Divider().padding(.horizontal, -16)
                                             }
                                         }
@@ -248,7 +226,13 @@ struct EntriesSubSectionView: View {
                     } // End Section
                 }
             }.sheet(isPresented: $isShowDateModal) {
-                ModalDateRangeView(isShowing: $isShowDateModal, selectedDate: $selectedDate)
+                ModalDateRangeView(isShowing: $isShowDateModal, selectedDate: $selectedDate, selectedStartDate: $selectedStartDate, selectedEndDate: $selectedEndDate)
+            }
+            .onAppear {
+                dataLogbookEntries = coreDataModel.dataLogbookEntries
+            }
+            .onChange(of: selectedDate) {_ in
+                dataLogbookEntries = extractEntriesInRange(coreDataModel.dataLogbookEntries, selectedStartDate, selectedEndDate)
             }
         }
     }
@@ -256,6 +240,28 @@ struct EntriesSubSectionView: View {
     func onToggleDate() {
         self.isShowDateModal.toggle()
     }
+}
+
+func extractEntriesInRange(_ entries: [LogbookEntriesList], _ startDate: String, _ endDate: String) -> [LogbookEntriesList] {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    guard let startDate = dateFormatter.date(from: startDate),
+          let endDate = dateFormatter.date(from: endDate) else {
+        return []
+    }
+    
+    var filteredEntries: [LogbookEntriesList] = []
+    
+    for entry in entries {
+        if let dateString = entry.date,
+           let entryDate = dateFormatter.date(from: dateString),
+           entryDate >= startDate && entryDate <= endDate {
+            filteredEntries.append(entry)
+        }
+    }
+    
+    return filteredEntries
 }
 
 struct EntriesSubSectionView_Previews: PreviewProvider {

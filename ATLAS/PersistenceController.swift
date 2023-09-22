@@ -164,8 +164,11 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAirportMap: [AirportMapList] = []
     @Published var dataAirportColorMap: [AirportMapColorList] = []
     @Published var dataTrafficMap: [TrafficMapList] = []
-//    @Published var dataAabbaMap: [AabbaMapList] = []
-    @Published var dataAabbaMap = [AabbaMapList]() //Todo: Change to Core data
+    @Published var dataAabbaMap = [AabbaMapList]()
+    
+    // For Logbook
+    @Published var dataLogbookLimitation = [LogbookLimitationList]()
+    @Published var dataLogbookEntries = [LogbookEntriesList]()
     
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
@@ -220,7 +223,13 @@ class CoreDataModelState: ObservableObject {
                     if let aabbaData = responseMap?.aabba_data {
                         self.initDataAabba(aabbaData)
                     }
-
+                    
+                    // Init Logbook
+                    let dataLogbook: ILogbookJson = self.remoteService.load("logbook_data.json")
+                    
+                    self.initDataLogbookEntries(dataLogbook.logbook_data)
+                    self.initDataLogbookLimitation(dataLogbook.limitation_data)
+                    
                     if let waypointData = responseMap?.all_waypoints_data {
                         self.initDataWaypoint(waypointData)
                     }
@@ -325,6 +334,9 @@ class CoreDataModelState: ObservableObject {
             self.dataAirportColorMap = self.readDataAirportMapColorList()
             self.dataTrafficMap = self.readDataTrafficMapList()
             self.dataAabbaMap = self.readDataAabbaMapList()
+            
+            self.dataLogbookEntries = self.readDataLogbookEntries()
+            self.dataLogbookLimitation = self.readDataLogbookLimitation()
 //            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
@@ -898,6 +910,79 @@ class CoreDataModelState: ObservableObject {
             }
 
             self.dataAabbaMap = readDataAabbaMapList()
+        }
+    }
+    
+    func initDataLogbookEntries(_ data: [ILogbookEntriesData]) {
+        if data.count > 0 {
+            data.forEach { item in
+                let newObj = LogbookEntriesList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.logId = item.log_id
+                newObj.date = item.date
+                newObj.aircraftCategory = item.aircraft_category
+                newObj.aircraftType = item.aircraft_type
+                newObj.aircraft = item.aircraft
+                newObj.departure = item.departure
+                newObj.destination = item.destination
+                newObj.picDay = item.pic_day
+                newObj.picUUsDay = item.pic_u_us_day
+                newObj.p1Day = item.p1_day
+                newObj.p2Day = item.p2_day
+                newObj.picNight = item.pic_night
+                newObj.picUUsNight = item.pic_u_us_night
+                newObj.p1Night = item.p1_night
+                newObj.p2Night = item.p2_night
+                newObj.instr = item.instr
+                newObj.exam = item.exam
+                newObj.comments = item.comments
+                newObj.signature = item.signature
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data logbook entries successfully")
+                    } catch {
+                        print("Failed to logbook entries save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+            self.dataLogbookEntries = readDataLogbookEntries()
+        }
+    }
+    
+    func initDataLogbookLimitation(_ data: [ILogbookLimitationData]) {
+        if data.count > 0 {
+            data.forEach { item in
+                let newObj = LogbookLimitationList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.remoteId = item.id
+                newObj.limitationType = item.limitation_type
+                newObj.limitation = item.limitation
+                newObj.limitationDays = item.limitation_days
+                newObj.limitationPeriod = item.limitation_period
+                newObj.limitationStatus = item.limitation_status
+
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data logbook limitation successfully")
+                    } catch {
+                        print("Failed to logbook limitation save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+            
+            self.dataLogbookLimitation = readDataLogbookLimitation()
         }
     }
     
@@ -2210,85 +2295,38 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-//    func prepareDataForWaypointMap() {
-//        var pointAnnotation = [CustomAnnotation]()
-//        var locationCoordinate = [CLLocationCoordinate2D]()
-//
-//        for item in self.dataWaypointMap {
-////            let annotation = MKPointAnnotation()
-////            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-////            annotation.title = item.name
-////            annotation.coordinate = coord
-////            annotationView.image = UIImage(systemName: "triangle.inset.filled")
-//
-//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-//
-//            let annotation = CustomAnnotation(coordinate: coord, title: item.name, subtitle: "", image: UIImage(imageLiteralResourceName: "icon_profile"))
-//
-//            pointAnnotation.append(annotation)
-//            locationCoordinate.append(coord)
-//        }
-//
-//        self.lineCoordinates = locationCoordinate
-//        self.pointsOfInterest = pointAnnotation
-//    }
+    func readDataLogbookEntries() -> [LogbookEntriesList] {
+        var data: [LogbookEntriesList] = []
+        
+        let request: NSFetchRequest<LogbookEntriesList> = LogbookEntriesList.fetchRequest()
+        do {
+            let response: [LogbookEntriesList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Logbook Entries from Core Data.")
+        }
+        
+        return data
+    }
     
-//    func prepareDataForAirportMap() {
-//        var pointAnnotation = [MKPointAnnotation]()
-//        var locationCoordinate = [CLLocationCoordinate2D]()
-//
-//        for item in self.dataWaypointMap {
-//            let annotation = MKPointAnnotation()
-//            let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-//            annotation.title = item.name
-//            annotation.coordinate = coord
-//
-//            pointAnnotation.append(annotation)
-//            locationCoordinate.append(coord)
-//        }
-//
-//        self.lineCoordinates = locationCoordinate
-//        self.pointsOfInterest = pointAnnotation
-//    }
-//
-//    func checkAndSyncDataFuel() async {
-//        print("Sync")
-//        await remoteService.getFuelData(completion: { response in
-//            print("Sync=====\(response)")
-//            DispatchQueue.main.async {
-////                if let historicalDelays = response?.historicalDelays {
-////                    self.initHistoricalDelays(historicalDelays)
-////                }
-//
-//                if let projDelays = response?.projDelays {
-//                    self.initProjDelays(projDelays)
-//                }
-//
-////                if let taxi = response?.taxi {
-////                    self.initProjTaxi(taxi)
-////                }
-////
-////                if let trackMiles = response?.trackMiles {
-////                    self.initTrackMiles(trackMiles)
-////                }
-////
-////                if let enrWX = response?.enrWX {
-////                    self.initEnrWX(enrWX)
-////                }
-////
-////                if let flightLevel = response?.flightLevel {
-////                    self.initFlightLevel(flightLevel)
-////                }
-////
-////                if let reciprocalRwy = response?.reciprocalRwy {
-////                    self.initReciprocalRwy(reciprocalRwy)
-////                }
-//            }
-//        })
-//
-//
-//    }
-    
+    func readDataLogbookLimitation() -> [LogbookLimitationList] {
+        var data: [LogbookLimitationList] = []
+        
+        let request: NSFetchRequest<LogbookLimitationList> = LogbookLimitationList.fetchRequest()
+        do {
+            let response: [LogbookLimitationList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Logbook Limitation from Core Data.")
+        }
+        
+        return data
+    }
+
     func readHistoricalDelays() {
         do {
             let request: NSFetchRequest<HistoricalDelaysList> = HistoricalDelaysList.fetchRequest()

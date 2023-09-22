@@ -327,6 +327,37 @@
         <attribute name="weather" optional="YES" attributeType="String"/>
         <relationship name="delaysRef" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoricalDelays" inverseName="delays" inverseEntity="HistoricalDelays"/>
     </entity>
+    <entity name="LogbookEntries" representedClassName="LogbookEntriesList" syncable="YES">
+        <attribute name="aircraft" optional="YES" attributeType="String"/>
+        <attribute name="aircraftCategory" optional="YES" attributeType="String"/>
+        <attribute name="aircraftType" optional="YES" attributeType="String"/>
+        <attribute name="comments" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="departure" optional="YES" attributeType="String"/>
+        <attribute name="destination" optional="YES" attributeType="String"/>
+        <attribute name="exam" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="instr" optional="YES" attributeType="String"/>
+        <attribute name="logId" optional="YES" attributeType="String"/>
+        <attribute name="p1Day" optional="YES" attributeType="String"/>
+        <attribute name="p1Night" optional="YES" attributeType="String"/>
+        <attribute name="p2Day" optional="YES" attributeType="String"/>
+        <attribute name="p2Night" optional="YES" attributeType="String"/>
+        <attribute name="picDay" optional="YES" attributeType="String"/>
+        <attribute name="picNight" optional="YES" attributeType="String"/>
+        <attribute name="picUUsDay" optional="YES" attributeType="String"/>
+        <attribute name="picUUsNight" optional="YES" attributeType="String"/>
+        <attribute name="signature" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LogbookLimitation" representedClassName="LogbookLimitationList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="limitation" optional="YES" attributeType="String"/>
+        <attribute name="limitationDays" optional="YES" attributeType="String"/>
+        <attribute name="limitationPeriod" optional="YES" attributeType="String"/>
+        <attribute name="limitationStatus" optional="YES" attributeType="String"/>
+        <attribute name="limitationType" optional="YES" attributeType="String"/>
+        <attribute name="remoteId" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>
         <attribute name="arrMetar" optional="YES" attributeType="String"/>
@@ -414,6 +445,17 @@
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="String"/>
         <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
+    </entity>
+    <entity name="Recency" representedClassName="RecencyList" syncable="YES">
+        <attribute name="expiredDate" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="recencyType" optional="YES" attributeType="String"/>
+        <attribute name="requirement" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="RecencyExpiry" representedClassName="RecencyExpiryList" syncable="YES">
+        <attribute name="expiredDate" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>

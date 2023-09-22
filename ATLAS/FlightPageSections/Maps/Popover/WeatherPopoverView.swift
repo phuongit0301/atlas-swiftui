@@ -85,8 +85,8 @@ struct WeatherPopoverView: View {
                                     "comment_count": "0",
                                     "category": "Weather",
                                     "comments": [String](),
-                                    "username": "Adil_Accumulus",
-                                    "location": selectedWaypoint
+                                    "username": "Nasrun360",
+                                    "location": dataExist?.unwrappedName ?? ""
                                 ]
                                 
                                 let payloadPost: [String: Any] = [
