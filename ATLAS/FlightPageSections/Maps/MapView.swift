@@ -46,6 +46,7 @@ struct MapViewModal: View {
     @State private var showPopoverHazard = false
     @State private var showPopoverGeneral = false
     @State private var showPopoverAskAABBA = false
+    @State private var isLoading = true
     
     //Variable for verify data exists in Route Direction or not
     @State private var routeDatas = [SRoute]()
@@ -62,7 +63,8 @@ struct MapViewModal: View {
                         dataWaypointMap: coreDataModel.dataWaypointMap,
                         dataAabbaMap: coreDataModel.dataAabbaMap,
                         currentLocation: locationViewModel.currentLocation,
-                        mapType: mapType
+                        mapType: mapType,
+                        isLoading: isLoading
                     ).overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
                         .cornerRadius(8)
                     
@@ -482,6 +484,12 @@ struct MapViewModal: View {
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
             updateMapOverlayViews()
         }
+        .onChange(of: isLoading) {newValue in
+            if !newValue {
+                mapView.removeOverlays(mapView.overlays)
+                if selectedWeather { addOverlay() }
+            }
+        }
         .sheet(isPresented: $mapIconModel.showModal) {
             MapAirportCardView().interactiveDismissDisabled(true)
         }
@@ -706,6 +714,7 @@ struct MapView: UIViewRepresentable {
     let dataAabbaMap: [AabbaMapList]
     let currentLocation: CLLocationCoordinate2D
     let mapType: MKMapType
+    var isLoading: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
@@ -817,9 +826,9 @@ class Coordinator: NSObject, MKMapViewDelegate {
             
             annotationView.addSubview(annotationLabel)
             return annotationView
-        }  else if annotation is CustomAirportAnnotation {
-            let annotationView = CustomAirportAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportAnnotationView")
-            annotationView.canShowCallout = false
+        }  else if annotation is CustomAirportColorAnnotation {
+            let annotationView = CustomAirportColorAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportAnnotationView")
+            annotationView.canShowCallout = true
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
@@ -832,8 +841,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
             
             return annotationView
         } else {
-            let annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotationView")
-//            annotationView.canShowCallout = true
+            let annotationView = CustomAirportAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportAnnotationView")
+            annotationView.canShowCallout = false
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))
@@ -881,8 +890,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
 //            let callout = MapCalloutView(rootView: AnyView(customView))
 ////            annotation.setValue(<#T##Any?#>, forKey: <#T##String#>)
 //            view.detailCalloutAccessoryView = callout
-        } else if view is CustomAnnotationView {
-            let annotationView = view.annotation as? CustomAnnotation
+        } else if view is CustomAirportColorAnnotationView {
+            let annotationView = view.annotation as? CustomAirportColorAnnotation
             parent.mapIconModel.showModal = true
             parent.mapIconModel.titleModal = annotationView?.title ?? ""
         }
@@ -925,5 +934,11 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return circleView
         }
         return MKOverlayRenderer()
+    }
+    
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.parent.isLoading = false
+        }
     }
 }

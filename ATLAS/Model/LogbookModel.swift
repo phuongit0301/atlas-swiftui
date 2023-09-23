@@ -138,6 +138,17 @@ struct ILobookTotalTimeData: Decodable {
     var totalTime: Int
 }
 
+struct ILobookTotalTimeDataResponse: Decodable {
+    var aircraftType: String
+    var pic: String
+    var picUUs: String
+    var p1: String
+    var p2: String
+    var instr: String
+    var exam: String
+    var totalTime: String
+}
+
 class LogbookDropDown: ObservableObject {
     @Published var dataDayNight: [String] = ["Day and Night", "Day", "Night"]
 }

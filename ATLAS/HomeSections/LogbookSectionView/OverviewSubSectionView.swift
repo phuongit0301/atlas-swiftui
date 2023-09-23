@@ -57,8 +57,9 @@ struct OverviewSubSectionView: View {
     @State private var isShowModal: Bool = false
     @State private var isShowDateModal: Bool = false
     
-    @State private var dataTable = [ILobookTotalTimeData]()
+    @State private var dataTable = [ILobookTotalTimeDataResponse]()
     @State private var dataTotalTime = [String: [String: Int]]()
+    @State private var dataLogbookEntries = [String]()
     
     @State private var isLoading = true
     @State private var firstLoading = true
@@ -126,7 +127,7 @@ struct OverviewSubSectionView: View {
                                                     .frame(alignment: .leading)
                                             }
                                             
-                                            Divider()
+                                            Divider().padding(.horizontal, -16)
                                             
                                             ForEach(MOCK_DATA.indices, id: \.self) {index in
                                                 GridRow {
@@ -171,8 +172,8 @@ struct OverviewSubSectionView: View {
                                         
                                         Picker("", selection: $selectedAircraft) {
                                             Text("All Aircraft").tag("")
-                                            ForEach(AircraftDataDropDown.allCases, id: \.self) {
-                                                Text($0.rawValue).tag($0)
+                                            ForEach(dataLogbookEntries, id: \.self) {
+                                                Text($0).tag($0)
                                             }
                                         }.pickerStyle(MenuPickerStyle()).fixedSize()
                                         
@@ -237,43 +238,43 @@ struct OverviewSubSectionView: View {
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["pic"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["pic"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["picUs"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["picUs"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["p1"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p1"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["p2"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p2"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["instr"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["instr"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\(dataTotalTime["total"]!["exam"] ?? 0)")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["exam"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
-                                                
-                                                Text("\((dataTotalTime["total"]!["p1"] ?? 0) + (dataTotalTime["total"]!["p2"] ?? 0))")
+
+                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p1"]! + dataTotalTime["total"]!["p2"]!))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
                                             }
-                                            
+
                                             Divider().padding(.horizontal, -16)
                                             
                                             ForEach(dataTable.indices, id: \.self) {index in
@@ -345,10 +346,17 @@ struct OverviewSubSectionView: View {
             .onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 selectedDayNight = logbookDropDown.dataDayNight.first ?? ""
-
+                
+                for row in coreDataModel.dataLogbookEntries {
+                    if !dataLogbookEntries.contains(row.unwrappedAircraftType) {
+                        dataLogbookEntries.append(row.unwrappedAircraftType)
+                    }
+                }
+                
                 let (earliestDate, latestDate) = findEarliestAndLatestDates(logbookEntries: coreDataModel.dataLogbookEntries)
                 if let earliestDate = earliestDate, let latestDate = latestDate {
-                    let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: coreDataModel.dataLogbookEntries, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
+                    let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
+                    let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
                     
                     selectedStartDate = dateFormatter.string(from: earliestDate)
                     selectedEndDate = dateFormatter.string(from: latestDate)
@@ -360,21 +368,35 @@ struct OverviewSubSectionView: View {
             }.onChange(of: selectedDate) {newValue in
                 if !firstLoading {
                     dateFormatter.dateFormat = "yyyy-MM-dd"
-                    
+
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: coreDataModel.dataLogbookEntries, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
+                        let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
-                    
-                   
+
+
                 }
             }.onChange(of: selectedDayNight) {newValue in
                 if !firstLoading {
                     dateFormatter.dateFormat = "yyyy-MM-dd"
-                    
+
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: coreDataModel.dataLogbookEntries, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue)
+                        let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue)
+                        self.dataTable = dataTable
+                        self.dataTotalTime = dataTotalTime
+                    }
+                }
+            }
+            .onChange(of: selectedAircraft) {newValue in
+                if !firstLoading {
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+                    if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
+                        let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, newValue)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -408,9 +430,28 @@ struct OverviewSubSectionView: View {
         return (earliestDate , latestDate)
     }
     
-    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String) -> ([ILobookTotalTimeData], [String: [String: Int]]) {
+    func filterDataByAircraftType(_ data: [LogbookEntriesList], _ selectedAircraft: String) -> [LogbookEntriesList] {
+        if selectedAircraft == "" {
+            return data
+        } else {
+            var arr = [LogbookEntriesList]()
+            
+            for row in coreDataModel.dataLogbookEntries {
+                if row.unwrappedAircraftType == selectedAircraft {
+                    arr.append(row)
+                }
+            }
+            
+            return arr
+        }
+        
+    }
+    
+    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String) -> ([ILobookTotalTimeDataResponse], [String: [String: Int]]) {
         let dateFormatter = DateFormatter()
+        let dateFormatter1 = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter1.dateFormat = "HH:mm:ss"
 
         var filteredEntries = [ILobookTotalTimeData]()
 
@@ -418,14 +459,22 @@ struct OverviewSubSectionView: View {
             if let dateString = entry.date, let entryDate = dateFormatter.date(from: dateString),
                entryDate >= startDate && entryDate <= endDate {
 
+//                let aircraftType = entry.unwrappedAircraftType
+//                let pic = parseTime(entry.unwrappedPicDay) + parseTime(entry.unwrappedPicNight)
+//                let picUs = parseTime(entry.unwrappedPicUUsDay) + parseTime(entry.unwrappedPicUUsNight)
+//                let p1 = parseTime(entry.unwrappedP1Day) + parseTime(entry.unwrappedP1Night)
+//                let p2 = parseTime(entry.unwrappedP2Day) + parseTime(entry.unwrappedP2Night)
+//                let instr = parseTime(entry.unwrappedInstr)
+//                let exam = parseTime(entry.unwrappedExam)
+
                 let aircraftType = entry.unwrappedAircraftType
-                let pic = parseTime(entry.unwrappedPicDay) + parseTime(entry.unwrappedPicNight)
-                let picUs = parseTime(entry.unwrappedPicUUsDay) + parseTime(entry.unwrappedPicUUsNight)
-                let p1 = parseTime(entry.unwrappedP1Day) + parseTime(entry.unwrappedP1Night)
-                let p2 = parseTime(entry.unwrappedP2Day) + parseTime(entry.unwrappedP2Night)
+                let pic = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
+                let picUs = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "picUUs")
+                let p1 = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "p1")
+                let p2 = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "p2")
                 let instr = parseTime(entry.unwrappedInstr)
                 let exam = parseTime(entry.unwrappedExam)
-
+                
                 // Apply day/night filter
                 if dayNightFilter == "Day" && (pic + picUs + p1 + p2) == 0 {
                     continue
@@ -440,18 +489,38 @@ struct OverviewSubSectionView: View {
         }
         
         var aircraftTypeTotals: [String: [String: Int]] = [:]
+        var rowTotals: [String: [String: Int]] = [:]
         
         for entry in filteredEntries {
-            if var totals = aircraftTypeTotals["total"] {
+            if var totals = aircraftTypeTotals[entry.aircraftType] {
                 totals["pic"] = (totals["pic"] ?? 0) + entry.pic
                 totals["picUs"] = (totals["picUs"] ?? 0) + entry.picUUs
                 totals["p1"] = (totals["p1"] ?? 0) + entry.p1
                 totals["p2"] = (totals["p2"] ?? 0) + entry.p2
                 totals["instr"] = (totals["instr"] ?? 0) + entry.instr
                 totals["exam"] = (totals["exam"] ?? 0) + entry.exam
-                aircraftTypeTotals["total"] = totals
+                aircraftTypeTotals[entry.aircraftType] = totals
             } else {
-                aircraftTypeTotals["total"] = [
+                aircraftTypeTotals[entry.aircraftType] = [
+                    "pic": entry.pic,
+                    "picUs": entry.picUUs,
+                    "p1": entry.p1,
+                    "p2": entry.p2,
+                    "instr": entry.instr,
+                    "exam": entry.exam
+                ]
+            }
+            
+            if var totals = rowTotals["total"] {
+                totals["pic"] = (totals["pic"] ?? 0) + entry.pic
+                totals["picUs"] = (totals["picUs"] ?? 0) + entry.picUUs
+                totals["p1"] = (totals["p1"] ?? 0) + entry.p1
+                totals["p2"] = (totals["p2"] ?? 0) + entry.p2
+                totals["instr"] = (totals["instr"] ?? 0) + entry.instr
+                totals["exam"] = (totals["exam"] ?? 0) + entry.exam
+                rowTotals["total"] = totals
+            } else {
+                rowTotals["total"] = [
                     "pic": entry.pic,
                     "picUs": entry.picUUs,
                     "p1": entry.p1,
@@ -462,8 +531,33 @@ struct OverviewSubSectionView: View {
             }
         }
         
+        var tableData: [ILobookTotalTimeDataResponse] = []
+        
+        for (aircraftType, totals) in aircraftTypeTotals {
+            let totalPic = seconds2Timestamp(totals["pic"]!)
+            let totalPicUs = seconds2Timestamp(totals["picUs"]!)
+            let totalP1 = seconds2Timestamp(totals["p1"]!)
+            let totalP2 = seconds2Timestamp(totals["p2"]!)
+            let totalInstr = seconds2Timestamp(totals["instr"]!)
+            let totalExam = seconds2Timestamp(totals["exam"]!)
+            let totalP1P2 = seconds2Timestamp(totals["p1"]! + totals["p2"]!)
+            
+            let tableRow = ILobookTotalTimeDataResponse(aircraftType: aircraftType, pic: totalPic, picUUs: totalPicUs, p1: totalP1, p2: totalP2, instr: totalInstr, exam: totalExam, totalTime: totalP1P2)
+
+            tableData.append(tableRow)
+        }
+        
         isLoading = false
-        return (filteredEntries, aircraftTypeTotals)
+        return (tableData, rowTotals)
+    }
+    
+    func seconds2Timestamp(_ intSeconds: Int) -> String {
+       let mins:Int = (intSeconds % 3600) / 60
+       let hours:Int = intSeconds / 3600
+       let secs:Int = intSeconds % 60
+
+       let strTimestamp: String = ((hours<10) ? "0" : "") + String(hours) + ":" + ((mins<10) ? "0" : "") + String(mins) + ":" + ((secs<10) ? "0" : "") + String(secs)
+       return strTimestamp
     }
 
     func parseTime(_ timeString: String?) -> Int {
@@ -511,6 +605,32 @@ struct OverviewSubSectionView: View {
 
         return array
     }
+    
+    func calculateTotalTime(_ entry: LogbookEntriesList, dayNightFilter: String, timeKey: String) -> Int {
+        var dayTime = parseTime(entry.unwrappedPicDay)
+        var nightTime = parseTime(entry.unwrappedPicNight)
+        
+        if timeKey == "picUUs" {
+            dayTime = parseTime(entry.unwrappedPicUUsDay)
+            nightTime = parseTime(entry.unwrappedPicUUsNight)
+        } else if timeKey == "p1" {
+            dayTime = parseTime(entry.unwrappedP1Day)
+            nightTime = parseTime(entry.unwrappedP1Night)
+        } else if timeKey == "p2" {
+            dayTime = parseTime(entry.unwrappedP2Day)
+            nightTime = parseTime(entry.unwrappedP2Night)
+        }
+        
+        switch dayNightFilter {
+            case "Day":
+                return dayTime
+            case "Night":
+                return nightTime
+            default:
+                return dayTime + nightTime
+            }
+    }
+
     
     func fontColor(_ color: String) -> Color {
         if color == "red" {
