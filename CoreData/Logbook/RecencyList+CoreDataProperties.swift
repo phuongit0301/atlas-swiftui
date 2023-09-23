@@ -2,7 +2,7 @@
 //  RecencyList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 22/09/2023.
+//  Created by phuong phan on 23/09/2023.
 //
 //
 
@@ -17,20 +17,25 @@ extension RecencyList {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var recencyType: String?
-    @NSManaged public var expiredDate: String?
+    @NSManaged public var type: String?
+    @NSManaged public var limit: String?
     @NSManaged public var requirement: String?
+    @NSManaged public var text: String?
     
-    public var unwrappedRecencyType: String {
-        recencyType ?? ""
+    public var unwrappedType: String {
+        type ?? ""
     }
     
-    public var unwrappedExpiredDate: String {
-        expiredDate ?? ""
+    public var unwrappedLimit: String {
+        limit ?? ""
     }
     
     public var unwrappedRequirement: String {
         requirement ?? ""
+    }
+    
+    public var unwrappedText: String {
+        text ?? ""
     }
 }
 

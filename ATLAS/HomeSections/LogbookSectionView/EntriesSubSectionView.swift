@@ -32,16 +32,16 @@ struct EntriesSubSectionView: View {
                                 HStack {
                                     CommonStepper(onToggle: onToggleDate, value: $selectedDate, suffix: "").fixedSize()
                                     
-                                    Button(action: {
-                                        //Todo
-                                    }, label: {
-                                        Text("Extract").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
-                                    }).padding(.vertical, 11)
-                                        .padding(.horizontal)
-                                        .background(Color.theme.azure)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
-                                        .cornerRadius(8)
-                                        .buttonStyle(PlainButtonStyle())
+//                                    Button(action: {
+//                                        //Todo
+//                                    }, label: {
+//                                        Text("Extract").font(.system(size: 15, weight: .regular)).foregroundColor(Color.white)
+//                                    }).padding(.vertical, 11)
+//                                        .padding(.horizontal)
+//                                        .background(Color.theme.azure)
+//                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
+//                                        .cornerRadius(8)
+//                                        .buttonStyle(PlainButtonStyle())
                                 }
                             }.contentShape(Rectangle())
                                 .padding()

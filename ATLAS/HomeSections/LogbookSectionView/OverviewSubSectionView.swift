@@ -97,13 +97,13 @@ struct OverviewSubSectionView: View {
                                     
                                     Spacer()
                                     
-                                    Button(action: {
-                                        // ToDo
-                                    }, label: {
-                                        Text("See All")
-                                            .font(.system(size: 17, weight: .regular)).textCase(nil)
-                                            .foregroundColor(Color.theme.azure)
-                                    }).buttonStyle(PlainButtonStyle())
+//                                    Button(action: {
+//                                        // ToDo
+//                                    }, label: {
+//                                        Text("See All")
+//                                            .font(.system(size: 17, weight: .regular)).textCase(nil)
+//                                            .foregroundColor(Color.theme.azure)
+//                                    }).buttonStyle(PlainButtonStyle())
                                 }.contentShape(Rectangle())
                                     .padding()
                                 
@@ -239,37 +239,37 @@ struct OverviewSubSectionView: View {
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["pic"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["pic"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["picUs"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["picUs"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p1"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["p1"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p2"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["p2"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["instr"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["instr"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["exam"]!))
+                                                Text(seconds2Timestamp(dataTotalTime["total"]?["exam"] ?? 0))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
 
-                                                Text(seconds2Timestamp(dataTotalTime["total"]!["p1"]! + dataTotalTime["total"]!["p2"]!))
+                                                Text(seconds2Timestamp((dataTotalTime["total"]?["p1"] ?? 0) + (dataTotalTime["total"]?["p2"] ?? 0)))
                                                     .font(.system(size: 17, weight: .semibold))
                                                     .foregroundColor(Color.black)
                                                     .frame(alignment: .leading)
@@ -476,11 +476,11 @@ struct OverviewSubSectionView: View {
                 let exam = parseTime(entry.unwrappedExam)
                 
                 // Apply day/night filter
-                if dayNightFilter == "Day" && (pic + picUs + p1 + p2) == 0 {
-                    continue
-                } else if dayNightFilter == "Night" && (pic + picUs + p1 + p2) == 0 {
-                    continue
-                }
+//                if dayNightFilter == "Day" && (pic + picUs + p1 + p2) == 0 {
+//                    continue
+//                } else if dayNightFilter == "Night" && (pic + picUs + p1 + p2) == 0 {
+//                    continue
+//                }
                 
                 let logbookEntry = ILobookTotalTimeData(aircraftType: aircraftType, pic: pic, picUUs: picUs, p1: p1, p2: p2, instr: instr, exam: exam, date: entryDate, totalTime: p1 + p2)
                 

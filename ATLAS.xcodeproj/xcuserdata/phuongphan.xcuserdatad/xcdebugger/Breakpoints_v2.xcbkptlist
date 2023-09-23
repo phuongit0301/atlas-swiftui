@@ -5411,8 +5411,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3726"
-            endingLineNumber = "3726"
+            startingLineNumber = "3611"
+            endingLineNumber = "3611"
             landmarkName = "readAISearch(target:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8934,6 +8934,86 @@
                   offsetFromSymbolStart = "124">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA1C8FA8-FD63-4B5C-BE42-4046C26829B5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/HomeSections/LogbookSectionView/OverviewSubSectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "prepareTableData(logbookEntries:startDate:endDate:dayNightFilter:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BA1C8FA8-FD63-4B5C-BE42-4046C26829B5 - f3afd154e9a545b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.OverviewSubSectionView.prepareTableData(logbookEntries: Swift.Array&lt;ATLAS.LogbookEntriesList&gt;, startDate: Foundation.Date, endDate: Foundation.Date, dayNightFilter: Swift.String) -&gt; (Swift.Array&lt;ATLAS.ILobookTotalTimeDataResponse&gt;, Swift.Dictionary&lt;Swift.String, Swift.Dictionary&lt;Swift.String, Swift.Int&gt;&gt;)"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/HomeSections/LogbookSectionView/OverviewSubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "453"
+                  endingLineNumber = "453"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "BA1C8FA8-FD63-4B5C-BE42-4046C26829B5 - f3afd154e9a545b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.OverviewSubSectionView.prepareTableData(logbookEntries: Swift.Array&lt;ATLAS.LogbookEntriesList&gt;, startDate: Foundation.Date, endDate: Foundation.Date, dayNightFilter: Swift.String) -&gt; (Swift.Array&lt;ATLAS.ILobookTotalTimeDataResponse&gt;, Swift.Dictionary&lt;Swift.String, Swift.Dictionary&lt;Swift.String, Swift.Int&gt;&gt;)"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/HomeSections/LogbookSectionView/OverviewSubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "453"
+                  endingLineNumber = "453"
+                  offsetFromSymbolStart = "316">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85CC8C12-0BCF-4245-B53F-1B4D37040806"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/HomeSections/LogbookSectionView/OverviewSubSectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
+            landmarkName = "prepareTableData(logbookEntries:startDate:endDate:dayNightFilter:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D3D01E95-775E-4EDE-8540-73D647794A10"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/HomeSections/RecencySectionView/RecencySectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
+            landmarkName = "calculateRecencyPercentage(_:_:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

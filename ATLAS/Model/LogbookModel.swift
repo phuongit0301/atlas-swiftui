@@ -88,7 +88,9 @@ struct ILogbookJson: Decodable {
 struct IRecencyData: Decodable {
     var id: String
     var recency_type: String
-    var recency: String
+    var recency_requirement: String
+    var recency_limit: String
+    var recency_text: String
 }
 
 struct IVisaData: Decodable {
@@ -111,8 +113,7 @@ struct IExpiryData: Decodable {
 
 struct IRecencyJson: Decodable {
     var recency_data: [IRecencyData]
-    var expiry_data: [[String: String]]
-    var visa_data: [IVisaData]
+    var expiry_data: [String: String]
 }
 
 struct LogbookEntryTotal {

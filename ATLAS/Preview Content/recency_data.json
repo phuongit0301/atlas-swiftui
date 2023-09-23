@@ -2,52 +2,29 @@
    "recency_data":[
       {
          "id":"2911a6e9-5b18-4f7f-a9a1-99669cb28ee9",
-         "recency_type":"landing - 1 in 35",
-         "recency":"2023-09-30"
-      },
-      {
-         "id":"8a84375d-836d-4b29-ba18-7a0666ca6b1d",
-         "recency_type":"landing - 3 in 90",
-         "recency":"2023-10-30"
+         "recency_type":"landing",
+         "recency_requirement":"1",
+         "recency_limit":"35",
+         "recency_text":"1 in 35 days"
       },
       {
          "id":"b1727c52-7be1-4a8d-a738-7a4a9c57ecf6",
-         "recency_type":"landing - 5 in 50",
-         "recency":"2023-11-30"
+         "recency_type":"landing",
+         "recency_requirement":"1",
+         "recency_limit":"35",
+         "recency_text":"1 in 35 days"
       }
    ],
-   "expiry_data":[
-      {
-         "id":"6e8456d1-6c70-4a3d-8c82-09e8398b091e",
-         "medical":"2024-01-29",
-         "sep":"2024-01-29",
-         "base_check":"2024-01-29",
-         "line_check":"2024-01-29",
-         "instructor_rating":"2024-01-29",
-         "examiner_rating":"2024-01-29",
-         "passport":"2024-01-29"
-      },
-      {
-         "id":"a7e6f98f-0e13-463e-881a-c42c7a365c04",
-         "medical":"2024-02-29",
-         "sep":"2024-02-29",
-         "base_check":"2024-02-29",
-         "line_check":"2024-02-29",
-         "instructor_rating":"2024-02-29",
-         "examiner_rating":"2024-02-29",
-         "passport":"2024-02-29"
-      }
-   ],
-   "visa_data":[
-      {
-         "id":"47f4e4b5-754c-4df4-af78-4e8b8a993299",
-         "visa":"US",
-         "expiry":"2024-01-29"
-      },
-      {
-         "id":"e1875f2a-10f7-4be1-93dd-23ed879d93a0",
-         "visa":"UK",
-         "expiry":"2024-02-29"
-      }
-   ]
+   "expiry_data": {
+      "id":"6e8456d1-6c70-4a3d-8c82-09e8398b091e",
+      "medical":"2024-01-29",
+      "sep":"2024-01-29",
+      "base_check":"2024-01-29",
+      "line_check":"2024-01-29",
+      "instructor_rating":"2024-01-29",
+      "examiner_rating":"2024-01-29",
+      "passport":"2024-01-29",
+      "US visa":"2024-01-29",
+      "UK visa":"2024-02-29"
+   }
 }

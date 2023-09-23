@@ -447,10 +447,11 @@
         <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
     </entity>
     <entity name="Recency" representedClassName="RecencyList" syncable="YES">
-        <attribute name="expiredDate" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="recencyType" optional="YES" attributeType="String"/>
+        <attribute name="limit" optional="YES" attributeType="String"/>
         <attribute name="requirement" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RecencyExpiry" representedClassName="RecencyExpiryList" syncable="YES">
         <attribute name="expiredDate" optional="YES" attributeType="String"/>

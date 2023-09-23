@@ -1005,13 +1005,10 @@ class CoreDataModelState: ObservableObject {
                 let newObj = RecencyList(context: service.container.viewContext)
                 
                 newObj.id = UUID()
-                if item.recency_type != "" {
-                    let arr = item.recency_type.components(separatedBy: "-")
-                    newObj.recencyType = arr[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                    newObj.requirement = arr[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                }
-                newObj.expiredDate = item.recency
-                
+                newObj.type = item.recency_type
+                newObj.text = item.recency_text
+                newObj.limit = item.recency_limit
+                newObj.requirement = item.recency_requirement
 
                 service.container.viewContext.performAndWait {
                     do {
@@ -1026,145 +1023,33 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             
-//            self.dataLogbookLimitation = readDataLogbookLimitation()
+            self.dataRecency = readDataRecency()
         }
     }
     
-    func initDataRecencyExpiry(_ data: [[String: String]]) {
-        if data.count > 0 {
-            for item in data {
-                for key in item.keys {
-                    if key != "id" {
-                        let newObj = RecencyExpiryList(context: service.container.viewContext)
-                        newObj.id = UUID()
-                        newObj.name = key
-                        newObj.expiredDate = item[key]
-                        
-                        service.container.viewContext.performAndWait {
-                            do {
-                                try service.container.viewContext.save()
-                                print("saved data recency expiry successfully")
-                            } catch {
-                                print("Failed to data recency expiry save: \(error)")
-                                // Rollback any changes in the managed object context
-                                service.container.viewContext.rollback()
-        
-                            }
-                        }
-                    }
-                }
-             
-            }
-//            for item in data {
-//                let newObj = RecencyExpiryList(context: service.container.viewContext)
-//
-//                newObj.id = UUID()
-//
-//                if item.medical != "" {
-//                    newObj.name = "medical"
-//                    newObj.expiredDate = item.medical
-//                } else {
-//                    newObj.name = "medical"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.sep != "" {
-//                    newObj.name = "sep"
-//                    newObj.expiredDate = item.sep
-//                } else {
-//                    newObj.name = "sep"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.base_check != "" {
-//                    newObj.name = "base_check"
-//                    newObj.expiredDate = item.base_check
-//                } else {
-//                    newObj.name = "base_check"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.line_check != "" {
-//                    newObj.name = "line_check"
-//                    newObj.expiredDate = item.line_check
-//                } else {
-//                    newObj.name = "line_check"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.instructor_rating != "" {
-//                    newObj.name = "instructor_rating"
-//                    newObj.expiredDate = item.instructor_rating
-//                } else {
-//                    newObj.name = "instructor_rating"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.examiner_rating != "" {
-//                    newObj.name = "examiner_rating"
-//                    newObj.expiredDate = item.examiner_rating
-//                } else {
-//                    newObj.name = "examiner_rating"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                if item.passport != "" {
-//                    newObj.name = "passport"
-//                    newObj.expiredDate = item.passport
-//                } else {
-//                    newObj.name = "passport"
-//                    newObj.expiredDate = ""
-//                }
-//
-//                service.container.viewContext.performAndWait {
-//                    do {
-//                        try service.container.viewContext.save()
-//                        print("saved data recency expiry successfully")
-//                    } catch {
-//                        print("Failed to data recency expiry save: \(error)")
-//                        // Rollback any changes in the managed object context
-//                        service.container.viewContext.rollback()
-//
-//                    }
-//                }
-//
-//            }
-            
-//            self.dataLogbookLimitation = readDataLogbookLimitation()
-        }
-    }
-    
-    func initDataRecencyVisa(_ data: [IVisaData]) {
-        if data.count > 0 {
-            for item in data {
+    func initDataRecencyExpiry(_ data: [String: String]) {
+        for key in data.keys {
+            if key != "id" {
                 let newObj = RecencyExpiryList(context: service.container.viewContext)
-
                 newObj.id = UUID()
+                newObj.name = key
+                newObj.expiredDate = data[key]
                 
-                if item.visa != "" {
-                    newObj.name = "visa"
-                    newObj.expiredDate = item.visa
-                } else {
-                    newObj.name = "visa"
-                    newObj.expiredDate = ""
-                }
-
                 service.container.viewContext.performAndWait {
                     do {
                         try service.container.viewContext.save()
-                        print("saved data recency visa successfully")
+                        print("saved data recency expiry successfully")
                     } catch {
-                        print("Failed to data recency visa save: \(error)")
+                        print("Failed to data recency expiry save: \(error)")
                         // Rollback any changes in the managed object context
                         service.container.viewContext.rollback()
-
+                        
                     }
                 }
-
             }
-            
-//            self.dataLogbookLimitation = readDataLogbookLimitation()
         }
+        
+        self.dataRecencyExpiry = readDataRecencyExpiry()
     }
     
     func initDataEvent() {

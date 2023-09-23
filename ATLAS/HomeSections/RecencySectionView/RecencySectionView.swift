@@ -19,17 +19,32 @@ let MOCK_DATA_EXPIRING_SOON = [
     IDataExpiringSoon(id: UUID(), item: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "XXXXXXXXXXXXXXXXXXXXX", remark: "XXXXXXXXXXXXXXXXXXXXX"),
 ]
 
+struct DocumentExpiry {
+    let id: String
+    let type: String
+    let expiryDate: String
+}
+
 struct RecencySectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var recencySection = RecencySection()
     
+    @State var dataExpiringSoon = [DocumentExpiry]()
     @State var isCollapse = false
     @State var isCollapseRecency = false
     @State var isCollapseDocument = false
     @State private var selectedPicker = ""
     @State private var selectedExpiring = ""
     @State private var selectedExpirySoon = ""
-    @State private var progress = 0.8
+    @State var progress = 0.0
+    @State private var count = 0
+    let monthsAhead = 6
+    let dateFormatter = DateFormatter()
+    let currentDate = Date()
+    
+    //for calculate recency
+    let recencyRequirement = 1
+    let recencyLimit = 35
     
     var body: some View {
         GeometryReader { proxy in
@@ -61,21 +76,21 @@ struct RecencySectionView: View {
                                 
                                 Spacer()
                                 
-//                                HStack {
-//                                    Picker("", selection: $selectedPicker) {
-//                                        Text("Show All").tag("")
-//                                        ForEach(recencySection.dataItemDropDown, id: \.self) {
-//                                            Text($0).tag($0)
-//                                        }
-//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-//
-//                                    Picker("", selection: $selectedPicker) {
-//                                        Text("Show All").tag("")
-//                                        ForEach(recencySection.dataExpiringDropDown, id: \.self) {
-//                                            Text($0).tag($0)
-//                                        }
-//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-//                                }
+                                //                                HStack {
+                                //                                    Picker("", selection: $selectedPicker) {
+                                //                                        Text("Show All").tag("")
+                                //                                        ForEach(recencySection.dataItemDropDown, id: \.self) {
+                                //                                            Text($0).tag($0)
+                                //                                        }
+                                //                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                //
+                                //                                    Picker("", selection: $selectedPicker) {
+                                //                                        Text("Show All").tag("")
+                                //                                        ForEach(recencySection.dataExpiringDropDown, id: \.self) {
+                                //                                            Text($0).tag($0)
+                                //                                        }
+                                //                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                //                                }
                             }.contentShape(Rectangle())
                                 .padding()
                             
@@ -92,36 +107,18 @@ struct RecencySectionView: View {
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundColor(Color.black)
                                                 .frame(alignment: .leading)
-                                            
-                                            Text("Requirement")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
-                                            
-                                            Text("Remarks")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
                                         }
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(MOCK_DATA_EXPIRING_SOON, id: \.self) {item in
+                                        ForEach(dataExpiringSoon.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(item.item)
+                                                    Text(dataExpiringSoon[index].type)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(item.expireDate)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(item.requirement)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(item.remark)
+                                                    Text(dataExpiringSoon[index].expiryDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                 }
@@ -162,14 +159,14 @@ struct RecencySectionView: View {
                                 
                                 Spacer()
                                 
-//                                HStack {
-//                                    Picker("", selection: $selectedExpirySoon) {
-//                                        Text("Expiry (Soonest)").tag("")
-//                                        ForEach(recencySection.dataExpirySoonDropDown, id: \.self) {
-//                                            Text($0).tag($0)
-//                                        }
-//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-//                                }
+                                //                                HStack {
+                                //                                    Picker("", selection: $selectedExpirySoon) {
+                                //                                        Text("Expiry (Soonest)").tag("")
+                                //                                        ForEach(recencySection.dataExpirySoonDropDown, id: \.self) {
+                                //                                            Text($0).tag($0)
+                                //                                        }
+                                //                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                //                                }
                             }.contentShape(Rectangle())
                                 .padding()
                             
@@ -187,11 +184,6 @@ struct RecencySectionView: View {
                                                 .foregroundColor(Color.black)
                                                 .frame(alignment: .leading)
                                             
-                                            Text("Expire Date")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
-                                            
                                             Text("Requirement")
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundColor(Color.black)
@@ -203,15 +195,11 @@ struct RecencySectionView: View {
                                         ForEach(coreDataModel.dataRecency.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(coreDataModel.dataRecency[index].unwrappedRecencyType)
+                                                    Text(coreDataModel.dataRecency[index].unwrappedType)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
                                                     Text("B737")
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(coreDataModel.dataRecency[index].unwrappedExpiredDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
@@ -220,7 +208,7 @@ struct RecencySectionView: View {
                                                             Text(coreDataModel.dataRecency[index].unwrappedRequirement)
                                                                 .font(.system(size: 17, weight: .regular))
                                                                 .frame(alignment: .leading)
-                                                            Text("2/3 landings in 49/90 days")
+                                                            Text("\(count) / \(coreDataModel.dataRecency[index].unwrappedRequirement) landings in the last \(coreDataModel.dataRecency[index].unwrappedLimit) days")
                                                                 .foregroundColor(Color.theme.azure)
                                                                 .font(.system(size: 17, weight: .regular))
                                                                 .frame(alignment: .leading)
@@ -273,12 +261,12 @@ struct RecencySectionView: View {
                                 }.contentShape(Rectangle())
                                 
                                 HStack(spacing: 16) {
-//                                    Picker("", selection: $selectedExpirySoon) {
-//                                        Text("Expiry (Soonest)").tag("")
-//                                        ForEach(recencySection.dataRecencyDropDown, id: \.self) {
-//                                            Text($0).tag($0)
-//                                        }
-//                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
+                                    //                                    Picker("", selection: $selectedExpirySoon) {
+                                    //                                        Text("Expiry (Soonest)").tag("")
+                                    //                                        ForEach(recencySection.dataRecencyDropDown, id: \.self) {
+                                    //                                            Text($0).tag($0)
+                                    //                                        }
+                                    //                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
                                     
                                     Button(action: {
                                         // ToDo
@@ -312,16 +300,6 @@ struct RecencySectionView: View {
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundColor(Color.black)
                                                 .frame(alignment: .leading)
-                                            
-                                            Text("Requirement")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
-                                            
-                                            Text("Remarks")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
                                         }
                                         
                                         Divider().padding(.horizontal, -16)
@@ -336,15 +314,6 @@ struct RecencySectionView: View {
                                                     Text(coreDataModel.dataRecencyExpiry[index].unwrappedExpiredDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
-                                                    
-                                                    Text("XXXXXXXXXXXXXXXXXXXXX")
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text("XXXXXXXXXXXXXXXXXXXXX")
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
                                                 }
                                                 
                                             }
@@ -361,8 +330,103 @@ struct RecencySectionView: View {
                             .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     } // End Section
                 }
+            }.onAppear {
+                dataExpiringSoon = extractExpiringDocuments(expiryData: coreDataModel.dataRecencyExpiry, monthsAhead: monthsAhead)
+                let data = calculateRecencyPercentage(coreDataModel.dataLogbookEntries, recencyRequirement, recencyLimit)
+                self.progress = data.percentage
+                self.count = data.count
             }
         }
+    }
+    
+    
+    func extractExpiringDocuments(expiryData: [RecencyExpiryList], monthsAhead: Int) -> [DocumentExpiry] {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        // Get the current date
+        
+        // Calculate the date 6 months from now
+        if let sixMonthsFromNow = Calendar.current.date(byAdding: .month, value: monthsAhead, to: currentDate) {
+            // Create an array to store expiring documents
+            var expiringDocuments: [DocumentExpiry] = []
+            // Iterate through each document in the expiry data
+            for row in expiryData {
+                if let expiryDate = dateFormatter.date(from: row.expiredDate!) {
+                    // Check if the expiry date is within the next 6 months
+                    if expiryDate <= sixMonthsFromNow {
+                        let documentExpiry = DocumentExpiry(id: UUID().uuidString,
+                                                            type: row.unwrappedName,
+                                                            expiryDate: dateFormatter.string(from: expiryDate))
+                        expiringDocuments.append(documentExpiry)
+                    }
+                }
+            }
+            
+            return expiringDocuments
+        }
+        
+        return []
+    }
+    
+    func calculateRecencyPercentage(_ logbookEntries: [LogbookEntriesList], _ recencyRequirement: Int, _ recencyLimit: Int) -> (count: Int, percentage: Double) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        // Get today's date in UTC
+        let currentDate = Date()
+        
+        // Calculate the date "recencyLimit" days ago
+        if let startDate = Calendar.current.date(byAdding: .day, value: -recencyLimit, to: currentDate) {
+            // Filter logbook entries within the recency limit
+            let filteredEntries = logbookEntries.filter { entry in
+                if let dateString = entry.date,
+                   let entryDate = dateFormatter.date(from: dateString) {
+                    // Check if the entry date is within the recency limit
+                    if entryDate >= startDate && entryDate <= currentDate {
+                        // Check if any of the time values are not zero
+                        let picDay = parseTime(entry.picDay)
+                        let picNight = parseTime(entry.picNight)
+                        let picUsDay = parseTime(entry.picUUsDay)
+                        let picUsNight = parseTime(entry.picUUsNight)
+                        let p1Day = parseTime(entry.p1Day)
+                        let p1Night = parseTime(entry.p1Night)
+                        
+                        return picDay > 0 || picNight > 0 || picUsDay > 0 || picUsNight > 0 || p1Day > 0 || p1Night > 0
+                    }
+                }
+                return false
+            }
+            
+            // Calculate the count of landings
+            let landingCount = filteredEntries.count
+            
+            // Calculate the percentage
+            let percentage = min((Double(landingCount) / Double(recencyRequirement)), 1.0)
+            
+            return (landingCount, percentage)
+        }
+        
+        return (0, 0.0)
+    }
+    
+    func parseTime(_ timeString: String?) -> Int {
+        guard let timeString = timeString else {
+            return 0
+        }
+
+        let arr = timeString.components(separatedBy: " ")
+        
+        if arr.count == 3 {
+            let timeComponents = arr[2].components(separatedBy: ":")
+            if timeComponents.count == 3 {
+                if let hours = Int(timeComponents[0]), let minutes = Int(timeComponents[1]), let seconds = Int(timeComponents[2]) {
+                    return hours * 3600 + minutes * 60 + seconds
+                }
+            }
+        }
+        
+
+        return 0
     }
 }
 
