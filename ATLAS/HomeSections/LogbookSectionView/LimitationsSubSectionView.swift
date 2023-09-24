@@ -22,14 +22,6 @@ struct ILimitationResult {
     var color: String
 }
 
-let MOCK_DATA_LIMITATION = [
-    IDataLimitation(id: UUID(), name: "Max 900 flight hours in 365 days", period: "DD/MM/YY to DD/MM/YY", status: "922:47 / 900:00", color: "red"),
-    IDataLimitation(id: UUID(), name: "Max 20 flight hours in 30 days", period: "DD/MM/YY to DD/MM/YY", status: "922:47 / 900:00", color: "yellow"),
-    IDataLimitation(id: UUID(), name: "Max 900 flight hours in 365 days ", period: "DD/MM/YY to DD/MM/YY", status: "922:47 / 900:00", color: "black"),
-    IDataLimitation(id: UUID(), name: "Max 900 flight hours in 365 days ", period: "DD/MM/YY to DD/MM/YY", status: "922:47 / 900:00", color: "black"),
-    IDataLimitation(id: UUID(), name: "Max 900 flight hours in 365 days ", period: "DD/MM/YY to DD/MM/YY", status: "922:47 / 900:00", color: "black"),
-]
-
 struct LimitationsSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     

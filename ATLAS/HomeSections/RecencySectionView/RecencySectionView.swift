@@ -15,10 +15,6 @@ struct IDataExpiringSoon: Identifiable, Hashable {
     var remark: String
 }
 
-let MOCK_DATA_EXPIRING_SOON = [
-    IDataExpiringSoon(id: UUID(), item: "Instructor Rating", expireDate: "DD/MM/YY", requirement: "XXXXXXXXXXXXXXXXXXXXX", remark: "XXXXXXXXXXXXXXXXXXXXX"),
-]
-
 struct DocumentExpiry {
     let id: String
     let type: String

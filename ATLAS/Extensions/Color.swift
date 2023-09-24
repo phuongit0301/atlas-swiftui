@@ -63,4 +63,6 @@ struct ColorTheme {
     let iris = Color("Iris") //5856D6
     let onyx = Color("Onyx") //383838
     let seaSerpent = Color("SeaSerpent") //66D4CF
+    let mountainMeadow = Color("MountainMeadow") //35CD9A
+    let salleGreen = Color("SalleGreen") //116530
 }

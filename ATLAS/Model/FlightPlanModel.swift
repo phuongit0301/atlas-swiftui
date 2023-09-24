@@ -113,6 +113,10 @@ func calculateWidth(_ width: CGFloat, _ size: Int) -> CGFloat {
     return width - CGFloat(100) <= 0 ? 0 : CGFloat((width - CGFloat(100)) / CGFloat(size))
 }
 
+func calculateWidthSummary(_ width: CGFloat, _ size: Int) -> CGFloat {
+    return width - CGFloat(32) <= 0 ? 0 : CGFloat((width - CGFloat(32)) / CGFloat(size))
+}
+
 class StepperObject: ObservableObject {
     @Published var hours: Int = 0
     @Published var minutes: Int = 0
