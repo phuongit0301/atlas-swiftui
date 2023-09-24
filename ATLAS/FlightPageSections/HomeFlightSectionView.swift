@@ -29,7 +29,7 @@ struct HomeFlightSectionView: View {
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
                         case NavigationEnumeration.FlightPlanSummarySectionView:
-                            FlightPlanNOTAMSectionView()
+                            FlightPlanMetarTafSectionView()
                                 .tag(NavigationEnumeration.FlightPlanSummarySectionView)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)

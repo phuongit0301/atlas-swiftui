@@ -2,7 +2,7 @@
 //  FlightPlanNOTAMSectionView.swift
 //  ATLAS
 //
-//  Created by Muhammad Adil on 25/6/23.
+//  Created by phuong phan on 24/9/23.
 //
 
 import Foundation
