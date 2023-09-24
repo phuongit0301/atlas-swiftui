@@ -127,22 +127,24 @@
          "signature":"None"
       }
    ],
-   "limitation_data":[
-      {
-         "id":"94fb9e6d-8c3a-48c3-9b45-9d7f0c49a1e6",
-         "limitation_type":"Approaching Limitations",
-         "limitation":"Max 20 flight hours in 30 days",
-         "limitation_days":"30",
-         "limitation_period":"22/08/23 to 22/09/23",
-         "limitation_status":"18:05/20:00"
-      },
-      {
-         "id":"fced3475-eb43-41d6-af1c-4a4f6f25c32a",
-         "limitation_type":"Approaching Limitations",
-         "limitation":"Max 900 flight hours in 365 days",
-         "limitation_days":"365",
-         "limitation_period":"22/09/22 to 22/09/23",
-         "limitation_status":"992:47/900:00"
-      }
-   ]
+  "limitation_data": [
+     {
+        "id":"94fb9e6d-8c3a-48c3-9b45-9d7f0c49a1e6",
+        "limitation_type":"flight hours",
+        "limitation_requirement":"20",
+        "limitation_limit":"30",
+        "limitation_start":"22/08/23",
+        "limitation_end":"22/09/23",
+        "limitation_text":"Max 20 flight hours in 30 days"
+     },
+     {
+        "id":"fced3475-eb43-41d6-af1c-4a4f6f25c32a",
+        "limitation_type":"flight hours",
+        "limitation_requirement":"900",
+        "limitation_limit":"365",
+        "limitation_start":"22/09/22",
+        "limitation_end":"22/09/23",
+        "limitation_text":"Max 900 flight hours in 365 days"
+     }
+  ]
 }

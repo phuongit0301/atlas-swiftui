@@ -976,11 +976,12 @@ class CoreDataModelState: ObservableObject {
                 
                 newObj.id = UUID()
                 newObj.remoteId = item.id
-                newObj.limitationType = item.limitation_type
-                newObj.limitation = item.limitation
-                newObj.limitationDays = item.limitation_days
-                newObj.limitationPeriod = item.limitation_period
-                newObj.limitationStatus = item.limitation_status
+                newObj.type = item.limitation_type
+                newObj.requirement = item.limitation_requirement
+                newObj.limit = item.limitation_limit
+                newObj.start = item.limitation_start
+                newObj.end = item.limitation_end
+                newObj.text = item.limitation_text
 
                 service.container.viewContext.performAndWait {
                     do {

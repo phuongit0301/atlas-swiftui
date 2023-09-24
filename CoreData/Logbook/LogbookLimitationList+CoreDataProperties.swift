@@ -2,7 +2,7 @@
 //  LogbookLimitationList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 22/09/2023.
+//  Created by phuong phan on 23/09/2023.
 //
 //
 
@@ -18,22 +18,35 @@ extension LogbookLimitationList {
 
     @NSManaged public var id: UUID?
     @NSManaged public var remoteId: String?
-    @NSManaged public var limitationType: String?
-    @NSManaged public var limitation: String?
-    @NSManaged public var limitationDays: String?
-    @NSManaged public var limitationPeriod: String?
-    @NSManaged public var limitationStatus: String?
+    @NSManaged public var type: String?
+    @NSManaged public var requirement: String?
+    @NSManaged public var limit: String?
+    @NSManaged public var start: String?
+    @NSManaged public var end: String?
+    @NSManaged public var text: String?
     
-    public var unwrappedLimitation: String {
-        limitation ?? ""
+    public var unwrappedType: String {
+        type ?? ""
     }
     
-    public var unwrappedLimitationPeriod: String {
-        limitationPeriod ?? ""
+    public var unwrappedRequirement: String {
+        requirement ?? ""
     }
     
-    public var unwrappedLimitationStatus: String {
-        limitationStatus ?? ""
+    public var unwrappedLimit: String {
+        limit ?? ""
+    }
+    
+    public var unwrappedStart: String {
+        start ?? ""
+    }
+    
+    public var unwrappedEnd: String {
+        end ?? ""
+    }
+    
+    public var unwrappedText: String {
+        text ?? ""
     }
 }
 

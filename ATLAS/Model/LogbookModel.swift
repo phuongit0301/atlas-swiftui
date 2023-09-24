@@ -74,10 +74,11 @@ struct ILogbookEntriesData: Decodable {
 struct ILogbookLimitationData: Decodable {
     var id: String
     var limitation_type: String
-    var limitation: String
-    var limitation_days: String
-    var limitation_period: String
-    var limitation_status: String
+    var limitation_requirement: String
+    var limitation_limit: String
+    var limitation_start: String
+    var limitation_end: String
+    var limitation_text: String
 }
 
 struct ILogbookJson: Decodable {

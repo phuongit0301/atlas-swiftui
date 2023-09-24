@@ -350,13 +350,14 @@
         <attribute name="signature" optional="YES" attributeType="String"/>
     </entity>
     <entity name="LogbookLimitation" representedClassName="LogbookLimitationList" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="limitation" optional="YES" attributeType="String"/>
-        <attribute name="limitationDays" optional="YES" attributeType="String"/>
-        <attribute name="limitationPeriod" optional="YES" attributeType="String"/>
-        <attribute name="limitationStatus" optional="YES" attributeType="String"/>
-        <attribute name="limitationType" optional="YES" attributeType="String"/>
+        <attribute name="limit" optional="YES" attributeType="String"/>
         <attribute name="remoteId" optional="YES" attributeType="String"/>
+        <attribute name="requirement" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="arrAirport" optional="YES" attributeType="String"/>

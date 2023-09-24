@@ -160,8 +160,6 @@
 		3E7291082ABC251F000FF295 /* LogbookSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291072ABC251F000FF295 /* LogbookSegmented.swift */; };
 		3E72910A2ABC2CA8000FF295 /* ModalDateRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291092ABC2CA8000FF295 /* ModalDateRangeView.swift */; };
 		3E72910C2ABC5F9E000FF295 /* RecencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72910B2ABC5F9E000FF295 /* RecencyModel.swift */; };
-		3E7291112ABD4290000FF295 /* LogbookLimitationList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72910D2ABD4290000FF295 /* LogbookLimitationList+CoreDataClass.swift */; };
-		3E7291122ABD4290000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72910E2ABD4290000FF295 /* LogbookLimitationList+CoreDataProperties.swift */; };
 		3E7291132ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72910F2ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift */; };
 		3E7291142ABD4290000FF295 /* LogbookEntriesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291102ABD4290000FF295 /* LogbookEntriesList+CoreDataProperties.swift */; };
 		3E7291172ABD49E4000FF295 /* logbook_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E7291162ABD49E4000FF295 /* logbook_data.json */; };
@@ -172,6 +170,8 @@
 		3E7291252ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291242ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift */; };
 		3E7291282ABEA46C000FF295 /* RecencyList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291262ABEA46C000FF295 /* RecencyList+CoreDataClass.swift */; };
 		3E7291292ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291272ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift */; };
+		3E72912C2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72912A2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift */; };
+		3E72912D2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72912B2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -527,8 +527,6 @@
 		3E7291072ABC251F000FF295 /* LogbookSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogbookSegmented.swift; sourceTree = "<group>"; };
 		3E7291092ABC2CA8000FF295 /* ModalDateRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDateRangeView.swift; sourceTree = "<group>"; };
 		3E72910B2ABC5F9E000FF295 /* RecencyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyModel.swift; sourceTree = "<group>"; };
-		3E72910D2ABD4290000FF295 /* LogbookLimitationList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookLimitationList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E72910E2ABD4290000FF295 /* LogbookLimitationList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookLimitationList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E72910F2ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookEntriesList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291102ABD4290000FF295 /* LogbookEntriesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookEntriesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291162ABD49E4000FF295 /* logbook_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logbook_data.json; sourceTree = "<group>"; };
@@ -539,6 +537,8 @@
 		3E7291242ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAirportColorAnnotation.swift; sourceTree = "<group>"; };
 		3E7291262ABEA46C000FF295 /* RecencyList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291272ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E72912A2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookLimitationList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E72912B2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogbookLimitationList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -1042,8 +1042,8 @@
 				3E7291272ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift */,
 				3E72911A2ABD8959000FF295 /* RecencyExpiryList+CoreDataClass.swift */,
 				3E72911B2ABD8959000FF295 /* RecencyExpiryList+CoreDataProperties.swift */,
-				3E72910D2ABD4290000FF295 /* LogbookLimitationList+CoreDataClass.swift */,
-				3E72910E2ABD4290000FF295 /* LogbookLimitationList+CoreDataProperties.swift */,
+				3E72912A2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift */,
+				3E72912B2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift */,
 				3E72910F2ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift */,
 				3E7291102ABD4290000FF295 /* LogbookEntriesList+CoreDataProperties.swift */,
 			);
@@ -1768,6 +1768,7 @@
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3EECB8642A716638009D4971 /* LoginView.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
+				3E72912D2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E870BA12A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
@@ -1809,7 +1810,6 @@
 				C580EA242A48251500E3E8D6 /* FlightPlanNOTAMView.swift in Sources */,
 				3E766FA72A5F914200B11616 /* AISearchSegmented.swift in Sources */,
 				3EEBE6752AB3EBCA00421AFF /* CustomRouteAnnotationView.swift in Sources */,
-				3E7291122ABD4290000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E4A36A12A570BA800027C61 /* AltnDataList+CoreDataClass.swift in Sources */,
 				3E4A36D62A5AA04400027C61 /* TaxiTimesList+CoreDataProperties.swift in Sources */,
 				3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */,
@@ -1832,6 +1832,7 @@
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
+				3E72912C2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift in Sources */,
 				3E4A368E2A570BA800027C61 /* FuelTableList+CoreDataProperties.swift in Sources */,
 				3E4A37202A5C361500027C61 /* HistoricalDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D812A94957E00BE00AD /* SummaryInfoList+CoreDataClass.swift in Sources */,
@@ -1862,7 +1863,6 @@
 				3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */,
 				3EE170742AA82D7E004DA27C /* HomeSectionView.swift in Sources */,
 				3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
-				3E7291112ABD4290000FF295 /* LogbookLimitationList+CoreDataClass.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,

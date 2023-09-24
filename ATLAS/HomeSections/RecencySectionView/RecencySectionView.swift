@@ -131,6 +131,7 @@ struct RecencySectionView: View {
                             
                         }.listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.vividGamboge, lineWidth: 1))
                     } // End Section
                     
                     Section {

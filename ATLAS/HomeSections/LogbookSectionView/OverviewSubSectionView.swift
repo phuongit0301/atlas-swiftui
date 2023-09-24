@@ -63,6 +63,8 @@ struct OverviewSubSectionView: View {
     
     @State private var isLoading = true
     @State private var firstLoading = true
+    
+    @State var dataLimitation: [ILimitationResult] = []
 
     var body: some View {
         GeometryReader { proxy in
@@ -129,24 +131,24 @@ struct OverviewSubSectionView: View {
                                             
                                             Divider().padding(.horizontal, -16)
                                             
-                                            ForEach(MOCK_DATA.indices, id: \.self) {index in
+                                            ForEach(dataLimitation.indices, id: \.self) {index in
                                                 GridRow {
                                                     Group {
-                                                        Text(MOCK_DATA[index].name)
+                                                        Text(dataLimitation[index].text)
                                                             .font(.system(size: 17, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
-                                                        Text(MOCK_DATA[index].date)
+                                                        Text(dataLimitation[index].period)
                                                             .font(.system(size: 17, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
-                                                        Text(MOCK_DATA[index].time)
+                                                        Text(dataLimitation[index].status)
                                                             .font(.system(size: 17, weight: .regular))
                                                             .frame(alignment: .leading)
-                                                    }.foregroundColor(fontColor(MOCK_DATA[index].color))
+                                                    }.foregroundColor(fontColor(dataLimitation[index].color))
                                                 }
                                                 
-                                                if index + 1 < MOCK_DATA.count {
+                                                if index + 1 < dataLimitation.count {
                                                     Divider().padding(.horizontal, -16)
                                                 }
                                             }
@@ -365,6 +367,12 @@ struct OverviewSubSectionView: View {
                     self.dataTotalTime = dataTotalTime
                     firstLoading = false
                 }
+                
+                //Handle data limitation
+                dataLimitation = checkLimitations(coreDataModel.dataLogbookEntries, coreDataModel.dataLogbookLimitation)
+                dataLimitation = dataLimitation.filter { item in
+                    return item.color == "red" || item.color == "amber"
+                }
             }.onChange(of: selectedDate) {newValue in
                 if !firstLoading {
                     dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -551,36 +559,6 @@ struct OverviewSubSectionView: View {
         return (tableData, rowTotals)
     }
     
-    func seconds2Timestamp(_ intSeconds: Int) -> String {
-       let mins:Int = (intSeconds % 3600) / 60
-       let hours:Int = intSeconds / 3600
-       let secs:Int = intSeconds % 60
-
-       let strTimestamp: String = ((hours<10) ? "0" : "") + String(hours) + ":" + ((mins<10) ? "0" : "") + String(mins) + ":" + ((secs<10) ? "0" : "") + String(secs)
-       return strTimestamp
-    }
-
-    func parseTime(_ timeString: String?) -> Int {
-        guard let timeString = timeString else {
-            return 0
-        }
-
-        let arr = timeString.components(separatedBy: " ")
-        
-        if arr.count == 3 {
-            let timeComponents = arr[2].components(separatedBy: ":")
-            if timeComponents.count == 3 {
-                if let hours = Int(timeComponents[0]), let minutes = Int(timeComponents[1]), let seconds = Int(timeComponents[2]) {
-                    return hours * 3600 + minutes * 60 + seconds
-                }
-            }
-        }
-        
-
-        return 0
-    }
-
-    
     func onToggle() {
         self.isShowModal.toggle()
     }
@@ -635,12 +613,41 @@ struct OverviewSubSectionView: View {
     func fontColor(_ color: String) -> Color {
         if color == "red" {
             return Color.theme.coralRed
-        } else if color == "yellow" {
+        } else if color == "amber" {
             return Color.theme.vividGamboge
         } else {
             return Color.black
         }
     }
+}
+
+func parseTime(_ timeString: String?) -> Int {
+    guard let timeString = timeString else {
+        return 0
+    }
+
+    let arr = timeString.components(separatedBy: " ")
+    
+    if arr.count == 3 {
+        let timeComponents = arr[2].components(separatedBy: ":")
+        if timeComponents.count == 3 {
+            if let hours = Int(timeComponents[0]), let minutes = Int(timeComponents[1]), let seconds = Int(timeComponents[2]) {
+                return hours * 3600 + minutes * 60 + seconds
+            }
+        }
+    }
+    
+
+    return 0
+}
+
+func seconds2Timestamp(_ intSeconds: Int) -> String {
+   let mins:Int = (intSeconds % 3600) / 60
+   let hours:Int = intSeconds / 3600
+   let secs:Int = intSeconds % 60
+
+   let strTimestamp: String = ((hours<10) ? "0" : "") + String(hours) + ":" + ((mins<10) ? "0" : "") + String(mins) + ":" + ((secs<10) ? "0" : "") + String(secs)
+   return strTimestamp
 }
 
 struct OverviewSubSectionView_Previews: PreviewProvider {
