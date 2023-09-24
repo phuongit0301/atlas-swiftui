@@ -1,5 +1,5 @@
 //
-//  FlightSummaryView.swift
+//  FlightOverviewView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 22/08/2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct FlightSummaryView: View {
+struct FlightOverviewSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @State var isReference = false
@@ -517,11 +517,5 @@ struct FlightSummaryView: View {
                 }
             }
         }//end geometry
-    }
-}
-
-struct FlightSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        FlightSummaryView()
     }
 }

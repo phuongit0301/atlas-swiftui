@@ -10,6 +10,8 @@ import SwiftUI
 
 enum NavigationEnumeration {
     case FlightSummaryScreen
+    case FlightOverviewSectionView
+    case FlightPlanSummarySectionView
     case HomeScreen
     case FlightScreen
     case OverviewScreen
@@ -97,7 +99,8 @@ struct ITabs: Identifiable, Hashable {
 
 class TabModelState: ObservableObject {
     let Data = [
-        ITabs(name: "Flight Summary", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightSummaryScreen,  isDefault: false, isDisabled: false),
+        ITabs(name: "Flight Overview", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightOverviewSectionView,  isDefault: false, isDisabled: false),
+        ITabs(name: "Preflight", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanSummarySectionView,  isDefault: false, isDisabled: false),
         ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanScreen,  isDefault: false, isDisabled: false),
         ITabs(name: "Sector Info", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightScreen, isDefault: true, isDisabled: false),
         ITabs(name: "Statistics", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FuelScreen, isDefault: false, isDisabled: false),

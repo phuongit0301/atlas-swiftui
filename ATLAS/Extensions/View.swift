@@ -227,7 +227,7 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     
     if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
         return AnyView(
-            FlightSummaryView(isReference: true)
+            FlightOverviewSectionView(isReference: true)
                 .navigationBarBackButtonHidden()
 //                .navigationBarHidden(true)
                 .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
@@ -578,8 +578,10 @@ public struct BreadCrumb: ViewModifier {
 
 func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
     switch screenName {
-        case .FlightSummaryScreen:
-            return "Flight Summary"
+        case .FlightOverviewSectionView:
+            return "Flight Overview"
+        case .FlightPlanSummarySectionView:
+            return "Summary"
         case .HomeScreen:
             return "Home"
         case .FlightScreen:
@@ -616,6 +618,8 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Reporting"
         case .ScratchPadScreen:
             return "Scratch Pad"
+        default:
+            return "Flight Overview"
     }
 }
 

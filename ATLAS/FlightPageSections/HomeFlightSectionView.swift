@@ -22,9 +22,15 @@ struct HomeFlightSectionView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     // Tabs
                     switch modelState.selectedTab.screenName {
-                        case NavigationEnumeration.FlightSummaryScreen:
-                            FlightSummaryView()
-                                .tag(NavigationEnumeration.OverviewScreen)
+                        case NavigationEnumeration.FlightOverviewSectionView:
+                            FlightOverviewSectionView()
+                                .tag(NavigationEnumeration.FlightOverviewSectionView)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .toolbar(.hidden, for: .tabBar)
+                                .ignoresSafeArea()
+                        case NavigationEnumeration.FlightPlanSummarySectionView:
+                            FlightPlanNOTAMSectionView()
+                                .tag(NavigationEnumeration.FlightPlanSummarySectionView)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
@@ -95,13 +101,5 @@ struct HomeFlightSectionView: View {
             }
             
         }
-    }
-}
-
-struct HomeFlightSectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeFlightSectionView()
-            .environmentObject(SideMenuModelState())
-            .environmentObject(TabModelState())
     }
 }
