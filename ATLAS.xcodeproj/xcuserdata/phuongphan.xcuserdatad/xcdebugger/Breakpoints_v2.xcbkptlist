@@ -2460,8 +2460,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "updateFuelData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -2583,8 +2583,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "updateFuelData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -2691,8 +2691,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "updateFuelData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -2829,8 +2829,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "updateFuelData(_:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5411,8 +5411,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3612"
-            endingLineNumber = "3612"
+            startingLineNumber = "3622"
+            endingLineNumber = "3622"
             landmarkName = "readAISearch(target:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7042,8 +7042,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7058,8 +7058,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7106,8 +7106,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7154,8 +7154,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7170,8 +7170,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7388,8 +7388,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7404,10 +7404,10 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "sortNotams(notamsDict:sortKey:)"
-            landmarkType = "7">
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "FlightPlanNOTAMView"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7420,8 +7420,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7468,8 +7468,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -8690,8 +8690,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -8738,8 +8738,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -8786,8 +8786,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
          </BreakpointContent>

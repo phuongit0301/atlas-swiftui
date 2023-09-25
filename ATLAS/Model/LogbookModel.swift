@@ -82,7 +82,7 @@ struct ILogbookLimitationData: Decodable {
 }
 
 struct ILogbookJson: Decodable {
-    var logbook_data: [ILogbookEntriesData]
+    var logbook_entry: [ILogbookEntriesData]
     var limitation_data: [ILogbookLimitationData]
 }
 

@@ -174,6 +174,76 @@ class RemoteService: ObservableObject {
         return nil
     }
     
+    func getLogbookData() async -> ILogbookJson?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_logbook_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "user_id": "abc123",
+            ] as [String : Any]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(ILogbookJson.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
+    func getRecencyData() async -> IRecencyJson?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_recency_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "user_id": "abc123",
+            ] as [String : Any]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(IRecencyJson.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
     func updateFuelData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_update_flightPlan_data") else { fatalError("Missing URL") }
             //make request

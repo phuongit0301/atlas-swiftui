@@ -273,7 +273,6 @@ struct FlightPlanSummarySectionView: View {
                                                     }.pickerStyle(MenuPickerStyle()).fixedSize()
                                                 }.fixedSize()
                                                     .frame(width: calculateWidthSummary(proxy.size.width - 56, 4), alignment: .leading)
-                                                    .padding(.leading, -32)
                                                 
                                                 TextField("Enter VIS",text: $tfVis)
                                                     .frame(width: calculateWidthSummary(proxy.size.width - 56, 4), alignment: .leading)

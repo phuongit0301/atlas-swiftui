@@ -194,7 +194,10 @@ class CoreDataModelState: ObservableObject {
                 let data = await remoteService.getFlightPlanData()
                 let response = await remoteService.getFuelData()
                 let responseMap = await remoteService.getMapData()
+                let responseLogbook = await remoteService.getLogbookData()
+                let responseRecency = await remoteService.getRecencyData()
                 
+                print("responseRecency========\(responseRecency)")
                 DispatchQueue.main.async {
                     if let waypointsData = data?.waypointsData {
                         self.initDataEnroute(waypointsData)
@@ -229,16 +232,23 @@ class CoreDataModelState: ObservableObject {
                     }
                     
                     // Init Logbook
-                    let dataLogbook: ILogbookJson = self.remoteService.load("logbook_data.json")
+                    if let logbookEntry = responseLogbook?.logbook_entry {
+                        self.initDataLogbookEntries(logbookEntry)
+                    }
                     
-                    self.initDataLogbookEntries(dataLogbook.logbook_data)
-                    self.initDataLogbookLimitation(dataLogbook.limitation_data)
+                    if let limitationData = responseLogbook?.limitation_data {
+                        self.initDataLogbookLimitation(limitationData)
+                    }
                     
                     // Init data recency
-                    let dataRecency: IRecencyJson = self.remoteService.load("recency_data.json")
                     
-                    self.initDataRecency(dataRecency.recency_data)
-                    self.initDataRecencyExpiry(dataRecency.expiry_data)
+                    if let recencyData = responseRecency?.recency_data {
+                        self.initDataRecency(recencyData)
+                    }
+                    
+                    if let expiryData = responseRecency?.expiry_data {
+                        self.initDataRecencyExpiry(expiryData)
+                    }
                     
                     if let waypointData = responseMap?.all_waypoints_data {
                         self.initDataWaypoint(waypointData)

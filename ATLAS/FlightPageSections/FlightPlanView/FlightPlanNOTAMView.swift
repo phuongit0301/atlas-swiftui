@@ -28,191 +28,181 @@ struct FlightPlanNOTAMView: View {
     @State private var selectionArr = ""
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(alignment: .center) {
-                HStack {
-                    Text("Flight Plan: \(coreDataModel.dataSummaryInfo.unwrappedPlanNo)").font(.system(size: 15, weight: .semibold))
+        GeometryReader { proxy in
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .center) {
+                    Text("NOTAMS")
+                        .font(.system(size: 20, weight: .semibold))
+                        .padding(.leading, 30)
                     Spacer()
-                    Text("Last Update: 10 mins ago").font(.system(size: 15, weight: .regular))
-                }.padding(.horizontal)
-                    .padding(.vertical, 8)
-                .background(Color.theme.lightGray1)
-                    .cornerRadius(8)
-            }
-            .padding(.horizontal, 16)
-            
-            HStack(alignment: .center) {
-                Text("NOTAMS")
-                    .font(.system(size: 20, weight: .semibold))
-                    .padding(.leading, 30)
-                Spacer()
-                
-                HStack {
-                    Toggle(isOn: $isSortDate) {
-                        Text("Most Relevant")
+                    
+                    HStack {
+                        Toggle(isOn: $isSortDate) {
+                            Text("Most Relevant")
+                                .font(.system(size: 17, weight: .regular))
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }.padding(.horizontal)
+                        
+                        Text("Most Recent")
                             .font(.system(size: 17, weight: .regular))
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                    }.padding(.horizontal)
-                    
-                    Text("Most Recent")
-                        .font(.system(size: 17, weight: .regular))
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                }.fixedSize()
-            }.padding(.vertical, 7)
-                .padding(.trailing, 16)
-            
-            //scrollable outer list section
-            List {
-                // Dep NOTAM section
-                Section(content: {
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center, spacing: 0) {
-                            HStack {
-                                Text("DEP NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
-                                Spacer().frame(maxWidth: .infinity)
-                            }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    self.isDepShow.toggle()
-                                }
-                            
-                            HStack {
-                                Picker("", selection: $selectionDep) {
-                                    ForEach(notamSection.dataDropDown, id: \.self) {
-                                        Text($0).tag($0)
-                                    }
-                                }
-                            }.fixedSize()
-                        }.padding(.vertical)
-                        
-                        if isDepShow {
-                            Divider()
-                            
-                            ForEach(arrDepNotams, id: \.id) { item in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(item.unwrappedNotam)
-                                        .font(.system(size: 17, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        item.isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                    }) {
-                                        if item.isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.vertical)
-                                
-                                Divider()
-                            }
-                        }
-                    }
-                }).listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
-
-                // Enr NOTAM section
-                Section(content: {
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center, spacing: 0) {
-                            HStack {
-                                Text("ENROUTE NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
-                                Spacer().frame(maxWidth: .infinity)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                self.isEnrShow.toggle()
-                            }
-                        }.padding(.vertical, 24)
-                        
-                        if isEnrShow {
-                            Divider()
-                            
-                            ForEach(arrEnrNotams, id: \.id) { item in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        item.isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                    }) {
-                                        if item.isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.vertical)
-                                
-                                Divider()
-                            }
-                        }
-                    }
-                }).listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    }.fixedSize()
+                }.padding(.vertical, 7)
+                    .padding(.trailing, 16)
                 
-                // Arr NOTAM section
-                Section(content: {
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center, spacing: 0) {
+                //scrollable outer list section
+                List {
+                    // Dep NOTAM section
+                    Section(content: {
+                        VStack(spacing: 0) {
                             HStack(alignment: .center, spacing: 0) {
-                                Text("ARR NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
-                                Spacer().frame(maxWidth: .infinity)
-                            }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    self.isArrShow.toggle()
-                                }
-                            
-                            HStack(alignment: .center, spacing: 0) {
-                                Picker("", selection: $selectionArr) {
-                                    ForEach(notamSection.dataDropDown, id: \.self) {
-                                        Text($0).tag($0)
+                                HStack {
+                                    Text("DEP NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                    Spacer().frame(maxWidth: .infinity)
+                                }.contentShape(Rectangle())
+                                    .onTapGesture {
+                                        self.isDepShow.toggle()
                                     }
-                                }
-                            }.fixedSize()
-                        }.padding(.vertical)
-                        
-                        if isArrShow {
-                            Divider()
-                            
-                            ForEach(arrArrNotams, id: \.id) { item in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        item.isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                    }) {
-                                        if item.isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.vertical)
                                 
+                                HStack {
+                                    Picker("", selection: $selectionDep) {
+                                        ForEach(notamSection.dataDropDown, id: \.self) {
+                                            Text($0).tag($0)
+                                        }
+                                    }
+                                }.fixedSize()
+                            }.padding(.vertical)
+                            
+                            if isDepShow {
                                 Divider()
+                                
+                                ForEach(arrDepNotams, id: \.id) { item in
+                                    HStack(alignment: .center, spacing: 0) {
+                                        // notam text
+                                        Text(item.unwrappedNotam)
+                                            .font(.system(size: 17, weight: .regular))
+                                        Spacer()
+                                        // star function to add to reference
+                                        Button(action: {
+                                            item.isChecked.toggle()
+                                            coreDataModel.save()
+                                            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        }) {
+                                            if item.isChecked {
+                                                Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                                            } else {
+                                                Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                            }
+                                        }.fixedSize()
+                                            .buttonStyle(PlainButtonStyle())
+                                    }.padding(.vertical)
+                                    
+                                    Divider()
+                                }
                             }
                         }
-                    }
-                }).listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
-            }.padding(.top, -8)
+                    }).listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    
+                    // Enr NOTAM section
+                    Section(content: {
+                        VStack(spacing: 0) {
+                            HStack(alignment: .center, spacing: 0) {
+                                HStack {
+                                    Text("ENROUTE NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                    Spacer().frame(maxWidth: .infinity)
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.isEnrShow.toggle()
+                                }
+                            }.padding(.vertical, 24)
+                            
+                            if isEnrShow {
+                                Divider()
+                                
+                                ForEach(arrEnrNotams, id: \.id) { item in
+                                    HStack(alignment: .center, spacing: 0) {
+                                        // notam text
+                                        Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
+                                        Spacer()
+                                        // star function to add to reference
+                                        Button(action: {
+                                            item.isChecked.toggle()
+                                            coreDataModel.save()
+                                            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        }) {
+                                            if item.isChecked {
+                                                Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                                            } else {
+                                                Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                            }
+                                        }.fixedSize()
+                                            .buttonStyle(PlainButtonStyle())
+                                    }.padding(.vertical)
+                                    
+                                    Divider()
+                                }
+                            }
+                        }
+                    }).listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    
+                    // Arr NOTAM section
+                    Section(content: {
+                        VStack(spacing: 0) {
+                            HStack(alignment: .center, spacing: 0) {
+                                HStack(alignment: .center, spacing: 0) {
+                                    Text("ARR NOTAMS").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                    Spacer().frame(maxWidth: .infinity)
+                                }.contentShape(Rectangle())
+                                    .onTapGesture {
+                                        self.isArrShow.toggle()
+                                    }
+                                
+                                HStack(alignment: .center, spacing: 0) {
+                                    Picker("", selection: $selectionArr) {
+                                        ForEach(notamSection.dataDropDown, id: \.self) {
+                                            Text($0).tag($0)
+                                        }
+                                    }
+                                }.fixedSize()
+                            }.padding(.vertical)
+                            
+                            if isArrShow {
+                                Divider()
+                                
+                                ForEach(arrArrNotams, id: \.id) { item in
+                                    HStack(alignment: .center, spacing: 0) {
+                                        // notam text
+                                        Text(item.unwrappedNotam).font(.system(size: 17, weight: .regular))
+                                        Spacer()
+                                        // star function to add to reference
+                                        Button(action: {
+                                            item.isChecked.toggle()
+                                            coreDataModel.save()
+                                            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                                            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        }) {
+                                            if item.isChecked {
+                                                Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                                            } else {
+                                                Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                            }
+                                        }.fixedSize()
+                                            .buttonStyle(PlainButtonStyle())
+                                    }.padding(.vertical)
+                                    
+                                    Divider()
+                                }
+                            }
+                        }
+                    }).listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                }.padding(.top, -8)
+            }
         }
         .onChange(of: selectionArr) { newValue in
             var temp = [NotamsDataList]()
