@@ -120,7 +120,9 @@ struct FlightOverviewSectionView: View {
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .center) {
-                    Text("Flight Overview").font(.system(size: 20, weight: .semibold))
+                    Text("Summary")
+                        .font(.system(size: 17, weight: .semibold))
+                        .padding(.leading, 16)
                     
                     Spacer().frame(maxWidth: .infinity)
                     
@@ -157,6 +159,7 @@ struct FlightOverviewSectionView: View {
                             }, label: {
                                 HStack {
                                     Text("Flight Information").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
+                                    
                                     if isCollapseFlightInfo {
                                         Image(systemName: "chevron.down")
                                             .foregroundColor(Color.blue)
@@ -255,7 +258,7 @@ struct FlightOverviewSectionView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
                     
-                    VStack(spacing: 16) {
+                    VStack(spacing: 0) {
                         HStack {
                             Button(action: {
                                 self.isCollapsePlanTime.toggle()
@@ -347,7 +350,7 @@ struct FlightOverviewSectionView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
 //
 //
-                    VStack(spacing: 16) {
+                    VStack(spacing: 0) {
                         HStack {
                             Button(action: {
                                 self.isCollapseActualTime.toggle()
@@ -439,7 +442,7 @@ struct FlightOverviewSectionView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
 
 
-                    VStack(spacing: 16) {
+                    VStack(spacing: 0) {
                         HStack {
                             Button(action: {
                                 self.isCollapseCrew.toggle()

@@ -19,7 +19,7 @@ struct FlightPlanMetarTafSectionView: View {
     
     var body: some View {
         GeometryReader { proxy in
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .center) {
                     Text("METAR & TAF")
                         .font(.system(size: 17, weight: .semibold))
@@ -45,25 +45,25 @@ struct FlightPlanMetarTafSectionView: View {
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(.white, lineWidth: 0)
                         )
-                        .padding(.horizontal)
                         .padding(.vertical, 8)
                         .disabled(showLoading)
                 }.frame(height: 44)
+                    .padding(.bottom)
                 
-                HStack {
-                    Text("Waypoints")
-                        .font(.system(size: 17, weight: .semibold))
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // Todo
-                    }, label: {
-                        Text("Direct").font(.system(size: 17, weight: .regular))
-                            .foregroundColor(Color.theme.azure)
-                    })
-                }.frame(height: 44)
-                    .padding(.horizontal, 16)
+//                HStack {
+//                    Text("Waypoints")
+//                        .font(.system(size: 17, weight: .semibold))
+//
+//                    Spacer()
+//
+//                    Button(action: {
+//                        // Todo
+//                    }, label: {
+//                        Text("Direct").font(.system(size: 17, weight: .regular))
+//                            .foregroundColor(Color.theme.azure)
+//                    })
+//                }.frame(height: 44)
+//                    .padding(.horizontal, 16)
                 
                 //scrollable outer list section
                 ScrollView {
@@ -83,7 +83,9 @@ struct FlightPlanMetarTafSectionView: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                             
-                        }.frame(height: 54)
+                            Spacer()
+                        }.frame(maxWidth: .infinity)
+                            .frame(height: 46, alignment: .leading)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isDepShow.toggle()
@@ -139,7 +141,9 @@ struct FlightPlanMetarTafSectionView: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                             
-                        }.frame(height: 54)
+                            Spacer()
+                        }.frame(maxWidth: .infinity)
+                            .frame(height: 46, alignment: .leading)
                         .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isEnrShow.toggle()
@@ -196,7 +200,9 @@ struct FlightPlanMetarTafSectionView: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                             
-                        }.frame(height: 54)
+                            Spacer()
+                        }.frame(maxWidth: .infinity)
+                            .frame(height: 46, alignment: .leading)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isArrShow.toggle()
@@ -251,7 +257,9 @@ struct FlightPlanMetarTafSectionView: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                             
-                        }.frame(height: 54)
+                            Spacer()
+                        }.frame(maxWidth: .infinity)
+                            .frame(height: 46, alignment: .leading)
                         .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isDestShow.toggle()

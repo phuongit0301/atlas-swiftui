@@ -23,7 +23,7 @@ struct HomeFlightSectionView: View {
                     // Tabs
                     switch modelState.selectedTab.screenName {
                         case NavigationEnumeration.FlightOverviewSectionView:
-                            FlightOverviewSectionView()
+                            NoteSectionView()
                                 .tag(NavigationEnumeration.FlightOverviewSectionView)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
