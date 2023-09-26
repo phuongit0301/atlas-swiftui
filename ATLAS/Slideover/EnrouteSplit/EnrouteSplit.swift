@@ -24,68 +24,68 @@ struct EnrouteSplit: View {
         VStack (spacing: 0) {
             HeaderViewSplit(isMenu: true, isNext: true, item: item)
             
-            VStack(spacing: 0) {
-                ItemListSplit(
-                    header: header,
-                    showSheet: $showSheet,
-                    currentIndex: $currentIndex,
-                    itemList: $viewModel.enrouteRefArray,
-                    geoWidth: geoWidth,
-                    update: update,
-                    updateStatus: updateStatus,
-                    delete: delete
-                ).frame(maxHeight: .infinity)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .sheet(isPresented: $showSheet) {
-                        NoteFormSplit(
-                            textNote: $textNote,
-                            tagList: $viewModel.tagList,
-                            itemList: $viewModel.enrouteRefArray,
-                            currentIndex: $currentIndex,
-                            showSheet: $showSheet,
-                            target: target,
-                            resetData: self.resetData
-                        ).interactiveDismissDisabled(true)
-                    }
-            }.padding()
+//            VStack(spacing: 0) {
+//                ItemListSplit(
+//                    header: header,
+//                    showSheet: $showSheet,
+//                    currentIndex: $currentIndex,
+//                    itemList: $viewModel.enrouteRefArray,
+//                    geoWidth: geoWidth,
+//                    update: update,
+//                    updateStatus: updateStatus,
+//                    delete: delete
+//                ).frame(maxHeight: .infinity)
+//                    .background(Color.white)
+//                    .cornerRadius(8)
+//                    .sheet(isPresented: $showSheet) {
+//                        NoteFormSplit(
+//                            textNote: $textNote,
+//                            tagList: $viewModel.tagList,
+//                            itemList: $viewModel.enrouteRefArray,
+//                            currentIndex: $currentIndex,
+//                            showSheet: $showSheet,
+//                            target: target,
+//                            resetData: self.resetData
+//                        ).interactiveDismissDisabled(true)
+//                    }
+//            }.padding()
         }.background(Color.theme.antiFlashWhite)
             .navigationBarBackButtonHidden()
             .ignoresSafeArea()
     }
     
-    private func update(_ index: Int) {
-        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
-            found.isDefault = false
-        }
-        
-        viewModel.delete(viewModel.enrouteRefArray[index])
-        viewModel.save()
-        resetData()
-    }
-    
-    private func updateStatus(_ index: Int) {
-        viewModel.enrouteRefArray[index].isDefault.toggle()
-        viewModel.save()
-        resetData()
-    }
-    
-    private func delete(_ index: Int) {
-        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
-            found.isDefault = false
-        }
-        
-        viewModel.delete(viewModel.enrouteRefArray[index])
-        viewModel.save()
-        resetData()
-    }
-    
-    private func resetData() {
-        viewModel.enrouteArray = viewModel.read("enroute")
-        viewModel.enrouteRefArray = viewModel.read("enrouteref")
-        
-        if self.currentIndex > -1 {
-            self.currentIndex = -1
-        }
-    }
+//    private func update(_ index: Int) {
+//        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+//            found.isDefault = false
+//        }
+//        
+//        viewModel.delete(viewModel.enrouteRefArray[index])
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func updateStatus(_ index: Int) {
+//        viewModel.enrouteRefArray[index].isDefault.toggle()
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func delete(_ index: Int) {
+//        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+//            found.isDefault = false
+//        }
+//        
+//        viewModel.delete(viewModel.enrouteRefArray[index])
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func resetData() {
+//        viewModel.enrouteArray = viewModel.read("enroute")
+//        viewModel.enrouteRefArray = viewModel.read("enrouteref")
+//        
+//        if self.currentIndex > -1 {
+//            self.currentIndex = -1
+//        }
+//    }
 }

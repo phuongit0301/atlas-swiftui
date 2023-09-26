@@ -58,7 +58,7 @@ struct ItemList: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(itemList[index].name.trimmingCharacters(in: .whitespacesAndNewlines))
+                                    Text(itemList[index].unwrappedName.trimmingCharacters(in: .whitespacesAndNewlines))
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.system(size: 16, weight: .regular))
                                     
@@ -108,13 +108,13 @@ struct ItemList: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
                             .swipeActions(allowsFullSwipe: false) {
-                                if itemList[index].canDelete {
-                                    Button(role: .destructive) {
-                                        remove(itemList[index])
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                }
+//                                if itemList[index].canDelete {
+//                                    Button(role: .destructive) {
+//                                        remove(itemList[index])
+//                                    } label: {
+//                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+//                                    }.tint(Color.theme.coralRed)
+//                                }
                                 
                                 Button {
                                     self.currentIndex = index

@@ -54,6 +54,7 @@ struct ColorTheme {
     let gray = Color("Gray") //BABABC
     let pictonBlue = Color("PictonBlue") //32ADE6
     let silverFoil = Color("SilverFoil") //AEAEB2
+    let silverSand = Color("SilverSand") //C5C5C7
     let lavenderGray = Color("LavenderGray") //C7C7CC
     let mediumOrchid = Color("MediumOrchid") //AF52DE
     let vividGamboge = Color("VividGamboge") //FF9500

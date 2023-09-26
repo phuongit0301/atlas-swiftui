@@ -22,66 +22,67 @@ struct EnrouteReferenceContainer: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            GeometryReader { proxy in
-                ItemListReference(
-                    header: header,
-                    showSheet: $showSheet,
-                    currentIndex: $currentIndex,
-                    itemList: $viewModel.enrouteRefArray,
-                    geoWidth: proxy.size.width,
-                    update: update,
-                    updateStatus: updateStatus,
-                    delete: delete
-                ).frame(maxHeight: .infinity)
-                    .sheet(isPresented: $showSheet) {
-                        NoteReferenceForm(
-                            textNote: $textNote,
-                            tagList: $viewModel.tagList,
-                            itemList: $viewModel.enrouteRefArray,
-                            currentIndex: $currentIndex,
-                            showSheet: $showSheet,
-                            target: target,
-                            resetData: self.resetData
-                        ).interactiveDismissDisabled(true)
-                    }
-            }
+            Text("123")
+//            GeometryReader { proxy in
+//                ItemListReference(
+//                    header: header,
+//                    showSheet: $showSheet,
+//                    currentIndex: $currentIndex,
+//                    itemList: $viewModel.enrouteRefArray,
+//                    geoWidth: proxy.size.width,
+//                    update: update,
+//                    updateStatus: updateStatus,
+//                    delete: delete
+//                ).frame(maxHeight: .infinity)
+//                    .sheet(isPresented: $showSheet) {
+//                        NoteReferenceForm(
+//                            textNote: $textNote,
+//                            tagList: $viewModel.tagList,
+//                            itemList: $viewModel.enrouteRefArray,
+//                            currentIndex: $currentIndex,
+//                            showSheet: $showSheet,
+//                            target: target,
+//                            resetData: self.resetData
+//                        ).interactiveDismissDisabled(true)
+//                    }
+//            }
         }
     }
     
-    private func update(_ index: Int) {
-        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
-            found.isDefault = false
-        }
-        
-        viewModel.delete(viewModel.enrouteRefArray[index])
-        viewModel.save()
-        resetData()
-    }
-    
-    private func updateStatus(_ index: Int) {
-        viewModel.enrouteRefArray[index].isDefault.toggle()
-        viewModel.save()
-        resetData()
-    }
-    
-    private func delete(_ index: Int) {
-        if let found = viewModel.enrouteRefArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
-            found.isDefault = false
-        }
-        
-        viewModel.delete(viewModel.enrouteRefArray[index])
-        viewModel.save()
-        resetData()
-    }
-    
-    private func resetData() {
-        viewModel.enrouteArray = viewModel.read("enroute")
-        viewModel.enrouteRefArray = viewModel.read("enrouteref")
-        
-        if self.currentIndex > -1 {
-            self.currentIndex = -1
-        }
-    }
+//    private func update(_ index: Int) {
+//        if let found = viewModel.enrouteArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+//            found.isDefault = false
+//        }
+//        
+//        viewModel.delete(viewModel.enrouteRefArray[index])
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func updateStatus(_ index: Int) {
+//        viewModel.enrouteRefArray[index].isDefault.toggle()
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func delete(_ index: Int) {
+//        if let found = viewModel.enrouteRefArray.first(where: {$0.id == viewModel.enrouteRefArray[index].parentId}) {
+//            found.isDefault = false
+//        }
+//        
+//        viewModel.delete(viewModel.enrouteRefArray[index])
+//        viewModel.save()
+//        resetData()
+//    }
+//    
+//    private func resetData() {
+//        viewModel.enrouteArray = viewModel.read("enroute")
+//        viewModel.enrouteRefArray = viewModel.read("enrouteref")
+//        
+//        if self.currentIndex > -1 {
+//            self.currentIndex = -1
+//        }
+//    }
 }
 
 struct EnrouteReferenceContainer_Previews: PreviewProvider {

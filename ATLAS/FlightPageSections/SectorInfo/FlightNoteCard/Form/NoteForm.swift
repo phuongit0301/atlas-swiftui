@@ -100,7 +100,7 @@ struct NoteForm: View {
                 .frame(maxHeight: .infinity)
                 .onAppear {
                     if currentIndex > -1 {
-                        self.textNote = itemList[currentIndex].name
+                        self.textNote = itemList[currentIndex].unwrappedName
                         
                         let tags = itemList[currentIndex].tags?.allObjects ?? []
                         
@@ -117,25 +117,25 @@ struct NoteForm: View {
     }
     
     func save() {
-        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if !name.isEmpty {
-            let item = NoteList(context: persistenceController.container.viewContext)
-            item.id = UUID()
-            item.name = name
-            item.isDefault = false
-            item.canDelete = true
-            item.fromParent = false
-            item.target = target
-            item.addToTags(NSSet(array: tagListSelected))
-            
-            viewModel.save()
-            
-            textNote = ""
-            tagListSelected = []
-            self.resetData()
-            self.showSheet.toggle()
-        }
+//        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+//        
+//        if !name.isEmpty {
+//            let item = NoteList(context: persistenceController.container.viewContext)
+//            item.id = UUID()
+//            item.name = name
+//            item.isDefault = false
+//            item.canDelete = true
+//            item.fromParent = false
+//            item.target = target
+//            item.addToTags(NSSet(array: tagListSelected))
+//            
+//            viewModel.save()
+//            
+//            textNote = ""
+//            tagListSelected = []
+//            self.resetData()
+//            self.showSheet.toggle()
+//        }
     }
     
     func update() {

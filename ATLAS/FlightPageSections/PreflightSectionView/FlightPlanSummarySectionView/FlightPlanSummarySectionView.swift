@@ -7,10 +7,21 @@
 
 import SwiftUI
 import Combine
+import UIKit
+
+struct IAlternate {
+    var id = UUID()
+    var altn: String
+    var vis: String?
+    var minima: String?
+    var eta: String
+    var type: String?
+}
 
 struct FlightPlanSummarySectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    
     @State var isReference = false
     @State private var selectedCA = SummaryDataDropDown.pic
     @State private var selectedFO = SummaryDataDropDown.pic
@@ -21,6 +32,7 @@ struct FlightPlanSummarySectionView: View {
     @State private var tfMinima: String = ""
     @State private var tfEta: String = ""
     @State private var showUTC = true
+    @State private var isEdit = false
     
     @State private var isCollapseFlightInfo = true
     @State private var isCollapsePlanTime = true
@@ -28,8 +40,9 @@ struct FlightPlanSummarySectionView: View {
     @State private var isCollapseCrew = true
     @State private var selectedAircraftPicker = ""
     @State private var tfFlightTime = ""
-    @State private var enrouteAlternates = 1
-    @State private var destinationAlternates = 1
+
+    @State var enrouteAlternates: [IAlternate] = []
+    @State var destinationAlternates: [IAlternate] = []
     
     var ALTN_DROP_DOWN: [String] = ["ALTN 1", "ALTN 1", "ALTN 1"]
     
@@ -160,10 +173,10 @@ struct FlightPlanSummarySectionView: View {
                                     }
                                 }.frame(alignment: .leading)
                             }).buttonStyle(PlainButtonStyle())
-
+                            
                             Spacer()
                         }.frame(height: 52)
-
+                        
                         if isCollapsePlanTime {
                             VStack(spacing: 0) {
                                 HStack(spacing: 0) {
@@ -180,9 +193,9 @@ struct FlightPlanSummarySectionView: View {
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
+                                
                                 HStack(spacing: 0) {
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -190,7 +203,7 @@ struct FlightPlanSummarySectionView: View {
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text("").frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 HStack(spacing: 0) {
                                     Text("Block Time")
                                         .foregroundStyle(Color.black)
@@ -205,16 +218,16 @@ struct FlightPlanSummarySectionView: View {
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
+                                
                                 HStack(spacing: 0) {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
+                                    
                                     Text("XXXXX").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
+                                    
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -225,8 +238,8 @@ struct FlightPlanSummarySectionView: View {
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-
-
+                    
+                    
                     VStack(spacing: 0) {
                         HStack(alignment: .center, spacing: 0) {
                             Button(action: {
@@ -245,12 +258,30 @@ struct FlightPlanSummarySectionView: View {
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     }
+                                    
+                                    Spacer()
+                                    
+                                    if isEdit {
+                                        Button(action: {
+                                            self.isEdit.toggle()
+                                            create()
+                                        }, label: {
+                                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                                        })
+                                    } else {
+                                        Button(action: {
+                                            self.isEdit.toggle()
+                                        }, label: {
+                                            Text("Edit").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                                        })
+                                    }
+                                    
                                 }.frame(alignment: .leading)
                             }).buttonStyle(PlainButtonStyle())
-
+                            
                             Spacer()
                         }.frame(height: 52)
-
+                        
                         if isCollapseRoute {
                             VStack(spacing: 8) {
                                 VStack(spacing: 0) {
@@ -259,9 +290,9 @@ struct FlightPlanSummarySectionView: View {
                                             .foregroundStyle(Color.black)
                                             .font(.system(size: 15, weight: .semibold))
                                     }.frame(height: 44)
-
+                                    
                                     Divider().padding(.horizontal, -16)
-
+                                    
                                     HStack {
                                         TextField("Enter route",text: $tfRoute)
                                             .frame(width: proxy.size.width - 64, alignment: .leading)
@@ -270,21 +301,24 @@ struct FlightPlanSummarySectionView: View {
                                             }
                                     }.frame(height: 44)
                                 }
-
+                                
                                 // Enroute Alternates
                                 VStack(spacing: 0) {
                                     HStack(alignment: .center, spacing: 0) {
                                         HStack {
                                             Text("Enroute Alternates").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             Spacer()
-                                            Button(action: {
-                                                enrouteAlternates += 1
-                                            }, label: {
-                                                Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
-                                            }).padding(.trailing)
-
+                                            
+                                            if isEdit {
+                                                Button(action: {
+                                                    enrouteAlternates.append(IAlternate(altn: "", eta: ""))
+                                                }, label: {
+                                                    Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
+                                                }).padding(.trailing)
+                                            }
+                                            
                                         }.frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
-
+                                        
                                         Text("VIS (Optional)")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
@@ -295,29 +329,47 @@ struct FlightPlanSummarySectionView: View {
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                     }.frame(height: 44)
-
+                                    
                                     Divider().padding(.horizontal, -16)
-
-                                    ForEach(0..<enrouteAlternates, id: \.self) {index in
-                                        RowAlternates(width: proxy.size.width)
-                                            .id("enroute\(index)")
+                                    
+                                    if enrouteAlternates.count > 0 {
+                                        ForEach(enrouteAlternates.indices, id: \.self) {index in
+                                            if isEdit {
+                                                RowAlternates(width: proxy.size.width, index: index, itemList: $enrouteAlternates, create: create, removeItem: removeItem)
+                                            } else {
+                                                RowTextAlternates(width: proxy.size.width, index: index, itemList: $enrouteAlternates)
+                                                    .id("enroute\(index)")
+                                            }
+                                        }
+                                    } else {
+                                        HStack(alignment: .center) {
+                                            if isEdit {
+                                                Text("Tap \"Add\" to add enroute alternate").foregroundColor(Color.theme.silverSand).font(.system(size: 15, weight: .regular))
+                                            } else {
+                                                Text("Tap \"Edit\" to add enroute alternate").foregroundColor(Color.theme.silverSand).font(.system(size: 15, weight: .regular))
+                                            }
+                                            
+                                            Spacer()
+                                        }.frame(height: 44)
                                     }
                                 }
-
+                                
                                 // Destination Alternates
                                 VStack(spacing: 0) {
                                     HStack(spacing: 0) {
                                         HStack {
                                             Text("Destination Alternates").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             Spacer()
-                                            Button(action: {
-                                                destinationAlternates += 1
-                                            }, label: {
-                                                Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
-                                            }).padding(.trailing)
-
+                                            
+                                            if isEdit {
+                                                Button(action: {
+                                                    destinationAlternates.append(IAlternate(altn: "", eta: ""))
+                                                }, label: {
+                                                    Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
+                                                }).padding(.trailing)
+                                            }
                                         }.frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
-
+                                        
                                         Text("VIS")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
@@ -328,13 +380,30 @@ struct FlightPlanSummarySectionView: View {
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                     }.frame(height: 44)
-
+                                    
                                     Divider().padding(.horizontal, -16)
-
-                                    ForEach(0..<destinationAlternates, id: \.self) {index in
-                                        RowAlternates(width: proxy.size.width)
-                                            .id("destination\(index)")
+                                    
+                                    if destinationAlternates.count > 0 {
+                                        ForEach(destinationAlternates.indices, id: \.self) {index in
+                                            if isEdit {
+                                                RowAlternates(width: proxy.size.width, index: index, itemList: $destinationAlternates, create: create, removeItem: removeItem)
+                                            } else {
+                                                RowTextAlternates(width: proxy.size.width, index: index, itemList: $destinationAlternates)
+                                                    .id("destination\(index)")
+                                            }
+                                        }
+                                    } else {
+                                        HStack(alignment: .center) {
+                                            if isEdit {
+                                                Text("Tap \"Add\" to add destination alternate").foregroundColor(Color.theme.silverSand).font(.system(size: 15, weight: .regular))
+                                            } else {
+                                                Text("Tap \"Edit\" to add destination alternate").foregroundColor(Color.theme.silverSand).font(.system(size: 15, weight: .regular))
+                                            }
+                                            
+                                            Spacer()
+                                        }.frame(height: 44)
                                     }
+                                    
                                 }
                             }// End VStack
                         }// End if
@@ -348,7 +417,67 @@ struct FlightPlanSummarySectionView: View {
             }.padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
+                .onAppear {
+                    if coreDataModel.dataAlternate.count > 0 {
+                        for item in coreDataModel.dataAlternate {
+                            if item.type == "enroute" {
+                                enrouteAlternates.append(
+                                    IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "")
+                                )
+                            } else {
+                                destinationAlternates.append(
+                                    IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "")
+                                )
+                            }
+                            
+                        }
+                    }
+                }
         }//end geometry
+    }
+    
+    func create() {
+        if (destinationAlternates.count > 0) {
+            for item in enrouteAlternates {
+                if item.eta != "" && item.altn != "" {
+                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                    newObject.id = UUID()
+                    newObject.altn = item.altn
+                    newObject.vis = item.vis
+                    newObject.minima = item.minima
+                    newObject.eta = item.eta
+                    newObject.type = "enroute"
+                    
+                    coreDataModel.save()
+                }
+            }
+        }
+        
+        if (destinationAlternates.count > 0) {
+            for item in destinationAlternates {
+                if item.eta != "" && item.altn != "" {
+                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                    newObject.id = UUID()
+                    newObject.altn = item.altn
+                    newObject.vis = item.vis
+                    newObject.minima = item.minima
+                    newObject.eta = item.eta
+                    newObject.type = "destination"
+                    
+                    coreDataModel.save()
+                }
+            }
+        }
+    }
+    
+    func removeItem(_ index: Int) {
+        print("index========\(index)")
+        print("enrouteAlternates[index]========\(enrouteAlternates[index])")
+        print("enrouteAlternates========\(enrouteAlternates)")
+        
+        enrouteAlternates.removeAll(where: {$0.id == enrouteAlternates[index].id})
+        
+        print("enrouteAlternates========\(enrouteAlternates)")
     }
 }
 

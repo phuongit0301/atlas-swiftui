@@ -18,9 +18,12 @@ struct NoteItemForm: View {
     @Binding var showSheet: Bool
     @State var tagListSelected: [TagList] = []
     @State var pasteboard = UIPasteboard.general
-    @State var isIncludeBriefing = true
+    @State var isIncludeBriefing = false
     
     @State private var animate = false
+    
+    var resetData: () -> Void
+    let dateFormatter = DateFormatter()
     
     var body: some View {
         GeometryReader { geo in
@@ -130,14 +133,59 @@ struct NoteItemForm: View {
             }.cornerRadius(8)
                 .background(.white)
                 .frame(maxHeight: .infinity)
+                .onAppear {
+                    if currentIndex > -1 {
+                        self.textNote = itemList[currentIndex].unwrappedName
+                        
+                        let tags = itemList[currentIndex].tags?.allObjects ?? []
+                        
+                        if tags.count > 0 {
+                            for index in 0..<tagList.count {
+                                if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
+                                    tagListSelected.append(tagList[index])
+                                }
+                            }
+                        }
+                    }
+                }
         }
     }
     
     func save() {
+        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
+        if !name.isEmpty {
+            let item = NoteList(context: persistenceController.container.viewContext)
+            item.id = UUID()
+            item.name = name
+            item.isDefault = false
+            item.createdAt = dateFormatter.string(from: Date())
+
+            item.addToTags(NSSet(array: tagListSelected))
+
+            viewModel.save()
+
+            textNote = ""
+            tagListSelected = []
+            self.resetData()
+            self.showSheet.toggle()
+        }
     }
     
     func update() {
+        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
+        if !name.isEmpty {
+            itemList[currentIndex].name = name
+            itemList[currentIndex].tags = NSSet(array: tagListSelected)
+            
+            viewModel.save()
+            
+            textNote = ""
+            tagListSelected = []
+            self.resetData()
+            self.showSheet.toggle()
+        }
     }
 }

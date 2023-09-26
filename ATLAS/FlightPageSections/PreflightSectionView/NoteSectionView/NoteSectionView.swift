@@ -21,74 +21,76 @@ struct NoteSectionView: View {
     
     var body: some View {
         GeometryReader {proxy in
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .center) {
-                    Text("Notes")
-                        .font(.system(size: 17, weight: .semibold))
-                        .padding(.leading)
-                    Spacer()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .center) {
+                        Text("Notes")
+                            .font(.system(size: 17, weight: .semibold))
+                            .padding(.leading)
+                        Spacer()
+                        
+                        Text("Last Update: DD/MM/YY HHMM").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                        
+                        Button(action: {
+                            // Todo
+                        }, label: {
+                            HStack {
+                                Text("Refresh").font(.system(size: 17, weight: .regular))
+                                    .foregroundColor(Color.white)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 8)
+                            }
+                        }).background(Color.theme.azure)
+                            .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(.white, lineWidth: 0)
+                            )
+                            .padding(.vertical, 8)
+                    }.frame(height: 52)
                     
-                    Text("Last Update: DD/MM/YY HHMM").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                    
-                    Button(action: {
-                        // Todo
-                    }, label: {
-                        HStack {
-                            Text("Refresh").font(.system(size: 17, weight: .regular))
-                                .foregroundColor(Color.white)
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
-                        }
-                    }).background(Color.theme.azure)
-                        .cornerRadius(12)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(.white, lineWidth: 0)
-                        )
-                        .padding(.vertical, 8)
-                }.frame(height: 44)
-                
-                NoteItemList(
-                    header: header,
-                    isRelevant: false,
-                    showSheet: $showSheet,
-                    currentIndex: $currentIndex,
-                    itemList: $viewModel.departureArray,
-                    isShowList: $isShowListNote,
-                    geoWidth: proxy.size.width,
-                    remove: remove,
-                    add: add
-                ).frame(maxHeight: .infinity)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
-                
-                NoteItemList(
-                    header: "Relevant AABBA Posts",
-                    isRelevant: true,
-                    showSheet: $showSheet,
-                    currentIndex: $currentIndex,
-                    itemList: $viewModel.departureArray,
-                    isShowList: $isShowListRelevent,
-                    geoWidth: proxy.size.width,
-                    remove: remove,
-                    add: add
-                ).frame(maxHeight: .infinity)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
-            }.padding(.vertical, 8)
-                .padding(.horizontal, 16)
-                .background(Color.theme.antiFlashWhite)
-                .sheet(isPresented: $showSheet) {
-                    NoteItemForm(
-                        textNote: $textNote,
-                        tagList: $viewModel.tagList,
-                        itemList: $itemList,
+                    NoteItemList(
+                        header: header,
+                        showSheet: $showSheet,
                         currentIndex: $currentIndex,
-                        showSheet: $showSheet
-                    ).interactiveDismissDisabled(true)
-                }
+                        itemList: $viewModel.noteList,
+                        isShowList: $isShowListNote,
+                        geoWidth: proxy.size.width,
+                        remove: remove,
+                        add: add,
+                        resetData: resetData
+                    ).frame(maxHeight: .infinity)
+                        .padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                    
+                    NoteItemRelevantList(
+                        header: "Relevant AABBA Posts",
+                        showSheet: $showSheet,
+                        currentIndex: $currentIndex,
+                        itemList: $viewModel.noteList,
+                        isShowList: $isShowListRelevent,
+                        geoWidth: proxy.size.width,
+                        remove: remove,
+                        add: add
+                    ).frame(maxHeight: .infinity)
+                        .padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                }.padding(.horizontal, 16)
+                    .background(Color.theme.antiFlashWhite)
+                    .padding(.bottom)
+                    .sheet(isPresented: $showSheet) {
+                        NoteItemForm(
+                            textNote: $textNote,
+                            tagList: $viewModel.tagList,
+                            itemList: $viewModel.noteList,
+                            currentIndex: $currentIndex,
+                            showSheet: $showSheet,
+                            resetData: resetData
+                        ).interactiveDismissDisabled(true)
+                    }
+            }
         }
         
     }
@@ -99,6 +101,14 @@ struct NoteSectionView: View {
     
     private func add() {
        
+    }
+    
+    private func resetData() {
+        viewModel.noteList = viewModel.read()
+
+        if self.currentIndex > -1 {
+            self.currentIndex = -1
+        }
     }
 }
 

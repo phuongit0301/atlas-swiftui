@@ -29,22 +29,23 @@ struct FlightPlanNOTAMSectionView: View {
     @State private var selectionArr = ""
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
                 Text("NOTAMS")
                     .font(.system(size: 17, weight: .semibold))
                     .padding(.leading)
                 Spacer()
 
-            }.frame(height: 44)
+            }.frame(height: 52)
+                .padding(.bottom, 8)
             
             //scrollable outer list section
             ScrollView {
                 // Dep NOTAM section
                 VStack(spacing: 0) {
                     HStack(alignment: .center, spacing: 0) {
-                        HStack {
-                            Text("Departure NOTAMs").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                        HStack(alignment: .center, spacing: 8) {
+                            Text("Departure NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                             
                             if isDepShow {
                                 Image(systemName: "chevron.down")
@@ -65,8 +66,8 @@ struct FlightPlanNOTAMSectionView: View {
                         
                         Spacer()
                         
-                        HStack {
-                            HStack {
+                        HStack(alignment: .center, spacing: 16) {
+                            HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
                                     Text("Most Recent")
                                         .font(.system(size: 17, weight: .regular))
@@ -89,18 +90,22 @@ struct FlightPlanNOTAMSectionView: View {
                     
                     if isDepShow {
                         VStack(alignment: .leading) {
-                            Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Color.black)
-                                .frame(height: 44)
+                            HStack(spacing: 0) {
+                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(Color.black)
+                                Spacer()
+                            }.frame(height: 44)
                             
-                            Divider().padding(.horizontal, -16)
+                            if arrDepNotams.count > 0 {
+                                Divider().padding(.horizontal, -16)
+                            }
                             
                             ForEach(arrDepNotams.indices, id: \.self) { index in
                                 HStack(alignment: .center, spacing: 0) {
                                     // notam text
                                     Text(arrDepNotams[index].unwrappedNotam)
-                                        .font(.system(size: 17, weight: .regular))
+                                        .font(.system(size: 15, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -116,15 +121,15 @@ struct FlightPlanNOTAMSectionView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }.frame(height: 44)
+                                }.padding(.bottom, 8)
                                 
-                                if arrDepNotams.count > 0 && index + 1 < arrDepNotams.count {
+                                if index + 1 < arrDepNotams.count {
                                     Divider().padding(.horizontal, -16)
                                 }
                             }
                         }
                     }
-                }.padding(16)
+                }.padding(.horizontal)
                     .background(Color.white)
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
@@ -133,8 +138,8 @@ struct FlightPlanNOTAMSectionView: View {
                 
                 VStack(spacing: 0) {
                     HStack(alignment: .center, spacing: 0) {
-                        HStack {
-                            Text("Enroute Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                        HStack(alignment: .center, spacing: 8) {
+                            Text("Enroute Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                             
                             if isEnrShow {
                                 Image(systemName: "chevron.down")
@@ -155,8 +160,8 @@ struct FlightPlanNOTAMSectionView: View {
                         
                         Spacer()
                         
-                        HStack {
-                            HStack {
+                        HStack(alignment: .center, spacing: 16) {
+                            HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
                                     Text("Most Recent")
                                         .font(.system(size: 17, weight: .regular))
@@ -179,17 +184,21 @@ struct FlightPlanNOTAMSectionView: View {
                     
                     if isEnrShow {
                         VStack(alignment: .leading) {
-                            Text("[STATION NAME]: ETD DD/MM/YY HHMM").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                            HStack(spacing: 0) {
+                                Text("[STATION NAME]: ETD DD/MM/YY HHMM").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                Spacer()
+                            }.frame(height: 44)
                             
-                            Divider().padding(.horizontal, -16)
+                            if arrEnrNotams.count > 0 {
+                                Divider().padding(.horizontal, -16)
+                            }
                             
                             ForEach(arrEnrNotams.indices, id: \.self) { index in
                                 HStack(alignment: .center, spacing: 0) {
                                     // notam text
                                     Text(arrEnrNotams[index].unwrappedNotam)
-                                        .font(.system(size: 17, weight: .regular))
+                                        .font(.system(size: 15, weight: .regular))
                                         .foregroundColor(Color.black)
-                                        .frame(height: 44)
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -205,7 +214,7 @@ struct FlightPlanNOTAMSectionView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }.frame(height: 44)
+                                }.padding(.bottom, 8)
                                 
                                 if arrEnrNotams.count > 0 && index + 1 < arrEnrNotams.count {
                                     Divider().padding(.horizontal, -16)
@@ -213,7 +222,7 @@ struct FlightPlanNOTAMSectionView: View {
                             }
                         }
                     }
-                }.padding(16)
+                }.padding(.horizontal)
                     .background(Color.white)
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
@@ -221,8 +230,8 @@ struct FlightPlanNOTAMSectionView: View {
                 // Arr NOTAM section
                 VStack(spacing: 0) {
                     HStack(alignment: .center, spacing: 0) {
-                        HStack {
-                            Text("Arrival NOTAMs").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                        HStack(alignment: .center, spacing: 8) {
+                            Text("Arrival NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                             
                             if isArrShow {
                                 Image(systemName: "chevron.down")
@@ -242,8 +251,8 @@ struct FlightPlanNOTAMSectionView: View {
                         
                         Spacer()
                         
-                        HStack(alignment: .center, spacing: 0) {
-                            HStack {
+                        HStack(alignment: .center, spacing: 16) {
+                            HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
                                     Text("Most Recent")
                                         .font(.system(size: 17, weight: .regular))
@@ -265,17 +274,21 @@ struct FlightPlanNOTAMSectionView: View {
                     
                     if isArrShow {
                         VStack(alignment: .leading) {
-                            Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Color.black)
-                                .frame(height: 44)
+                            HStack(spacing: 0) {
+                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(Color.black)
+                                Spacer()
+                            }.frame(height: 44)
                             
-                            Divider().padding(.horizontal, -16)
+                            if arrArrNotams.count > 0 {
+                                Divider().padding(.horizontal, -16)
+                            }
                             
                             ForEach(arrArrNotams.indices, id: \.self) { index in
                                 HStack(alignment: .center, spacing: 0) {
                                     // notam text
-                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 17, weight: .regular))
+                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 15, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -291,7 +304,7 @@ struct FlightPlanNOTAMSectionView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }.frame(height: 44)
+                                }.padding(.bottom, 8)
                                 
                                 if arrArrNotams.count > 0 && index + 1 < arrArrNotams.count {
                                     Divider().padding(.horizontal, -16)
@@ -299,7 +312,7 @@ struct FlightPlanNOTAMSectionView: View {
                             }
                         }
                     }
-                }.padding(16)
+                }.padding(.horizontal)
                     .background(Color.white)
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
@@ -307,8 +320,8 @@ struct FlightPlanNOTAMSectionView: View {
                 // Destination NOTAM section
                 VStack(spacing: 0) {
                     HStack(alignment: .center, spacing: 0) {
-                        HStack {
-                            Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                        HStack(alignment: .center, spacing: 8) {
+                            Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                             
                             if isDestShow {
                                 Image(systemName: "chevron.down")
@@ -328,8 +341,8 @@ struct FlightPlanNOTAMSectionView: View {
                         
                         Spacer()
                         
-                        HStack(alignment: .center, spacing: 0) {
-                            HStack {
+                        HStack(alignment: .center, spacing: 16) {
+                            HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
                                     Text("Most Recent")
                                         .font(.system(size: 17, weight: .regular))
@@ -351,17 +364,21 @@ struct FlightPlanNOTAMSectionView: View {
                     
                     if isDestShow {
                         VStack(alignment: .leading) {
-                            Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Color.black)
-                                .frame(height: 44)
+                            HStack(spacing: 0) {
+                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(Color.black)
+                                Spacer()
+                            }.frame(height: 44)
                             
-                            Divider().padding(.horizontal, -16)
+                            if arrArrNotams.count > 0 {
+                                Divider().padding(.horizontal, -16)
+                            }
                             
                             ForEach(arrArrNotams.indices, id: \.self) { index in
                                 HStack(alignment: .center, spacing: 0) {
                                     // notam text
-                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 17, weight: .regular))
+                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 15, weight: .regular))
                                     Spacer()
                                     // star function to add to reference
                                     Button(action: {
@@ -377,7 +394,7 @@ struct FlightPlanNOTAMSectionView: View {
                                         }
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
-                                }.frame(height: 44)
+                                }.padding(.bottom, 8)
                                 
                                 if arrArrNotams.count > 0 && index + 1 < arrArrNotams.count {
                                     Divider().padding(.horizontal, -16)
@@ -385,13 +402,12 @@ struct FlightPlanNOTAMSectionView: View {
                             }
                         }
                     }
-                }.padding(16)
+                }.padding(.horizontal)
                     .background(Color.white)
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-            }
-        }.padding(.vertical, 8)
-            .padding(.horizontal, 16)
+            }.padding(.bottom, 32)
+        }.padding(.horizontal, 16)
             .background(Color.theme.antiFlashWhite)
         .onChange(of: selectionArr) { newValue in
             var temp = [NotamsDataList]()

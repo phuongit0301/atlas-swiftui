@@ -62,14 +62,17 @@ class CoreDataModelState: ObservableObject {
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
     @Published var tagList: [TagList] = []
-    @Published var aircraftArray: [NoteList] = []
-    @Published var departureArray: [NoteList] = []
-    @Published var enrouteArray: [NoteList] = []
-    @Published var arrivalArray: [NoteList] = []
-    @Published var aircraftRefArray: [NoteList] = []
-    @Published var departureRefArray: [NoteList] = []
-    @Published var enrouteRefArray: [NoteList] = []
-    @Published var arrivalRefArray: [NoteList] = []
+    @Published var noteList: [NoteList] = []
+//    @Published var aircraftArray: [NoteList] = []
+//    @Published var departureArray: [NoteList] = []
+//    @Published var enrouteArray: [NoteList] = []
+//    @Published var arrivalArray: [NoteList] = []
+//    @Published var aircraftRefArray: [NoteList] = []
+//    @Published var departureRefArray: [NoteList] = []
+//    @Published var enrouteRefArray: [NoteList] = []
+//    @Published var arrivalRefArray: [NoteList] = []
+//    @Published var dataFlightPlan: FlightPlanList?
+//    @Published var dataEvents: [EventList] = []
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
     
@@ -174,6 +177,9 @@ class CoreDataModelState: ObservableObject {
     @Published var dataRecency = [RecencyList]()
     @Published var dataRecencyExpiry = [RecencyExpiryList]()
     
+    // For Route Alternate
+    @Published var dataAlternate = [RouteAlternateList]()
+    
     @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 1.988333, longitude: 104.105), span: MKCoordinateSpan(latitudeDelta: 8, longitudeDelta: 8))
     @Published var lineCoordinates = [CLLocationCoordinate2D]()
     @Published var pointsOfInterest = [MKAnnotation]()
@@ -197,7 +203,6 @@ class CoreDataModelState: ObservableObject {
                 let responseLogbook = await remoteService.getLogbookData()
                 let responseRecency = await remoteService.getRecencyData()
                 
-                print("responseRecency========\(responseRecency)")
                 DispatchQueue.main.async {
                     if let waypointsData = data?.waypointsData {
                         self.initDataEnroute(waypointsData)
@@ -337,14 +342,15 @@ class CoreDataModelState: ObservableObject {
     func initFetchData() async {
         DispatchQueue.main.async {
             self.tagList = self.readTag()
-            self.aircraftArray = self.read("aircraft")
-            self.departureArray = self.read("departure")
-            self.enrouteArray = self.read("enroute")
-            self.arrivalArray = self.read("arrival")
-            self.aircraftRefArray = self.read("aircraftref")
-            self.departureRefArray = self.read("departureref")
-            self.enrouteRefArray = self.read("enrouteref")
-            self.arrivalRefArray = self.read("arrivalref")
+            self.noteList = self.read()
+//            self.aircraftArray = self.read("aircraft")
+//            self.departureArray = self.read("departure")
+//            self.enrouteArray = self.read("enroute")
+//            self.arrivalArray = self.read("arrival")
+//            self.aircraftRefArray = self.read("aircraftref")
+//            self.departureRefArray = self.read("departureref")
+//            self.enrouteRefArray = self.read("enrouteref")
+//            self.arrivalRefArray = self.read("arrivalref")
             self.scratchPadArray = self.readScratchPad()
             self.dataFPEnroute = self.readEnrouteList()
             //        readFlightPlan()
@@ -360,6 +366,8 @@ class CoreDataModelState: ObservableObject {
             
             self.dataRecency = self.readDataRecency()
             self.dataRecencyExpiry = self.readDataRecencyExpiry()
+            
+            self.dataAlternate = self.readDataAlternate()
 //            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
@@ -459,121 +467,125 @@ class CoreDataModelState: ObservableObject {
     func initData() {
         let newTags1 = TagList(context: service.container.viewContext)
         newTags1.id = UUID()
-        newTags1.name = "Dispatch"
+        newTags1.name = "Terrain"
         
         let newTags2 = TagList(context: service.container.viewContext)
         newTags2.id = UUID()
-        newTags2.name = "Terrain"
+        newTags2.name = "ATC"
         
         let newTags3 = TagList(context: service.container.viewContext)
         newTags3.id = UUID()
-        newTags3.name = "Weather"
+        newTags3.name = "Cabin Defects"
         
         let newTags4 = TagList(context: service.container.viewContext)
         newTags4.id = UUID()
-        newTags4.name = "Approach"
+        newTags4.name = "Aircraft Status"
         
         let newTags5 = TagList(context: service.container.viewContext)
         newTags5.id = UUID()
-        newTags5.name = "Airport"
+        newTags5.name = "Preflight"
         
         let newTags6 = TagList(context: service.container.viewContext)
         newTags6.id = UUID()
-        newTags6.name = "ATC"
+        newTags6.name = "Departure"
         
         let newTags7 = TagList(context: service.container.viewContext)
         newTags7.id = UUID()
-        newTags7.name = "Aircraft"
+        newTags7.name = "Enroute"
         
         let newTags8 = TagList(context: service.container.viewContext)
         newTags8.id = UUID()
-        newTags8.name = "Environment"
+        newTags8.name = "Arrival"
         
-        let newDep1 = NoteList(context: service.container.viewContext)
-        newDep1.id = UUID()
-        newDep1.name = "All crew to be simulator-qualified for RNP approach"
-        newDep1.isDefault = false
-        newDep1.canDelete = false
-        newDep1.fromParent = false
-        newDep1.target = "departure"
-        newDep1.tags = NSSet(array: [newTags1])
+        let newTags9 = TagList(context: service.container.viewContext)
+        newTags9.id = UUID()
+        newTags9.name = "Crew Briefing"
         
-        let newDep2 = NoteList(context: service.container.viewContext)
-        newDep2.id = UUID()
-        newDep2.name = "Note digital clearance requirements 10mins before pushback"
-        newDep2.isDefault = false
-        newDep2.canDelete = false
-        newDep2.fromParent = false
-        newDep2.target = "departure"
-        newDep2.tags = NSSet(array: [newTags5])
-        
-        let newDep3 = NoteList(context: service.container.viewContext)
-        newDep3.id = UUID()
-        newDep3.name = "Reduce ZFW by 1 ton for preliminary fuel"
-        newDep3.isDefault = false
-        newDep3.canDelete = false
-        newDep3.fromParent = false
-        newDep3.target = "departure"
-        newDep3.tags = NSSet(array: [newTags1])
-        
-        let newDep4 = NoteList(context: service.container.viewContext)
-        newDep4.id = UUID()
-        newDep4.name = "Expected POB: 315"
-        newDep4.isDefault = false
-        newDep4.canDelete = false
-        newDep4.fromParent = false
-        newDep4.target = "departure"
-        newDep4.tags = NSSet(array: [newTags1])
-        
-        let newDep5 = NoteList(context: service.container.viewContext)
-        newDep5.id = UUID()
-        newDep5.name = "Hills to the north of aerodrome"
-        newDep5.isDefault = false
-        newDep5.canDelete = false
-        newDep5.fromParent = false
-        newDep5.target = "departure"
-        newDep5.tags = NSSet(array: [newTags2])
-        
-        let newEnroute1 = NoteList(context: service.container.viewContext)
-        newEnroute1.id = UUID()
-        newEnroute1.name = "Non-standard levels when large scale weather deviation in progress"
-        newEnroute1.isDefault = false
-        newEnroute1.canDelete = false
-        newEnroute1.fromParent = false
-        newEnroute1.target = "enroute"
-        newEnroute1.tags = NSSet(array: [newTags6])
-        
-        let newArrival1 = NoteList(context: service.container.viewContext)
-        newArrival1.id = UUID()
-        newArrival1.name = "Birds in vicinity"
-        newArrival1.isDefault = false
-        newArrival1.canDelete = false
-        newArrival1.fromParent = false
-        newArrival1.target = "arrival"
-        newArrival1.tags = NSSet(array: [newTags8])
-        
-        let newArrival2 = NoteList(context: service.container.viewContext)
-        newArrival2.id = UUID()
-        newArrival2.name = "Any +TS expected to last 15mins"
-        newArrival2.isDefault = false
-        newArrival2.canDelete = false
-        newArrival2.fromParent = false
-        newArrival2.target = "arrival"
-        newArrival2.tags = NSSet(array: [newTags3])
-        
-        service.container.viewContext.performAndWait {
-            do {
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-                print("saved successfully")
-            } catch {
-                // Something went wrong 😭
-                print("Failed to save: \(error)")
-                // Rollback any changes in the managed object context
-                service.container.viewContext.rollback()
-                
-            }
-        }
+//        let newDep1 = NoteList(context: service.container.viewContext)
+//        newDep1.id = UUID()
+//        newDep1.name = "All crew to be simulator-qualified for RNP approach"
+//        newDep1.isDefault = false
+//        newDep1.canDelete = false
+//        newDep1.fromParent = false
+//        newDep1.target = "departure"
+//        newDep1.tags = NSSet(array: [newTags1])
+//
+//        let newDep2 = NoteList(context: service.container.viewContext)
+//        newDep2.id = UUID()
+//        newDep2.name = "Note digital clearance requirements 10mins before pushback"
+//        newDep2.isDefault = false
+//        newDep2.canDelete = false
+//        newDep2.fromParent = false
+//        newDep2.target = "departure"
+//        newDep2.tags = NSSet(array: [newTags5])
+//
+//        let newDep3 = NoteList(context: service.container.viewContext)
+//        newDep3.id = UUID()
+//        newDep3.name = "Reduce ZFW by 1 ton for preliminary fuel"
+//        newDep3.isDefault = false
+//        newDep3.canDelete = false
+//        newDep3.fromParent = false
+//        newDep3.target = "departure"
+//        newDep3.tags = NSSet(array: [newTags1])
+//
+//        let newDep4 = NoteList(context: service.container.viewContext)
+//        newDep4.id = UUID()
+//        newDep4.name = "Expected POB: 315"
+//        newDep4.isDefault = false
+//        newDep4.canDelete = false
+//        newDep4.fromParent = false
+//        newDep4.target = "departure"
+//        newDep4.tags = NSSet(array: [newTags1])
+//
+//        let newDep5 = NoteList(context: service.container.viewContext)
+//        newDep5.id = UUID()
+//        newDep5.name = "Hills to the north of aerodrome"
+//        newDep5.isDefault = false
+//        newDep5.canDelete = false
+//        newDep5.fromParent = false
+//        newDep5.target = "departure"
+//        newDep5.tags = NSSet(array: [newTags2])
+//
+//        let newEnroute1 = NoteList(context: service.container.viewContext)
+//        newEnroute1.id = UUID()
+//        newEnroute1.name = "Non-standard levels when large scale weather deviation in progress"
+//        newEnroute1.isDefault = false
+//        newEnroute1.canDelete = false
+//        newEnroute1.fromParent = false
+//        newEnroute1.target = "enroute"
+//        newEnroute1.tags = NSSet(array: [newTags6])
+//
+//        let newArrival1 = NoteList(context: service.container.viewContext)
+//        newArrival1.id = UUID()
+//        newArrival1.name = "Birds in vicinity"
+//        newArrival1.isDefault = false
+//        newArrival1.canDelete = false
+//        newArrival1.fromParent = false
+//        newArrival1.target = "arrival"
+//        newArrival1.tags = NSSet(array: [newTags8])
+//
+//        let newArrival2 = NoteList(context: service.container.viewContext)
+//        newArrival2.id = UUID()
+//        newArrival2.name = "Any +TS expected to last 15mins"
+//        newArrival2.isDefault = false
+//        newArrival2.canDelete = false
+//        newArrival2.fromParent = false
+//        newArrival2.target = "arrival"
+//        newArrival2.tags = NSSet(array: [newTags3])
+//
+//        service.container.viewContext.performAndWait {
+//            do {
+//                // Persist the data in this managed object context to the underlying store
+//                try service.container.viewContext.save()
+//                print("saved successfully")
+//            } catch {
+//                // Something went wrong 😭
+//                print("Failed to save: \(error)")
+//                // Rollback any changes in the managed object context
+//                service.container.viewContext.rollback()
+//
+//            }
+//        }
     }
     
     
@@ -1690,27 +1702,23 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func read(_ target: String = "departure", predicateFormat: String? = "target = %@", fetchLimit: Int? = nil) -> [NoteList] {
+    func read(fetchLimit: Int? = nil) -> [NoteList] {
         // create a temp array to save fetched notes
         var results: [NoteList] = []
         // initialize the fetch request
         let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
-        
-        // define filter and/or limit if needed
-        if predicateFormat != nil {
-            request.predicate = NSPredicate(format: "target == %@", target)
-        }
+
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }
-        
+
         // fetch with the request
         do {
             results = try service.container.viewContext.fetch(request)
         } catch {
             print("Could not fetch notes from Core Data.")
         }
-        
+
         // return results
         return results
     }
@@ -2426,6 +2434,22 @@ class CoreDataModelState: ObservableObject {
         let request: NSFetchRequest<RecencyExpiryList> = RecencyExpiryList.fetchRequest()
         do {
             let response: [RecencyExpiryList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Recency Expiry from Core Data.")
+        }
+        
+        return data
+    }
+
+    func readDataAlternate() -> [RouteAlternateList] {
+        var data: [RouteAlternateList] = []
+        
+        let request: NSFetchRequest<RouteAlternateList> = RouteAlternateList.fetchRequest()
+        do {
+            let response: [RouteAlternateList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 data = response
             }

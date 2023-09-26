@@ -47,7 +47,7 @@ struct FlightPlanMetarTafSectionView: View {
                         )
                         .padding(.vertical, 8)
                         .disabled(showLoading)
-                }.frame(height: 44)
+                }.frame(height: 52)
                     .padding(.bottom)
                 
 //                HStack {
@@ -67,8 +67,8 @@ struct FlightPlanMetarTafSectionView: View {
                 
                 //scrollable outer list section
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
+                    VStack(spacing: 8) {
+                        HStack(alignment: .center, spacing: 8) {
                             Text("Departure METAR & TAF").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                             
                             if isDepShow {
@@ -84,8 +84,7 @@ struct FlightPlanMetarTafSectionView: View {
                             }
                             
                             Spacer()
-                        }.frame(maxWidth: .infinity)
-                            .frame(height: 46, alignment: .leading)
+                        }.frame(height: 52)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isDepShow.toggle()
@@ -97,36 +96,35 @@ struct FlightPlanMetarTafSectionView: View {
                                     .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
-                                
                                 Text("METAR")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
+                                    .padding(.vertical, 8)
                                 
                                 Text("TAF")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
-                            }
+                                    .padding(.vertical, 8)
+                            }.padding(.bottom)
                         }
-                    }.padding(16)
+                    }.padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        HStack {
+                        HStack(alignment: .center, spacing: 8) {
                             Text("Enroute Alternates METAR & TAF").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                             
                             if isEnrShow {
@@ -142,8 +140,7 @@ struct FlightPlanMetarTafSectionView: View {
                             }
                             
                             Spacer()
-                        }.frame(maxWidth: .infinity)
-                            .frame(height: 46, alignment: .leading)
+                        }.frame(height: 52)
                         .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isEnrShow.toggle()
@@ -157,35 +154,35 @@ struct FlightPlanMetarTafSectionView: View {
                                 
                                 
                                 Text("METAR")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
+                                    .padding(.vertical, 8)
                                 
                                 Text("TAF")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
+                                    .padding(.vertical, 8)
                                 
-                            }
+                            }.padding(.bottom)
                         }
-                    }.padding(16)
+                    }.padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
+                    VStack(spacing: 8) {
+                        HStack(alignment: .center, spacing: 8) {
                             Text("Arrival METAR & TAF").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                             
                             if isArrShow {
@@ -201,8 +198,7 @@ struct FlightPlanMetarTafSectionView: View {
                             }
                             
                             Spacer()
-                        }.frame(maxWidth: .infinity)
-                            .frame(height: 46, alignment: .leading)
+                        }.frame(height: 52)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isArrShow.toggle()
@@ -215,34 +211,34 @@ struct FlightPlanMetarTafSectionView: View {
                                     .frame(height: 44)
                                 
                                 Text("METAR")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
+                                    .padding(.vertical, 8)
                                 
                                 Text("TAF")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
-                            }
+                                    .padding(.vertical, 8)
+                            }.padding(.bottom)
                         }
-                    }.padding(16)
+                    }.padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
+                    VStack(spacing: 8) {
+                        HStack(alignment: .center, spacing: 8) {
                             Text("Destination Alternates METAR & TAF").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
                             
                             if isDestShow {
@@ -258,8 +254,7 @@ struct FlightPlanMetarTafSectionView: View {
                             }
                             
                             Spacer()
-                        }.frame(maxWidth: .infinity)
-                            .frame(height: 46, alignment: .leading)
+                        }.frame(height: 52)
                         .contentShape(Rectangle())
                             .onTapGesture {
                                 self.isDestShow.toggle()
@@ -271,32 +266,32 @@ struct FlightPlanMetarTafSectionView: View {
                                     .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
-                                Text("METAR").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                Text("METAR").font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
+                                    .padding(.vertical, 8)
                                 
                                 Text("TAF")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                     .frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
                                     .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.top)
-                            }
+                                    .padding(.vertical, 8)
+                            }.padding(.bottom)
                         }
-                    }.padding(16)
+                    }.padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                 }
-            }.padding(.vertical, 8)
+            }.padding(.bottom)
                 .padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
         }

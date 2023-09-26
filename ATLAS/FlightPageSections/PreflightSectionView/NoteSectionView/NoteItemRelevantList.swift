@@ -1,5 +1,5 @@
 //
-//  NoteItemList.swift
+//  NoteItemRelevantList.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,9 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteItemList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
-    
+struct NoteItemRelevantList: View {
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var currentIndex: Int
@@ -19,7 +17,9 @@ struct NoteItemList: View {
     var geoWidth: Double
     var remove: () -> Void
     var add: () -> Void
-    var resetData: () -> Void?
+    
+    @State var listHeight: CGFloat = 0
+    let dateFormatter = DateFormatter()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -44,15 +44,6 @@ struct NoteItemList: View {
                     .onTapGesture {
                         self.isShowList.toggle()
                     }
-                
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
             }.frame(height: 54)
             
             if isShowList {
@@ -94,16 +85,39 @@ struct NoteItemList: View {
                                                     }
                                                 }
                                                 
+                                                Text("@[Username]").foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
+                                                
                                                 Text(renderDate(itemList[index].unwrappedCreatedAt)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                
+                                                HStack(alignment: .center, spacing: 4) {
+                                                    Image(systemName: "arrowshape.left")
+                                                        .foregroundColor(Color.black)
+                                                        .font(.system(size: 20))
+                                                        .rotationEffect(.degrees(90))
+                                                    
+                                                    Text("20").foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                }
+                                                
+                                                HStack(alignment: .center, spacing: 4) {
+                                                    Image(systemName: "bubble.left.and.bubble.right")
+                                                        .foregroundColor(Color.black)
+                                                        .font(.system(size: 20))
+                                                    
+                                                    Text("1").foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                }
                                             }
                                         }.padding(.leading)
                                         
                                         Spacer()
+
+                                        Circle().fill(Color.theme.azure).frame(width: 12, height: 12)
                                         
                                         Button(action: {
-                                            itemList[index].isDefault.toggle()
-                                            viewModel.save()
-                                            resetData()
+                                            if (itemList[index].isDefault) {
+                                                remove()
+                                            } else {
+                                                add()
+                                            }
                                         }) {
                                             itemList[index].isDefault ?
                                                 Image(systemName: "star.fill")
@@ -115,34 +129,26 @@ struct NoteItemList: View {
                                                     .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
+                                            
                                     }
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
+                                .padding(.vertical, 8)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
-                                        resetData()
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                    
                                     Button {
-                                        self.currentIndex = index
-                                        self.showSheet.toggle()
+                                        add()
                                     } label: {
-                                        Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                     }
-                                    .tint(Color.theme.orangePeel)
+                                    .tint(Color.theme.graniteGray)
                                 }
                             }.onMove(perform: move)
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
-                            .frame(height: 73 * CGFloat(viewModel.noteList.count))
+                            .frame(height: 73 * CGFloat(itemList.count))
                     }
                 }
             }

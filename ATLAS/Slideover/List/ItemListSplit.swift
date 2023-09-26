@@ -58,7 +58,7 @@ struct ItemListSplit: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(itemList[index].name.trimmingCharacters(in: .whitespacesAndNewlines))
+                                    Text(itemList[index].unwrappedName.trimmingCharacters(in: .whitespacesAndNewlines))
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.system(size: 16, weight: .regular))
                                     
@@ -80,24 +80,24 @@ struct ItemListSplit: View {
 
                                     
                                     Button(action: {
-                                        if (itemList[index].canDelete && itemList[index].fromParent) {
-                                            update(index)
-                                        } else {
-                                            updateStatus(index)
-                                        }
+//                                        if (itemList[index].canDelete && itemList[index].fromParent) {
+//                                            update(index)
+//                                        } else {
+//                                            updateStatus(index)
+//                                        }
                                     }) {
-                                        itemList[index].isDefault || itemList[index].fromParent ?
-                                            Image(systemName: "star.fill")
-                                                .foregroundColor(Color.theme.azure)
-                                                .frame(width: 22, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        :
-                                            Image(systemName: "star")
-                                                .foregroundColor(Color.theme.azure)
-                                                .frame(width: 22, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
+//                                        itemList[index].isDefault || itemList[index].fromParent ?
+//                                            Image(systemName: "star.fill")
+//                                                .foregroundColor(Color.theme.azure)
+//                                                .frame(width: 22, height: 22)
+//                                                .scaledToFit()
+//                                                .aspectRatio(contentMode: .fit)
+//                                        :
+//                                            Image(systemName: "star")
+//                                                .foregroundColor(Color.theme.azure)
+//                                                .frame(width: 22, height: 22)
+//                                                .scaledToFit()
+//                                                .aspectRatio(contentMode: .fit)
                                     }.padding(.horizontal, 5)
                                         .buttonStyle(PlainButtonStyle())
                                 }
