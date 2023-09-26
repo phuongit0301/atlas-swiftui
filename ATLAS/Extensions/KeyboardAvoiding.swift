@@ -95,7 +95,7 @@ struct KeyboardAvoidView: ViewModifier {
                 if $0.native == 0 {
                     self.keyboardActiveAdjustment = min($0, 0)
                 } else {
-                    self.keyboardActiveAdjustment = $0 - 20
+                    self.keyboardActiveAdjustment = $0 + 20
                 }
             }
             .scrollDismissesKeyboard(.immediately)

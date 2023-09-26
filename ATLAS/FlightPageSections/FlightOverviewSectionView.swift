@@ -118,9 +118,9 @@ struct FlightOverviewSectionView: View {
         }
         
         GeometryReader { proxy in
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .center) {
-                    Text("Summary")
+                    Text("Flight Overview")
                         .font(.system(size: 17, weight: .semibold))
                         .padding(.leading, 16)
                     
@@ -128,16 +128,16 @@ struct FlightOverviewSectionView: View {
                     
                     HStack {
                         Toggle(isOn: $showUTC) {
-                            Text("Local").font(.system(size: 17, weight: .regular))
+                            Text("Local").font(.system(size: 15, weight: .regular))
                                 .foregroundStyle(Color.black)
                         }
-                        Text("UTC").font(.system(size: 17, weight: .regular))
+                        Text("UTC").font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(Color.black)
                         
                         Button(action: {
                             //Todo
                         }, label: {
-                            Text("Close Flight").font(Font.custom("SF Pro", size: 17)).foregroundColor(Color.white)
+                            Text("Close Flight").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
                         }).padding(.vertical, 11)
                             .padding(.horizontal)
                             .background(Color.theme.philippineGray3)
@@ -148,16 +148,16 @@ struct FlightOverviewSectionView: View {
                             )
                     }.fixedSize(horizontal: true, vertical: false)
                     
-                }.padding(.horizontal, 8)
+                }.frame(height: 52)
                     .padding(.bottom, 8)
                     // End header
                 ScrollView {
                     VStack(spacing: 0) {
-                        HStack {
+                        HStack(alignment: .center, spacing: 0) {
                             Button(action: {
                                 self.isCollapseFlightInfo.toggle()
                             }, label: {
-                                HStack {
+                                HStack(alignment: .center, spacing: 8) {
                                     Text("Flight Information").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                                     
                                     if isCollapseFlightInfo {
@@ -176,29 +176,29 @@ struct FlightOverviewSectionView: View {
                             }).buttonStyle(PlainButtonStyle())
                             
                             Spacer()
-                        }.frame(height: 44)
+                        }.frame(height: 52)
                         
                         if isCollapseFlightInfo {
-                            VStack {
-                                HStack {
+                            VStack(spacing: 0) {
+                                HStack(spacing: 0) {
                                     Text("Callsign")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Aircraft Model")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Aircraft")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
-                                HStack {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                HStack(spacing: 0) {
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     
                                     HStack {
                                         Picker("", selection: $selectedAircraftPicker) {
@@ -210,60 +210,61 @@ struct FlightOverviewSectionView: View {
                                             .fixedSize()
                                             .padding(.leading, -16)
                                         Spacer()
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     
                                     TextField(
                                         "Enter Aircraft",
                                         text: $tfAircraft
-                                    ).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                    ).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                         .onSubmit {
                                             //Todo
                                         }
                                 }.frame(height: 44)
                                 
-                                HStack {
+                                HStack(spacing: 0) {
                                     Text("Dep")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Dest")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("POB")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 56, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
-                                HStack {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                HStack(spacing: 0) {
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     
                                     TextField(
                                         "Enter POB",
                                         text: $tfPob
-                                    ).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                    ).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                         .onSubmit {
                                             //Todo
                                         }
                                 }.frame(height: 44)
                             } //end VStack
                         }// end if
-                    }.padding(16)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                    
+                    }
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
                     VStack(spacing: 0) {
-                        HStack {
+                        HStack(alignment: .center, spacing: 0) {
                             Button(action: {
                                 self.isCollapsePlanTime.toggle()
                             }, label: {
-                                HStack {
+                                HStack(alignment: .center, spacing: 8) {
                                     Text("Planned times").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                                     if isCollapsePlanTime {
                                         Image(systemName: "chevron.down")
@@ -278,227 +279,229 @@ struct FlightOverviewSectionView: View {
                                     }
                                 }.frame(alignment: .leading)
                             }).buttonStyle(PlainButtonStyle())
-
+                            
                             Spacer()
-                        }.frame(height: 44)
-
+                        }.frame(height: 52)
+                        
                         if isCollapsePlanTime {
-                            VStack {
-                                HStack {
+                            VStack(spacing: 0) {
+                                HStack(spacing: 0) {
                                     Text("STD")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("STA")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
-                                HStack {
+                                
+                                HStack(spacing: 0) {
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-                                    Text("").frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                    Text("").frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
-                                HStack {
+                                
+                                HStack(spacing: 0) {
                                     Text("Block Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Flight Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Block Time - Flight Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
-                                HStack {
+                                
+                                HStack(spacing: 0) {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     TextField("Enter Flight Time",text: $tfFlightTime)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                         .onSubmit {
                                             //Todo
                                         }
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// end If
-                    }.padding(16)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-//
-//
+                    }
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                    
                     VStack(spacing: 0) {
-                        HStack {
+                        HStack(alignment: .center, spacing: 0) {
                             Button(action: {
                                 self.isCollapseActualTime.toggle()
                             }, label: {
-                                HStack {
+                                HStack(alignment: .center, spacing: 8) {
                                     Text("Actual Times").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                                     if isCollapseActualTime {
-                                        Image(systemName: "chevron.up")
+                                        Image(systemName: "chevron.down")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     } else {
-                                        Image(systemName: "chevron.down")
+                                        Image(systemName: "chevron.up")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     }
                                 }.frame(alignment: .leading)
                             }).buttonStyle(PlainButtonStyle())
-                                .padding(.leading, 12)
+                            
                             Spacer()
-                        }.frame(height: 44)
-
+                        }.frame(height: 52)
+                        
                         if isCollapseActualTime {
-                            VStack {
-                                HStack {
+                            VStack(spacing: 0) {
+                                HStack(spacing: 0) {
                                     Text("Chocks Off")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("ETA")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Chocks On")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
-                                HStack {
+                                
+                                HStack(spacing: 0) {
                                     Text(showUTC ? chocksOffUTC : chocksOffLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text(showUTC ? etaUTC : etaLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text(showUTC ? chocksOnUTC : chocksOnLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
-
-                                HStack {
+                                
+                                
+                                HStack(spacing: 0) {
                                     Text("Day")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Night")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("Total Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
-                                HStack {
+                                
+                                HStack(spacing: 0) {
                                     Text("TODO")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text("TODO")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                     Text(calculateDateTime(chocksOffUTC, chocksOnUTC))
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// End if
-                    }.padding(8)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-
-
+                    }
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                    
                     VStack(spacing: 0) {
-                        HStack {
+                        HStack(alignment: .center, spacing: 0) {
                             Button(action: {
                                 self.isCollapseCrew.toggle()
                             }, label: {
-                                HStack {
+                                HStack(alignment: .center, spacing: 8) {
                                     Text("Crew").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                                     if isCollapseCrew {
-                                        Image(systemName: "chevron.up")
+                                        Image(systemName: "chevron.down")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     } else {
-                                        Image(systemName: "chevron.down")
+                                        Image(systemName: "chevron.up")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     }
                                 }.frame(alignment: .leading)
                             }).buttonStyle(PlainButtonStyle())
-
+                            
                             Spacer()
-                        }.frame(height: 44)
-
+                        }.frame(height: 52)
+                        
                         if isCollapseCrew {
-                            VStack {
-                                HStack {
-                                    HStack {
+                            VStack(spacing: 0) {
+                                HStack(spacing: 0) {
+                                    HStack(spacing: 0) {
                                         Text("CA").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
-
+                                        
                                         Spacer()
-
+                                        
                                         Image("icon_sync")
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                             .padding(.trailing)
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-
-                                    Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-
-                                    Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                    
+                                    Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                    
+                                    Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                    
                                 }.frame(height: 44, alignment: .leading)
-
+                                
                                 Divider().padding(.horizontal, -16)
-
-                                HStack(alignment: .top) {
-                                    HStack {
+                                
+                                HStack(alignment: .top, spacing: 0) {
+                                    HStack(alignment: .center) {
                                         HStack(alignment: .center) {
                                             Circle().strokeBorder(Color.black, lineWidth: 1)
                                                 .background(Circle().fill(Color.theme.mountainMeadow))
                                                 .frame(width: 48, height: 48)
                                         }
-
+                                        
                                         VStack(alignment: .leading) {
                                             HStack {
-                                                Text("Muhammad Adil").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                                Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 HStack {
                                                     Picker("", selection: $selectedFO) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
@@ -506,22 +509,22 @@ struct FlightOverviewSectionView: View {
                                                         }
                                                     }.pickerStyle(MenuPickerStyle()).fixedSize()
                                                 }.fixedSize()
-                                            }
-
+                                            }.frame(height: 44)
+                                            
                                             Spacer()
                                         }
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-
-                                    HStack {
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 16, 3), height: 88, alignment: .leading)
+                                    
+                                    HStack(alignment: .center) {
                                         HStack(alignment: .center) {
                                             Circle().strokeBorder(Color.black, lineWidth: 1)
                                                 .background(Circle().fill(Color.theme.mountainMeadow))
                                                 .frame(width: 48, height: 48)
                                         }
-
-                                        VStack(alignment: .leading) {
+                                        
+                                        VStack(alignment: .leading, spacing: 0) {
                                             HStack {
-                                                Text("Other Pilot's Full name").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                                Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 HStack {
                                                     Picker("", selection: $selectedCA) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
@@ -529,34 +532,29 @@ struct FlightOverviewSectionView: View {
                                                         }
                                                     }.pickerStyle(MenuPickerStyle()).fixedSize()
                                                 }.fixedSize()
-                                            }
-
-                                            Spacer()
-
-                                            Text("Chat").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.theme.azure).frame(alignment: .leading)
+                                            }.frame(height: 44)
+                                            
+                                            Text("Chat").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure).frame(height: 44, alignment: .leading)
                                         }
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 16, 3), height: 88, alignment: .leading)
+                                    
                                     VStack(alignment: .leading) {
-                                        HStack {
-                                            Text("Chelsea").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.theme.azure)
-                                        }
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-                                        .padding(.top, 8)
-                                        .padding(.leading, 8)
-
-                                }.frame(height: 88)
-
-                            }// End VStack
-                        }// end if
-                    }// END CREW
-                    .padding(16)
+                                        HStack(alignment: .center) {
+                                            Text("Chelsea").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                        }.frame(height: 44)
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 16, 3), alignment: .leading)
+                                }
+                                
+                            }.frame(height: 88)
+                        }
+                    }.padding(.bottom)
+                        .padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                        .padding(.bottom, 32)
                 }// end ScrollView
-            }.padding(.vertical, 8)
-                .padding(.horizontal, 16)
+            }.padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
             // end VStack

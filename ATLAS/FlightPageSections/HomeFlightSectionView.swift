@@ -23,14 +23,14 @@ struct HomeFlightSectionView: View {
                     // Tabs
                     switch modelState.selectedTab.screenName {
                         case NavigationEnumeration.FlightOverviewSectionView:
-                            NoteSectionView()
+                            FlightOverviewSectionView()
                                 .tag(NavigationEnumeration.FlightOverviewSectionView)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
-                        case NavigationEnumeration.FlightPlanSummarySectionView:
-                            FlightPlanMetarTafSectionView()
-                                .tag(NavigationEnumeration.FlightPlanSummarySectionView)
+                        case NavigationEnumeration.PreflightSectionView:
+                            PreflightSectionView()
+                                .tag(NavigationEnumeration.PreflightSectionView)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()

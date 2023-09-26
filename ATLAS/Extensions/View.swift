@@ -235,6 +235,15 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
         )
     }
     
+    if item.screenName == NavigationEnumeration.PreflightSectionView {
+        return AnyView(
+            PreflightSectionView()
+                .navigationBarBackButtonHidden()
+                .breadCrumbRef(item.screenName ?? NavigationEnumeration.PreflightSectionView)
+                .ignoresSafeArea()
+        )
+    }
+    
     if item.screenName == NavigationEnumeration.NotamDetailScreen {
         return AnyView(
             FlightPlanNOTAMReferenceView()

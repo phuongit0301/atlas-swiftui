@@ -218,12 +218,8 @@ struct FlightPlanSummarySectionView: View {
                                             Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                                 .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
                                             
-                                            TextField("Enter Flight Time",text: $tfFlightTime)
-                                                .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                            Text("XXXXX").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                                 .frame(width: calculateWidthSummary(proxy.size.width - 48, 3), alignment: .leading)
-                                                .onSubmit {
-                                                    //Todo
-                                                }
                                             
                                             Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                                 .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
@@ -246,12 +242,12 @@ struct FlightPlanSummarySectionView: View {
                                 HStack {
                                     Text("Route").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                                     if isCollapseRoute {
-                                        Image(systemName: "chevron.up")
+                                        Image(systemName: "chevron.down")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                     } else {
-                                        Image(systemName: "chevron.down")
+                                        Image(systemName: "chevron.up")
                                             .foregroundColor(Color.blue)
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
@@ -274,7 +270,7 @@ struct FlightPlanSummarySectionView: View {
                                     Divider().padding(.horizontal, -16)
                                     
                                     HStack {
-                                        TextField("Enter Waypoints",text: $tfRoute)
+                                        TextField("Enter route",text: $tfRoute)
                                             .frame(width: proxy.size.width - 56, alignment: .leading)
                                             .onSubmit {
                                                 //Todo
@@ -348,7 +344,7 @@ struct FlightPlanSummarySectionView: View {
                                                 }.tint(Color.theme.coralRed)
                                             }
                                     }
-                                }
+                                }.padding(.bottom, 8)
                             }// End VStack
                         }// End if
                     }.padding(16)
@@ -357,10 +353,41 @@ struct FlightPlanSummarySectionView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                 }
                 // end List
-            }.padding(.vertical, 8)
+            }.padding(.top, 8)
                 .padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
         }//end geometry
+    }
+}
+
+struct WarningPopover: View {
+    // 1
+    var text: String
+    // 2
+    var shouldDisplay: Bool
+    // 3
+    @State private var showPopover = false
+
+    var body: some View {
+        HStack { // 4
+            Spacer()
+            // 5
+            if shouldDisplay {
+                // 6
+                Image(systemName: "xmark.octagon")
+                    .foregroundColor(.red)
+                    .padding(2)
+                    // 7
+                    .popover(isPresented: $showPopover) {
+                        Text(text)
+                            .padding()
+                    }
+                    // 8
+                    .onHover { (hoverring) in
+                        showPopover = hoverring
+                    }
+            }
+        }
     }
 }

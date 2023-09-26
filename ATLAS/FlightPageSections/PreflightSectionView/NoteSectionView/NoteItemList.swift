@@ -81,7 +81,7 @@ struct NoteItemList: View {
                                             
                                             HStack {
                                                 if isRelevant {
-                                                    Text("@[Username").foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
+                                                    Text("@[Username]").foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
                                                 }
                                                 
                                                 Text("DD/MM/YY HHMM").foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
