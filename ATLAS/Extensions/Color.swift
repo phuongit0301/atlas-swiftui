@@ -66,4 +66,6 @@ struct ColorTheme {
     let seaSerpent = Color("SeaSerpent") //66D4CF
     let mountainMeadow = Color("MountainMeadow") //35CD9A
     let salleGreen = Color("SalleGreen") //116530
+    let radicalRed = Color("RadicalRed") //FF375F
+    let mayaBlue = Color("MayaBlue") //5AC8F5
 }

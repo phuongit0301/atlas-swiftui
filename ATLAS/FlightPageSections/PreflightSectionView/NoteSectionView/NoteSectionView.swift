@@ -10,11 +10,15 @@ import SwiftUI
 struct NoteSectionView: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var mapIconModel: MapIconModel
     
+    @State var parentIndex = 0
+    @State var postIndex = 0
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
+    @State private var showModalComment: Bool = false
     @State private var textNote: String = ""
     @State private var itemList = [NoteList]()
     var header: String = "Your Notes"
@@ -67,9 +71,11 @@ struct NoteSectionView: View {
                     NoteItemRelevantList(
                         header: "Relevant AABBA Posts",
                         showSheet: $showSheet,
+                        showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.noteList,
+                        itemList: $viewModel.dataNoteAabbaPost,
                         isShowList: $isShowListRelevent,
+                        postIndex: $postIndex,
                         geoWidth: proxy.size.width,
                         remove: remove,
                         add: add
@@ -90,6 +96,10 @@ struct NoteSectionView: View {
                             resetData: resetData
                         ).interactiveDismissDisabled(true)
                     }
+            }.onChange(of: mapIconModel.num) { _ in
+                viewModel.dataNoteAabbaPost = viewModel.readDataNoteAabbaPostList()
+            }.sheet(isPresented: $showModalComment) {
+                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
             }
         }
         

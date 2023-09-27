@@ -63,6 +63,7 @@ class CoreDataModelState: ObservableObject {
     @Published var loadingInit: Bool = false
     @Published var tagList: [TagList] = []
     @Published var noteList: [NoteList] = []
+    @Published var dataNoteAabbaPost: [NoteAabbaPostList] = []
 //    @Published var aircraftArray: [NoteList] = []
 //    @Published var departureArray: [NoteList] = []
 //    @Published var enrouteArray: [NoteList] = []
@@ -263,6 +264,10 @@ class CoreDataModelState: ObservableObject {
                         self.initDataAirport(airportData)
                         self.initDataAirportColor(airportData)
                     }
+                    
+                    let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
+                    
+                    self.initDataNotePost(postData.departure)
 
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
@@ -372,6 +377,7 @@ class CoreDataModelState: ObservableObject {
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
+            self.dataNoteAabbaPost = self.readDataNoteAabbaPostList()
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -1073,6 +1079,75 @@ class CoreDataModelState: ObservableObject {
         }
         
         self.dataRecencyExpiry = readDataRecencyExpiry()
+    }
+    
+    func initDataNotePost(_ data: [INoteResponse]) {
+        if data.count > 0 {
+            for item in data {
+                var posts = [NotePostList]()
+                
+                if item.post_count > 0 {
+                    for post in item.posts {
+                        var comments = [NoteCommentList]()
+                        
+                        if (post.comment_count as NSString).intValue > 0 {
+                            for comment in post.comments {
+                                let newComment = NoteCommentList(context: service.container.viewContext)
+                                newComment.id = UUID()
+                                newComment.commentId = comment.comment_id
+                                newComment.postId = comment.post_id
+                                newComment.userId = comment.user_id
+                                newComment.commentDate = comment.comment_date
+                                newComment.commentText = comment.comment_text
+                                newComment.userName = comment.username
+                                
+                                comments.append(newComment)
+                            }
+                        }
+                        
+                        let newPost = NotePostList(context: service.container.viewContext)
+                        newPost.id = UUID()
+                        newPost.postId = post.post_id
+                        newPost.userId = post.user_id
+                        newPost.userName = post.username
+                        newPost.postDate = post.post_date
+                        newPost.postTitle = post.post_title
+                        newPost.postText = post.post_text
+                        newPost.upvoteCount = post.upvote_count
+                        newPost.commentCount = post.comment_count
+                        newPost.category = post.category
+                        newPost.postUpdated = Date()
+                        newPost.favourite = post.favourite
+                        newPost.blue = post.blue
+                        newPost.comments = NSSet(array: comments)
+                        posts.append(newPost)
+                    }
+                }
+                
+                let newObj = NoteAabbaPostList(context: service.container.viewContext)
+
+                newObj.id = UUID()
+                newObj.postCount = "\(item.post_count)"
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.name = item.name
+                newObj.posts = NSSet(array: posts)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data aabba successfully")
+                    } catch {
+                        print("Failed to data aabba save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+            }
+
+            self.dataNoteAabbaPost = readDataNoteAabbaPostList()
+        }
     }
     
     func initDataEvent() {
@@ -2375,6 +2450,22 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch Traffic List from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataNoteAabbaPostList() -> [NoteAabbaPostList] {
+        var data: [NoteAabbaPostList] = []
+        
+        let request: NSFetchRequest<NoteAabbaPostList> = NoteAabbaPostList.fetchRequest()
+        do {
+            let response: [NoteAabbaPostList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Note Aabba Post List from Core Data.")
         }
         
         return data

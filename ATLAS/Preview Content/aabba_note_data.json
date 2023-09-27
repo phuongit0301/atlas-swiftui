@@ -1,0 +1,366 @@
+{
+   "departure":[
+      {
+         "name":"VTBS",
+         "lat":"13.6811",
+         "long":"100.747",
+         "post_count":9,
+         "posts":[
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Nasrun360",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":false,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"0",
+               "category":"Runway",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":false,
+               "blue":false
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"0",
+               "category":"Runway",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"1",
+               "category":"Runway",
+               "comments":[
+                  {
+                     "comment_id":"23fe0160-7fd0-4ea9-9ec5-a65848384fd5",
+                     "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+                     "user_id":"abc122",
+                     "comment_date":"2023-09-10 22:15:00",
+                     "comment_text":"Rough landing",
+                     "username":"Nasrun360"
+                  }
+               ],
+               "username":"Nasrun360",
+               "favourite":true,
+               "blue":true
+            }
+         ]
+      }
+   ],
+   "arrival":[
+      {
+         "name":"VTBS",
+         "lat":"13.6811",
+         "long":"100.747",
+         "post_count":9,
+         "posts":[
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Nasrun360",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":false,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"0",
+               "category":"Runway",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":false,
+               "blue":false
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"0",
+               "category":"Runway",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+               "user_id":"abc122",
+               "post_date":"2023-09-14 23:15:00",
+               "post_title":"Too many planes",
+               "post_text":"30 mins delay",
+               "upvote_count":"4",
+               "comment_count":"1",
+               "category":"Congestion",
+               "comments":[
+                  {
+                     "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                     "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
+                     "user_id":"abc123",
+                     "comment_date":"2023-09-15 22:15:00",
+                     "comment_text":"Healing",
+                     "username":"Adil_Accumulus"
+                  }
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Departure delay",
+               "post_text":"10 mins delay",
+               "upvote_count":"4",
+               "comment_count":"0",
+               "category":"Congestion",
+               "comments":[
+                  
+               ],
+               "username":"Adil_Accumulus",
+               "favourite":true,
+               "blue":true
+            },
+            {
+               "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+               "user_id":"abc123",
+               "post_date":"2023-09-09 23:15:00",
+               "post_title":"Runway conditions",
+               "post_text":"Bumpy runway",
+               "upvote_count":"6",
+               "comment_count":"1",
+               "category":"Runway",
+               "comments":[
+                  {
+                     "comment_id":"23fe0160-7fd0-4ea9-9ec5-a65848384fd5",
+                     "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+                     "user_id":"abc122",
+                     "comment_date":"2023-09-10 22:15:00",
+                     "comment_text":"Rough landing",
+                     "username":"Nasrun360"
+                  }
+               ],
+               "username":"Nasrun360",
+               "favourite":true,
+               "blue":true
+            }
+         ]
+      }
+   ]
+}

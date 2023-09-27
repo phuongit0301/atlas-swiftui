@@ -384,6 +384,43 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
+    <entity name="NoteAabbaPost" representedClassName="NoteAabbaPostList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="postCount" optional="YES" attributeType="String"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NotePost" inverseName="lists" inverseEntity="NotePost"/>
+    </entity>
+    <entity name="NoteComment" representedClassName="NoteCommentList" syncable="YES">
+        <attribute name="commentDate" optional="YES" attributeType="String"/>
+        <attribute name="commentId" optional="YES" attributeType="String"/>
+        <attribute name="commentText" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="postId" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NotePost" inverseName="comments" inverseEntity="NotePost"/>
+    </entity>
+    <entity name="NotePost" representedClassName="NotePostList" syncable="YES">
+        <attribute name="blue" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="commentCount" optional="YES" attributeType="String"/>
+        <attribute name="favourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="postDate" optional="YES" attributeType="String"/>
+        <attribute name="postId" optional="YES" attributeType="String"/>
+        <attribute name="postText" optional="YES" attributeType="String"/>
+        <attribute name="postTitle" optional="YES" attributeType="String"/>
+        <attribute name="postUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="upvoteCount" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NoteComment" inverseName="posts" inverseEntity="NoteComment"/>
+        <relationship name="lists" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NoteAabbaPost" inverseName="posts" inverseEntity="NoteAabbaPost"/>
+    </entity>
     <entity name="PerfData" representedClassName="PerfDataList" syncable="YES">
         <attribute name="airMiles" optional="YES" attributeType="String"/>
         <attribute name="apd" optional="YES" attributeType="String"/>

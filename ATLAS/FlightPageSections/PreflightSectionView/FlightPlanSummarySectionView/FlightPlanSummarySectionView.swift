@@ -10,12 +10,14 @@ import Combine
 import UIKit
 
 struct IAlternate {
-    var id = UUID()
+    var id: UUID?
     var altn: String
     var vis: String?
     var minima: String?
     var eta: String
     var type: String?
+    var isNew: Bool?
+    var isDeleted: Bool?
 }
 
 struct FlightPlanSummarySectionView: View {
@@ -311,7 +313,7 @@ struct FlightPlanSummarySectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    enrouteAlternates.append(IAlternate(altn: "", eta: ""))
+                                                    enrouteAlternates.append(IAlternate(altn: "", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
@@ -363,17 +365,17 @@ struct FlightPlanSummarySectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    destinationAlternates.append(IAlternate(altn: "", eta: ""))
+                                                    destinationAlternates.append(IAlternate(altn: "", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
                                             }
                                         }.frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         
-                                        Text("VIS")
+                                        Text("VIS (Optional)")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
-                                        Text("Minima")
+                                        Text("Minima (Optional)")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         Text("ETA")
@@ -418,56 +420,85 @@ struct FlightPlanSummarySectionView: View {
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
                 .onAppear {
-                    if coreDataModel.dataAlternate.count > 0 {
-                        for item in coreDataModel.dataAlternate {
-                            if item.type == "enroute" {
-                                enrouteAlternates.append(
-                                    IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "")
-                                )
-                            } else {
-                                destinationAlternates.append(
-                                    IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "")
-                                )
-                            }
-                            
-                        }
-                    }
+                    prepareData()
                 }
         }//end geometry
     }
     
+    func prepareData() {
+        if coreDataModel.dataAlternate.count > 0 {
+            for item in coreDataModel.dataAlternate {
+                if item.type == "enroute" {
+                    enrouteAlternates.append(
+                        IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "", isNew: false, isDeleted: false)
+                    )
+                } else {
+                    destinationAlternates.append(
+                        IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "", isNew: false, isDeleted: false)
+                    )
+                }
+                
+            }
+        }
+    }
+    
     func create() {
         if (destinationAlternates.count > 0) {
-            for item in enrouteAlternates {
-                if item.eta != "" && item.altn != "" {
-                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                    newObject.id = UUID()
-                    newObject.altn = item.altn
-                    newObject.vis = item.vis
-                    newObject.minima = item.minima
-                    newObject.eta = item.eta
-                    newObject.type = "enroute"
-                    
-                    coreDataModel.save()
+            persistenceController.container.viewContext.performAndWait {
+                for item in enrouteAlternates {
+                    do {
+                        if item.id == nil && item.eta != "" && item.altn != "" {
+                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                            newObject.id = UUID()
+                            newObject.altn = item.altn
+                            newObject.vis = item.vis
+                            newObject.minima = item.minima
+                            newObject.eta = item.eta
+                            newObject.type = "enroute"
+                            
+                            try persistenceController.container.viewContext.save()
+                            print("saved Enroute successfully")
+                            
+                            enrouteAlternates = []
+                        }
+                    } catch {
+                        print("Failed to Enroute save: \(error)")
+                        // Rollback any changes in the managed object context
+                        persistenceController.container.viewContext.rollback()
+                    }
                 }
             }
         }
         
         if (destinationAlternates.count > 0) {
-            for item in destinationAlternates {
-                if item.eta != "" && item.altn != "" {
-                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                    newObject.id = UUID()
-                    newObject.altn = item.altn
-                    newObject.vis = item.vis
-                    newObject.minima = item.minima
-                    newObject.eta = item.eta
-                    newObject.type = "destination"
-                    
-                    coreDataModel.save()
+            persistenceController.container.viewContext.performAndWait {
+                for item in destinationAlternates {
+                    do {
+                        if item.id == nil && item.eta != "" && item.altn != "" {
+                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                            newObject.id = UUID()
+                            newObject.altn = item.altn
+                            newObject.vis = item.vis
+                            newObject.minima = item.minima
+                            newObject.eta = item.eta
+                            newObject.type = "destination"
+                            
+                            try persistenceController.container.viewContext.save()
+                            print("saved Enroute successfully")
+                            
+                            destinationAlternates = []
+                        }
+                    } catch {
+                        print("Failed to Destination save: \(error)")
+                        // Rollback any changes in the managed object context
+                        persistenceController.container.viewContext.rollback()
+                    }
                 }
             }
         }
+        
+        coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
+        prepareData()
     }
     
     func removeItem(_ index: Int) {
