@@ -24,6 +24,12 @@ struct FlightOverviewSectionView: View {
     @State private var isCollapseActualTime = true
     @State private var isCollapseCrew = true
     @State private var selectedAircraftPicker = ""
+    
+    // For signature
+    @State private var isSignatureViewModalPresented = false
+    @State private var isSignatureModalPresented = false
+    @State private var signatureImage: UIImage?
+    
     var AIRCRAFT_DROP_DOWN: [String] = ["Aircraft 1", "Aircraft 2", "Aircraft 3"]
     
     var body: some View {
@@ -135,7 +141,7 @@ struct FlightOverviewSectionView: View {
                             .foregroundStyle(Color.black)
                         
                         Button(action: {
-                            //Todo
+                            isSignatureModalPresented.toggle()
                         }, label: {
                             Text("Close Flight").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
                         }).padding(.vertical, 11)
@@ -567,6 +573,19 @@ struct FlightOverviewSectionView: View {
                     coreDataModel.dataSummaryInfo.crewFO = value.rawValue
                     coreDataModel.save()
                 }
+            }
+            .onChange(of: signatureImage) { _ in
+                if let signatureImage = signatureImage {
+                    let str = convertImageToBase64(image: signatureImage)
+                    let newObj = SignatureList(context: persistenceController.container.viewContext)
+                    newObj.id = UUID()
+                    newObj.imageString = str
+                    
+                    coreDataModel.save()
+                }
+            }
+            .sheet(isPresented: $isSignatureModalPresented) {
+                SignatureModalView(signatureImage: $signatureImage, isSignatureModalPresented: $isSignatureModalPresented)
             }
         }//end geometry
     }

@@ -54,9 +54,10 @@ struct SignatureModalView: View {
     @State private var isDrawing = false
     @State private var drawing = Drawing()
     @Binding var isSignatureModalPresented: Bool
+    @State var temp: UIImage?
     
     var body: some View {
-        NavigationView {
+        HStack {
             VStack {
                 SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -73,11 +74,8 @@ struct SignatureModalView: View {
                     }
                     Spacer()
                     Button(action: {
-                        if let image = drawing.image {
-                            signatureImage = image
-                            print(signatureImage)
-                            isSignatureModalPresented = false
-                        }
+                        signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(maxWidth: .infinity, maxHeight: .infinity).snapshot()
+                        isSignatureModalPresented = false
                     }) {
                         Text("Save")
                             .padding()
@@ -88,9 +86,19 @@ struct SignatureModalView: View {
                 }
                 .padding()
             }
-            .navigationBarTitle("Draw Your Signature")
         }
     }
+}
+
+func convertImageToBase64(image: UIImage) -> String {
+        let imageData = image.pngData()!
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+    }
+    
+func convertBase64ToImage(imageString: String) -> UIImage {
+    let imageData = Data(base64Encoded: imageString,
+                         options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+    return UIImage(data: imageData)!
 }
 
 struct Drawing {
@@ -116,7 +124,7 @@ struct SignatureCanvasView: View {
     @Binding var drawing: Drawing
     
     var body: some View {
-        GeometryReader { geometry in
+//        GeometryReader { geometry in
             ZStack {
                 Color.white
                 Path { path in
@@ -142,8 +150,8 @@ struct SignatureCanvasView: View {
 //                            drawing.clear() // Clear the drawing points
 //                        }
                 )
-            }
-        }
+            }.frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 2)
+//        }
     }
 }
 
@@ -187,3 +195,19 @@ extension UIView {
     }
 }
 
+extension View {
+    func snapshot() -> UIImage {
+        let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
+        let view = controller.view
+
+        let targetSize = controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+        return renderer.image { _ in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+    }
+}

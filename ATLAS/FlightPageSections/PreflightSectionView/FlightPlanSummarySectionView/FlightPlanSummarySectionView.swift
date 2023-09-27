@@ -10,7 +10,7 @@ import Combine
 import UIKit
 
 struct IAlternate {
-    var id: UUID?
+    var id = UUID()
     var altn: String
     var vis: String?
     var minima: String?
@@ -408,6 +408,7 @@ struct FlightPlanSummarySectionView: View {
                                     
                                 }
                             }// End VStack
+                            .padding(.bottom)
                         }// End if
                     }.padding(.horizontal)
                         .background(Color.white)
@@ -447,7 +448,7 @@ struct FlightPlanSummarySectionView: View {
             persistenceController.container.viewContext.performAndWait {
                 for item in enrouteAlternates {
                     do {
-                        if item.id == nil && item.eta != "" && item.altn != "" {
+                        if item.isNew! && item.eta != "" && item.altn != "" {
                             let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
                             newObject.id = UUID()
                             newObject.altn = item.altn
@@ -474,7 +475,7 @@ struct FlightPlanSummarySectionView: View {
             persistenceController.container.viewContext.performAndWait {
                 for item in destinationAlternates {
                     do {
-                        if item.id == nil && item.eta != "" && item.altn != "" {
+                        if item.isNew! && item.eta != "" && item.altn != "" {
                             let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
                             newObject.id = UUID()
                             newObject.altn = item.altn
@@ -505,10 +506,23 @@ struct FlightPlanSummarySectionView: View {
         print("index========\(index)")
         print("enrouteAlternates[index]========\(enrouteAlternates[index])")
         print("enrouteAlternates========\(enrouteAlternates)")
+        var temp = [IAlternate]()
         
-        enrouteAlternates.removeAll(where: {$0.id == enrouteAlternates[index].id})
+        for item in enrouteAlternates {
+            if item.id != enrouteAlternates[index].id {
+                temp.append(item)
+            }
+        }
+//        let item = enrouteAlternates.filter{$0.id != enrouteAlternates[index].id}
         
-        print("enrouteAlternates========\(enrouteAlternates)")
+        print("item========\(temp)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.easeOut(duration: 0.3)) {
+                enrouteAlternates = temp
+            }
+        }
+//        enrouteAlternates = temp
+//        print("enrouteAlternates========\(enrouteAlternates)")
     }
 }
 

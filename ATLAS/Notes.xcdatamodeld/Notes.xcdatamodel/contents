@@ -507,6 +507,10 @@
         <attribute name="orderNum" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
+    <entity name="Signature" representedClassName="SignatureList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageString" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
         <attribute name="blkTime" optional="YES" attributeType="String"/>
         <attribute name="cm1" optional="YES" attributeType="String"/>
