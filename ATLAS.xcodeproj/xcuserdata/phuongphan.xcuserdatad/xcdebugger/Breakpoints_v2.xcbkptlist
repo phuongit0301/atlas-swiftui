@@ -7186,8 +7186,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7484,8 +7484,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "500"
-            endingLineNumber = "500"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7723,8 +7723,8 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "954"
-            endingLineNumber = "954"
+            startingLineNumber = "953"
+            endingLineNumber = "953"
             landmarkName = "updateValues(editedIndex:)"
             landmarkType = "7">
             <Locations>
@@ -7758,6 +7758,36 @@
                   endingLineNumber = "954"
                   offsetFromSymbolStart = "22088">
                </Location>
+               <Location
+                  uuid = "20B26DD1-CFE3-4EE2-A64C-D1761D80E296 - 9d0311acfa1f7098"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "953"
+                  endingLineNumber = "953"
+                  offsetFromSymbolStart = "22012">
+               </Location>
+               <Location
+                  uuid = "20B26DD1-CFE3-4EE2-A64C-D1761D80E296 - 9d0311acfa1f7098"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "953"
+                  endingLineNumber = "953"
+                  offsetFromSymbolStart = "22088">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -7771,10 +7801,42 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "949"
-            endingLineNumber = "949"
+            startingLineNumber = "948"
+            endingLineNumber = "948"
             landmarkName = "updateValues(editedIndex:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BA02D78A-D296-4A94-898B-FB2DC4CAE34D - 9d0311acfa1f703f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "950"
+                  endingLineNumber = "950"
+                  offsetFromSymbolStart = "20140">
+               </Location>
+               <Location
+                  uuid = "BA02D78A-D296-4A94-898B-FB2DC4CAE34D - 9d0311acfa1f701c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "949"
+                  endingLineNumber = "949"
+                  offsetFromSymbolStart = "20140">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7787,10 +7849,42 @@
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "867"
-            endingLineNumber = "867"
+            startingLineNumber = "866"
+            endingLineNumber = "866"
             landmarkName = "updateValues(editedIndex:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "99393F61-8179-44FB-80BD-3934760997CC - 9d0311acfa1f6562"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "867"
+                  endingLineNumber = "867"
+                  offsetFromSymbolStart = "7848">
+               </Location>
+               <Location
+                  uuid = "99393F61-8179-44FB-80BD-3934760997CC - 9d0311acfa1f6543"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.FlightPlanEnrView.updateValues(editedIndex: Swift.Int) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "866"
+                  endingLineNumber = "866"
+                  offsetFromSymbolStart = "7848">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

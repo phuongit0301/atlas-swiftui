@@ -20,8 +20,6 @@ struct ArrivalNoteItemRelevantList: View {
     @Binding var isShowList: Bool
     @Binding var postIndex: Int
     var geoWidth: Double
-    var remove: () -> Void
-    var add: () -> Void
     
     @State var postList: [NotePostList] = []
     @State var listHeight: CGFloat = 0
@@ -151,7 +149,7 @@ struct ArrivalNoteItemRelevantList: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button {
-                                        add()
+                                        //Todo
                                     } label: {
                                         Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                     }

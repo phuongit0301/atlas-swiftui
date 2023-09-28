@@ -43,7 +43,6 @@ struct FlightPlanEnrView: View {
     // initialise state variables
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
-    @ObservedObject var enrouteSection = EnrouteSection()
     
     @State var waypointsTableDefault: [EnrouteList] = []
     @State var waypointsTable: [EnrouteList] = []

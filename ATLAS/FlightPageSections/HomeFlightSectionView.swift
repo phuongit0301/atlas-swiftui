@@ -35,7 +35,7 @@ struct HomeFlightSectionView: View {
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
                         case NavigationEnumeration.DepartureScreen:
-                            DepatureSectionView()
+                            DepartureSectionView()
                                 .tag(NavigationEnumeration.DepartureScreen)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)

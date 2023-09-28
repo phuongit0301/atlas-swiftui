@@ -1,5 +1,5 @@
 //
-//  DepatureNoteItemForm.swift
+//  DepartureNoteItemForm.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DepatureNoteItemForm: View {
+struct DepartureNoteItemForm: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String

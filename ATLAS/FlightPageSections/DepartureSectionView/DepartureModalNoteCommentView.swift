@@ -1,5 +1,5 @@
 //
-//  DepatureModalNoteCommentView.swift
+//  DepartureModalNoteCommentView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 18/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DepatureModalNoteCommentView: View {
+struct DepartureModalNoteCommentView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel

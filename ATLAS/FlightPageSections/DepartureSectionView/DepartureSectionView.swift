@@ -1,5 +1,5 @@
 //
-//  ArrivalSectionView.swift
+//  DepartureSectionView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 25/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ArrivalSectionView: View {
+struct DepartureSectionView: View {
     @State var selectedTab: FlightNoteEnumeration = IFlightNoteTabs.first?.screenName ?? FlightNoteEnumeration.MapScreen
     @State var planTab = IFlightNoteTabs
     
@@ -18,7 +18,7 @@ struct ArrivalSectionView: View {
                     case .MapScreen:
                         MapViewModal()
                     case .NoteScreen:
-                        ArrivalSectionListView()
+                        DepartureSectionListView()
                 }
                 
                 CustomSegmentedControl(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)

@@ -74,15 +74,15 @@ class ScreenReferenceModel: ObservableObject {
 struct ListReferenceModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "Flight Summary", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
-            ListFlightInformationItem(name: "Aircraft Status", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
-            ListFlightInformationItem(name: "NOTAMs", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
+            ListFlightInformationItem(name: "Flight Overview", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
+            ListFlightInformationItem(name: "Preflight", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
+            ListFlightInformationItem(name: "Crew Briefing", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen, nextScreen: NavigationEnumeration.ArrivalScreen),
             ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen, nextScreen: NavigationEnumeration.DepartureScreen),
-            ListFlightInformationItem(name: "AI Search", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
-            ListFlightInformationItem(name: "Scratchpad", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
+            ListFlightInformationItem(name: "AI Search Results", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
+            ListFlightInformationItem(name: "Utilities", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
         ]
         
         return MainItem
@@ -597,59 +597,6 @@ class FlightNoteModelState: ObservableObject {
     }
     
     // END Arrival, ArrivalQR
-}
-
-struct STab {
-    var icon: Image?
-    var title: String
-}
-
-struct IFlightNoteTabs {
-    let ListItem = {
-        let MainItem = [
-            STab(title: "Aircraft Status"),
-            STab(title: "Departure"),
-            STab(title: "Enroute"),
-            STab(title: "Arrival")
-        ]
-        
-        return MainItem
-    }()
-}
-
-//class CoreDataModel: ObservableObject {
-//    // save fetched notes for view loading
-//    @Published var notes: [NoteList] = []
-//
-//    let dataService = PersistenceController.shared
-//
-//    init(_ target: String = "departure") {
-//        getAllNotesByTarget(target)
-//    }
-//
-//    func getAllNotesByTarget(_ target: String = "departure") {
-//        notes = dataService.read(target: target)
-//    }
-    
-//    func createNote() {
-//        dataService.create(title: noteTitle, body: noteBody, isFavorite: noteIsFav)
-//        getAllNotesByTarget()
-//    }
-//
-//    func toggleFav(note: Note) {
-//        dataService.update(entity: note, isFavorite: !note.isFavorite)
-//        getAllNotesByTarget()
-//    }
-//
-//    func deleteNote(note: Note) {
-//        dataService.delete(note)
-//        getAllNotesByTarget()
-//    }
-
-//}
-
-class EnrouteSection: ObservableObject {
-    @Published var dataDropDown: [String] = ["CLB", "CLB1", "CLB2", "CLB3"]
 }
 
 class NotamSection: ObservableObject {

@@ -195,11 +195,11 @@
 		3E72918F2AC56811000FF295 /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72918D2AC56811000FF295 /* NoteList+CoreDataProperties.swift */; };
 		3E7291922AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */; };
 		3E7291932AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291912AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift */; };
-		3E7291962AC5797A000FF295 /* DepatureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291952AC5797A000FF295 /* DepatureSectionView.swift */; };
-		3E7291982AC579CB000FF295 /* DepatureNoteItemForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291972AC579CB000FF295 /* DepatureNoteItemForm.swift */; };
-		3E72919A2AC579EB000FF295 /* DepatureNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291992AC579EB000FF295 /* DepatureNoteItemList.swift */; };
-		3E72919C2AC579F8000FF295 /* DepatureNoteItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72919B2AC579F8000FF295 /* DepatureNoteItemRelevantList.swift */; };
-		3E72919E2AC57A50000FF295 /* DepatureModalNoteCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72919D2AC57A50000FF295 /* DepatureModalNoteCommentView.swift */; };
+		3E7291962AC5797A000FF295 /* DepartureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291952AC5797A000FF295 /* DepartureSectionView.swift */; };
+		3E7291982AC579CB000FF295 /* DepartureNoteItemForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291972AC579CB000FF295 /* DepartureNoteItemForm.swift */; };
+		3E72919A2AC579EB000FF295 /* DepartureNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291992AC579EB000FF295 /* DepartureNoteItemList.swift */; };
+		3E72919C2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72919B2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift */; };
+		3E72919E2AC57A50000FF295 /* DepartureModalNoteCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72919D2AC57A50000FF295 /* DepartureModalNoteCommentView.swift */; };
 		3E7291A12AC59292000FF295 /* EnrouteSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291A02AC59292000FF295 /* EnrouteSectionView.swift */; };
 		3E7291A32AC592A3000FF295 /* EnrouteNoteItemForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291A22AC592A3000FF295 /* EnrouteNoteItemForm.swift */; };
 		3E7291A52AC592AF000FF295 /* EnrouteNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291A42AC592AF000FF295 /* EnrouteNoteItemList.swift */; };
@@ -210,6 +210,10 @@
 		3E7291B02AC5946C000FF295 /* ArrivalNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291AF2AC5946C000FF295 /* ArrivalNoteItemList.swift */; };
 		3E7291B22AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B12AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift */; };
 		3E7291B42AC59487000FF295 /* ArrivalModalNoteCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B32AC59487000FF295 /* ArrivalModalNoteCommentView.swift */; };
+		3E7291B62AC5977E000FF295 /* ArrivalSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B52AC5977E000FF295 /* ArrivalSectionListView.swift */; };
+		3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */; };
+		3E7291BA2AC59A8C000FF295 /* DepartureSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */; };
+		3E7291BC2AC59D32000FF295 /* ClipboardFlightOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -595,11 +599,11 @@
 		3E72918D2AC56811000FF295 /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291912AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E7291952AC5797A000FF295 /* DepatureSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepatureSectionView.swift; sourceTree = "<group>"; };
-		3E7291972AC579CB000FF295 /* DepatureNoteItemForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepatureNoteItemForm.swift; sourceTree = "<group>"; };
-		3E7291992AC579EB000FF295 /* DepatureNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepatureNoteItemList.swift; sourceTree = "<group>"; };
-		3E72919B2AC579F8000FF295 /* DepatureNoteItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepatureNoteItemRelevantList.swift; sourceTree = "<group>"; };
-		3E72919D2AC57A50000FF295 /* DepatureModalNoteCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepatureModalNoteCommentView.swift; sourceTree = "<group>"; };
+		3E7291952AC5797A000FF295 /* DepartureSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureSectionView.swift; sourceTree = "<group>"; };
+		3E7291972AC579CB000FF295 /* DepartureNoteItemForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteItemForm.swift; sourceTree = "<group>"; };
+		3E7291992AC579EB000FF295 /* DepartureNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteItemList.swift; sourceTree = "<group>"; };
+		3E72919B2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteItemRelevantList.swift; sourceTree = "<group>"; };
+		3E72919D2AC57A50000FF295 /* DepartureModalNoteCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureModalNoteCommentView.swift; sourceTree = "<group>"; };
 		3E7291A02AC59292000FF295 /* EnrouteSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteSectionView.swift; sourceTree = "<group>"; };
 		3E7291A22AC592A3000FF295 /* EnrouteNoteItemForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteNoteItemForm.swift; sourceTree = "<group>"; };
 		3E7291A42AC592AF000FF295 /* EnrouteNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteNoteItemList.swift; sourceTree = "<group>"; };
@@ -610,6 +614,10 @@
 		3E7291AF2AC5946C000FF295 /* ArrivalNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteItemList.swift; sourceTree = "<group>"; };
 		3E7291B12AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteItemRelevantList.swift; sourceTree = "<group>"; };
 		3E7291B32AC59487000FF295 /* ArrivalModalNoteCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalModalNoteCommentView.swift; sourceTree = "<group>"; };
+		3E7291B52AC5977E000FF295 /* ArrivalSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalSectionListView.swift; sourceTree = "<group>"; };
+		3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteSectionListView.swift; sourceTree = "<group>"; };
+		3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureSectionListView.swift; sourceTree = "<group>"; };
+		3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardFlightOverviewView.swift; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -853,15 +861,16 @@
 			path = Maps;
 			sourceTree = "<group>";
 		};
-		3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */ = {
+		3E3FCBE42A21C8A0008017FA /* Clipboard */ = {
 			isa = PBXGroup;
 			children = (
+				3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */,
 				3EB9DAD62A7500F4009AEDFB /* AISearch */,
 				3EFA5F0C2A429B2C001ED6CF /* List */,
 				3E3FCBE82A21C8CB008017FA /* Container */,
 				3E3FCBE72A21C8C6008017FA /* Form */,
 			);
-			path = QuickReferenceCard;
+			path = Clipboard;
 			sourceTree = "<group>";
 		};
 		3E3FCBE72A21C8C6008017FA /* Form */ = {
@@ -1013,11 +1022,11 @@
 			children = (
 				3E7291AA2AC5943D000FF295 /* ArrivalSectionView */,
 				3E72919F2AC5927E000FF295 /* EnrouteSectionView */,
-				3E7291942AC57963000FF295 /* DepatureSectionView */,
+				3E7291942AC57963000FF295 /* DepartureSectionView */,
 				3E7291402AC264B0000FF295 /* PreflightSectionView */,
 				3E086D782A9491F600BE00AD /* Maps */,
 				3EFA5F6B2A4A82EB001ED6CF /* ScratchPad */,
-				3E3FCBE42A21C8A0008017FA /* QuickReferenceCard */,
+				3E3FCBE42A21C8A0008017FA /* Clipboard */,
 				C56AF5132A56640300BD07A1 /* Fuel */,
 				C52063F12A43552A0041580E /* FlightPlanView */,
 				3E7F68472A217B9500EC2CA3 /* AISearchView */,
@@ -1146,22 +1155,24 @@
 			path = Preflight;
 			sourceTree = "<group>";
 		};
-		3E7291942AC57963000FF295 /* DepatureSectionView */ = {
+		3E7291942AC57963000FF295 /* DepartureSectionView */ = {
 			isa = PBXGroup;
 			children = (
-				3E7291952AC5797A000FF295 /* DepatureSectionView.swift */,
-				3E7291972AC579CB000FF295 /* DepatureNoteItemForm.swift */,
-				3E7291992AC579EB000FF295 /* DepatureNoteItemList.swift */,
-				3E72919B2AC579F8000FF295 /* DepatureNoteItemRelevantList.swift */,
-				3E72919D2AC57A50000FF295 /* DepatureModalNoteCommentView.swift */,
+				3E7291952AC5797A000FF295 /* DepartureSectionView.swift */,
+				3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */,
+				3E7291972AC579CB000FF295 /* DepartureNoteItemForm.swift */,
+				3E7291992AC579EB000FF295 /* DepartureNoteItemList.swift */,
+				3E72919B2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift */,
+				3E72919D2AC57A50000FF295 /* DepartureModalNoteCommentView.swift */,
 			);
-			path = DepatureSectionView;
+			path = DepartureSectionView;
 			sourceTree = "<group>";
 		};
 		3E72919F2AC5927E000FF295 /* EnrouteSectionView */ = {
 			isa = PBXGroup;
 			children = (
 				3E7291A02AC59292000FF295 /* EnrouteSectionView.swift */,
+				3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */,
 				3E7291A22AC592A3000FF295 /* EnrouteNoteItemForm.swift */,
 				3E7291A42AC592AF000FF295 /* EnrouteNoteItemList.swift */,
 				3E7291A62AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift */,
@@ -1174,6 +1185,7 @@
 			isa = PBXGroup;
 			children = (
 				3E7291AB2AC59448000FF295 /* ArrivalSectionView.swift */,
+				3E7291B52AC5977E000FF295 /* ArrivalSectionListView.swift */,
 				3E7291AD2AC59458000FF295 /* ArrivalNoteItemForm.swift */,
 				3E7291AF2AC5946C000FF295 /* ArrivalNoteItemList.swift */,
 				3E7291B12AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift */,
@@ -1877,7 +1889,8 @@
 				3E4A36902A570BA800027C61 /* FuelTableList+CoreDataClass.swift in Sources */,
 				3E7291292ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift in Sources */,
 				3E4A36CF2A5A4A6400027C61 /* ArrivalATISList+CoreDataClass.swift in Sources */,
-				3E7291962AC5797A000FF295 /* DepatureSectionView.swift in Sources */,
+				3E7291B62AC5977E000FF295 /* ArrivalSectionListView.swift in Sources */,
+				3E7291962AC5797A000FF295 /* DepartureSectionView.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E7291A12AC59292000FF295 /* EnrouteSectionView.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
@@ -1894,6 +1907,7 @@
 				3E7291A72AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift in Sources */,
 				3EECB8642A716638009D4971 /* LoginView.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
+				3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */,
 				3E72912D2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E72917A2AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift in Sources */,
@@ -1928,7 +1942,7 @@
 				3E086D852A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E7291252ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift in Sources */,
 				3EEBE64D2AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift in Sources */,
-				3E72919C2AC579F8000FF295 /* DepatureNoteItemRelevantList.swift in Sources */,
+				3E72919C2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
 				3E7291A52AC592AF000FF295 /* EnrouteNoteItemList.swift in Sources */,
@@ -2012,7 +2026,7 @@
 				3E4A36612A56EAE800027C61 /* AltnTafDataList+CoreDataProperties.swift in Sources */,
 				3EE1707A2AA82E0E004DA27C /* LogbookSectionView.swift in Sources */,
 				3EE170802AA82E28004DA27C /* AABBASectionView.swift in Sources */,
-				3E7291982AC579CB000FF295 /* DepatureNoteItemForm.swift in Sources */,
+				3E7291982AC579CB000FF295 /* DepartureNoteItemForm.swift in Sources */,
 				3E086DA02A959E4500BE00AD /* NotamsDataList+CoreDataClass.swift in Sources */,
 				3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */,
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
@@ -2070,6 +2084,7 @@
 				3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */,
 				C52063F32A4355840041580E /* FlightPlanSummaryView.swift in Sources */,
 				3E72910A2ABC2CA8000FF295 /* ModalDateRangeView.swift in Sources */,
+				3E7291BC2AC59D32000FF295 /* ClipboardFlightOverviewView.swift in Sources */,
 				3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */,
 				3E086D8E2A94E4C500BE00AD /* EnrouteList+CoreDataProperties.swift in Sources */,
 				3EEBE6922AB6809000421AFF /* CongestionPopoverView.swift in Sources */,
@@ -2140,10 +2155,11 @@
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E766FAD2A5F92FA00B11616 /* PreviousSearchView.swift in Sources */,
 				3E5AF64F2A18FFF100A97ECF /* WeatherView.swift in Sources */,
+				3E7291BA2AC59A8C000FF295 /* DepartureSectionListView.swift in Sources */,
 				3EEBE69E2AB7F69D00421AFF /* CustomAirportAnnotation.swift in Sources */,
 				3E4A36CB2A595B4A00027C61 /* FlightPlanList+CoreDataClass.swift in Sources */,
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
-				3E72919E2AC57A50000FF295 /* DepatureModalNoteCommentView.swift in Sources */,
+				3E72919E2AC57A50000FF295 /* DepartureModalNoteCommentView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
 				3E7290FE2ABB2BD2000FF295 /* AabbaMapList+CoreDataProperties.swift in Sources */,
 				3E086D772A94918F00BE00AD /* MapModal.swift in Sources */,
@@ -2182,7 +2198,7 @@
 				3E4A36A32A570BA800027C61 /* PerfWeightList+CoreDataClass.swift in Sources */,
 				3EB9DAE52A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */,
 				3E870BA52A736A140036DE3B /* ProjDelaysListRef+CoreDataProperties.swift in Sources */,
-				3E72919A2AC579EB000FF295 /* DepatureNoteItemList.swift in Sources */,
+				3E72919A2AC579EB000FF295 /* DepartureNoteItemList.swift in Sources */,
 				3EECB8572A6E1BA6009D4971 /* SlideOverModel.swift in Sources */,
 				3E4A36922A570BA800027C61 /* FuelDataList+CoreDataProperties.swift in Sources */,
 				3E7291812AC3E0AF000FF295 /* NoteTagItemColor.swift in Sources */,

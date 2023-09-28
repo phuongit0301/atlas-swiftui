@@ -1,5 +1,5 @@
 //
-//  DepatureSectionView.swift
+//  DepartureSectionListView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 25/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DepatureSectionView: View {
+struct DepartureSectionListView: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
@@ -53,7 +53,7 @@ struct DepatureSectionView: View {
                             .padding(.vertical, 8)
                     }.frame(height: 52)
                     
-                    DepatureNoteItemList(
+                    DepartureNoteItemList(
                         header: header,
                         showSheet: $showSheet,
                         currentIndex: $currentIndex,
@@ -66,7 +66,7 @@ struct DepatureSectionView: View {
                         .background(Color.white)
                         .cornerRadius(8)
                     
-                    DepatureNoteItemRelevantList(
+                    DepartureNoteItemRelevantList(
                         header: "Relevant AABBA Posts",
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
@@ -87,9 +87,9 @@ struct DepatureSectionView: View {
             }.onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaDeparture = viewModel.readDataNoteAabbaPostList("depature")
             }.sheet(isPresented: $showModalComment) {
-                DepatureModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
+                DepartureModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
             }.sheet(isPresented: $showSheet) {
-                DepatureNoteItemForm(
+                DepartureNoteItemForm(
                     textNote: $textNote,
                     tagList: $viewModel.tagList,
                     itemList: $viewModel.departureArray,
