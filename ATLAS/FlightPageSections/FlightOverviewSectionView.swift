@@ -16,7 +16,23 @@ struct FlightOverviewSectionView: View {
     @State private var selectedFO = SummaryDataDropDown.pic
     @State private var tfAircraft: String = ""
     @State private var tfPob: String = ""
-    @State private var tfFlightTime: String = ""
+    @State private var tfPassword: String = ""
+    
+    //For Modal Flight Time
+    @State private var currentDateFlightTime: String = "00:00"
+    @State private var currentDateFlightTimeTemp = Date()
+    @State private var isShowFlightTimeModal = false
+    
+    //For Modal Chock Off
+    @State private var currentDateChockOff = Date()
+    @State private var currentDateChockOffTemp = Date()
+    @State private var isShowChockOffModal = false
+    
+    //For Modal Chock On
+    @State private var currentDateChockOn = Date()
+    @State private var currentDateChockOnTemp = Date()
+    @State private var isShowChockOnModal = false
+    
     @State private var showUTC = true
     
     @State private var isCollapseFlightInfo = true
@@ -29,6 +45,9 @@ struct FlightOverviewSectionView: View {
     @State private var isSignatureViewModalPresented = false
     @State private var isSignatureModalPresented = false
     @State private var signatureImage: UIImage?
+    
+    //For switch crew
+    @State private var isSync = false
     
     var AIRCRAFT_DROP_DOWN: [String] = ["Aircraft 1", "Aircraft 2", "Aircraft 3"]
     
@@ -191,7 +210,7 @@ struct FlightOverviewSectionView: View {
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Aircraft Model")
+                                    Text("Model")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -337,12 +356,11 @@ struct FlightOverviewSectionView: View {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    TextField("Enter Flight Time",text: $tfFlightTime)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    
+                                    FlightTimeButtonTimeStepper(onToggle: onFlightTime, value: currentDateFlightTime)
+                                        .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                        .onSubmit {
-                                            //Todo
-                                        }
+                                    
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -398,15 +416,21 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(showUTC ? chocksOffUTC : chocksOffLocal)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "")
+                                        .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    
                                     Text(showUTC ? etaUTC : etaLocal)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(showUTC ? chocksOnUTC : chocksOnLocal)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    
+                                    ButtonDateStepper(onToggle: onChockOn, value: $currentDateChockOn, suffix: "")
+                                        .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    
+//                                    Text(showUTC ? chocksOnUTC : chocksOnLocal)
+//                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 
@@ -472,26 +496,41 @@ struct FlightOverviewSectionView: View {
                         if isCollapseCrew {
                             VStack(spacing: 0) {
                                 HStack(spacing: 0) {
+                                    Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    
                                     HStack(spacing: 0) {
                                         Text("CA").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
 
                                         Spacer()
-
-                                        Image("icon_sync")
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                            .padding(.trailing)
+                                        
+                                        Button(action: {
+                                            self.isSync.toggle()
+                                        }, label: {
+                                            Image("icon_sync")
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                        }).padding(.trailing)
+                                            .buttonStyle(PlainButtonStyle())
+                                        
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
 
                                     Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
-                                    Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
 
                                 }.frame(height: 44, alignment: .leading)
 
                                 Divider().padding(.horizontal, -16)
 
                                 HStack(alignment: .top, spacing: 0) {
+                                    VStack(alignment: .leading) {
+                                        HStack(alignment: .center) {
+                                            SecureField("Enter Password",text: $tfPassword)
+                                                .font(.system(size: 17, weight: .regular))
+                                                .foregroundStyle(Color.black)
+                                        }.frame(height: 44)
+                                        
+                                        Spacer()
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    
                                     HStack(alignment: .center) {
                                         HStack(alignment: .center) {
                                             Circle().strokeBorder(Color.black, lineWidth: 1)
@@ -501,7 +540,11 @@ struct FlightOverviewSectionView: View {
 
                                         VStack(alignment: .leading) {
                                             HStack {
-                                                Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                if isSync {
+                                                    Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                } else {
+                                                    Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                }
                                                 HStack {
                                                     Picker("", selection: $selectedFO) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
@@ -524,7 +567,12 @@ struct FlightOverviewSectionView: View {
 
                                         VStack(alignment: .leading, spacing: 0) {
                                             HStack {
-                                                Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                if isSync {
+                                                    Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                } else {
+                                                    Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                }
+
                                                 HStack {
                                                     Picker("", selection: $selectedCA) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
@@ -533,16 +581,11 @@ struct FlightOverviewSectionView: View {
                                                     }.pickerStyle(MenuPickerStyle()).fixedSize()
                                                 }.fixedSize()
                                             }.frame(height: 44)
-
-                                            Text("Chat").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure).frame(height: 44, alignment: .leading)
+                                            
+                                            Spacer()
+//                                            Text("Chat").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure).frame(height: 44, alignment: .leading)
                                         }
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), height: 88, alignment: .leading)
-
-                                    VStack(alignment: .leading) {
-                                        HStack(alignment: .center) {
-                                            Text("Chelsea").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        }.frame(height: 44)
-                                    }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 88)
 
                             }
@@ -587,6 +630,126 @@ struct FlightOverviewSectionView: View {
             .sheet(isPresented: $isSignatureModalPresented) {
                 SignatureModalView(signatureImage: $signatureImage, isSignatureModalPresented: $isSignatureModalPresented)
             }
+            .formSheet(isPresented: $isShowFlightTimeModal) {
+                VStack {
+                    HStack(alignment: .center) {
+                        Button(action: {
+                            self.isShowFlightTimeModal.toggle()
+                        }) {
+                            Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                        
+                        Spacer()
+                        
+                        Text("Flight Time").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                        
+                        Spacer()
+                        Button(action: {
+                            // assign value from modal to entries form
+                            dateFormatter.dateFormat = "HH:mm"
+                            self.currentDateFlightTime = dateFormatter.string(from: currentDateFlightTimeTemp)
+                            
+                            self.isShowFlightTimeModal.toggle()
+                        }) {
+                            Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                    }.padding()
+                        .background(.white)
+                        .roundedCorner(12, corners: [.topLeft, .topRight])
+                    
+                    Divider()
+                    
+                    VStack {
+                        DatePicker("", selection: $currentDateFlightTimeTemp, displayedComponents: [ .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
+                            .environment(\.locale, Locale(identifier: "en_GB"))
+                    }
+                    Spacer()
+                }
+            }
+            .formSheet(isPresented: $isShowChockOffModal) {
+                VStack {
+                    HStack(alignment: .center) {
+                        Button(action: {
+                            self.isShowChockOffModal.toggle()
+                        }) {
+                            Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                        
+                        Spacer()
+                        
+                        Text("Chocks Off").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                        
+                        Spacer()
+                        Button(action: {
+                            // assign value from modal to entries form
+                            self.currentDateChockOff = currentDateChockOffTemp
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            
+                            self.isShowChockOffModal.toggle()
+                        }) {
+                            Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                    }.padding()
+                        .background(.white)
+                        .roundedCorner(12, corners: [.topLeft, .topRight])
+                    
+                    Divider()
+                    
+                    VStack {
+                        DatePicker("", selection: $currentDateChockOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
+                            .environment(\.locale, Locale(identifier: "en_GB"))
+                    }
+                    Spacer()
+                }
+            }
+            .formSheet(isPresented: $isShowChockOnModal) {
+                VStack {
+                    HStack(alignment: .center) {
+                        Button(action: {
+                            self.isShowChockOnModal.toggle()
+                        }) {
+                            Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                        
+                        Spacer()
+                        
+                        Text("Chocks On").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                        
+                        Spacer()
+                        Button(action: {
+                            // assign value from modal to entries form
+                            self.currentDateChockOn = currentDateChockOnTemp
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            
+                            self.isShowChockOnModal.toggle()
+                        }) {
+                            Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                        }
+                    }.padding()
+                        .background(.white)
+                        .roundedCorner(12, corners: [.topLeft, .topRight])
+                    
+                    Divider()
+                    
+                    VStack {
+                        DatePicker("", selection: $currentDateChockOnTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
+                            .environment(\.locale, Locale(identifier: "en_GB"))
+                    }
+                    Spacer()
+                }
+            }
         }//end geometry
+    }
+    
+    func onFlightTime() {
+        self.isShowFlightTimeModal.toggle()
+    }
+    
+    func onChockOff() {
+        self.isShowChockOffModal.toggle()
+    }
+    
+    func onChockOn() {
+        self.isShowChockOnModal.toggle()
     }
 }

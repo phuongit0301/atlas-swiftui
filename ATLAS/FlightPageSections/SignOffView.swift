@@ -55,38 +55,108 @@ struct SignatureModalView: View {
     @State private var drawing = Drawing()
     @Binding var isSignatureModalPresented: Bool
     @State var temp: UIImage?
+    @State private var tfLicense = ""
+    @State private var tfComment = ""
     
     var body: some View {
-        HStack {
             VStack {
-                SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.white)
-                HStack {
+                HStack(alignment: .center) {
                     Button(action: {
-                        drawing.clear()
+                        self.isSignatureModalPresented.toggle()
                     }) {
-                        Text("Clear")
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                     }
+                    Spacer()
+                    
+                    Text("Close Flight").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    
                     Spacer()
                     Button(action: {
                         signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(maxWidth: .infinity, maxHeight: .infinity).snapshot()
                         isSignatureModalPresented = false
                     }) {
-                        Text("Save")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(handleBtnColor())
                     }
+                }.padding(.vertical, 11)
+                    .padding(.horizontal)
+                    .background(.white)
+                    .roundedCorner(12, corners: [.topLeft, .topRight])
+                    .frame(height: 44)
+                
+                VStack(spacing: 8) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Licence Number").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
+
+                        Divider().padding(.horizontal, -16)
+
+                        TextField("Enter Licence Number", text: $tfLicense)
+                            .font(.system(size: 15)).frame(maxWidth: .infinity)
+                            .padding(.vertical)
+                            .frame(height: 55)
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            Text("Draw Signature").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
+                            Spacer()
+                            
+                            Button(action: {
+                                drawing.clear()
+                            }, label: {
+                                Text("Clear").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                            }).padding(.vertical, 4)
+                                .padding(.horizontal)
+                                .buttonStyle(PlainButtonStyle())
+                                .background(Color.white)
+                                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.azure, lineWidth: 1))
+                                .cornerRadius(12)
+                        }
+                        
+                        
+                        Divider().padding(.horizontal, -16)
+                        
+                        SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 144)
+                            .background(Color.white)
+                            .overlay(GeometryReader { geometry in
+                                Color.white
+                                    .opacity(
+                                        geometry.frame(in: .global).maxX < UIScreen.main.bounds.width ? 0.0 : 1.0
+                                    )
+                            })
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Comments (Optional)").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
+                        
+                        Divider().padding(.horizontal, -16)
+                        
+                        TextField("Enter Comments", text: $tfComment)
+                            .font(.system(size: 15)).frame(maxWidth: .infinity)
+                            .padding(.vertical)
+                            .frame(height: 55)
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
                 }
-                .padding()
-            }
+                
+                Spacer()
+        }.background(Color.theme.antiFlashWhite)
+    }
+    
+    func handleBtnColor() -> Color {
+        if(tfLicense != "" && drawing.image != nil) {
+            return Color.theme.azure
         }
+        return Color.theme.philippineGray3
     }
 }
 
@@ -150,7 +220,7 @@ struct SignatureCanvasView: View {
 //                            drawing.clear() // Clear the drawing points
 //                        }
                 )
-            }.frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 2)
+            }.frame(height: 144)
 //        }
     }
 }

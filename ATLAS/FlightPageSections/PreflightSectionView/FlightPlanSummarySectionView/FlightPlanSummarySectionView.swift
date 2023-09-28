@@ -91,7 +91,7 @@ struct FlightPlanSummarySectionView: View {
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Aircraft Model")
+                                    Text("Model")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
