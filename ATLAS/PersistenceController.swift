@@ -62,18 +62,21 @@ class CoreDataModelState: ObservableObject {
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
     @Published var tagList: [TagList] = []
-    @Published var noteList: [NoteList] = []
-    @Published var dataNoteAabbaPost: [NoteAabbaPostList] = []
-//    @Published var aircraftArray: [NoteList] = []
-//    @Published var departureArray: [NoteList] = []
-//    @Published var enrouteArray: [NoteList] = []
-//    @Published var arrivalArray: [NoteList] = []
-//    @Published var aircraftRefArray: [NoteList] = []
-//    @Published var departureRefArray: [NoteList] = []
-//    @Published var enrouteRefArray: [NoteList] = []
-//    @Published var arrivalRefArray: [NoteList] = []
-//    @Published var dataFlightPlan: FlightPlanList?
-//    @Published var dataEvents: [EventList] = []
+    @Published var preflightArray: [NoteList] = []
+    @Published var departureArray: [NoteList] = []
+    @Published var enrouteArray: [NoteList] = []
+    @Published var arrivalArray: [NoteList] = []
+    @Published var preflightRefArray: [NoteList] = []
+    @Published var departureRefArray: [NoteList] = []
+    @Published var enrouteRefArray: [NoteList] = []
+    @Published var arrivalRefArray: [NoteList] = []
+    //    @Published var dataFlightPlan: FlightPlanList?
+    //    @Published var dataEvents: [EventList] = []
+    
+    @Published var dataNoteAabbaPreflight: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaDeparture: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaEnroute: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaArrival: [NoteAabbaPostList] = []
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
     
@@ -267,7 +270,11 @@ class CoreDataModelState: ObservableObject {
                     
                     let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
                     
-                    self.initDataNotePost(postData.departure)
+                    // For Note Relevant
+                    self.initDataNoteAabbaPreflight(postData.preflight)
+                    self.initDataNoteAabbaDepature(postData.departure)
+                    self.initDataNoteAabbaEnroute(postData.enroute)
+                    self.initDataNoteAabbaArrival(postData.arrival)
 
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
@@ -347,15 +354,14 @@ class CoreDataModelState: ObservableObject {
     func initFetchData() async {
         DispatchQueue.main.async {
             self.tagList = self.readTag()
-            self.noteList = self.read()
-//            self.aircraftArray = self.read("aircraft")
-//            self.departureArray = self.read("departure")
-//            self.enrouteArray = self.read("enroute")
-//            self.arrivalArray = self.read("arrival")
-//            self.aircraftRefArray = self.read("aircraftref")
-//            self.departureRefArray = self.read("departureref")
-//            self.enrouteRefArray = self.read("enrouteref")
-//            self.arrivalRefArray = self.read("arrivalref")
+            self.preflightArray = self.read("preflight")
+            self.departureArray = self.read("departure")
+            self.enrouteArray = self.read("enroute")
+            self.arrivalArray = self.read("arrival")
+            self.preflightRefArray = self.read("preflightref")
+            self.departureRefArray = self.read("departureref")
+            self.enrouteRefArray = self.read("enrouteref")
+            self.arrivalRefArray = self.read("arrivalref")
             self.scratchPadArray = self.readScratchPad()
             self.dataFPEnroute = self.readEnrouteList()
             //        readFlightPlan()
@@ -377,7 +383,10 @@ class CoreDataModelState: ObservableObject {
             self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
-            self.dataNoteAabbaPost = self.readDataNoteAabbaPostList()
+            self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
+            self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
+            self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")
+            self.dataNoteAabbaArrival = self.readDataNoteAabbaPostList("arrival")
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -506,6 +515,20 @@ class CoreDataModelState: ObservableObject {
         let newTags9 = TagList(context: service.container.viewContext)
         newTags9.id = UUID()
         newTags9.name = "Crew Briefing"
+        
+        service.container.viewContext.performAndWait {
+            do {
+                // Persist the data in this managed object context to the underlying store
+                try service.container.viewContext.save()
+                print("saved successfully")
+            } catch {
+                // Something went wrong 😭
+                print("Failed to save: \(error)")
+                // Rollback any changes in the managed object context
+                service.container.viewContext.rollback()
+
+            }
+        }
         
 //        let newDep1 = NoteList(context: service.container.viewContext)
 //        newDep1.id = UUID()
@@ -1081,7 +1104,7 @@ class CoreDataModelState: ObservableObject {
         self.dataRecencyExpiry = readDataRecencyExpiry()
     }
     
-    func initDataNotePost(_ data: [INoteResponse]) {
+    func initDataNoteAabbaPreflight(_ data: [INoteResponse]) {
         if data.count > 0 {
             for item in data {
                 var posts = [NotePostList]()
@@ -1131,6 +1154,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name
+                newObj.type = "preflight"
                 newObj.posts = NSSet(array: posts)
                 
                 service.container.viewContext.performAndWait {
@@ -1146,7 +1170,217 @@ class CoreDataModelState: ObservableObject {
                 }
             }
 
-            self.dataNoteAabbaPost = readDataNoteAabbaPostList()
+            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("preflight")
+        }
+    }
+    
+    func initDataNoteAabbaDepature(_ data: [INoteResponse]) {
+        if data.count > 0 {
+            for item in data {
+                var posts = [NotePostList]()
+                
+                if item.post_count > 0 {
+                    for post in item.posts {
+                        var comments = [NoteCommentList]()
+                        
+                        if (post.comment_count as NSString).intValue > 0 {
+                            for comment in post.comments {
+                                let newComment = NoteCommentList(context: service.container.viewContext)
+                                newComment.id = UUID()
+                                newComment.commentId = comment.comment_id
+                                newComment.postId = comment.post_id
+                                newComment.userId = comment.user_id
+                                newComment.commentDate = comment.comment_date
+                                newComment.commentText = comment.comment_text
+                                newComment.userName = comment.username
+                                
+                                comments.append(newComment)
+                            }
+                        }
+                        
+                        let newPost = NotePostList(context: service.container.viewContext)
+                        newPost.id = UUID()
+                        newPost.postId = post.post_id
+                        newPost.userId = post.user_id
+                        newPost.userName = post.username
+                        newPost.postDate = post.post_date
+                        newPost.postTitle = post.post_title
+                        newPost.postText = post.post_text
+                        newPost.upvoteCount = post.upvote_count
+                        newPost.commentCount = post.comment_count
+                        newPost.category = post.category
+                        newPost.postUpdated = Date()
+                        newPost.favourite = post.favourite
+                        newPost.blue = post.blue
+                        newPost.comments = NSSet(array: comments)
+                        posts.append(newPost)
+                    }
+                }
+                
+                let newObj = NoteAabbaPostList(context: service.container.viewContext)
+
+                newObj.id = UUID()
+                newObj.postCount = "\(item.post_count)"
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.name = item.name
+                newObj.type = "departure"
+                newObj.posts = NSSet(array: posts)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data aabba departure successfully")
+                    } catch {
+                        print("Failed to data aabba departure save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+            }
+
+            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("departure")
+        }
+    }
+    
+    func initDataNoteAabbaEnroute(_ data: [INoteResponse]) {
+        if data.count > 0 {
+            for item in data {
+                var posts = [NotePostList]()
+                
+                if item.post_count > 0 {
+                    for post in item.posts {
+                        var comments = [NoteCommentList]()
+                        
+                        if (post.comment_count as NSString).intValue > 0 {
+                            for comment in post.comments {
+                                let newComment = NoteCommentList(context: service.container.viewContext)
+                                newComment.id = UUID()
+                                newComment.commentId = comment.comment_id
+                                newComment.postId = comment.post_id
+                                newComment.userId = comment.user_id
+                                newComment.commentDate = comment.comment_date
+                                newComment.commentText = comment.comment_text
+                                newComment.userName = comment.username
+                                
+                                comments.append(newComment)
+                            }
+                        }
+                        
+                        let newPost = NotePostList(context: service.container.viewContext)
+                        newPost.id = UUID()
+                        newPost.postId = post.post_id
+                        newPost.userId = post.user_id
+                        newPost.userName = post.username
+                        newPost.postDate = post.post_date
+                        newPost.postTitle = post.post_title
+                        newPost.postText = post.post_text
+                        newPost.upvoteCount = post.upvote_count
+                        newPost.commentCount = post.comment_count
+                        newPost.category = post.category
+                        newPost.postUpdated = Date()
+                        newPost.favourite = post.favourite
+                        newPost.blue = post.blue
+                        newPost.comments = NSSet(array: comments)
+                        posts.append(newPost)
+                    }
+                }
+                
+                let newObj = NoteAabbaPostList(context: service.container.viewContext)
+
+                newObj.id = UUID()
+                newObj.postCount = "\(item.post_count)"
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.name = item.name
+                newObj.type = "enroute"
+                newObj.posts = NSSet(array: posts)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data aabba enroute successfully")
+                    } catch {
+                        print("Failed to data aabba enroute save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+            }
+
+            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("enroute")
+        }
+    }
+    
+    func initDataNoteAabbaArrival(_ data: [INoteResponse]) {
+        if data.count > 0 {
+            for item in data {
+                var posts = [NotePostList]()
+                
+                if item.post_count > 0 {
+                    for post in item.posts {
+                        var comments = [NoteCommentList]()
+                        
+                        if (post.comment_count as NSString).intValue > 0 {
+                            for comment in post.comments {
+                                let newComment = NoteCommentList(context: service.container.viewContext)
+                                newComment.id = UUID()
+                                newComment.commentId = comment.comment_id
+                                newComment.postId = comment.post_id
+                                newComment.userId = comment.user_id
+                                newComment.commentDate = comment.comment_date
+                                newComment.commentText = comment.comment_text
+                                newComment.userName = comment.username
+                                
+                                comments.append(newComment)
+                            }
+                        }
+                        
+                        let newPost = NotePostList(context: service.container.viewContext)
+                        newPost.id = UUID()
+                        newPost.postId = post.post_id
+                        newPost.userId = post.user_id
+                        newPost.userName = post.username
+                        newPost.postDate = post.post_date
+                        newPost.postTitle = post.post_title
+                        newPost.postText = post.post_text
+                        newPost.upvoteCount = post.upvote_count
+                        newPost.commentCount = post.comment_count
+                        newPost.category = post.category
+                        newPost.postUpdated = Date()
+                        newPost.favourite = post.favourite
+                        newPost.blue = post.blue
+                        newPost.comments = NSSet(array: comments)
+                        posts.append(newPost)
+                    }
+                }
+                
+                let newObj = NoteAabbaPostList(context: service.container.viewContext)
+
+                newObj.id = UUID()
+                newObj.postCount = "\(item.post_count)"
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.name = item.name
+                newObj.type = "arrival"
+                newObj.posts = NSSet(array: posts)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data aabba arrival successfully")
+                    } catch {
+                        print("Failed to data aabba arrival save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+
+                    }
+                }
+            }
+
+            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("arrival")
         }
     }
     
@@ -1777,12 +2011,17 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func read(fetchLimit: Int? = nil) -> [NoteList] {
+    func read(_ target: String = "preflight", predicateFormat: String? = "type = %@", fetchLimit: Int? = nil) -> [NoteList] {
         // create a temp array to save fetched notes
         var results: [NoteList] = []
         // initialize the fetch request
         let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
 
+        // define filter and/or limit if needed
+        if predicateFormat != nil {
+            request.predicate = NSPredicate(format: "type == %@", target)
+        }
+        
         if fetchLimit != nil {
             request.fetchLimit = fetchLimit!
         }
@@ -2455,10 +2694,16 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readDataNoteAabbaPostList() -> [NoteAabbaPostList] {
+    func readDataNoteAabbaPostList(_ target: String = "", predicateFormat: String? = "type = %@") -> [NoteAabbaPostList] {
         var data: [NoteAabbaPostList] = []
         
         let request: NSFetchRequest<NoteAabbaPostList> = NoteAabbaPostList.fetchRequest()
+        
+        // define filter and/or limit if needed
+        if predicateFormat != nil {
+            request.predicate = NSPredicate(format: "type == %@", target)
+        }
+        
         do {
             let response: [NoteAabbaPostList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {

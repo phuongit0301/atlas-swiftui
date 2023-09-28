@@ -78,11 +78,11 @@ struct NoteReferenceForm: View {
                             if tagList.count > 0 {
                                 Rectangle().fill(.black.opacity(0.3)).frame(height: 1)
                                 
-                                NewFlowLayout(alignment: .leading) {
-                                    ForEach(tagList, id: \.self) { item in
-                                        TagItem(tagList: $tagList, item: item, tagListSelected: $tagListSelected)
-                                    }
-                                }.padding(.vertical)
+//                                NewFlowLayout(alignment: .leading) {
+//                                    ForEach(tagList, id: \.self) { item in
+//                                        TagItem(tagList: $tagList, item: item, tagListSelected: $tagListSelected)
+//                                    }
+//                                }.padding(.vertical)
                             }
                             
                             Spacer()

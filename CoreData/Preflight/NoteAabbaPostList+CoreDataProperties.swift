@@ -2,7 +2,7 @@
 //  NoteAabbaPostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 27/09/2023.
+//  Created by phuong phan on 28/09/2023.
 //
 //
 
@@ -21,6 +21,8 @@ extension NoteAabbaPostList {
     @NSManaged public var longitude: String?
     @NSManaged public var name: String?
     @NSManaged public var postCount: String?
+    @NSManaged public var type: String?
+    @NSManaged public var includeCrew: Bool
     @NSManaged public var posts: NSSet?
     
     public var unwrappedLatitude: String {
@@ -37,6 +39,10 @@ extension NoteAabbaPostList {
     
     public var unwrappedPostCount: String {
         postCount ?? ""
+    }
+    
+    public var unwrappedType: String {
+        type ?? ""
     }
 }
 

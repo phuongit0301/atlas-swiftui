@@ -34,9 +34,9 @@ struct HomeFlightSectionView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
-                        case NavigationEnumeration.OverviewScreen:
-                            OverviewView()
-                                .tag(NavigationEnumeration.OverviewScreen)
+                        case NavigationEnumeration.DepartureScreen:
+                            DepatureSectionView()
+                                .tag(NavigationEnumeration.DepartureScreen)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
@@ -46,13 +46,13 @@ struct HomeFlightSectionView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
-                        case NavigationEnumeration.FlightScreen:
-                            FlightNoteView()
-                                .tag(NavigationEnumeration.FlightScreen)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(Color.theme.cultured)
-                                .toolbar(.hidden, for: .tabBar)
-                                .ignoresSafeArea()
+//                        case NavigationEnumeration.FlightScreen:
+//                            FlightNoteView()
+//                                .tag(NavigationEnumeration.FlightScreen)
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                                .background(Color.theme.cultured)
+//                                .toolbar(.hidden, for: .tabBar)
+//                                .ignoresSafeArea()
 
                         case NavigationEnumeration.FuelScreen:
                             FuelView()

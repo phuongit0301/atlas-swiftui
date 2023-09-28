@@ -50,6 +50,10 @@ struct RowAlternates: View {
             }.fixedSize()
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
+            HStack {
+                ButtonDateStepper(onToggle: onEta, value: $currentDateEta, suffix: "").fixedSize()
+            }.frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
+            
             TextField("Enter VIS",text: $tfVis)
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
                 .onSubmit {
@@ -65,10 +69,6 @@ struct RowAlternates: View {
                         itemList[index].minima = tfMinima
                     }
                 }
-            
-            HStack {
-                ButtonDateStepper(onToggle: onEta, value: $currentDateEta, suffix: "").fixedSize()
-            }.frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
         }.frame(height: 44)
             .onChange(of: selectAltn) {newValue in

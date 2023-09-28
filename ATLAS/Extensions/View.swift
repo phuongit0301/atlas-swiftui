@@ -589,7 +589,7 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
     switch screenName {
         case .FlightOverviewSectionView:
             return "Flight Overview"
-        case .FlightPlanSummarySectionView:
+        case .SummarySubSectionView:
             return "Summary"
         case .HomeScreen:
             return "Home"

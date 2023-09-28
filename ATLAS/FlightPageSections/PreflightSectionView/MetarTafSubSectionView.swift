@@ -1,5 +1,5 @@
 //
-//  FlightPlanMetarTafSectionView.swift
+//  MetarTafSubSectionView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 24/9/23.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct FlightPlanMetarTafSectionView: View {
+struct MetarTafSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @State var showLoading = false
     

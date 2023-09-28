@@ -1,5 +1,5 @@
 //
-//  NoteSectionView.swift
+//  DepatureSectionView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 25/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteSectionView: View {
+struct DepatureSectionView: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
@@ -53,27 +53,25 @@ struct NoteSectionView: View {
                             .padding(.vertical, 8)
                     }.frame(height: 52)
                     
-                    NoteItemList(
+                    DepatureNoteItemList(
                         header: header,
                         showSheet: $showSheet,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.noteList,
+                        itemList: $viewModel.departureArray,
                         isShowList: $isShowListNote,
                         geoWidth: proxy.size.width,
-                        remove: remove,
-                        add: add,
                         resetData: resetData
                     ).frame(maxHeight: .infinity)
                         .padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                     
-                    NoteItemRelevantList(
+                    DepatureNoteItemRelevantList(
                         header: "Relevant AABBA Posts",
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataNoteAabbaPost,
+                        itemList: $viewModel.dataNoteAabbaDeparture,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
                         geoWidth: proxy.size.width,
@@ -86,20 +84,20 @@ struct NoteSectionView: View {
                 }.padding(.horizontal, 16)
                     .background(Color.theme.antiFlashWhite)
                     .padding(.bottom)
-                    .sheet(isPresented: $showSheet) {
-                        NoteItemForm(
-                            textNote: $textNote,
-                            tagList: $viewModel.tagList,
-                            itemList: $viewModel.noteList,
-                            currentIndex: $currentIndex,
-                            showSheet: $showSheet,
-                            resetData: resetData
-                        ).interactiveDismissDisabled(true)
-                    }
             }.onChange(of: mapIconModel.num) { _ in
-                viewModel.dataNoteAabbaPost = viewModel.readDataNoteAabbaPostList()
+                viewModel.dataNoteAabbaDeparture = viewModel.readDataNoteAabbaPostList("depature")
             }.sheet(isPresented: $showModalComment) {
-                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
+                DepatureModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
+            }.sheet(isPresented: $showSheet) {
+                DepatureNoteItemForm(
+                    textNote: $textNote,
+                    tagList: $viewModel.tagList,
+                    itemList: $viewModel.departureArray,
+                    currentIndex: $currentIndex,
+                    showSheet: $showSheet,
+                    type: "departure",
+                    resetData: resetData
+                ).interactiveDismissDisabled(true)
             }
         }
         
@@ -114,16 +112,10 @@ struct NoteSectionView: View {
     }
     
     private func resetData() {
-        viewModel.noteList = viewModel.read()
+        viewModel.departureArray = viewModel.read("departure")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
-    }
-}
-
-struct NoteSectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteSectionView()
     }
 }

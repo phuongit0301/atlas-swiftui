@@ -1,5 +1,5 @@
 //
-//  FlightOverviewView.swift
+//  SummarySubSectionView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 22/08/2023.
@@ -20,7 +20,7 @@ struct IAlternate {
     var isDeleted: Bool?
 }
 
-struct FlightPlanSummarySectionView: View {
+struct SummarySubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
@@ -54,6 +54,18 @@ struct FlightPlanSummarySectionView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .center) {
                     Text("Summary").font(.system(size: 17, weight: .semibold))
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Toggle(isOn: $showUTC) {
+                            Text("Local").font(.system(size: 17, weight: .regular))
+                                .foregroundStyle(Color.black)
+                        }
+                        Text("UTC").font(.system(size: 17, weight: .regular))
+                            .foregroundStyle(Color.black)
+                    }.fixedSize()
+                    
                 }.frame(height: 52)
                     .padding(.leading, 16)
                     .padding(.bottom, 8)
@@ -308,7 +320,7 @@ struct FlightPlanSummarySectionView: View {
                                 VStack(spacing: 0) {
                                     HStack(alignment: .center, spacing: 0) {
                                         HStack {
-                                            Text("Enroute Alternates").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
+                                            Text("Enroute Alternate").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             Spacer()
                                             
                                             if isEdit {
@@ -321,13 +333,13 @@ struct FlightPlanSummarySectionView: View {
                                             
                                         }.frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         
+                                        Text("ETA")
+                                            .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
+                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         Text("VIS (Optional)")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         Text("Minima (Optional)")
-                                            .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
-                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
-                                        Text("ETA")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                     }.frame(height: 44)
@@ -360,7 +372,7 @@ struct FlightPlanSummarySectionView: View {
                                 VStack(spacing: 0) {
                                     HStack(spacing: 0) {
                                         HStack {
-                                            Text("Destination Alternates").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
+                                            Text("Destination Alternate").foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             Spacer()
                                             
                                             if isEdit {
@@ -372,13 +384,14 @@ struct FlightPlanSummarySectionView: View {
                                             }
                                         }.frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         
+                                        Text("ETA")
+                                            .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
+                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
+                                        
                                         Text("VIS (Optional)")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                         Text("Minima (Optional)")
-                                            .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
-                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
-                                        Text("ETA")
                                             .foregroundColor(Color.black).font(.system(size: 15, weight: .medium))
                                             .frame(width: calculateWidthSummary(proxy.size.width - 32, 4), alignment: .leading)
                                     }.frame(height: 44)

@@ -1,5 +1,5 @@
 //
-//  NoteItemList.swift
+//  DepatureNoteItemRelevantList.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,18 +8,24 @@
 import Foundation
 import SwiftUI
 
-struct NoteItemList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+struct DepatureNoteItemRelevantList: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
+    @Binding var showModalComment: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [NoteList] // itemList
+    @Binding var itemList: [NoteAabbaPostList] // itemList
     @Binding var isShowList: Bool
+    @Binding var postIndex: Int
     var geoWidth: Double
     var remove: () -> Void
     var add: () -> Void
-    var resetData: () -> Void?
+    
+    @State var postList: [NotePostList] = []
+    @State var listHeight: CGFloat = 0
+    let dateFormatter = DateFormatter()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -44,19 +50,10 @@ struct NoteItemList: View {
                     .onTapGesture {
                         self.isShowList.toggle()
                     }
-                
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
             }.frame(height: 54)
             
             if isShowList {
-                if itemList.isEmpty {
+                if postList.isEmpty {
                     VStack(alignment: .leading) {
                         Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
                     }
@@ -64,7 +61,7 @@ struct NoteItemList: View {
                 } else {
                     VStack(spacing: 0) {
                         List {
-                            ForEach(itemList.indices, id: \.self) { index in
+                            ForEach(postList.indices, id: \.self) { index in
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center, spacing: 0) {
                                         Image(systemName: "line.3.horizontal")
@@ -74,37 +71,67 @@ struct NoteItemList: View {
                                             .aspectRatio(contentMode: .fit)
                                         
                                         VStack(alignment: .leading, spacing: 8) {
-                                            Text(itemList[index].unwrappedName.trimmingCharacters(in: .whitespacesAndNewlines))
+                                            Text(postList[index].unwrappedPostText.trimmingCharacters(in: .whitespacesAndNewlines))
                                                 .foregroundColor(Color.theme.eerieBlack)
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        Text(tag.name)
-                                                            .padding(.vertical, 4)
-                                                            .padding(.horizontal, 12)
-                                                            .font(.system(size: 11, weight: .regular))
-                                                            .foregroundColor(Color.theme.eerieBlack)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 12)
-                                                                    .stroke(Color.theme.eerieBlack, lineWidth: 1)
-                                                            )
-                                                    }
+                                                HStack(alignment: .center, spacing: 8) {
+                                                    NoteTagItemColor(name: postList[index].unwrappedCategory)
                                                 }
                                                 
-                                                Text(renderDate(itemList[index].unwrappedCreatedAt)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                Text(postList[index].unwrappedUserName).foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
+                                                
+                                                Text(renderDate(postList[index].unwrappedPostDate)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                
+                                                Button(action: {
+                                                    postList[index].upvoteCount = "\(((postList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                                    coreDataModel.save()
+                                                    
+                                                    mapIconModel.num += 1
+                                                }, label: {
+                                                    HStack(alignment: .center, spacing: 4) {
+                                                        Image(systemName: "arrowshape.left")
+                                                            .foregroundColor(Color.black)
+                                                            .font(.system(size: 20))
+                                                            .rotationEffect(.degrees(90))
+                                                        
+                                                        Text(postList[index].unwrappedUpvoteCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                    }
+                                                }).buttonStyle(PlainButtonStyle())
+                                                
+                                                Button(action: {
+                                                    postIndex = index
+                                                    showModalComment.toggle()
+                                                }, label: {
+                                                    HStack(alignment: .center, spacing: 4) {
+                                                        Image(systemName: "bubble.left.and.bubble.right")
+                                                            .foregroundColor(Color.black)
+                                                            .font(.system(size: 20))
+                                                        
+                                                        Text(postList[index].unwrappedCommentCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                    }
+                                                }).buttonStyle(PlainButtonStyle())
+                                                
                                             }
                                         }.padding(.leading)
                                         
                                         Spacer()
+
+                                        if postList[index].blue {
+                                            Circle().fill(Color.theme.azure).frame(width: 12, height: 12)
+                                        } else {
+                                            Circle().stroke(Color.theme.azure, lineWidth: 1).frame(width: 12, height: 12)
+                                        }
+                                        
                                         
                                         Button(action: {
-                                            itemList[index].isDefault.toggle()
-                                            viewModel.save()
-                                            resetData()
+                                            postList[index].favourite = !postList[index].favourite
+                                            coreDataModel.save()
+                                            
+                                            mapIconModel.num += 1
                                         }) {
-                                            itemList[index].isDefault ?
+                                            postList[index].favourite ?
                                                 Image(systemName: "star.fill")
                                                     .foregroundColor(Color.theme.azure)
                                                     .font(.system(size: 22))
@@ -114,40 +141,38 @@ struct NoteItemList: View {
                                                     .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
+                                            
                                     }
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
+                                .padding(.vertical, 8)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
-                                        resetData()
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                    
                                     Button {
-                                        self.currentIndex = index
-                                        self.showSheet.toggle()
+                                        add()
                                     } label: {
-                                        Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                     }
-                                    .tint(Color.theme.orangePeel)
+                                    .tint(Color.theme.graniteGray)
                                 }
                             }.onMove(perform: move)
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
-                            .frame(height: 73 * CGFloat(viewModel.noteList.count))
+                            .frame(height: 73 * CGFloat(postList.count))
                     }
                 }
             }
             
             Spacer()
             
+        }.onAppear {
+            if itemList.count > 0 {
+                if let firstItem = itemList.first {
+                    postList = firstItem.posts?.allObjects as! [NotePostList]
+                }
+            }
         }
     }
     

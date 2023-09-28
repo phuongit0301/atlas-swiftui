@@ -82,4 +82,6 @@ struct INoteResponse: Decodable {
 struct INotePostJson: Decodable {
     var departure: [INoteResponse]
     var arrival: [INoteResponse]
+    var preflight: [INoteResponse]
+    var enroute: [INoteResponse]
 }

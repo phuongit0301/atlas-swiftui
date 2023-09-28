@@ -11,7 +11,6 @@ import SwiftUI
 struct OverviewView: View {
     var viewInformationModel = ListReferenceModel()
     var viewUtilitiesModel = ListUtilitiesModel()
-    @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var refState: ScreenReferenceModel
 //    @State private var isActive: Bool = false
 //    @State private var selectedItem: ListFlightInformationItem?

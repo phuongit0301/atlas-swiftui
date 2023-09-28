@@ -16,17 +16,17 @@ struct PreflightSectionView: View {
             VStack(spacing: 0) {
                 switch selectedTab {
                     case .SummaryScreen:
-                        FlightPlanSummarySectionView()
+                        SummarySubSectionView()
                     case .NotamScreen:
-                        FlightPlanNOTAMSectionView()
+                        NotamSubSectionView()
                     case .MetarTafScreen:
-                        FlightPlanMetarTafSectionView()
+                        MetarTafSubSectionView()
                     case .StatisticsScreen:
-                        FlightPlanMetarTafSectionView()
+                        FuelView()
                     case .Mapcreen:
-                        FlightPlanMetarTafSectionView()
+                        MapViewModal()
                     case .NotesScreen:
-                        NoteSectionView()
+                        NoteSubSectionView()
                 }
                 
                 PreflightSegmented(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)

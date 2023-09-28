@@ -1,5 +1,5 @@
 //
-//  ModalNoteCommentView.swift
+//  DepatureModalNoteCommentView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 18/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ModalNoteCommentView: View {
+struct DepatureModalNoteCommentView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
@@ -200,8 +200,8 @@ struct ModalNoteCommentView: View {
             Spacer()
         }
         .onAppear {
-            if coreDataModel.dataNoteAabbaPost.count > 0 {
-                if let payload = coreDataModel.dataNoteAabbaPost[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
+            if coreDataModel.dataNoteAabbaDeparture.count > 0 {
+                if let payload = coreDataModel.dataNoteAabbaDeparture[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
                     self.posts = posts
                     self.post = posts[postIndex]
                 }

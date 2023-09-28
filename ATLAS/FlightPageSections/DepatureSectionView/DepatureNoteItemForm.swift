@@ -1,5 +1,5 @@
 //
-//  NoteItemForm.swift
+//  DepatureNoteItemForm.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteItemForm: View {
+struct DepatureNoteItemForm: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
@@ -16,6 +16,7 @@ struct NoteItemForm: View {
     @Binding var itemList: [NoteList]
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
+    @State var type: String // Preflight, Depature, Arrival, Enroute
     @State var tagListSelected: [TagList] = []
     @State var pasteboard = UIPasteboard.general
     @State var isIncludeBriefing = false
@@ -161,7 +162,10 @@ struct NoteItemForm: View {
             item.name = name
             item.isDefault = false
             item.createdAt = dateFormatter.string(from: Date())
-
+            item.canDelete = true
+            item.fromParent = false
+            item.type = type
+            item.includeCrew = isIncludeBriefing
             item.addToTags(NSSet(array: tagListSelected))
 
             viewModel.save()

@@ -378,18 +378,24 @@
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
+        <attribute name="canDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="String"/>
+        <attribute name="fromParent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="includeCrew" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
     <entity name="NoteAabbaPost" representedClassName="NoteAabbaPostList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="includeCrew" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="postCount" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NotePost" inverseName="lists" inverseEntity="NotePost"/>
     </entity>
     <entity name="NoteComment" representedClassName="NoteCommentList" syncable="YES">

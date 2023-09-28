@@ -11,11 +11,12 @@ import SwiftUI
 enum NavigationEnumeration {
     case FlightSummaryScreen
     case FlightOverviewSectionView
-    case FlightPlanSummarySectionView
+    case SummarySubSectionView
     case PreflightSectionView
     case HomeScreen
     case FlightScreen
     case OverviewScreen
+    case ClipboardScreen
     case NoteScreen
     case FlightPlanScreen
     case FlightInformationDetailScreen
@@ -102,15 +103,15 @@ class TabModelState: ObservableObject {
     let Data = [
         ITabs(name: "Flight Overview", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightOverviewSectionView,  isDefault: false, isDisabled: false),
         ITabs(name: "Preflight", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.PreflightSectionView,  isDefault: false, isDisabled: false),
-        ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanScreen,  isDefault: false, isDisabled: false),
-        ITabs(name: "Sector Info", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightScreen, isDefault: true, isDisabled: false),
-        ITabs(name: "Statistics", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FuelScreen, isDefault: false, isDisabled: false),
-        ITabs(name: "Charts", iconName: "map", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "jdmpro.jeppesen://"),
-        ITabs(name: "Weather", iconName: "sun.max", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.WeatherScreen, isDefault: false, isDisabled: false, scheme: "ewas://"),
-        ITabs(name: "eDocuments", iconName: "doc.viewfinder", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "com.adobe.Adobe-Reader://"),
+//        ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanScreen,  isDefault: false, isDisabled: false),
+        ITabs(name: "Depature", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.DepartureScreen, isDefault: true, isDisabled: false),
+        ITabs(name: "Enroute", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.EnrouteScreen, isDefault: false, isDisabled: false),
+        ITabs(name: "Arrival", iconName: "map", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ArrivalScreen, isDefault: false, isDisabled: false, scheme: "jdmpro.jeppesen://"),
+//        ITabs(name: "Weather", iconName: "sun.max", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.WeatherScreen, isDefault: false, isDisabled: false, scheme: "ewas://"),
+//        ITabs(name: "eDocuments", iconName: "doc.viewfinder", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "com.adobe.Adobe-Reader://"),
         ITabs(name: "AI Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.AtlasSearchScreen, isDefault: false, isDisabled: false),
-        ITabs(name: "Reporting", iconName: "rectangle.stack", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ReportingScreen, isDefault: false, isDisabled: true),
-        ITabs(name: "Reference", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.OverviewScreen, isDefault: false, isDisabled: false),
+        ITabs(name: "Utilities", iconName: "rectangle.stack", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ReportingScreen, isDefault: false, isDisabled: true),
+        ITabs(name: "Clipboard", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ClipboardScreen, isDefault: false, isDisabled: false),
     ]
     
     @Published var selectedNav: NavigationEnumeration

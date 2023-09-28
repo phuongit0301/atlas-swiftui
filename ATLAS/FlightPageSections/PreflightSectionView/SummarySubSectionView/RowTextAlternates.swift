@@ -22,11 +22,11 @@ struct RowTextAlternates: View {
         HStack {
             Text(itemList[index].altn).frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
+            Text(itemList[index].eta).frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
+            
             Text(itemList[index].vis ?? "").frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
             Text(itemList[index].minima ?? "").frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
-            
-            Text(itemList[index].eta).frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
         }.frame(height: 44)
     }
