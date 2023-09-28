@@ -40,9 +40,15 @@ struct HomeFlightSectionView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
-                        case NavigationEnumeration.FlightPlanScreen:
-                            FlightPlanView()
-                                .tag(NavigationEnumeration.FlightPlanScreen)
+                        case NavigationEnumeration.EnrouteScreen:
+                            EnrouteSectionView()
+                                .tag(NavigationEnumeration.EnrouteScreen)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .toolbar(.hidden, for: .tabBar)
+                                .ignoresSafeArea()
+                        case NavigationEnumeration.ArrivalScreen:
+                            ArrivalSectionView()
+                                .tag(NavigationEnumeration.ArrivalScreen)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
