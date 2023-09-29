@@ -126,6 +126,7 @@ struct NotamSubSectionView: View {
                                         coreDataModel.save()
                                         coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
                                         coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
                                     }) {
                                         if arrDepNotams[index].isChecked {
                                             Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -219,6 +220,7 @@ struct NotamSubSectionView: View {
                                         coreDataModel.save()
                                         coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
                                         coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
                                     }) {
                                         if arrEnrNotams[index].isChecked {
                                             Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -310,6 +312,7 @@ struct NotamSubSectionView: View {
                                         coreDataModel.save()
                                         coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
                                         coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
                                     }) {
                                         if arrArrNotams[index].isChecked {
                                             Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
@@ -401,6 +404,7 @@ struct NotamSubSectionView: View {
                                         coreDataModel.save()
                                         coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
                                         coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                        coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
                                     }) {
                                         if arrArrNotams[index].isChecked {
                                             Image(systemName: "star.fill").foregroundColor(Color.theme.azure)

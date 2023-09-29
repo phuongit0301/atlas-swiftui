@@ -1,5 +1,5 @@
 //
-//  ClipboardNotamView.swift
+//  ClipboardDepartureNotamView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ClipboardNotamView: View {
+struct ClipboardDepartureNotamView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @Binding var itemList: [NotamsDataList]
 //    var resetData: () -> Void
@@ -65,7 +65,7 @@ struct ClipboardNotamView: View {
                                 itemList[index].isChecked.toggle()
                                 coreDataModel.save()
                                 coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                                coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
                             }) {
                                 if itemList[index].isChecked {
                                     Image(systemName: "star.fill").foregroundColor(Color.theme.azure)

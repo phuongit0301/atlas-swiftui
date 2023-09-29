@@ -88,6 +88,12 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPostDeparture: [NotePostList] = []
     @Published var dataPostDepartureRef: [NotePostList] = []
     
+    @Published var dataPostEnroute: [NotePostList] = []
+    @Published var dataPostEnrouteRef: [NotePostList] = []
+    
+    @Published var dataPostArrival: [NotePostList] = []
+    @Published var dataPostArrivalRef: [NotePostList] = []
+    
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
     
@@ -131,6 +137,11 @@ class CoreDataModelState: ObservableObject {
     // For NoTams
     @Published var dataNotams: [NotamsDataList] = []
     @Published var dataNotamsRef: [NotamsDataList] = []
+    
+    @Published var dataDepartureNotamsRef: [NotamsDataList] = []
+    @Published var dataEnrouteNotamsRef: [NotamsDataList] = []
+    @Published var dataArrivalNotamsRef: [NotamsDataList] = []
+    @Published var dataDestinationNotamsRef: [NotamsDataList] = []
     @Published var existDataNotams: Bool = false
     
     // For Metar Taf
@@ -402,6 +413,12 @@ class CoreDataModelState: ObservableObject {
             self.dataPostDeparture = self.readDataPostList("departure", "")
             self.dataPostDepartureRef = self.readDataPostList("departure", "ref")
             
+            self.dataPostEnroute = self.readDataPostList("enroute", "")
+            self.dataPostEnrouteRef = self.readDataPostList("enroute", "ref")
+            
+            self.dataPostArrival = self.readDataPostList("arrival", "")
+            self.dataPostArrivalRef = self.readDataPostList("arrival", "ref")
+            
             self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
             self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")
             self.dataNoteAabbaArrival = self.readDataNoteAabbaPostList("arrival")
@@ -426,6 +443,10 @@ class CoreDataModelState: ObservableObject {
             self.readArrivalEntries()
             self.dataNotams = self.readDataNotamsList()
             self.dataNotamsRef = self.readDataNotamsRefList()
+            self.dataDepartureNotamsRef = self.readDataNotamsByType("depNotams")
+            self.dataEnrouteNotamsRef = self.readDataNotamsByType("enrNotams")
+            self.dataArrivalNotamsRef = self.readDataNotamsByType("arrNotams")
+            self.dataDestinationNotamsRef = self.readDataNotamsByType("destNotams")
             self.readDataMetarTafList()
             self.dataAltnTaf = self.readDataAltnTafList()
             // For Fuel
@@ -2544,6 +2565,26 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch altn from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataNotamsByType(_ target: String = "") -> [NotamsDataList] {
+        var data: [NotamsDataList] = []
+        
+        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
+        
+        if target != "" {
+            request.predicate = NSPredicate(format: "type == %@ AND isChecked == %@", argumentArray: [target, 1])
+        }
+        do {
+            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
         }
         
         return data

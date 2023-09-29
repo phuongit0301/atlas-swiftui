@@ -1,5 +1,5 @@
 //
-//  ArrivalNoteItemList.swift
+//  ClipboardArrivalNoteItemList.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,12 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct ArrivalNoteItemList: View {
+struct ClipboardArrivalNoteItemList: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
     @State var header: String = "" // "Aircraft Status"
-    @Binding var showSheet: Bool
     @Binding var currentIndex: Int
     @Binding var itemList: [NoteList] // itemList
     @Binding var isShowList: Bool
@@ -43,15 +42,6 @@ struct ArrivalNoteItemList: View {
                     .onTapGesture {
                         self.isShowList.toggle()
                     }
-                
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
             }.frame(height: 54)
             
             if isShowList {
@@ -101,13 +91,14 @@ struct ArrivalNoteItemList: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            if (itemList[index].isDefault) {
-                                                removeQR(index)
+                                            if (itemList[index].canDelete && itemList[index].fromParent) {
+                                                update(index)
                                             } else {
-                                                addQR(index)
+                                                updateStatus(index)
                                             }
+
                                         }) {
-                                            itemList[index].isDefault ?
+                                            itemList[index].isDefault || itemList[index].fromParent ?
                                                 Image(systemName: "star.fill")
                                                     .foregroundColor(Color.theme.azure)
                                                     .font(.system(size: 22))
@@ -124,24 +115,7 @@ struct ArrivalNoteItemList: View {
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.white)
-                                .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
-                                        resetData()
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                    
-                                    Button {
-                                        self.currentIndex = index
-                                        self.showSheet.toggle()
-                                    } label: {
-                                        Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }
-                                    .tint(Color.theme.orangePeel)
-                                }
-                            }.onMove(perform: move)
+                            }
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))
@@ -169,34 +143,18 @@ struct ArrivalNoteItemList: View {
         self.itemList.move(fromOffsets: source, toOffset: destination)
     }
     
-    private func addQR(_ index: Int) {
-        let data = itemList[index]
-        let item = NoteList(context: persistenceController.container.viewContext)
-        item.id = UUID()
-        item.name = data.name
-        item.isDefault = false
-        item.createdAt = dateFormatter.string(from: Date())
-        item.canDelete = true
-        item.fromParent = true
-        item.type = "arrivalref"
-        item.includeCrew = data.includeCrew
-        item.parentId = data.id
-        
-        if let tags = data.tags {
-            item.addToTags(tags)
+    private func update(_ index: Int) {
+        if let found = viewModel.arrivalArray.first(where: {$0.id == viewModel.arrivalRefArray[index].parentId}) {
+            found.isDefault = false
         }
-        
-        data.isDefault = true
+
+        viewModel.delete(viewModel.arrivalRefArray[index])
         viewModel.save()
         resetData()
     }
-    
-    private func removeQR(_ index: Int) {
-        itemList[index].isDefault = false
 
-        if let found = viewModel.arrivalRefArray.first(where: {$0.parentId == viewModel.arrivalArray[index].id}) {
-            viewModel.delete(found)
-        }
+    private func updateStatus(_ index: Int) {
+        viewModel.arrivalRefArray[index].isDefault.toggle()
         viewModel.save()
         resetData()
     }

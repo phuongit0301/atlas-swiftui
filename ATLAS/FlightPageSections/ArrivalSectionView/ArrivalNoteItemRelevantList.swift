@@ -9,19 +9,19 @@ import Foundation
 import SwiftUI
 
 struct ArrivalNoteItemRelevantList: View {
-    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
     @Binding var showModalComment: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [NoteAabbaPostList] // itemList
+    @Binding var itemList: [NotePostList] // itemList
     @Binding var isShowList: Bool
     @Binding var postIndex: Int
     var geoWidth: Double
+    var resetData: () -> Void
     
-    @State var postList: [NotePostList] = []
     @State var listHeight: CGFloat = 0
     let dateFormatter = DateFormatter()
     
@@ -51,7 +51,7 @@ struct ArrivalNoteItemRelevantList: View {
             }.frame(height: 54)
             
             if isShowList {
-                if postList.isEmpty {
+                if itemList.isEmpty {
                     VStack(alignment: .leading) {
                         Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
                     }
@@ -59,7 +59,7 @@ struct ArrivalNoteItemRelevantList: View {
                 } else {
                     VStack(spacing: 0) {
                         List {
-                            ForEach(postList.indices, id: \.self) { index in
+                            ForEach(itemList.indices, id: \.self) { index in
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center, spacing: 0) {
                                         Image(systemName: "line.3.horizontal")
@@ -69,22 +69,22 @@ struct ArrivalNoteItemRelevantList: View {
                                             .aspectRatio(contentMode: .fit)
                                         
                                         VStack(alignment: .leading, spacing: 8) {
-                                            Text(postList[index].unwrappedPostText.trimmingCharacters(in: .whitespacesAndNewlines))
+                                            Text(itemList[index].unwrappedPostText.trimmingCharacters(in: .whitespacesAndNewlines))
                                                 .foregroundColor(Color.theme.eerieBlack)
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
                                                 HStack(alignment: .center, spacing: 8) {
-                                                    NoteTagItemColor(name: postList[index].unwrappedCategory)
+                                                    NoteTagItemColor(name: itemList[index].unwrappedCategory)
                                                 }
                                                 
-                                                Text(postList[index].unwrappedUserName).foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
+                                                Text(itemList[index].unwrappedUserName).foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
                                                 
-                                                Text(renderDate(postList[index].unwrappedPostDate)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                Text(renderDate(itemList[index].unwrappedPostDate)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
                                                 
                                                 Button(action: {
-                                                    postList[index].upvoteCount = "\(((postList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
-                                                    coreDataModel.save()
+                                                    itemList[index].upvoteCount = "\(((itemList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                                    viewModel.save()
                                                     
                                                     mapIconModel.num += 1
                                                 }, label: {
@@ -94,7 +94,7 @@ struct ArrivalNoteItemRelevantList: View {
                                                             .font(.system(size: 20))
                                                             .rotationEffect(.degrees(90))
                                                         
-                                                        Text(postList[index].unwrappedUpvoteCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                        Text(itemList[index].unwrappedUpvoteCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
                                                     }
                                                 }).buttonStyle(PlainButtonStyle())
                                                 
@@ -107,7 +107,7 @@ struct ArrivalNoteItemRelevantList: View {
                                                             .foregroundColor(Color.black)
                                                             .font(.system(size: 20))
                                                         
-                                                        Text(postList[index].unwrappedCommentCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                        Text(itemList[index].unwrappedCommentCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
                                                     }
                                                 }).buttonStyle(PlainButtonStyle())
                                                 
@@ -116,7 +116,7 @@ struct ArrivalNoteItemRelevantList: View {
                                         
                                         Spacer()
 
-                                        if postList[index].blue {
+                                        if itemList[index].blue {
                                             Circle().fill(Color.theme.azure).frame(width: 12, height: 12)
                                         } else {
                                             Circle().stroke(Color.theme.azure, lineWidth: 1).frame(width: 12, height: 12)
@@ -124,12 +124,13 @@ struct ArrivalNoteItemRelevantList: View {
                                         
                                         
                                         Button(action: {
-                                            postList[index].favourite = !postList[index].favourite
-                                            coreDataModel.save()
-                                            
-                                            mapIconModel.num += 1
+                                            if (itemList[index].favourite) {
+                                                removeQR(index)
+                                            } else {
+                                                addQR(index)
+                                            }
                                         }) {
-                                            postList[index].favourite ?
+                                            itemList[index].favourite ?
                                                 Image(systemName: "star.fill")
                                                     .foregroundColor(Color.theme.azure)
                                                     .font(.system(size: 22))
@@ -158,20 +159,28 @@ struct ArrivalNoteItemRelevantList: View {
                             }.onMove(perform: move)
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
-                            .frame(height: 73 * CGFloat(postList.count))
+                            .frame(height: 73 * CGFloat(itemList.count))
                     }
                 }
             }
             
             Spacer()
             
-        }.onAppear {
-            if itemList.count > 0 {
-                if let firstItem = itemList.first {
-                    postList = firstItem.posts?.allObjects as! [NotePostList]
-                }
-            }
         }
+    }
+    
+    private func addQR(_ index: Int) {
+        let data = itemList[index]
+        data.favourite = true
+        data.fromParent = true
+        viewModel.save()
+        resetData()
+    }
+    
+    private func removeQR(_ index: Int) {
+        itemList[index].favourite = false
+        itemList[index].fromParent = false
+        resetData()
     }
     
     func renderDate(_ date: String) -> String {

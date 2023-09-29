@@ -157,120 +157,120 @@ enum Status {
     case dislike
 }
 
-func getDestination(_ item: ListFlightInformationItem) -> AnyView {
-    if item.screenName == NavigationEnumeration.AirCraftScreen {
-        return AnyView(
-            AircraftReferenceContainer()
-                .navigationBarBackButtonHidden()
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-            
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.FuelScreen {
-        return AnyView(
-            FuelView()
-                .navigationBarBackButtonHidden()
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(
-            DepartureReferenceContainer()
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(
-            EnrouteReferenceContainer()
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(
-            ArrivalReferenceContainer()
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(
-            PreviousSearchReferenceView(title: "AI Search")
-                .navigationBarBackButtonHidden()
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.FlightPlanScreen {
-        return AnyView(
-            FlightPlanView()
-                .navigationBarBackButtonHidden()
-                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
-        return AnyView(
-            FlightOverviewSectionView(isReference: true)
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.PreflightSectionView {
-        return AnyView(
-            PreflightSectionView()
-                .navigationBarBackButtonHidden()
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.PreflightSectionView)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.NotamDetailScreen {
-        return AnyView(
-            FlightPlanNOTAMReferenceView()
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    if item.screenName == NavigationEnumeration.ScratchPadScreen {
-        return AnyView(
-            ScratchPadView()
-                .navigationBarBackButtonHidden()
-//                .navigationBarHidden(true)
-                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
-                .ignoresSafeArea()
-        )
-    }
-    
-    return AnyView(
-        ClipboardFlightOverviewView()
-            .navigationBarBackButtonHidden()
-            .breadCrumb(item.screenName ?? NavigationEnumeration.ClipboardFlightOverviewScreen)
-            .ignoresSafeArea()
-    )
-}
+//func getDestination(_ item: ListFlightInformationItem) -> AnyView {
+//    if item.screenName == NavigationEnumeration.AirCraftScreen {
+//        return AnyView(
+//            AircraftReferenceContainer()
+//                .navigationBarBackButtonHidden()
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//            
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.FuelScreen {
+//        return AnyView(
+//            FuelView()
+//                .navigationBarBackButtonHidden()
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.DepartureScreen {
+//        return AnyView(
+//            DepartureReferenceContainer()
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.EnrouteScreen {
+//        return AnyView(
+//            EnrouteReferenceContainer()
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.ArrivalScreen {
+//        return AnyView(
+//            ArrivalReferenceContainer()
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.AtlasSearchScreen {
+//        return AnyView(
+//            PreviousSearchReferenceView(title: "AI Search")
+//                .navigationBarBackButtonHidden()
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.FlightPlanScreen {
+//        return AnyView(
+//            FlightPlanView()
+//                .navigationBarBackButtonHidden()
+//                .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
+//        return AnyView(
+//            FlightOverviewSectionView(isReference: true)
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.PreflightSectionView {
+//        return AnyView(
+//            PreflightSectionView()
+//                .navigationBarBackButtonHidden()
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.PreflightSectionView)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.NotamDetailScreen {
+//        return AnyView(
+//            FlightPlanNOTAMReferenceView()
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    if item.screenName == NavigationEnumeration.ScratchPadScreen {
+//        return AnyView(
+//            ScratchPadView()
+//                .navigationBarBackButtonHidden()
+////                .navigationBarHidden(true)
+//                .breadCrumbRef(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+//                .ignoresSafeArea()
+//        )
+//    }
+//    
+//    return AnyView(
+//        ClipboardFlightOverviewView()
+//            .navigationBarBackButtonHidden()
+//            .breadCrumb(item.screenName ?? NavigationEnumeration.ClipboardFlightOverviewScreen)
+//            .ignoresSafeArea()
+//    )
+//}
 
 func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     if item.screenName == NavigationEnumeration.AirCraftScreen {
@@ -630,6 +630,12 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Preflight"
         case .ClipboardDepature:
             return "Departure"
+        case .ClipboardEnroute:
+            return "Enroute"
+        case .ClipboardArrival:
+            return "Arrival"
+        case .ClipboardAISearch:
+            return "AI Search Results"
         default:
             return "Flight Overview"
     }

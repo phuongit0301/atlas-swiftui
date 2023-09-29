@@ -1,5 +1,5 @@
 //
-//  ArrivalNoteItemList.swift
+//  ClipboardArrivalNoteRelevantList.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,17 +8,22 @@
 import Foundation
 import SwiftUI
 
-struct ArrivalNoteItemList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
-    @EnvironmentObject var persistenceController: PersistenceController
+struct ClipboardArrivalNoteRelevantList: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @State var header: String = "" // "Aircraft Status"
-    @Binding var showSheet: Bool
+    @Binding var showModalComment: Bool
     @Binding var currentIndex: Int
-    @Binding var itemList: [NoteList] // itemList
+    @Binding var itemList: [NotePostList] // itemList
     @Binding var isShowList: Bool
+    @Binding var postIndex: Int
     var geoWidth: Double
     var resetData: () -> Void?
+    
+    @State var postList: [NotePostList] = []
+    @State var listHeight: CGFloat = 0
+    let dateFormatter = DateFormatter()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -43,15 +48,6 @@ struct ArrivalNoteItemList: View {
                     .onTapGesture {
                         self.isShowList.toggle()
                     }
-                
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
             }.frame(height: 54)
             
             if isShowList {
@@ -73,41 +69,67 @@ struct ArrivalNoteItemList: View {
                                             .aspectRatio(contentMode: .fit)
                                         
                                         VStack(alignment: .leading, spacing: 8) {
-                                            Text(itemList[index].unwrappedName.trimmingCharacters(in: .whitespacesAndNewlines))
+                                            Text(itemList[index].unwrappedPostText.trimmingCharacters(in: .whitespacesAndNewlines))
                                                 .foregroundColor(Color.theme.eerieBlack)
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                ForEach(itemList[index].tags?.allObjects as! [TagList]) { tag in
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        Text(tag.name)
-                                                            .padding(.vertical, 4)
-                                                            .padding(.horizontal, 12)
-                                                            .font(.system(size: 11, weight: .regular))
-                                                            .background(Color.theme.azure)
-                                                            .foregroundColor(Color.white)
-                                                            .cornerRadius(12)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 12)
-                                                                    .stroke(Color.theme.azure, lineWidth: 0)
-                                                            )
-                                                    }
+                                                HStack(alignment: .center, spacing: 8) {
+                                                    NoteTagItemColor(name: itemList[index].unwrappedCategory)
                                                 }
                                                 
-                                                Text(renderDate(itemList[index].unwrappedCreatedAt)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                Text(itemList[index].unwrappedUserName).foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
+                                                
+                                                Text(renderDate(itemList[index].unwrappedPostDate)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
+                                                
+                                                Button(action: {
+                                                    itemList[index].upvoteCount = "\(((itemList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                                    coreDataModel.save()
+                                                    
+                                                    mapIconModel.num += 1
+                                                }, label: {
+                                                    HStack(alignment: .center, spacing: 4) {
+                                                        Image(systemName: "arrowshape.left")
+                                                            .foregroundColor(Color.black)
+                                                            .font(.system(size: 20))
+                                                            .rotationEffect(.degrees(90))
+                                                        
+                                                        Text(itemList[index].unwrappedUpvoteCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                    }
+                                                }).buttonStyle(PlainButtonStyle())
+                                                
+                                                Button(action: {
+                                                    postIndex = index
+                                                    showModalComment.toggle()
+                                                }, label: {
+                                                    HStack(alignment: .center, spacing: 4) {
+                                                        Image(systemName: "bubble.left.and.bubble.right")
+                                                            .foregroundColor(Color.black)
+                                                            .font(.system(size: 20))
+                                                        
+                                                        Text(itemList[index].unwrappedCommentCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
+                                                    }
+                                                }).buttonStyle(PlainButtonStyle())
+                                                
                                             }
                                         }.padding(.leading)
                                         
                                         Spacer()
+
+                                        if itemList[index].blue {
+                                            Circle().fill(Color.theme.azure).frame(width: 12, height: 12)
+                                        } else {
+                                            Circle().stroke(Color.theme.azure, lineWidth: 1).frame(width: 12, height: 12)
+                                        }
+                                        
                                         
                                         Button(action: {
-                                            if (itemList[index].isDefault) {
-                                                removeQR(index)
-                                            } else {
-                                                addQR(index)
-                                            }
+                                            itemList[index].favourite = !itemList[index].favourite
+                                            itemList[index].fromParent = !itemList[index].fromParent
+                                            coreDataModel.save()
+                                            resetData()
                                         }) {
-                                            itemList[index].isDefault ?
+                                            itemList[index].favourite || itemList[index].fromParent ?
                                                 Image(systemName: "star.fill")
                                                     .foregroundColor(Color.theme.azure)
                                                     .font(.system(size: 22))
@@ -117,31 +139,15 @@ struct ArrivalNoteItemList: View {
                                                     .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
+                                            
                                     }
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
+                                .padding(.vertical, 8)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(Color.white)
-                                .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
-                                        resetData()
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                    
-                                    Button {
-                                        self.currentIndex = index
-                                        self.showSheet.toggle()
-                                    } label: {
-                                        Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }
-                                    .tint(Color.theme.orangePeel)
-                                }
-                            }.onMove(perform: move)
+                                .listRowBackground(Color.white)   
+                            }
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))
@@ -167,37 +173,5 @@ struct ArrivalNoteItemList: View {
     private func move(from source: IndexSet, to destination: Int) {
         print("Move");
         self.itemList.move(fromOffsets: source, toOffset: destination)
-    }
-    
-    private func addQR(_ index: Int) {
-        let data = itemList[index]
-        let item = NoteList(context: persistenceController.container.viewContext)
-        item.id = UUID()
-        item.name = data.name
-        item.isDefault = false
-        item.createdAt = dateFormatter.string(from: Date())
-        item.canDelete = true
-        item.fromParent = true
-        item.type = "arrivalref"
-        item.includeCrew = data.includeCrew
-        item.parentId = data.id
-        
-        if let tags = data.tags {
-            item.addToTags(tags)
-        }
-        
-        data.isDefault = true
-        viewModel.save()
-        resetData()
-    }
-    
-    private func removeQR(_ index: Int) {
-        itemList[index].isDefault = false
-
-        if let found = viewModel.arrivalRefArray.first(where: {$0.parentId == viewModel.arrivalArray[index].id}) {
-            viewModel.delete(found)
-        }
-        viewModel.save()
-        resetData()
     }
 }

@@ -13,7 +13,6 @@ struct ClipboardNoteItemList: View {
     @EnvironmentObject var persistenceController: PersistenceController
     
     @State var header: String = "" // "Aircraft Status"
-    @Binding var showSheet: Bool
     @Binding var currentIndex: Int
     @Binding var itemList: [NoteList] // itemList
     @Binding var isShowList: Bool
@@ -44,14 +43,14 @@ struct ClipboardNoteItemList: View {
                         self.isShowList.toggle()
                     }
                 
-                Button(action: {
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Text("Add Note").foregroundColor(Color.theme.azure)
-                            .font(.system(size: 17, weight: .regular))
-                    }
-                }
+//                Button(action: {
+//                    self.showSheet.toggle()
+//                }) {
+//                    HStack {
+//                        Text("Add Note").foregroundColor(Color.theme.azure)
+//                            .font(.system(size: 17, weight: .regular))
+//                    }
+//                }
             }.frame(height: 54)
             
             if isShowList {
@@ -125,24 +124,7 @@ struct ClipboardNoteItemList: View {
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.white)
-                                .swipeActions(allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
-                                        resetData()
-                                    } label: {
-                                        Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }.tint(Color.theme.coralRed)
-                                    
-                                    Button {
-                                        self.currentIndex = index
-                                        self.showSheet.toggle()
-                                    } label: {
-                                        Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }
-                                    .tint(Color.theme.orangePeel)
-                                }
-                            }.onMove(perform: move)
+                            }
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))

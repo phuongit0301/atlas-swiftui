@@ -1,5 +1,5 @@
 //
-//  ClipboardDepature.swift
+//  ClipboardArrival.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ClipboardDepature: View {
+struct ClipboardArrival: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var refState: ScreenReferenceModel
     
@@ -37,8 +37,8 @@ struct ClipboardDepature: View {
             GeometryReader { proxy in
                 // End header
                 ScrollView {
-                    ClipboardDepartureNotamView(itemList: $viewModel.dataDepartureNotamsRef)
-                    ClipboardDepartureNoteView(width: proxy.size.width)
+                    ClipboardArrivalNotamView(itemList: $viewModel.dataArrivalNotamsRef)
+                    ClipboardArrivalNoteView(width: proxy.size.width)
                 }
             }
             
@@ -46,5 +46,4 @@ struct ClipboardDepature: View {
             .padding(.bottom, 32)
             .background(Color.theme.antiFlashWhite)
     }
-
 }

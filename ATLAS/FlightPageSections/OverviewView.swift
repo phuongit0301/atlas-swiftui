@@ -23,6 +23,14 @@ struct OverviewView: View {
                     ClipboardPreflight().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardDepature {
                     ClipboardDepature().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardEnroute {
+                    ClipboardEnroute().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardArrival {
+                    ClipboardArrival().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardArrival {
+                    ClipboardArrival().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardAISearch {
+                    ClipboardAISearchResult().padding(.top, -8)
                 }
             } else {
                 HStack(spacing: 0) {

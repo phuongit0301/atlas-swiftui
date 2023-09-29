@@ -13,7 +13,6 @@ struct ClipboardNoteItemRelevantList: View {
     @EnvironmentObject var mapIconModel: MapIconModel
     
     @State var header: String = "" // "Aircraft Status"
-    @Binding var showSheet: Bool
     @Binding var showModalComment: Bool
     @Binding var currentIndex: Int
     @Binding var itemList: [NotePostList] // itemList
@@ -148,15 +147,7 @@ struct ClipboardNoteItemRelevantList: View {
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.white)
-                                .swipeActions(allowsFullSwipe: false) {
-                                    Button {
-                                        // TODO
-                                    } label: {
-                                        Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
-                                    }
-                                    .tint(Color.theme.graniteGray)
-                                }
-                            }.onMove(perform: move)
+                            }
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))

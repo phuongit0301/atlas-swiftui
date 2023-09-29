@@ -10,6 +10,7 @@ import SwiftUI
 
 struct EnrouteNoteItemList: View {
     @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     
     @State var header: String = "" // "Aircraft Status"
     @Binding var showSheet: Bool
@@ -100,9 +101,11 @@ struct EnrouteNoteItemList: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            itemList[index].isDefault.toggle()
-                                            viewModel.save()
-                                            resetData()
+                                            if (itemList[index].isDefault) {
+                                                removeQR(index)
+                                            } else {
+                                                addQR(index)
+                                            }
                                         }) {
                                             itemList[index].isDefault ?
                                                 Image(systemName: "star.fill")
@@ -165,4 +168,37 @@ struct EnrouteNoteItemList: View {
         print("Move");
         self.itemList.move(fromOffsets: source, toOffset: destination)
     }
+    
+    private func addQR(_ index: Int) {
+        let data = itemList[index]
+        let item = NoteList(context: persistenceController.container.viewContext)
+        item.id = UUID()
+        item.name = data.name
+        item.isDefault = false
+        item.createdAt = dateFormatter.string(from: Date())
+        item.canDelete = true
+        item.fromParent = true
+        item.type = "enrouteref"
+        item.includeCrew = data.includeCrew
+        item.parentId = data.id
+        
+        if let tags = data.tags {
+            item.addToTags(tags)
+        }
+        
+        data.isDefault = true
+        viewModel.save()
+        resetData()
+    }
+    
+    private func removeQR(_ index: Int) {
+        itemList[index].isDefault = false
+
+        if let found = viewModel.enrouteRefArray.first(where: {$0.parentId == viewModel.enrouteArray[index].id}) {
+            viewModel.delete(found)
+        }
+        viewModel.save()
+        resetData()
+    }
+
 }

@@ -71,10 +71,11 @@ struct EnrouteSectionListView: View {
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataNoteAabbaEnroute,
+                        itemList: $viewModel.dataPostEnroute,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
-                        geoWidth: proxy.size.width
+                        geoWidth: proxy.size.width,
+                        resetData: resetData
                     ).frame(maxHeight: .infinity)
                         .padding(.horizontal)
                         .background(Color.white)
@@ -103,6 +104,10 @@ struct EnrouteSectionListView: View {
     
     private func resetData() {
         viewModel.enrouteArray = viewModel.read("enroute")
+        viewModel.enrouteRefArray = viewModel.read("enrouteref")
+        
+        viewModel.dataPostEnroute = viewModel.readDataPostList("enroute", "")
+        viewModel.dataPostEnrouteRef = viewModel.readDataPostList("enroute", "ref")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

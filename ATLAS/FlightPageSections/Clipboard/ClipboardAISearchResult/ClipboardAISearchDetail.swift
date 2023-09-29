@@ -1,5 +1,5 @@
 //
-//  AISearchDetailView.swift
+//  ClipboardAISearchDetail.swift
 //  ATLAS
 //
 //  Created by phuong phan on 16/07/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AISearchDetailReferenceView: View {
+struct ClipboardAISearchDetail: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var aiSearchState: AISearchModelState
@@ -54,28 +54,28 @@ struct AISearchDetailReferenceView: View {
     }
 }
 
-struct AIButton: View {
-    @Binding var isFavorite: Bool
-    @EnvironmentObject var coreDataModel: CoreDataModelState
-    
-    var body: some View {
-        Button(action: {
-            isFavorite.toggle()
-            coreDataModel.save()
-        }, label: {
-            isFavorite ?
-                Image(systemName: "star.fill")
-                    .foregroundColor(Color.theme.azure)
-                    .frame(width: 22, height: 22)
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fit)
-            :
-                Image(systemName: "star")
-                    .foregroundColor(Color.theme.azure)
-                    .frame(width: 22, height: 22)
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fit)
-        }).padding(.horizontal)
-            .buttonStyle(PlainButtonStyle())
-    }
-}
+//struct AIButton: View {
+//    @Binding var isFavorite: Bool
+//    @EnvironmentObject var coreDataModel: CoreDataModelState
+//
+//    var body: some View {
+//        Button(action: {
+//            isFavorite.toggle()
+//            coreDataModel.save()
+//        }, label: {
+//            isFavorite ?
+//                Image(systemName: "star.fill")
+//                    .foregroundColor(Color.theme.azure)
+//                    .frame(width: 22, height: 22)
+//                    .scaledToFit()
+//                    .aspectRatio(contentMode: .fit)
+//            :
+//                Image(systemName: "star")
+//                    .foregroundColor(Color.theme.azure)
+//                    .frame(width: 22, height: 22)
+//                    .scaledToFit()
+//                    .aspectRatio(contentMode: .fit)
+//        }).padding(.horizontal)
+//            .buttonStyle(PlainButtonStyle())
+//    }
+//}

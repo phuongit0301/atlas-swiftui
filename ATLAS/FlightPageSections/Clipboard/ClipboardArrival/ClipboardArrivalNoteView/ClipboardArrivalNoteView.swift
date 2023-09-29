@@ -1,5 +1,5 @@
 //
-//  ClipboardDepartureNoteView.swift
+//  ClipboardArrivalNoteView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ClipboardDepartureNoteView: View {
+struct ClipboardArrivalNoteView: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
@@ -16,7 +16,6 @@ struct ClipboardDepartureNoteView: View {
     @State var parentIndex = 0
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
-    @State private var showSheet: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -27,10 +26,10 @@ struct ClipboardDepartureNoteView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ClipboardDepartureNoteItemList(
+            ClipboardArrivalNoteItemList(
                 header: header,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.departureRefArray,
+                itemList: $viewModel.arrivalRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
@@ -39,11 +38,11 @@ struct ClipboardDepartureNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
             
-            ClipboardDepartureNoteRelevantList(
+            ClipboardArrivalNoteRelevantList(
                 header: "Relevant AABBA Posts",
                 showModalComment: $showModalComment,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.dataPostDepartureRef,
+                itemList: $viewModel.dataPostArrivalRef,
                 isShowList: $isShowListRelevent,
                 postIndex: $postIndex,
                 geoWidth: width,
@@ -53,15 +52,15 @@ struct ClipboardDepartureNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
-            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostDepartureRef).interactiveDismissDisabled(true)
+            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostArrivalRef).interactiveDismissDisabled(true)
         }
     }
     
     private func resetData() {
-        viewModel.dataPostDeparture = viewModel.readDataPostList("departure", "")
-        viewModel.dataPostDepartureRef = viewModel.readDataPostList("departure", "ref")
-        viewModel.departureArray = viewModel.read("departure")
-        viewModel.departureRefArray = viewModel.read("departureref")
+        viewModel.dataPostArrival = viewModel.readDataPostList("arrival", "")
+        viewModel.dataPostArrivalRef = viewModel.readDataPostList("arrival", "ref")
+        viewModel.arrivalArray = viewModel.read("arrival")
+        viewModel.arrivalRefArray = viewModel.read("arrivalref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

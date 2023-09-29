@@ -71,10 +71,11 @@ struct ArrivalSectionListView: View {
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataNoteAabbaArrival,
+                        itemList: $viewModel.dataPostArrival,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
-                        geoWidth: proxy.size.width
+                        geoWidth: proxy.size.width,
+                        resetData: resetData
                     ).frame(maxHeight: .infinity)
                         .padding(.horizontal)
                         .background(Color.white)
@@ -103,6 +104,10 @@ struct ArrivalSectionListView: View {
     
     private func resetData() {
         viewModel.arrivalArray = viewModel.read("arrival")
+        viewModel.arrivalRefArray = viewModel.read("arrivalref")
+        
+        viewModel.dataPostArrival = viewModel.readDataPostList("arrival", "")
+        viewModel.dataPostArrivalRef = viewModel.readDataPostList("arrival", "ref")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1
