@@ -183,6 +183,7 @@ struct EnrouteNoteItemForm: View {
         if !name.isEmpty {
             itemList[currentIndex].name = name
             itemList[currentIndex].tags = NSSet(array: tagListSelected)
+            itemList[currentIndex].includeCrew = isIncludeBriefing
             
             viewModel.save()
             

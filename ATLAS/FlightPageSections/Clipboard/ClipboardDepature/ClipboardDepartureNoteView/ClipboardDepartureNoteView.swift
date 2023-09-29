@@ -1,13 +1,13 @@
 //
-//  ClipboardNoteView.swift
+//  ClipboardDepartureNoteView.swift
 //  ATLAS
 //
-//  Created by phuong phan on 25/09/2023.
+//  Created by phuong phan on 29/09/2023.
 //
 
 import SwiftUI
 
-struct ClipboardNoteView: View {
+struct ClipboardDepartureNoteView: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
@@ -27,11 +27,11 @@ struct ClipboardNoteView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ClipboardNoteItemList(
+            ClipboardDepartureNoteItemList(
                 header: header,
                 showSheet: $showSheet,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.preflightRefArray,
+                itemList: $viewModel.departureRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
@@ -40,12 +40,12 @@ struct ClipboardNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
             
-            ClipboardNoteItemRelevantList(
+            ClipboardDepartureNoteRelevantList(
                 header: "Relevant AABBA Posts",
                 showSheet: $showSheet,
                 showModalComment: $showModalComment,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.dataPostPreflightRef,
+                itemList: $viewModel.dataPostDepartureRef,
                 isShowList: $isShowListRelevent,
                 postIndex: $postIndex,
                 geoWidth: width,
@@ -55,16 +55,16 @@ struct ClipboardNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
-            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflightRef).interactiveDismissDisabled(true)
+            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostDepartureRef).interactiveDismissDisabled(true)
         }
         .sheet(isPresented: $showSheet) {
             NoteItemForm(
                 textNote: $textNote,
                 tagList: $viewModel.tagList,
-                itemList: $viewModel.preflightArray,
+                itemList: $viewModel.departureArray,
                 currentIndex: $currentIndex,
                 showSheet: $showSheet,
-                type: "preflightref",
+                type: "departureref",
                 resetData: resetData
             ).interactiveDismissDisabled(true)
             
@@ -72,13 +72,14 @@ struct ClipboardNoteView: View {
     }
     
     private func resetData() {
-        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
-        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
-        viewModel.preflightArray = viewModel.read("preflight")
-        viewModel.preflightRefArray = viewModel.read("preflightref")
+        viewModel.dataPostDeparture = viewModel.readDataPostList("departure", "")
+        viewModel.dataPostDepartureRef = viewModel.readDataPostList("departure", "ref")
+        viewModel.departureArray = viewModel.read("departure")
+        viewModel.departureRefArray = viewModel.read("departureref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
     }
 }
+

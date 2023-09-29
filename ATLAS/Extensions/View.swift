@@ -628,6 +628,8 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Flight Overview"
         case .ClipboardPreflight:
             return "Preflight"
+        case .ClipboardDepature:
+            return "Departure"
         default:
             return "Flight Overview"
     }

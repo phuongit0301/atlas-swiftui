@@ -35,6 +35,7 @@ enum NavigationEnumeration {
     //New Item
     case ClipboardFlightOverviewScreen
     case ClipboardPreflight
+    case ClipboardDepature
 }
 
 enum NavigationEnumerationToString: CustomStringConvertible {

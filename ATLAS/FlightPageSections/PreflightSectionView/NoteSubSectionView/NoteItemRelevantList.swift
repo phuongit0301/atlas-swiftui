@@ -23,7 +23,6 @@ struct NoteItemRelevantList: View {
     var geoWidth: Double
     var resetData: () -> Void?
     
-    @State var postList: [NotePostList] = []
     @State var listHeight: CGFloat = 0
     let dateFormatter = DateFormatter()
     
@@ -131,10 +130,6 @@ struct NoteItemRelevantList: View {
                                             } else {
                                                 addQR(index)
                                             }
-//                                            postList[index].favourite = !postList[index].favourite
-//                                            coreDataModel.save()
-//
-//                                            mapIconModel.num += 1
                                         }) {
                                             itemList[index].favourite ?
                                                 Image(systemName: "star.fill")

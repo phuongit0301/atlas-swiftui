@@ -137,6 +137,7 @@ struct DepartureNoteItemForm: View {
                 .onAppear {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].unwrappedName
+                        self.isIncludeBriefing = itemList[currentIndex].includeCrew
                         
                         let tags = itemList[currentIndex].tags?.allObjects ?? []
                         
@@ -183,6 +184,7 @@ struct DepartureNoteItemForm: View {
         if !name.isEmpty {
             itemList[currentIndex].name = name
             itemList[currentIndex].tags = NSSet(array: tagListSelected)
+            itemList[currentIndex].includeCrew = isIncludeBriefing
             
             viewModel.save()
             

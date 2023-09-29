@@ -71,12 +71,11 @@ struct DepartureSectionListView: View {
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataNoteAabbaDeparture,
+                        itemList: $viewModel.dataPostDeparture,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
                         geoWidth: proxy.size.width,
-                        remove: remove,
-                        add: add
+                        resetData: resetData
                     ).frame(maxHeight: .infinity)
                         .padding(.horizontal)
                         .background(Color.white)
@@ -103,16 +102,12 @@ struct DepartureSectionListView: View {
         
     }
     
-    private func remove() {
-        
-    }
-    
-    private func add() {
-       
-    }
-    
     private func resetData() {
         viewModel.departureArray = viewModel.read("departure")
+        viewModel.departureRefArray = viewModel.read("departureref")
+        
+        viewModel.dataPostDeparture = viewModel.readDataPostList("departure", "")
+        viewModel.dataPostDepartureRef = viewModel.readDataPostList("departure", "ref")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

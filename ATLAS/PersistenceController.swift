@@ -85,6 +85,9 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPostPreflight: [NotePostList] = []
     @Published var dataPostPreflightRef: [NotePostList] = []
     
+    @Published var dataPostDeparture: [NotePostList] = []
+    @Published var dataPostDepartureRef: [NotePostList] = []
+    
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
     
@@ -395,9 +398,9 @@ class CoreDataModelState: ObservableObject {
             
             self.dataPostPreflight = self.readDataPostList("preflight", "")
             self.dataPostPreflightRef = self.readDataPostList("preflight", "ref")
-//            let (postList, postListRef) = prepareDataPostPreflight(responsePreflight)
-//            self.dataNoteAabbaPreflight = postList
-//            self.dataNoteAabbaPreflightRef = postListRef
+            
+            self.dataPostDeparture = self.readDataPostList("departure", "")
+            self.dataPostDepartureRef = self.readDataPostList("departure", "ref")
             
             self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
             self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")

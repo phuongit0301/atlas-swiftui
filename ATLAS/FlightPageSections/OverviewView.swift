@@ -21,6 +21,8 @@ struct OverviewView: View {
                     ClipboardFlightOverviewView().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardPreflight {
                     ClipboardPreflight().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardDepature {
+                    ClipboardDepature().padding(.top, -8)
                 }
             } else {
                 HStack(spacing: 0) {

@@ -78,7 +78,7 @@ struct ListReferenceModel {
             ListFlightInformationItem(name: "Preflight", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardPreflight),
             ListFlightInformationItem(name: "Crew Briefing", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
-            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
+            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.ClipboardDepature, nextScreen: NavigationEnumeration.EnrouteScreen),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.EnrouteScreen, nextScreen: NavigationEnumeration.ArrivalScreen),
             ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ArrivalScreen, nextScreen: NavigationEnumeration.DepartureScreen),
             ListFlightInformationItem(name: "AI Search Results", date: "XXX", screenName: NavigationEnumeration.AtlasSearchScreen),
