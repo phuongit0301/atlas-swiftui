@@ -178,53 +178,52 @@ struct NoteItemRelevantList: View {
     
     private func addQR(_ index: Int) {
         let data = itemList[index]
-        let newPost = NotePostList(context: persistenceController.container.viewContext)
-        newPost.id = UUID()
-        newPost.postId = data.postId
-        newPost.userId = data.userId
-        newPost.userName = data.userName
-        newPost.postDate = data.postDate
-        newPost.postTitle = data.postTitle
-        newPost.postText = data.postText
-        newPost.upvoteCount = data.upvoteCount
-        newPost.commentCount = data.commentCount
-        newPost.category = data.category
-        newPost.postUpdated = data.postUpdated
-        newPost.favourite = false
-        newPost.blue = data.blue
-        newPost.type = "preflightref"
-        newPost.canDelete = true
-        newPost.fromParent = true
-        newPost.parentId = data.id
-        
-        if let comments = data.comments {
-            newPost.addToComments(comments)
-        }
-        
-        // add data to parent core data
-        if itemList.count > 0 {
-            if let dataExist = viewModel.dataNoteAabbaPreflight.first {
-                if let oldPosts = dataExist.posts?.allObjects as? [NotePostList] {
-                    dataExist.posts = NSSet(array: oldPosts + [newPost])
-                }
-            }
-        }
+//        let newPost = NotePostList(context: persistenceController.container.viewContext)
+//        newPost.id = UUID()
+//        newPost.postId = data.postId
+//        newPost.userId = data.userId
+//        newPost.userName = data.userName
+//        newPost.postDate = data.postDate
+//        newPost.postTitle = data.postTitle
+//        newPost.postText = data.postText
+//        newPost.upvoteCount = data.upvoteCount
+//        newPost.commentCount = data.commentCount
+//        newPost.category = data.category
+//        newPost.postUpdated = data.postUpdated
+//        newPost.favourite = false
+//        newPost.blue = data.blue
+//        newPost.type = "preflightref"
+//        newPost.canDelete = true
+//        newPost.fromParent = true
+//        newPost.parentId = data.id
+//
+//        if let comments = data.comments {
+//            newPost.addToComments(comments)
+//        }
+//
+//        // add data to parent core data
+//        if itemList.count > 0 {
+//            if let dataExist = viewModel.dataNoteAabbaPreflight.first {
+//                if let oldPosts = dataExist.posts?.allObjects as? [NotePostList] {
+//                    dataExist.posts = NSSet(array: oldPosts + [newPost])
+//                }
+//            }
+//        }
         
         data.favourite = true
+        data.fromParent = true
         viewModel.save()
         resetData()
-        mapIconModel.num += 1
     }
     
     private func removeQR(_ index: Int) {
         itemList[index].favourite = false
-        
-        if let found = viewModel.dataPostPreflightRef.first(where: {$0.parentId == itemList[index].id}) {
-            viewModel.delete(found)
-        }
+        itemList[index].fromParent = false
+//        if let found = viewModel.dataPostPreflightRef.first(where: {$0.parentId == itemList[index].id}) {
+//            viewModel.delete(found)
+//        }
         viewModel.save()
         resetData()
-        mapIconModel.num += 1
     }
     
     func renderDate(_ date: String) -> String {

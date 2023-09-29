@@ -126,9 +126,9 @@ struct ClipboardNoteItemRelevantList: View {
                                         
                                         Button(action: {
                                             itemList[index].favourite = !itemList[index].favourite
+                                            itemList[index].fromParent = !itemList[index].fromParent
                                             coreDataModel.save()
-                                            
-                                            mapIconModel.num += 1
+                                            resetData()
                                         }) {
                                             itemList[index].favourite || itemList[index].fromParent ?
                                                 Image(systemName: "star.fill")

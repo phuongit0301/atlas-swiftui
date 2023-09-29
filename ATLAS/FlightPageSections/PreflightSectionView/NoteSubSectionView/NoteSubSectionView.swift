@@ -86,7 +86,7 @@ struct NoteSubSectionView: View {
             }.onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
             }.sheet(isPresented: $showModalComment) {
-                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflight, post: $viewModel[postIndex]).interactiveDismissDisabled(true)
+                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflight).interactiveDismissDisabled(true)
             }.sheet(isPresented: $showSheet) {
                 NoteItemForm(
                     textNote: $textNote,
@@ -105,8 +105,8 @@ struct NoteSubSectionView: View {
     private func resetData() {
         viewModel.preflightArray = viewModel.read("preflight")
         viewModel.preflightRefArray = viewModel.read("preflightref")
-        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight")
-        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflightref")
+        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
+        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

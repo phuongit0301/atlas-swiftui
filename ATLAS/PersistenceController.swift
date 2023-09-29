@@ -393,8 +393,8 @@ class CoreDataModelState: ObservableObject {
 //            self.prepareDataForAirportMap()
             self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
             
-            self.dataPostPreflight = self.readDataPostList("preflight")
-            self.dataPostPreflightRef = self.readDataPostList("preflightref")
+            self.dataPostPreflight = self.readDataPostList("preflight", "")
+            self.dataPostPreflightRef = self.readDataPostList("preflight", "ref")
 //            let (postList, postListRef) = prepareDataPostPreflight(responsePreflight)
 //            self.dataNoteAabbaPreflight = postList
 //            self.dataNoteAabbaPreflightRef = postListRef
@@ -2748,9 +2748,13 @@ class CoreDataModelState: ObservableObject {
         
         // define filter and/or limit if needed
         if target != "" {
-            let con = ref == "" ? 0 : 1
             
-            request.predicate = NSPredicate(format: "type == %@ AND fromParent == %@", argumentArray: [target, con])
+            if ref != "" {
+                request.predicate = NSPredicate(format: "type == %@ AND fromParent == %@", argumentArray: [target, 1])
+            } else {
+                request.predicate = NSPredicate(format: "type == %@", target)
+            }
+           
         }
         
         do {

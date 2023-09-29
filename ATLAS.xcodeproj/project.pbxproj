@@ -216,8 +216,8 @@
 		3E7291C82AC5C7B2000FF295 /* ClipboardNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */; };
 		3E7291CB2AC5C852000FF295 /* ClipboardNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */; };
 		3E7291CD2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */; };
-		3E7291D02AC5D086000FF295 /* NotePostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */; };
-		3E7291D12AC5D086000FF295 /* NotePostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */; };
+		3E7291D82AC67976000FF295 /* NotePostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291D62AC67976000FF295 /* NotePostList+CoreDataClass.swift */; };
+		3E7291D92AC67976000FF295 /* NotePostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291D72AC67976000FF295 /* NotePostList+CoreDataProperties.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -624,8 +624,8 @@
 		3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteItemList.swift; sourceTree = "<group>"; };
 		3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteView.swift; sourceTree = "<group>"; };
 		3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteItemRelevantList.swift; sourceTree = "<group>"; };
-		3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E7291D62AC67976000FF295 /* NotePostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E7291D72AC67976000FF295 /* NotePostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -1154,8 +1154,8 @@
 			children = (
 				3E7291842AC45F66000FF295 /* SignatureList+CoreDataClass.swift */,
 				3E7291852AC45F66000FF295 /* SignatureList+CoreDataProperties.swift */,
-				3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */,
-				3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */,
+				3E7291D62AC67976000FF295 /* NotePostList+CoreDataClass.swift */,
+				3E7291D72AC67976000FF295 /* NotePostList+CoreDataProperties.swift */,
 				3E7291762AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift */,
 				3E7291772AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift */,
 				3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */,
@@ -1934,7 +1934,7 @@
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E7291C82AC5C7B2000FF295 /* ClipboardNoteItemList.swift in Sources */,
-				3E7291D02AC5D086000FF295 /* NotePostList+CoreDataClass.swift in Sources */,
+				3E7291D82AC67976000FF295 /* NotePostList+CoreDataClass.swift in Sources */,
 				3E7291A72AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift in Sources */,
 				3EECB8642A716638009D4971 /* LoginView.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
@@ -2167,7 +2167,7 @@
 				3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
-				3E7291D12AC5D086000FF295 /* NotePostList+CoreDataProperties.swift in Sources */,
+				3E7291D92AC67976000FF295 /* NotePostList+CoreDataProperties.swift in Sources */,
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3EEBE6A22AB8425C00421AFF /* CustomPicker.swift in Sources */,
 				3E4A374D2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift in Sources */,

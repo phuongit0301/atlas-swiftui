@@ -15,8 +15,8 @@ struct ModalNoteCommentView: View {
     @Binding var isShowing: Bool
     @Binding var parentIndex: Int
     @Binding var postIndex: Int
-    @Binding var posts: [NotePostList]?
-    @Binding var post: NotePostList?
+    @Binding var posts: [NotePostList]
+    @State private var post: NotePostList?
 
     @State private var tfComment: String = ""
     let dateFormatter = DateFormatter()
@@ -199,7 +199,8 @@ struct ModalNoteCommentView: View {
             
             Spacer()
         }
-//        .onAppear {
+        .onAppear {
+            self.post = posts[postIndex]
 //            if itemList.count > 0 {
 //                if let payload = itemList[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
 //                    self.posts = posts
@@ -212,6 +213,6 @@ struct ModalNoteCommentView: View {
 //                    self.post = posts[postIndex]
 //                }
 //            }
-//        }
+        }
     }
 }

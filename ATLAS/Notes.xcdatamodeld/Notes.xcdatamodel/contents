@@ -411,11 +411,11 @@
     </entity>
     <entity name="NotePost" representedClassName="NotePostList" syncable="YES">
         <attribute name="blue" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="canDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="commentCount" optional="YES" attributeType="String"/>
         <attribute name="favourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="fromParent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

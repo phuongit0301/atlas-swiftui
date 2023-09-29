@@ -2,7 +2,7 @@
 //  NotePostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 28/09/2023.
+//  Created by phuong phan on 29/09/2023.
 //
 //
 

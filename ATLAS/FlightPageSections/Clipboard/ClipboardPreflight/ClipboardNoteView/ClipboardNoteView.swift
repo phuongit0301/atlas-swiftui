@@ -55,7 +55,7 @@ struct ClipboardNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
-//            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
+            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflightRef).interactiveDismissDisabled(true)
         }
         .sheet(isPresented: $showSheet) {
             NoteItemForm(
@@ -72,8 +72,8 @@ struct ClipboardNoteView: View {
     }
     
     private func resetData() {
-        viewModel.preflightArray = viewModel.read("preflight")
-        viewModel.preflightRefArray = viewModel.read("preflightref")
+        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
+        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1
