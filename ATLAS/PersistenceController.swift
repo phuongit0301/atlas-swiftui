@@ -77,6 +77,14 @@ class CoreDataModelState: ObservableObject {
     @Published var dataNoteAabbaDeparture: [NoteAabbaPostList] = []
     @Published var dataNoteAabbaEnroute: [NoteAabbaPostList] = []
     @Published var dataNoteAabbaArrival: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaPreflightRef: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaDepartureRef: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaEnrouteRef: [NoteAabbaPostList] = []
+    @Published var dataNoteAabbaArrivalRef: [NoteAabbaPostList] = []
+    
+    @Published var dataPostPreflight: [NotePostList] = []
+    @Published var dataPostPreflightRef: [NotePostList] = []
+    
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
     
@@ -384,9 +392,21 @@ class CoreDataModelState: ObservableObject {
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
             self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
+            
+            self.dataPostPreflight = self.readDataPostList("preflight")
+            self.dataPostPreflightRef = self.readDataPostList("preflightref")
+//            let (postList, postListRef) = prepareDataPostPreflight(responsePreflight)
+//            self.dataNoteAabbaPreflight = postList
+//            self.dataNoteAabbaPreflightRef = postListRef
+            
             self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
             self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")
             self.dataNoteAabbaArrival = self.readDataNoteAabbaPostList("arrival")
+            self.dataNoteAabbaPreflightRef = self.readDataNoteAabbaPostList("preflightref")
+            self.dataNoteAabbaDepartureRef = self.readDataNoteAabbaPostList("departureref")
+            self.dataNoteAabbaEnrouteRef = self.readDataNoteAabbaPostList("enrouteref")
+            self.dataNoteAabbaArrivalRef = self.readDataNoteAabbaPostList("arrivalref")
+            
             self.readSummaryRoute()
             self.readPerfData()
             self.dataPerfInfo = self.readPerfInfo()
@@ -1142,6 +1162,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.type = "preflight"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
                     }
@@ -1212,6 +1233,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.type = "departure"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
                     }
@@ -1282,6 +1304,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.type = "enroute"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
                     }
@@ -1352,6 +1375,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.type = "arrival"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
                     }
@@ -2715,6 +2739,32 @@ class CoreDataModelState: ObservableObject {
         
         return data
     }
+
+    
+    func readDataPostList(_ target: String = "", _ ref: String = "") -> [NotePostList] {
+        var data: [NotePostList] = []
+        
+        let request: NSFetchRequest<NotePostList> = NotePostList.fetchRequest()
+        
+        // define filter and/or limit if needed
+        if target != "" {
+            let con = ref == "" ? 0 : 1
+            
+            request.predicate = NSPredicate(format: "type == %@ AND fromParent == %@", argumentArray: [target, con])
+        }
+        
+        do {
+            let response: [NotePostList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Note Aabba Post List from Core Data.")
+        }
+        
+        return data
+    }
+
     
     func readDataLogbookEntries() -> [LogbookEntriesList] {
         var data: [LogbookEntriesList] = []
@@ -4042,5 +4092,26 @@ class CoreDataModelState: ObservableObject {
         }
         
         return data
+    }
+    
+    func prepareDataPostPreflight(_ data: [NoteAabbaPostList]) -> (postList: [NotePostList], postListRef :[NotePostList]) {
+        var postList = [NotePostList]()
+        var postListRef = [NotePostList]()
+        
+        if data.count > 0, let firstItem = data.first {
+            if let posts = firstItem.posts?.allObjects as? [NotePostList] {
+                for item in posts {
+                    if item.type == "preflight" {
+                        postList.append(item)
+                    }
+                    
+                    if item.type == "preflightref" {
+                        postListRef.append(item)
+                    }
+                }
+            }
+        }
+        
+        return (postList: postList, postListRef: postListRef)
     }
 }

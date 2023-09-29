@@ -15,9 +15,9 @@ struct ModalNoteCommentView: View {
     @Binding var isShowing: Bool
     @Binding var parentIndex: Int
     @Binding var postIndex: Int
-    
-    @State private var posts: [NotePostList]?
-    @State private var post: NotePostList?
+    @Binding var posts: [NotePostList]?
+    @Binding var post: NotePostList?
+
     @State private var tfComment: String = ""
     let dateFormatter = DateFormatter()
     
@@ -199,13 +199,19 @@ struct ModalNoteCommentView: View {
             
             Spacer()
         }
-        .onAppear {
-            if coreDataModel.dataNoteAabbaPreflight.count > 0 {
-                if let payload = coreDataModel.dataNoteAabbaPreflight[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
-                    self.posts = posts
-                    self.post = posts[postIndex]
-                }
-            }
-        }
+//        .onAppear {
+//            if itemList.count > 0 {
+//                if let payload = itemList[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
+//                    self.posts = posts
+//                    self.post = posts[postIndex]
+//                }
+//            }
+//            if coreDataModel.dataNoteAabbaPreflight.count > 0 {
+//                if let payload = coreDataModel.dataNoteAabbaPreflight[parentIndex].posts, let posts = payload.allObjects as? [NotePostList] {
+//                    self.posts = posts
+//                    self.post = posts[postIndex]
+//                }
+//            }
+//        }
     }
 }

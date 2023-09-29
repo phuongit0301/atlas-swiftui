@@ -265,9 +265,9 @@ func getDestination(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     return AnyView(
-        FlightPlanView()
+        ClipboardFlightOverviewView()
             .navigationBarBackButtonHidden()
-            .breadCrumb(item.screenName ?? NavigationEnumeration.FlightPlanScreen)
+            .breadCrumb(item.screenName ?? NavigationEnumeration.ClipboardFlightOverviewScreen)
             .ignoresSafeArea()
     )
 }
@@ -556,7 +556,7 @@ public struct BreadCrumbRef: ViewModifier {
 }
 
 public struct BreadCrumb: ViewModifier {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var refState: ScreenReferenceModel
     var screenName: NavigationEnumeration
     
     public func body(content: Content) -> some View {
@@ -564,10 +564,9 @@ public struct BreadCrumb: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     VStack {
-                        Rectangle().fill(Color.clear).frame(height: screenName == NavigationEnumeration.FuelScreen ? 8 : 16 )
                         HStack(alignment: .center) {
                             Button {
-                                dismiss()
+                                refState.isActive = false
                             } label: {
                                 HStack {
                                     Text("Reference").font(.system(size: 13, weight: .semibold)).foregroundColor(Color.theme.azure)
@@ -576,9 +575,6 @@ public struct BreadCrumb: ViewModifier {
                             Image(systemName: "chevron.forward").resizable().padding(.horizontal, 5).frame(width: 18, height: 11).aspectRatio(contentMode: .fit)
                             Text("\(convertScreenNameToString(screenName))").font(.system(size: 13, weight: .semibold)).foregroundColor(.black)
                         }.padding()
-                        if screenName == NavigationEnumeration.FuelScreen || screenName == NavigationEnumeration.FlightPlanScreen {
-                            Rectangle().fill(Color.clear).frame(height: 8)
-                        }
                     }
                 }
             }
@@ -627,6 +623,11 @@ func convertScreenNameToString(_ screenName: NavigationEnumeration) -> String {
             return "Reporting"
         case .ScratchPadScreen:
             return "Scratch Pad"
+        //New
+        case .ClipboardFlightOverviewScreen:
+            return "Flight Overview"
+        case .ClipboardPreflight:
+            return "Preflight"
         default:
             return "Flight Overview"
     }

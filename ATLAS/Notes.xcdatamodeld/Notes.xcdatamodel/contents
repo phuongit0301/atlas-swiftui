@@ -385,6 +385,7 @@
         <attribute name="includeCrew" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
@@ -410,11 +411,14 @@
     </entity>
     <entity name="NotePost" representedClassName="NotePostList" syncable="YES">
         <attribute name="blue" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="canDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="commentCount" optional="YES" attributeType="String"/>
         <attribute name="favourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="fromParent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="postDate" optional="YES" attributeType="String"/>
         <attribute name="postId" optional="YES" attributeType="String"/>
         <attribute name="postText" optional="YES" attributeType="String"/>

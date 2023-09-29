@@ -24,8 +24,9 @@ extension NoteList {
     @NSManaged public var includeCrew: Bool
     @NSManaged public var canDelete: Bool
     @NSManaged public var fromParent: Bool
+    @NSManaged public var parentId: UUID?
     @NSManaged public var tags: NSSet?
-
+    
     public var unwrappedName: String {
         name ?? ""
     }

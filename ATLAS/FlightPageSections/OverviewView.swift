@@ -16,30 +16,45 @@ struct OverviewView: View {
     var body: some View {
         // flight informations
         VStack (spacing: 0) {
-            if refState.isActive {
-                getDestination(refState.selectedItem!)
+            if refState.isActive, let currentItem = refState.selectedItem {
+                if currentItem.screenName == NavigationEnumeration.ClipboardFlightOverviewScreen {
+                    ClipboardFlightOverviewView().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardPreflight {
+                    ClipboardPreflight().padding(.top, -8)
+                }
             } else {
-                HStack {
+                HStack(spacing: 0) {
                     Text("Clipboard").foregroundColor(Color.black).font(.system(size: 17, weight: .semibold))
-                }.frame(height: 44)
-                .padding(.horizontal)
+                    Spacer()
+                }.frame(height: 52)
+                    .padding(.top, -8)
+                    .padding(.horizontal, 32)
                 
-                List {
-                    ForEach(viewInformationModel.ListItem, id: \.self) { item in
-                        HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
-                            Spacer()
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                refState.isActive = true
-                                refState.selectedItem = item
+                ScrollView {
+                    VStack(spacing: 0) {
+                        VStack(spacing: 0) {
+                            ForEach(viewInformationModel.ListItem, id: \.self) { item in
+                                HStack {
+                                    Text(item.name)
+                                        .foregroundColor(Color.theme.eerieBlack)
+                                        .font(.system(size: 17, weight: .regular))
+                                        .frame(height: 44)
+                                    Spacer()
+                                }.contentShape(Rectangle())
+                                    .onTapGesture {
+                                        refState.isActive = true
+                                        refState.selectedItem = item
+                                    }
+                                
+                                Divider().padding(.horizontal, -16)
                             }
-                    }
-                    
-                }.scrollContentBackground(.hidden)
-                    .ignoresSafeArea()
+                        }.padding(.horizontal)
+                        .background(Color.white)
+                            .cornerRadius(8)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                    }.padding(.horizontal)
+                }
             }
-            
         }
     }
 }

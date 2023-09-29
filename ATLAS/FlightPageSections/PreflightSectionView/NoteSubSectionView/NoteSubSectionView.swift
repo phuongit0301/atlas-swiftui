@@ -71,12 +71,11 @@ struct NoteSubSectionView: View {
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataNoteAabbaPreflight,
+                        itemList: $viewModel.dataPostPreflight,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
                         geoWidth: proxy.size.width,
-                        remove: remove,
-                        add: add
+                        resetData: resetData
                     ).frame(maxHeight: .infinity)
                         .padding(.horizontal)
                         .background(Color.white)
@@ -87,7 +86,7 @@ struct NoteSubSectionView: View {
             }.onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
             }.sheet(isPresented: $showModalComment) {
-                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
+                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflight, post: $viewModel[postIndex]).interactiveDismissDisabled(true)
             }.sheet(isPresented: $showSheet) {
                 NoteItemForm(
                     textNote: $textNote,
@@ -103,16 +102,11 @@ struct NoteSubSectionView: View {
         
     }
     
-    private func remove() {
-        
-    }
-    
-    private func add() {
-       
-    }
-    
     private func resetData() {
-        viewModel.preflightArray = viewModel.read()
+        viewModel.preflightArray = viewModel.read("preflight")
+        viewModel.preflightRefArray = viewModel.read("preflightref")
+        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight")
+        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflightref")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

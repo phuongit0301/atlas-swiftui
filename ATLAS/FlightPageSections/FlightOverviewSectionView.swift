@@ -223,7 +223,10 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo)
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     HStack {
                                         Picker("", selection: $selectedAircraftPicker) {
@@ -264,8 +267,15 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep)
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest)
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     TextField(
                                         "Enter POB",
@@ -327,10 +337,10 @@ struct FlightOverviewSectionView: View {
                                 
                                 HStack(spacing: 0) {
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text("").frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
@@ -354,7 +364,7 @@ struct FlightOverviewSectionView: View {
                                 
                                 HStack(spacing: 0) {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     FlightTimeButtonTimeStepper(onToggle: onFlightTime, value: currentDateFlightTime)
@@ -362,7 +372,7 @@ struct FlightOverviewSectionView: View {
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
@@ -453,13 +463,13 @@ struct FlightOverviewSectionView: View {
                                 
                                 HStack(spacing: 0) {
                                     Text("TODO")
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text("TODO")
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text(calculateDateTime(chocksOffUTC, chocksOnUTC))
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
@@ -524,7 +534,7 @@ struct FlightOverviewSectionView: View {
                                     VStack(alignment: .leading) {
                                         HStack(alignment: .center) {
                                             SecureField("Enter Password",text: $tfPassword)
-                                                .font(.system(size: 17, weight: .regular))
+                                                .font(.system(size: 15, weight: .regular))
                                                 .foregroundStyle(Color.black)
                                         }.frame(height: 44)
                                         
@@ -583,7 +593,6 @@ struct FlightOverviewSectionView: View {
                                             }.frame(height: 44)
                                             
                                             Spacer()
-//                                            Text("Chat").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure).frame(height: 44, alignment: .leading)
                                         }
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), height: 88, alignment: .leading)
                                 }.frame(height: 88)

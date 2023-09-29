@@ -2,7 +2,7 @@
 //  NotePostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 27/09/2023.
+//  Created by phuong phan on 28/09/2023.
 //
 //
 
@@ -31,8 +31,28 @@ extension NotePostList {
     @NSManaged public var type: String?
     @NSManaged public var favourite: Bool
     @NSManaged public var blue: Bool
+    @NSManaged public var canDelete: Bool
+    @NSManaged public var fromParent: Bool
+    @NSManaged public var parentId: UUID?
     @NSManaged public var comments: NSSet?
     @NSManaged public var lists: NoteAabbaPostList?
+
+}
+
+// MARK: Generated accessors for comments
+extension NotePostList {
+
+    @objc(addCommentsObject:)
+    @NSManaged public func addToComments(_ value: NoteCommentList)
+
+    @objc(removeCommentsObject:)
+    @NSManaged public func removeFromComments(_ value: NoteCommentList)
+
+    @objc(addComments:)
+    @NSManaged public func addToComments(_ values: NSSet)
+
+    @objc(removeComments:)
+    @NSManaged public func removeFromComments(_ values: NSSet)
     
     public var unwrappedCategory: String {
         category ?? ""
@@ -65,23 +85,6 @@ extension NotePostList {
     public var unwrappedUserName: String {
         userName ?? ""
     }
-}
-
-// MARK: Generated accessors for comments
-extension NotePostList {
-
-    @objc(addCommentsObject:)
-    @NSManaged public func addToComments(_ value: NoteCommentList)
-
-    @objc(removeCommentsObject:)
-    @NSManaged public func removeFromComments(_ value: NoteCommentList)
-
-    @objc(addComments:)
-    @NSManaged public func addToComments(_ values: NSSet)
-
-    @objc(removeComments:)
-    @NSManaged public func removeFromComments(_ values: NSSet)
-
 }
 
 extension NotePostList : Identifiable {

@@ -129,7 +129,6 @@
 		3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E102B2A6567C50026802B /* ScratchPadEditSplitForm.swift */; };
 		3E4E10332A6A07460026802B /* ScratchPadList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10312A6A07450026802B /* ScratchPadList+CoreDataClass.swift */; };
 		3E4E10342A6A07460026802B /* ScratchPadList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E10322A6A07450026802B /* ScratchPadList+CoreDataProperties.swift */; };
-		3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6352A187F7900A97ECF /* FlightView.swift */; };
 		3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF63D2A18D90F00A97ECF /* TabView.swift */; };
 		3E5AF6422A18DAB800A97ECF /* AISearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6412A18DAB800A97ECF /* AISearchView.swift */; };
 		3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6452A18FF0500A97ECF /* FuelView.swift */; };
@@ -183,16 +182,12 @@
 		3E7291522AC3081A000FF295 /* RouteAlternateList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291502AC3081A000FF295 /* RouteAlternateList+CoreDataProperties.swift */; };
 		3E7291542AC3B7E6000FF295 /* aabba_note_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E7291532AC3B7E6000FF295 /* aabba_note_data.json */; };
 		3E7291732AC3C875000FF295 /* SignOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291722AC3C875000FF295 /* SignOffView.swift */; };
-		3E72917A2AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291742AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift */; };
-		3E72917B2AC3D7F6000FF295 /* NotePostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291752AC3D7F6000FF295 /* NotePostList+CoreDataProperties.swift */; };
 		3E72917C2AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291762AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift */; };
 		3E72917D2AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291772AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift */; };
 		3E7291812AC3E0AF000FF295 /* NoteTagItemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291802AC3E0AF000FF295 /* NoteTagItemColor.swift */; };
 		3E7291832AC3E8B6000FF295 /* ModalNoteCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291822AC3E8B6000FF295 /* ModalNoteCommentView.swift */; };
 		3E7291862AC45F66000FF295 /* SignatureList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291842AC45F66000FF295 /* SignatureList+CoreDataClass.swift */; };
 		3E7291872AC45F66000FF295 /* SignatureList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291852AC45F66000FF295 /* SignatureList+CoreDataProperties.swift */; };
-		3E72918E2AC56811000FF295 /* NoteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72918C2AC56811000FF295 /* NoteList+CoreDataClass.swift */; };
-		3E72918F2AC56811000FF295 /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72918D2AC56811000FF295 /* NoteList+CoreDataProperties.swift */; };
 		3E7291922AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */; };
 		3E7291932AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291912AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift */; };
 		3E7291962AC5797A000FF295 /* DepartureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291952AC5797A000FF295 /* DepartureSectionView.swift */; };
@@ -214,6 +209,15 @@
 		3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */; };
 		3E7291BA2AC59A8C000FF295 /* DepartureSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */; };
 		3E7291BC2AC59D32000FF295 /* ClipboardFlightOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */; };
+		3E7291BF2AC5B549000FF295 /* ClipboardPreflight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291BE2AC5B549000FF295 /* ClipboardPreflight.swift */; };
+		3E7291C22AC5B5B6000FF295 /* ClipboardSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291C12AC5B5B6000FF295 /* ClipboardSummaryView.swift */; };
+		3E7291C52AC5C5F6000FF295 /* NoteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291C32AC5C5F6000FF295 /* NoteList+CoreDataClass.swift */; };
+		3E7291C62AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291C42AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift */; };
+		3E7291C82AC5C7B2000FF295 /* ClipboardNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */; };
+		3E7291CB2AC5C852000FF295 /* ClipboardNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */; };
+		3E7291CD2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */; };
+		3E7291D02AC5D086000FF295 /* NotePostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */; };
+		3E7291D12AC5D086000FF295 /* NotePostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -532,7 +536,6 @@
 		3E4E10322A6A07450026802B /* ScratchPadList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchPadList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E5AF6322A18622F00A97ECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E5AF6332A187E3500A97ECF /* HomeFlightSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlightSectionView.swift; sourceTree = "<group>"; };
-		3E5AF6352A187F7900A97ECF /* FlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightView.swift; sourceTree = "<group>"; };
 		3E5AF63D2A18D90F00A97ECF /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		3E5AF6412A18DAB800A97ECF /* AISearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISearchView.swift; sourceTree = "<group>"; };
 		3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
@@ -587,16 +590,12 @@
 		3E7291502AC3081A000FF295 /* RouteAlternateList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteAlternateList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291532AC3B7E6000FF295 /* aabba_note_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = aabba_note_data.json; sourceTree = "<group>"; };
 		3E7291722AC3C875000FF295 /* SignOffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOffView.swift; sourceTree = "<group>"; };
-		3E7291742AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E7291752AC3D7F6000FF295 /* NotePostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291762AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteCommentList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291772AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteCommentList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291802AC3E0AF000FF295 /* NoteTagItemColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteTagItemColor.swift; sourceTree = "<group>"; };
 		3E7291822AC3E8B6000FF295 /* ModalNoteCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalNoteCommentView.swift; sourceTree = "<group>"; };
 		3E7291842AC45F66000FF295 /* SignatureList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291852AC45F66000FF295 /* SignatureList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E72918C2AC56811000FF295 /* NoteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E72918D2AC56811000FF295 /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E7291912AC5688C000FF295 /* NoteAabbaPostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7291952AC5797A000FF295 /* DepartureSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureSectionView.swift; sourceTree = "<group>"; };
@@ -618,6 +617,15 @@
 		3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteSectionListView.swift; sourceTree = "<group>"; };
 		3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureSectionListView.swift; sourceTree = "<group>"; };
 		3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardFlightOverviewView.swift; sourceTree = "<group>"; };
+		3E7291BE2AC5B549000FF295 /* ClipboardPreflight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPreflight.swift; sourceTree = "<group>"; };
+		3E7291C12AC5B5B6000FF295 /* ClipboardSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardSummaryView.swift; sourceTree = "<group>"; };
+		3E7291C32AC5C5F6000FF295 /* NoteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E7291C42AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteItemList.swift; sourceTree = "<group>"; };
+		3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteView.swift; sourceTree = "<group>"; };
+		3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteItemRelevantList.swift; sourceTree = "<group>"; };
+		3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -864,6 +872,7 @@
 		3E3FCBE42A21C8A0008017FA /* Clipboard */ = {
 			isa = PBXGroup;
 			children = (
+				3E7291BD2AC5B526000FF295 /* ClipboardPreflight */,
 				3E7291BB2AC59D32000FF295 /* ClipboardFlightOverviewView.swift */,
 				3EB9DAD62A7500F4009AEDFB /* AISearch */,
 				3EFA5F0C2A429B2C001ED6CF /* List */,
@@ -1145,8 +1154,8 @@
 			children = (
 				3E7291842AC45F66000FF295 /* SignatureList+CoreDataClass.swift */,
 				3E7291852AC45F66000FF295 /* SignatureList+CoreDataProperties.swift */,
-				3E7291742AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift */,
-				3E7291752AC3D7F6000FF295 /* NotePostList+CoreDataProperties.swift */,
+				3E7291CE2AC5D086000FF295 /* NotePostList+CoreDataClass.swift */,
+				3E7291CF2AC5D086000FF295 /* NotePostList+CoreDataProperties.swift */,
 				3E7291762AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift */,
 				3E7291772AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift */,
 				3E7291902AC5688C000FF295 /* NoteAabbaPostList+CoreDataClass.swift */,
@@ -1192,6 +1201,26 @@
 				3E7291B32AC59487000FF295 /* ArrivalModalNoteCommentView.swift */,
 			);
 			path = ArrivalSectionView;
+			sourceTree = "<group>";
+		};
+		3E7291BD2AC5B526000FF295 /* ClipboardPreflight */ = {
+			isa = PBXGroup;
+			children = (
+				3E7291C92AC5C824000FF295 /* ClipboardNoteView */,
+				3E7291C12AC5B5B6000FF295 /* ClipboardSummaryView.swift */,
+				3E7291BE2AC5B549000FF295 /* ClipboardPreflight.swift */,
+			);
+			path = ClipboardPreflight;
+			sourceTree = "<group>";
+		};
+		3E7291C92AC5C824000FF295 /* ClipboardNoteView */ = {
+			isa = PBXGroup;
+			children = (
+				3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */,
+				3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */,
+				3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */,
+			);
+			path = ClipboardNoteView;
 			sourceTree = "<group>";
 		};
 		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
@@ -1292,7 +1321,6 @@
 				C5F9C81B2A14878D0076396F /* ContentView.swift */,
 				3ED7546F2A11E1BC003072A1 /* Assets.xcassets */,
 				3ED754712A11E1BC003072A1 /* Preview Content */,
-				3E5AF6352A187F7900A97ECF /* FlightView.swift */,
 				3E5AF63D2A18D90F00A97ECF /* TabView.swift */,
 				3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */,
 				3E5AF6502A19035200A97ECF /* TabbarScrollable.swift */,
@@ -1651,8 +1679,8 @@
 				3E7291502AC3081A000FF295 /* RouteAlternateList+CoreDataProperties.swift */,
 				3E4E10312A6A07450026802B /* ScratchPadList+CoreDataClass.swift */,
 				3E4E10322A6A07450026802B /* ScratchPadList+CoreDataProperties.swift */,
-				3E72918C2AC56811000FF295 /* NoteList+CoreDataClass.swift */,
-				3E72918D2AC56811000FF295 /* NoteList+CoreDataProperties.swift */,
+				3E7291C32AC5C5F6000FF295 /* NoteList+CoreDataClass.swift */,
+				3E7291C42AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift */,
 				3E4A36692A570B9A00027C61 /* TagList+CoreDataClass.swift */,
 				3E4A36672A570B9A00027C61 /* TagList+CoreDataProperties.swift */,
 			);
@@ -1883,6 +1911,7 @@
 				3E4A36A52A570BA800027C61 /* PerfWeightList+CoreDataProperties.swift in Sources */,
 				3E3FCC472A270851008017FA /* taxiView.swift in Sources */,
 				3EE1707D2AA82E1B004DA27C /* RecencySectionView.swift in Sources */,
+				3E7291C62AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift in Sources */,
 				3ECD57942A98E19300C5FEF3 /* MapViewModel.swift in Sources */,
 				3E7291132ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift in Sources */,
 				3E4A36BD2A571A2500027C61 /* FlightInformationDetailView.swift in Sources */,
@@ -1904,13 +1933,14 @@
 				3EEBE6862AB6795800421AFF /* CustomPopOverView.swift in Sources */,
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
+				3E7291C82AC5C7B2000FF295 /* ClipboardNoteItemList.swift in Sources */,
+				3E7291D02AC5D086000FF295 /* NotePostList+CoreDataClass.swift in Sources */,
 				3E7291A72AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift in Sources */,
 				3EECB8642A716638009D4971 /* LoginView.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
 				3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */,
 				3E72912D2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
-				3E72917A2AC3D7F6000FF295 /* NotePostList+CoreDataClass.swift in Sources */,
 				3E870BA12A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
 				3E7291282ABEA46C000FF295 /* RecencyList+CoreDataClass.swift in Sources */,
@@ -1933,7 +1963,6 @@
 				3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */,
 				3E7291362AC188DD000FF295 /* RowAlternates.swift in Sources */,
 				3ECD577D2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift in Sources */,
-				3E72918E2AC56811000FF295 /* NoteList+CoreDataClass.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
@@ -1969,17 +1998,16 @@
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
 				3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
 				3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */,
-				3E72917B2AC3D7F6000FF295 /* NotePostList+CoreDataProperties.swift in Sources */,
 				3E086D822A94957E00BE00AD /* SummaryInfoList+CoreDataProperties.swift in Sources */,
 				3E086D8D2A94E4C500BE00AD /* EnrouteList+CoreDataClass.swift in Sources */,
 				3E024D8E2A848A730066C8E3 /* ReferenceModel.swift in Sources */,
 				3EEBE6D92AB97A6100421AFF /* AabbaPostList+CoreDataClass.swift in Sources */,
 				3E3FCC242A25E48B008017FA /* SearchModel.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
-				3E72918F2AC56811000FF295 /* NoteList+CoreDataProperties.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
 				3E72912C2ABED9AC000FF295 /* LogbookLimitationList+CoreDataClass.swift in Sources */,
 				3E4A368E2A570BA800027C61 /* FuelTableList+CoreDataProperties.swift in Sources */,
+				3E7291CD2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift in Sources */,
 				3E4A37202A5C361500027C61 /* HistoricalDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D812A94957E00BE00AD /* SummaryInfoList+CoreDataClass.swift in Sources */,
 				3EF221A52AAF0C4A000B8FFB /* OtherEventForm.swift in Sources */,
@@ -2004,6 +2032,7 @@
 				3E5AF64B2A18FF7600A97ECF /* ReportingView.swift in Sources */,
 				C5A8DDFE2A4E8C420045EB32 /* TaxiTimeView.swift in Sources */,
 				3E5AF64D2A18FFDD00A97ECF /* ChartView.swift in Sources */,
+				3E7291CB2AC5C852000FF295 /* ClipboardNoteView.swift in Sources */,
 				3E4A369F2A570BA800027C61 /* DepartureATCList+CoreDataClass.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E4A36A62A570BA800027C61 /* FuelDataList+CoreDataClass.swift in Sources */,
@@ -2058,6 +2087,7 @@
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
 				3E4A368F2A570BA800027C61 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
 				3E3FCBF02A21C924008017FA /* DepartureReferenceContainer.swift in Sources */,
+				3E7291BF2AC5B549000FF295 /* ClipboardPreflight.swift in Sources */,
 				3EEBE6962AB6816A00421AFF /* GeneralPopoverView.swift in Sources */,
 				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
@@ -2137,6 +2167,7 @@
 				3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */,
 				3E5AF6482A18FF1E00A97ECF /* FlightPlanView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
+				3E7291D12AC5D086000FF295 /* NotePostList+CoreDataProperties.swift in Sources */,
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3EEBE6A22AB8425C00421AFF /* CustomPicker.swift in Sources */,
 				3E4A374D2A5CC85C00027C61 /* MetarTafDataList+CoreDataClass.swift in Sources */,
@@ -2145,6 +2176,7 @@
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
 				3E4A36D52A5AA04400027C61 /* TaxiTimesList+CoreDataClass.swift in Sources */,
 				C5A8DE082A4E931D0045EB32 /* reciprocalRwyChart.swift in Sources */,
+				3E7291C22AC5B5B6000FF295 /* ClipboardSummaryView.swift in Sources */,
 				3E4A369B2A570BA800027C61 /* FuelExtraList+CoreDataProperties.swift in Sources */,
 				3EEBE6712AB3547C00421AFF /* CustomRouteAnnotation.swift in Sources */,
 				3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */,
@@ -2165,6 +2197,7 @@
 				3E086D772A94918F00BE00AD /* MapModal.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
 				3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */,
+				3E7291C52AC5C5F6000FF295 /* NoteList+CoreDataClass.swift in Sources */,
 				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3EB99CE12A4FC7060091BC08 /* ButtonStepper.swift in Sources */,
 				3EFA5F6A2A4A814F001ED6CF /* ScratchPadView.swift in Sources */,
@@ -2209,7 +2242,6 @@
 				3E7291512AC3081A000FF295 /* RouteAlternateList+CoreDataClass.swift in Sources */,
 				3E4A36C22A57B3C700027C61 /* RemoteService.swift in Sources */,
 				3E7290F92ABB2B70000FF295 /* TrafficMapList+CoreDataClass.swift in Sources */,
-				3E5AF6362A187F7900A97ECF /* FlightView.swift in Sources */,
 				3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */,

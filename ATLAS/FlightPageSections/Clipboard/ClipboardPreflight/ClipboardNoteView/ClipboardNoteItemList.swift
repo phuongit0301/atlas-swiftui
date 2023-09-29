@@ -1,5 +1,5 @@
 //
-//  NoteItemList.swift
+//  ClipboardNoteItemList.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NoteItemList: View {
+struct ClipboardNoteItemList: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
@@ -101,13 +101,14 @@ struct NoteItemList: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            if (itemList[index].isDefault) {
-                                                removeQR(index)
+                                            if (itemList[index].canDelete && itemList[index].fromParent) {
+                                                update(index)
                                             } else {
-                                                addQR(index)
+                                                updateStatus(index)
                                             }
+
                                         }) {
-                                            itemList[index].isDefault ?
+                                            itemList[index].isDefault || itemList[index].fromParent ?
                                                 Image(systemName: "star.fill")
                                                     .foregroundColor(Color.theme.azure)
                                                     .font(.system(size: 22))
@@ -169,37 +170,19 @@ struct NoteItemList: View {
         self.itemList.move(fromOffsets: source, toOffset: destination)
     }
     
-    private func addQR(_ index: Int) {
-        let data = itemList[index]
-        let item = NoteList(context: persistenceController.container.viewContext)
-        item.id = UUID()
-        item.name = data.name
-        item.isDefault = false
-        item.createdAt = dateFormatter.string(from: Date())
-        item.canDelete = true
-        item.fromParent = true
-        item.type = "preflightref"
-        item.includeCrew = data.includeCrew
-        item.parentId = data.id
-        
-        if let tags = data.tags {
-            item.addToTags(tags)
+    private func update(_ index: Int) {
+        if let found = viewModel.preflightArray.first(where: {$0.id == viewModel.preflightRefArray[index].parentId}) {
+            found.isDefault = false
         }
-        
-        data.isDefault = true
-        viewModel.save()
-        resetData()
-    }
-    
-    private func removeQR(_ index: Int) {
-        itemList[index].isDefault = false
 
-        if let found = viewModel.preflightRefArray.first(where: {$0.parentId == viewModel.preflightArray[index].id}) {
-            viewModel.delete(found)
-        }
+        viewModel.delete(viewModel.preflightRefArray[index])
         viewModel.save()
         resetData()
     }
 
-
+    private func updateStatus(_ index: Int) {
+        viewModel.preflightRefArray[index].isDefault.toggle()
+        viewModel.save()
+        resetData()
+    }
 }

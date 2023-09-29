@@ -74,8 +74,8 @@ class ScreenReferenceModel: ObservableObject {
 struct ListReferenceModel {
     let ListItem = {
         let MainItem = [
-            ListFlightInformationItem(name: "Flight Overview", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.FlightInformationDetailScreen),
-            ListFlightInformationItem(name: "Preflight", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.AirCraftScreen),
+            ListFlightInformationItem(name: "Flight Overview", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardFlightOverviewScreen),
+            ListFlightInformationItem(name: "Preflight", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardPreflight),
             ListFlightInformationItem(name: "Crew Briefing", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
 //            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.DepartureScreen, nextScreen: NavigationEnumeration.EnrouteScreen),
