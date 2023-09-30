@@ -76,13 +76,12 @@ struct ListReferenceModel {
         let MainItem = [
             ListFlightInformationItem(name: "Flight Overview", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardFlightOverviewScreen),
             ListFlightInformationItem(name: "Preflight", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardPreflight),
-            ListFlightInformationItem(name: "Crew Briefing", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.NotamDetailScreen),
-//            ListFlightInformationItem(name: "Fuel", date: "XX:XX", screenName: NavigationEnumeration.FuelScreen),
-            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.ClipboardDepature, nextScreen: NavigationEnumeration.EnrouteScreen),
-            ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.ClipboardEnroute, nextScreen: NavigationEnumeration.ArrivalScreen),
-            ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ClipboardArrival, nextScreen: NavigationEnumeration.DepartureScreen),
+            ListFlightInformationItem(name: "Crew Briefing", date: "XX:XX (UTC+8)", screenName: NavigationEnumeration.ClipboardCrewBriefing),
+            ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.ClipboardDepature),
+            ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.ClipboardEnroute),
+            ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ClipboardArrival),
             ListFlightInformationItem(name: "AI Search Results", date: "XXX", screenName: NavigationEnumeration.ClipboardAISearch),
-            ListFlightInformationItem(name: "Utilities", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
+//            ListFlightInformationItem(name: "Utilities", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
         ]
         
         return MainItem

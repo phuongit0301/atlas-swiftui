@@ -21,6 +21,8 @@ struct OverviewView: View {
                     ClipboardFlightOverviewView().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardPreflight {
                     ClipboardPreflight().padding(.top, -8)
+                } else if currentItem.screenName == NavigationEnumeration.ClipboardCrewBriefing {
+                    ClipboardCrewBriefing().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardDepature {
                     ClipboardDepature().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardEnroute {
@@ -43,9 +45,9 @@ struct OverviewView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         VStack(spacing: 0) {
-                            ForEach(viewInformationModel.ListItem, id: \.self) { item in
+                            ForEach(viewInformationModel.ListItem.indices, id: \.self) { index in
                                 HStack {
-                                    Text(item.name)
+                                    Text(viewInformationModel.ListItem[index].name)
                                         .foregroundColor(Color.theme.eerieBlack)
                                         .font(.system(size: 17, weight: .regular))
                                         .frame(height: 44)
@@ -53,10 +55,13 @@ struct OverviewView: View {
                                 }.contentShape(Rectangle())
                                     .onTapGesture {
                                         refState.isActive = true
-                                        refState.selectedItem = item
+                                        refState.selectedItem = viewInformationModel.ListItem[index]
                                     }
                                 
-                                Divider().padding(.horizontal, -16)
+                                if index + 1 < viewInformationModel.ListItem.count {
+                                    Divider().padding(.horizontal, -16)
+                                }
+                                
                             }
                         }.padding(.horizontal)
                         .background(Color.white)

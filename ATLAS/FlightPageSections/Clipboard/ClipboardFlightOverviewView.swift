@@ -386,15 +386,6 @@ struct ClipboardFlightOverviewView: View {
 
                                         Spacer()
                                         
-                                        Button(action: {
-                                            self.isSync.toggle()
-                                        }, label: {
-                                            Image("icon_sync")
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }).padding(.trailing)
-                                            .buttonStyle(PlainButtonStyle())
-                                        
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
 
                                     Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -423,18 +414,9 @@ struct ClipboardFlightOverviewView: View {
 
                                         VStack(alignment: .leading) {
                                             HStack {
-                                                if isSync {
-                                                    Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                                } else {
-                                                    Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                                }
-                                                HStack {
-                                                    Picker("", selection: $selectedFO) {
-                                                        ForEach(SummaryDataDropDown.allCases, id: \.self) {
-                                                            Text($0.rawValue).tag($0.rawValue)
-                                                        }
-                                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                                }.fixedSize()
+                                                Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                
+                                                Text("Picker").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                             }.frame(height: 44)
 
                                             Spacer()
@@ -450,19 +432,9 @@ struct ClipboardFlightOverviewView: View {
 
                                         VStack(alignment: .leading, spacing: 0) {
                                             HStack {
-                                                if isSync {
-                                                    Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                                } else {
-                                                    Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                                }
+                                                Text("Other Pilot's Full name").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
 
-                                                HStack {
-                                                    Picker("", selection: $selectedCA) {
-                                                        ForEach(SummaryDataDropDown.allCases, id: \.self) {
-                                                            Text($0.rawValue).tag($0.rawValue)
-                                                        }
-                                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
-                                                }.fixedSize()
+                                                Text("Picker").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                             }.frame(height: 44)
                                             
                                             Spacer()

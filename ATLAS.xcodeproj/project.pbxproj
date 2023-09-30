@@ -234,6 +234,11 @@
 		3E7291FB2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291FA2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift */; };
 		3E7291FD2AC6BC0C000FF295 /* ClipboardArrivalNoteRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291FC2AC6BC0C000FF295 /* ClipboardArrivalNoteRelevantList.swift */; };
 		3E7291FF2AC6F1A6000FF295 /* ClipboardAISearchDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7291FE2AC6F1A6000FF295 /* ClipboardAISearchDetailModal.swift */; };
+		3E7292022AC6F7D0000FF295 /* ClipboardCrewBriefing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292012AC6F7D0000FF295 /* ClipboardCrewBriefing.swift */; };
+		3E7292042AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292032AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift */; };
+		3E7292062AC6FCA2000FF295 /* ClipboardTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292052AC6FCA2000FF295 /* ClipboardTagView.swift */; };
+		3E7292092AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292082AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift */; };
+		3E72920B2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72920A2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -658,6 +663,11 @@
 		3E7291FA2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalNoteItemList.swift; sourceTree = "<group>"; };
 		3E7291FC2AC6BC0C000FF295 /* ClipboardArrivalNoteRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalNoteRelevantList.swift; sourceTree = "<group>"; };
 		3E7291FE2AC6F1A6000FF295 /* ClipboardAISearchDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardAISearchDetailModal.swift; sourceTree = "<group>"; };
+		3E7292012AC6F7D0000FF295 /* ClipboardCrewBriefing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefing.swift; sourceTree = "<group>"; };
+		3E7292032AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefingSummaryView.swift; sourceTree = "<group>"; };
+		3E7292052AC6FCA2000FF295 /* ClipboardTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardTagView.swift; sourceTree = "<group>"; };
+		3E7292082AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefingNoteView.swift; sourceTree = "<group>"; };
+		3E72920A2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefingNoteItemList.swift; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -904,6 +914,7 @@
 		3E3FCBE42A21C8A0008017FA /* Clipboard */ = {
 			isa = PBXGroup;
 			children = (
+				3E7292002AC6F7A2000FF295 /* ClipboardCrewBriefing */,
 				3E7291F22AC6BBB6000FF295 /* ClipboardArrival */,
 				3E7291E62AC6AC4C000FF295 /* ClipboardEnroute */,
 				3E7291DA2AC67F79000FF295 /* ClipboardDepature */,
@@ -1316,6 +1327,26 @@
 				3E7291FC2AC6BC0C000FF295 /* ClipboardArrivalNoteRelevantList.swift */,
 			);
 			path = ClipboardArrivalNoteView;
+			sourceTree = "<group>";
+		};
+		3E7292002AC6F7A2000FF295 /* ClipboardCrewBriefing */ = {
+			isa = PBXGroup;
+			children = (
+				3E7292072AC71011000FF295 /* ClipboardCrewBriefingNoteView */,
+				3E7292052AC6FCA2000FF295 /* ClipboardTagView.swift */,
+				3E7292012AC6F7D0000FF295 /* ClipboardCrewBriefing.swift */,
+				3E7292032AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift */,
+			);
+			path = ClipboardCrewBriefing;
+			sourceTree = "<group>";
+		};
+		3E7292072AC71011000FF295 /* ClipboardCrewBriefingNoteView */ = {
+			isa = PBXGroup;
+			children = (
+				3E7292082AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift */,
+				3E72920A2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift */,
+			);
+			path = ClipboardCrewBriefingNoteView;
 			sourceTree = "<group>";
 		};
 		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
@@ -2154,6 +2185,7 @@
 				3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */,
 				3EEBE64C2AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
+				3E7292022AC6F7D0000FF295 /* ClipboardCrewBriefing.swift in Sources */,
 				3E7291B02AC5946C000FF295 /* ArrivalNoteItemList.swift in Sources */,
 				3EF221A12AAF0C2C000B8FFB /* FlightForm.swift in Sources */,
 				3EFA5F6F2A4A8377001ED6CF /* ScratchPadForm.swift in Sources */,
@@ -2194,6 +2226,7 @@
 				3E3FCBF02A21C924008017FA /* DepartureReferenceContainer.swift in Sources */,
 				3E7291BF2AC5B549000FF295 /* ClipboardPreflight.swift in Sources */,
 				3EEBE6962AB6816A00421AFF /* GeneralPopoverView.swift in Sources */,
+				3E72920B2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift in Sources */,
 				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3EEBE6C12AB88CE700421AFF /* MapPostView.swift in Sources */,
@@ -2211,9 +2244,11 @@
 				3E72911F2ABD8959000FF295 /* RecencyExpiryList+CoreDataProperties.swift in Sources */,
 				3E5AF6422A18DAB800A97ECF /* AISearchView.swift in Sources */,
 				3E7291022ABC24BB000FF295 /* OverviewSubSectionView.swift in Sources */,
+				3E7292092AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
 				3E086D722A945DEA00BE00AD /* Helper.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
+				3E7292042AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */,
 				3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */,
@@ -2348,6 +2383,7 @@
 				3E7291FF2AC6F1A6000FF295 /* ClipboardAISearchDetailModal.swift in Sources */,
 				3E7291812AC3E0AF000FF295 /* NoteTagItemColor.swift in Sources */,
 				3E72913B2AC1BD8A000FF295 /* NoteItemList.swift in Sources */,
+				3E7292062AC6FCA2000FF295 /* ClipboardTagView.swift in Sources */,
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3EEBE6882AB67B0000421AFF /* AskAabbaPopoverView.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,

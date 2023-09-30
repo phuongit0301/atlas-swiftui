@@ -62,6 +62,9 @@ class CoreDataModelState: ObservableObject {
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
     @Published var tagList: [TagList] = []
+    @Published var tagListCabinDefects: [TagList] = []
+    @Published var tagListWeather: [TagList] = []
+    @Published var noteListIncludeCrew: [NoteList] = []
     @Published var preflightArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []
     @Published var enrouteArray: [NoteList] = []
@@ -376,6 +379,9 @@ class CoreDataModelState: ObservableObject {
     func initFetchData() async {
         DispatchQueue.main.async {
             self.tagList = self.readTag()
+            self.tagListCabinDefects = self.readTagByName("Cabin Defects")
+            self.tagListWeather = self.readTagByName("Weather")
+            self.noteListIncludeCrew = self.readNoteListIncludeCrew()
             self.preflightArray = self.read("preflight")
             self.departureArray = self.read("departure")
             self.enrouteArray = self.read("enroute")
@@ -683,6 +689,44 @@ class CoreDataModelState: ObservableObject {
         // initialize the fetch request
         let request: NSFetchRequest<TagList> = TagList.fetchRequest()
         
+        // fetch with the request
+        do {
+            data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch tag from Core Data.")
+        }
+        
+        // return results
+        return data
+    }
+    
+    func readTagByName(_ target: String = "") -> [TagList] {
+        // create a temp array to save fetched notes
+        var data: [TagList] = []
+        // initialize the fetch request
+        let request: NSFetchRequest<TagList> = TagList.fetchRequest()
+        
+        if target != "" {
+            request.predicate = NSPredicate(format: "name == %@", target)
+        }
+        // fetch with the request
+        do {
+            data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch tag from Core Data.")
+        }
+        
+        // return results
+        return data
+    }
+    
+    func readNoteListIncludeCrew() -> [NoteList] {
+        // create a temp array to save fetched notes
+        var data: [NoteList] = []
+        // initialize the fetch request
+        let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "includeCrew == 1")
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)
