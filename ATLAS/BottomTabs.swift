@@ -19,7 +19,7 @@ struct BottomTabs: View {
             GeometryReader {proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 0) {
-                        ForEach(viewModel.tabs, id: \.self) { item in
+                        ForEach(viewModel.tabsSlideOver, id: \.self) { item in
                             if item.isExternal {
                                 VStack(alignment: .center) {
                                     Image(systemName: item.iconName)
@@ -75,10 +75,6 @@ struct BottomTabs: View {
         
         if item.screenName == NavigationEnumeration.AtlasSearchScreen {
             return AnyView(AtlasSearchSplit())
-        }
-        
-        if item.screenName == NavigationEnumeration.ReportingScreen {
-            return AnyView(ReportingView())
         }
         
         return AnyView(HomeViewSplit())

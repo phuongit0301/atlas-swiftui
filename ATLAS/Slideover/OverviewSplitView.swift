@@ -15,10 +15,11 @@ struct OverviewSplitView: View {
     var body: some View {
         // flight informations
         VStack (spacing: 0) {
+            HStack {
+                Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+            }.padding()
+            
             List {
-                HStack {
-                    Text("Notes").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
-                }.padding(.vertical, 10)
                 ForEach(viewInformationModel.ListItem, id: \.self) { item in
                     NavigationLink(destination: getDestinationSplit(item)) {
                         HStack {
@@ -27,27 +28,27 @@ struct OverviewSplitView: View {
                     }
                 }
                 
-                HStack {
-                    Text("Utilities").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
-                    
-                    Spacer()
-                    
-//                    HStack {
-//                        Image(systemName: "plus")
-//                            .resizable()
-//                            .frame(width: 16, height: 16)
-//                            .foregroundColor(Color.theme.azure)
-//                        Text("Add Item").foregroundColor(Color.theme.azure)
-//                            .font(.system(size: 17, weight: .regular))
+//                HStack {
+//                    Text("Utilities").foregroundColor(Color.theme.eerieBlack).font(.system(size: 20, weight: .semibold))
+//                    
+//                    Spacer()
+//                    
+////                    HStack {
+////                        Image(systemName: "plus")
+////                            .resizable()
+////                            .frame(width: 16, height: 16)
+////                            .foregroundColor(Color.theme.azure)
+////                        Text("Add Item").foregroundColor(Color.theme.azure)
+////                            .font(.system(size: 17, weight: .regular))
+////                    }
+//                }.padding(.vertical, 10)
+//                ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
+//                    NavigationLink(destination: getDestinationSplitTable(item)) {
+//                        HStack {
+//                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
+//                        }
 //                    }
-                }.padding(.vertical, 10)
-                ForEach(viewUtilitiesModel.ListItem, id: \.self) { item in
-                    NavigationLink(destination: getDestinationSplitTable(item)) {
-                        HStack {
-                            Text(item.name).foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .regular))
-                        }
-                    }
-                }
+//                }
             }.scrollContentBackground(.hidden)
                 
         }

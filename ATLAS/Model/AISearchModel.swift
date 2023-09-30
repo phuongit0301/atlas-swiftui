@@ -13,11 +13,6 @@ enum AISearchEnumeration {
     case PreviousSearchView
 }
 
-let IAISearchTabs = [
-    AISearchTab(title: "Search", screenName: AISearchEnumeration.AISearchView),
-    AISearchTab(title: "Previous Searches", screenName: AISearchEnumeration.PreviousSearchView),
-]
-
 struct AISearchTab {
     var icon: Image?
     var title: String

@@ -123,13 +123,21 @@ class TabModelState: ObservableObject {
         ITabs(name: "Clipboard", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ClipboardScreen, isDefault: false, isDisabled: false),
     ]
     
+    let DataSlideOver = [
+        ITabs(name: "Charts", iconName: "map", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "jdmpro.jeppesen://"),
+        ITabs(name: "Weather", iconName: "sun.max", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.WeatherScreen, isDefault: false, isDisabled: false, scheme: "ewas://"),
+        ITabs(name: "eDocuments", iconName: "doc.viewfinder", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "com.adobe.Adobe-Reader://"),
+    ]
+    
     @Published var selectedNav: NavigationEnumeration
     @Published var tabs: [ITabs]
+    @Published var tabsSlideOver: [ITabs]
     @Published var selectedTab: ITabs
     
     init() {
         self.selectedNav = NavigationEnumeration.FlightScreen
         self.tabs = Data
+        self.tabsSlideOver = DataSlideOver
         self.selectedTab = Data[0]
     }
 }

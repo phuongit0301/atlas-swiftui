@@ -53,7 +53,7 @@ struct IScratchPad: Identifiable, Hashable {
 }
 
 
-let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "500", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
+//let perfData = PerfData(fltRules: "RVSM", gndMiles: "6385", airMiles: "7004", crzComp: "M42", apd: "1.4", ci: "100", zfwChange: "557", lvlChange: "500", planZFW: "143416", maxZFW: "161025", limZFW: "Structural", planTOW: "227883", maxTOW: "227930", limTOW: "Perf - Obstacle", planLDW: "151726", maxLDW: "172365", limLDW: "Structural")
 
 class CoreDataModelState: ObservableObject {
     var remoteService = RemoteService.shared
@@ -112,7 +112,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPerfInfo: [PerfInfoList] = []
     @Published var existDataPerfInfo: Bool = false
     
-    @Published var perfChangesTable: [perfChanges] = []
+//    @Published var perfChangesTable: [perfChanges] = []
     
     // For Perf Data
     @Published var dataPerfData: PerfDataList!
@@ -304,16 +304,16 @@ class CoreDataModelState: ObservableObject {
                     if let perfData = data?.perfData {
                         self.initDataPerfData(perfData)
 
-                        self.initDataPerfInfo(perfData)
+//                        self.initDataPerfInfo(perfData)
 
                         self.dataPerfWeight = self.readPerfWeight()
 
-                        self.initDataPerfWeight(perfData)
+//                        self.initDataPerfWeight(perfData)
                     }
 
-                    if let fuelData = data?.fuelData {
-                        self.initDataFuelList(fuelData)
-                    }
+//                    if let fuelData = data?.fuelData {
+//                        self.initDataFuelList(fuelData)
+//                    }
 
                     if let altnData = data?.altnData {
                         self.dataAltnList = self.readAltnList()
@@ -435,7 +435,7 @@ class CoreDataModelState: ObservableObject {
             
             self.readSummaryRoute()
             self.readPerfData()
-            self.dataPerfInfo = self.readPerfInfo()
+//            self.dataPerfInfo = self.readPerfInfo()
             self.dataPerfWeight = self.readPerfWeight()
             self.readFuelDataList()
             self.dataFuelTableList = self.readFuelTableList()
@@ -1590,130 +1590,130 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataPerfInfo(_ perfData: IPerfDataResponseModel) {
-        let newObj = PerfInfoList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.fltRules = perfData.fltRules
-        newObj.gndMiles = perfData.gndMiles
-        newObj.airMiles = perfData.airMiles
-        newObj.crzComp = perfData.crzComp
-        newObj.apd = perfData.apd
-        newObj.ci = perfData.ci
-        newObj.zfwChange = "M1000KG BURN LESS \(perfData.minus_zfwChange!)KG"
-        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange!)KG"
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            existDataPerfInfo = true
-            dataPerfInfo = readPerfInfo()
-            print("saved perf info successfully")
-        } catch {
-            print("Failed to perf info save: \(error)")
-            existDataPerfInfo = false
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
+//    func initDataPerfInfo(_ perfData: IPerfDataResponseModel) {
+//        let newObj = PerfInfoList(context: service.container.viewContext)
+//        newObj.id = UUID()
+//        newObj.fltRules = perfData.fltRules
+//        newObj.gndMiles = perfData.gndMiles
+//        newObj.airMiles = perfData.airMiles
+//        newObj.crzComp = perfData.crzComp
+//        newObj.apd = perfData.apd
+//        newObj.ci = perfData.ci
+//        newObj.zfwChange = "M1000KG BURN LESS \(perfData.minus_zfwChange!)KG"
+//        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange!)KG"
+//
+//        do {
+//            // Persist the data in this managed object context to the underlying store
+//            try service.container.viewContext.save()
+//            existDataPerfInfo = true
+//            dataPerfInfo = readPerfInfo()
+//            print("saved perf info successfully")
+//        } catch {
+//            print("Failed to perf info save: \(error)")
+//            existDataPerfInfo = false
+//            // Rollback any changes in the managed object context
+//            service.container.viewContext.rollback()
+//
+//        }
+//    }
     
-    func initDataPerfWeight(_ perfData: IPerfDataResponseModel) {
-        let perfWeightsTable = [
-            perfWeights(weight: "ZFW", plan: perfData.planZFW ?? "", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
-            perfWeights(weight: "TOW", plan: perfData.planTOW ?? "", actual: "", max: perfData.maxTOW ?? "", limitation: perfData.limTOW ?? ""),
-            perfWeights(weight: "LDW", plan: perfData.planLDW ?? "", actual: "", max: perfData.maxLDW ?? "", limitation: perfData.limLDW ?? ""),
-        ]
-        
-        perfWeightsTable.forEach { item in
-            let newObj = PerfWeightList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.weight = item.weight
-            newObj.plan = item.plan
-            newObj.actual = ""
-            newObj.max = item.max
-            newObj.limitation = item.limitation
-            
-            service.container.viewContext.performAndWait {
-                do {
-                    try service.container.viewContext.save()
-                    print("saved perf weight successfully")
-                } catch {
-                    print("Failed to perf weight save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-        }
-        existDataPerfWeight = true
-        dataPerfWeight = readPerfWeight()
-    }
-    
-    func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
-        let fuelTable = [
-            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"] ?? "", fuel: fuelData.burnoff["fuel"] ?? "", policy_reason: ""),
-            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"] ?? "", fuel: fuelData.cont["fuel"] ?? "", policy_reason: fuelData.cont["policy"]!),
-            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"] ?? "", fuel: fuelData.altn["fuel"] ?? "", policy_reason: ""),
-            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"] ?? "", fuel: fuelData.hold["fuel"] ?? "", policy_reason: ""),
-            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"] ?? "", fuel: fuelData.topup60["fuel"] ?? "", policy_reason: ""),
-            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"] ?? "", fuel: fuelData.taxi["fuel"] ?? "", policy_reason: fuelData.taxi["policy"]!),
-            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"] ?? "", fuel: fuelData.planReq["fuel"] ?? "", policy_reason: ""),
-            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"] ?? "", fuel: fuelData.dispAdd["fuel"] ?? "", policy_reason: fuelData.dispAdd["policy"]!)
-        ]
-        
-        do {
-            let newFuelData = FuelDataList(context: service.container.viewContext)
-            newFuelData.id = UUID()
-            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
-            
-            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
-            
-            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
-            
-            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
-            
-            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
-            
-            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
-            
-            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
-            
-            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
-            
-            try service.container.viewContext.save()
-            existDataFuelDataList = true
-            readFuelDataList()
-        } catch {
-            existDataFuelDataList = false
-            print("failed to fuel data save: \(error)")
-        }
-        
-        fuelTable.forEach { item in
-            let newObj = FuelTableList(context: self.service.container.viewContext)
-            newObj.id = UUID()
-            newObj.firstColumn = item.firstColumn
-            newObj.time = item.time
-            newObj.fuel = item.fuel
-            newObj.policyReason = item.policy_reason
-            
-            service.container.viewContext.performAndWait {
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved perf weight successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to fuel table list save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-        }
-        
-        dataFuelTableList = readFuelTableList()
-        readFuelExtra()
-    }
+//    func initDataPerfWeight(_ perfData: IPerfDataResponseModel) {
+//        let perfWeightsTable = [
+//            perfWeights(weight: "ZFW", plan: perfData.planZFW ?? "", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
+//            perfWeights(weight: "TOW", plan: perfData.planTOW ?? "", actual: "", max: perfData.maxTOW ?? "", limitation: perfData.limTOW ?? ""),
+//            perfWeights(weight: "LDW", plan: perfData.planLDW ?? "", actual: "", max: perfData.maxLDW ?? "", limitation: perfData.limLDW ?? ""),
+//        ]
+//
+//        perfWeightsTable.forEach { item in
+//            let newObj = PerfWeightList(context: service.container.viewContext)
+//            newObj.id = UUID()
+//            newObj.weight = item.weight
+//            newObj.plan = item.plan
+//            newObj.actual = ""
+//            newObj.max = item.max
+//            newObj.limitation = item.limitation
+//
+//            service.container.viewContext.performAndWait {
+//                do {
+//                    try service.container.viewContext.save()
+//                    print("saved perf weight successfully")
+//                } catch {
+//                    print("Failed to perf weight save: \(error)")
+//                    // Rollback any changes in the managed object context
+//                    service.container.viewContext.rollback()
+//
+//                }
+//            }
+//        }
+//        existDataPerfWeight = true
+//        dataPerfWeight = readPerfWeight()
+//    }
+//
+//    func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
+//        let fuelTable = [
+//            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"] ?? "", fuel: fuelData.burnoff["fuel"] ?? "", policy_reason: ""),
+//            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"] ?? "", fuel: fuelData.cont["fuel"] ?? "", policy_reason: fuelData.cont["policy"]!),
+//            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"] ?? "", fuel: fuelData.altn["fuel"] ?? "", policy_reason: ""),
+//            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"] ?? "", fuel: fuelData.hold["fuel"] ?? "", policy_reason: ""),
+//            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"] ?? "", fuel: fuelData.topup60["fuel"] ?? "", policy_reason: ""),
+//            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"] ?? "", fuel: fuelData.taxi["fuel"] ?? "", policy_reason: fuelData.taxi["policy"]!),
+//            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"] ?? "", fuel: fuelData.planReq["fuel"] ?? "", policy_reason: ""),
+//            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"] ?? "", fuel: fuelData.dispAdd["fuel"] ?? "", policy_reason: fuelData.dispAdd["policy"]!)
+//        ]
+//
+//        do {
+//            let newFuelData = FuelDataList(context: service.container.viewContext)
+//            newFuelData.id = UUID()
+//            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
+//
+//            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
+//
+//            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
+//
+//            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
+//
+//            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
+//
+//            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
+//
+//            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
+//
+//            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
+//
+//            try service.container.viewContext.save()
+//            existDataFuelDataList = true
+//            readFuelDataList()
+//        } catch {
+//            existDataFuelDataList = false
+//            print("failed to fuel data save: \(error)")
+//        }
+//
+//        fuelTable.forEach { item in
+//            let newObj = FuelTableList(context: self.service.container.viewContext)
+//            newObj.id = UUID()
+//            newObj.firstColumn = item.firstColumn
+//            newObj.time = item.time
+//            newObj.fuel = item.fuel
+//            newObj.policyReason = item.policy_reason
+//
+//            service.container.viewContext.performAndWait {
+//                do {
+//                    // Persist the data in this managed object context to the underlying store
+//                    try service.container.viewContext.save()
+//                    print("saved perf weight successfully")
+//                } catch {
+//                    // Something went wrong 😭
+//                    print("Failed to fuel table list save: \(error)")
+//                    // Rollback any changes in the managed object context
+//                    service.container.viewContext.rollback()
+//
+//                }
+//            }
+//        }
+//
+//        dataFuelTableList = readFuelTableList()
+//        readFuelExtra()
+//    }
     
     func initDataAltn(_ altnData: [IAltnDataResponseModel]) {
         altnData.forEach { item in
@@ -2448,27 +2448,27 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func readPerfInfo() -> [PerfInfoList] {
-        var data: [PerfInfoList] = []
-        
-        let request: NSFetchRequest<PerfInfoList> = PerfInfoList.fetchRequest()
-        do {
-            let response: [PerfInfoList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-                existDataPerfInfo = true
-                
-                // Init data performance change table
-                if let item = response.first {
-                    perfChangesTable = [perfChanges(zfwChange: item.unwrappedZfwChange, lvlChange: item.unwrappedLvlChange)]
-                }
-            }
-        } catch {
-            print("Could not fetch scratch pad from Core Data.")
-        }
-        
-        return data
-    }
+//    func readPerfInfo() -> [PerfInfoList] {
+//        var data: [PerfInfoList] = []
+//
+//        let request: NSFetchRequest<PerfInfoList> = PerfInfoList.fetchRequest()
+//        do {
+//            let response: [PerfInfoList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response
+//                existDataPerfInfo = true
+//
+//                // Init data performance change table
+//                if let item = response.first {
+//                    perfChangesTable = [perfChanges(zfwChange: item.unwrappedZfwChange, lvlChange: item.unwrappedLvlChange)]
+//                }
+//            }
+//        } catch {
+//            print("Could not fetch scratch pad from Core Data.")
+//        }
+//
+//        return data
+//    }
     
     func readPerfWeight() -> [PerfWeightList] {
         var data: [PerfWeightList] = []

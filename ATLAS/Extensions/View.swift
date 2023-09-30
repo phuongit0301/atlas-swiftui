@@ -277,10 +277,6 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
         return AnyView(AircraftSplit())
     }
     
-//    if item.screenName == NavigationEnumeration.FuelScreen {
-//        return AnyView(FuelViewSplit())
-//    }
-    
     if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
         return AnyView(FlightInformationDetailSplitView())
     }
@@ -317,7 +313,7 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
             .ignoresSafeArea())
     }
     
-    return AnyView(FlightPlanSplit())
+    return AnyView(SlideoverOverviewView().navigationBarBackButtonHidden().ignoresSafeArea())
 }
 
 func getDestinationNextSplit(_ item: ListFlightInformationItem, _ listItem: [ListFlightInformationItem]) -> AnyView {
