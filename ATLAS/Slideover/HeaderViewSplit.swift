@@ -44,7 +44,6 @@ struct HeaderViewSplit: View {
                     
                     if isMenu {
                         Button(action: {
-                            //                                NavigationUtil.popToRootView()
                             dismiss()
                         }) {
                             Text("Clipboard").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))

@@ -273,44 +273,28 @@ enum Status {
 //}
 
 func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
-    if item.screenName == NavigationEnumeration.AirCraftScreen {
-        return AnyView(AircraftSplit())
+    if item.screenName == NavigationEnumeration.ClipboardPreflight {
+        return AnyView(SlideoverPreflightView().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
-    if item.screenName == NavigationEnumeration.FlightInformationDetailScreen {
-        return AnyView(FlightInformationDetailSplitView())
+    if item.screenName == NavigationEnumeration.ClipboardCrewBriefing {
+        return AnyView(SlideoverCrewBriefing().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
-    if item.screenName == NavigationEnumeration.NoteScreen {
-        return AnyView(FlightPlanSplit())
+    if item.screenName == NavigationEnumeration.ClipboardDepature {
+        return AnyView(SlideoverDepature().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
-    if item.screenName == NavigationEnumeration.DepartureScreen {
-        return AnyView(DepartureSplit(item: item))
+    if item.screenName == NavigationEnumeration.ClipboardEnroute {
+        return AnyView(SlideoverEnroute().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
-    if item.screenName == NavigationEnumeration.EnrouteScreen {
-        return AnyView(EnrouteSplit(item: item))
+    if item.screenName == NavigationEnumeration.ClipboardArrival {
+        return AnyView(SlideoverArrival().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
-    if item.screenName == NavigationEnumeration.ArrivalScreen {
-        return AnyView(ArrivalSplit(item: item))
-    }
-    
-    if item.screenName == NavigationEnumeration.AtlasSearchScreen {
-        return AnyView(PreviousSearchSplitView().navigationBarBackButtonHidden()
-            .ignoresSafeArea())
-    }
-    
-    if item.screenName == NavigationEnumeration.ScratchPadScreen {
-        return AnyView(ScratchPadSplitView())
-    }
-    
-    if item.screenName == NavigationEnumeration.NotamDetailScreen {
-        return AnyView(
-            FlightPlanNOTAMSplitView()
-            .navigationBarBackButtonHidden()
-            .ignoresSafeArea())
+    if item.screenName == NavigationEnumeration.ClipboardAISearch {
+        return AnyView(SlideoverAISearchResult().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
     return AnyView(SlideoverOverviewView().navigationBarBackButtonHidden().ignoresSafeArea())

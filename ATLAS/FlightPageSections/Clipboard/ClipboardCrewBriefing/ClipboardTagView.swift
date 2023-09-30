@@ -50,10 +50,10 @@ struct ClipboardTagView: View {
                     VStack(spacing: 0) {
                         if isShowing {
                             if noteList.count <= 0 {
-                                VStack(alignment: .leading, spacing: 0) {
+                                HStack(spacing: 0) {
                                     Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular))
-                                }.frame(height: 44)
-                                Spacer()
+                                    Spacer()
+                                }.frame(height: 44, alignment: .leading)
                             } else {
                                 ForEach(noteList.indices, id: \.self) { index in
                                     if noteList[index].isDefault {
@@ -90,6 +90,8 @@ struct ClipboardTagView: View {
                                                     noteList[index].isDefault.toggle()
                                                     coreDataModel.save()
                                                     coreDataModel.tagList = coreDataModel.readTag()
+                                                    coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
+                                                    coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
                                                 }, label: {
                                                     if noteList[index].isDefault {
                                                         Image(systemName: "star.fill")
@@ -115,22 +117,26 @@ struct ClipboardTagView: View {
                                 }.onMove(perform: move)
                             }
                         }
-                    }.padding(.bottom)
+                    }
                 }
             }.padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                 .onAppear {
-                    self.isLoading = true
-                    for item in notes {
-                        if item.isDefault {
-                            self.noteList.append(item)
-                        }
-                    }
-                    self.isLoading = false
+                    prepareData()
                 }
         }
+    }
+    
+    func prepareData() {
+        self.isLoading = true
+        for item in notes {
+            if item.isDefault {
+                self.noteList.append(item)
+            }
+        }
+        self.isLoading = false
     }
     
     private func move(from source: IndexSet, to destination: Int) {
