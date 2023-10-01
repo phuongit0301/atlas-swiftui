@@ -68,4 +68,5 @@ struct ColorTheme {
     let salleGreen = Color("SalleGreen") //116530
     let radicalRed = Color("RadicalRed") //FF375F
     let mayaBlue = Color("MayaBlue") //5AC8F5
+    let electricBlue = Color("ElectricBlue") //62E9FF
 }

@@ -12,7 +12,8 @@ struct ClipboardNoteItemList: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
-    @State var header: String = "" // "Aircraft Status"
+    @State var header: String = ""
+    @Binding var showSheet: Bool
     @Binding var currentIndex: Int
     @Binding var itemList: [NoteList] // itemList
     @Binding var isShowList: Bool
@@ -43,22 +44,23 @@ struct ClipboardNoteItemList: View {
                         self.isShowList.toggle()
                     }
                 
-//                Button(action: {
-//                    self.showSheet.toggle()
-//                }) {
-//                    HStack {
-//                        Text("Add Note").foregroundColor(Color.theme.azure)
-//                            .font(.system(size: 17, weight: .regular))
-//                    }
-//                }
+                Button(action: {
+                    self.showSheet.toggle()
+                }) {
+                    HStack {
+                        Text("Add Note").foregroundColor(Color.theme.azure)
+                            .font(.system(size: 17, weight: .regular))
+                    }
+                }
             }.frame(height: 54)
+                .padding(.horizontal)
             
             if isShowList {
                 if itemList.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
-                    }
-                    Spacer()
+                    HStack(spacing: 0) {
+                        Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular))
+                        Spacer()
+                    }.frame(height: 44, alignment: .leading)
                 } else {
                     VStack(spacing: 0) {
                         List {
@@ -105,28 +107,30 @@ struct ClipboardNoteItemList: View {
                                             } else {
                                                 updateStatus(index)
                                             }
-
+                                            
                                         }) {
                                             itemList[index].isDefault || itemList[index].fromParent ?
-                                                Image(systemName: "star.fill")
-                                                    .foregroundColor(Color.theme.azure)
-                                                    .font(.system(size: 22))
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(Color.theme.azure)
+                                                .font(.system(size: 22))
                                             :
-                                                Image(systemName: "star")
-                                                    .foregroundColor(Color.theme.azure)
-                                                    .font(.system(size: 22))
+                                            Image(systemName: "star")
+                                                .foregroundColor(Color.theme.azure)
+                                                .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
                                     }
+                                    
+                                    if index + 1 < itemList.count {
+                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                    }
+                                    
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
-                                .frame(maxWidth: geoWidth, alignment: .leading)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(Color.white)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                    .listRowBackground(Color.white)
                             }
                         }.listStyle(.plain)
-                            .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))
                     }
                 }

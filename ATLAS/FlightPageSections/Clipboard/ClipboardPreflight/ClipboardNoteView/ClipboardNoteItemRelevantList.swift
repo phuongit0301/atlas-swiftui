@@ -49,6 +49,7 @@ struct ClipboardNoteItemRelevantList: View {
                         self.isShowList.toggle()
                     }
             }.frame(height: 54)
+                .padding(.horizontal)
             
             if isShowList {
                 if itemList.isEmpty {
@@ -115,7 +116,7 @@ struct ClipboardNoteItemRelevantList: View {
                                         }.padding(.leading)
                                         
                                         Spacer()
-
+                                        
                                         if itemList[index].blue {
                                             Circle().fill(Color.theme.azure).frame(width: 12, height: 12)
                                         } else {
@@ -130,24 +131,28 @@ struct ClipboardNoteItemRelevantList: View {
                                             resetData()
                                         }) {
                                             itemList[index].favourite || itemList[index].fromParent ?
-                                                Image(systemName: "star.fill")
-                                                    .foregroundColor(Color.theme.azure)
-                                                    .font(.system(size: 22))
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(Color.theme.azure)
+                                                .font(.system(size: 22))
                                             :
-                                                Image(systemName: "star")
-                                                    .foregroundColor(Color.theme.azure)
-                                                    .font(.system(size: 22))
+                                            Image(systemName: "star")
+                                                .foregroundColor(Color.theme.azure)
+                                                .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
-                                            
+                                        
                                     }
+                                    
+                                    if index + 1 < itemList.count {
+                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                    }
+                                    
                                 }.id(UUID())
-                                .padding(.vertical, 8)
-                                .frame(maxWidth: geoWidth, alignment: .leading)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(Color.white)
-                            }
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                    .listRowBackground(Color.white)
+                                
+                            }.onMove(perform: move)
                         }.listStyle(.plain)
                             .listRowBackground(Color.white)
                             .frame(height: 73 * CGFloat(itemList.count))

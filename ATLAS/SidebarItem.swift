@@ -16,23 +16,23 @@ struct SidebarItem: View {
         NavigationLink(value: selectedItem) {
             HStack {
                 if item == selectedItem {
-                    renderImage
+//                    renderImage
                     VStack {
-                        Text(item.name).foregroundColor(.white).font(.system(size: 17, weight: .regular))
+                        Text(item.name).foregroundColor(.white).font(.system(size: 17, weight: .semibold))
                         Text(item.flight ?? "").foregroundColor(.white).font(.system(size: 13, weight: .regular))
                     }
                     Spacer()
-                    Text(item.date ?? "").foregroundColor(.white).font(.system(size: 17, weight: .regular))
+                    Text(item.date ?? "").foregroundColor(.white).font(.system(size: 15, weight: .regular))
                 } else {
-                    renderImage
+//                    renderImage
                     VStack {
-                        Text(item.name).background(Color.clear).font(.system(size: 17, weight: .regular))
+                        Text(item.name).background(Color.clear).font(.system(size: 17, weight: .semibold))
                         Text(item.flight ?? "").background(Color.clear).font(.system(size: 13, weight: .regular))
                     }
                     Spacer()
-                    Text(item.date ?? "").background(Color.clear).font(.system(size: 17, weight: .regular))
+                    Text(item.date ?? "").background(Color.clear).font(.system(size: 15, weight: .regular))
                 }
-            }.padding(.horizontal, 15)
+            }.padding(.horizontal, 8)
         }
     }
     

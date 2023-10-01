@@ -53,6 +53,7 @@ struct NoteItemList: View {
                     }
                 }
             }.frame(height: 54)
+                .padding(.horizontal)
             
             if isShowList {
                 if itemList.isEmpty {
@@ -118,11 +119,15 @@ struct NoteItemList: View {
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
                                     }
+                                    
+                                    if index + 1 < itemList.count {
+                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                    }
+                                    
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
+                                .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {

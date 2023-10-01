@@ -52,6 +52,10 @@ struct OverviewView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .frame(height: 44)
                                     Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(Color.theme.arsenic.opacity(0.3))
                                 }.contentShape(Rectangle())
                                     .onTapGesture {
                                         refState.isActive = true

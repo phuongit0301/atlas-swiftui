@@ -16,6 +16,7 @@ struct ClipboardNoteView: View {
     @State var parentIndex = 0
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
+    @State private var showSheet: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -28,13 +29,13 @@ struct ClipboardNoteView: View {
         VStack(alignment: .leading, spacing: 8) {
             ClipboardNoteItemList(
                 header: header,
+                showSheet: $showSheet,
                 currentIndex: $currentIndex,
                 itemList: $viewModel.preflightRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
             
@@ -48,11 +49,21 @@ struct ClipboardNoteView: View {
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
             ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflightRef).interactiveDismissDisabled(true)
+        }.sheet(isPresented: $showSheet) {
+            NoteItemForm(
+                textNote: $textNote,
+                tagList: $viewModel.tagList,
+                itemList: $viewModel.preflightArray,
+                currentIndex: $currentIndex,
+                showSheet: $showSheet,
+                type: "preflight",
+                resetData: resetData,
+                isCreateFromClipboard: true
+            ).interactiveDismissDisabled(true)
         }
     }
     

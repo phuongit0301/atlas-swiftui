@@ -24,6 +24,7 @@ struct NoteItemForm: View {
     @State private var animate = false
     
     var resetData: () -> Void
+    var isCreateFromClipboard: Bool?
     let dateFormatter = DateFormatter()
     
     var body: some View {
@@ -161,7 +162,7 @@ struct NoteItemForm: View {
             let item = NoteList(context: persistenceController.container.viewContext)
             item.id = UUID()
             item.name = name
-            item.isDefault = false
+            item.isDefault = (isCreateFromClipboard ?? false) ? true : false
             item.createdAt = dateFormatter.string(from: Date())
             item.canDelete = true
             item.fromParent = false
@@ -169,6 +170,20 @@ struct NoteItemForm: View {
             item.includeCrew = isIncludeBriefing
             item.addToTags(NSSet(array: tagListSelected))
 
+            if isCreateFromClipboard != nil {
+                let child = NoteList(context: persistenceController.container.viewContext)
+                child.id = UUID()
+                child.name = name
+                child.isDefault = true
+                child.createdAt = dateFormatter.string(from: Date())
+                child.canDelete = true
+                child.fromParent = true
+                child.type = "\(type)ref"
+                child.includeCrew = isIncludeBriefing
+                child.parentId = item.id
+                child.addToTags(NSSet(array: tagListSelected))
+            }
+            
             viewModel.save()
 
             textNote = ""
