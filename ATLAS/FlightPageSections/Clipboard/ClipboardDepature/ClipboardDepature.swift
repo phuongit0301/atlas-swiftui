@@ -37,8 +37,10 @@ struct ClipboardDepature: View {
             GeometryReader { proxy in
                 // End header
                 ScrollView {
-                    ClipboardDepartureNotamView(itemList: $viewModel.dataDepartureNotamsRef)
-                    ClipboardDepartureNoteView(width: proxy.size.width)
+                    VStack(spacing: 8) {
+                        ClipboardDepartureNotamView(itemList: $viewModel.dataDepartureNotamsRef)
+                        ClipboardDepartureNoteView(width: proxy.size.width)
+                    }
                 }
             }
             

@@ -282,7 +282,7 @@ func getDestinationSplit(_ item: ListFlightInformationItem) -> AnyView {
     }
     
     if item.screenName == NavigationEnumeration.ClipboardDepature {
-        return AnyView(SlideoverDepature().navigationBarBackButtonHidden().ignoresSafeArea())
+        return AnyView(SlideoverDeparture().navigationBarBackButtonHidden().ignoresSafeArea())
     }
     
     if item.screenName == NavigationEnumeration.ClipboardEnroute {

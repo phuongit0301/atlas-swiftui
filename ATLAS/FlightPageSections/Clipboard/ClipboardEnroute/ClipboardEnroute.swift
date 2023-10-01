@@ -37,8 +37,10 @@ struct ClipboardEnroute: View {
             GeometryReader { proxy in
                 // End header
                 ScrollView {
-                    ClipboardEnrouteNotamView(itemList: $viewModel.dataEnrouteNotamsRef)
-                    ClipboardEnrouteNoteView(width: proxy.size.width)
+                    VStack(spacing: 8) {
+                        ClipboardEnrouteNotamView(itemList: $viewModel.dataEnrouteNotamsRef)
+                        ClipboardEnrouteNoteView(width: proxy.size.width)
+                    }
                 }
             }
             

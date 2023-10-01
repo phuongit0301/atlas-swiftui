@@ -16,6 +16,7 @@ struct ClipboardArrivalNoteView: View {
     @State var parentIndex = 0
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
+    @State private var showSheet: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -28,13 +29,13 @@ struct ClipboardArrivalNoteView: View {
         VStack(alignment: .leading, spacing: 8) {
             ClipboardArrivalNoteItemList(
                 header: header,
+                showSheet: $showSheet,
                 currentIndex: $currentIndex,
                 itemList: $viewModel.arrivalRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
             
@@ -48,11 +49,21 @@ struct ClipboardArrivalNoteView: View {
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
             ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostArrivalRef).interactiveDismissDisabled(true)
+        }.sheet(isPresented: $showSheet) {
+            NoteItemForm(
+                textNote: $textNote,
+                tagList: $viewModel.tagList,
+                itemList: $viewModel.enrouteRefArray,
+                currentIndex: $currentIndex,
+                showSheet: $showSheet,
+                type: "arrival",
+                resetData: resetData,
+                isCreateFromClipboard: true
+            ).interactiveDismissDisabled(true)
         }
     }
     

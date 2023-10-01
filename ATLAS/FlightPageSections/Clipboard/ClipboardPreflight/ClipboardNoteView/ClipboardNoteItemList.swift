@@ -57,10 +57,11 @@ struct ClipboardNoteItemList: View {
             
             if isShowList {
                 if itemList.isEmpty {
-                    HStack(spacing: 0) {
+                    HStack {
                         Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular))
                         Spacer()
-                    }.frame(height: 44, alignment: .leading)
+                    }.frame(height: 44)
+                        .padding(.horizontal)
                 } else {
                     VStack(spacing: 0) {
                         List {

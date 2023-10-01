@@ -53,13 +53,15 @@ struct ArrivalNoteItemList: View {
                     }
                 }
             }.frame(height: 54)
+                .padding(.horizontal)
             
             if isShowList {
                 if itemList.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
-                    }
-                    Spacer()
+                    HStack {
+                        Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                        Spacer()
+                    }.frame(height: 44)
+                        .padding(.horizontal)
                 } else {
                     VStack(spacing: 0) {
                         List {
@@ -118,14 +120,21 @@ struct ArrivalNoteItemList: View {
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
                                     }
+                                    
+                                    if index + 1 < itemList.count {
+                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                    }
+                                    
                                 }.id(UUID())
-                                    .padding(.vertical, 8)
-                                .frame(maxWidth: geoWidth, alignment: .leading)
                                 .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
+                                .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
+                                        if let found = viewModel.arrivalRefArray.first(where: {$0.parentId == itemList[index].id}) {
+                                            viewModel.delete(found)
+                                        }
+                                        
                                         viewModel.delete(itemList[index])
                                         viewModel.save()
                                         resetData()

@@ -62,7 +62,6 @@ struct DepartureSectionListView: View {
                         geoWidth: proxy.size.width,
                         resetData: resetData
                     ).frame(maxHeight: .infinity)
-                        .padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                     
@@ -77,7 +76,6 @@ struct DepartureSectionListView: View {
                         geoWidth: proxy.size.width,
                         resetData: resetData
                     ).frame(maxHeight: .infinity)
-                        .padding(.horizontal)
                         .background(Color.white)
                         .cornerRadius(8)
                 }.padding(.horizontal, 16)

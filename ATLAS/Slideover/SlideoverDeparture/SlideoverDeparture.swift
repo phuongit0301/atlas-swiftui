@@ -1,5 +1,5 @@
 //
-//  SlideoverDepature.swift
+//  SlideoverDeparture.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SlideoverDepature: View {
+struct SlideoverDeparture: View {
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var refState: ScreenReferenceModel
     
@@ -20,7 +20,7 @@ struct SlideoverDepature: View {
                     
                     HStack(alignment: .center) {
                         HStack {
-                            Text("Arrival").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                            Text("Departure").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                         }
                         Spacer()
                         

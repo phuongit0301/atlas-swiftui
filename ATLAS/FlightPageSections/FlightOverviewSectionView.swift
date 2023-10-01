@@ -354,10 +354,6 @@ struct FlightOverviewSectionView: View {
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Block Time - Flight Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -370,10 +366,21 @@ struct FlightOverviewSectionView: View {
                                     FlightTimeButtonTimeStepper(onToggle: onFlightTime, value: currentDateFlightTime)
                                         .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    Text("Block Time - Flight Time")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                Divider().padding(.horizontal, -16)
+                                
+                                HStack(spacing: 0) {
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// end If
@@ -413,10 +420,10 @@ struct FlightOverviewSectionView: View {
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("ETA")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text("ETA")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     Text("Chocks On")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
@@ -438,9 +445,6 @@ struct FlightOverviewSectionView: View {
                                         .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
-//                                    Text(showUTC ? chocksOnUTC : chocksOnLocal)
-//                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 
@@ -471,6 +475,10 @@ struct FlightOverviewSectionView: View {
                                     Text(calculateDateTime(chocksOffUTC, chocksOnUTC))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    
                                 }.frame(height: 44)
                             }// End VStack
                         }// End if

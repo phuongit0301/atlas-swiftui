@@ -225,7 +225,7 @@ struct SlideoverOverviewView: View {
                                         Text("Block Time - Flight Time")
                                             .foregroundStyle(Color.black)
                                             .font(.system(size: 15, weight: .semibold))
-                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                         
                                         Spacer()
                                     }.frame(height: 44)
@@ -236,7 +236,7 @@ struct SlideoverOverviewView: View {
                                         Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                             .font(.system(size: 15, weight: .regular))
                                             .foregroundStyle(Color.black)
-                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                         
                                         Spacer()
                                     }.frame(height: 44)

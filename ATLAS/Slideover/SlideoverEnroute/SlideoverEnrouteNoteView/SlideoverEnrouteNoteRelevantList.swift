@@ -53,9 +53,9 @@ struct SlideoverEnrouteNoteRelevantList: View {
             if isShowList {
                 if itemList.isEmpty {
                     HStack(spacing: 0) {
-                        Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
+                        Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                         Spacer()
-                    }
+                    }.frame(height: 44)
                 } else {
                     VStack(spacing: 0) {
                         ForEach(itemList.indices, id: \.self) { index in

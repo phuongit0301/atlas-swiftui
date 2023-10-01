@@ -54,10 +54,10 @@ struct NoteItemRelevantList: View {
             
             if isShowList {
                 if itemList.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text("No note saved. Tap on Add Note to save your first note.").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular)).padding()
-                    }
-                    Spacer()
+                    HStack {
+                        Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                        Spacer()
+                    }.padding(.horizontal)
                 } else {
                     VStack(spacing: 0) {
                         List {

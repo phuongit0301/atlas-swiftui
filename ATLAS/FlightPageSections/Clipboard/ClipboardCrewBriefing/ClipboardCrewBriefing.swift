@@ -10,8 +10,11 @@ import SwiftUI
 struct ClipboardCrewBriefing: View {
     @EnvironmentObject var refState: ScreenReferenceModel
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @State private var showUTC = true
+    @State var dataCabin = [TagList]()
+    @State var dataWeather = [TagList]()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -42,13 +45,13 @@ struct ClipboardCrewBriefing: View {
                     VStack(spacing: 8) {
                         ClipboardCrewBriefingSummaryView(width: proxy.size.width)
                         
-                        if coreDataModel.tagListCabinDefects.count > 0, let firstItem = coreDataModel.tagListCabinDefects.first {
+                        if dataCabin.count > 0, let firstItem = dataCabin.first {
                             if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
                                 ClipboardTagView(notes: notes, tag: firstItem)
                             }
                         }
 
-                        if coreDataModel.tagListWeather.count > 0, let firstItem = coreDataModel.tagListWeather.first {
+                        if dataWeather.count > 0, let firstItem = dataWeather.first {
                             if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
                                 ClipboardTagView(notes: notes, tag: firstItem)
                             }
@@ -62,5 +65,17 @@ struct ClipboardCrewBriefing: View {
         }.padding(.horizontal, 16)
             .padding(.bottom, 32)
             .background(Color.theme.antiFlashWhite)
+            .onAppear {
+                dataCabin = coreDataModel.tagListCabinDefects
+                dataWeather = coreDataModel.tagListWeather
+            }
+            .onChange(of: mapIconModel.num) { _ in
+                coreDataModel.tagList = coreDataModel.readTag()
+                coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
+                coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
+                
+                dataCabin = coreDataModel.tagListCabinDefects
+                dataWeather = coreDataModel.tagListWeather
+            }
     }
 }

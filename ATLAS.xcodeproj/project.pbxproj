@@ -236,7 +236,7 @@
 		3E72920D2AC84018000FF295 /* SlideoverOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72920C2AC84018000FF295 /* SlideoverOverviewView.swift */; };
 		3E72920F2AC852AB000FF295 /* SlideoverPreflightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72920E2AC852AB000FF295 /* SlideoverPreflightView.swift */; };
 		3E7292112AC85B2F000FF295 /* SlideoverCrewBriefing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292102AC85B2F000FF295 /* SlideoverCrewBriefing.swift */; };
-		3E7292132AC85F90000FF295 /* SlideoverDepature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292122AC85F90000FF295 /* SlideoverDepature.swift */; };
+		3E7292132AC85F90000FF295 /* SlideoverDeparture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292122AC85F90000FF295 /* SlideoverDeparture.swift */; };
 		3E7292162AC860EE000FF295 /* SlideoverDepartureNotamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292152AC860EE000FF295 /* SlideoverDepartureNotamView.swift */; };
 		3E7292192AC86122000FF295 /* SlideoverDepartureNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292182AC86122000FF295 /* SlideoverDepartureNoteView.swift */; };
 		3E72921B2AC86132000FF295 /* SlideoverDepartureNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72921A2AC86132000FF295 /* SlideoverDepartureNoteItemList.swift */; };
@@ -665,7 +665,7 @@
 		3E72920C2AC84018000FF295 /* SlideoverOverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverOverviewView.swift; sourceTree = "<group>"; };
 		3E72920E2AC852AB000FF295 /* SlideoverPreflightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverPreflightView.swift; sourceTree = "<group>"; };
 		3E7292102AC85B2F000FF295 /* SlideoverCrewBriefing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverCrewBriefing.swift; sourceTree = "<group>"; };
-		3E7292122AC85F90000FF295 /* SlideoverDepature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDepature.swift; sourceTree = "<group>"; };
+		3E7292122AC85F90000FF295 /* SlideoverDeparture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDeparture.swift; sourceTree = "<group>"; };
 		3E7292152AC860EE000FF295 /* SlideoverDepartureNotamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDepartureNotamView.swift; sourceTree = "<group>"; };
 		3E7292182AC86122000FF295 /* SlideoverDepartureNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDepartureNoteView.swift; sourceTree = "<group>"; };
 		3E72921A2AC86132000FF295 /* SlideoverDepartureNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDepartureNoteItemList.swift; sourceTree = "<group>"; };
@@ -973,7 +973,7 @@
 				3E72920E2AC852AB000FF295 /* SlideoverPreflightView.swift */,
 				3E7292102AC85B2F000FF295 /* SlideoverCrewBriefing.swift */,
 				3E72922A2AC86DDF000FF295 /* SlideoverArrival */,
-				3E7292142AC860CD000FF295 /* SlideoverDepature */,
+				3E7292142AC860CD000FF295 /* SlideoverDeparture */,
 				3E72921E2AC86733000FF295 /* SlideoverEnroute */,
 				3E7292362AC871CC000FF295 /* SlideoverAISearchResult */,
 			);
@@ -1349,14 +1349,14 @@
 			path = ClipboardCrewBriefingNoteView;
 			sourceTree = "<group>";
 		};
-		3E7292142AC860CD000FF295 /* SlideoverDepature */ = {
+		3E7292142AC860CD000FF295 /* SlideoverDeparture */ = {
 			isa = PBXGroup;
 			children = (
 				3E7292172AC8610C000FF295 /* SlideoverDepartureNoteView */,
+				3E7292122AC85F90000FF295 /* SlideoverDeparture.swift */,
 				3E7292152AC860EE000FF295 /* SlideoverDepartureNotamView.swift */,
-				3E7292122AC85F90000FF295 /* SlideoverDepature.swift */,
 			);
-			path = SlideoverDepature;
+			path = SlideoverDeparture;
 			sourceTree = "<group>";
 		};
 		3E7292172AC8610C000FF295 /* SlideoverDepartureNoteView */ = {
@@ -1373,8 +1373,8 @@
 			isa = PBXGroup;
 			children = (
 				3E7292232AC86785000FF295 /* SlideoverEnrouteNoteView */,
-				3E7292212AC8677C000FF295 /* SlideoverEnrouteNotamView.swift */,
 				3E72921F2AC86767000FF295 /* SlideoverEnroute.swift */,
+				3E7292212AC8677C000FF295 /* SlideoverEnrouteNotamView.swift */,
 			);
 			path = SlideoverEnroute;
 			sourceTree = "<group>";
@@ -2302,7 +2302,7 @@
 				3E7290FA2ABB2B70000FF295 /* TrafficMapList+CoreDataProperties.swift in Sources */,
 				3EB9DAE92A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */,
 				3E870BA02A73647F0036DE3B /* ProjDelaysList+CoreDataClass.swift in Sources */,
-				3E7292132AC85F90000FF295 /* SlideoverDepature.swift in Sources */,
+				3E7292132AC85F90000FF295 /* SlideoverDeparture.swift in Sources */,
 				3E7291142ABD4290000FF295 /* LogbookEntriesList+CoreDataProperties.swift in Sources */,
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
 				3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */,

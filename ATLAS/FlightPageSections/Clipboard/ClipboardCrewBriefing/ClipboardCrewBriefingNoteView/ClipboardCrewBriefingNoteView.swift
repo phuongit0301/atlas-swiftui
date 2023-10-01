@@ -25,15 +25,26 @@ struct ClipboardCrewBriefingNoteView: View {
         VStack(alignment: .leading, spacing: 8) {
             ClipboardCrewBriefingNoteItemList(
                 header: header,
+                showSheet: $showSheet,
                 currentIndex: $currentIndex,
                 itemList: $viewModel.noteListIncludeCrew,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
+        }.sheet(isPresented: $showSheet) {
+            NoteItemForm(
+                textNote: $textNote,
+                tagList: $viewModel.tagList,
+                itemList: $viewModel.preflightRefArray,
+                currentIndex: $currentIndex,
+                showSheet: $showSheet,
+                type: "preflight",
+                resetData: resetData,
+                isCreateFromClipboard: true
+            ).interactiveDismissDisabled(true)
         }
     }
     

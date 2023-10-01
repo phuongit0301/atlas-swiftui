@@ -20,7 +20,7 @@ struct SlideoverEnroute: View {
                     
                     HStack(alignment: .center) {
                         HStack {
-                            Text("Departure").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                            Text("Enroute").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                         }
                         Spacer()
                         

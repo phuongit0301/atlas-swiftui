@@ -57,7 +57,7 @@ struct ClipboardNoteView: View {
             NoteItemForm(
                 textNote: $textNote,
                 tagList: $viewModel.tagList,
-                itemList: $viewModel.preflightArray,
+                itemList: $viewModel.preflightRefArray,
                 currentIndex: $currentIndex,
                 showSheet: $showSheet,
                 type: "preflight",

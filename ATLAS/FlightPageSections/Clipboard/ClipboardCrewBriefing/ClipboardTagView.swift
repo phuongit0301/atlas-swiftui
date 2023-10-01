@@ -10,6 +10,7 @@ import Foundation
 
 struct ClipboardTagView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     var notes: [NoteList]
     let tag: TagList
@@ -55,66 +56,62 @@ struct ClipboardTagView: View {
                                     Spacer()
                                 }.frame(height: 44, alignment: .leading)
                             } else {
-                                ForEach(noteList.indices, id: \.self) { index in
-                                    if noteList[index].isDefault {
-                                        VStack(spacing: 0) {
-                                            HStack(alignment: .center) {
-                                                Image(systemName: "line.3.horizontal")
-                                                    .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                                    .frame(width: 22, height: 22)
-                                                    .scaledToFit()
-                                                    .aspectRatio(contentMode: .fit)
-                                                
-                                                VStack(alignment: .leading, spacing: 8) {
-                                                    Text(noteList[index].unwrappedName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
+                                VStack(spacing: 0) {
+                                    ForEach(noteList.indices, id: \.self) { index in
+                                        if noteList[index].isDefault {
+                                            VStack(spacing: 0) {
+                                                HStack(alignment: .center) {
+                                                    Image(systemName: "line.3.horizontal")
+                                                        .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                        .frame(width: 22, height: 22)
+                                                        .scaledToFit()
+                                                        .aspectRatio(contentMode: .fit)
                                                     
-                                                    HStack(spacing: 8) {
-                                                        Text(tag.name).padding(.vertical, 4)
-                                                            .padding(.horizontal, 12)
-                                                            .font(.system(size: 11, weight: .regular))
-                                                            .background(Color.white)
-                                                            .foregroundColor(Color.black)
-                                                            .cornerRadius(12)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 12)
-                                                                    .stroke(Color.black, lineWidth: 1)
-                                                            )
+                                                    VStack(alignment: .leading, spacing: 8) {
+                                                        Text(noteList[index].unwrappedName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
                                                         
-                                                        Text(renderDate(notes[index].unwrappedCreatedAt)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                        HStack(spacing: 8) {
+                                                            Text(tag.name).padding(.vertical, 4)
+                                                                .padding(.horizontal, 12)
+                                                                .font(.system(size: 11, weight: .regular))
+                                                                .background(Color.white)
+                                                                .foregroundColor(Color.black)
+                                                                .cornerRadius(12)
+                                                                .overlay(
+                                                                    RoundedRectangle(cornerRadius: 12)
+                                                                        .stroke(Color.black, lineWidth: 1)
+                                                                )
+                                                            
+                                                            Text(renderDate(notes[index].unwrappedCreatedAt)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                        }
                                                     }
+                                                    
+                                                    Spacer()
+                                                    
+                                                    Button(action: {
+                                                        noteList[index].isDefault.toggle()
+                                                        coreDataModel.save()
+                                                        mapIconModel.numAabba += 1
+                                                    }, label: {
+                                                        if noteList[index].isDefault {
+                                                            Image(systemName: "star.fill")
+                                                                .foregroundColor(Color.theme.azure)
+                                                                .font(.system(size: 22))
+                                                        } else {
+                                                            Image(systemName: "star")
+                                                                .foregroundColor(Color.theme.azure)
+                                                                .font(.system(size: 22))
+                                                        }
+                                                    }).buttonStyle(PlainButtonStyle())
+                                                    
+                                                }.padding(.vertical, 8)
+                                                if index + 1 < noteList.count {
+                                                    Divider().padding(.horizontal, -16)
                                                 }
-                                                
-                                                Spacer()
-                                                
-                                                Button(action: {
-                                                    noteList[index].isDefault.toggle()
-                                                    coreDataModel.save()
-                                                    coreDataModel.tagList = coreDataModel.readTag()
-                                                    coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
-                                                    coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
-                                                }, label: {
-                                                    if noteList[index].isDefault {
-                                                        Image(systemName: "star.fill")
-                                                            .foregroundColor(Color.theme.azure)
-                                                            .font(.system(size: 22))
-                                                    } else {
-                                                        Image(systemName: "star")
-                                                            .foregroundColor(Color.theme.azure)
-                                                            .font(.system(size: 22))
-                                                    }
-                                                }).buttonStyle(PlainButtonStyle())
-                                                
-                                                Image(systemName: "chevron.right")
-                                                    .foregroundColor(Color.theme.charlestonGreen)
-                                                    .scaledToFit()
-                                                    .aspectRatio(contentMode: .fit)
-                                            }.padding(.vertical, 8)
-                                            if index + 1 < noteList.count {
-                                                Divider().padding(.horizontal, -16)
-                                            }
-                                        }.id(UUID())
-                                    }
-                                }.onMove(perform: move)
+                                            }.id(UUID())
+                                        }
+                                    }.onMove(perform: move)
+                                }.padding(.bottom, 8)
                             }
                         }
                     }

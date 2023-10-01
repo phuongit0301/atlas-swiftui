@@ -29,13 +29,13 @@ struct ClipboardDepartureNoteView: View {
         VStack(alignment: .leading, spacing: 8) {
             ClipboardDepartureNoteItemList(
                 header: header,
+                showSheet: $showSheet,
                 currentIndex: $currentIndex,
                 itemList: $viewModel.departureRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
             
@@ -49,11 +49,21 @@ struct ClipboardDepartureNoteView: View {
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
-                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
             ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostDepartureRef).interactiveDismissDisabled(true)
+        }.sheet(isPresented: $showSheet) {
+            NoteItemForm(
+                textNote: $textNote,
+                tagList: $viewModel.tagList,
+                itemList: $viewModel.departureRefArray,
+                currentIndex: $currentIndex,
+                showSheet: $showSheet,
+                type: "departure",
+                resetData: resetData,
+                isCreateFromClipboard: true
+            ).interactiveDismissDisabled(true)
         }
     }
     
