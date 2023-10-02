@@ -24,6 +24,7 @@ let DataCheckList = [
 let DataAirlineDropdown = ["Accumulus Airlines", "Accumulus Airlines 1", "Accumulus Airlines 2"]
 let DataCountryDropdown = ["65", "68", "84"]
 let DataModelDropdown = ["B777-300ER/SF", "B222-300ER/SF", "B444-300ER/SF"]
+let DataLimitationDropdown = ["Maximum flight hours", "Maximum flight hours 1", "Maximum flight hours 2"]
 
 struct IProvideExperience: Identifiable, Hashable {
     var id = UUID()
@@ -35,4 +36,13 @@ struct IProvideExperience: Identifiable, Hashable {
     var instr: String
     var exam: String
     var totalTime: String
+}
+
+struct IProvideLimitation: Identifiable, Hashable {
+    var id = UUID()
+    var limitation: Int
+    var duration: Int
+    var startDate: String
+    var endDate: String
+    var completed: Int
 }

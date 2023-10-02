@@ -91,6 +91,8 @@ struct OnboardingView: View {
                         CompleteYourProfileView()
                     } else if selected == 1 {
                         ProvideExperienceView()
+                    } else if selected == 2 {
+                        ProvideLimitationView()
                     }
                     
                 }
