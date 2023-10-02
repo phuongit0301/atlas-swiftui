@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ModelRowView: View {
     @Binding var dataModel: [IProvideExperience]
-    let index: Int
+//    let index: Int
+    let item: IProvideExperience
     let width: CGFloat
     @State private var selectedModel = ""
     
@@ -33,7 +34,7 @@ struct ModelRowView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .center, spacing: 8) {
                 Button(action: {
-                    dataModel.remove(at: index)
+                    dataModel.removeAll(where: {$0.id == item.id})
                 }, label: {
                     Image(systemName: "minus.circle")
                         .foregroundColor(Color.theme.azure)

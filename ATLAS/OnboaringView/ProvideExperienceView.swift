@@ -47,8 +47,8 @@ struct ProvideExperienceView: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         if dataModel.count > 0 {
-                            ForEach(dataModel.indices, id: \.self) {index in
-                                ModelRowView(dataModel: $dataModel, index: index, width: proxy.size.width)
+                            ForEach(dataModel, id: \.self) {item in
+                                ModelRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
                             }
                         }
                     }

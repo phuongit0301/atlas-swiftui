@@ -25,7 +25,7 @@ let DataAirlineDropdown = ["Accumulus Airlines", "Accumulus Airlines 1", "Accumu
 let DataCountryDropdown = ["65", "68", "84"]
 let DataModelDropdown = ["B777-300ER/SF", "B222-300ER/SF", "B444-300ER/SF"]
 
-struct IProvideExperience {
+struct IProvideExperience: Identifiable, Hashable {
     var id = UUID()
     var modelName: String
     var pic: String
