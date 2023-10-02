@@ -53,7 +53,8 @@ struct ATLASApp: App {
                     if userID != "" {
                         ContentView()
                     } else {
-                        LoginView()
+//                        LoginView()
+                        OnboardingView()
                     }
                 }
             }.onAppear {
