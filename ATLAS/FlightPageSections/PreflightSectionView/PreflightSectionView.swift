@@ -22,7 +22,8 @@ struct PreflightSectionView: View {
                     case .MetarTafScreen:
                         MetarTafSubSectionView()
                     case .StatisticsScreen:
-                        FuelView()
+                        //FuelView()
+                        StatisticsView()  // note added here new statistics view
                     case .Mapcreen:
                         MapViewModal()
                     case .NotesScreen:
