@@ -25,6 +25,19 @@ let DataAirlineDropdown = ["Accumulus Airlines", "Accumulus Airlines 1", "Accumu
 let DataCountryDropdown = ["65", "68", "84"]
 let DataModelDropdown = ["B777-300ER/SF", "B222-300ER/SF", "B444-300ER/SF"]
 let DataLimitationDropdown = ["Maximum flight hours", "Maximum flight hours 1", "Maximum flight hours 2"]
+let DataRecencyDropdown = ["Landing 1", "Landing 2", "Landing 3"]
+let DataExpiryDropdown = ["Instructor Rating 1", "Instructor Rating 2", "Instructor Rating 3"]
+
+struct IRecencyModel: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
+}
+
+let DataRecencyModelDropdown: [IRecencyModel] = [
+    IRecencyModel(name: "B777"),
+    IRecencyModel(name: "B222"),
+    IRecencyModel(name: "B444")
+]
 
 struct IProvideExperience: Identifiable, Hashable {
     var id = UUID()
@@ -45,4 +58,20 @@ struct IProvideLimitation: Identifiable, Hashable {
     var startDate: String
     var endDate: String
     var completed: Int
+}
+
+struct IProvideRecency: Identifiable, Hashable {
+    var id = UUID()
+    var modelName: String
+    var requirement: Int
+    var frequency: Int
+    var periodStart: String
+    var completed: Int
+}
+
+struct IProvideExpiry: Identifiable, Hashable {
+    var id = UUID()
+    var expiredDate: String
+    var requirement: String
+    var documentType: String
 }

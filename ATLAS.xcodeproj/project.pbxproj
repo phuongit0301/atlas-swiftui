@@ -263,6 +263,11 @@
 		3E7292502ACAA072000FF295 /* LimitationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72924F2ACAA072000FF295 /* LimitationRowView.swift */; };
 		3E7292522ACAA21B000FF295 /* LimitationTimeModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292512ACAA21B000FF295 /* LimitationTimeModalView.swift */; };
 		3E7292542ACAA396000FF295 /* LimitationNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292532ACAA396000FF295 /* LimitationNumberModalView.swift */; };
+		3E7292572ACAB100000FF295 /* ProvideRecencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292562ACAB100000FF295 /* ProvideRecencyView.swift */; };
+		3E7292592ACAB114000FF295 /* RecencyRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292582ACAB114000FF295 /* RecencyRowView.swift */; };
+		3E72925B2ACAB4BC000FF295 /* RecencyModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72925A2ACAB4BC000FF295 /* RecencyModelView.swift */; };
+		3E7292602ACABDEC000FF295 /* ProvideExpiryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72925F2ACABDEC000FF295 /* ProvideExpiryView.swift */; };
+		3E7292622ACABDFB000FF295 /* ExpiryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7292612ACABDFB000FF295 /* ExpiryRowView.swift */; };
 		3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */; };
 		3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */; };
 		3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766FA22A5EEFDA00B11616 /* FuelModel.swift */; };
@@ -703,6 +708,11 @@
 		3E72924F2ACAA072000FF295 /* LimitationRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LimitationRowView.swift; sourceTree = "<group>"; };
 		3E7292512ACAA21B000FF295 /* LimitationTimeModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LimitationTimeModalView.swift; sourceTree = "<group>"; };
 		3E7292532ACAA396000FF295 /* LimitationNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LimitationNumberModalView.swift; sourceTree = "<group>"; };
+		3E7292562ACAB100000FF295 /* ProvideRecencyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvideRecencyView.swift; sourceTree = "<group>"; };
+		3E7292582ACAB114000FF295 /* RecencyRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyRowView.swift; sourceTree = "<group>"; };
+		3E72925A2ACAB4BC000FF295 /* RecencyModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyModelView.swift; sourceTree = "<group>"; };
+		3E72925F2ACABDEC000FF295 /* ProvideExpiryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvideExpiryView.swift; sourceTree = "<group>"; };
+		3E7292612ACABDFB000FF295 /* ExpiryRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiryRowView.swift; sourceTree = "<group>"; };
 		3E74C0FB2A3310CA0026938F /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		3E766FA02A5EEF9900B11616 /* FuelSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelSegmented.swift; sourceTree = "<group>"; };
 		3E766FA22A5EEFDA00B11616 /* FuelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelModel.swift; sourceTree = "<group>"; };
@@ -1452,6 +1462,8 @@
 		3E72923E2AC99C0B000FF295 /* OnboaringView */ = {
 			isa = PBXGroup;
 			children = (
+				3E72925E2ACABB0F000FF295 /* ProvideExpiry */,
+				3E7292552ACAB0DE000FF295 /* ProvideRecency */,
 				3E72924E2ACA9FE4000FF295 /* ProvideLimitation */,
 				3E72924D2ACA9FBF000FF295 /* ProvideExperience */,
 				3E72923F2AC99C22000FF295 /* OnboardingView.swift */,
@@ -1479,6 +1491,25 @@
 				3E7292532ACAA396000FF295 /* LimitationNumberModalView.swift */,
 			);
 			path = ProvideLimitation;
+			sourceTree = "<group>";
+		};
+		3E7292552ACAB0DE000FF295 /* ProvideRecency */ = {
+			isa = PBXGroup;
+			children = (
+				3E7292562ACAB100000FF295 /* ProvideRecencyView.swift */,
+				3E7292582ACAB114000FF295 /* RecencyRowView.swift */,
+				3E72925A2ACAB4BC000FF295 /* RecencyModelView.swift */,
+			);
+			path = ProvideRecency;
+			sourceTree = "<group>";
+		};
+		3E72925E2ACABB0F000FF295 /* ProvideExpiry */ = {
+			isa = PBXGroup;
+			children = (
+				3E72925F2ACABDEC000FF295 /* ProvideExpiryView.swift */,
+				3E7292612ACABDFB000FF295 /* ExpiryRowView.swift */,
+			);
+			path = ProvideExpiry;
 			sourceTree = "<group>";
 		};
 		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
@@ -2179,10 +2210,12 @@
 				3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */,
 				3E72912D2ABED9AC000FF295 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E7292192AC86122000FF295 /* SlideoverDepartureNoteView.swift in Sources */,
+				3E72925B2ACAB4BC000FF295 /* RecencyModelView.swift in Sources */,
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E870BA12A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
 				3E7291282ABEA46C000FF295 /* RecencyList+CoreDataClass.swift in Sources */,
+				3E7292572ACAB100000FF295 /* ProvideRecencyView.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
 				3E086DA12A959E4500BE00AD /* NotamsDataList+CoreDataProperties.swift in Sources */,
 				3E7291E12AC68434000FF295 /* ClipboardDepartureNoteView.swift in Sources */,
@@ -2228,6 +2261,7 @@
 				3EEBE6752AB3EBCA00421AFF /* CustomRouteAnnotationView.swift in Sources */,
 				3E4A36A12A570BA800027C61 /* AltnDataList+CoreDataClass.swift in Sources */,
 				3E4A36D62A5AA04400027C61 /* TaxiTimesList+CoreDataProperties.swift in Sources */,
+				3E7292592ACAB114000FF295 /* RecencyRowView.swift in Sources */,
 				3E3FCC282A263392008017FA /* ActivityIndicator.swift in Sources */,
 				3E4A377D2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataClass.swift in Sources */,
 				3E7291DC2AC67F9C000FF295 /* ClipboardDepature.swift in Sources */,
@@ -2282,6 +2316,7 @@
 				3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */,
 				3E7291B42AC59487000FF295 /* ArrivalModalNoteCommentView.swift in Sources */,
 				3EE170742AA82D7E004DA27C /* HomeSectionView.swift in Sources */,
+				3E7292602ACABDEC000FF295 /* ProvideExpiryView.swift in Sources */,
 				3E7292112AC85B2F000FF295 /* SlideoverCrewBriefing.swift in Sources */,
 				3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
 				3E72913F2AC1BE0D000FF295 /* NoteTagItem.swift in Sources */,
@@ -2462,6 +2497,7 @@
 				3E086D862A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataProperties.swift in Sources */,
 				3EB99CDF2A4FB6A50091BC08 /* ModalPicker.swift in Sources */,
 				3E4A37392A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift in Sources */,
+				3E7292622ACABDFB000FF295 /* ExpiryRowView.swift in Sources */,
 				3EB9DAD92A750F5D009AEDFB /* FuelTaxiRefList+CoreDataClass.swift in Sources */,
 				3EEBE67F2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift in Sources */,
 				3E7291832AC3E8B6000FF295 /* ModalNoteCommentView.swift in Sources */,

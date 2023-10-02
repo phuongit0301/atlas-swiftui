@@ -1,5 +1,5 @@
 //
-//  ProvideLimitationView.swift
+//  ProvideExpiryView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 01/10/2023.
@@ -7,30 +7,30 @@
 
 import SwiftUI
 
-struct ProvideLimitationView: View {
-    @State var dataModel = [IProvideLimitation]()
+struct ProvideExpiryView: View {
+    @State var dataModel = [IProvideExpiry]()
     
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
-                        Text("Provide your limitations").font(.system(size: 20, weight: .semibold)).foregroundColor(Color.black)
+                        Text("Provide your expiry information").font(.system(size: 20, weight: .semibold)).foregroundColor(Color.black)
                         
                         Spacer()
                         
                         Button(action: {
-                            let obj = IProvideLimitation(limitation: 0, duration: 0, startDate: "", endDate: "", completed: 0)
+                            let obj = IProvideExpiry(expiredDate: "", requirement: "", documentType: "")
                             dataModel.append(obj)
                         }, label: {
-                            Text("Add Limitation").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
+                            Text("Add Item").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                         })
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
                         if dataModel.count > 0 {
                             ForEach(dataModel, id: \.self) {item in
-                                LimitationRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
+                                ExpiryRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
                             }
                         }
                     }

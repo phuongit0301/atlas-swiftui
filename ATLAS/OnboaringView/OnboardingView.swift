@@ -93,6 +93,10 @@ struct OnboardingView: View {
                         ProvideExperienceView()
                     } else if selected == 2 {
                         ProvideLimitationView()
+                    } else if selected == 3 {
+                        ProvideRecencyView()
+                    } else {
+                        ProvideExpiryView()
                     }
                     
                 }
