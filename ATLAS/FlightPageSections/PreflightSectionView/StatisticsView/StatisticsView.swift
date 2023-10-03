@@ -64,7 +64,7 @@ struct StatisticsView: View {
                                 .padding([.horizontal, .bottom], 16)
                                 .frame(maxWidth: .infinity)
                                 GridRow {
-                                    MapViewModalTrackFlown()
+//                                    MapViewModalTrackFlown()
                                 }
                                 .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .fixedSize(horizontal: false, vertical: true)

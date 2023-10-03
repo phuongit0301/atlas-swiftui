@@ -92,6 +92,7 @@ struct ExpiryRowView: View {
             .formSheet(isPresented: $showModal) {
                 LimitationTimeModalView(isShowing: $showModal, pickerType: $pickerType, currentDate: $currentDate, header: "Expiry Date").interactiveDismissDisabled(true)
             }
+            .keyboardAdaptive()
     }
     
     func onDate() {
