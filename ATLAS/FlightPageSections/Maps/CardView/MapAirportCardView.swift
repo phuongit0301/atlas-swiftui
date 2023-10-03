@@ -120,7 +120,7 @@ struct MapAirportCardView: View {
                         
                         HStack {
                             NewFlowLayout(alignment: .leading) {
-                                ForEach(coreDataModel.dataMetarTaf.unwrappedDepMetar.components(separatedBy: " "), id: \.self) { word in
+                                ForEach(coreDataModel.dataMetarTaf.unwrappedMetar.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
                                             .font(.system(size: 17, weight: .regular))
@@ -149,7 +149,7 @@ struct MapAirportCardView: View {
                         
                         HStack {
                             NewFlowLayout(alignment: .leading) {
-                                ForEach(coreDataModel.dataMetarTaf.unwrappedDepTaf.components(separatedBy: " "), id: \.self) { word in
+                                ForEach(coreDataModel.dataMetarTaf.unwrappedTaf.components(separatedBy: " "), id: \.self) { word in
                                     if redWords.contains(word) {
                                         Text(word)
                                             .font(.system(size: 17, weight: .regular))

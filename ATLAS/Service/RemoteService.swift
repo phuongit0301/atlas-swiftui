@@ -429,67 +429,67 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_notam_wx_data
-    func updateNotamData(_ parameters: Any) async  {
-//        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_notam_wx_data") else { fatalError("Missing URL") }
-//            var request = URLRequest(url: url)
-//            request.httpMethod = "POST"
-//
-//        do {
-//            // Convert the request body to JSON data
-//            let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-//            // Set the request body data
-//            request.httpBody = requestData
-//
-//            // Set the Content-Type header to indicate JSON format
-//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//            let (data, _) = try await URLSession.shared.data(for: request)
-//
-//            do {
-//                let decodedSearch = try JSONDecoder().decode(IWaypointDataJson.self, from: data)
-//                return decodedSearch.all_waypoints_data
-//            } catch let error {
-//                print("Error decoding: ", error)
-//            }
-//        } catch {
-//            print("Error: \(error)")
-//        }
-//        return nil
-        
+    func updateNotamData(_ parameters: Any) async -> INotamWXDataJson?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_notam_wx_data") else { fatalError("Missing URL") }
-            //make request
             var request = URLRequest(url: url)
-
-            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
-            request.httpBody = postData
 
-            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error {
-                    print("Request error: ", error)
-                    return
-                }
+        do {
+            // Convert the request body to JSON data
+            let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            // Set the request body data
+            request.httpBody = requestData
 
-                DispatchQueue.main.async {
-                    do {
-                        guard let response = response as? HTTPURLResponse else { return }
-                        if response.statusCode == 200 {
-                            print("Update successfully")
-                            return
-                        } else {
-                            return
-                        }
-                    } catch {
-                        print("Error: \(error)")
-                        return
-                    }
+            // Set the Content-Type header to indicate JSON format
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-                }
+            let (data, _) = try await URLSession.shared.data(for: request)
 
+            do {
+                let decodedSearch = try JSONDecoder().decode(INotamWXDataJson.self, from: data)
+                return decodedSearch
+            } catch let error {
+                print("Error decoding: ", error)
             }
-
-            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+        }
+        return nil
+        
+//        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_notam_wx_data") else { fatalError("Missing URL") }
+//            //make request
+//            var request = URLRequest(url: url)
+//
+//            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.httpMethod = "POST"
+//            request.httpBody = postData
+//
+//            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+//                if let error = error {
+//                    print("Request error: ", error)
+//                    return
+//                }
+//
+//                DispatchQueue.main.async {
+//                    do {
+//                        guard let response = response as? HTTPURLResponse else { return }
+//                        if response.statusCode == 200 {
+//                            print("Update successfully")
+//                            return
+//                        } else {
+//                            return
+//                        }
+//                    } catch {
+//                        print("Error: \(error)")
+//                        return
+//                    }
+//
+//                }
+//
+//            }
+//
+//            dataTask.resume()
     }
     
     // End Update data for Pre Flight

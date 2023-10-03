@@ -798,3 +798,79 @@ struct IFuelDataModel: Decodable {
     let flightLevel: IFlightLevelModel
     let reciprocalRwy: IReciprocalRwyModel
 }
+
+struct IDepMetarTafWXChild: Decodable {
+    let airport: String
+    let std: String
+    let metar: String
+    let taf: String
+}
+
+struct IArrMetarTafWXChild: Decodable {
+    let airport: String
+    let sta: String
+    let metar: String
+    let taf: String
+}
+
+struct IAltnMetarTafWXChild: Decodable {
+    let airport: String
+    let eta: String
+    let metar: String
+    let taf: String
+}
+
+struct IEnrMetarTafWXChild: Decodable {
+    let airport: String
+    let eta: String
+    let metar: String
+    let taf: String
+}
+
+struct IMetarTafWXJson: Decodable {
+    let depMetarTaf: IDepMetarTafWXChild
+    let arrMetarTaf: IArrMetarTafWXChild
+    let altnMetarTaf: [IAltnMetarTafWXChild]
+    let enrMetarTaf: [IAltnMetarTafWXChild]
+}
+
+struct INotamWXChildJson: Decodable {
+    let rank: String
+    let date: String
+    let notam: String
+}
+
+struct INotamWXChild: Decodable {
+    let Airport: String
+    let Runway: [INotamWXChildJson]
+    let Taxiway: [INotamWXChildJson]
+    let Approach_Departure: [INotamWXChildJson]
+    let Obstacles: [INotamWXChildJson]
+    let Others: [INotamWXChildJson]
+}
+
+struct INotamWXAirportChild: Decodable {
+    let Airport: String
+    let eta: String
+}
+
+struct INotamWXChild2: Decodable {
+    let Airport: INotamWXAirportChild
+    let Runway: [INotamWXChildJson]
+    let Taxiway: [INotamWXChildJson]
+    let Approach_Departure: [INotamWXChildJson]
+    let Obstacles: [INotamWXChildJson]
+    let Others: [INotamWXChildJson]
+}
+
+struct INotamWXJson: Decodable {
+    let depNotams: INotamWXChild
+    let arrNotams: INotamWXChild
+    let enrNotams: [INotamWXChild2]
+    let altnNotams: [INotamWXChild2]
+}
+
+struct INotamWXDataJson: Decodable {
+    let metarTafData: IMetarTafWXJson
+    let notamsData: INotamWXJson
+}

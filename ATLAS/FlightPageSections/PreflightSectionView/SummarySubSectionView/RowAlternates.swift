@@ -97,7 +97,7 @@ struct RowAlternates: View {
                         Button(action: {
                             // assign value from modal to entries form
                             self.currentDateEta = currentDateEtaTemp
-                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                             
                             if itemList.count > 0 {
                                 itemList[currentIndex].eta = dateFormatter.string(from: currentDateEtaTemp)
@@ -135,7 +135,7 @@ struct RowAlternates: View {
             }.onAppear {
                 if let selectedIndex = itemList.firstIndex(of: item) {
                     currentIndex = selectedIndex
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     selectAltn = itemList[currentIndex].altn
                     tfVis = itemList[currentIndex].vis ?? ""
                     tfMinima = itemList[currentIndex].minima ?? ""

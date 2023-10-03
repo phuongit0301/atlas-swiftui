@@ -148,6 +148,11 @@ class CoreDataModelState: ObservableObject {
     @Published var existDataNotams: Bool = false
     
     // For Metar Taf
+    @Published var dataDepartureMetarTaf: MetarTafDataList?
+    @Published var dataEnrouteMetarTaf: MetarTafDataList?
+    @Published var dataArrivalMetarTaf: MetarTafDataList?
+    @Published var dataDestinationMetarTaf: MetarTafDataList?
+    
     @Published var dataMetarTaf: MetarTafDataList!
     @Published var existDataMetarTaf: Bool = false
     
@@ -370,10 +375,10 @@ class CoreDataModelState: ObservableObject {
     func syncDataMetarTaf() async {
         let response = await remoteService.getFlightPlanWX()
         
-        if let metarTafData = response {
-            self.updateDataMetarTaf(metarTafData)
-            self.updateDataAltnTaf(metarTafData)
-        }
+//        if let metarTafData = response {
+//            self.updateDataMetarTaf(metarTafData)
+//            self.updateDataAltnTaf(metarTafData)
+//        }
     }
     
     @MainActor
@@ -454,6 +459,12 @@ class CoreDataModelState: ObservableObject {
             self.dataEnrouteNotamsRef = self.readDataNotamsByType("enrNotams")
             self.dataArrivalNotamsRef = self.readDataNotamsByType("arrNotams")
             self.dataDestinationNotamsRef = self.readDataNotamsByType("destNotams")
+            
+            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
+            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
+            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
+            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
+            
             self.readDataMetarTafList()
             self.dataAltnTaf = self.readDataAltnTafList()
             // For Fuel
@@ -1763,76 +1774,166 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataNotams(_ notamsData: INotamsDataResponseModel) {
+    func insertDataNotams(airport: String, type: String, category: String, item: INotamWXChildJson) {
         
-        for data in notamsData.depNotams {
-            if data.value.count > 0 {
-                data.value.forEach { item in
-                    let newObj = NotamsDataList(context: self.service.container.viewContext)
-                    newObj.id = UUID()
-                    newObj.type = "depNotams"
-                    newObj.notam = item.notam
-                    newObj.date = item.date
-                    newObj.rank = item.rank
-                    newObj.isChecked = false
-                    newObj.category = data.key
-                    self.service.container.viewContext.performAndWait {
-                        do {
-                            try self.service.container.viewContext.save()
-                            print("saved notams successfully")
-                        } catch {
-                            print("Failed to Notams depNotams save: \(error)")
-                        }
-    
-                    }
-                }
+        let newObj = NotamsDataList(context: self.service.container.viewContext)
+        newObj.id = UUID()
+        newObj.airport = airport
+        newObj.type = type
+        newObj.notam = item.notam
+        newObj.date = item.date
+        newObj.rank = item.rank
+        newObj.isChecked = false
+        newObj.category = category
+        self.service.container.viewContext.performAndWait {
+            do {
+                try self.service.container.viewContext.save()
+                print("saved notams successfully")
+            } catch {
+                print("Failed to Notams depNotams save: \(error)")
             }
-        }
-        
-        for data in notamsData.arrNotams {
-            if data.value.count > 0 {
-                data.value.forEach { item in
-                    let newObj = NotamsDataList(context: self.service.container.viewContext)
-                    newObj.id = UUID()
-                    newObj.type = "arrNotams"
-                    newObj.notam = item.notam
-                    newObj.date = item.date
-                    newObj.rank = item.rank
-                    newObj.isChecked = false
-                    newObj.category = data.key
-                    self.service.container.viewContext.performAndWait {
-                        do {
-                            try self.service.container.viewContext.save()
-                            print("saved notams successfully")
-                        } catch {
-                            print("Failed to Notams depNotams save: \(error)")
-                        }
-    
-                    }
-                }
-            }
-        }
-        
-        notamsData.enrNotams.forEach { item in
-            let newObj = NotamsDataList(context: self.service.container.viewContext)
-            newObj.id = UUID()
-            newObj.type = "enrNotams"
-            newObj.notam = item.notam
-            newObj.date = item.date
-            newObj.rank = item.rank
-            newObj.isChecked = false
-            self.service.container.viewContext.performAndWait {
-                do {
-                    try self.service.container.viewContext.save()
-                    print("saved notams successfully")
-                } catch {
-                    service.container.viewContext.rollback()
-                    print("Failed to Notams enrNotams save: \(error)")
-                }
 
+        }
+    }
+    
+    func initDataNotams(_ notamsData: INotamWXJson) {
+        if notamsData.depNotams.Runway.count > 0 {
+            for item in notamsData.depNotams.Runway {
+                insertDataNotams(airport: notamsData.depNotams.Airport, type: "depNotams", category: "Runway", item: item)
             }
         }
-        dataNotams = readDataNotamsList()
+        
+        if notamsData.depNotams.Taxiway.count > 0 {
+            for item in notamsData.depNotams.Taxiway {
+                insertDataNotams(airport: notamsData.depNotams.Airport, type: "depNotams", category: "Taxiway", item: item)
+            }
+        }
+        
+        if notamsData.depNotams.Approach_Departure.count > 0 {
+            for item in notamsData.depNotams.Approach_Departure {
+                insertDataNotams(airport: notamsData.depNotams.Airport, type: "depNotams", category: "Approach_Departure", item: item)
+            }
+        }
+        
+        if notamsData.depNotams.Obstacles.count > 0 {
+            for item in notamsData.depNotams.Obstacles {
+                insertDataNotams(airport: notamsData.depNotams.Airport, type: "depNotams", category: "Obstacles", item: item)
+            }
+        }
+        
+        if notamsData.depNotams.Others.count > 0 {
+            for item in notamsData.depNotams.Others {
+                insertDataNotams(airport: notamsData.depNotams.Airport, type: "depNotams", category: "Others", item: item)
+            }
+        }
+        
+        // End Dep
+        
+        if notamsData.arrNotams.Runway.count > 0 {
+            for item in notamsData.arrNotams.Runway {
+                insertDataNotams(airport: notamsData.arrNotams.Airport, type: "arrNotams", category: "Runway", item: item)
+            }
+        }
+        
+        if notamsData.arrNotams.Taxiway.count > 0 {
+            for item in notamsData.arrNotams.Taxiway {
+                insertDataNotams(airport: notamsData.arrNotams.Airport, type: "arrNotams", category: "Taxiway", item: item)
+            }
+        }
+        
+        if notamsData.arrNotams.Approach_Departure.count > 0 {
+            for item in notamsData.arrNotams.Approach_Departure {
+                insertDataNotams(airport: notamsData.arrNotams.Airport, type: "arrNotams", category: "Approach_Departure", item: item)
+            }
+        }
+        
+        if notamsData.arrNotams.Obstacles.count > 0 {
+            for item in notamsData.arrNotams.Obstacles {
+                insertDataNotams(airport: notamsData.arrNotams.Airport, type: "arrNotams", category: "Obstacles", item: item)
+            }
+        }
+        
+        if notamsData.arrNotams.Others.count > 0 {
+            for item in notamsData.arrNotams.Others {
+                insertDataNotams(airport: notamsData.arrNotams.Airport, type: "arrNotams", category: "Others", item: item)
+            }
+        }
+        
+        // End Arr
+        
+        if notamsData.enrNotams.count > 0 {
+            
+            for enr in notamsData.enrNotams {
+                if enr.Runway.count > 0 {
+                    for item in enr.Runway {
+                        insertDataNotams(airport: enr.Airport.Airport, type: "enrNotams", category: "Runway", item: item)
+                    }
+                }
+                
+                if enr.Taxiway.count > 0 {
+                    for item in enr.Taxiway {
+                        insertDataNotams(airport: enr.Airport.Airport, type: "enrNotams", category: "Taxiway", item: item)
+                    }
+                }
+                
+                if enr.Approach_Departure.count > 0 {
+                    for item in enr.Approach_Departure {
+                        insertDataNotams(airport: enr.Airport.Airport, type: "enrNotams", category: "Approach_Departure", item: item)
+                    }
+                }
+                
+                if enr.Obstacles.count > 0 {
+                    for item in enr.Obstacles {
+                        insertDataNotams(airport: enr.Airport.Airport, type: "enrNotams", category: "Obstacles", item: item)
+                    }
+                }
+                
+                if enr.Others.count > 0 {
+                    for item in enr.Others {
+                        insertDataNotams(airport: enr.Airport.Airport, type: "enrNotams", category: "Others", item: item)
+                    }
+                }
+            }
+        }
+        
+        // End Enr
+        
+        if notamsData.altnNotams.count > 0 {
+            for altn in notamsData.altnNotams {
+                if altn.Runway.count > 0 {
+                    for item in altn.Runway {
+                        insertDataNotams(airport: altn.Airport.Airport, type: "altnNotams", category: "Runway", item: item)
+                    }
+                }
+                
+                if altn.Taxiway.count > 0 {
+                    for item in altn.Taxiway {
+                        insertDataNotams(airport: altn.Airport.Airport, type: "altnNotams", category: "Taxiway", item: item)
+                    }
+                }
+                
+                if altn.Approach_Departure.count > 0 {
+                    for item in altn.Approach_Departure {
+                        insertDataNotams(airport: altn.Airport.Airport, type: "altnNotams", category: "Approach_Departure", item: item)
+                    }
+                }
+                
+                if altn.Obstacles.count > 0 {
+                    for item in altn.Obstacles {
+                        insertDataNotams(airport: altn.Airport.Airport, type: "altnNotams", category: "Obstacles", item: item)
+                    }
+                }
+                
+                if altn.Others.count > 0 {
+                    for item in altn.Others {
+                        insertDataNotams(airport: altn.Airport.Airport, type: "altnNotams", category: "Others", item: item)
+                    }
+                }
+            }
+        }
+        
+        // End Altn
+        
         
 //        notamsData.arrNotams.forEach { item in
 //            let newObj = NotamsDataList(context: self.service.container.viewContext)
@@ -1857,14 +1958,153 @@ class CoreDataModelState: ObservableObject {
 
     }
     
-    func initDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
+//    func initDataNotams(_ notamsData: INotamsDataResponseModel) {
+//
+//        for data in notamsData.depNotams {
+//            if data.value.count > 0 {
+//                data.value.forEach { item in
+//                    let newObj = NotamsDataList(context: self.service.container.viewContext)
+//                    newObj.id = UUID()
+//                    newObj.type = "depNotams"
+//                    newObj.notam = item.notam
+//                    newObj.date = item.date
+//                    newObj.rank = item.rank
+//                    newObj.isChecked = false
+//                    newObj.category = data.key
+//                    self.service.container.viewContext.performAndWait {
+//                        do {
+//                            try self.service.container.viewContext.save()
+//                            print("saved notams successfully")
+//                        } catch {
+//                            print("Failed to Notams depNotams save: \(error)")
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
+//
+//        for data in notamsData.arrNotams {
+//            if data.value.count > 0 {
+//                data.value.forEach { item in
+//                    let newObj = NotamsDataList(context: self.service.container.viewContext)
+//                    newObj.id = UUID()
+//                    newObj.type = "arrNotams"
+//                    newObj.notam = item.notam
+//                    newObj.date = item.date
+//                    newObj.rank = item.rank
+//                    newObj.isChecked = false
+//                    newObj.category = data.key
+//                    self.service.container.viewContext.performAndWait {
+//                        do {
+//                            try self.service.container.viewContext.save()
+//                            print("saved notams successfully")
+//                        } catch {
+//                            print("Failed to Notams depNotams save: \(error)")
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
+//
+//        notamsData.enrNotams.forEach { item in
+//            let newObj = NotamsDataList(context: self.service.container.viewContext)
+//            newObj.id = UUID()
+//            newObj.type = "enrNotams"
+//            newObj.notam = item.notam
+//            newObj.date = item.date
+//            newObj.rank = item.rank
+//            newObj.isChecked = false
+//            self.service.container.viewContext.performAndWait {
+//                do {
+//                    try self.service.container.viewContext.save()
+//                    print("saved notams successfully")
+//                } catch {
+//                    service.container.viewContext.rollback()
+//                    print("Failed to Notams enrNotams save: \(error)")
+//                }
+//
+//            }
+//        }
+//        dataNotams = readDataNotamsList()
+//
+////        notamsData.arrNotams.forEach { item in
+////            let newObj = NotamsDataList(context: self.service.container.viewContext)
+////            newObj.id = UUID()
+////            newObj.type = "arrNotams"
+////            newObj.notam = item.notam
+////            newObj.date = item.date
+////            newObj.rank = item.rank
+////            newObj.isChecked = false
+////            self.service.container.viewContext.performAndWait {
+////                do {
+////                    try self.service.container.viewContext.save()
+////                    print("saved notams successfully")
+////                } catch {
+////                    service.container.viewContext.rollback()
+////                    print("Failed to Notams arrNotams save: \(error)")
+////                }
+////
+////            }
+////        }
+////
+//
+//    }
+    
+    func initDepDataMetarTaf(_ metarTafData: IDepMetarTafWXChild, type: String) {
         do {
             let newObj = MetarTafDataList(context: service.container.viewContext)
             newObj.id = UUID()
-            newObj.depMetar = metarTafData.depMetar
-            newObj.depTaf = metarTafData.depTaf
-            newObj.arrMetar = metarTafData.arrMetar
-            newObj.arrTaf = metarTafData.arrTaf
+            newObj.airport = metarTafData.airport
+            newObj.std = metarTafData.std
+            newObj.metar = metarTafData.metar
+            newObj.taf = metarTafData.taf
+            newObj.type = type
+            try service.container.viewContext.save()
+            existDataMetarTaf = true
+            readDataMetarTafList()
+            print("saved Metar Taf successfully")
+        } catch {
+            print("Failed to Metar Taf save: \(error)")
+            existDataMetarTaf = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initArrDataMetarTaf(_ metarTafData: IArrMetarTafWXChild, type: String) {
+        do {
+            let newObj = MetarTafDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.airport = metarTafData.airport
+            newObj.std = metarTafData.sta
+            newObj.metar = metarTafData.metar
+            newObj.taf = metarTafData.taf
+            newObj.type = type
+            try service.container.viewContext.save()
+            existDataMetarTaf = true
+            readDataMetarTafList()
+            print("saved Metar Taf successfully")
+        } catch {
+            print("Failed to Metar Taf save: \(error)")
+            existDataMetarTaf = false
+            // Rollback any changes in the managed object context
+            service.container.viewContext.rollback()
+            
+        }
+    }
+    
+    func initEnrDataMetarTaf(_ metarTafData: IAltnMetarTafWXChild, type: String) {
+        do {
+            let newObj = MetarTafDataList(context: service.container.viewContext)
+            newObj.id = UUID()
+            newObj.airport = metarTafData.airport
+            newObj.std = metarTafData.eta
+            newObj.metar = metarTafData.metar
+            newObj.taf = metarTafData.taf
+            newObj.type = type
             try service.container.viewContext.save()
             existDataMetarTaf = true
             readDataMetarTafList()
@@ -1879,31 +2119,31 @@ class CoreDataModelState: ObservableObject {
     }
     
     func updateDataMetarTaf(_ metarTafData: IFlightPlanWXResponseModel) {
-        do {
-            readDataMetarTafList()
-            if self.dataMetarTaf!.id != nil {
-                self.dataMetarTaf.depMetar = metarTafData.depMetar
-                self.dataMetarTaf.depTaf = metarTafData.depTaf
-                self.dataMetarTaf.arrMetar = metarTafData.arrMetar
-                self.dataMetarTaf.arrTaf = metarTafData.arrTaf
-            } else {
-                let newObj = MetarTafDataList(context: service.container.viewContext)
-                newObj.id = UUID()
-                newObj.depMetar = metarTafData.depMetar
-                newObj.depTaf = metarTafData.depTaf
-                newObj.arrMetar = metarTafData.arrMetar
-                newObj.arrTaf = metarTafData.arrTaf
-            }
-            try service.container.viewContext.save()
-            existDataMetarTaf = true
-            readDataMetarTafList()
-            print("saved Metar Taf successfully")
-        } catch {
-            print("Failed to Metar Taf save: \(error)")
-            existDataMetarTaf = false
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-        }
+//        do {
+//            readDataMetarTafList()
+//            if self.dataMetarTaf!.id != nil {
+//                self.dataMetarTaf.depMetar = metarTafData.depMetar
+//                self.dataMetarTaf.depTaf = metarTafData.depTaf
+//                self.dataMetarTaf.arrMetar = metarTafData.arrMetar
+//                self.dataMetarTaf.arrTaf = metarTafData.arrTaf
+//            } else {
+//                let newObj = MetarTafDataList(context: service.container.viewContext)
+//                newObj.id = UUID()
+//                newObj.depMetar = metarTafData.depMetar
+//                newObj.depTaf = metarTafData.depTaf
+//                newObj.arrMetar = metarTafData.arrMetar
+//                newObj.arrTaf = metarTafData.arrTaf
+//            }
+//            try service.container.viewContext.save()
+//            existDataMetarTaf = true
+//            readDataMetarTafList()
+//            print("saved Metar Taf successfully")
+//        } catch {
+//            print("Failed to Metar Taf save: \(error)")
+//            existDataMetarTaf = false
+//            // Rollback any changes in the managed object context
+//            service.container.viewContext.rollback()
+//        }
     }
     
     func initDataAltnTaf(_ metarTafData: IFlightPlanWXResponseModel) {
@@ -2687,6 +2927,26 @@ class CoreDataModelState: ObservableObject {
         
         return data
         
+    }
+    
+    func readDataMetarTafByType(_ target: String = "") -> MetarTafDataList? {
+        var data: MetarTafDataList?
+        
+        let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
+        
+        if target != "" {
+            request.predicate = NSPredicate(format: "type == %@", argumentArray: [target, 1])
+        }
+        do {
+            let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
     }
     
     func readDataMetarTafList() {
@@ -4366,6 +4626,54 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllMetaTaf() async {
+        let fetchRequest: NSFetchRequest<MetarTafDataList>
+        fetchRequest = MetarTafDataList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Metar Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Metar Taf update: \(error)")
+        }
+    }
+    
+    func deleteAllNotam() async {
+        let fetchRequest: NSFetchRequest<NotamsDataList>
+        fetchRequest = NotamsDataList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Notam : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Notam update: \(error)")
         }
     }
 }

@@ -91,31 +91,39 @@ struct MetarTafSubSectionView: View {
                             }
                         
                         if isDepShow {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Text("METAR")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                                
-                                Text("TAF")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                            }.padding(.bottom)
+                            if coreDataModel.dataDepartureMetarTaf == nil {
+                                HStack {
+                                    Text("No Departure METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                    Spacer()
+                                }.frame(height: 44)
+                            } else {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text("\(coreDataModel.dataDepartureMetarTaf?.unwrappedAirport ?? "") \(coreDataModel.dataDepartureMetarTaf?.unwrappedStd ?? "")")
+                                        .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Text("METAR")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataDepartureMetarTaf?.unwrappedMetar ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                    
+                                    Text("TAF")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataDepartureMetarTaf?.unwrappedTaf ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                }.padding(.bottom)
+                            }
+                            
                         }
                     }.padding(.horizontal)
                         .background(Color.white)
@@ -147,33 +155,40 @@ struct MetarTafSubSectionView: View {
                             }
                         
                         if isEnrShow {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                
-                                Text("METAR")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                                
-                                Text("TAF")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                                
-                            }.padding(.bottom)
+                            if coreDataModel.dataEnrouteMetarTaf == nil {
+                                HStack {
+                                    Text("No Enroute Alternates METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                    Spacer()
+                                }.frame(height: 44)
+                            } else {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text("\(coreDataModel.dataEnrouteMetarTaf?.unwrappedAirport ?? "") \(coreDataModel.dataEnrouteMetarTaf?.unwrappedStd ?? "")")
+                                        .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    
+                                    Text("METAR")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataEnrouteMetarTaf?.unwrappedMetar ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                    
+                                    Text("TAF")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataEnrouteMetarTaf?.unwrappedTaf ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                    
+                                }.padding(.bottom)
+                            }
                         }
                     }.padding(.horizontal)
                         .background(Color.white)
@@ -205,31 +220,38 @@ struct MetarTafSubSectionView: View {
                             }
                         
                         if isArrShow {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Text("METAR")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                                
-                                Text("TAF")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                            }.padding(.bottom)
+                            if coreDataModel.dataArrivalMetarTaf == nil {
+                                HStack {
+                                    Text("No Arrival METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                    Spacer()
+                                }.frame(height: 44)
+                            } else {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text("\(coreDataModel.dataArrivalMetarTaf?.unwrappedAirport ?? "") \(coreDataModel.dataArrivalMetarTaf?.unwrappedStd ?? "")")
+                                        .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Text("METAR")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataArrivalMetarTaf?.unwrappedMetar ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                    
+                                    Text("TAF")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataArrivalMetarTaf?.unwrappedTaf ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                }.padding(.bottom)
+                            }
                         }
                     }.padding(.horizontal)
                         .background(Color.white)
@@ -261,30 +283,37 @@ struct MetarTafSubSectionView: View {
                             }
                         
                         if isDestShow {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Text("METAR").font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                                
-                                Text("TAF")
-                                    .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
-                                    .frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                Text("XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX XXXXXX")
-                                    .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                    .padding(.vertical, 8)
-                            }.padding(.bottom)
+                            if coreDataModel.dataDestinationMetarTaf == nil {
+                                HStack {
+                                    Text("No Destination Alternates METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                    Spacer()
+                                }.frame(height: 44)
+                            } else {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text("\(coreDataModel.dataDestinationMetarTaf?.unwrappedAirport ?? "") \(coreDataModel.dataDestinationMetarTaf?.unwrappedStd ?? "")")
+                                        .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Text("METAR").font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataDestinationMetarTaf?.unwrappedMetar ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                    
+                                    Text("TAF")
+                                        .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
+                                        .frame(height: 44)
+                                    
+                                    Divider().padding(.horizontal, -16)
+                                    
+                                    Text(coreDataModel.dataDestinationMetarTaf?.unwrappedTaf ?? "")
+                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                                        .padding(.vertical, 8)
+                                }.padding(.bottom)
+                            }
                         }
                     }.padding(.horizontal)
                         .background(Color.white)

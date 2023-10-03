@@ -509,18 +509,18 @@ struct SummarySubSectionView: View {
             }
         }
         
-        var payloadNotam: [String: Any] = [
-            "depAirport": [
-                "Airport": "VTBS",
-                "std": "2023-09-08 20:00"
-            ],
-            "arrAirport": [
-                "Airport": "WSSS",
-                "sta": "2023-09-08 23:00"
-            ],
-            "enrAirports": payloadEnroute,
-            "altnAirports": payloadDestination
-        ]
+            let payloadNotam: [String: Any] = [
+                "depAirport": [
+                    "Airport": "VTBS",
+                    "std": "2023-09-08 20:00"
+                ],
+                "arrAirport": [
+                    "Airport": "WSSS",
+                    "sta": "2023-09-08 23:00"
+                ],
+                "enrAirports": payloadEnroute,
+                "altnAirports": payloadDestination
+            ]
             
             let payloadMap: [String: Any] = [
                 "depAirport": coreDataModel.dataSummaryInfo.unwrappedDepICAO,
@@ -535,14 +535,18 @@ struct SummarySubSectionView: View {
             async let waypointService = remoteService.updateMapWaypointData(payloadMap)
             async let airportService = remoteService.updateMapAirportData()
             
+            // For Notam, MetarTaf
+//            async let notamService = remoteService.updateNotamData(payloadNotam)
+            
             //array handle call API parallel
             let services = try await [trafficService, aabbaService, waypointService, airportService]
+            let servicesNotam: INotamWXDataJson = self.remoteService.load("testing_data.json")
             
             if (services[0] as! [ITrafficData]).count > 0 {
                 await coreDataModel.deleteAllTrafficMap()
                 coreDataModel.initDataTraffic(services[0] as! [ITrafficData])
             }
-            
+
             if (services[1] as! [IAabbaData]).count > 0 {
                 await coreDataModel.deleteAllAabbaCommentList()
                 await coreDataModel.deleteAllAabbaPostList()
@@ -559,6 +563,36 @@ struct SummarySubSectionView: View {
                 await coreDataModel.deleteAllAirportList()
                 coreDataModel.initDataAirport(services[3] as! [IAirportData])
             }
+            
+            await coreDataModel.deleteAllMetaTaf()
+            await coreDataModel.deleteAllNotam()
+            coreDataModel.initDepDataMetarTaf(servicesNotam.metarTafData.depMetarTaf, type: "depMetarTaf")
+            coreDataModel.initArrDataMetarTaf(servicesNotam.metarTafData.arrMetarTaf, type: "arrMetarTaf")
+            
+            if servicesNotam.metarTafData.altnMetarTaf.count > 0 {
+                for item in servicesNotam.metarTafData.altnMetarTaf {
+                    coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
+                }
+            }
+            
+            if servicesNotam.metarTafData.enrMetarTaf.count > 0 {
+                for item in servicesNotam.metarTafData.enrMetarTaf {
+                    coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
+                }
+            }
+            
+            coreDataModel.initDataNotams(servicesNotam.notamsData)
+            
+            coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
+            coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
+            coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
+            coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
+            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
+            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
+            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
+            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
             
             if (enrouteAlternates.count > 0) {
                 persistenceController.container.viewContext.performAndWait {
