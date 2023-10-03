@@ -10,10 +10,9 @@ import UIKit
 
 struct RowAlternates: View {
     let width: CGFloat
-    let index: Int
+    let item: IAlternate
     @Binding var itemList: [IAlternate]
     let create: () -> Void
-    let removeItem: (_ index: Int) -> Void
     
     @State private var selectAltn = ""
     @State private var tfVis: String = ""
@@ -23,15 +22,18 @@ struct RowAlternates: View {
     @State private var currentDateEta = Date()
     @State private var currentDateEtaTemp = Date()
     @State private var isShowModal = false
+    @State private var currentIndex = -1
     
-    var ALTN_DROP_DOWN: [String] = ["ALTN 1", "ALTN 2", "ALTN 3"]
     let dateFormatter = DateFormatter()
+    let columns = [GridItem(.flexible())]
     
     var body: some View {
         HStack {
             HStack {
                 Button(action: {
-                    removeItem(index)
+                    print("itemList========\(itemList)")
+                    print("item========\(item)")
+                    itemList.removeAll(where: {$0.id == item.id})
                 }, label: {
                     Image(systemName: "minus.circle")
                         .foregroundColor(Color.theme.azure)
@@ -42,9 +44,11 @@ struct RowAlternates: View {
                 
                 Picker("", selection: $selectAltn) {
                     Text("Select ALTN").tag("")
-                    ForEach(ALTN_DROP_DOWN, id: \.self) {
-                        Text($0).tag($0)
-                    }
+//                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(ALTN_DROP_DOWN, id: \.self) {
+                            Text($0).tag($0)
+                        }
+//                    }
                 }.pickerStyle(MenuPickerStyle()).fixedSize()
                     .padding(.leading, -12)
             }.fixedSize()
@@ -58,7 +62,7 @@ struct RowAlternates: View {
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
                 .onSubmit {
                     if itemList.count > 0 {
-                        itemList[index].vis = tfVis
+                        itemList[currentIndex].vis = tfVis
                     }
                 }
             
@@ -66,14 +70,14 @@ struct RowAlternates: View {
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
                 .onSubmit {
                     if itemList.count > 0 {
-                        itemList[index].minima = tfMinima
+                        itemList[currentIndex].minima = tfMinima
                     }
                 }
             
         }.frame(height: 44)
             .onChange(of: selectAltn) {newValue in
                 if itemList.count > 0 {
-                    itemList[index].altn = newValue
+                    itemList[currentIndex].altn = newValue
                 }
             }
             .formSheet(isPresented: $isShowModal) {
@@ -96,7 +100,7 @@ struct RowAlternates: View {
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             
                             if itemList.count > 0 {
-                                itemList[index].eta = dateFormatter.string(from: currentDateEtaTemp)
+                                itemList[currentIndex].eta = dateFormatter.string(from: currentDateEtaTemp)
                             }
                             // Save data
                             //                            let dateFormatter = DateFormatter()
@@ -129,15 +133,19 @@ struct RowAlternates: View {
                     Spacer()
                 }
             }.onAppear {
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                selectAltn = itemList[index].altn
-                tfVis = itemList[index].vis ?? ""
-                tfMinima = itemList[index].minima ?? ""
-                
-                if let eta = dateFormatter.date(from: itemList[index].eta) {
-                    currentDateEta = eta
-                    currentDateEtaTemp = eta
+                if let selectedIndex = itemList.firstIndex(of: item) {
+                    currentIndex = selectedIndex
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    selectAltn = itemList[currentIndex].altn
+                    tfVis = itemList[currentIndex].vis ?? ""
+                    tfMinima = itemList[currentIndex].minima ?? ""
+                    
+                    if let eta = dateFormatter.date(from: itemList[currentIndex].eta) {
+                        currentDateEta = eta
+                        currentDateEtaTemp = eta
+                    }
                 }
+                
             }
     }
     

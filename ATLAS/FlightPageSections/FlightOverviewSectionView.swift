@@ -39,7 +39,7 @@ struct FlightOverviewSectionView: View {
     @State private var isCollapsePlanTime = true
     @State private var isCollapseActualTime = true
     @State private var isCollapseCrew = true
-    @State private var selectedAircraftPicker = ""
+    @State private var selectedModelPicker = ""
     
     // For signature
     @State private var isSignatureViewModalPresented = false
@@ -229,7 +229,7 @@ struct FlightOverviewSectionView: View {
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     HStack {
-                                        Picker("", selection: $selectedAircraftPicker) {
+                                        Picker("", selection: $selectedModelPicker) {
                                             Text("Select Aircraft Model").tag("")
                                             ForEach(AIRCRAFT_DROP_DOWN, id: \.self) {
                                                 Text($0).tag($0)
@@ -245,7 +245,14 @@ struct FlightOverviewSectionView: View {
                                         text: $tfAircraft
                                     ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                         .onSubmit {
-                                            //Todo
+                                            if coreDataModel.existDataSummaryInfo {
+                                                coreDataModel.dataSummaryInfo.aircraft = tfAircraft
+                                            } else {
+                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                item.aircraft = tfAircraft
+                                            }
+                                            coreDataModel.save()
+                                            coreDataModel.readSummaryInfo()
                                         }
                                 }.frame(height: 44)
                                 
@@ -281,9 +288,22 @@ struct FlightOverviewSectionView: View {
                                         "Enter POB",
                                         text: $tfPob
                                     ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                        .onSubmit {
-                                            //Todo
+                                        .keyboardType(.numberPad)
+                                        .onReceive(Just(tfPob)) { output in
+                                            let newOutput = output.filter { "0123456789".contains($0) }
+                                            tfPob = String(newOutput.prefix(3))
                                         }
+                                        .onSubmit {
+                                            if coreDataModel.existDataSummaryInfo {
+                                                coreDataModel.dataSummaryInfo.pob = tfPob
+                                            } else {
+                                                let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                item.pob = tfPob
+                                            }
+                                            coreDataModel.save()
+                                            coreDataModel.readSummaryInfo()
+                                        }
+
                                 }.frame(height: 44)
                             } //end VStack
                         }// end if
@@ -322,15 +342,11 @@ struct FlightOverviewSectionView: View {
                                     Text("STD")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("STA")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -338,22 +354,21 @@ struct FlightOverviewSectionView: View {
                                 HStack(spacing: 0) {
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("").frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
                                     Text("Block Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Flight Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -361,11 +376,11 @@ struct FlightOverviewSectionView: View {
                                 HStack(spacing: 0) {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                     FlightTimeButtonTimeStepper(onToggle: onFlightTime, value: currentDateFlightTime)
                                         .fixedSize()
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
@@ -419,15 +434,11 @@ struct FlightOverviewSectionView: View {
                                     Text("Chocks Off")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-//                                    Text("ETA")
-//                                        .foregroundStyle(Color.black)
-//                                        .font(.system(size: 15, weight: .semibold))
-//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Chocks On")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -435,15 +446,11 @@ struct FlightOverviewSectionView: View {
                                 HStack(spacing: 0) {
                                     ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "")
                                         .fixedSize()
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    
-                                    Text(showUTC ? etaUTC : etaLocal)
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                     ButtonDateStepper(onToggle: onChockOn, value: $currentDateChockOn, suffix: "")
                                         .fixedSize()
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                 }.frame(height: 44)
                                 
@@ -452,15 +459,11 @@ struct FlightOverviewSectionView: View {
                                     Text("Day")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Night")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Total Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -468,17 +471,33 @@ struct FlightOverviewSectionView: View {
                                 HStack(spacing: 0) {
                                     Text("TODO")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("TODO")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(calculateDateTime(chocksOffUTC, chocksOnUTC))
-                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
+                                    Text("ETA")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                    Text("Total Time")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                Divider().padding(.horizontal, -16)
+                                
+                                HStack {
+                                    Text(showUTC ? etaUTC : etaLocal)
+                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
+                                    Text(calculateDateTime(chocksOffUTC, chocksOnUTC))
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// End if
@@ -620,18 +639,37 @@ struct FlightOverviewSectionView: View {
             .onAppear {
                 selectedCA = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewCA) ?? SummaryDataDropDown.pic
                 selectedFO = SummaryDataDropDown(rawValue: coreDataModel.dataSummaryInfo.unwrappedCrewFO) ?? SummaryDataDropDown.pic
+                selectedModelPicker = coreDataModel.dataSummaryInfo.unwrappedModel
+                currentDateFlightTime = coreDataModel.dataSummaryInfo.unwrappedFlightTime
                 tfPob = coreDataModel.dataSummaryInfo.unwrappedPob
+                tfAircraft = coreDataModel.dataSummaryInfo.unwrappedAircraft
             }
             .onChange(of: selectedCA) { value in
                 if coreDataModel.existDataSummaryInfo {
                     coreDataModel.dataSummaryInfo.crewCA = value.rawValue
                     coreDataModel.save()
+                    coreDataModel.readSummaryInfo()
                 }
             }
             .onChange(of: selectedFO) { value in
                 if coreDataModel.existDataSummaryInfo {
                     coreDataModel.dataSummaryInfo.crewFO = value.rawValue
                     coreDataModel.save()
+                    coreDataModel.readSummaryInfo()
+                }
+            }
+            .onChange(of: selectedModelPicker) { value in
+                if coreDataModel.existDataSummaryInfo {
+                    coreDataModel.dataSummaryInfo.model = value
+                    coreDataModel.save()
+                    coreDataModel.readSummaryInfo()
+                }
+            }
+            .onChange(of: currentDateFlightTime) { value in
+                if coreDataModel.existDataSummaryInfo {
+                    coreDataModel.dataSummaryInfo.flightTime = value
+                    coreDataModel.save()
+                    coreDataModel.readSummaryInfo()
                 }
             }
             .onChange(of: signatureImage) { _ in
@@ -642,6 +680,7 @@ struct FlightOverviewSectionView: View {
                     newObj.imageString = str
                     
                     coreDataModel.save()
+                    coreDataModel.readSummaryInfo()
                 }
             }
             .sheet(isPresented: $isSignatureModalPresented) {

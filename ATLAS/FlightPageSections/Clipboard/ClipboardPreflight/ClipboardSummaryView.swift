@@ -71,15 +71,15 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedFltNo)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedModel)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedAircraft)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
@@ -102,15 +102,15 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedDep)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedDest)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("XXXXXXXX")
+                            Text(coreDataModel.dataSummaryInfo.unwrappedPob)
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
@@ -278,8 +278,8 @@ struct ClipboardSummaryView: View {
                             Divider().padding(.horizontal, -16)
                             
                             if enrouteAlternates.count > 0 {
-                                ForEach(enrouteAlternates.indices, id: \.self) {index in
-                                    RowTextAlternates(width: width, index: index, itemList: $enrouteAlternates)
+                                ForEach(enrouteAlternates, id: \.self) {item in
+                                    RowTextAlternates(width: width, item: item, itemList: $enrouteAlternates)
                                         .id("enroute\(index)")
                                 }
                             }
@@ -308,9 +308,8 @@ struct ClipboardSummaryView: View {
                             Divider().padding(.horizontal, -16)
                             
                             if destinationAlternates.count > 0 {
-                                ForEach(destinationAlternates.indices, id: \.self) {index in
-                                    RowTextAlternates(width: width, index: index, itemList: $destinationAlternates)
-                                        .id("destination\(index)")
+                                ForEach(destinationAlternates, id: \.self) {item in
+                                    RowTextAlternates(width: width, item: item, itemList: $destinationAlternates)
                                 }
                             }
                             

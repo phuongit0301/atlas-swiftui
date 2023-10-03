@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import UIKit
 
-struct IAlternate {
+struct IAlternate: Identifiable, Hashable {
     var id = UUID()
     var altn: String
     var vis: String?
@@ -23,6 +23,7 @@ struct IAlternate {
 struct SummarySubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var remoteService: RemoteService
     
     @State var isReference = false
     @State private var selectedCA = SummaryDataDropDown.pic
@@ -46,7 +47,7 @@ struct SummarySubSectionView: View {
     @State var enrouteAlternates: [IAlternate] = []
     @State var destinationAlternates: [IAlternate] = []
     
-    var ALTN_DROP_DOWN: [String] = ["ALTN 1", "ALTN 1", "ALTN 1"]
+//    var ALTN_DROP_DOWN: [String] = ["ALTN 1", "ALTN 1", "ALTN 1"]
     
     var body: some View {
         
@@ -116,15 +117,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedModel)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedAircraft)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -147,15 +148,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("XXXXXXXX")
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedPob)
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -197,54 +198,58 @@ struct SummarySubSectionView: View {
                                     Text("STD")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("STA")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("").frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
                                     Text("Block Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Flight Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Block Time - Flight Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                    
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
                                     Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    Text("XXXXX").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    
+                                    Text(coreDataModel.dataSummaryInfo.unwrappedFlightTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    Text("Block Time - Flight Time")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                Divider().padding(.horizontal, -16)
+                                
+                                HStack(spacing: 0) {
                                     Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// end If
@@ -347,12 +352,11 @@ struct SummarySubSectionView: View {
                                     Divider().padding(.horizontal, -16)
                                     
                                     if enrouteAlternates.count > 0 {
-                                        ForEach(enrouteAlternates.indices, id: \.self) {index in
+                                        ForEach(enrouteAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, index: index, itemList: $enrouteAlternates, create: create, removeItem: removeItem)
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates, create: create).id(UUID())
                                             } else {
-                                                RowTextAlternates(width: proxy.size.width, index: index, itemList: $enrouteAlternates)
-                                                    .id("enroute\(index)")
+                                                RowTextAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates).id(UUID())
                                             }
                                         }
                                     } else {
@@ -399,12 +403,11 @@ struct SummarySubSectionView: View {
                                     Divider().padding(.horizontal, -16)
                                     
                                     if destinationAlternates.count > 0 {
-                                        ForEach(destinationAlternates.indices, id: \.self) {index in
+                                        ForEach(destinationAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, index: index, itemList: $destinationAlternates, create: create, removeItem: removeItem)
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates, create: create).id(UUID())
                                             } else {
-                                                RowTextAlternates(width: proxy.size.width, index: index, itemList: $destinationAlternates)
-                                                    .id("destination\(index)")
+                                                RowTextAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates).id(UUID())
                                             }
                                         }
                                     } else {
@@ -457,85 +460,197 @@ struct SummarySubSectionView: View {
     }
     
     func create() {
-        if (destinationAlternates.count > 0) {
-            persistenceController.container.viewContext.performAndWait {
-                for item in enrouteAlternates {
-                    do {
-                        if item.isNew! && item.eta != "" && item.altn != "" {
-                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                            newObject.id = UUID()
-                            newObject.altn = item.altn
-                            newObject.vis = item.vis
-                            newObject.minima = item.minima
-                            newObject.eta = item.eta
-                            newObject.type = "enroute"
-                            
-                            try persistenceController.container.viewContext.save()
-                            print("saved Enroute successfully")
-                            
-                            enrouteAlternates = []
-                        }
-                    } catch {
-                        print("Failed to Enroute save: \(error)")
-                        // Rollback any changes in the managed object context
-                        persistenceController.container.viewContext.rollback()
-                    }
+        Task {
+            let payloadMap: [String: Any] = [
+                "depAirport": coreDataModel.dataSummaryInfo.unwrappedDep,
+                "arrAirport": coreDataModel.dataSummaryInfo.unwrappedDest,
+                "enrAirports": ["WMKP", "WMKK"],
+                "altnAirports": ["WMKJ", "WIDD"],
+                "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
+            ]
+        
+        var payloadEnroute: [Any] = []
+        var payloadDestination: [Any] = []
+        
+        if enrouteAlternates.count > 0 {
+            for item in enrouteAlternates {
+                payloadEnroute.append([
+                    "Airport": item.altn,
+                    "std": item.eta
+                ])
+            }
+        }
+        
+        if destinationAlternates.count > 0 {
+            for item in destinationAlternates {
+                payloadDestination.append([
+                    "Airport": item.altn,
+                    "std": item.eta
+                ])
+            }
+        }
+        
+        var payloadNotam: [String: Any] = [
+            "depAirport": [
+                "Airport": "VTBS",
+                "std": "2023-09-08 20:00"
+            ],
+            "arrAirport": [
+                "Airport": "WSSS",
+                "sta": "2023-09-08 23:00"
+            ],
+            "enrAirports": payloadEnroute,
+            "altnAirports": payloadDestination
+        ]
+            
+            await remoteService.updateMapTrafficData(payloadMap, completion: { success in
+                if(success) {
                 }
-            }
+            })
+
+//            await remoteService.updateMapAabbaData(payloadMap, completion: { success in
+//                if(success) {
+//                }
+//            })
+//
+//            await remoteService.updateMapWaypointData(payloadMap, completion: { success in
+//                if(success) {
+//                }
+//            })
+//
+//            await remoteService.updateMapAirportData(completion: { success in
+//                if(success) {
+//                }
+//            })
+//
+//            await remoteService.updateNotamData(payloadMap, completion: { success in
+//                if(success) {
+//                }
+//            })
         }
+            
         
-        if (destinationAlternates.count > 0) {
-            persistenceController.container.viewContext.performAndWait {
-                for item in destinationAlternates {
-                    do {
-                        if item.isNew! && item.eta != "" && item.altn != "" {
-                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                            newObject.id = UUID()
-                            newObject.altn = item.altn
-                            newObject.vis = item.vis
-                            newObject.minima = item.minima
-                            newObject.eta = item.eta
-                            newObject.type = "destination"
-                            
-                            try persistenceController.container.viewContext.save()
-                            print("saved Enroute successfully")
-                            
-                            destinationAlternates = []
-                        }
-                    } catch {
-                        print("Failed to Destination save: \(error)")
-                        // Rollback any changes in the managed object context
-                        persistenceController.container.viewContext.rollback()
-                    }
-                }
-            }
-        }
+        //todo
+//        /ATLAS_get_map_traffic_data,
+        // inputJSON = {
+        //            "depAirport": "VTBS", Dep Field
+        //            "arrAirport": "WSSS", Dest Field
+        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
+        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
+        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
+        //        }
         
-        coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
-        prepareData()
-    }
-    
-    func removeItem(_ index: Int) {
-        print("index========\(index)")
-        print("enrouteAlternates[index]========\(enrouteAlternates[index])")
-        print("enrouteAlternates========\(enrouteAlternates)")
-        var temp = [IAlternate]()
         
-        for item in enrouteAlternates {
-            if item.id != enrouteAlternates[index].id {
-                temp.append(item)
-            }
-        }
-//        let item = enrouteAlternates.filter{$0.id != enrouteAlternates[index].id}
+//        /ATLAS_get_map_aabba_data,
+//        inputJSON = {
+        //            "depAirport": "VTBS", Dep Field
+        //            "arrAirport": "WSSS", Dest Field
+        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
+        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
+        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
+        //        }
+
         
-        print("item========\(temp)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            withAnimation(.easeOut(duration: 0.3)) {
-                enrouteAlternates = temp
-            }
-        }
-//        enrouteAlternates = temp
-//        print("enrouteAlternates========\(enrouteAlternates)")
+        //        /ATLAS_get_map_waypoints_data
+//        inputJSON = {
+        //            "depAirport": "VTBS", Dep Field
+        //            "arrAirport": "WSSS", Dest Field
+        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
+        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
+        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
+        //        }
+        
+        
+//        /ATLAS_get_map_airports_data
+        
+        
+        // todo send POST to API /ATLAS_get_notam_wx_data
+//        inputJSON = {
+//                    "depAirport": {
+//                        "Airport": "VTBS",
+//                        "std": "2023-09-08 20:00"
+//                    },
+//                    "arrAirport": {
+//                        "Airport": "WSSS",
+//                        "sta": "2023-09-08 23:00"
+//                    },
+//                    "enrAirports": [
+//                        {
+//                            "Airport": "WMKK",
+//                            "eta": "2023-09-08 22:00"
+//                        },
+//                        {
+//                            "Airport": "WMKP",
+//                            "eta": "2023-09-08 22:00"
+//                        }
+//                    ],
+//                    "altnAirports": [
+//                        {
+//                            "Airport": "WMKJ",
+//                            "eta": "2023-09-08 22:00"
+//                        },
+//                        {
+//                            "Airport": "WIDD",
+//                            "eta": "2023-09-08 22:00"
+//                        }
+//                    ]
+//                }
+//        if (destinationAlternates.count > 0) {
+//            persistenceController.container.viewContext.performAndWait {
+//                for item in enrouteAlternates {
+//                    do {
+//                        if item.isNew! && item.eta != "" && item.altn != "" {
+//                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+//                            newObject.id = UUID()
+//                            newObject.altn = item.altn
+//                            newObject.vis = item.vis
+//                            newObject.minima = item.minima
+//                            newObject.eta = item.eta
+//                            newObject.type = "enroute"
+//
+//                            try persistenceController.container.viewContext.save()
+//                            print("saved Enroute successfully")
+//
+//                            enrouteAlternates = []
+//                        }
+//                    } catch {
+//                        print("Failed to Enroute save: \(error)")
+//                        // Rollback any changes in the managed object context
+//                        persistenceController.container.viewContext.rollback()
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (destinationAlternates.count > 0) {
+//            persistenceController.container.viewContext.performAndWait {
+//                for item in destinationAlternates {
+//                    do {
+//                        if item.isNew! && item.eta != "" && item.altn != "" {
+//                            let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+//                            newObject.id = UUID()
+//                            newObject.altn = item.altn
+//                            newObject.vis = item.vis
+//                            newObject.minima = item.minima
+//                            newObject.eta = item.eta
+//                            newObject.type = "destination"
+//
+//                            try persistenceController.container.viewContext.save()
+//                            print("saved Enroute successfully")
+//
+//                            destinationAlternates = []
+//                        }
+//                    } catch {
+//                        print("Failed to Destination save: \(error)")
+//                        // Rollback any changes in the managed object context
+//                        persistenceController.container.viewContext.rollback()
+//                    }
+//                }
+//            }
+//        }
+//
+//        coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
+//        prepareData()
     }
 }
 

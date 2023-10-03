@@ -2,7 +2,7 @@
 //  SummaryInfoList+CoreDataClass.swift
 //  ATLAS
 //
-//  Created by phuong phan on 22/08/2023.
+//  Created by phuong phan on 03/10/2023.
 //
 //
 

@@ -21,8 +21,7 @@ struct ButtonDateStepper: View {
                 Spacer()
                 
                 VStack {
-                    Image(systemName: "chevron.up").foregroundColor(Color.theme.azure)
-                    Image(systemName: "chevron.down").foregroundColor(Color.theme.azure)
+                    Image(systemName: "chevron.up.chevron.down").foregroundColor(Color.theme.azure)
                 }
             }
         }).buttonStyle(.plain)

@@ -522,6 +522,7 @@
         <attribute name="imageString" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
+        <attribute name="aircraft" optional="YES" attributeType="String"/>
         <attribute name="blkTime" optional="YES" attributeType="String"/>
         <attribute name="cm1" optional="YES" attributeType="String"/>
         <attribute name="cm2" optional="YES" attributeType="String"/>
@@ -532,9 +533,11 @@
         <attribute name="dest" optional="YES" attributeType="String"/>
         <attribute name="destICAO" optional="YES" attributeType="String"/>
         <attribute name="flightDate" optional="YES" attributeType="String"/>
+        <attribute name="flightTime" optional="YES" attributeType="String"/>
         <attribute name="fltNo" optional="YES" attributeType="String"/>
         <attribute name="fltTime" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
         <attribute name="planNo" optional="YES" attributeType="String"/>
         <attribute name="pob" optional="YES" attributeType="String"/>
         <attribute name="staLocal" optional="YES" attributeType="String"/>
