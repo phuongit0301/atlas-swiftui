@@ -97,7 +97,7 @@ struct GeneralPopoverView: View {
                                         newPost.postDate = dateFormatter.string(from: Date())
                                         newPost.postTitle = "General"
                                         newPost.postText = tfPost
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "General"
                                         newPost.location = selectedStation?.airportId

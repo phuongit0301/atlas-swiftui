@@ -113,7 +113,7 @@ struct TurbulencePopoverView: View {
                                         newPost.postDate = dateFormatter.string(from: Date())
                                         newPost.postTitle = "Ride Report"
                                         newPost.postText = "\(selectionOutputFlight) \(selectedModerate.rawValue.capitalized)"
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Turbulence"
                                         newPost.location = selectedWaypoint

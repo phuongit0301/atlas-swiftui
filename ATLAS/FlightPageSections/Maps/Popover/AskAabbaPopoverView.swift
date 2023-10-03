@@ -97,7 +97,7 @@ struct AskAabbaPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Ask Aabba"
                                         newPost.postText = tfPost
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Ask Aabba"
                                         newPost.location = selectedStation?.airportId

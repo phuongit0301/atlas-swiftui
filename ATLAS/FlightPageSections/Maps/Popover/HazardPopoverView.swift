@@ -97,7 +97,7 @@ struct HazardPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Hazard"
                                         newPost.postText = tfPost
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Hazard"
                                         newPost.location = selectedStation?.airportId

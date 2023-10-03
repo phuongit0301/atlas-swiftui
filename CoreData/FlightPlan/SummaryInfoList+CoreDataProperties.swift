@@ -41,6 +41,7 @@ extension SummaryInfoList {
     @NSManaged public var model: String?
     @NSManaged public var aircraft: String?
     @NSManaged public var flightTime: String?
+    @NSManaged public var route: String?
     
     public var unwrappedBlkTime: String {
         blkTime ?? ""
@@ -136,6 +137,10 @@ extension SummaryInfoList {
     
     public var unwrappedFlightTime: String {
         flightTime ?? "00:00"
+    }
+    
+    public var unwrappedRoute: String {
+        route ?? ""
     }
 }
 

@@ -105,7 +105,7 @@ struct CongestionPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Arrival Delay"
                                         newPost.postText = "Arrival Delay \(selectedTime * 5) mins"
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Congestion"
                                         newPost.location = selectedStation?.airportId

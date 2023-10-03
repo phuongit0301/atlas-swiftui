@@ -68,7 +68,7 @@ struct RunwayPopoverView: View {
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Dry"
-                            newPost.upvoteCount = "0"
+                            newPost.upvoteCount = 0
                             newPost.commentCount = "0"
                             newPost.category = "Runway"
                             newPost.location = selectedStation?.airportId
@@ -114,7 +114,7 @@ struct RunwayPopoverView: View {
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Damp"
-                            newPost.upvoteCount = "0"
+                            newPost.upvoteCount = 0
                             newPost.commentCount = "0"
                             newPost.category = "Runway"
                             newPost.location = selectedStation?.airportId
@@ -160,7 +160,7 @@ struct RunwayPopoverView: View {
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Wet"
-                            newPost.upvoteCount = "0"
+                            newPost.upvoteCount = 0
                             newPost.commentCount = "0"
                             newPost.category = "Runway"
                             newPost.location = selectedStation?.airportId
@@ -238,7 +238,7 @@ struct RunwayPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Runway condition"
                                         newPost.postText = "Slippery"
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Runway"
                                         newPost.location = selectedStation?.airportId

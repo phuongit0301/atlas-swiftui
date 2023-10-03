@@ -77,7 +77,7 @@ struct ModalCommentView: View {
                         
                         HStack {
                             Button(action: {
-                                post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                post.upvoteCount = post.upvoteCount + 1
 //                                posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
                                 coreDataModel.save()
                                 
@@ -88,7 +88,7 @@ struct ModalCommentView: View {
                                         .scaledToFit()
                                         .aspectRatio(contentMode: .fit)
                                     
-                                    Text(post.unwrappedUpvoteCount)
+                                    Text("\(post.upvoteCount)")
                                         .font(Font.custom("SF Pro", size: 13).weight(.medium))
                                         .foregroundColor(.black)
                                 }

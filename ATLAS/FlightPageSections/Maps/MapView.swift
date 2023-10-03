@@ -191,8 +191,10 @@ struct MapViewModal: View {
                                             Divider().padding(.horizontal, -16)
                                                 
                                             Button(action: {
-                                                self.selectedWeather.toggle()
-                                                self.updateMapOverlayViews()
+                                                if coreDataModel.image != nil {
+                                                    self.selectedWeather.toggle()
+                                                    self.updateMapOverlayViews()
+                                                }
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -477,6 +479,10 @@ struct MapViewModal: View {
             }
         }.onAppear {
             updateMapOverlayViews()
+            if coreDataModel.dataSummaryInfo.route != "" {
+                tfRoute = coreDataModel.dataSummaryInfo.route ?? ""
+                selectedAddRoute = true
+            }
         }.onChange(of: mapIconModel.num) { _ in
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
         }
@@ -485,7 +491,7 @@ struct MapViewModal: View {
             updateMapOverlayViews()
         }
         .onChange(of: isLoading) {newValue in
-            if !newValue {
+            if !newValue && coreDataModel.image != nil {
                 mapView.removeOverlays(mapView.overlays)
                 if selectedWeather { addOverlay() }
             }
@@ -498,8 +504,9 @@ struct MapViewModal: View {
     func updateMapOverlayViews() {
       mapView.removeAnnotations(mapView.annotations)
       mapView.removeOverlays(mapView.overlays)
-
-      if selectedWeather { addOverlay() }
+        if coreDataModel.image != nil {
+            if selectedWeather { addOverlay() }
+        }
       if selectedAddRoute { addRoute() }
       if selectedWaypoint { addWaypoint() }
       if selectedAirport { addAirportColor() }

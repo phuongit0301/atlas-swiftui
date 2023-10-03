@@ -108,7 +108,7 @@ struct WeatherPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Weather Observation"
                                         newPost.postText = "\(selectionOutputFlight) \(tfPost)"
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Weather"
                                         newPost.location = selectedWaypoint

@@ -546,6 +546,15 @@ struct ITrafficData: Codable {
     var colour: String
 }
 
+struct ITrafficDataResponseAPI: Codable {
+    let traffic_data: [ITrafficData]
+}
+
+struct ITrafficDataResponse: Codable {
+    let success: Bool
+    let data: [ITrafficData]
+}
+
 struct IAabbaPostCommentData: Codable {
     var comment_id: String
     var post_id: String
@@ -561,7 +570,7 @@ struct IAabbaPostData: Codable {
     var post_date: String
     var post_title: String
     var post_text: String
-    var upvote_count: String
+    var upvote_count: Int
     var comment_count: String
     var category: String
     var username: String
@@ -580,7 +589,7 @@ struct IAabbaDataJson: Codable {
     var aabba_data: [String: [IAabbaData]]
 }
 
-struct IAabbaDataJsonRequest: Codable {
+struct IAabbaDataJsonResponse: Codable {
     var aabba_data: [IAabbaData]
 }
 
@@ -600,6 +609,14 @@ struct IMapDataModel: Decodable {
     let traffic_data: [ITrafficData]
     let aabba_data: [IAabbaData]
     let all_waypoints_data: [IWaypointData]
+    let all_airports_data: [IAirportData]
+}
+
+struct IWaypointDataJsonResponse: Decodable {
+    let all_waypoints_data: [IWaypointData]
+}
+
+struct IAirportDataJsonResponse: Decodable {
     let all_airports_data: [IAirportData]
 }
 

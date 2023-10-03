@@ -106,7 +106,7 @@ struct VisibilityPopoverView: View {
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Runway Visibility"
                                         newPost.postText = "\(selectedRunway)nm"
-                                        newPost.upvoteCount = "0"
+                                        newPost.upvoteCount = 0
                                         newPost.commentCount = "0"
                                         newPost.category = "Visibility"
                                         newPost.location = airportId

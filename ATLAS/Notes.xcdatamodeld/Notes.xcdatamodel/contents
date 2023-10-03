@@ -28,7 +28,7 @@
         <attribute name="postText" optional="YES" attributeType="String"/>
         <attribute name="postTitle" optional="YES" attributeType="String"/>
         <attribute name="postUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="upvoteCount" optional="YES" attributeType="String"/>
+        <attribute name="upvoteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaComment" inverseName="posts" inverseEntity="AabbaComment"/>
@@ -360,13 +360,12 @@
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
-        <attribute name="arrAirport" optional="YES" attributeType="String"/>
-        <attribute name="arrMetar" optional="YES" attributeType="String"/>
-        <attribute name="arrTaf" optional="YES" attributeType="String"/>
-        <attribute name="depAirport" optional="YES" attributeType="String"/>
-        <attribute name="depMetar" optional="YES" attributeType="String"/>
-        <attribute name="depTaf" optional="YES" attributeType="String"/>
+        <attribute name="airport" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="metar" optional="YES" attributeType="String"/>
+        <attribute name="std" optional="YES" attributeType="String"/>
+        <attribute name="taf" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String"/>
@@ -540,6 +539,7 @@
         <attribute name="model" optional="YES" attributeType="String"/>
         <attribute name="planNo" optional="YES" attributeType="String"/>
         <attribute name="pob" optional="YES" attributeType="String"/>
+        <attribute name="route" optional="YES" attributeType="String"/>
         <attribute name="staLocal" optional="YES" attributeType="String"/>
         <attribute name="staUTC" optional="YES" attributeType="String"/>
         <attribute name="stdLocal" optional="YES" attributeType="String"/>

@@ -221,28 +221,29 @@ class CoreDataModelState: ObservableObject {
     
     @MainActor
     func checkAndSyncData() async {
-        dataFPEnroute = readEnrouteList()
+        dataTrafficMap = readDataTrafficMapList()
         
-        if dataFPEnroute.count == 0 {
+        if dataTrafficMap.count == 0 {
             self.loadingInit = true
             Task {
-                let data = await remoteService.getFlightPlanData()
+//                let data = await remoteService.getFlightPlanData()
                 let response = await remoteService.getFuelData()
                 let responseMap = await remoteService.getMapData()
                 let responseLogbook = await remoteService.getLogbookData()
                 let responseRecency = await remoteService.getRecencyData()
                 
                 DispatchQueue.main.async {
-                    if let waypointsData = data?.waypointsData {
-                        self.initDataEnroute(waypointsData)
-                    }
-
-                    if let infoData = data?.infoData {
-                        self.initDataSummaryInfo(infoData)
-                    }
-                    
-                    if let routeData = data?.routeData {
-                        self.initDataSummaryRoute(routeData)
+                    self.initDataSummaryInfo()
+//                    if let waypointsData = data?.waypointsData {
+//                        self.initDataEnroute(waypointsData)
+//                    }
+//
+//                    if let infoData = data?.infoData {
+//                        self.initDataSummaryInfo(infoData)
+//                    }
+//
+//                    if let routeData = data?.routeData {
+//                        self.initDataSummaryRoute(routeData)
 ////                        self.initDataWaypoint(routeData.waypoints)
 //                        let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
 //                        let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
@@ -255,7 +256,7 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataAirportColor(airportDataColor)
 //                        self.initDataTraffic(trafficData)
 //                        self.initDataAabba(dataAabba)
-                    }
+//                    }
                     
                     if let trafficData = responseMap?.traffic_data {
                         self.initDataTraffic(trafficData)
@@ -301,33 +302,33 @@ class CoreDataModelState: ObservableObject {
                     self.initDataNoteAabbaEnroute(postData.enroute)
                     self.initDataNoteAabbaArrival(postData.arrival)
 
-                    if let perfData = data?.perfData {
-                        self.initDataPerfData(perfData)
-
-//                        self.initDataPerfInfo(perfData)
-
-                        self.dataPerfWeight = self.readPerfWeight()
-
-//                        self.initDataPerfWeight(perfData)
-                    }
-
-//                    if let fuelData = data?.fuelData {
-//                        self.initDataFuelList(fuelData)
+//                    if let perfData = data?.perfData {
+//                        self.initDataPerfData(perfData)
+//
+////                        self.initDataPerfInfo(perfData)
+//
+//                        self.dataPerfWeight = self.readPerfWeight()
+//
+////                        self.initDataPerfWeight(perfData)
 //                    }
-
-                    if let altnData = data?.altnData {
-                        self.dataAltnList = self.readAltnList()
-                        self.initDataAltn(altnData)
-                    }
-
-                    if let notamsData = data?.notamsData {
-                        self.initDataNotams(notamsData)
-                    }
-
-                    if let metarTafData = data?.metarTafData {
-                        self.initDataMetarTaf(metarTafData)
-                        self.initDataAltnTaf(metarTafData)
-                    }
+//
+////                    if let fuelData = data?.fuelData {
+////                        self.initDataFuelList(fuelData)
+////                    }
+//
+//                    if let altnData = data?.altnData {
+//                        self.dataAltnList = self.readAltnList()
+//                        self.initDataAltn(altnData)
+//                    }
+//
+//                    if let notamsData = data?.notamsData {
+//                        self.initDataNotams(notamsData)
+//                    }
+//
+//                    if let metarTafData = data?.metarTafData {
+//                        self.initDataMetarTaf(metarTafData)
+//                        self.initDataAltnTaf(metarTafData)
+//                    }
                     if let historicalDelays = response?.historicalDelays {
                         self.initHistoricalDelays(historicalDelays)
                     }
@@ -407,8 +408,8 @@ class CoreDataModelState: ObservableObject {
             self.dataRecencyExpiry = self.readDataRecencyExpiry()
             
             self.dataAlternate = self.readDataAlternate()
-//            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/1694739600/8000/2/0_1.png")
-            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
+            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/3e919cac9c01/8000/2/0_1.png")
+//            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=51689caed7a11007a1c5dd75a7678b5c")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
             self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
@@ -790,25 +791,42 @@ class CoreDataModelState: ObservableObject {
         updateValues(0, dataFPEnroute)
     }
     
-    func initDataSummaryInfo(_ infoData: IInfoDataResponseModel) {
+    func initDataSummaryInfo() {
         let newObj = SummaryInfoList(context: service.container.viewContext)
         newObj.id = UUID()
-        newObj.planNo = infoData.planNo
-        newObj.fltNo = infoData.fltNo
-        newObj.tailNo = infoData.tailNo
-        newObj.dep = infoData.dep
-        newObj.dest = infoData.dest
-        newObj.depICAO = infoData.depICAO
-        newObj.destICAO = infoData.destICAO
-        newObj.flightDate = infoData.flightDate
-        newObj.stdUTC = infoData.STDUTC
-        newObj.staUTC = infoData.STAUTC
-        newObj.stdLocal = infoData.STDLocal
-        newObj.staLocal = infoData.STALocal
-        newObj.blkTime = infoData.blkTime
-        newObj.fltTime = infoData.fltTime
-        newObj.timeDiffArr = infoData.time_diff_arr
-        newObj.timeDiffDep = infoData.time_diff_dep
+        newObj.planNo = ""
+        newObj.fltNo = "TR753"
+        newObj.tailNo = ""
+        newObj.dep = "BKK"
+        newObj.dest = "SIN"
+        newObj.depICAO = "VTBS"
+        newObj.destICAO = "WSSS"
+        newObj.flightDate = "2023-10-04"
+        newObj.stdUTC = "2023-10-04 0815"
+        newObj.staUTC = "2023-10-04 1015"
+        newObj.stdLocal = "2023-10-04 1515"
+        newObj.staLocal = "2023-10-04 1615"
+        newObj.blkTime = "02:00"
+        newObj.fltTime = "01:45"
+        newObj.timeDiffArr = "8"
+        newObj.timeDiffDep = "9"
+        
+//        newObj.planNo = infoData.planNo
+//        newObj.fltNo = infoData.fltNo
+//        newObj.tailNo = infoData.tailNo
+//        newObj.dep = infoData.dep
+//        newObj.dest = infoData.dest
+//        newObj.depICAO = infoData.depICAO
+//        newObj.destICAO = infoData.destICAO
+//        newObj.flightDate = infoData.flightDate
+//        newObj.stdUTC = infoData.STDUTC
+//        newObj.staUTC = infoData.STAUTC
+//        newObj.stdLocal = infoData.STDLocal
+//        newObj.staLocal = infoData.STALocal
+//        newObj.blkTime = infoData.blkTime
+//        newObj.fltTime = infoData.fltTime
+//        newObj.timeDiffArr = infoData.time_diff_arr
+//        newObj.timeDiffDep = infoData.time_diff_dep
         
         do {
             // Persist the data in this managed object context to the underlying store
@@ -1030,7 +1048,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postDate = post.post_date
                         newPost.postTitle = post.post_title
                         newPost.postText = post.post_text
-                        newPost.upvoteCount = post.upvote_count
+                        newPost.upvoteCount = Int32(post.upvote_count)
                         newPost.commentCount = post.comment_count
                         newPost.category = post.category
                         newPost.postUpdated = Date()
@@ -4205,5 +4223,149 @@ class CoreDataModelState: ObservableObject {
         }
         
         return (postList: postList, postListRef: postListRef)
+    }
+    
+    func deleteAllTrafficMap() async {
+        let fetchRequest: NSFetchRequest<TrafficMapList>
+        fetchRequest = TrafficMapList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllAabbaCommentList() async {
+        let fetchRequest: NSFetchRequest<AabbaCommentList>
+        fetchRequest = AabbaCommentList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllAabbaPostList() async {
+        let fetchRequest: NSFetchRequest<AabbaPostList>
+        fetchRequest = AabbaPostList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllAabbMapList() async {
+        let fetchRequest: NSFetchRequest<AabbaMapList>
+        fetchRequest = AabbaMapList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllWaypointList() async {
+        let fetchRequest: NSFetchRequest<WaypointMapList>
+        fetchRequest = WaypointMapList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    func deleteAllAirportList() async {
+        let fetchRequest: NSFetchRequest<AirportMapList>
+        fetchRequest = AirportMapList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Altn Taf : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Traffic Map update: \(error)")
+        }
     }
 }

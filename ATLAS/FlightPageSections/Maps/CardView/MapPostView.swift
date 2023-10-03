@@ -54,7 +54,7 @@ struct MapPostView: View {
                     
                     HStack {
                         Button(action: {
-                            postSort[index].upvoteCount = "\(((postSort[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                            postSort[index].upvoteCount = postSort[index].upvoteCount + 1
                             coreDataModel.save()
                             
                             mapIconModel.num += 1
@@ -64,7 +64,7 @@ struct MapPostView: View {
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fit)
                                 
-                                Text(posts[index].unwrappedUpvoteCount)
+                                Text("\(posts[index].upvoteCount)")
                                     .font(Font.custom("SF Pro", size: 13).weight(.medium))
                                     .foregroundColor(.black)
                             }
