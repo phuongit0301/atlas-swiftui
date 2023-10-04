@@ -10490,6 +10490,111 @@
                   endingLineNumber = "544"
                   offsetFromSymbolStart = "60">
                </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - bf2253de5eaef58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "3388">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - 9bb1b77797549788"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(33) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - cc5f95cff7d78c40"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt; in closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - 8cc3a2c77b29b31b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for implicit closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt; in closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - 234d951bd102ef15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for implicit closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt; in closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - 24772d2ee7682a08"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for implicit closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt; in closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "045A597B-CF45-4854-910B-6FA895313E7F - 198c945b80325c55"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "partial apply forwarder for implicit closure #1 @Sendable () async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt; in closure #1 @Sendable () async throws -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "545"
+                  endingLineNumber = "545"
+                  offsetFromSymbolStart = "60">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

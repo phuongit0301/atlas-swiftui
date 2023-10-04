@@ -13,20 +13,14 @@ struct LimitationRowView: View {
     let width: CGFloat
     @State private var selectedLimitation = ""
     
-    @State var currentLimitation = 0
-    @State var minLimitation = 0
-    @State var maxLimitation = 900
+    @State var currentLimitation = "000"
     
-    @State var currentDuration = 0
-    @State var minDuration = 0
-    @State var maxDuration = 365
+    @State var currentDuration = "000"
     
     @State var currentStartDate = ""
     @State var currentEndDate = ""
     
-    @State var currentCompleted = 0
-    @State var minCompleted = 0
-    @State var maxCompleted = 900
+    @State var currentCompleted = "000"
     
     @State var showLimitationModal = false
     @State var showDurationModal = false
@@ -141,10 +135,10 @@ struct LimitationRowView: View {
                 currentEndDate = dateFormatter.string(from: Date())
             }
             .formSheet(isPresented: $showLimitationModal) {
-                LimitationNumberModalView(isShowing: $showLimitationModal, currentNumber: $currentLimitation, header: "Limitation", minNumber: minLimitation, maxNumber: maxLimitation).interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showLimitationModal, selectionInOut: $currentLimitation, header: "Limitation").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showDurationModal) {
-                LimitationNumberModalView(isShowing: $showDurationModal, currentNumber: $currentDuration, header: "Duration", minNumber: minDuration, maxNumber: maxDuration).interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showDurationModal, selectionInOut: $currentDuration, header: "Duration").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showStartDateModal) {
                 LimitationTimeModalView(isShowing: $showStartDateModal, pickerType: $pickerType, currentDate: $currentStartDate, header: "Start Date").interactiveDismissDisabled(true)
@@ -153,7 +147,7 @@ struct LimitationRowView: View {
                 LimitationTimeModalView(isShowing: $showEndDateModal, pickerType: $pickerType, currentDate: $currentEndDate, header: "End Date").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showCompletedModal) {
-                LimitationNumberModalView(isShowing: $showCompletedModal, currentNumber: $currentCompleted, header: "Completed", minNumber: minCompleted, maxNumber: maxCompleted).interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed").interactiveDismissDisabled(true)
             }
     }
     

@@ -14,20 +14,20 @@ struct ModelRowView: View {
     let width: CGFloat
     @State private var selectedModel = ""
     
-    @State var currentPic = "00:00"
-    @State var currentPicUs = "00:00"
-    @State var currentP1 = "00:00"
-    @State var currentP2 = "00:00"
-    @State var currentInstr = "00:00"
-    @State var currentExam = "00:00"
-    @State var currentTotal = "00:00"
+    @State var currentPic = "0000:00"
+    @State var currentPicUs = "0000:00"
+    @State var currentP1 = "0000:00"
+    @State var currentP2 = "0000:00"
+//    @State var currentInstr = "00:00"
+//    @State var currentExam = "00:00"
+    @State var currentTotal = "0000:00"
     
     @State var showPicModal = false
     @State var showPicUsModal = false
     @State var showP1Modal = false
     @State var showP2Modal = false
-    @State var showInstrModal = false
-    @State var showExamModal = false
+//    @State var showInstrModal = false
+//    @State var showExamModal = false
     @State var showTotalModal = false
     
     var body: some View {
@@ -68,31 +68,31 @@ struct ModelRowView: View {
                     Text("PIC")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
                     Text("PIC(u/us)")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
                     Text("P1")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
                     Text("P2")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
-                    Text("Instr")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
-                    Text("Exam")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+//                    Text("Instr")
+//                        .font(.system(size: 15, weight: .medium))
+//                        .foregroundColor(Color.black)
+//                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+//                    Text("Exam")
+//                        .font(.system(size: 15, weight: .medium))
+//                        .foregroundColor(Color.black)
+//                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
                     Text("Total Time (P1+P2)")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
                 }.frame(height: 44, alignment: .leading)
                 
                 HStack {
@@ -100,37 +100,37 @@ struct ModelRowView: View {
                         FlightTimeButtonTimeStepper(onToggle: onPic, value: currentPic)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onPicUs, value: currentPicUs)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onP1, value: currentP1)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onP2, value: currentP2)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
-                    HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onInstr, value: currentInstr)
-                            .fixedSize()
-                        Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
-                    HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onExam, value: currentExam)
-                            .fixedSize()
-                        Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
+//                    HStack {
+//                        FlightTimeButtonTimeStepper(onToggle: onInstr, value: currentInstr)
+//                            .fixedSize()
+//                        Spacer()
+//                    }.frame(width: calculateWidthSummary(width - 64, 5))
+//                    HStack {
+//                        FlightTimeButtonTimeStepper(onToggle: onExam, value: currentExam)
+//                            .fixedSize()
+//                        Spacer()
+//                    }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onTotal, value: currentTotal)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 7))
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
                 }.frame(height: 44, alignment: .leading)
             }.frame(maxWidth: .infinity)
             
@@ -145,27 +145,28 @@ struct ModelRowView: View {
                     .foregroundColor(.white)
             )
             .formSheet(isPresented: $showPicModal) {
-                OnboardingTimeModalView(isShowing: $showPicModal, currentDate: $currentPic)
+                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic)
             }
             .formSheet(isPresented: $showPicUsModal) {
-                OnboardingTimeModalView(isShowing: $showPicUsModal, currentDate: $currentPicUs)
+                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs)
             }
             .formSheet(isPresented: $showP1Modal) {
-                OnboardingTimeModalView(isShowing: $showP1Modal, currentDate: $currentP1)
+                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1)
             }
             .formSheet(isPresented: $showP2Modal) {
-                OnboardingTimeModalView(isShowing: $showP2Modal, currentDate: $currentP2)
+                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2)
             }
-            .formSheet(isPresented: $showInstrModal) {
-                OnboardingTimeModalView(isShowing: $showInstrModal, currentDate: $currentInstr)
-            }
-            .formSheet(isPresented: $showExamModal) {
-                OnboardingTimeModalView(isShowing: $showExamModal, currentDate: $currentExam)
-            }
+//            .formSheet(isPresented: $showInstrModal) {
+//                OnboardingTimeModalView(isShowing: $showInstrModal, currentDate: $currentInstr)
+//            }
+//            .formSheet(isPresented: $showExamModal) {
+//                OnboardingTimeModalView(isShowing: $showExamModal, currentDate: $currentExam)
+//            }
             .formSheet(isPresented: $showTotalModal) {
-                OnboardingTimeModalView(isShowing: $showTotalModal, currentDate: $currentTotal)
+                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal)
             }
     }
+    
     func onPic() {
         self.showPicModal.toggle()
     }
@@ -182,13 +183,13 @@ struct ModelRowView: View {
         self.showP2Modal.toggle()
     }
     
-    func onInstr() {
-        self.showInstrModal.toggle()
-    }
-    
-    func onExam() {
-        self.showExamModal.toggle()
-    }
+//    func onInstr() {
+//        self.showInstrModal.toggle()
+//    }
+//
+//    func onExam() {
+//        self.showExamModal.toggle()
+//    }
     
     func onTotal() {
         self.showTotalModal.toggle()

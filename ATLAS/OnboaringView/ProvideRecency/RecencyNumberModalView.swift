@@ -1,5 +1,5 @@
 //
-//  LimitationNumberModalView.swift
+//  RecencyNumberModalView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 01/10/2023.
@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-struct LimitationNumberModalView: View {
+struct RecencyNumberModalView: View {
     @Binding var isShowing: Bool
     @Binding var selectionInOut: String
     let header: String
     @State var itemsA: ClosedRange<Int> = 0...9
     @State var itemsB: ClosedRange<Int> = 0...9
-    @State var itemsC: ClosedRange<Int> = 0...9
     @State private var selectionA = 0
     @State private var selectionB = 0
-    @State private var selectionC = 0
     
     var body: some View {
         VStack {
@@ -35,7 +33,7 @@ struct LimitationNumberModalView: View {
                 
                 Button(action: {
                     // assign value from modal to entries form
-                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)"
+                    self.selectionInOut = "\(selectionA)\(selectionB)"
                     self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -61,22 +59,14 @@ struct LimitationNumberModalView: View {
                         }
                     }.pickerStyle(.wheel)
                     .labelsHidden()
-                    
-                    Picker(selection: $selectionC, label: Text("")) {
-                        ForEach(itemsC, id: \.self) {
-                            Text("\($0)").tag("\($0)")
-                        }
-                    }.pickerStyle(.wheel)
-                    .labelsHidden()
                 }
             }
             Spacer()
             
         }.onAppear {
-            if selectionInOut.count == 3 {
+            if selectionInOut.count == 2 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
-                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
             }
         }
     }

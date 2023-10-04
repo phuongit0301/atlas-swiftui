@@ -13,6 +13,7 @@ struct ExpiryRowView: View {
     let width: CGFloat
     @State private var selectedType = ""
     @State private var txtRequirement = ""
+    @State private var txtDocumentType = ""
     
     @State var currentDate = ""
     @State var showModal = false
@@ -34,11 +35,7 @@ struct ExpiryRowView: View {
                 Text("Document Type").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                 
                 HStack(spacing: 8) {
-                    Picker("", selection: $selectedType) {
-                        ForEach(DataExpiryDropdown, id: \.self) {
-                            Text($0).tag($0)
-                        }
-                    }.pickerStyle(MenuPickerStyle())
+                    TextField("Enter Document Type", text: $txtDocumentType)
                 }.frame(height: 44)
                     .padding(.horizontal)
                     .background(Color.white)
@@ -92,7 +89,7 @@ struct ExpiryRowView: View {
             .formSheet(isPresented: $showModal) {
                 LimitationTimeModalView(isShowing: $showModal, pickerType: $pickerType, currentDate: $currentDate, header: "Expiry Date").interactiveDismissDisabled(true)
             }
-            .keyboardAdaptive()
+//            .keyboardAdaptive()
     }
     
     func onDate() {

@@ -24,6 +24,7 @@
 		3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */; };
 		3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */; };
 		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
+		3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
@@ -473,6 +474,7 @@
 		3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPicker.swift; sourceTree = "<group>"; };
 		3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPickerString.swift; sourceTree = "<group>"; };
 		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
+		3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyNumberModalView.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
@@ -1523,6 +1525,7 @@
 				3E7292562ACAB100000FF295 /* ProvideRecencyView.swift */,
 				3E7292582ACAB114000FF295 /* RecencyRowView.swift */,
 				3E72925A2ACAB4BC000FF295 /* RecencyModelView.swift */,
+				3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */,
 			);
 			path = ProvideRecency;
 			sourceTree = "<group>";
@@ -2254,6 +2257,7 @@
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
 				3E7291282ABEA46C000FF295 /* RecencyList+CoreDataClass.swift in Sources */,
 				3E7292572ACAB100000FF295 /* ProvideRecencyView.swift in Sources */,
+				3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
 				3E7291E12AC68434000FF295 /* ClipboardDepartureNoteView.swift in Sources */,
 				3EEBE68A2AB67BED00421AFF /* TurbulencePopoverView.swift in Sources */,

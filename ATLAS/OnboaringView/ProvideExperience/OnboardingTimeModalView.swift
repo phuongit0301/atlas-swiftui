@@ -10,10 +10,19 @@ import SwiftUI
 struct OnboardingTimeModalView: View {
     @Binding var isShowing: Bool
     
-    @Binding var currentDate: String
-    @State private var currentDateTemp = Date()
-    
-    let dateFormatterTime = DateFormatter()
+    @Binding var selectionInOut: String
+    @State var itemsA: ClosedRange<Int> = 0...9
+    @State var itemsB: ClosedRange<Int> = 0...9
+    @State var itemsC: ClosedRange<Int> = 0...9
+    @State var itemsD: ClosedRange<Int> = 0...9
+    @State var itemsE: ClosedRange<Int> = 0...9
+    @State var itemsF: ClosedRange<Int> = 0...9
+    @State private var selectionA = 0
+    @State private var selectionB = 0
+    @State private var selectionC = 0
+    @State private var selectionD = 0
+    @State private var selectionE = 0
+    @State private var selectionF = 0
     
     var body: some View {
         VStack {
@@ -23,19 +32,14 @@ struct OnboardingTimeModalView: View {
                 }) {
                     Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                 }
-                
                 Spacer()
                 
-                Text("Time").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                Text("Onboarding").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                 
                 Spacer()
-                
                 Button(action: {
-                    // assign value from modal to entries form
-                    dateFormatter.dateFormat = "HH:mm"
-                    self.currentDate = dateFormatter.string(from: currentDateTemp)
-                    
-                    self.isShowing.toggle()
+                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)\(selectionD):\(selectionE)\(selectionF)"
+                    self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                 }
@@ -43,17 +47,59 @@ struct OnboardingTimeModalView: View {
                 .background(.white)
                 .roundedCorner(12, corners: [.topLeft, .topRight])
             
-            Divider()
-            
-            VStack {
-                DatePicker("", selection: $currentDateTemp, displayedComponents: [ .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
-                    .environment(\.locale, Locale(identifier: "en_GB"))
+            HStack {
+                Picker(selection: $selectionA, label: Text("")) {
+                    ForEach(itemsA, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionB, label: Text("")) {
+                    ForEach(itemsB, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionC, label: Text("")) {
+                    ForEach(itemsC, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionD, label: Text("")) {
+                    ForEach(itemsD, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionE, label: Text("")) {
+                    ForEach(itemsE, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
+                
+                Picker(selection: $selectionF, label: Text("")) {
+                    ForEach(itemsF, id: \.self) {
+                        Text("\($0)").tag("\($0)")
+                    }
+                }.pickerStyle(.wheel)
+                .labelsHidden()
             }
             Spacer()
-            
         }.onAppear {
-            dateFormatter.dateFormat = "HH:mm"
-            currentDateTemp = dateFormatter.date(from: currentDate)!
+            if selectionInOut.count == 6 {
+                self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
+                self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
+                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
+                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
+                self.selectionE = Int(selectionInOut.suffix(selectionInOut.count - 5).prefix(1)) ?? 0
+                self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 6).prefix(1)) ?? 0
+            }
         }
     }
 }

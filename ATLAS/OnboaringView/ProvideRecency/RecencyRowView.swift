@@ -15,19 +15,13 @@ struct RecencyRowView: View {
     
     @State var currentModel = ""
     
-    @State var currentRequirement = 0
-    @State var minRequirement = 0
-    @State var maxRequirement = 50
+    @State var currentRequirement = "00"
     
-    @State var currentFrequency = 0
-    @State var minFrequency = 0
-    @State var maxFrequency = 50
+    @State var currentFrequency = "00"
     
     @State var currentPeriodDate = ""
     
-    @State var currentCompleted = 0
-    @State var minCompleted = 0
-    @State var maxCompleted = 900
+    @State var currentCompleted = "00"
     
     @State var showModelModal = false
     @State var showRequirementModal = false
@@ -144,16 +138,16 @@ struct RecencyRowView: View {
                 RecencyModelView(isShowing: $showModelModal, currentItem: $currentModel, data: DataRecencyModelDropdown, header: "Model").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showRequirementModal) {
-                LimitationNumberModalView(isShowing: $showRequirementModal, currentNumber: $currentRequirement, header: "Requirement", minNumber: minRequirement, maxNumber: maxRequirement).interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showRequirementModal, selectionInOut: $currentRequirement, header: "Requirement").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showFrequencyModal) {
-                LimitationNumberModalView(isShowing: $showFrequencyModal, currentNumber: $currentFrequency, header: "Frequency", minNumber: minFrequency, maxNumber: maxFrequency).interactiveDismissDisabled(true)
+                RecencyNumberModalView(isShowing: $showFrequencyModal, selectionInOut: $currentFrequency, header: "Frequency").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showPeriodDateModal) {
                 LimitationTimeModalView(isShowing: $showPeriodDateModal, pickerType: $pickerType, currentDate: $currentPeriodDate, header: "Period Date").interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showCompletedModal) {
-                LimitationNumberModalView(isShowing: $showCompletedModal, currentNumber: $currentCompleted, header: "Completed", minNumber: minCompleted, maxNumber: maxCompleted).interactiveDismissDisabled(true)
+                RecencyNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed").interactiveDismissDisabled(true)
             }
     }
     

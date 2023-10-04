@@ -50,11 +50,11 @@ struct ATLASApp: App {
                 if coreDataModel.loading || coreDataModel.loadingInit {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
-                    if userID == "" {
+                    if userID != "" {
                         ContentView()
                     } else {
 //                        LoginView()
-//                        OnboardingView()
+                        OnboardingView()
                     }
                 }
             }.onAppear {
