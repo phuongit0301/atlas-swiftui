@@ -15,9 +15,9 @@ struct NotamSubSectionView: View {
     // initialise state variables
     @State private var isSortDate = true
     @State var arrDepNotams = [NotamsDataList]()
-    @State var arrEnrNotams = [NotamsDataList]()
     @State var arrArrNotams = [NotamsDataList]()
-    @State var arrDestNotams = [NotamsDataList]()
+    @State var arrEnrNotams = [String: [NotamsDataList]]()
+    @State var arrDestNotams = [String: [NotamsDataList]]()
     
     //For collpase and expand
     @State private var isDepShow = true
@@ -154,7 +154,7 @@ struct NotamSubSectionView: View {
                     HStack(alignment: .center, spacing: 0) {
                         HStack(alignment: .center, spacing: 8) {
                             Text("Enroute Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-                            
+
                             if isEnrShow {
                                 Image(systemName: "chevron.down")
                                     .foregroundColor(Color.blue)
@@ -171,9 +171,9 @@ struct NotamSubSectionView: View {
                         .onTapGesture {
                             self.isEnrShow.toggle()
                         }
-                        
+
                         Spacer()
-                        
+
                         HStack(alignment: .center, spacing: 16) {
                             HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
@@ -181,12 +181,12 @@ struct NotamSubSectionView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.padding(.horizontal)
-                                
+
                                 Text("Most Relevant")
                                     .font(.system(size: 17, weight: .semibold))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.fixedSize()
-                            
+
                             Picker("", selection: $selectionEnr) {
                                 Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                                 ForEach(notamSection.dataDropDown, id: \.self) {
@@ -195,46 +195,10 @@ struct NotamSubSectionView: View {
                             }
                         }.fixedSize()
                     }.frame(height: 54)
-                    
+
                     if isEnrShow {
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
-                                Spacer()
-                            }.frame(height: 44)
-                            
-                            if arrEnrNotams.count > 0 {
-                                Divider().padding(.horizontal, -16)
-                            }
-                            
-                            ForEach(arrEnrNotams.indices, id: \.self) { index in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(arrEnrNotams[index].unwrappedNotam)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        arrEnrNotams[index].isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                        coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
-                                    }) {
-                                        if arrEnrNotams[index].isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.bottom, 8)
-                                
-                                if arrEnrNotams.count > 0 && index + 1 < arrEnrNotams.count {
-                                    Divider().padding(.horizontal, -16)
-                                }
-                            }
+                        ForEach(Array(arrEnrNotams.keys), id: \.self) {key in
+                            NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], key: key)
                         }
                     }
                 }.padding(.horizontal)
@@ -247,7 +211,7 @@ struct NotamSubSectionView: View {
                     HStack(alignment: .center, spacing: 0) {
                         HStack(alignment: .center, spacing: 8) {
                             Text("Arrival NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-                            
+
                             if isArrShow {
                                 Image(systemName: "chevron.down")
                                     .foregroundColor(Color.blue)
@@ -263,9 +227,9 @@ struct NotamSubSectionView: View {
                             .onTapGesture {
                                 self.isArrShow.toggle()
                             }
-                        
+
                         Spacer()
-                        
+
                         HStack(alignment: .center, spacing: 16) {
                             HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
@@ -273,12 +237,12 @@ struct NotamSubSectionView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.padding(.horizontal)
-                                
+
                                 Text("Most Relevant")
                                     .font(.system(size: 17, weight: .semibold))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.fixedSize()
-                            
+
                             Picker("", selection: $selectionArr) {
                                 Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                                 ForEach(notamSection.dataDropDown, id: \.self) {
@@ -287,7 +251,7 @@ struct NotamSubSectionView: View {
                             }
                         }.fixedSize()
                     }.frame(height: 54)
-                    
+
                     if isArrShow {
                         VStack(alignment: .leading) {
                             HStack(spacing: 0) {
@@ -296,11 +260,11 @@ struct NotamSubSectionView: View {
                                     .foregroundColor(Color.black)
                                 Spacer()
                             }.frame(height: 44)
-                            
+
                             if arrArrNotams.count > 0 {
                                 Divider().padding(.horizontal, -16)
                             }
-                            
+
                             ForEach(arrArrNotams.indices, id: \.self) { index in
                                 HStack(alignment: .center, spacing: 0) {
                                     // notam text
@@ -322,7 +286,7 @@ struct NotamSubSectionView: View {
                                     }.fixedSize()
                                         .buttonStyle(PlainButtonStyle())
                                 }.padding(.bottom, 8)
-                                
+
                                 if arrArrNotams.count > 0 && index + 1 < arrArrNotams.count {
                                     Divider().padding(.horizontal, -16)
                                 }
@@ -339,7 +303,7 @@ struct NotamSubSectionView: View {
                     HStack(alignment: .center, spacing: 0) {
                         HStack(alignment: .center, spacing: 8) {
                             Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-                            
+
                             if isDestShow {
                                 Image(systemName: "chevron.down")
                                     .foregroundColor(Color.blue)
@@ -355,9 +319,9 @@ struct NotamSubSectionView: View {
                             .onTapGesture {
                                 self.isDestShow.toggle()
                             }
-                        
+
                         Spacer()
-                        
+
                         HStack(alignment: .center, spacing: 16) {
                             HStack(alignment: .center, spacing: 0) {
                                 Toggle(isOn: $isSortDate) {
@@ -365,12 +329,12 @@ struct NotamSubSectionView: View {
                                         .font(.system(size: 17, weight: .regular))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                 }.padding(.horizontal)
-                                
+
                                 Text("Most Relevant")
                                     .font(.system(size: 17, weight: .semibold))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }.fixedSize()
-                            
+
                             Picker("", selection: $selectionDest) {
                                 Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
                                 ForEach(notamSection.dataDropDown, id: \.self) {
@@ -379,46 +343,10 @@ struct NotamSubSectionView: View {
                             }
                         }.fixedSize()
                     }.frame(height: 54)
-                    
+
                     if isDestShow {
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .foregroundColor(Color.black)
-                                Spacer()
-                            }.frame(height: 44)
-                            
-                            if arrArrNotams.count > 0 {
-                                Divider().padding(.horizontal, -16)
-                            }
-                            
-                            ForEach(arrArrNotams.indices, id: \.self) { index in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 15, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        arrArrNotams[index].isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                        coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
-                                    }) {
-                                        if arrArrNotams[index].isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.bottom, 8)
-                                
-                                if arrArrNotams.count > 0 && index + 1 < arrArrNotams.count {
-                                    Divider().padding(.horizontal, -16)
-                                }
-                            }
+                        ForEach(Array(arrDestNotams.keys), id: \.self) {key in
+                            NotamSubSectionRowView(item: arrDestNotams[key] ?? [], key: key)
                         }
                     }
                 }.padding(.horizontal)
@@ -439,69 +367,83 @@ struct NotamSubSectionView: View {
                 }
                 arrDepNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
             }
-            .onChange(of: selectionEnr) { newValue in
-                var temp = [NotamsDataList]()
-                coreDataModel.dataNotams.forEach { item in
-                    let category = item.category ?? ""
-                    
-                    if item.type == "enrNotams" && category == selectionEnr  {
-                        temp.append(item)
-                    }
-                }
-                arrEnrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-            }
+//            .onChange(of: selectionEnr) { newValue in
+//                var temp = [NotamsDataList]()
+//                coreDataModel.dataNotams.forEach { item in
+//                    let category = item.category ?? ""
+//
+//                    if item.type == "enrNotams" && category == selectionEnr  {
+//                        temp.append(item)
+//                    }
+//                }
+//                arrEnrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
+//            }
             .onChange(of: selectionArr) { newValue in
                 var temp = [NotamsDataList]()
                 coreDataModel.dataNotams.forEach { item in
                     let category = item.category ?? ""
-                    
+
                     if item.type == "arrNotams" && category == selectionArr  {
                         temp.append(item)
                     }
                 }
                 arrArrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
             }
-            .onChange(of: selectionDest) { newValue in
-                var temp = [NotamsDataList]()
-                coreDataModel.dataNotams.forEach { item in
-                    let category = item.category ?? ""
-                    
-                    if item.type == "destNotams" && category == selectionDest  {
-                        temp.append(item)
-                    }
-                }
-                arrDestNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-            }
-            .onChange(of: isSortDate) { newValue in
-                arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: newValue)
-                arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: newValue)
-                arrArrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: newValue)
-            }
+//            .onChange(of: selectionDest) { newValue in
+//                var temp = [NotamsDataList]()
+//                coreDataModel.dataNotams.forEach { item in
+//                    let category = item.category ?? ""
+//
+//                    if item.type == "destNotams" && category == selectionDest  {
+//                        temp.append(item)
+//                    }
+//                }
+//                arrDestNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
+//            }
             .onAppear {
                 coreDataModel.dataNotams.forEach { item in
                     if item.type == "arrNotams" {
-                        if item.category == selectionArr {
-                            arrArrNotams.append(item)
-                        }
+                        arrArrNotams.append(item)
                     } else if item.type == "depNotams" {
-                        if item.category == selectionDep {
-                            arrDepNotams.append(item)
-                        }
-                    } else if item.type == "destNotams" {
-                        if item.category == selectionDest {
-                            arrDestNotams.append(item)
+                        arrDepNotams.append(item)
+                    } else if item.type == "enrNotams" {
+                        if let airport = item.airport {
+                            if arrEnrNotams[airport] != nil {
+                                arrEnrNotams[airport]?.append(item)
+                            } else {
+                                arrEnrNotams.updateValue([item], forKey: airport)
+                            }
                         }
                     } else {
-                        arrEnrNotams.append(item)
+                        if let airport = item.airport {
+                            if arrDestNotams[airport] != nil {
+                                arrDestNotams[airport]?.append(item)
+                            } else {
+                                arrDestNotams.updateValue([item], forKey: airport)
+                            }
+                        }
                     }
                 }
+                
                 arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDate)
                 arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDate)
-                arrEnrNotams = sortNotams(notamsDict: arrEnrNotams, sortKey: isSortDate)
-                arrDestNotams = sortNotams(notamsDict: arrDestNotams, sortKey: isSortDate)
+                arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDate)
+                arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDate)
             }
             .navigationTitle("NOTAMS")
             .background(Color(.systemGroupedBackground))
+    }
+    
+    func sortNotamsArray(notamsDict: [String: [NotamsDataList]], sortKey: Bool) -> [String: [NotamsDataList]] {
+        
+        var res = [String: [NotamsDataList]]()
+        
+        for (key, row) in notamsDict {
+            let reponse = sortNotams(notamsDict: row, sortKey: sortKey)
+            res.updateValue(reponse, forKey: key)
+        }
+        
+        return res
     }
     
     func sortNotams(notamsDict: [NotamsDataList], sortKey: Bool) -> [NotamsDataList] {

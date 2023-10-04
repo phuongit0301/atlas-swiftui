@@ -61,6 +61,7 @@ class CoreDataModelState: ObservableObject {
     
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
+    @Published var loadingInitFuel: Bool = false
     @Published var tagList: [TagList] = []
     @Published var tagListCabinDefects: [TagList] = []
     @Published var tagListWeather: [TagList] = []
@@ -232,7 +233,7 @@ class CoreDataModelState: ObservableObject {
             self.loadingInit = true
             Task {
 //                let data = await remoteService.getFlightPlanData()
-                let response = await remoteService.getFuelData()
+//                let response = await remoteService.getFuelData()
 //                let responseMap = await remoteService.getMapData()
                 let responseLogbook = await remoteService.getLogbookData()
                 let responseRecency = await remoteService.getRecencyData()
@@ -334,33 +335,6 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataMetarTaf(metarTafData)
 //                        self.initDataAltnTaf(metarTafData)
 //                    }
-                    if let historicalDelays = response?.historicalDelays {
-                        self.initHistoricalDelays(historicalDelays)
-                    }
-
-                    if let projDelays = response?.projDelays {
-                        self.initProjDelays(projDelays)
-                    }
-
-                    if let taxi = response?.taxi {
-                        self.initProjTaxi(taxi)
-                    }
-
-                    if let trackMiles = response?.trackMiles {
-                        self.initTrackMiles(trackMiles)
-                    }
-
-                    if let enrWX = response?.enrWX {
-                        self.initEnrWX(enrWX)
-                    }
-
-                    if let flightLevel = response?.flightLevel {
-                        self.initFlightLevel(flightLevel)
-                    }
-
-                    if let reciprocalRwy = response?.reciprocalRwy {
-                        self.initReciprocalRwy(reciprocalRwy)
-                    }
 
                     // For init Calendar
                     self.initDataEvent()

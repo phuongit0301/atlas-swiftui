@@ -321,6 +321,7 @@ struct SummarySubSectionView: View {
                                     
                                     HStack {
                                         TextField("Enter route",text: $tfRoute)
+                                            .disabled(!isEdit)
                                             .frame(width: proxy.size.width - 64, alignment: .leading)
                                             .onSubmit {
                                                 if coreDataModel.existDataSummaryInfo {

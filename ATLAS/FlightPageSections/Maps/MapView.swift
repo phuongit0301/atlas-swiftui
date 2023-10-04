@@ -528,24 +528,26 @@ struct MapViewModal: View {
         let departureLatLong = extractLatLong(forSelection: "departure", inDictionaries: coreDataModel.dataAirportColorMap)
         let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataAirportColorMap)
         
-        let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]! as! CLLocationDegrees, longitude: departureLatLong["longitude"]! as! CLLocationDegrees)
-        let firstImage = UIImage(named: "icon_circle_fill_blue")
-//        let firstColorName = departureLatLong["colour"] as? String ?? "black"
-        
-//        if firstColorName.lowercased() == "green" {
-//            firstImage = UIImage(named: "icon_circle_green")
-//        } else if firstColorName.lowercased() == "amber" {
-//            firstImage = UIImage(named: "icon_circle_amber")
-//        } else if firstColorName.lowercased() == "red" {
-//            firstImage = UIImage(named: "icon_circle_red")
-//        }
-        
-        let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: firstImage)
-        locationCoordinate.append(firstCoord)
-        mapView.addAnnotation(firstAnnotation)
-        
-        //Append data to route
-        routeDatas.append(SRoute(name: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: departureLatLong["latitude"] as? String ?? "0", longitude: departureLatLong["longitude"] as? String ?? "0"))
+        if departureLatLong["latitude"] != nil {
+            let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]! as! CLLocationDegrees, longitude: departureLatLong["longitude"]! as! CLLocationDegrees)
+            let firstImage = UIImage(named: "icon_circle_fill_blue")
+    //        let firstColorName = departureLatLong["colour"] as? String ?? "black"
+            
+    //        if firstColorName.lowercased() == "green" {
+    //            firstImage = UIImage(named: "icon_circle_green")
+    //        } else if firstColorName.lowercased() == "amber" {
+    //            firstImage = UIImage(named: "icon_circle_amber")
+    //        } else if firstColorName.lowercased() == "red" {
+    //            firstImage = UIImage(named: "icon_circle_red")
+    //        }
+            
+            let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: firstImage)
+            locationCoordinate.append(firstCoord)
+            mapView.addAnnotation(firstAnnotation)
+            
+            //Append data to route
+            routeDatas.append(SRoute(name: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: departureLatLong["latitude"] as? String ?? "0", longitude: departureLatLong["longitude"] as? String ?? "0"))
+        }
         
         for item in payload {
             if let itemExists = coreDataModel.dataWaypointMap.first(where: {$0.unwrappedName == item}) {
@@ -562,24 +564,26 @@ struct MapViewModal: View {
             }
         }
         
-        let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]! as! CLLocationDegrees, longitude: arrivalLatLong["longitude"]! as! CLLocationDegrees)
-        let lastImage = UIImage(named: "icon_circle_fill_blue")
-//        let lastColorName = arrivalLatLong["colour"] as? String ?? "black"
-        
-//        if lastColorName.lowercased() == "green" {
-//            lastImage = UIImage(named: "icon_circle_green")
-//        } else if lastColorName.lowercased() == "amber" {
-//            lastImage = UIImage(named: "icon_circle_amber")
-//        } else if lastColorName.lowercased() == "red" {
-//            lastImage = UIImage(named: "icon_circle_red")
-//        }
-        
-        let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image:lastImage)
-        locationCoordinate.append(lastCoord)
-        mapView.addAnnotation(lastAnnotation)
-        
-        //Append data to route
-        routeDatas.append(SRoute(name: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: arrivalLatLong["latitude"] as? String ?? "0", longitude: arrivalLatLong["longitude"] as? String ?? "0"))
+        if arrivalLatLong["latitude"] != nil {
+            let lastCoord = CLLocationCoordinate2D(latitude: arrivalLatLong["latitude"]! as! CLLocationDegrees, longitude: arrivalLatLong["longitude"]! as! CLLocationDegrees)
+            let lastImage = UIImage(named: "icon_circle_fill_blue")
+            //        let lastColorName = arrivalLatLong["colour"] as? String ?? "black"
+            
+            //        if lastColorName.lowercased() == "green" {
+            //            lastImage = UIImage(named: "icon_circle_green")
+            //        } else if lastColorName.lowercased() == "amber" {
+            //            lastImage = UIImage(named: "icon_circle_amber")
+            //        } else if lastColorName.lowercased() == "red" {
+            //            lastImage = UIImage(named: "icon_circle_red")
+            //        }
+            
+            let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image:lastImage)
+            locationCoordinate.append(lastCoord)
+            mapView.addAnnotation(lastAnnotation)
+            
+            //Append data to route
+            routeDatas.append(SRoute(name: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: arrivalLatLong["latitude"] as? String ?? "0", longitude: arrivalLatLong["longitude"] as? String ?? "0"))
+        }
         
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)

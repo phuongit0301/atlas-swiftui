@@ -61,6 +61,44 @@ struct ATLASApp: App {
                 if locationViewModel.authorizationStatus == .notDetermined {
                     locationViewModel.requestPermission()
                 }
+                
+                Task {
+                    if coreDataModel.dataHistoricalDelays.count <= 0  {
+                        coreDataModel.loadingInitFuel = true
+                        
+                        let response = await remoteServiceController.getFuelData()
+                        
+                        if let historicalDelays = response?.historicalDelays {
+                            coreDataModel.initHistoricalDelays(historicalDelays)
+                        }
+
+                        if let projDelays = response?.projDelays {
+                            coreDataModel.initProjDelays(projDelays)
+                        }
+
+                        if let taxi = response?.taxi {
+                            coreDataModel.initProjTaxi(taxi)
+                        }
+
+                        if let trackMiles = response?.trackMiles {
+                            coreDataModel.initTrackMiles(trackMiles)
+                        }
+
+                        if let enrWX = response?.enrWX {
+                            coreDataModel.initEnrWX(enrWX)
+                        }
+
+                        if let flightLevel = response?.flightLevel {
+                            coreDataModel.initFlightLevel(flightLevel)
+                        }
+
+                        if let reciprocalRwy = response?.reciprocalRwy {
+                            coreDataModel.initReciprocalRwy(reciprocalRwy)
+                        }
+                        
+                        coreDataModel.loadingInitFuel = false
+                    }
+                }
             }
             .onAppWentToBackground {
                 if !coreDataModel.loading && !coreDataModel.loadingInit {

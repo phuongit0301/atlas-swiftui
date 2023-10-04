@@ -23,6 +23,7 @@
 		3E086D962A95000B00BE00AD /* EnrouteButtonTimeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D952A95000B00BE00AD /* EnrouteButtonTimeStepper.swift */; };
 		3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */; };
 		3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */; };
+		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
@@ -471,6 +472,7 @@
 		3E086D972A9501C200BE00AD /* ATLAS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ATLAS.entitlements; sourceTree = "<group>"; };
 		3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPicker.swift; sourceTree = "<group>"; };
 		3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPickerString.swift; sourceTree = "<group>"; };
+		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
@@ -955,6 +957,15 @@
 			path = Maps;
 			sourceTree = "<group>";
 		};
+		3E2BA82C2ACDB7C6009ABCC2 /* NotamSubSectionView */ = {
+			isa = PBXGroup;
+			children = (
+				3E7291302AC06133000FF295 /* NotamSubSectionView.swift */,
+				3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */,
+			);
+			path = NotamSubSectionView;
+			sourceTree = "<group>";
+		};
 		3E3FCBE42A21C8A0008017FA /* Clipboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,6 +1138,7 @@
 		3E5AF6492A18FF2900A97ECF /* FlightPageSections */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BA82C2ACDB7C6009ABCC2 /* NotamSubSectionView */,
 				3E7291AA2AC5943D000FF295 /* ArrivalSectionView */,
 				3E72919F2AC5927E000FF295 /* EnrouteSectionView */,
 				3E7291942AC57963000FF295 /* DepartureSectionView */,
@@ -1233,7 +1245,6 @@
 			children = (
 				C5192C662ACA693D0029BC48 /* StatisticsView */,
 				3E7291392AC1BD6E000FF295 /* NoteSubSectionView */,
-				3E7291302AC06133000FF295 /* NotamSubSectionView.swift */,
 				3E7291322AC08558000FF295 /* MetarTafSubSectionView.swift */,
 				3E7291342AC188B8000FF295 /* SummarySubSectionView */,
 				3E7291432AC266A4000FF295 /* PreflightSectionView.swift */,
@@ -2508,6 +2519,7 @@
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E72919E2AC57A50000FF295 /* DepartureModalNoteCommentView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
+				3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */,
 				3E7290FE2ABB2BD2000FF295 /* AabbaMapList+CoreDataProperties.swift in Sources */,
 				3E7292202AC86767000FF295 /* SlideoverEnroute.swift in Sources */,
 				3E086D772A94918F00BE00AD /* MapModal.swift in Sources */,
