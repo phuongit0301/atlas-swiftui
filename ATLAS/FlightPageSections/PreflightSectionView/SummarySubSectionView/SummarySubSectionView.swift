@@ -329,6 +329,8 @@ struct SummarySubSectionView: View {
                                                     let item = SummaryInfoList(context: persistenceController.container.viewContext)
                                                     item.route = tfRoute
                                                 }
+                                                
+                                                isRouteFormChange = true
                                                 coreDataModel.save()
                                                 coreDataModel.readSummaryInfo()
                                             }
