@@ -12,6 +12,7 @@ struct RowAlternates: View {
     let width: CGFloat
     let item: IAlternate
     @Binding var itemList: [IAlternate]
+    @Binding var isRouteFormChange: Bool
     let create: () -> Void
     
     @State private var selectAltn = ""
@@ -31,8 +32,6 @@ struct RowAlternates: View {
         HStack {
             HStack {
                 Button(action: {
-                    print("itemList========\(itemList)")
-                    print("item========\(item)")
                     itemList.removeAll(where: {$0.id == item.id})
                 }, label: {
                     Image(systemName: "minus.circle")
@@ -44,11 +43,9 @@ struct RowAlternates: View {
                 
                 Picker("", selection: $selectAltn) {
                     Text("Select ALTN").tag("")
-//                    LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(ALTN_DROP_DOWN, id: \.self) {
-                            Text($0).tag($0)
-                        }
-//                    }
+                    ForEach(ALTN_DROP_DOWN, id: \.self) {
+                        Text($0).tag($0)
+                    }
                 }.pickerStyle(MenuPickerStyle()).fixedSize()
                     .padding(.leading, -12)
             }.fixedSize()
@@ -77,6 +74,10 @@ struct RowAlternates: View {
         }.frame(height: 44)
             .onChange(of: selectAltn) {newValue in
                 if itemList.count > 0 {
+                    if itemList[currentIndex].altn != newValue {
+                        isRouteFormChange = true
+                    }
+                    
                     itemList[currentIndex].altn = newValue
                 }
             }
@@ -101,21 +102,8 @@ struct RowAlternates: View {
                             
                             if itemList.count > 0 {
                                 itemList[currentIndex].eta = dateFormatter.string(from: currentDateEtaTemp)
+                                isRouteFormChange = true
                             }
-                            // Save data
-                            //                            let dateFormatter = DateFormatter()
-                            //                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            //                            let str = dateFormatter.string(from: currentDateEtaTemp)
-                            //
-                            //                            if coreDataModel.existDataArrivalEntries {
-                            //                                coreDataModel.dataArrivalEntries.entLdg = str
-                            //                            } else {
-                            //                                let item = ArrivalEntriesList(context: persistenceController.container.viewContext)
-                            //                                item.entLdg = dateFormatter.string(from: currentDateLandingTemp)
-                            //                            }
-                            //                            coreDataModel.save()
-                            //                            coreDataModel.readArrivalEntries()
-                            
                             self.isShowModal.toggle()
                         }) {
                             Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -133,9 +121,9 @@ struct RowAlternates: View {
                     Spacer()
                 }
             }.onAppear {
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                 if let selectedIndex = itemList.firstIndex(of: item) {
                     currentIndex = selectedIndex
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     selectAltn = itemList[currentIndex].altn
                     tfVis = itemList[currentIndex].vis ?? ""
                     tfMinima = itemList[currentIndex].minima ?? ""

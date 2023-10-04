@@ -233,7 +233,7 @@ class CoreDataModelState: ObservableObject {
             Task {
 //                let data = await remoteService.getFlightPlanData()
                 let response = await remoteService.getFuelData()
-                let responseMap = await remoteService.getMapData()
+//                let responseMap = await remoteService.getMapData()
                 let responseLogbook = await remoteService.getLogbookData()
                 let responseRecency = await remoteService.getRecencyData()
                 
@@ -263,14 +263,14 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataAabba(dataAabba)
 //                    }
                     
-                    if let trafficData = responseMap?.traffic_data {
-                        self.initDataTraffic(trafficData)
-                    }
-
-                    if let aabbaData = responseMap?.aabba_data {
-                        self.initDataAabba(aabbaData)
-                    }
-                    
+//                    if let trafficData = responseMap?.traffic_data {
+//                        self.initDataTraffic(trafficData)
+//                    }
+//
+//                    if let aabbaData = responseMap?.aabba_data {
+//                        self.initDataAabba(aabbaData)
+//                    }
+//
                     // Init Logbook
                     if let logbookEntry = responseLogbook?.logbook_entry {
                         self.initDataLogbookEntries(logbookEntry)
@@ -290,14 +290,14 @@ class CoreDataModelState: ObservableObject {
                         self.initDataRecencyExpiry(expiryData)
                     }
                     
-                    if let waypointData = responseMap?.all_waypoints_data {
-                        self.initDataWaypoint(waypointData)
-                    }
-
-                    if let airportData = responseMap?.all_airports_data {
-                        self.initDataAirport(airportData)
-                        self.initDataAirportColor(airportData)
-                    }
+//                    if let waypointData = responseMap?.all_waypoints_data {
+//                        self.initDataWaypoint(waypointData)
+//                    }
+//
+//                    if let airportData = responseMap?.all_airports_data {
+//                        self.initDataAirport(airportData)
+//                        self.initDataAirportColor(airportData)
+//                    }
                     
                     let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
                     

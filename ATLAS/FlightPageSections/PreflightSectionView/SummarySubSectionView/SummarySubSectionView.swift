@@ -37,6 +37,9 @@ struct SummarySubSectionView: View {
     @State private var showUTC = true
     @State private var isEdit = false
     
+    // if user change data on route alternative
+    @State var isRouteFormChange = false
+    
     @State private var isCollapseFlightInfo = true
     @State private var isCollapsePlanTime = true
     @State private var isCollapseRoute = true
@@ -284,7 +287,10 @@ struct SummarySubSectionView: View {
                                     if isEdit {
                                         Button(action: {
                                             self.isEdit.toggle()
-                                            create()
+                                            
+                                            if isRouteFormChange {
+                                                create()
+                                            }
                                         }, label: {
                                             Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
                                         })
@@ -362,7 +368,7 @@ struct SummarySubSectionView: View {
                                     if enrouteAlternates.count > 0 {
                                         ForEach(enrouteAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates, create: create).id(UUID())
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates, isRouteFormChange: $isRouteFormChange, create: create).id(UUID())
                                             } else {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates).id(UUID())
                                             }
@@ -413,7 +419,7 @@ struct SummarySubSectionView: View {
                                     if destinationAlternates.count > 0 {
                                         ForEach(destinationAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates, create: create).id(UUID())
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates, isRouteFormChange: $isRouteFormChange, create: create).id(UUID())
                                             } else {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates).id(UUID())
                                             }
@@ -464,6 +470,9 @@ struct SummarySubSectionView: View {
     
     func prepareData() {
         if coreDataModel.dataAlternate.count > 0 {
+            enrouteAlternates = []
+            destinationAlternates = []
+            
             for item in coreDataModel.dataAlternate {
                 if item.type == "enroute" {
                     enrouteAlternates.append(
@@ -598,20 +607,23 @@ struct SummarySubSectionView: View {
                 persistenceController.container.viewContext.performAndWait {
                     for item in enrouteAlternates {
                         do {
-                            if item.isNew! && item.eta != "" && item.altn != "" {
-                                let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                                newObject.id = UUID()
-                                newObject.altn = item.altn
-                                newObject.vis = item.vis
-                                newObject.minima = item.minima
-                                newObject.eta = item.eta
-                                newObject.type = "enroute"
+                            if let isNew = item.isNew {
+                                if isNew && item.eta != "" && item.altn != "" {
+                                   let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                                   newObject.id = UUID()
+                                   newObject.altn = item.altn
+                                   newObject.vis = item.vis
+                                   newObject.minima = item.minima
+                                   newObject.eta = item.eta
+                                   newObject.type = "enroute"
 
-                                try persistenceController.container.viewContext.save()
-                                print("saved Enroute successfully")
+                                   try persistenceController.container.viewContext.save()
+                                   print("saved Enroute successfully")
 
-                                enrouteAlternates = []
+                                   enrouteAlternates = []
+                               }
                             }
+                             
                         } catch {
                             print("Failed to Enroute save: \(error)")
                             // Rollback any changes in the managed object context
@@ -625,19 +637,21 @@ struct SummarySubSectionView: View {
                 persistenceController.container.viewContext.performAndWait {
                     for item in destinationAlternates {
                         do {
-                            if item.isNew! && item.eta != "" && item.altn != "" {
-                                let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                                newObject.id = UUID()
-                                newObject.altn = item.altn
-                                newObject.vis = item.vis
-                                newObject.minima = item.minima
-                                newObject.eta = item.eta
-                                newObject.type = "destination"
-
-                                try persistenceController.container.viewContext.save()
-                                print("saved Enroute successfully")
-
-                                destinationAlternates = []
+                            if let isNew = item.isNew {
+                                if isNew && item.eta != "" && item.altn != "" {
+                                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                                    newObject.id = UUID()
+                                    newObject.altn = item.altn
+                                    newObject.vis = item.vis
+                                    newObject.minima = item.minima
+                                    newObject.eta = item.eta
+                                    newObject.type = "destination"
+                                    
+                                    try persistenceController.container.viewContext.save()
+                                    print("saved Enroute successfully")
+                                    
+                                    destinationAlternates = []
+                                }
                             }
                         } catch {
                             print("Failed to Destination save: \(error)")
@@ -647,7 +661,7 @@ struct SummarySubSectionView: View {
                     }
                 }
             }
-
+            
             coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
             prepareData()
