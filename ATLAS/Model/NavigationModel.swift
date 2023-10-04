@@ -112,7 +112,7 @@ class TabModelState: ObservableObject {
         ITabs(name: "Flight Overview", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightOverviewSectionView,  isDefault: false, isDisabled: false),
         ITabs(name: "Preflight", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.PreflightSectionView,  isDefault: false, isDisabled: false),
 //        ITabs(name: "Flight Plan", iconName: "doc.plaintext", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.FlightPlanScreen,  isDefault: false, isDisabled: false),
-        ITabs(name: "Depature", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.DepartureScreen, isDefault: true, isDisabled: false),
+        ITabs(name: "Departure", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.DepartureScreen, isDefault: true, isDisabled: false),
         ITabs(name: "Enroute", iconName: "fuelpump", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.EnrouteScreen, isDefault: false, isDisabled: false),
         ITabs(name: "Arrival", iconName: "map", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ArrivalScreen, isDefault: false, isDisabled: false),
 //        ITabs(name: "Arrival", iconName: "map", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ArrivalScreen, isDefault: false, isDisabled: false, scheme: "jdmpro.jeppesen://"),
