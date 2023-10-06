@@ -38,19 +38,20 @@ struct OnboardingView: View {
                     Spacer()
                     
                     Button {
-                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
-//                            isLoading = true
-                            let payload: [String: Any] = [
-                                "yourProfile": onboardingModel.dataYourProfile,
-                                "experience": onboardingModel.dataModelExperience,
-                                "limitations": onboardingModel.dataModelLimitation,
-                                "recencies": onboardingModel.dataModelRecency,
-                                "expiry": onboardingModel.dataModelExpiry
-                            ]
-                            
-                            print("payload=========\(payload)")
-                            isOnboarding = "0"
-                        }
+                        isOnboarding = "0"
+//                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
+////                            isLoading = true
+//                            let payload: [String: Any] = [
+//                                "yourProfile": onboardingModel.dataYourProfile,
+//                                "experience": onboardingModel.dataModelExperience,
+//                                "limitations": onboardingModel.dataModelLimitation,
+//                                "recencies": onboardingModel.dataModelRecency,
+//                                "expiry": onboardingModel.dataModelExpiry
+//                            ]
+//
+//                            print("payload=========\(payload)")
+//                            isOnboarding = "0"
+//                        }
                     } label: {
                         Text("Complete Onboarding")
                             .foregroundColor(.white)

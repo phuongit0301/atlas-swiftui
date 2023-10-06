@@ -209,6 +209,8 @@ class CoreDataModelState: ObservableObject {
     @Published var dataLogbookEntries = [LogbookEntriesList]()
     
     // For Recency
+    let monthsAhead = 6
+    @Published var dataExpiringSoon = [DocumentExpiry]()
     @Published var dataRecency = [RecencyList]()
     @Published var dataRecencyExpiry = [RecencyExpiryList]()
     
@@ -221,25 +223,58 @@ class CoreDataModelState: ObservableObject {
     @Published var image: UIImage!
     @Published var imageLoading = true
     
+    // For Event Calendar
+    @Published var dateRange: [ClosedRange<Date>] = []
+    @Published var dataEventUpcoming: [EventList] = []
+    @Published var dataEventCompleted: [EventList] = []
+    
+    let dateFormatter = DateFormatter()
+    
     init() {
         
     }
     
     @MainActor
     func checkAndSyncData() async {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dataTrafficMap = readDataTrafficMapList()
         
-        if dataTrafficMap.count == 0 {
+        if dataTrafficMap.count > 0 {
             self.loadingInit = true
             Task {
-                let data = await remoteService.getFlightPlanData()
+                async let calendarService = remoteService.getCalendarData()
+                
+                // For Notam, MetarTaf
+    //            async let notamService = remoteService.updateNotamData(payloadNotam)
+                
+                //array handle call API parallel
+                let services = await [calendarService]
 //                let response = await remoteService.getFuelData()
 //                let responseMap = await remoteService.getMapData()
-                let responseLogbook = await remoteService.getLogbookData()
-                let responseRecency = await remoteService.getRecencyData()
+//                let responseLogbook = await remoteService.getLogbookData()
+//                let responseRecency = await remoteService.getRecencyData()
                 
                 DispatchQueue.main.async {
-                    self.initDataSummaryInfo()
+                    //For calendar
+                    if let dataDateRange = services[0]?.COP_date_ranges, dataDateRange.count > 0 {
+                        for item in dataDateRange {
+                            var dateRange: ClosedRange<Date> {
+                                let startDate = self.dateFormatter.date(from: item.startDate) ?? Date()
+                                let endDate = self.dateFormatter.date(from: item.endDate) ?? Date()
+                                return startDate...endDate
+                            }
+                            
+                            self.dateRange.append(dateRange)
+                        }
+                        
+                    }
+                    
+                    if let events = services[0]?.events, events.count > 0 {
+                        self.initDataEvent(events)
+                    }
+                    
+                    
+//                    self.initDataSummaryInfo()
 //                    if let waypointsData = data?.waypointsData {
 //                        self.initDataEnroute(waypointsData)
 //                    }
@@ -273,23 +308,23 @@ class CoreDataModelState: ObservableObject {
 //                    }
 //
                     // Init Logbook
-                    if let logbookEntry = responseLogbook?.logbook_entry {
-                        self.initDataLogbookEntries(logbookEntry)
-                    }
-                    
-                    if let limitationData = responseLogbook?.limitation_data {
-                        self.initDataLogbookLimitation(limitationData)
-                    }
-                    
-                    // Init data recency
-                    
-                    if let recencyData = responseRecency?.recency_data {
-                        self.initDataRecency(recencyData)
-                    }
-                    
-                    if let expiryData = responseRecency?.expiry_data {
-                        self.initDataRecencyExpiry(expiryData)
-                    }
+//                    if let logbookEntry = responseLogbook?.logbook_entry {
+//                        self.initDataLogbookEntries(logbookEntry)
+//                    }
+//
+//                    if let limitationData = responseLogbook?.limitation_data {
+//                        self.initDataLogbookLimitation(limitationData)
+//                    }
+//
+//                    // Init data recency
+//
+//                    if let recencyData = responseRecency?.recency_data {
+//                        self.initDataRecency(recencyData)
+//                    }
+//
+//                    if let expiryData = responseRecency?.expiry_data {
+//                        self.initDataRecencyExpiry(expiryData)
+//                    }
                     
 //                    if let waypointData = responseMap?.all_waypoints_data {
 //                        self.initDataWaypoint(waypointData)
@@ -299,14 +334,14 @@ class CoreDataModelState: ObservableObject {
 //                        self.initDataAirport(airportData)
 //                        self.initDataAirportColor(airportData)
 //                    }
-                    
-                    let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
-                    
-                    // For Note Relevant
-                    self.initDataNoteAabbaPreflight(postData.preflight)
-                    self.initDataNoteAabbaDepature(postData.departure)
-                    self.initDataNoteAabbaEnroute(postData.enroute)
-                    self.initDataNoteAabbaArrival(postData.arrival)
+//
+//                    let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
+//
+//                    // For Note Relevant
+//                    self.initDataNoteAabbaPreflight(postData.preflight)
+//                    self.initDataNoteAabbaDepature(postData.departure)
+//                    self.initDataNoteAabbaEnroute(postData.enroute)
+//                    self.initDataNoteAabbaArrival(postData.arrival)
 
 //                    if let perfData = data?.perfData {
 //                        self.initDataPerfData(perfData)
@@ -337,7 +372,7 @@ class CoreDataModelState: ObservableObject {
 //                    }
 
                     // For init Calendar
-                    self.initDataEvent()
+//                    self.initDataEvent()
                     
                     self.loadingInit = false
                     print("Fetch data")
@@ -426,8 +461,10 @@ class CoreDataModelState: ObservableObject {
             self.dataLogbookEntries = self.readDataLogbookEntries()
             self.dataLogbookLimitation = self.readDataLogbookLimitation()
             
+            // For Recency
             self.dataRecency = self.readDataRecency()
             self.dataRecencyExpiry = self.readDataRecencyExpiry()
+            self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyExpiry, monthsAhead: self.monthsAhead)
             
             self.dataAlternate = self.readDataAlternate()
             self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/3e919cac9c01/8000/2/0_1.png")
@@ -499,6 +536,8 @@ class CoreDataModelState: ObservableObject {
             
             // For Calendar
             self.dataEvents = self.readEvents()
+            self.dataEventCompleted = self.readEventsByStatus(status: "2")
+            self.dataEventUpcoming = self.readEventsByStatus(status: "5")
         }
     }
     
@@ -1522,82 +1561,41 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataEvent() {
+    func initDataEvent(_ events: [IEventResponse]) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = Date()
         
-        let event1 = EventList(context: service.container.viewContext)
-        event1.id = UUID()
-        event1.name = "COP: 234 SIN DXB LIS DXB SIN"
-        event1.status = 5
-        event1.startDate = dateFormatter.string(from: today)
-        event1.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
-        
-        let event2 = EventList(context: service.container.viewContext)
-        event2.id = UUID()
-        event2.name = "EK231 SIN-DXB"
-        event2.status = 2
-        event2.startDate = dateFormatter.string(from: today)
-        event2.endDate = dateFormatter.string(from: today)
-        
-        let event3 = EventList(context: service.container.viewContext)
-        event3.id = UUID()
-        event3.name = "EK231 SIN-DXB"
-        event3.status = 2
-        event3.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
-        event3.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
-        
-        let event4 = EventList(context: service.container.viewContext)
-        event4.id = UUID()
-        event4.name = "Rest"
-        event4.status = 2
-        event4.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
-        event4.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 3, to: today)!)
-        
-        let event5 = EventList(context: service.container.viewContext)
-        event5.id = UUID()
-        event5.name = "EK231 SIN-DXB"
-        event5.status = 2
-        event5.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)
-        event5.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 10, to: today)!)
-        
-        let event6 = EventList(context: service.container.viewContext)
-        event6.id = UUID()
-        event6.name = "EK231 SIN-DXB"
-        event6.status = 2
-        event6.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
-        event6.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 12, to: today)!)
-        
-        let event7 = EventList(context: service.container.viewContext)
-        event7.id = UUID()
-        event7.name = "Leave"
-        event7.status = 3
-        event7.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 13, to: today)!)
-        event7.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 20, to: today)!)
-        
-        let event8 = EventList(context: service.container.viewContext)
-        event8.id = UUID()
-        event8.name = "Internal training"
-        event8.status = 3
-        event8.startDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 21, to: today)!)
-        event8.endDate = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 23, to: today)!)
-        
-        service.container.viewContext.performAndWait {
-            do {
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-                print("saved calendar successfully")
-            } catch {
-                // Something went wrong 😭
-                print("Failed to save: \(error)")
-                // Rollback any changes in the managed object context
-                service.container.viewContext.rollback()
-                
+        for item in events {
+            let event = EventList(context: service.container.viewContext)
+            event.id = UUID()
+            event.dep = item.dep
+            event.dest = item.dest
+            event.startDate = item.startDate
+            event.endDate = item.endDate
+            event.location = item.location
+            event.name = item.name
+            event.status = Int32(item.status) ?? 0
+            event.type = item.type
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved calendar successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
             }
+            
         }
         
         self.dataEvents = self.readEvents()
+        self.dataEventCompleted = self.readEventsByStatus(status: "2")
+        self.dataEventUpcoming = self.readEventsByStatus(status: "5")
     }
     
     func initDataPerfData(_ perfData: IPerfDataResponseModel) {
@@ -4448,6 +4446,25 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
+    func readEventsByStatus(status: String = "1") -> [EventList] {
+        var data: [EventList] = []
+        
+        let request: NSFetchRequest<EventList> = EventList.fetchRequest()
+        
+        do {
+            request.predicate = NSPredicate(format: "status == %@", status)
+            let response: [EventList] = try service.container.viewContext.fetch(request)
+            
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Event from Core Data.")
+        }
+        
+        return data
+    }
+    
     func loadImage(for urlString: String) {
         self.imageLoading = true
         guard let url = URL(string: urlString) else { return }
@@ -4692,5 +4709,34 @@ class CoreDataModelState: ObservableObject {
         } catch {
             print("Failed to Delete Notam update: \(error)")
         }
+    }
+    
+    func extractExpiringDocuments(expiryData: [RecencyExpiryList], monthsAhead: Int) -> [DocumentExpiry] {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        // Get the current date
+        let currentDate = Date()
+        
+        // Calculate the date 6 months from now
+        if let sixMonthsFromNow = Calendar.current.date(byAdding: .month, value: monthsAhead, to: currentDate) {
+            // Create an array to store expiring documents
+            var expiringDocuments: [DocumentExpiry] = []
+            // Iterate through each document in the expiry data
+            for row in expiryData {
+                if let expiryDate = dateFormatter.date(from: row.expiredDate!) {
+                    // Check if the expiry date is within the next 6 months
+                    if expiryDate <= sixMonthsFromNow {
+                        let documentExpiry = DocumentExpiry(id: UUID().uuidString,
+                                                            type: row.unwrappedName,
+                                                            expiryDate: dateFormatter.string(from: expiryDate))
+                        expiringDocuments.append(documentExpiry)
+                    }
+                }
+            }
+            
+            return expiringDocuments
+        }
+        
+        return []
     }
 }

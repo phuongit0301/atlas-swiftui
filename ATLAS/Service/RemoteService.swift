@@ -18,8 +18,8 @@ class RemoteService: ObservableObject {
     
     private init() {}
     
-    func getCalendarData() async -> IFlightPlanDataModel?  {
-        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flightPlan_data") else { fatalError("Missing URL") }
+    func getCalendarData() async -> ICalendarResponse?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_calendar_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -27,10 +27,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "company": "Test Company",
-                "flight_no": "TR753",
-                "flightDate": "2023-07-24"
-//                "flightDate": "2023-07-08"
+                "user_id": "abc123",
             ]
             
             do {
@@ -45,7 +42,7 @@ class RemoteService: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
                 do {
-                    let decodedSearch = try JSONDecoder().decode(IFlightPlanDataModel.self, from: data)
+                    let decodedSearch = try JSONDecoder().decode(ICalendarResponse.self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)

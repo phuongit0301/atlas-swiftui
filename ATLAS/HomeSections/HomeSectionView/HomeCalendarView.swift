@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeCalendarView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     private var calendar: Calendar
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
@@ -17,8 +18,9 @@ struct HomeCalendarView: View {
     @State private var selectedDate = Self.now
     private static var now = Date()
     
-    @State private var entries: [IEntries] = CalendarModel().listItem
-    @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
+    let dateFormatter = DateFormatter()
+//    @State private var entries: [IEntries] = CalendarModel().listItem
+//    @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
     
     init(calendar: Calendar) {
         self.calendar = calendar
@@ -34,7 +36,7 @@ struct HomeCalendarView: View {
             HomeCalendarViewComponent(
                 calendar: calendar,
                 date: $selectedDate,
-                entries: $entries,
+                entries: $coreDataModel.dataEvents,
                 content: { date in
                     VStack(alignment: .center, spacing: 0) {
                         Button(action: { selectedDate = date }) {
@@ -128,32 +130,37 @@ struct HomeCalendarView: View {
     
     func dateHasEvents(date: Date) -> Bool {
         
-        for entry in entries {
-            if calendar.isDate(date, inSameDayAs: entry.timestamp) {
-                return true
+        for entry in coreDataModel.dataEvents {
+            if let startDate = entry.startDate, let startDateFormat = dateFormatter.date(from: startDate) {
+                if calendar.isDate(date, inSameDayAs: startDateFormat) {
+                    return true
+                }
             }
+            
         }
         
         return false
     }
     
     func eventsOfDate(date: Date) -> Color {
-        for entry in entries {
-            if calendar.isDate(date, inSameDayAs: entry.timestamp) {
-                if entry.status == 1 {
-                    return Color.theme.lavenderGray
-                }
-                
-                if entry.status == 2 {
-                    return Color.theme.azure
-                }
-                
-                if entry.status == 3 {
-                    return Color.theme.coralRed1
-                }
-                
-                if entry.status == 4 {
-                    return Color.theme.mediumOrchid
+        for entry in coreDataModel.dataEvents {
+            if let startDate = entry.startDate, let startDateFormat = dateFormatter.date(from: startDate) {
+                if calendar.isDate(date, inSameDayAs: startDateFormat) {
+                    if entry.status == 1 {
+                        return Color.theme.lavenderGray
+                    }
+                    
+                    if entry.status == 2 {
+                        return Color.theme.azure
+                    }
+                    
+                    if entry.status == 3 {
+                        return Color.theme.coralRed1
+                    }
+                    
+                    if entry.status == 4 {
+                        return Color.theme.mediumOrchid
+                    }
                 }
             }
         }
@@ -162,7 +169,7 @@ struct HomeCalendarView: View {
     }
     
     func eventsOfRange(date: Date) -> Color {
-        for range in dateRange {
+        for range in coreDataModel.dateRange {
             if date >= range.lowerBound && date <= range.upperBound {
                 return Color.theme.azure.opacity(0.1)
             }
@@ -178,7 +185,7 @@ public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Tr
     // Injected dependencies
     private var calendar: Calendar
     @Binding private var date: Date
-    @Binding private var entries: [IEntries]
+    @Binding private var entries: [EventList]
     private let content: (Date) -> Day
     private let trailing: (Date) -> Trailing
     private let header: (Date) -> Header
@@ -190,7 +197,7 @@ public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Tr
     init(
         calendar: Calendar,
         date: Binding<Date>,
-        entries: Binding<[IEntries]>,
+        entries: Binding<[EventList]>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
         @ViewBuilder header: @escaping (Date) -> Header,
@@ -242,33 +249,35 @@ public struct HomeCalendarViewComponent<Day: View, Header: View, Title: View, Tr
             
             
             // List Entries
-            List(entries) { entry in
-                HStack(alignment: .top) {
-                    Rectangle().fill(eventsOfDate(entry))
-                        .frame(width: 4, height: 24)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
-                        )
-                        .cornerRadius(100)
-                    
-                    VStack(alignment: .center) {
-                        HStack {
-                            Text("234 SIN DXB LIS DXB SIN").font(.system(size: 17, weight: .semibold))
-                            Spacer()
-                            Text("\(entry.timestamp, formatter: dateFormatter)").font(.system(size: 15, weight: .regular))
-                        }
+            List {
+                ForEach(entries.indices, id: \.self) { index in
+                    HStack(alignment: .top) {
+                        Rectangle().fill(eventsOfDate(entries[index]))
+                            .frame(width: 4, height: 24)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1)
+                            )
+                            .cornerRadius(100)
                         
-                        Divider()
-                    }
-                }.listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets.init(top: 16, leading: 0, bottom: 16, trailing: 0))
+                        VStack(alignment: .center) {
+                            HStack {
+                                Text(entries[index].unwrappedName).font(.system(size: 17, weight: .semibold))
+                                Spacer()
+                                Text(entries[index].unwrappedStartDate).font(.system(size: 15, weight: .regular))
+                            }
+                            
+                            Divider()
+                        }
+                    }.listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 16, leading: 0, bottom: 16, trailing: 0))
+                }
             }.listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
             
         }
     }
     
-    func eventsOfDate(_ entry: IEntries) -> Color {
+    func eventsOfDate(_ entry: EventList) -> Color {
         if entry.status == 1 {
             return Color.theme.lavenderGray
         }

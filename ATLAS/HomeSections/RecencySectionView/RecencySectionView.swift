@@ -25,7 +25,7 @@ struct RecencySectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var recencySection = RecencySection()
     
-    @State var dataExpiringSoon = [DocumentExpiry]()
+//    @State var dataExpiringSoon = [DocumentExpiry]()
     @State var isCollapse = false
     @State var isCollapseRecency = false
     @State var isCollapseDocument = false
@@ -34,9 +34,8 @@ struct RecencySectionView: View {
     @State private var selectedExpirySoon = ""
     @State var progress = 0.0
     @State private var count = 0
-    let monthsAhead = 6
+//    let monthsAhead = 6
     let dateFormatter = DateFormatter()
-    let currentDate = Date()
     
     //for calculate recency
     let recencyRequirement = 1
@@ -107,14 +106,14 @@ struct RecencySectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(dataExpiringSoon.indices, id: \.self) {index in
+                                        ForEach(coreDataModel.dataExpiringSoon.indices, id: \.self) {index in
                                             GridRow {
                                                 Group {
-                                                    Text(dataExpiringSoon[index].type)
+                                                    Text(coreDataModel.dataExpiringSoon[index].type)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                     
-                                                    Text(dataExpiringSoon[index].expiryDate)
+                                                    Text(coreDataModel.dataExpiringSoon[index].expiryDate)
                                                         .font(.system(size: 17, weight: .regular))
                                                         .frame(alignment: .leading)
                                                 }
@@ -328,7 +327,6 @@ struct RecencySectionView: View {
                     } // End Section
                 }
             }.onAppear {
-                dataExpiringSoon = extractExpiringDocuments(expiryData: coreDataModel.dataRecencyExpiry, monthsAhead: monthsAhead)
                 let data = calculateRecencyPercentage(coreDataModel.dataLogbookEntries, recencyRequirement, recencyLimit)
                 self.progress = data.percentage
                 self.count = data.count
@@ -337,34 +335,34 @@ struct RecencySectionView: View {
     }
     
     
-    func extractExpiringDocuments(expiryData: [RecencyExpiryList], monthsAhead: Int) -> [DocumentExpiry] {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        // Get the current date
-        
-        // Calculate the date 6 months from now
-        if let sixMonthsFromNow = Calendar.current.date(byAdding: .month, value: monthsAhead, to: currentDate) {
-            // Create an array to store expiring documents
-            var expiringDocuments: [DocumentExpiry] = []
-            // Iterate through each document in the expiry data
-            for row in expiryData {
-                if let expiryDate = dateFormatter.date(from: row.expiredDate!) {
-                    // Check if the expiry date is within the next 6 months
-                    if expiryDate <= sixMonthsFromNow {
-                        let documentExpiry = DocumentExpiry(id: UUID().uuidString,
-                                                            type: row.unwrappedName,
-                                                            expiryDate: dateFormatter.string(from: expiryDate))
-                        expiringDocuments.append(documentExpiry)
-                    }
-                }
-            }
-            
-            return expiringDocuments
-        }
-        
-        return []
-    }
-    
+//    func extractExpiringDocuments(expiryData: [RecencyExpiryList], monthsAhead: Int) -> [DocumentExpiry] {
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//
+//        // Get the current date
+//
+//        // Calculate the date 6 months from now
+//        if let sixMonthsFromNow = Calendar.current.date(byAdding: .month, value: monthsAhead, to: currentDate) {
+//            // Create an array to store expiring documents
+//            var expiringDocuments: [DocumentExpiry] = []
+//            // Iterate through each document in the expiry data
+//            for row in expiryData {
+//                if let expiryDate = dateFormatter.date(from: row.expiredDate!) {
+//                    // Check if the expiry date is within the next 6 months
+//                    if expiryDate <= sixMonthsFromNow {
+//                        let documentExpiry = DocumentExpiry(id: UUID().uuidString,
+//                                                            type: row.unwrappedName,
+//                                                            expiryDate: dateFormatter.string(from: expiryDate))
+//                        expiringDocuments.append(documentExpiry)
+//                    }
+//                }
+//            }
+//
+//            return expiringDocuments
+//        }
+//
+//        return []
+//    }
+//
     func calculateRecencyPercentage(_ logbookEntries: [LogbookEntriesList], _ recencyRequirement: Int, _ recencyLimit: Int) -> (count: Int, percentage: Double) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

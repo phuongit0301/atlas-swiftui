@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct HomeInformationView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    
     @State var isCollapseFlight = false
     @State var isCollapseExpiring = false
     @State var isCollapseLimitations = false
-
+    @State private var upcomingEvent = [EventList]()
+    @State private var dataLimitation: [ILimitationResult] = []
+    
+    let dateFormatter = DateFormatter()
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
@@ -50,14 +56,14 @@ struct HomeInformationView: View {
                     
                     if !isCollapseFlight {
                         VStack(alignment: .leading, spacing: 0) {
-                            HStack {
-                                Text("Current COP: 234 SIN DXB LIS DXB SIN")
-                                
-                                Spacer()
-                            }.padding(.vertical, 8)
-                                .padding(.horizontal)
-                                .background(Color.theme.azureishWhite1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+//                            HStack {
+//                                Text("Current COP: 234 SIN DXB LIS DXB SIN")
+//
+//                                Spacer()
+//                            }.padding(.vertical, 8)
+//                                .padding(.horizontal)
+//                                .background(Color.theme.azureishWhite1)
+//                                .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Group {
                                 Text("UPCOMING")
@@ -71,52 +77,33 @@ struct HomeInformationView: View {
                                 
                                 Divider()
                                 
-                                NavigationLink(destination: HomeFlightSectionView()) {
-                                    HStack {
-                                        Text("29/09/23 LIS-DXB HHMM-HHMM")
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(Color.black)
-                                        
-                                        Spacer()
-                                        
+                                ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
+                                    NavigationLink(destination: HomeFlightSectionView()) {
                                         HStack {
-                                            Text("EK424 / E-IHAL")
-                                                .font(.system(size: 17, weight: .regular))
+                                            Text(renderItem(coreDataModel.dataEventUpcoming[index]))
+                                                .font(.system(size: 15, weight: .regular))
                                                 .foregroundColor(Color.black)
                                             
-                                            Image(systemName: "chevron.right")
-                                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                                .frame(width: 11, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }
-                                    }.padding(.vertical, 11)
-                                        .padding(.horizontal)
-                                }
-                                
-                                Divider()
-                                
-                                NavigationLink(destination: HomeFlightSectionView()) {
-                                    HStack {
-                                        Text("01/10/23 DXB-SIN HHMM-HHMM ")
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(Color.black)
-                                        
-                                        Spacer()
-                                        
-                                        HStack {
-                                            Text("EK232 / S-WLW")
-                                                .font(.system(size: 17, weight: .regular))
-                                                .foregroundColor(Color.black)
+                                            Spacer()
                                             
-                                            Image(systemName: "chevron.right")
-                                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                                .frame(width: 11, height: 22)
-                                                .scaledToFit()
-                                                .aspectRatio(contentMode: .fit)
-                                        }
-                                    }.padding(.vertical, 11)
-                                        .padding(.horizontal)
+                                            HStack {
+                                                Text(coreDataModel.dataEventUpcoming[index].unwrappedName)
+                                                    .font(.system(size: 15, weight: .regular))
+                                                    .foregroundColor(Color.black)
+
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                    .frame(width: 11, height: 22)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                            }
+                                        }.padding(.vertical, 11)
+                                            .padding(.horizontal)
+                                    }
+                                    
+                                    if index + 1 < coreDataModel.dataEventUpcoming.count {
+                                        Divider()
+                                    }
                                 }
                             }
                             
@@ -132,55 +119,35 @@ struct HomeInformationView: View {
                                 
                                 Divider()
                                 
-                                HStack {
-                                    Text("29/09/23 LIS-DXB HHMM-HHMM")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        //TODO
-                                    }, label: {
-                                        Text("Complete Report")
+                                ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
+                                    HStack {
+                                        Text(renderItemCompleted(coreDataModel.dataEventCompleted[index]))
                                             .font(.system(size: 15, weight: .regular))
-                                            .foregroundColor(Color.white)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal)
-                                    }).background(Color.theme.azure)
-                                        .cornerRadius(8)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
-                                        .buttonStyle(PlainButtonStyle())
+                                            .foregroundColor(Color.black)
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            //TODO
+                                        }, label: {
+                                            Text("Report Submitted")
+                                                .font(.system(size: 15, weight: .regular))
+                                                .foregroundColor(Color.black)
+                                                .padding(.vertical, 8)
+                                                .padding(.horizontal)
+                                        }).background(Color.theme.tealDeer)
+                                            .cornerRadius(8)
+                                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
+                                            .buttonStyle(PlainButtonStyle())
+                                        
+                                    }// End HStack
+                                    .padding(.vertical, 4)
+                                    .padding(.horizontal)
                                     
-                                }// End HStack
-                                .padding(.vertical, 4)
-                                .padding(.horizontal)
-                                
-                                Divider()
-                                
-                                HStack {
-                                    Text("29/09/23 LIS-DXB HHMM-HHMM")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        //TODO
-                                    }, label: {
-                                        Text("Report Submitted")
-                                            .font(.system(size: 15, weight: .regular))
-                                            .foregroundColor(Color.white)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 16)
-                                    }).background(Color.theme.philippineGray3)
-                                        .cornerRadius(8)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
-                                        .buttonStyle(PlainButtonStyle())
-                                    
-                                }// End HStack
-                                .padding(.vertical, 4)
-                                .padding(.horizontal)
+                                    if index + 1 < coreDataModel.dataEventCompleted.count {
+                                        Divider()
+                                    }
+                                }
                             }
                             
                         }.frame(maxWidth: .infinity)
@@ -228,40 +195,28 @@ struct HomeInformationView: View {
                     
                     if !isCollapseExpiring {
                         VStack(alignment: .leading) {
-                            HStack {
-                                Text("Licence")
-                                    .font(.system(size: 17, weight: .regular))
-                                    .foregroundColor(Color.black)
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Text("01/10/23")
-                                        .font(.system(size: 17, weight: .regular))
+                            ForEach(coreDataModel.dataExpiringSoon.indices, id: \.self) { index in
+                                HStack(spacing: 0) {
+                                    Text(coreDataModel.dataExpiringSoon[index].type)
+                                        .font(.system(size: 15, weight: .regular))
                                         .foregroundColor(Color.black)
-                                }
-                            }.padding(.vertical, 8)
-                                .padding(.horizontal)
-                            
-                            Divider()
-                            
-                            HStack {
-                                Text("Base Check")
-                                    .font(.system(size: 17, weight: .regular))
-                                    .foregroundColor(Color.black)
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        Text(coreDataModel.dataExpiringSoon[index].expiryDate)
+                                            .font(.system(size: 15, weight: .regular))
+                                            .foregroundColor(Color.black)
+                                    }
+                                }.frame(height: 44)
+                                    .padding(.horizontal)
                                 
-                                Spacer()
-                                
-                                HStack {
-                                    Text("05/10/23")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.black)
+                                if index + 1 < coreDataModel.dataExpiringSoon.count {
+                                    Divider()
                                 }
-                            }.padding(.vertical, 8)
-                                .padding(.horizontal)
+                            }
                         }.frame(maxWidth: .infinity)
                             .padding(.bottom)
-                        
                     }
                     
                 }.background(Color.white)
@@ -304,39 +259,33 @@ struct HomeInformationView: View {
                     if !isCollapseLimitations {
                         VStack(alignment: .leading) {
                             Grid(alignment: .topLeading) {
-                                GridRow {
-                                    Text("Max 900 flight hours in 365 days ")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.coralRed1)
-                                    
-                                    Text("DD/MM/YY to DD/MM/YY")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.coralRed1)
-                                    
-                                    Text("922:47 / 900:00")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.coralRed1)
-                                }.padding(.vertical, 8)
-                                    .padding(.horizontal)
-                                    .frame(alignment: .leading)
-                                
-                                Divider()
-                                
-                                GridRow {
-                                    Text("Max 20 flight hours in 30 days")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.vividGamboge)
-                                    
-                                    Text("DD/MM/YY to DD/MM/YY")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.vividGamboge)
-                                    
-                                    Text("922:47 / 900:00")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .foregroundColor(Color.theme.vividGamboge)
-                                }.padding(.vertical, 8)
-                                    .padding(.horizontal)
-                                    .frame(alignment: .leading)
+                                if dataLimitation.count == 0 {
+                                    Text("No Limitation")
+                                        .font(.system(size: 15, weight: .regular))
+                                        .foregroundColor(Color.black)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(alignment: .leading)
+                                } else {
+                                    ForEach(dataLimitation.indices, id: \.self) { index in
+                                        GridRow {
+                                            Text(dataLimitation[index].text)
+                                                .font(.system(size: 15, weight: .regular))
+                                                .foregroundColor(Color.theme.coralRed1)
+                                            
+                                            Text(dataLimitation[index].period)
+                                                .font(.system(size: 15, weight: .regular))
+                                                .foregroundColor(Color.theme.coralRed1)
+                                            
+                                            Text(dataLimitation[index].status)
+                                                .font(.system(size: 15, weight: .regular))
+                                                .foregroundColor(Color.theme.coralRed1)
+                                        }.padding(.vertical, 8)
+                                            .padding(.horizontal)
+                                            .frame(alignment: .leading)
+                                        
+                                        Divider()
+                                    }
+                                }
                             }
                         }.frame(maxWidth: .infinity)
                             .padding(.bottom)
@@ -347,7 +296,44 @@ struct HomeInformationView: View {
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.gainsboro, lineWidth: 0.5))
             }.padding(.leading, 8)
+                .onAppear {
+                    dataLimitation = checkLimitations(coreDataModel.dataLogbookEntries, coreDataModel.dataLogbookLimitation)
+                }
         } // End VStack
+    }
+    
+    func renderItem(_ item: EventList) -> String {
+        let date = renderDate(item.unwrappedStartDate)
+        let startTime = renderTime(item.unwrappedStartDate)
+        let endTime = renderTime(item.unwrappedEndDate)
+        
+        return "\(date) \(item.dep ?? "")-\(item.dest ?? "") \(startTime)-\(endTime)"
+    }
+    
+    func renderItemCompleted(_ item: EventList) -> String {
+        let date = renderDate(item.unwrappedStartDate)
+        
+        return "\(date) \(item.dep ?? "")-\(item.dest ?? "") \(item.unwrappedName)"
+    }
+    
+    func renderDate(_ date: String) -> String {
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
+        if let temp = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "YY/MM/dd"
+            return dateFormatter.string(from: temp)
+        }
+
+        return ""
+    }
+    
+    func renderTime(_ date: String) -> String {
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
+        if let temp = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "HH:mm"
+            return dateFormatter.string(from: temp)
+        }
+
+        return ""
     }
 }
 

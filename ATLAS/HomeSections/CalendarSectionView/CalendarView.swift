@@ -418,9 +418,8 @@ private extension CalendarViewComponent {
 
 private extension CalendarViewComponent {
     func countEventByRow(_ events: [EventList], _ days: [Date]) -> [String: Any] {
-        
         let dateFormmater = DateFormatter()
-        dateFormmater.dateFormat = "yyyy-MM-dd"
+        dateFormmater.dateFormat = "yyyy-MM-dd HH:mm"
         var tempIndex = [String: Any]()
         
         for (i, event) in events.enumerated() {
@@ -434,6 +433,8 @@ private extension CalendarViewComponent {
                 
                 let startDate = dateFormmater.date(from: event.unwrappedStartDate)
                 let endDate = dateFormmater.date(from: event.unwrappedEndDate)
+                let rowCompare = dateFormmater.date(from: dateFormat(row))
+                
                 let dateString = dateFormmater.string(from: row)
                 
                 let num: Double = Double(index + 1)/7
@@ -447,16 +448,18 @@ private extension CalendarViewComponent {
                 let strRowNum = "\(parseRowIndex).\(event.id).rowNum"
                 let strSpace = "\(parseRowIndex).\(event.id).space"
                 
-                if row >= startDate! && row <= endDate! {
-                    if tempIndex[keyPath: strIndex] != nil && tempIndex[keyPath: strStartDate] != nil {
-                        tempIndex[keyPath: strColumn] = (tempIndex[keyPath: strColumn] as! Int) + 1
-                        tempIndex[keyPath: strRowNum] = i + 1
-                    } else {
-                        tempIndex[keyPath: strStartDate] = dateString
-                        tempIndex[keyPath: strEventName] = event.name
-                        tempIndex[keyPath: strColumn] = 1
-                        tempIndex[keyPath: strRowNum] = i + 1
-                        tempIndex[keyPath: strSpace] = space
+                if let startDate = startDate, let endDate = endDate, let rowCompare = rowCompare {
+                    if rowCompare >= startDate && rowCompare <= endDate {
+                        if tempIndex[keyPath: strIndex] != nil && tempIndex[keyPath: strStartDate] != nil {
+                            tempIndex[keyPath: strColumn] = (tempIndex[keyPath: strColumn] as! Int) + 1
+                            tempIndex[keyPath: strRowNum] = i + 1
+                        } else {
+                            tempIndex[keyPath: strStartDate] = dateString
+                            tempIndex[keyPath: strEventName] = event.name
+                            tempIndex[keyPath: strColumn] = 1
+                            tempIndex[keyPath: strRowNum] = i + 1
+                            tempIndex[keyPath: strSpace] = space
+                        }
                     }
                 }
                 else {
@@ -467,6 +470,12 @@ private extension CalendarViewComponent {
         }
         
         return tempIndex
+    }
+    
+    func dateFormat(_ date: Date) -> String {
+        let dateFormmater = DateFormatter()
+        dateFormmater.dateFormat = "yyyy-MM-dd HH:mm"
+        return dateFormmater.string(from: date)
     }
 }
 

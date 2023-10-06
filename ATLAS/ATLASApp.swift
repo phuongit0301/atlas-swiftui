@@ -97,11 +97,12 @@ struct ATLASApp: App {
 //                    await coreDataModel.checkAndSyncDataFuel()
 //                    await coreDataModel.initFetchData()
 //                    coreDataModel.loading = false
-                    await coreDataModel.checkAndSyncDataNote()
+//                    await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.checkAndSyncData()
-                    await coreDataModel.checkAndSynDataFuel()
+//                    await coreDataModel.checkAndSynDataFuel()
                     coreDataModel.loading = false
-                }.task {
+                }
+                .task {
                     coreDataModel.loading = true
                     await coreDataModel.initFetchData()
                     coreDataModel.loading = false
