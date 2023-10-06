@@ -20,7 +20,7 @@ struct ProvideLimitationView: View {
                         Spacer()
                         
                         Button(action: {
-                            let obj = IProvideLimitation(limitation: 0, duration: 0, startDate: "", endDate: "", completed: 0)
+                            let obj = IProvideLimitation(limitationFlight: "", limitation: "", duration: "", startDate: "", endDate: "", completed: "")
                             onboardingModel.dataModelLimitation.append(obj)
                         }, label: {
                             Text("Add Limitation").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)

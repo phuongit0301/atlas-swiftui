@@ -18,6 +18,8 @@ struct LimitationNumberModalView: View {
     @State private var selectionB = 0
     @State private var selectionC = 0
     
+    var onChange: (_ value: String) -> Void
+    
     var body: some View {
         VStack {
             HStack(alignment: .center) {
@@ -36,6 +38,7 @@ struct LimitationNumberModalView: View {
                 Button(action: {
                     // assign value from modal to entries form
                     self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)"
+                    onChange(selectionInOut)
                     self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -73,7 +76,7 @@ struct LimitationNumberModalView: View {
             Spacer()
             
         }.onAppear {
-            if selectionInOut.count == 3 {
+            if selectionInOut.count >= 3 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
                 self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0

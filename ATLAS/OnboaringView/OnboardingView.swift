@@ -9,10 +9,15 @@ import SwiftUI
 
 struct OnboardingView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
+    @AppStorage("isOnboarding") var isOnboarding: String = ""
     
     @State private var selected: Int = 0
     @State private var isProfileValid = false
     @State private var isExperienceValid = false
+    @State private var isLimitationValid = false
+    @State private var isRecencyValid = false
+    @State private var isExpiryValid = false
+    @State private var isLoading = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +38,19 @@ struct OnboardingView: View {
                     Spacer()
                     
                     Button {
-                        //Todo
+                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
+//                            isLoading = true
+                            let payload: [String: Any] = [
+                                "yourProfile": onboardingModel.dataYourProfile,
+                                "experience": onboardingModel.dataModelExperience,
+                                "limitations": onboardingModel.dataModelLimitation,
+                                "recencies": onboardingModel.dataModelRecency,
+                                "expiry": onboardingModel.dataModelExpiry
+                            ]
+                            
+                            print("payload=========\(payload)")
+                            isOnboarding = "0"
+                        }
                     } label: {
                         Text("Complete Onboarding")
                             .foregroundColor(.white)
@@ -43,7 +60,7 @@ struct OnboardingView: View {
                             .padding(.horizontal)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.theme.philippineGray3)
+                                    .fill((isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid) ? Color.theme.azure : Color.theme.philippineGray3)
                             )
                         
                     }
@@ -66,6 +83,12 @@ struct OnboardingView: View {
                                     if index == 0 && isProfileValid {
                                         Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
                                     } else if index == 1 && isExperienceValid {
+                                        Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
+                                    } else if index == 2 && isLimitationValid {
+                                        Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
+                                    } else if index == 3 && isRecencyValid {
+                                        Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
+                                    } else if index == 4 && isExpiryValid {
                                         Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
                                     } else {
                                         Image(systemName: "checkmark.circle").font(.system(size: 20)).foregroundColor(selected == index ? Color.white : Color.black)
@@ -119,6 +142,15 @@ struct OnboardingView: View {
             .onChange(of: onboardingModel.dataModelExperience) { _ in
                 isExperienceValid = validateExperience()
             }
+            .onChange(of: onboardingModel.dataModelLimitation) { _ in
+                isLimitationValid = validateLimitation()
+            }
+            .onChange(of: onboardingModel.dataModelRecency) { _ in
+                isRecencyValid = validateRecency()
+            }
+            .onChange(of: onboardingModel.dataModelExpiry) { _ in
+                isExpiryValid = validateExpiry()
+            }
     }
     
     func validateYourProfile() -> Bool {
@@ -131,6 +163,51 @@ struct OnboardingView: View {
         
         for item in onboardingModel.dataModelExperience {
             if item.modelName != "" && item.pic != "" && item.picUs != "" && item.p1 != "" && item.p2 != "" && item.totalTime != "" {
+                bool = true
+            } else {
+                bool = false
+                break
+            }
+        }
+        
+        return bool
+    }
+    
+    func validateLimitation() -> Bool {
+        var bool = false
+        
+        for item in onboardingModel.dataModelLimitation {
+            if item.limitationFlight != "" && item.limitation != "" && item.duration != "" && item.startDate != "" && item.endDate != "" && item.completed != "" {
+                bool = true
+            } else {
+                bool = false
+                break
+            }
+        }
+        
+        return bool
+    }
+    
+    func validateRecency() -> Bool {
+        var bool = false
+        
+        for item in onboardingModel.dataModelRecency {
+            if item.type != "" && item.modelName != "" && item.requirement != "" && item.frequency != "" && item.periodStart != "" && item.completed != "" {
+                bool = true
+            } else {
+                bool = false
+                break
+            }
+        }
+        
+        return bool
+    }
+    
+    func validateExpiry() -> Bool {
+        var bool = false
+        
+        for item in onboardingModel.dataModelExpiry {
+            if item.documentType != "" && item.expiredDate != "" {
                 bool = true
             } else {
                 bool = false

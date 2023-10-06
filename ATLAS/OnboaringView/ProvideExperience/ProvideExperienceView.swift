@@ -63,57 +63,8 @@ struct ProvideExperienceView: View {
                             .foregroundColor(.white)
                     )
             }
-//            .formSheet(isPresented: $showPicModal) {
-//                OnboardingTimeModalView(isShowing: $showPicModal, currentDate: $currentPic)
-//            }
-//            .formSheet(isPresented: $showPicUsModal) {
-//                OnboardingTimeModalView(isShowing: $showPicUsModal, currentDate: $currentPicUs)
-//            }
-//            .formSheet(isPresented: $showP1Modal) {
-//                OnboardingTimeModalView(isShowing: $showP1Modal, currentDate: $currentP1)
-//            }
-//            .formSheet(isPresented: $showP2Modal) {
-//                OnboardingTimeModalView(isShowing: $showP2Modal, currentDate: $currentP2)
-//            }
-//            .formSheet(isPresented: $showInstrModal) {
-//                OnboardingTimeModalView(isShowing: $showInstrModal, currentDate: $currentInstr)
-//            }
-//            .formSheet(isPresented: $showExamModal) {
-//                OnboardingTimeModalView(isShowing: $showExamModal, currentDate: $currentExam)
-//            }
-//            .formSheet(isPresented: $showTotalModal) {
-//                OnboardingTimeModalView(isShowing: $showTotalModal, currentDate: $currentTotal)
-//            }
         }
     }
-
-//    func onPic() {
-//        self.showPicModal.toggle()
-//    }
-//    
-//    func onPicUs() {
-//        self.showPicUsModal.toggle()
-//    }
-//    
-//    func onP1() {
-//        self.showP1Modal.toggle()
-//    }
-//    
-//    func onP2() {
-//        self.showP2Modal.toggle()
-//    }
-//    
-//    func onInstr() {
-//        self.showInstrModal.toggle()
-//    }
-//    
-//    func onExam() {
-//        self.showExamModal.toggle()
-//    }
-//    
-//    func onTotal() {
-//        self.showTotalModal.toggle()
-//    }
 }
 
 struct ProvideExperienceView_Previews: PreviewProvider {

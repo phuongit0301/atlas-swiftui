@@ -154,7 +154,7 @@ struct ModelRowView: View {
                         if dataModel[matchingIndex].modelName != "" {
                             self.selectedModel = dataModel[matchingIndex].modelName
                         } else {
-                            self.selectedModel = DataModelDropdown.first
+                            self.selectedModel = DataModelDropdown.first ?? ""
                         }
                         
                         if dataModel[matchingIndex].pic != "" {
@@ -201,7 +201,9 @@ struct ModelRowView: View {
                 OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal, onChange: onChangeTotalTime)
             }
             .onChange(of: selectedModel) { newValue in
-                dataModel[currentIndex].modelName = newValue
+                if dataModel[currentIndex].modelName != newValue {
+                    dataModel[currentIndex].modelName = newValue
+                }
             }
 //            .onChange(of: currentPic) { newValue in
 //                dataModel[currentIndex].pic = newValue

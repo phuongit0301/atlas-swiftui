@@ -11,7 +11,7 @@ struct LimitationRowView: View {
     @Binding var dataModel: [IProvideLimitation]
     let item: IProvideLimitation
     let width: CGFloat
-    @State private var selectedLimitation = ""
+    @State private var selectedLimitationFlight = ""
     
     @State var currentLimitation = "000"
     
@@ -28,6 +28,9 @@ struct LimitationRowView: View {
     @State var showEndDateModal = false
     @State var showCompletedModal = false
     @State var pickerType = "date"
+    
+    @State private var currentIndex = -1
+    
     let dateFormatterTime = DateFormatter()
     
     var body: some View {
@@ -44,7 +47,7 @@ struct LimitationRowView: View {
                 Text("Limitation").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                 
                 HStack(spacing: 8) {
-                    Picker("", selection: $selectedLimitation) {
+                    Picker("", selection: $selectedLimitationFlight) {
                         ForEach(DataLimitationDropdown, id: \.self) {
                             Text($0).tag($0)
                         }
@@ -131,24 +134,85 @@ struct LimitationRowView: View {
             )
             .onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                currentStartDate = dateFormatter.string(from: Date())
-                currentEndDate = dateFormatter.string(from: Date())
+
+                if dataModel.count > 0 {
+                    if let matchingIndex = dataModel.firstIndex(where: { $0.id == item.id }) {
+                        self.currentIndex = matchingIndex
+                        
+                        if dataModel[matchingIndex].limitationFlight != "" {
+                            selectedLimitationFlight = dataModel[matchingIndex].limitationFlight
+                        } else {
+                            selectedLimitationFlight = DataLimitationDropdown.first ?? ""
+                        }
+                        
+                        if dataModel[matchingIndex].limitation != "" {
+                            currentLimitation = dataModel[matchingIndex].limitation
+                        }
+                        
+                        if dataModel[matchingIndex].duration != "" {
+                            currentDuration = dataModel[matchingIndex].duration
+                        }
+                        
+                        if dataModel[matchingIndex].startDate != "" {
+                            currentStartDate = dataModel[matchingIndex].startDate
+                        } else {
+                            currentStartDate = dateFormatter.string(from: Date())
+                            dataModel[matchingIndex].startDate = currentStartDate
+                        }
+                        
+                        if dataModel[matchingIndex].endDate != "" {
+                            currentEndDate = dataModel[matchingIndex].endDate
+                        } else {
+                            currentEndDate = dateFormatter.string(from: Date())
+                            dataModel[matchingIndex].endDate = currentEndDate
+                        }
+                        
+                        if dataModel[matchingIndex].completed != "" {
+                            currentCompleted = dataModel[matchingIndex].completed
+                        }
+                    }
+                }
             }
             .formSheet(isPresented: $showLimitationModal) {
-                LimitationNumberModalView(isShowing: $showLimitationModal, selectionInOut: $currentLimitation, header: "Limitation").interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showLimitationModal, selectionInOut: $currentLimitation, header: "Limitation", onChange: onChangeLimitation).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showDurationModal) {
-                LimitationNumberModalView(isShowing: $showDurationModal, selectionInOut: $currentDuration, header: "Duration").interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showDurationModal, selectionInOut: $currentDuration, header: "Duration", onChange: onChangeDuration).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showStartDateModal) {
-                LimitationTimeModalView(isShowing: $showStartDateModal, pickerType: $pickerType, currentDate: $currentStartDate, header: "Start Date").interactiveDismissDisabled(true)
+                LimitationTimeModalView(isShowing: $showStartDateModal, pickerType: $pickerType, currentDate: $currentStartDate, header: "Start Date", onChange: onChangeStartDate).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showEndDateModal) {
-                LimitationTimeModalView(isShowing: $showEndDateModal, pickerType: $pickerType, currentDate: $currentEndDate, header: "End Date").interactiveDismissDisabled(true)
+                LimitationTimeModalView(isShowing: $showEndDateModal, pickerType: $pickerType, currentDate: $currentEndDate, header: "End Date", onChange: onChangeEndDate).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showCompletedModal) {
-                LimitationNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed").interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed", onChange: onChangeCompleted).interactiveDismissDisabled(true)
             }
+            .onChange(of: selectedLimitationFlight) { newValue in
+                if dataModel[currentIndex].limitationFlight != newValue {
+                    dataModel[currentIndex].limitationFlight = newValue
+                }
+            }
+    }
+    
+    func onChangeLimitation(_ value: String) {
+        dataModel[currentIndex].limitation = value
+    }
+
+    func onChangeDuration(_ value: String) {
+        dataModel[currentIndex].duration = value
+    }
+    
+    func onChangeStartDate(_ value: String) {
+        dataModel[currentIndex].startDate = value
+    }
+    
+    func onChangeEndDate(_ value: String) {
+        dataModel[currentIndex].endDate = value
+    }
+    
+    func onChangeCompleted(_ value: String) {
+        dataModel[currentIndex].completed = value
     }
     
     func onLimitation() {

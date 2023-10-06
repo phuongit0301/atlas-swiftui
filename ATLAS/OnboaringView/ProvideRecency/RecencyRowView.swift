@@ -11,23 +11,25 @@ struct RecencyRowView: View {
     @Binding var dataModel: [IProvideRecency]
     let item: IProvideRecency
     let width: CGFloat
-    @State private var selectedRecency = ""
+    @State private var selectedType = ""
     
     @State var currentModel = ""
     
-    @State var currentRequirement = "00"
+    @State var currentRequirement = "000"
     
-    @State var currentFrequency = "00"
+    @State var currentFrequency = "000"
     
     @State var currentPeriodDate = ""
     
-    @State var currentCompleted = "00"
+    @State var currentCompleted = "000"
     
     @State var showModelModal = false
     @State var showRequirementModal = false
     @State var showFrequencyModal = false
     @State var showPeriodDateModal = false
     @State var showCompletedModal = false
+    
+    @State private var currentIndex = -1
     
     @State var pickerType = "date"
     let dateFormatterTime = DateFormatter()
@@ -46,7 +48,7 @@ struct RecencyRowView: View {
                 Text("Type").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                 
                 HStack(spacing: 8) {
-                    Picker("", selection: $selectedRecency) {
+                    Picker("", selection: $selectedType) {
                         ForEach(DataRecencyDropdown, id: \.self) {
                             Text($0).tag($0)
                         }
@@ -90,8 +92,11 @@ struct RecencyRowView: View {
                 
                 HStack {
                     HStack(alignment: .center, spacing: 8) {
-                        FlightTimeButtonTimeStepper(onToggle: onModel, value: currentModel)
-                            .fixedSize()
+                        Picker("", selection: $currentModel) {
+                            ForEach(DataModelDropdown, id: \.self) {
+                                Text($0).tag($0)
+                            }
+                        }.pickerStyle(MenuPickerStyle())
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack(alignment: .center, spacing: 8) {
@@ -132,23 +137,78 @@ struct RecencyRowView: View {
             )
             .onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                currentPeriodDate = dateFormatter.string(from: Date())
-            }
-            .formSheet(isPresented: $showModelModal) {
-                RecencyModelView(isShowing: $showModelModal, currentItem: $currentModel, data: DataRecencyModelDropdown, header: "Model").interactiveDismissDisabled(true)
+                
+                if dataModel.count > 0 {
+                    if let matchingIndex = dataModel.firstIndex(where: { $0.id == item.id }) {
+                        self.currentIndex = matchingIndex
+                        
+                        if dataModel[matchingIndex].type != "" {
+                            selectedType = dataModel[matchingIndex].type
+                        } else {
+                            selectedType = DataRecencyDropdown.first ?? ""
+                        }
+                        
+                        if dataModel[matchingIndex].modelName != "" {
+                            currentModel = dataModel[matchingIndex].modelName
+                        } else {
+                            currentModel = DataModelDropdown.first ?? ""
+                        }
+                        
+                        if dataModel[matchingIndex].requirement != "" {
+                            currentRequirement = dataModel[matchingIndex].requirement
+                        }
+                        
+                        if dataModel[matchingIndex].frequency != "" {
+                            currentFrequency = dataModel[matchingIndex].frequency
+                        }
+                        
+                        if dataModel[matchingIndex].periodStart != "" {
+                            currentPeriodDate = dataModel[matchingIndex].periodStart
+                        } else {
+                            currentPeriodDate = dateFormatter.string(from: Date())
+                            dataModel[matchingIndex].periodStart = currentPeriodDate
+                        }
+                        
+                        if dataModel[matchingIndex].completed != "" {
+                            currentCompleted = dataModel[matchingIndex].completed
+                        }
+                    }
+                }
             }
             .formSheet(isPresented: $showRequirementModal) {
-                LimitationNumberModalView(isShowing: $showRequirementModal, selectionInOut: $currentRequirement, header: "Requirement").interactiveDismissDisabled(true)
+                LimitationNumberModalView(isShowing: $showRequirementModal, selectionInOut: $currentRequirement, header: "Requirement", onChange: onChangeRequirement).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showFrequencyModal) {
-                RecencyNumberModalView(isShowing: $showFrequencyModal, selectionInOut: $currentFrequency, header: "Frequency").interactiveDismissDisabled(true)
+                RecencyNumberModalView(isShowing: $showFrequencyModal, selectionInOut: $currentFrequency, header: "Frequency", onChange: onChangeFrequency).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showPeriodDateModal) {
-                LimitationTimeModalView(isShowing: $showPeriodDateModal, pickerType: $pickerType, currentDate: $currentPeriodDate, header: "Period Date").interactiveDismissDisabled(true)
+                LimitationTimeModalView(isShowing: $showPeriodDateModal, pickerType: $pickerType, currentDate: $currentPeriodDate, header: "Period Date", onChange: onChangePeriod).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showCompletedModal) {
-                RecencyNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed").interactiveDismissDisabled(true)
+                RecencyNumberModalView(isShowing: $showCompletedModal, selectionInOut: $currentCompleted, header: "Completed", onChange: onChangeCompleted).interactiveDismissDisabled(true)
             }
+            .onChange(of: currentModel) { newValue in
+                dataModel[currentIndex].modelName = newValue
+            }
+            .onChange(of: selectedType) { newValue in
+                dataModel[currentIndex].type = newValue
+            }
+    }
+    
+    func onChangeRequirement(_ value: String) {
+        dataModel[currentIndex].requirement = value
+    }
+    
+    func onChangeFrequency(_ value: String) {
+        dataModel[currentIndex].frequency = value
+    }
+    
+    func onChangePeriod(_ value: String) {
+        dataModel[currentIndex].periodStart = value
+    }
+    
+    func onChangeCompleted(_ value: String) {
+        dataModel[currentIndex].completed = value
     }
     
     func onModel() {

@@ -232,7 +232,7 @@ class CoreDataModelState: ObservableObject {
         if dataTrafficMap.count == 0 {
             self.loadingInit = true
             Task {
-//                let data = await remoteService.getFlightPlanData()
+                let data = await remoteService.getFlightPlanData()
 //                let response = await remoteService.getFuelData()
 //                let responseMap = await remoteService.getMapData()
                 let responseLogbook = await remoteService.getLogbookData()

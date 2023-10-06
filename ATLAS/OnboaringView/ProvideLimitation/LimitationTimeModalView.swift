@@ -12,6 +12,7 @@ struct LimitationTimeModalView: View {
     @Binding var pickerType: String //date, time, datetime
     @Binding var currentDate: String
     var header = "Time"
+    var onChange: (_ value: String) -> Void
     @State private var currentDateTemp = Date()
     
     let dateFormatterTime = DateFormatter()
@@ -42,7 +43,7 @@ struct LimitationTimeModalView: View {
                     }
                     
                     self.currentDate = dateFormatter.string(from: currentDateTemp)
-                    
+                    onChange(currentDate)
                     self.isShowing.toggle()
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)

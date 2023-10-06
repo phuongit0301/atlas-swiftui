@@ -19,6 +19,7 @@ struct ExpiryRowView: View {
     @State var showModal = false
     
     @State var pickerType = "date"
+    @State private var currentIndex = -1
     let dateFormatterTime = DateFormatter()
     
     var body: some View {
@@ -36,6 +37,9 @@ struct ExpiryRowView: View {
                 
                 HStack(spacing: 8) {
                     TextField("Enter Document Type", text: $txtDocumentType)
+                        .onChange(of: txtDocumentType) { newValue in
+                            dataModel[currentIndex].documentType = newValue
+                        }
                 }.frame(height: 44)
                     .padding(.horizontal)
                     .background(Color.white)
@@ -69,6 +73,9 @@ struct ExpiryRowView: View {
                     }.frame(width: calculateWidthSummary(width - 64, 2))
                     HStack(alignment: .center, spacing: 8) {
                         TextField("Enter Requirement", text: $txtRequirement)
+                            .onChange(of: txtRequirement) { newValue in
+                                dataModel[currentIndex].requirement = newValue
+                            }
                     }.frame(width: calculateWidthSummary(width - 64, 2))
                 }.frame(height: 44, alignment: .leading)
             }.frame(maxWidth: .infinity)
@@ -84,12 +91,35 @@ struct ExpiryRowView: View {
             )
             .onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                currentDate = dateFormatter.string(from: Date())
+                
+                if dataModel.count > 0 {
+                    if let matchingIndex = dataModel.firstIndex(where: { $0.id == item.id }) {
+                        self.currentIndex = matchingIndex
+                        
+                        if dataModel[matchingIndex].expiredDate != "" {
+                            currentDate = dataModel[matchingIndex].expiredDate
+                        } else {
+                            currentDate = dateFormatter.string(from: Date())
+                            dataModel[matchingIndex].expiredDate = currentDate
+                        }
+                        
+                        if dataModel[currentIndex].documentType != "" {
+                            txtDocumentType = dataModel[currentIndex].documentType
+                        }
+                        
+                        if dataModel[currentIndex].requirement != "" {
+                            txtRequirement = dataModel[currentIndex].requirement
+                        }
+                    }
+                }
             }
             .formSheet(isPresented: $showModal) {
-                LimitationTimeModalView(isShowing: $showModal, pickerType: $pickerType, currentDate: $currentDate, header: "Expiry Date").interactiveDismissDisabled(true)
+                LimitationTimeModalView(isShowing: $showModal, pickerType: $pickerType, currentDate: $currentDate, header: "Expiry Date", onChange: onChangeCurrentDate).interactiveDismissDisabled(true)
             }
-//            .keyboardAdaptive()
+    }
+    
+    func onChangeCurrentDate(_ value: String) {
+        dataModel[currentIndex].expiredDate = value
     }
     
     func onDate() {

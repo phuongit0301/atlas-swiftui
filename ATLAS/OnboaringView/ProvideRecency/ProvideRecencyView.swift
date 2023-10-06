@@ -20,7 +20,7 @@ struct ProvideRecencyView: View {
                         Spacer()
                         
                         Button(action: {
-                            let obj = IProvideRecency(modelName: "", requirement: 0, frequency: 0, periodStart: "", completed: 0)
+                            let obj = IProvideRecency(type: "", modelName: "", requirement: "", frequency: "", periodStart: "", completed: "")
                             onboardingModel.dataModelRecency.append(obj)
                         }, label: {
                             Text("Add Item").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)

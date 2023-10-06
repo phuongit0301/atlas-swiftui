@@ -10,6 +10,7 @@ import SwiftUI
 struct CompleteYourProfileView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @AppStorage("email") var email: String = ""
+    @AppStorage("uid") var userID: String = ""
     
     @State private var selected: Int = 0
     @State private var username = ""
@@ -227,6 +228,7 @@ struct CompleteYourProfileView: View {
             selectedAirline = ALTN_DROP_DOWN.first ?? ""
             selectedMobile = DataCountryDropdown.first ?? ""
             onboardingModel.dataYourProfile.email = email
+            onboardingModel.dataYourProfile.user_id = userID
             onboardingModel.dataYourProfile.airline = selectedAirline
             onboardingModel.dataYourProfile.mobile.country = selectedMobile
         }
