@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @EnvironmentObject var onboardingModel: OnboardingModel
+    
     @State private var selected: Int = 0
+    @State private var isProfileValid = false
+    @State private var isExperienceValid = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -59,7 +63,14 @@ struct OnboardingView: View {
                         VStack(alignment: .leading) {
                             ForEach(DataCheckList.indices, id: \.self) {index in
                                 HStack(spacing: 16) {
-                                    Image(systemName: "checkmark.circle").font(.system(size: 20)).foregroundColor(selected == index ? Color.white : Color.black)
+                                    if index == 0 && isProfileValid {
+                                        Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
+                                    } else if index == 1 && isExperienceValid {
+                                        Image(systemName: "checkmark.circle.fill").font(.system(size: 20)).foregroundStyle(Color.black, Color.theme.tealDeer)
+                                    } else {
+                                        Image(systemName: "checkmark.circle").font(.system(size: 20)).foregroundColor(selected == index ? Color.white : Color.black)
+                                    }
+                                    
                                     Text(DataCheckList[index].name).font(.system(size: 15, weight: selected == index ? .semibold : .regular)).foregroundColor(selected == index ? Color.white : Color.black)
                                 }.padding(.vertical, 12)
                                     .padding(.horizontal, 16)
@@ -102,6 +113,32 @@ struct OnboardingView: View {
                 }
             }.padding(.horizontal)
         }.background(Color.theme.antiFlashWhite)
+            .onChange(of: onboardingModel.dataYourProfile) { _ in
+                isProfileValid = validateYourProfile()
+            }
+            .onChange(of: onboardingModel.dataModelExperience) { _ in
+                isExperienceValid = validateExperience()
+            }
+    }
+    
+    func validateYourProfile() -> Bool {
+        let data = onboardingModel.dataYourProfile
+        return data.userName != "" && data.firstName != "" && data.lastName != "" && data.airline != "" && data.mobile.country != "" && data.mobile.number != "" && data.email != ""
+    }
+    
+    func validateExperience() -> Bool {
+        var bool = false
+        
+        for item in onboardingModel.dataModelExperience {
+            if item.modelName != "" && item.pic != "" && item.picUs != "" && item.p1 != "" && item.p2 != "" && item.totalTime != "" {
+                bool = true
+            } else {
+                bool = false
+                break
+            }
+        }
+        
+        return bool
     }
 }
 

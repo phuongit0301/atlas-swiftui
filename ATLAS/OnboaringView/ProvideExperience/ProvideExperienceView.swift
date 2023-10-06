@@ -11,13 +11,13 @@ struct ProvideExperienceView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @State private var selectedModel = ""
     
-    @State var currentPic = "00:00"
-    @State var currentPicUs = "00:00"
-    @State var currentP1 = "00:00"
-    @State var currentP2 = "00:00"
-    @State var currentInstr = "00:00"
-    @State var currentExam = "00:00"
-    @State var currentTotal = "00:00"
+    @State var currentPic = "0000:00"
+    @State var currentPicUs = "0000:00"
+    @State var currentP1 = "0000:00"
+    @State var currentP2 = "0000:00"
+    @State var currentInstr = "0000:00"
+    @State var currentExam = "0000:00"
+    @State var currentTotal = "0000:00"
     
     @State var showPicModal = false
     @State var showPicUsModal = false
@@ -39,7 +39,7 @@ struct ProvideExperienceView: View {
                         Spacer()
                         
                         Button(action: {
-                            let obj = IProvideExperience(modelName: "00:00", pic: "00:00", picUs: "00:00", p1: "00:00", p2: "00:00", instr: "00:00", exam: "00:00", totalTime: "00:00")
+                            let obj = IProvideExperience(modelName: "", pic: "", picUs: "", p1: "", p2: "", instr: "", exam: "", totalTime: "")
                             onboardingModel.dataModelExperience.append(obj)
                         }, label: {
                             Text("Add Model").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
@@ -49,7 +49,7 @@ struct ProvideExperienceView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         if onboardingModel.dataModelExperience.count > 0 {
                             ForEach(onboardingModel.dataModelExperience, id: \.self) {item in
-                                ModelRowView(dataModel: $onboardingModel.dataModelExperience, item: item, width: proxy.size.width)
+                                ModelRowView(dataModel: $onboardingModel.dataModelExperience, item: item, width: proxy.size.width).id(UUID())
                             }
                         }
                     }

@@ -132,7 +132,7 @@ struct LoginView: View {
                     
                     VStack(spacing: 0) {
                         if message.count > 0 {
-                            Text("The email address you provided is not registered.").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                            Text(message).font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
                         }
                         
                         if showEmailNotVerified {

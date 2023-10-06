@@ -24,6 +24,8 @@ struct OnboardingTimeModalView: View {
     @State private var selectionE = 0
     @State private var selectionF = 0
     
+    var onChange: (_ value: String) -> Void
+    
     var body: some View {
         VStack {
             HStack(alignment: .center) {
@@ -39,6 +41,7 @@ struct OnboardingTimeModalView: View {
                 Spacer()
                 Button(action: {
                     self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)\(selectionD):\(selectionE)\(selectionF)"
+                    onChange(selectionInOut)
                     self.isShowing = false
                 }) {
                     Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -92,7 +95,7 @@ struct OnboardingTimeModalView: View {
             }
             Spacer()
         }.onAppear {
-            if selectionInOut.count == 6 {
+            if selectionInOut.count >= 6 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
                 self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0

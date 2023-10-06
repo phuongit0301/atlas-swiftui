@@ -14,6 +14,7 @@ struct CreatePasswordView: View {
     
     @AppStorage("uid") var userID: String = ""
     @AppStorage("isOnboarding") var isOnboarding: String = "0"
+    @AppStorage("email") var email: String = ""
     
     @State var isSecured: Bool = true
     @State var isLoading: Bool = false
@@ -121,6 +122,7 @@ struct CreatePasswordView: View {
                             }
 
                             self.userID = user.uid
+                            self.email = user.email ?? ""
                             self.isOnboarding = "1"
                             self.isShowing.toggle()
                         }

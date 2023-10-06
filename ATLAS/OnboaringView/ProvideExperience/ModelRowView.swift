@@ -10,7 +10,7 @@ import SwiftUI
 struct ModelRowView: View {
     @Binding var dataModel: [IProvideExperience]
 //    let index: Int
-    let item: IProvideExperience
+    var item: IProvideExperience
     let width: CGFloat
     @State private var selectedModel = ""
     
@@ -29,6 +29,8 @@ struct ModelRowView: View {
 //    @State var showInstrModal = false
 //    @State var showExamModal = false
     @State var showTotalModal = false
+    
+    @State private var currentIndex = -1
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -144,17 +146,50 @@ struct ModelRowView: View {
                     .stroke(lineWidth: 0)
                     .foregroundColor(.white)
             )
+            .onAppear {
+                if dataModel.count > 0 {
+                    if let matchingIndex = dataModel.firstIndex(where: { $0.id == item.id }) {
+                        self.currentIndex = matchingIndex
+                        
+                        if dataModel[matchingIndex].modelName != "" {
+                            self.selectedModel = dataModel[matchingIndex].modelName
+                        } else {
+                            self.selectedModel = DataModelDropdown.first
+                        }
+                        
+                        if dataModel[matchingIndex].pic != "" {
+                            self.currentPic = dataModel[matchingIndex].pic
+                        }
+                        
+                        if dataModel[matchingIndex].picUs != "" {
+                            self.currentPicUs = dataModel[matchingIndex].picUs
+                        }
+                        
+                        if dataModel[matchingIndex].p1 != "" {
+                            self.currentP1 = dataModel[matchingIndex].p1
+                        }
+                        
+                        if dataModel[matchingIndex].p2 != "" {
+                            self.currentP2 = dataModel[matchingIndex].p2
+                        }
+                        
+                        if dataModel[matchingIndex].totalTime != "" {
+                            self.currentTotal = dataModel[matchingIndex].totalTime
+                        }
+                    }
+                }
+            }
             .formSheet(isPresented: $showPicModal) {
-                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic)
+                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic, onChange: onChangePic)
             }
             .formSheet(isPresented: $showPicUsModal) {
-                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs)
+                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs, onChange: onChangePicUs)
             }
             .formSheet(isPresented: $showP1Modal) {
-                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1)
+                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1, onChange: onChangeP1)
             }
             .formSheet(isPresented: $showP2Modal) {
-                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2)
+                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2, onChange: onChangeP2)
             }
 //            .formSheet(isPresented: $showInstrModal) {
 //                OnboardingTimeModalView(isShowing: $showInstrModal, currentDate: $currentInstr)
@@ -163,8 +198,46 @@ struct ModelRowView: View {
 //                OnboardingTimeModalView(isShowing: $showExamModal, currentDate: $currentExam)
 //            }
             .formSheet(isPresented: $showTotalModal) {
-                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal)
+                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal, onChange: onChangeTotalTime)
             }
+            .onChange(of: selectedModel) { newValue in
+                dataModel[currentIndex].modelName = newValue
+            }
+//            .onChange(of: currentPic) { newValue in
+//                dataModel[currentIndex].pic = newValue
+//            }
+//            .onChange(of: currentPicUs) { newValue in
+//                dataModel[currentIndex].picUs = newValue
+//            }
+//            .onChange(of: currentP1) { newValue in
+//                dataModel[currentIndex].p1 = newValue
+//            }
+//            .onChange(of: currentP2) { newValue in
+//                dataModel[currentIndex].p2 = newValue
+//            }
+//            .onChange(of: currentTotal) { newValue in
+//                dataModel[currentIndex].totalTime = newValue
+//            }
+    }
+
+    func onChangePic(_ value: String) {
+        dataModel[currentIndex].pic = value
+    }
+
+    func onChangePicUs(_ value: String) {
+        dataModel[currentIndex].picUs = value
+    }
+    
+    func onChangeP1(_ value: String) {
+        dataModel[currentIndex].p1 = value
+    }
+    
+    func onChangeP2(_ value: String) {
+        dataModel[currentIndex].p2 = value
+    }
+    
+    func onChangeTotalTime(_ value: String) {
+        dataModel[currentIndex].totalTime = value
     }
     
     func onPic() {

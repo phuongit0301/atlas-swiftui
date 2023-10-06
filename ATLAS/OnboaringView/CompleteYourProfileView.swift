@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct CompleteYourProfileView: View {
+    @EnvironmentObject var onboardingModel: OnboardingModel
+    @AppStorage("email") var email: String = ""
+    
     @State private var selected: Int = 0
     @State private var username = ""
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var phone = ""
-    @State private var email = ""
     @State private var selectedAirline = ""
     @State private var selectedMobile = ""
     @State private var showUTC = true
@@ -31,7 +33,11 @@ struct CompleteYourProfileView: View {
                         
                         HStack(alignment: .center, spacing: 8) {
                             HStack(spacing: 0) {
-                                TextField("Enter your preferred username", text: $username).font(.system(size: 15, weight: .regular))
+                                TextField("Enter your preferred username", text: $username)
+                                    .font(.system(size: 15, weight: .regular))
+                                    .onChange(of: username) { newValue in
+                                        onboardingModel.dataYourProfile.userName = username
+                                    }
                             }.frame(height: 44)
                                 .padding(.horizontal)
                                 .background(Color.white)
@@ -43,21 +49,21 @@ struct CompleteYourProfileView: View {
                                     
                                 )
                             
-                            Button {
-                                //Todo
-                            } label: {
-                                Text("Check Availability")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .frame(height: 20)
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(Color.theme.philippineGray3)
-                                    )
-                                
-                            }
+//                            Button {
+//                                //Todo
+//                            } label: {
+//                                Text("Check Availability")
+//                                    .foregroundColor(.white)
+//                                    .font(.system(size: 15, weight: .semibold))
+//                                    .frame(height: 20)
+//                                    .padding(.vertical, 12)
+//                                    .padding(.horizontal)
+//                                    .background(
+//                                        RoundedRectangle(cornerRadius: 8)
+//                                            .fill(Color.theme.philippineGray3)
+//                                    )
+//                                
+//                            }
                         }.frame(height: 44)
                     }
                     
@@ -67,7 +73,11 @@ struct CompleteYourProfileView: View {
                         }.frame(height: 44)
                         
                         HStack(spacing: 8) {
-                            TextField("Enter your first name", text: $firstName).font(.system(size: 15, weight: .regular))
+                            TextField("Enter your first name", text: $firstName)
+                                .font(.system(size: 15, weight: .regular))
+                                .onChange(of: firstName) { newValue in
+                                    onboardingModel.dataYourProfile.firstName = newValue
+                                }
                         }.frame(height: 44)
                             .padding(.horizontal)
                             .background(Color.white)
@@ -86,7 +96,11 @@ struct CompleteYourProfileView: View {
                         }.frame(height: 44)
                         
                         HStack(spacing: 8) {
-                            TextField("Enter your last name", text: $firstName).font(.system(size: 15, weight: .regular))
+                            TextField("Enter your last name", text: $lastName)
+                                .font(.system(size: 15, weight: .regular))
+                                .onChange(of: lastName) { newValue in
+                                    onboardingModel.dataYourProfile.lastName = newValue
+                                }
                         }.frame(height: 44)
                             .padding(.horizontal)
                             .background(Color.white)
@@ -106,7 +120,7 @@ struct CompleteYourProfileView: View {
                         
                         HStack(spacing: 8) {
                             Picker("", selection: $selectedAirline) {
-                                ForEach(DataAirlineDropdown, id: \.self) {
+                                ForEach(ALTN_DROP_DOWN, id: \.self) {
                                     Text($0).tag($0)
                                 }
                             }.pickerStyle(MenuPickerStyle())
@@ -148,7 +162,11 @@ struct CompleteYourProfileView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                             
                             HStack(spacing: 8) {
-                                TextField("Enter your mobile", text: $firstName).font(.system(size: 15, weight: .regular))
+                                TextField("Enter your mobile", text: $phone)
+                                    .font(.system(size: 15, weight: .regular))
+                                    .onChange(of: phone) { newValue in
+                                        onboardingModel.dataYourProfile.mobile.number = newValue
+                                    }
                             }.frame(height: 44)
                                 .padding(.horizontal)
                                 .background(Color.white)
@@ -168,7 +186,7 @@ struct CompleteYourProfileView: View {
                         }.frame(height: 44)
                         
                         HStack(spacing: 8) {
-                            TextField("adil@accumulus.sg", text: $firstName).font(.system(size: 15, weight: .regular)).disabled(true)
+                            TextField("", text: $email).font(.system(size: 15, weight: .regular)).foregroundColor(Color.black).disabled(true)
                         }.frame(height: 44)
                             .padding(.horizontal)
                             .background(Color.white)
@@ -205,6 +223,21 @@ struct CompleteYourProfileView: View {
                         .stroke(lineWidth: 0)
                         .foregroundColor(.white)
                 )
+        }.onAppear {
+            selectedAirline = ALTN_DROP_DOWN.first ?? ""
+            selectedMobile = DataCountryDropdown.first ?? ""
+            onboardingModel.dataYourProfile.email = email
+            onboardingModel.dataYourProfile.airline = selectedAirline
+            onboardingModel.dataYourProfile.mobile.country = selectedMobile
+        }
+        .onChange(of: selectedAirline) { newValue in
+            onboardingModel.dataYourProfile.airline = newValue
+        }
+        .onChange(of: selectedMobile) { newValue in
+            onboardingModel.dataYourProfile.mobile.country = newValue
+        }
+        .onChange(of: showUTC) { newValue in
+            onboardingModel.dataYourProfile.subscribe = newValue ? "1" : "0"
         }
     }
 }
