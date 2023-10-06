@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ResetPasswordView: View {
     @Binding var isShowResetPassword: Bool
-    @State var email = ""
+    
+    @State private var email = ""
+    @State private var errorMsg = ""
+    @State private var isSent = false
+    @State private var isLoading = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -38,7 +43,7 @@ struct ResetPasswordView: View {
                     }.frame(height: 44)
                     
                     HStack {
-                        TextField("Enter your airline email address", text: $email).font(.system(size: 15, weight: .regular))
+                        TextField("Enter your airline email address", text: $email).font(.system(size: 15, weight: .regular)).textInputAutocapitalization(.never)
                     }.frame(height: 44)
                         .padding(.horizontal)
                         .background(Color.white)
@@ -50,20 +55,50 @@ struct ResetPasswordView: View {
                         )
                 }
                 
+                Spacer()
+                
                 Button {
-                    //Todo
+                    if email.count > 0 && email.isValidEmail() {
+                        isLoading = true
+                        Auth.auth().sendPasswordReset(withEmail: email) { error in
+                            isLoading = false
+                            errorMsg = ""
+                            
+                            if let err = error {
+                                errorMsg = err.localizedDescription
+                                return
+                            }
+                            self.isSent = true
+                        }
+                    }
                 } label: {
-                    Text("Reset Password")
-                        .foregroundColor(.white)
-                        .font(.system(size: 15, weight: .semibold))
-                        .frame(height: 20)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.theme.philippineGray3)
-                        )
+                    HStack(alignment: .center, spacing: 16) {
+                        if isLoading {
+                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                        }
+                        Text("Reset Password")
+                            .foregroundColor(.white)
+                            .font(.system(size: 15, weight: .semibold))
+                    }
                     
+                }.buttonStyle(PlainButtonStyle())
+                    .frame(height: 20)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(!isSent && email.count > 0 && email.isValidEmail() ? Color.theme.azure : Color.theme.philippineGray3)
+                    )
+                    .cornerRadius(8)
+                
+                if errorMsg.count != 0 {
+                    Text(errorMsg).font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                }
+                
+                if isSent {
+                    Text("A password reset email has been sent to your email address.").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.ufoGreen).padding(.bottom, 16)
+                    Text("Please click the link in that email to reset your password.").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.ufoGreen).padding(.bottom, 10)
+                    Text("If you do not receive the email, please check your spam folder or other filtering tools.").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.ufoGreen)
                 }
             }.padding()
      

@@ -11,7 +11,6 @@ import Firebase
 struct LoginView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @EnvironmentObject var signupModel: SignUpModel
-    @EnvironmentObject var sessionStore: SessionStore
     
     @State var step = 1
     @State var email = ""

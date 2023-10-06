@@ -41,7 +41,7 @@ struct VerifyEmailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Verify Email").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).padding(.bottom, 16)
                     Text("A verification email has been sent to your email address. Please click the link in that email to verify your email, and then tap “Continue” below to continue with the sign up process.").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 10)
-                    Text("If you do not receive the email, please check your spam folder or other filtering tools..").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                    Text("If you do not receive the email, please check your spam folder or other filtering tools.").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
                 }
                 
                 Spacer()

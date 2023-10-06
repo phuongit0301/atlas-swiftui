@@ -75,7 +75,7 @@ struct SignUpView: View {
                     Button {
                         isLoading = true
                         let password = randomAlphanumericString(10)
-                        print("password======\(password)")
+                        
                         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                             if let err = error {
                                 isLoading = false

@@ -22,6 +22,7 @@ struct ATLASApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(FBAppDelegate.self) var delegate
     @AppStorage("uid") var userID: String = ""
+    @AppStorage("isOnboarding") var isOnboarding: String = "0"
     
     let persistenceController = PersistenceController.shared
     let remoteServiceController = RemoteService.shared
@@ -52,7 +53,11 @@ struct ATLASApp: App {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
                 } else {
                     if userID != "" {
-                        ContentView()
+                        if isOnboarding == "1" {
+                            OnboardingView()
+                        } else {
+                            ContentView()
+                        }
                     } else {
                         LoginView()
 //                        OnboardingView()
