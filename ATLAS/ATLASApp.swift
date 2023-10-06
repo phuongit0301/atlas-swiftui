@@ -40,6 +40,7 @@ struct ATLASApp: App {
     @StateObject var locationViewModel = LocationViewModel()
     @StateObject var calendarModel = CalendarModel()
     @StateObject var mapIconModel = MapIconModel()
+    @StateObject var onboardingModel = OnboardingModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -53,51 +54,13 @@ struct ATLASApp: App {
                     if userID != "" {
                         ContentView()
                     } else {
-//                        LoginView()
-                        OnboardingView()
+                        LoginView()
+//                        OnboardingView()
                     }
                 }
             }.onAppear {
                 if locationViewModel.authorizationStatus == .notDetermined {
                     locationViewModel.requestPermission()
-                }
-                
-                Task {
-                    if coreDataModel.dataHistoricalDelays.count <= 0  {
-                        coreDataModel.loadingInitFuel = true
-                        
-                        let response = await remoteServiceController.getFuelData()
-                        
-                        if let historicalDelays = response?.historicalDelays {
-                            coreDataModel.initHistoricalDelays(historicalDelays)
-                        }
-
-                        if let projDelays = response?.projDelays {
-                            coreDataModel.initProjDelays(projDelays)
-                        }
-
-                        if let taxi = response?.taxi {
-                            coreDataModel.initProjTaxi(taxi)
-                        }
-
-                        if let trackMiles = response?.trackMiles {
-                            coreDataModel.initTrackMiles(trackMiles)
-                        }
-
-                        if let enrWX = response?.enrWX {
-                            coreDataModel.initEnrWX(enrWX)
-                        }
-
-                        if let flightLevel = response?.flightLevel {
-                            coreDataModel.initFlightLevel(flightLevel)
-                        }
-
-                        if let reciprocalRwy = response?.reciprocalRwy {
-                            coreDataModel.initReciprocalRwy(reciprocalRwy)
-                        }
-                        
-                        coreDataModel.loadingInitFuel = false
-                    }
                 }
             }
             .onAppWentToBackground {
@@ -121,6 +84,7 @@ struct ATLASApp: App {
                 .environmentObject(aiSearchModel)
                 .environmentObject(calendarModel)
                 .environmentObject(mapIconModel)
+                .environmentObject(onboardingModel)
                 .task {
                     coreDataModel.loading = true
 //                    await coreDataModel.checkAndSyncDataNote()
@@ -130,6 +94,7 @@ struct ATLASApp: App {
 //                    coreDataModel.loading = false
                     await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.checkAndSyncData()
+                    await coreDataModel.checkAndSynDataFuel()
                     coreDataModel.loading = false
                 }.task {
                     coreDataModel.loading = true

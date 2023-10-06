@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProvideRecencyView: View {
-    @State var dataModel = [IProvideRecency]()
+    @EnvironmentObject var onboardingModel: OnboardingModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -21,16 +21,16 @@ struct ProvideRecencyView: View {
                         
                         Button(action: {
                             let obj = IProvideRecency(modelName: "", requirement: 0, frequency: 0, periodStart: "", completed: 0)
-                            dataModel.append(obj)
+                            onboardingModel.dataModelRecency.append(obj)
                         }, label: {
                             Text("Add Item").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                         })
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        if dataModel.count > 0 {
-                            ForEach(dataModel, id: \.self) {item in
-                                RecencyRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
+                        if onboardingModel.dataModelRecency.count > 0 {
+                            ForEach(onboardingModel.dataModelRecency, id: \.self) {item in
+                                RecencyRowView(dataModel: $onboardingModel.dataModelRecency, item: item, width: proxy.size.width)
                             }
                         }
                     }

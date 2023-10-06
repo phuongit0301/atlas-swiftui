@@ -703,3 +703,26 @@ let dateFormatter: DateFormatter = {
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter
 }()
+
+func isValidPassword(_ password: String) -> Bool {
+    // minimum 6 characters long
+    // 1 uppercase character
+    // 1 special char
+        
+    let passwordRegex = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{8,}$")
+    
+    return passwordRegex.evaluate(with: password)
+}
+
+func randomAlphanumericString(_ length: Int) -> String {
+   let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+   let len = UInt32(letters.count)
+   var random = SystemRandomNumberGenerator()
+   var randomString = ""
+   for _ in 0..<length {
+      let randomIndex = Int(random.next(upperBound: len))
+      let randomCharacter = letters[letters.index(letters.startIndex, offsetBy: randomIndex)]
+      randomString.append(randomCharacter)
+   }
+   return randomString
+}

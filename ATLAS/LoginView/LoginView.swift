@@ -9,12 +9,23 @@ import SwiftUI
 import Firebase
 
 struct LoginView: View {
+    @EnvironmentObject var onboardingModel: OnboardingModel
+    @EnvironmentObject var signupModel: SignUpModel
+    @EnvironmentObject var sessionStore: SessionStore
+    
+    @State var step = 1
     @State var email = ""
     @State var password = ""
     @State var message = ""
+    @State var isSecured: Bool = true
+    @State var showEmailNotVerified: Bool = false
     @AppStorage("uid") var userID: String = ""
+    @State var userInfo: [String: String] = [:]
     
     @State private var isShowResetPassword = false
+    @State private var isShowSignup = false
+    @State private var isShowVerifyEmail = false
+    @State private var isShowCreatePassword = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -32,17 +43,13 @@ struct LoginView: View {
                         HStack(spacing: 16) {
                             Text("Email").font(.system(size: 15, weight: .semibold))
                             
-                            Text("Please enter a valid airline email address").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                            if email.count > 0 && !email.isValidEmail() {
+                                Text("Please enter a valid airline email address").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                            }
                         }.frame(height: 44)
                         
                         HStack {
-                            TextField("Enter your airline email address", text: $email).font(.system(size: 15, weight: .regular))
-                            //                    if(email.count != 0) {
-                            //                        Image(systemName: email.isValidEmail() ? "checkmark" : "xmark")
-                            //                            .fontWeight(.bold)
-                            //                            .foregroundColor(email.isValidEmail() ? .green : .red)
-                            //                    }
-                            
+                            TextField("Enter your airline email address", text: $email).font(.system(size: 15, weight: .regular)).textInputAutocapitalization(.never)
                         }.frame(height: 44)
                             .padding(.horizontal)
                             .background(Color.white)
@@ -69,18 +76,19 @@ struct LoginView: View {
                         }.frame(height: 44)
                         
                         HStack {
-                            SecureField("Password", text: $password)
+                            if isSecured {
+                                SecureField("Password", text: $password)
+                            } else {
+                                TextField("Password", text: $password)
+                            }
                             
                             Spacer()
                             
-                            Image(systemName: "eye.slash")
-                            
-                            //                        if(password.count != 0) {
-                            //
-                            //                            Image(systemName: isValidPassword(password) ? "checkmark" : "xmark")
-                            //                                .fontWeight(.bold)
-                            //                                .foregroundColor(isValidPassword(password) ? .green : .red)
-                            //                        }
+                            Button(action: {
+                                self.isSecured.toggle()
+                            }, label: {
+                                Image(systemName: "eye.slash")
+                            })
                             
                         }.frame(height: 44)
                             .padding(.horizontal)
@@ -97,15 +105,16 @@ struct LoginView: View {
                         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                             if let error = error {
                                 message = error.localizedDescription
-                                print(error)
                                 return
                             }
                             
-                            if let authResult = authResult {
+                            if let authResult = authResult, authResult.user.isEmailVerified {
                                 print(authResult.user.uid)
                                 withAnimation {
                                     userID = authResult.user.uid
                                 }
+                            } else {
+                                showEmailNotVerified = true
                             }
                         }
                     } label: {
@@ -117,14 +126,39 @@ struct LoginView: View {
                             .padding(.vertical, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.theme.philippineGray3)
+                                    .fill(validate())
                             )
                             
                     }
                     
                     VStack(spacing: 0) {
-                        Text("The email address you provided is not registered.").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
-                        Text("Create a new account?").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.azure).underline()
+                        if message.count > 0 {
+                            Text("The email address you provided is not registered.").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                        }
+                        
+                        if showEmailNotVerified {
+                            VStack {
+                                Text("Your email address has not been verified.")
+                                    .font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.coralRed1)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                Text("Please click the link in the verification email sent to your email address to proceed.")
+                                    .font(.system(size: 13, weight: .regular))
+                                    .foregroundColor(Color.theme.coralRed1).padding(.bottom, 10)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                Text("If you do not receive the email, please check your spam folder or other filtering tools.")
+                                    .font(.system(size: 13, weight: .regular))
+                                    .foregroundColor(Color.theme.coralRed1)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                            }.frame(alignment: .center)
+                            .frame(maxWidth: .infinity)
+                        }
+                        
+                        Button(action: {
+                            self.isShowSignup.toggle()
+                        }, label: {
+                            Text("Create a new account?").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.azure).underline()
+                        }).buttonStyle(PlainButtonStyle())
+                        
                     }
                 }.padding(24)
                     .background(Color.white.opacity(0.5))
@@ -150,7 +184,11 @@ struct LoginView: View {
                     }
                     HStack {
                         Text("Don’t have an account?").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black)
-                        Text(" Sign up").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.azure)
+                        Button(action: {
+                            self.isShowSignup.toggle()
+                        }, label: {
+                            Text(" Sign up").font(.system(size: 13, weight: .regular)).foregroundColor(Color.theme.azure)
+                        })
                     }
                 }
                 
@@ -158,7 +196,7 @@ struct LoginView: View {
                 
                 Text("Copyright 2003 Accumulus Pte. Ltd. All Rights Reserved ").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 50)
                 
-            }.frame(width: 488)
+            }.frame(width: 550)
                 
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 48)
@@ -166,17 +204,33 @@ struct LoginView: View {
             .formSheet(isPresented: $isShowResetPassword) {
                 ResetPasswordView(isShowResetPassword: $isShowResetPassword)
             }
+            .formSheet(isPresented: $isShowSignup) {
+                SignUpView(step: $step, isShowing: $isShowSignup, userInfo: $userInfo)
+            }
+            .formSheet(isPresented: $isShowVerifyEmail) {
+                VerifyEmailView(step: $step, isShowing: $isShowVerifyEmail, userInfo: $userInfo)
+            }
+            .formSheet(isPresented: $isShowCreatePassword) {
+                CreatePasswordView(step: $step, isShowing: $isShowCreatePassword)
+            }
+            .onChange(of: isShowSignup) {newValue in
+                if !newValue && step == 2 {
+                    isShowVerifyEmail.toggle()
+                }
+            }
+            .onChange(of: isShowVerifyEmail) {newValue in
+                if !newValue && step == 3 {
+                    isShowCreatePassword.toggle()
+                }
+            }
     }
     
-    private func isValidPassword(_ password: String) -> Bool {
-            // minimum 6 characters long
-            // 1 uppercase character
-            // 1 special char
-            
-            let passwordRegex = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])(?=.*[A-Z]).{6,}$")
-            
-            return passwordRegex.evaluate(with: password)
+    func validate() -> Color {
+        if email.count > 0 && email.isValidEmail() && password.count > 0 {
+            return Color.theme.azure
         }
+        return Color.theme.philippineGray3
+    }
 }
 
 struct LoginView_Previews: PreviewProvider {

@@ -25,6 +25,9 @@
 		3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */; };
 		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
 		3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */; };
+		3E2BA8342ACE9DEA009ABCC2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8332ACE9DEA009ABCC2 /* SignUpView.swift */; };
+		3E2BA8362ACEAAFF009ABCC2 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8352ACEAAFF009ABCC2 /* VerifyEmailView.swift */; };
+		3E2BA8382ACEAE49009ABCC2 /* CreatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8372ACEAE49009ABCC2 /* CreatePasswordView.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
@@ -475,6 +478,9 @@
 		3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPickerString.swift; sourceTree = "<group>"; };
 		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
 		3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyNumberModalView.swift; sourceTree = "<group>"; };
+		3E2BA8332ACE9DEA009ABCC2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		3E2BA8352ACEAAFF009ABCC2 /* VerifyEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
+		3E2BA8372ACEAE49009ABCC2 /* CreatePasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasswordView.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
@@ -1481,6 +1487,9 @@
 			children = (
 				3EECB8632A716638009D4971 /* LoginView.swift */,
 				3E72923C2AC99951000FF295 /* ResetPasswordView.swift */,
+				3E2BA8332ACE9DEA009ABCC2 /* SignUpView.swift */,
+				3E2BA8352ACEAAFF009ABCC2 /* VerifyEmailView.swift */,
+				3E2BA8372ACEAE49009ABCC2 /* CreatePasswordView.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -2232,6 +2241,7 @@
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
 				3E7292422AC99DE4000FF295 /* OnboardingModel.swift in Sources */,
 				3E7291EF2AC6ACD0000FF295 /* ClipboardEnrouteNoteItemList.swift in Sources */,
+				3E2BA8382ACEAE49009ABCC2 /* CreatePasswordView.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
 				3E7291732AC3C875000FF295 /* SignOffView.swift in Sources */,
 				3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */,
@@ -2355,6 +2365,7 @@
 				3E4A36A62A570BA800027C61 /* FuelDataList+CoreDataClass.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3E7292542ACAA396000FF295 /* LimitationNumberModalView.swift in Sources */,
+				3E2BA8342ACE9DEA009ABCC2 /* SignUpView.swift in Sources */,
 				3E7291482AC2CBAD000FF295 /* NoteItemRelevantList.swift in Sources */,
 				3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */,
 				3E7291B42AC59487000FF295 /* ArrivalModalNoteCommentView.swift in Sources */,
@@ -2397,6 +2408,7 @@
 				3E72924C2ACA9FBC000FF295 /* ProvideLimitationView.swift in Sources */,
 				3E7291AC2AC59448000FF295 /* ArrivalSectionView.swift in Sources */,
 				3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */,
+				3E2BA8362ACEAAFF009ABCC2 /* VerifyEmailView.swift in Sources */,
 				3E7291442AC266A4000FF295 /* PreflightSectionView.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeFlightSectionView.swift in Sources */,
 				3E7292712ACC6FD1000FF295 /* MetarTafDataList+CoreDataClass.swift in Sources */,

@@ -75,3 +75,14 @@ struct IProvideExpiry: Identifiable, Hashable {
     var requirement: String
     var documentType: String
 }
+
+class OnboardingModel: ObservableObject {
+    @Published var dataModelExperience = [IProvideExperience]()
+    @Published var dataModelLimitation = [IProvideLimitation]()
+    @Published var dataModelRecency = [IProvideRecency]()
+    @Published var dataModelExpiry = [IProvideExpiry]()
+}
+
+class SignUpModel: ObservableObject {
+    @Published var step = 1
+}

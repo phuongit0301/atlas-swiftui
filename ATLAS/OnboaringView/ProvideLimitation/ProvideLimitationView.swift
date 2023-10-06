@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProvideLimitationView: View {
-    @State var dataModel = [IProvideLimitation]()
+    @EnvironmentObject var onboardingModel: OnboardingModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -21,16 +21,16 @@ struct ProvideLimitationView: View {
                         
                         Button(action: {
                             let obj = IProvideLimitation(limitation: 0, duration: 0, startDate: "", endDate: "", completed: 0)
-                            dataModel.append(obj)
+                            onboardingModel.dataModelLimitation.append(obj)
                         }, label: {
                             Text("Add Limitation").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                         })
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        if dataModel.count > 0 {
-                            ForEach(dataModel, id: \.self) {item in
-                                LimitationRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
+                        if onboardingModel.dataModelLimitation.count > 0 {
+                            ForEach(onboardingModel.dataModelLimitation, id: \.self) {item in
+                                LimitationRowView(dataModel: $onboardingModel.dataModelLimitation, item: item, width: proxy.size.width)
                             }
                         }
                     }

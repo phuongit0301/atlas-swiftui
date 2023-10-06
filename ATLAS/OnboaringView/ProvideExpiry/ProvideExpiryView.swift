@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProvideExpiryView: View {
-    @State var dataModel = [IProvideExpiry]()
+    @EnvironmentObject var onboardingModel: OnboardingModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -21,16 +21,16 @@ struct ProvideExpiryView: View {
                         
                         Button(action: {
                             let obj = IProvideExpiry(expiredDate: "", requirement: "", documentType: "")
-                            dataModel.append(obj)
+                            onboardingModel.dataModelExpiry.append(obj)
                         }, label: {
                             Text("Add Item").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                         })
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        if dataModel.count > 0 {
-                            ForEach(dataModel, id: \.self) {item in
-                                ExpiryRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
+                        if onboardingModel.dataModelExpiry.count > 0 {
+                            ForEach(onboardingModel.dataModelExpiry, id: \.self) {item in
+                                ExpiryRowView(dataModel: $onboardingModel.dataModelExpiry, item: item, width: proxy.size.width)
                             }
                         }
                     }

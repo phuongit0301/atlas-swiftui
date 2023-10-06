@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProvideExperienceView: View {
+    @EnvironmentObject var onboardingModel: OnboardingModel
     @State private var selectedModel = ""
     
     @State var currentPic = "00:00"
@@ -39,16 +40,16 @@ struct ProvideExperienceView: View {
                         
                         Button(action: {
                             let obj = IProvideExperience(modelName: "00:00", pic: "00:00", picUs: "00:00", p1: "00:00", p2: "00:00", instr: "00:00", exam: "00:00", totalTime: "00:00")
-                            dataModel.append(obj)
+                            onboardingModel.dataModelExperience.append(obj)
                         }, label: {
                             Text("Add Model").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                         })
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        if dataModel.count > 0 {
-                            ForEach(dataModel, id: \.self) {item in
-                                ModelRowView(dataModel: $dataModel, item: item, width: proxy.size.width)
+                        if onboardingModel.dataModelExperience.count > 0 {
+                            ForEach(onboardingModel.dataModelExperience, id: \.self) {item in
+                                ModelRowView(dataModel: $onboardingModel.dataModelExperience, item: item, width: proxy.size.width)
                             }
                         }
                     }
