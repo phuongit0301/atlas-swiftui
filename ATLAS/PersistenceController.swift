@@ -100,6 +100,7 @@ class CoreDataModelState: ObservableObject {
     
     @Published var dataFlightPlan: FlightPlanList?
     @Published var dataEvents: [EventList] = []
+    @Published var dataEventDateRange: [EventDateRangeList] = []
     
     // For summary info
     @Published var dataSummaryInfo: SummaryInfoList!
@@ -228,6 +229,12 @@ class CoreDataModelState: ObservableObject {
     @Published var dataEventUpcoming: [EventList] = []
     @Published var dataEventCompleted: [EventList] = []
     
+    @Published var isCalendarLoading = false
+    @Published var isLogbookEntriesLoading = false
+    @Published var isLogbookLimitationLoading = false
+    @Published var isRecencyLoading = false
+    @Published var isRecencyExpiryLoading = false
+    
     let dateFormatter = DateFormatter()
     
     init() {
@@ -237,142 +244,57 @@ class CoreDataModelState: ObservableObject {
     @MainActor
     func checkAndSyncData() async {
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dataTrafficMap = readDataTrafficMapList()
+        dataEvents = readEvents()
         
-        if dataTrafficMap.count > 0 {
+        if dataEvents.count == 0 {
             self.loadingInit = true
             Task {
                 async let calendarService = remoteService.getCalendarData()
-                
-                // For Notam, MetarTaf
-    //            async let notamService = remoteService.updateNotamData(payloadNotam)
+//                async let flightPlanService = remoteService.getFlightPlanDataV3()
+                async let logbookService = remoteService.getLogbookData()
+                async let limitationService = remoteService.getLimitationData()
+                async let recencyService = remoteService.getRecencyData()
                 
                 //array handle call API parallel
-                let services = await [calendarService]
-//                let response = await remoteService.getFuelData()
-//                let responseMap = await remoteService.getMapData()
-//                let responseLogbook = await remoteService.getLogbookData()
-//                let responseRecency = await remoteService.getRecencyData()
+//                let services = await [calendarService, logbookService, limitationService, recencyService, flightPlanService]
+                let services = await [calendarService, logbookService, limitationService, recencyService]
+
                 
                 DispatchQueue.main.async {
                     //For calendar
-                    if let dataDateRange = services[0]?.COP_date_ranges, dataDateRange.count > 0 {
-                        for item in dataDateRange {
-                            var dateRange: ClosedRange<Date> {
-                                let startDate = self.dateFormatter.date(from: item.startDate) ?? Date()
-                                let endDate = self.dateFormatter.date(from: item.endDate) ?? Date()
-                                return startDate...endDate
-                            }
-                            
-                            self.dateRange.append(dateRange)
-                        }
+                    if let dataDateRange = (services[0] as? ICalendarResponse)?.COP_date_ranges, dataDateRange.count > 0 {
                         
+                        self.initDataEventDateRange(dataDateRange)
                     }
                     
-                    if let events = services[0]?.events, events.count > 0 {
+                    if let events = (services[0] as? ICalendarResponse)?.events, events.count > 0 {
                         self.initDataEvent(events)
                     }
                     
-                    
-//                    self.initDataSummaryInfo()
-//                    if let waypointsData = data?.waypointsData {
-//                        self.initDataEnroute(waypointsData)
-//                    }
-//
-//                    if let infoData = data?.infoData {
-//                        self.initDataSummaryInfo(infoData)
-//                    }
-//
-//                    if let routeData = data?.routeData {
-//                        self.initDataSummaryRoute(routeData)
-////                        self.initDataWaypoint(routeData.waypoints)
-//                        let waypointData: IWaypointDataJson = self.remoteService.load("waypoint_data.json")
-//                        let airportData: IAirportDataJson = self.remoteService.load("airport_data.json")
-//                        let airportDataColor: [IAirportColor] = self.remoteService.load("airport_data_color.json")
-//                        let trafficData: [ITrafficData] = self.remoteService.load("traffic_data.json")
-//                        let dataAabba: [IAabbaData] = self.remoteService.load("aabba_data.json")
-//
-//                        self.initDataWaypoint(waypointData)
-//                        self.initDataAirport(airportData)
-//                        self.initDataAirportColor(airportDataColor)
-//                        self.initDataTraffic(trafficData)
-//                        self.initDataAabba(dataAabba)
-//                    }
-                    
-//                    if let trafficData = responseMap?.traffic_data {
-//                        self.initDataTraffic(trafficData)
-//                    }
-//
-//                    if let aabbaData = responseMap?.aabba_data {
-//                        self.initDataAabba(aabbaData)
-//                    }
-//
                     // Init Logbook
-//                    if let logbookEntry = responseLogbook?.logbook_entry {
-//                        self.initDataLogbookEntries(logbookEntry)
-//                    }
-//
-//                    if let limitationData = responseLogbook?.limitation_data {
-//                        self.initDataLogbookLimitation(limitationData)
-//                    }
-//
-//                    // Init data recency
-//
-//                    if let recencyData = responseRecency?.recency_data {
-//                        self.initDataRecency(recencyData)
-//                    }
-//
-//                    if let expiryData = responseRecency?.expiry_data {
-//                        self.initDataRecencyExpiry(expiryData)
-//                    }
+                    if let logbookEntry = (services[1] as? ILogbookJson)?.logbook_entry {
+                        self.initDataLogbookEntries(logbookEntry)
+                    }
                     
-//                    if let waypointData = responseMap?.all_waypoints_data {
-//                        self.initDataWaypoint(waypointData)
-//                    }
-//
-//                    if let airportData = responseMap?.all_airports_data {
-//                        self.initDataAirport(airportData)
-//                        self.initDataAirportColor(airportData)
-//                    }
-//
-//                    let postData: INotePostJson = self.remoteService.load("aabba_note_data.json")
-//
-//                    // For Note Relevant
-//                    self.initDataNoteAabbaPreflight(postData.preflight)
-//                    self.initDataNoteAabbaDepature(postData.departure)
-//                    self.initDataNoteAabbaEnroute(postData.enroute)
-//                    self.initDataNoteAabbaArrival(postData.arrival)
+                    if let limitationData = (services[2] as? ILimitationJson)?.limitation_data {
+                        self.initDataLogbookLimitation(limitationData)
+                    }
+                    
+                    if let responseRecency = (services[3] as? IRecencyJson) {
+                        // Init data recency
+                        self.initDataRecency(responseRecency.recency_data)
 
-//                    if let perfData = data?.perfData {
-//                        self.initDataPerfData(perfData)
-//
-////                        self.initDataPerfInfo(perfData)
-//
-//                        self.dataPerfWeight = self.readPerfWeight()
-//
-////                        self.initDataPerfWeight(perfData)
+                        self.initDataRecencyExpiry(responseRecency.expiry_data)
+                    }
+                    
+//                    if let notes = (services[4] as? FlightDataV30Json)?.notes, notes.count > 0 {
+//                        self.initDateNoteList(notes)
 //                    }
 //
-////                    if let fuelData = data?.fuelData {
-////                        self.initDataFuelList(fuelData)
-////                    }
-//
-//                    if let altnData = data?.altnData {
-//                        self.dataAltnList = self.readAltnList()
-//                        self.initDataAltn(altnData)
-//                    }
-//
-//                    if let notamsData = data?.notamsData {
-//                        self.initDataNotams(notamsData)
-//                    }
-//
-//                    if let metarTafData = data?.metarTafData {
-//                        self.initDataMetarTaf(metarTafData)
-//                        self.initDataAltnTaf(metarTafData)
+//                    if let colourAirport = (services[4] as? FlightDataV30Json)?.colour_airport, colourAirport.count > 0 {
+//                        self.initDataAirportColor(colourAirport)
 //                    }
 
-                    // For init Calendar
-//                    self.initDataEvent()
                     
                     self.loadingInit = false
                     print("Fetch data")
@@ -382,45 +304,34 @@ class CoreDataModelState: ObservableObject {
     }
     
     @MainActor
-    func checkAndSynDataFuel() async {
-        readHistoricalDelays()
-        
+    func checkAndSyncOrPostData() async {
         Task {
-            if self.dataHistoricalDelays.count <= 0  {
-                self.loadingInitFuel = true
-                
-                let response = await self.remoteService.getFuelData()
-                
-                if let historicalDelays = response?.historicalDelays {
-                    self.initHistoricalDelays(historicalDelays)
-                }
-                
-                if let projDelays = response?.projDelays {
-                    self.initProjDelays(projDelays)
-                }
-                
-                if let taxi = response?.taxi {
-                    self.initProjTaxi(taxi)
-                }
-                
-                if let trackMiles = response?.trackMiles {
-                    self.initTrackMiles(trackMiles)
-                }
-                
-                if let enrWX = response?.enrWX {
-                    self.initEnrWX(enrWX)
-                }
-                
-                if let flightLevel = response?.flightLevel {
-                    self.initFlightLevel(flightLevel)
-                }
-                
-                if let reciprocalRwy = response?.reciprocalRwy {
-                    self.initReciprocalRwy(reciprocalRwy)
-                }
-                
-                self.loadingInitFuel = false
+            self.dataEvents = self.readEvents()
+            self.dataEventDateRange = self.readEventDateRange()
+            self.dataLogbookEntries = readDataLogbookEntries()
+            self.dataLogbookLimitation = readDataLogbookLimitation()
+            self.dataRecency = readDataRecency()
+            self.dataRecencyExpiry = readDataRecencyExpiry()
+            
+            async let serviceEvent = getOrPostEvent()
+            
+            if self.dataLogbookEntries.count > 0 {
+                // Post Logbook
             }
+            
+            if self.dataLogbookLimitation.count > 0 {
+                // Post Logbook
+            }
+            
+            if self.dataRecency.count > 0 {
+                // Post data recency
+            }
+            
+            if self.dataRecencyExpiry.count > 0 {
+                // Post data recency expiry
+            }
+            
+            let _ = await [serviceEvent]
         }
     }
     
@@ -501,7 +412,7 @@ class CoreDataModelState: ObservableObject {
             self.dataFuelTableList = self.readFuelTableList()
             self.readFuelExtra()
             self.dataAltnList = self.readAltnList()
-            self.readDepartureAtc()
+//            self.readDepartureAtc()
             self.readDepartureAtis()
             self.readDepartureEntries()
             self.readArrivalAtc()
@@ -538,6 +449,55 @@ class CoreDataModelState: ObservableObject {
             self.dataEvents = self.readEvents()
             self.dataEventCompleted = self.readEventsByStatus(status: "2")
             self.dataEventUpcoming = self.readEventsByStatus(status: "5")
+        }
+    }
+    
+    // For V3.0
+    
+    func getOrPostEvent() async {
+        if dataEvents.count > 0 {
+            var payloadEvent: [Any] = []
+            var payloadEventDateRange: [Any] = []
+            
+            for item in dataEvents {
+                payloadEvent.append([
+                    "UUID": item.id ?? "",
+                    "status": item.status,
+                    "startDate": item.unwrappedStartDate,
+                    "endDate": item.unwrappedEndDate,
+                    "name": item.unwrappedName,
+                    "location": item.unwrappedLocation,
+                    "type": item.unwrappedType,
+                    "dep": item.unwrappedDep,
+                    "dest": item.unwrappedDest
+                ] as [String : Any])
+            }
+            
+            for item in dataEventDateRange {
+                payloadEventDateRange.append([
+                    "startDate": item.unwrappedStartDate,
+                    "endDate": item.unwrappedEndDate,
+                ])
+            }
+                    
+            let payload: [String: Any] = [
+                "user_id": "abc123",
+                "events": payloadEvent,
+                "COP_date_ranges": payloadEventDateRange
+            ]
+            
+            await remoteService.postCalendarData(payload)
+        } else {
+            // Get event data
+            let calendarService = await remoteService.getCalendarData()
+                    
+            if let dateRange = calendarService?.COP_date_ranges, dateRange.count > 0 {
+                self.initDataEventDateRange(dateRange)
+            }
+    
+            if let events = calendarService?.events, events.count > 0 {
+                self.initDataEvent(events)
+            }
         }
     }
     
@@ -647,92 +607,48 @@ class CoreDataModelState: ObservableObject {
 
             }
         }
+    }
+    
+    func initDateNoteList(_ notes: [NotesV30Json]) {
+        if notes.count > 0 {
+            for item in notes {
+                var tags = [TagList]()
+                
+                if item.tags.count > 0 {
+                    for tag in item.tags {
+                        let tagList = TagList(context: service.container.viewContext)
+                        tagList.id = UUID()
+                        tagList.name = tag
+                        tags.append(tagList)
+                    }
+                }
+                
+                
+                let note = NoteList(context: service.container.viewContext)
+                note.id = UUID()
+                note.name = item.name
+                note.isDefault = item.isDefault
+                note.canDelete = item.canDelete
+                note.fromParent = item.fromParent
+                note.type = item.type
+                note.tags = NSSet(array: tags)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        // Persist the data in this managed object context to the underlying store
+                        try service.container.viewContext.save()
+                        print("saved notes successfully")
+                    } catch {
+                        // Something went wrong 😭
+                        print("Failed to save notes: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
+            }
+        }
         
-//        let newDep1 = NoteList(context: service.container.viewContext)
-//        newDep1.id = UUID()
-//        newDep1.name = "All crew to be simulator-qualified for RNP approach"
-//        newDep1.isDefault = false
-//        newDep1.canDelete = false
-//        newDep1.fromParent = false
-//        newDep1.target = "departure"
-//        newDep1.tags = NSSet(array: [newTags1])
-//
-//        let newDep2 = NoteList(context: service.container.viewContext)
-//        newDep2.id = UUID()
-//        newDep2.name = "Note digital clearance requirements 10mins before pushback"
-//        newDep2.isDefault = false
-//        newDep2.canDelete = false
-//        newDep2.fromParent = false
-//        newDep2.target = "departure"
-//        newDep2.tags = NSSet(array: [newTags5])
-//
-//        let newDep3 = NoteList(context: service.container.viewContext)
-//        newDep3.id = UUID()
-//        newDep3.name = "Reduce ZFW by 1 ton for preliminary fuel"
-//        newDep3.isDefault = false
-//        newDep3.canDelete = false
-//        newDep3.fromParent = false
-//        newDep3.target = "departure"
-//        newDep3.tags = NSSet(array: [newTags1])
-//
-//        let newDep4 = NoteList(context: service.container.viewContext)
-//        newDep4.id = UUID()
-//        newDep4.name = "Expected POB: 315"
-//        newDep4.isDefault = false
-//        newDep4.canDelete = false
-//        newDep4.fromParent = false
-//        newDep4.target = "departure"
-//        newDep4.tags = NSSet(array: [newTags1])
-//
-//        let newDep5 = NoteList(context: service.container.viewContext)
-//        newDep5.id = UUID()
-//        newDep5.name = "Hills to the north of aerodrome"
-//        newDep5.isDefault = false
-//        newDep5.canDelete = false
-//        newDep5.fromParent = false
-//        newDep5.target = "departure"
-//        newDep5.tags = NSSet(array: [newTags2])
-//
-//        let newEnroute1 = NoteList(context: service.container.viewContext)
-//        newEnroute1.id = UUID()
-//        newEnroute1.name = "Non-standard levels when large scale weather deviation in progress"
-//        newEnroute1.isDefault = false
-//        newEnroute1.canDelete = false
-//        newEnroute1.fromParent = false
-//        newEnroute1.target = "enroute"
-//        newEnroute1.tags = NSSet(array: [newTags6])
-//
-//        let newArrival1 = NoteList(context: service.container.viewContext)
-//        newArrival1.id = UUID()
-//        newArrival1.name = "Birds in vicinity"
-//        newArrival1.isDefault = false
-//        newArrival1.canDelete = false
-//        newArrival1.fromParent = false
-//        newArrival1.target = "arrival"
-//        newArrival1.tags = NSSet(array: [newTags8])
-//
-//        let newArrival2 = NoteList(context: service.container.viewContext)
-//        newArrival2.id = UUID()
-//        newArrival2.name = "Any +TS expected to last 15mins"
-//        newArrival2.isDefault = false
-//        newArrival2.canDelete = false
-//        newArrival2.fromParent = false
-//        newArrival2.target = "arrival"
-//        newArrival2.tags = NSSet(array: [newTags3])
-//
-//        service.container.viewContext.performAndWait {
-//            do {
-//                // Persist the data in this managed object context to the underlying store
-//                try service.container.viewContext.save()
-//                print("saved successfully")
-//            } catch {
-//                // Something went wrong 😭
-//                print("Failed to save: \(error)")
-//                // Rollback any changes in the managed object context
-//                service.container.viewContext.rollback()
-//
-//            }
-//        }
     }
     
     
@@ -858,84 +774,6 @@ class CoreDataModelState: ObservableObject {
         updateValues(0, dataFPEnroute)
     }
     
-    func initDataSummaryInfo() {
-        let newObj = SummaryInfoList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.planNo = ""
-        newObj.fltNo = "TR753"
-        newObj.tailNo = ""
-        newObj.dep = "BKK"
-        newObj.dest = "SIN"
-        newObj.depICAO = "VTBS"
-        newObj.destICAO = "WSSS"
-        newObj.flightDate = "2023-10-04"
-        newObj.stdUTC = "2023-10-04 0815"
-        newObj.staUTC = "2023-10-04 1015"
-        newObj.stdLocal = "2023-10-04 1515"
-        newObj.staLocal = "2023-10-04 1615"
-        newObj.blkTime = "02:00"
-        newObj.fltTime = "01:45"
-        newObj.timeDiffArr = "8"
-        newObj.timeDiffDep = "9"
-        
-//        newObj.planNo = infoData.planNo
-//        newObj.fltNo = infoData.fltNo
-//        newObj.tailNo = infoData.tailNo
-//        newObj.dep = infoData.dep
-//        newObj.dest = infoData.dest
-//        newObj.depICAO = infoData.depICAO
-//        newObj.destICAO = infoData.destICAO
-//        newObj.flightDate = infoData.flightDate
-//        newObj.stdUTC = infoData.STDUTC
-//        newObj.staUTC = infoData.STAUTC
-//        newObj.stdLocal = infoData.STDLocal
-//        newObj.staLocal = infoData.STALocal
-//        newObj.blkTime = infoData.blkTime
-//        newObj.fltTime = infoData.fltTime
-//        newObj.timeDiffArr = infoData.time_diff_arr
-//        newObj.timeDiffDep = infoData.time_diff_dep
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            existDataSummaryInfo = true
-            readSummaryInfo()
-            print("saved successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to summary info save: \(error)")
-            // Rollback any changes in the managed object context
-            existDataSummaryInfo = false
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
-    func initDataSummaryRoute(_ routeData: ISummaryDataResponseModel) {
-        let newObj = SummaryRouteList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.routeNo = routeData.routeNo
-        newObj.route = routeData.route
-        newObj.depRwy = routeData.depRwy
-        newObj.arrRwy = routeData.arrRwy
-        newObj.levels = routeData.levels
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            existDataSummaryRoute = true
-            readSummaryRoute()
-            print("saved summary route successfully")
-        } catch {
-            // Something went wrong 😭
-            print("Failed to summary route save: \(error)")
-            existDataSummaryRoute = false
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-            
-        }
-    }
-    
     func initDataWaypoint(_ data: [IWaypointData]) {
         if data.count > 0 {
             data.forEach { item in
@@ -991,7 +829,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirportColor(_ data: [IAirportData]) {
+    func initDataAirportMapColor(_ data: [IAirportData]) {
         let depAirport = "VTBS"
         let arrAirport = "WSSS"
         let enrAirports = ["WMKK", "WMKP"]
@@ -1024,6 +862,50 @@ class CoreDataModelState: ObservableObject {
                         
                     }
                 }
+            }
+            
+            self.dataAirportColorMap = readDataAirportMapColorList()
+        }
+    }
+    
+    func initDataAirportColor(_ data: [IAirportColor]) {
+//        let depAirport = "VTBS"
+//        let arrAirport = "WSSS"
+//        let enrAirports = ["WMKK", "WMKP"]
+//        let altnAirports = ["WMKJ", "WIDD"]
+//
+//        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
+//
+        if data.count > 0 {
+            data.forEach { item in
+                do {
+                    let newObj = AirportMapColorList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.airportId = item.airportID
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    newObj.selection = item.selection
+                    newObj.colour = item.colour
+                    newObj.notams = try NSKeyedArchiver.archivedData(withRootObject: item.notams, requiringSecureCoding: true)
+                    newObj.metar = item.metar
+                    newObj.taf = item.taf
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved data airport color successfully")
+                        } catch {
+                            print("Failed to data airport color save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
+                    }
+                } catch {
+                    print("could not unarchive array: \(error)")
+                }
+                
             }
             
             self.dataAirportColorMap = readDataAirportMapColorList()
@@ -1598,193 +1480,33 @@ class CoreDataModelState: ObservableObject {
         self.dataEventUpcoming = self.readEventsByStatus(status: "5")
     }
     
-    func initDataPerfData(_ perfData: IPerfDataResponseModel) {
-        let newObj = PerfDataList(context: service.container.viewContext)
-        newObj.id = UUID()
-        newObj.fltRules = perfData.fltRules
-        newObj.gndMiles = perfData.gndMiles
-        newObj.airMiles = perfData.airMiles
-        newObj.crzComp = perfData.crzComp
-        newObj.apd = perfData.apd
-        newObj.ci = perfData.ci
-        newObj.zfwChange = perfData.minus_zfwChange
-        newObj.lvlChange = perfData.lvlChange
-        newObj.planZFW = perfData.planZFW
-        newObj.maxZFW = perfData.maxZFW
-        newObj.limZFW = perfData.limZFW
-        newObj.planTOW = perfData.planTOW
-        newObj.maxTOW = perfData.maxTOW
-        newObj.limTOW = perfData.limTOW
-        newObj.planLDW = perfData.planLDW
-        newObj.maxLDW = perfData.maxLDW
-        newObj.limLDW = perfData.limLDW
-        
-        do {
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            existDataPerfData = true
-            readPerfData()
-            print("saved perf info successfully")
-        } catch {
-            print("Failed to perf data save: \(error)")
-            existDataPerfData = false
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
+    func initDataEventDateRange(_ events: [IDateRangeResponse]) {
+        for item in events {
+            var dateRange: ClosedRange<Date> {
+                let startDate = self.dateFormatter.date(from: item.startDate) ?? Date()
+                let endDate = self.dateFormatter.date(from: item.endDate) ?? Date()
+                return startDate...endDate
+            }
             
-        }
-    }
-    
-//    func initDataPerfInfo(_ perfData: IPerfDataResponseModel) {
-//        let newObj = PerfInfoList(context: service.container.viewContext)
-//        newObj.id = UUID()
-//        newObj.fltRules = perfData.fltRules
-//        newObj.gndMiles = perfData.gndMiles
-//        newObj.airMiles = perfData.airMiles
-//        newObj.crzComp = perfData.crzComp
-//        newObj.apd = perfData.apd
-//        newObj.ci = perfData.ci
-//        newObj.zfwChange = "M1000KG BURN LESS \(perfData.minus_zfwChange!)KG"
-//        newObj.lvlChange = "P2000FT BURN LESS \(perfData.lvlChange!)KG"
-//
-//        do {
-//            // Persist the data in this managed object context to the underlying store
-//            try service.container.viewContext.save()
-//            existDataPerfInfo = true
-//            dataPerfInfo = readPerfInfo()
-//            print("saved perf info successfully")
-//        } catch {
-//            print("Failed to perf info save: \(error)")
-//            existDataPerfInfo = false
-//            // Rollback any changes in the managed object context
-//            service.container.viewContext.rollback()
-//
-//        }
-//    }
-    
-//    func initDataPerfWeight(_ perfData: IPerfDataResponseModel) {
-//        let perfWeightsTable = [
-//            perfWeights(weight: "ZFW", plan: perfData.planZFW ?? "", actual: "", max: perfData.maxZFW ?? "", limitation: perfData.limZFW ?? ""),
-//            perfWeights(weight: "TOW", plan: perfData.planTOW ?? "", actual: "", max: perfData.maxTOW ?? "", limitation: perfData.limTOW ?? ""),
-//            perfWeights(weight: "LDW", plan: perfData.planLDW ?? "", actual: "", max: perfData.maxLDW ?? "", limitation: perfData.limLDW ?? ""),
-//        ]
-//
-//        perfWeightsTable.forEach { item in
-//            let newObj = PerfWeightList(context: service.container.viewContext)
-//            newObj.id = UUID()
-//            newObj.weight = item.weight
-//            newObj.plan = item.plan
-//            newObj.actual = ""
-//            newObj.max = item.max
-//            newObj.limitation = item.limitation
-//
-//            service.container.viewContext.performAndWait {
-//                do {
-//                    try service.container.viewContext.save()
-//                    print("saved perf weight successfully")
-//                } catch {
-//                    print("Failed to perf weight save: \(error)")
-//                    // Rollback any changes in the managed object context
-//                    service.container.viewContext.rollback()
-//
-//                }
-//            }
-//        }
-//        existDataPerfWeight = true
-//        dataPerfWeight = readPerfWeight()
-//    }
-//
-//    func initDataFuelList(_ fuelData: IFuelDataResponseModel) {
-//        let fuelTable = [
-//            fuel(firstColumn: "(A) Burnoff", time: fuelData.burnoff["time"] ?? "", fuel: fuelData.burnoff["fuel"] ?? "", policy_reason: ""),
-//            fuel(firstColumn: "(B) Contingency Fuel", time: fuelData.cont["time"] ?? "", fuel: fuelData.cont["fuel"] ?? "", policy_reason: fuelData.cont["policy"]!),
-//            fuel(firstColumn: "(C) Altn Fuel", time: fuelData.altn["time"] ?? "", fuel: fuelData.altn["fuel"] ?? "", policy_reason: ""),
-//            fuel(firstColumn: "(D) Altn Hold", time: fuelData.hold["time"] ?? "", fuel: fuelData.hold["fuel"] ?? "", policy_reason: ""),
-//            fuel(firstColumn: "(E) 60min Topup Fuel", time: fuelData.topup60["time"] ?? "", fuel: fuelData.topup60["fuel"] ?? "", policy_reason: ""),
-//            fuel(firstColumn: "(F) Taxi Fuel", time: fuelData.taxi["time"] ?? "", fuel: fuelData.taxi["fuel"] ?? "", policy_reason: fuelData.taxi["policy"]!),
-//            fuel(firstColumn: "(G) Flight Plan Requirement (A + B + C + D + E + F)", time: fuelData.planReq["time"] ?? "", fuel: fuelData.planReq["fuel"] ?? "", policy_reason: ""),
-//            fuel(firstColumn: "(H) Dispatch Additional Fuel", time: fuelData.dispAdd["time"] ?? "", fuel: fuelData.dispAdd["fuel"] ?? "", policy_reason: fuelData.dispAdd["policy"]!)
-//        ]
-//
-//        do {
-//            let newFuelData = FuelDataList(context: service.container.viewContext)
-//            newFuelData.id = UUID()
-//            newFuelData.burnoff = try NSKeyedArchiver.archivedData(withRootObject: fuelData.burnoff, requiringSecureCoding: true)
-//
-//            newFuelData.cont = try NSKeyedArchiver.archivedData(withRootObject: fuelData.cont, requiringSecureCoding: true)
-//
-//            newFuelData.altn = try NSKeyedArchiver.archivedData(withRootObject: fuelData.altn, requiringSecureCoding: true)
-//
-//            newFuelData.hold = try NSKeyedArchiver.archivedData(withRootObject: fuelData.hold, requiringSecureCoding: true)
-//
-//            newFuelData.topup60 = try NSKeyedArchiver.archivedData(withRootObject: fuelData.topup60, requiringSecureCoding: true)
-//
-//            newFuelData.taxi = try NSKeyedArchiver.archivedData(withRootObject: fuelData.taxi, requiringSecureCoding: true)
-//
-//            newFuelData.planReq = try NSKeyedArchiver.archivedData(withRootObject: fuelData.planReq, requiringSecureCoding: true)
-//
-//            newFuelData.dispAdd = try NSKeyedArchiver.archivedData(withRootObject: fuelData.dispAdd, requiringSecureCoding: true)
-//
-//            try service.container.viewContext.save()
-//            existDataFuelDataList = true
-//            readFuelDataList()
-//        } catch {
-//            existDataFuelDataList = false
-//            print("failed to fuel data save: \(error)")
-//        }
-//
-//        fuelTable.forEach { item in
-//            let newObj = FuelTableList(context: self.service.container.viewContext)
-//            newObj.id = UUID()
-//            newObj.firstColumn = item.firstColumn
-//            newObj.time = item.time
-//            newObj.fuel = item.fuel
-//            newObj.policyReason = item.policy_reason
-//
-//            service.container.viewContext.performAndWait {
-//                do {
-//                    // Persist the data in this managed object context to the underlying store
-//                    try service.container.viewContext.save()
-//                    print("saved perf weight successfully")
-//                } catch {
-//                    // Something went wrong 😭
-//                    print("Failed to fuel table list save: \(error)")
-//                    // Rollback any changes in the managed object context
-//                    service.container.viewContext.rollback()
-//
-//                }
-//            }
-//        }
-//
-//        dataFuelTableList = readFuelTableList()
-//        readFuelExtra()
-//    }
-    
-    func initDataAltn(_ altnData: [IAltnDataResponseModel]) {
-        altnData.forEach { item in
-            let newObj = AltnDataList(context: self.service.container.viewContext)
-            newObj.id = UUID()
-            newObj.altnRwy = item.altnRwy
-            newObj.rte = item.rte
-            newObj.vis = item.vis
-            newObj.minima = item.minima
-            newObj.dist = item.dist
-            newObj.fl = item.fl
-            newObj.comp = item.comp
-            newObj.time = item.time
-            newObj.fuel = item.fuel
+            self.dateRange.append(dateRange)
             
-            do {
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-                existDataAltn = true
-                dataAltnList = readAltnList()
-                print("saved data altn successfully")
-            } catch {
-                // Something went wrong 😭
-                print("Failed to data altn save: \(error)")
-                existDataAltn = false
-                // Rollback any changes in the managed object context
-                service.container.viewContext.rollback()
+            let event = EventDateRangeList(context: service.container.viewContext)
+            event.id = UUID()
+            event.startDate = item.startDate
+            event.endDate = item.endDate
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    // Persist the data in this managed object context to the underlying store
+                    try service.container.viewContext.save()
+                    print("saved event date range successfully")
+                } catch {
+                    // Something went wrong 😭
+                    print("Failed to save event date range: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
             }
         }
     }
@@ -1972,100 +1694,6 @@ class CoreDataModelState: ObservableObject {
 //
 
     }
-    
-//    func initDataNotams(_ notamsData: INotamsDataResponseModel) {
-//
-//        for data in notamsData.depNotams {
-//            if data.value.count > 0 {
-//                data.value.forEach { item in
-//                    let newObj = NotamsDataList(context: self.service.container.viewContext)
-//                    newObj.id = UUID()
-//                    newObj.type = "depNotams"
-//                    newObj.notam = item.notam
-//                    newObj.date = item.date
-//                    newObj.rank = item.rank
-//                    newObj.isChecked = false
-//                    newObj.category = data.key
-//                    self.service.container.viewContext.performAndWait {
-//                        do {
-//                            try self.service.container.viewContext.save()
-//                            print("saved notams successfully")
-//                        } catch {
-//                            print("Failed to Notams depNotams save: \(error)")
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//        for data in notamsData.arrNotams {
-//            if data.value.count > 0 {
-//                data.value.forEach { item in
-//                    let newObj = NotamsDataList(context: self.service.container.viewContext)
-//                    newObj.id = UUID()
-//                    newObj.type = "arrNotams"
-//                    newObj.notam = item.notam
-//                    newObj.date = item.date
-//                    newObj.rank = item.rank
-//                    newObj.isChecked = false
-//                    newObj.category = data.key
-//                    self.service.container.viewContext.performAndWait {
-//                        do {
-//                            try self.service.container.viewContext.save()
-//                            print("saved notams successfully")
-//                        } catch {
-//                            print("Failed to Notams depNotams save: \(error)")
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//        notamsData.enrNotams.forEach { item in
-//            let newObj = NotamsDataList(context: self.service.container.viewContext)
-//            newObj.id = UUID()
-//            newObj.type = "enrNotams"
-//            newObj.notam = item.notam
-//            newObj.date = item.date
-//            newObj.rank = item.rank
-//            newObj.isChecked = false
-//            self.service.container.viewContext.performAndWait {
-//                do {
-//                    try self.service.container.viewContext.save()
-//                    print("saved notams successfully")
-//                } catch {
-//                    service.container.viewContext.rollback()
-//                    print("Failed to Notams enrNotams save: \(error)")
-//                }
-//
-//            }
-//        }
-//        dataNotams = readDataNotamsList()
-//
-////        notamsData.arrNotams.forEach { item in
-////            let newObj = NotamsDataList(context: self.service.container.viewContext)
-////            newObj.id = UUID()
-////            newObj.type = "arrNotams"
-////            newObj.notam = item.notam
-////            newObj.date = item.date
-////            newObj.rank = item.rank
-////            newObj.isChecked = false
-////            self.service.container.viewContext.performAndWait {
-////                do {
-////                    try self.service.container.viewContext.save()
-////                    print("saved notams successfully")
-////                } catch {
-////                    service.container.viewContext.rollback()
-////                    print("Failed to Notams arrNotams save: \(error)")
-////                }
-////
-////            }
-////        }
-////
-//
-//    }
     
     func initDepDataMetarTaf(_ metarTafData: IDepMetarTafWXChild, type: String) {
         do {
@@ -2400,12 +2028,6 @@ class CoreDataModelState: ObservableObject {
 
         // return results
         return results
-    }
-    
-    func readDepartures() {
-        readDepartureAtc()
-        readDepartureAtis()
-        readDepartureEntries()
     }
     
     func readDepartureAtc() {
@@ -3245,25 +2867,6 @@ class CoreDataModelState: ObservableObject {
         
     }
     
-//    func readHistoricalDelaysByType(_ type: String) -> HistoricalDelaysList? {
-//        do {
-//            let request: NSFetchRequest<HistoricalDelaysList> = HistoricalDelaysList.fetchRequest()
-//            request.predicate = NSPredicate(format: "type == %@", "months3")
-//            
-//            let response = try service.container.viewContext.fetch(request)
-//            
-//            if(response.count > 0) {
-//                let weeksD = (response.first?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order > $1.order})
-//                
-//                return response.first
-//            }
-//        } catch {
-//            print("Could not fetch notes from Core Data.")
-//        }
-//        return nil
-//    }
-    
-    
     func initHistoricalDelays(_ historicalDelays: IHistoricalDelaysModel) {
         service.container.viewContext.performAndWait {
             do {
@@ -3465,131 +3068,6 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch scratch pad from Core Data.")
-        }
-    }
-    
-    func initProjTaxi(_ data: ITaxiModel) {
-        do {
-            let newObject = FuelTaxiList(context: self.service.container.viewContext)
-            newObject.id = UUID()
-            var arr = [FuelTaxiRefList]()
-            var order = 1
-            
-            data.flights3.times.forEach { item in
-                let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
-                newObjRef.id = UUID()
-                newObjRef.date = item.date
-                newObjRef.condition = item.condition
-                newObjRef.taxiTime = item.taxiTime
-                newObjRef.order = Int16(order)
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    arr.append(newObjRef)
-                    order += 1
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-            
-            newObject.times = NSSet(array: arr)
-            newObject.aveTime = data.flights3.aveTime
-            newObject.aveDiff = data.flights3.aveDiff
-            newObject.ymax = data.flights3.ymax
-            newObject.type = "flights3"
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            
-            // For week1
-            let newObject1 = FuelTaxiList(context: self.service.container.viewContext)
-            newObject1.id = UUID()
-            var arr1 = [FuelTaxiRefList]()
-            var order1 = 1
-            
-            data.week1.times.forEach { item in
-                let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
-                newObjRef.id = UUID()
-                newObjRef.date = item.date
-                newObjRef.condition = item.condition
-                newObjRef.taxiTime = item.taxiTime
-                newObjRef.order = Int16(order1)
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    arr1.append(newObjRef)
-                    order1 += 1
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-            
-            newObject1.times = NSSet(array: arr1)
-            newObject1.aveTime = data.week1.aveTime
-            newObject1.aveDiff = data.week1.aveDiff
-            newObject1.ymax = data.week1.ymax
-            newObject1.type = "week1"
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            
-            
-            // For Month3
-            let newObject2 = FuelTaxiList(context: self.service.container.viewContext)
-            newObject2.id = UUID()
-            var arr2 = [FuelTaxiRefList]()
-            var order2 = 1
-            
-            data.months3.times.forEach { item in
-                let newObjRef = FuelTaxiRefList(context: self.service.container.viewContext)
-                newObjRef.id = UUID()
-                newObjRef.date = item.date
-                newObjRef.condition = item.condition
-                newObjRef.taxiTime = item.taxiTime
-                newObjRef.order = Int16(order2)
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    arr2.append(newObjRef)
-                    order2 += 1
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save Taxi Month3: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
-            }
-            
-            newObject2.times = NSSet(array: arr2)
-            newObject2.aveTime = data.months3.aveTime
-            newObject2.aveDiff = data.months3.aveDiff
-            newObject2.ymax = data.months3.ymax
-            newObject2.type = "months3"
-            // Persist the data in this managed object context to the underlying store
-            try service.container.viewContext.save()
-            
-            print("saved taxi successfully")
-            
-            readProjTaxi()
-        } catch {
-            // Something went wrong 😭
-            print("Failed to save Taxi: \(error)")
-            // Rollback any changes in the managed object context
-            service.container.viewContext.rollback()
-
         }
     }
     
@@ -4441,6 +3919,23 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch Event from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readEventDateRange() -> [EventDateRangeList] {
+        var data: [EventDateRangeList] = []
+        
+        let request: NSFetchRequest<EventDateRangeList> = EventDateRangeList.fetchRequest()
+        
+        do {
+            let response: [EventDateRangeList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Event Date Range from Core Data.")
         }
         
         return data

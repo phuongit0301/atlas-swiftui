@@ -23,6 +23,7 @@ struct ATLASApp: App {
     @UIApplicationDelegateAdaptor(FBAppDelegate.self) var delegate
     @AppStorage("uid") var userID: String = ""
     @AppStorage("isOnboarding") var isOnboarding: String = "0"
+    @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     
     let persistenceController = PersistenceController.shared
     let remoteServiceController = RemoteService.shared
@@ -91,16 +92,14 @@ struct ATLASApp: App {
                 .environmentObject(mapIconModel)
                 .environmentObject(onboardingModel)
                 .task {
-                    coreDataModel.loading = true
-//                    await coreDataModel.checkAndSyncDataNote()
-//                    await coreDataModel.checkAndSyncData()
-//                    await coreDataModel.checkAndSyncDataFuel()
-//                    await coreDataModel.initFetchData()
-//                    coreDataModel.loading = false
-//                    await coreDataModel.checkAndSyncDataNote()
-                    await coreDataModel.checkAndSyncData()
-//                    await coreDataModel.checkAndSynDataFuel()
-                    coreDataModel.loading = false
+                    if isBoardingCompleted == "1" {
+                        await coreDataModel.checkAndSyncData()
+                    }
+                }
+                .task {
+                    if userID != "" {
+                        await coreDataModel.checkAndSyncData()
+                    }
                 }
                 .task {
                     coreDataModel.loading = true

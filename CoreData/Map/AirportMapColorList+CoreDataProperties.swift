@@ -2,7 +2,7 @@
 //  AirportMapColorList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 15/09/2023.
+//  Created by phuong phan on 06/10/2023.
 //
 //
 
@@ -16,14 +16,14 @@ extension AirportMapColorList {
         return NSFetchRequest<AirportMapColorList>(entityName: "AirportMapColor")
     }
 
-    @NSManaged public var id: UUID?
     @NSManaged public var airportId: String?
+    @NSManaged public var colour: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
-    @NSManaged public var selection: String?
-    @NSManaged public var colour: String?
-    @NSManaged public var notams: [String]?
     @NSManaged public var metar: String?
+    @NSManaged public var notams: Data?
+    @NSManaged public var selection: String?
     @NSManaged public var taf: String?
     
     public var unwrappedAirportId: String {
@@ -52,6 +52,18 @@ extension AirportMapColorList {
     
     public var unwrappedTaf: String {
         taf ?? ""
+    }
+    
+    public var unwrappedNotams: [String] {
+        do {
+            if let data = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSArray.self, from: notams!) as? [String] {
+                return data
+            }
+        } catch {
+            print("could not unarchive array: \(error)")
+        }
+        
+        return []
     }
 }
 

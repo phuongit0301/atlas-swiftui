@@ -594,7 +594,7 @@ struct IAabbaDataJsonResponse: Codable {
 }
 
 
-struct IAirportColor: Decodable {
+struct IAirportColor: Codable {
     var airportID: String
     var lat: String
     var long: String
@@ -873,4 +873,91 @@ struct INotamWXJson: Decodable {
 struct INotamWXDataJson: Decodable {
     let metarTafData: IMetarTafWXJson
     let notamsData: INotamWXJson
+}
+
+
+// For v3.0
+
+struct FlightOverviewV30Json: Codable {
+    let CAName: String
+    let CAPicker: String
+    let ETA: String
+    let FOName: String
+    let FOPicker: String
+    let aircraft: String
+    let blockTime: String
+//    let "blockTime-FlightTime": String
+    let callsign: String
+    let chockOff: String
+    let chockOn: String
+    let day: String
+    let dep: String
+    let dest: String
+    let flightTime: String
+    let model: String
+    let night: String
+    let password: String
+    let pob: String
+    let sta: String
+    let std: String
+    let time_diff_arr: String
+    let time_diff_dep: String
+    let totalTime: String
+}
+
+struct RouteV30Json: Codable {
+    let lat: String
+    let long: String
+    let name: String
+}
+
+struct ColorAirportV30Json: Codable {
+    let airportID: String
+    let colour: String
+    let lat: String
+    let long: String
+    let metar: String
+    let notams: [String]
+    let selection: String
+    let taf: String
+}
+
+struct NotamV30Json: Codable {
+    let category: String
+    let date: String
+    let id: String
+    let isChecked: String
+    let notam: String
+    let rank: String
+    let type: String
+}
+
+struct MetarTafV30Json: Codable {
+    let airportText: String
+    let metar: String
+    let taf: String
+}
+
+struct NotesV30Json: Codable {
+    let canDelete: Bool
+    let createdAt: String
+    let favourite: Bool
+    let fromParent: Bool
+    let includeCrew: Bool
+    let isDefault: Bool
+    let name: String
+    let parentId: String
+    let tags: [String]
+    let type: String
+}
+
+struct FlightDataV30Json: Codable {
+    let status: String
+    let flight_overview: FlightOverviewV30Json
+    let route: [RouteV30Json]
+    let colour_airport: [IAirportColor]
+    let notam: [String: [NotamV30Json]]
+    let metar_taf: [String: [MetarTafV30Json]]
+    let notes: [NotesV30Json]
+    let aabba_notes: [String: [IAabbaData]]
 }

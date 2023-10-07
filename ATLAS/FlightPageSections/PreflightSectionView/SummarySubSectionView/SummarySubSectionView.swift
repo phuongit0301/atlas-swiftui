@@ -574,7 +574,7 @@ struct SummarySubSectionView: View {
             if (services[3] as! [IAirportData]).count > 0 {
                 await coreDataModel.deleteAllAirportList()
                 coreDataModel.initDataAirport(services[3] as! [IAirportData])
-                coreDataModel.initDataAirportColor(services[3] as! [IAirportData])
+                coreDataModel.initDataAirportMapColor(services[3] as! [IAirportData])
             }
             
             await coreDataModel.deleteAllMetaTaf()

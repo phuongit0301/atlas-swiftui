@@ -54,6 +54,76 @@ class RemoteService: ObservableObject {
         return nil
     }
     
+    func postCalendarData(_ parameters: Any) async -> Bool  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_calendar_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        
+        do {
+            // Convert the request body to JSON data
+            let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            // Set the request body data
+            request.httpBody = requestData
+            
+            // Set the Content-Type header to indicate JSON format
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let (_, response) = try await URLSession.shared.data(for: request)
+            
+            do {
+                guard let response = response as? HTTPURLResponse else { return false }
+                
+                if response.statusCode == 200 {
+                    return true
+                }
+            } catch {
+                print("Error decoding: ", error)
+                return false
+            }
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        return false
+    }
+    
+    func getFlightPlanDataV3() async -> FlightDataV30Json?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flights_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "user_id": "abc123",
+                "flight_number": "TR753"
+            ]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(FlightDataV30Json.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+                 
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
     func getFlightPlanData() async -> IFlightPlanDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flightPlan_data") else { fatalError("Missing URL") }
             //make request
@@ -235,6 +305,41 @@ class RemoteService: ObservableObject {
                 
                 do {
                     let decodedSearch = try JSONDecoder().decode(ILogbookJson.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
+    func getLimitationData() async -> ILimitationJson?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_limitation_data") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "user_id": "abc123",
+            ] as [String : Any]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(ILimitationJson.self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)

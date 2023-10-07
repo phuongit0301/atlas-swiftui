@@ -10,6 +10,7 @@ import SwiftUI
 struct OnboardingView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @AppStorage("isOnboarding") var isOnboarding: String = ""
+    @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     
     @State private var selected: Int = 0
     @State private var isProfileValid = false
@@ -39,6 +40,7 @@ struct OnboardingView: View {
                     
                     Button {
                         isOnboarding = "0"
+                        isBoardingCompleted = "1"
 //                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
 ////                            isLoading = true
 //                            let payload: [String: Any] = [

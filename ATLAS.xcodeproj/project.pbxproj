@@ -28,6 +28,10 @@
 		3E2BA8342ACE9DEA009ABCC2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8332ACE9DEA009ABCC2 /* SignUpView.swift */; };
 		3E2BA8362ACEAAFF009ABCC2 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8352ACEAAFF009ABCC2 /* VerifyEmailView.swift */; };
 		3E2BA8382ACEAE49009ABCC2 /* CreatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8372ACEAE49009ABCC2 /* CreatePasswordView.swift */; };
+		3E2BA8412AD05EF0009ABCC2 /* AirportMapColorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA83F2AD05EF0009ABCC2 /* AirportMapColorList+CoreDataClass.swift */; };
+		3E2BA8422AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8402AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */; };
+		3E2BA8492AD0FD55009ABCC2 /* EventDateRangeList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8472AD0FD55009ABCC2 /* EventDateRangeList+CoreDataClass.swift */; };
+		3E2BA84A2AD0FD55009ABCC2 /* EventDateRangeList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8482AD0FD55009ABCC2 /* EventDateRangeList+CoreDataProperties.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
@@ -362,8 +366,6 @@
 		3EEBE66F2AB34ECF00421AFF /* MapCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE66E2AB34ECF00421AFF /* MapCardView.swift */; };
 		3EEBE6712AB3547C00421AFF /* CustomRouteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6702AB3547C00421AFF /* CustomRouteAnnotation.swift */; };
 		3EEBE6752AB3EBCA00421AFF /* CustomRouteAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6742AB3EBCA00421AFF /* CustomRouteAnnotationView.swift */; };
-		3EEBE6782AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6762AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift */; };
-		3EEBE6792AB4537F00421AFF /* AirportMapColorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6772AB4537F00421AFF /* AirportMapColorList+CoreDataProperties.swift */; };
 		3EEBE67B2AB46A8C00421AFF /* CustomTrafficAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE67A2AB46A8C00421AFF /* CustomTrafficAnnotationView.swift */; };
 		3EEBE67D2AB46AA800421AFF /* CustomTrafficAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE67C2AB46AA800421AFF /* CustomTrafficAnnotation.swift */; };
 		3EEBE67F2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE67E2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift */; };
@@ -481,6 +483,10 @@
 		3E2BA8332ACE9DEA009ABCC2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		3E2BA8352ACEAAFF009ABCC2 /* VerifyEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
 		3E2BA8372ACEAE49009ABCC2 /* CreatePasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasswordView.swift; sourceTree = "<group>"; };
+		3E2BA83F2AD05EF0009ABCC2 /* AirportMapColorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E2BA8402AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E2BA8472AD0FD55009ABCC2 /* EventDateRangeList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventDateRangeList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E2BA8482AD0FD55009ABCC2 /* EventDateRangeList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventDateRangeList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
@@ -818,8 +824,6 @@
 		3EEBE66E2AB34ECF00421AFF /* MapCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCardView.swift; sourceTree = "<group>"; };
 		3EEBE6702AB3547C00421AFF /* CustomRouteAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRouteAnnotation.swift; sourceTree = "<group>"; };
 		3EEBE6742AB3EBCA00421AFF /* CustomRouteAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRouteAnnotationView.swift; sourceTree = "<group>"; };
-		3EEBE6762AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EEBE6772AB4537F00421AFF /* AirportMapColorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EEBE67A2AB46A8C00421AFF /* CustomTrafficAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTrafficAnnotationView.swift; sourceTree = "<group>"; };
 		3EEBE67C2AB46AA800421AFF /* CustomTrafficAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTrafficAnnotation.swift; sourceTree = "<group>"; };
 		3EEBE67E2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAabbaAnnotationView.swift; sourceTree = "<group>"; };
@@ -1775,6 +1779,8 @@
 		3EEBE6542AB1AE5000421AFF /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BA83F2AD05EF0009ABCC2 /* AirportMapColorList+CoreDataClass.swift */,
+				3E2BA8402AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */,
 				3E7292672ACC5339000FF295 /* AabbaPostList+CoreDataClass.swift */,
 				3E7292682ACC5339000FF295 /* AabbaPostList+CoreDataProperties.swift */,
 				3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */,
@@ -1783,8 +1789,6 @@
 				3EEBE6A62AB873C700421AFF /* AabbaCommentList+CoreDataProperties.swift */,
 				3E7290F72ABB2B70000FF295 /* TrafficMapList+CoreDataClass.swift */,
 				3E7290F82ABB2B70000FF295 /* TrafficMapList+CoreDataProperties.swift */,
-				3EEBE6762AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift */,
-				3EEBE6772AB4537F00421AFF /* AirportMapColorList+CoreDataProperties.swift */,
 				3EEBE6442AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift */,
 				3EEBE6452AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift */,
 				3EEBE6482AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift */,
@@ -1823,6 +1827,8 @@
 		3EF221932AAEBFEC000B8FFB /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BA8472AD0FD55009ABCC2 /* EventDateRangeList+CoreDataClass.swift */,
+				3E2BA8482AD0FD55009ABCC2 /* EventDateRangeList+CoreDataProperties.swift */,
 				3EF221A72AAF31A7000B8FFB /* EventList+CoreDataClass.swift */,
 				3EF221A82AAF31A7000B8FFB /* EventList+CoreDataProperties.swift */,
 			);
@@ -2229,6 +2235,7 @@
 				3E7291C62AC5C5F6000FF295 /* NoteList+CoreDataProperties.swift in Sources */,
 				3ECD57942A98E19300C5FEF3 /* MapViewModel.swift in Sources */,
 				3E7291132ABD4290000FF295 /* LogbookEntriesList+CoreDataClass.swift in Sources */,
+				3E2BA8492AD0FD55009ABCC2 /* EventDateRangeList+CoreDataClass.swift in Sources */,
 				3E4A36BD2A571A2500027C61 /* FlightInformationDetailView.swift in Sources */,
 				3E4A36902A570BA800027C61 /* FuelTableList+CoreDataClass.swift in Sources */,
 				3E7291292ABEA46C000FF295 /* RecencyList+CoreDataProperties.swift in Sources */,
@@ -2291,7 +2298,6 @@
 				3E7292352AC86E61000FF295 /* SlideoverArrivalNoteRelevantList.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
-				3EEBE6782AB4537F00421AFF /* AirportMapColorList+CoreDataClass.swift in Sources */,
 				3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */,
 				3E086D852A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E7291252ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift in Sources */,
@@ -2311,6 +2317,7 @@
 				3E766FA72A5F914200B11616 /* AISearchSegmented.swift in Sources */,
 				3E72924A2ACA8EDC000FF295 /* ModelRowView.swift in Sources */,
 				3E7292162AC860EE000FF295 /* SlideoverDepartureNotamView.swift in Sources */,
+				3E2BA8412AD05EF0009ABCC2 /* AirportMapColorList+CoreDataClass.swift in Sources */,
 				3EEBE6752AB3EBCA00421AFF /* CustomRouteAnnotationView.swift in Sources */,
 				3E4A36A12A570BA800027C61 /* AltnDataList+CoreDataClass.swift in Sources */,
 				3E4A36D62A5AA04400027C61 /* TaxiTimesList+CoreDataProperties.swift in Sources */,
@@ -2391,6 +2398,7 @@
 				3E7291982AC579CB000FF295 /* DepartureNoteItemForm.swift in Sources */,
 				3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */,
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
+				3E2BA8422AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift in Sources */,
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
 				3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
 				3EEBE6A02AB7F6AB00421AFF /* CustomAirportAnnotationView.swift in Sources */,
@@ -2493,7 +2501,6 @@
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E4E10342A6A07460026802B /* ScratchPadList+CoreDataProperties.swift in Sources */,
 				3E086D7A2A94920900BE00AD /* MapView.swift in Sources */,
-				3EEBE6792AB4537F00421AFF /* AirportMapColorList+CoreDataProperties.swift in Sources */,
 				3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */,
 				3E4E101C2A652A2D0026802B /* ClipboardAISearchResult.swift in Sources */,
 				3EEBE6502AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift in Sources */,
@@ -2576,6 +2583,7 @@
 				3EEBE67D2AB46AA800421AFF /* CustomTrafficAnnotation.swift in Sources */,
 				3E7292502ACAA072000FF295 /* LimitationRowView.swift in Sources */,
 				3E7291E32AC68454000FF295 /* ClipboardDepartureNoteItemList.swift in Sources */,
+				3E2BA84A2AD0FD55009ABCC2 /* EventDateRangeList+CoreDataProperties.swift in Sources */,
 				3E4A36432A55D55700027C61 /* CustomTFKeyboard.swift in Sources */,
 				3E7291462AC2678D000FF295 /* PreflightSegmented.swift in Sources */,
 				3E7291A32AC592A3000FF295 /* EnrouteNoteItemForm.swift in Sources */,

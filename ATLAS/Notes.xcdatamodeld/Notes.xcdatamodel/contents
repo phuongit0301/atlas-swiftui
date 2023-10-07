@@ -47,7 +47,7 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="metar" optional="YES" attributeType="String"/>
-        <attribute name="notams" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="notams" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="selection" optional="YES" attributeType="String"/>
         <attribute name="taf" optional="YES" attributeType="String"/>
     </entity>
@@ -171,6 +171,11 @@
         <attribute name="startDate" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="EventDateRange" representedClassName="EventDateRangeList" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startDate" optional="YES" attributeType="String"/>
     </entity>
     <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
         <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
