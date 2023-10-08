@@ -74,25 +74,35 @@ struct LimitationsSubSectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(dataLimitation.indices, id: \.self) {index in
+                                        if dataLimitation.count == 0 {
                                             GridRow {
                                                 Group {
-                                                    Text(dataLimitation[index].text)
-                                                        .font(.system(size: 17, weight: .regular))
+                                                    Text("No limitations")
+                                                        .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLimitation[index].period)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLimitation[index].status)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                }.foregroundColor(fontColor(dataLimitation[index].color))
+                                                }.frame(height: 44)
                                             }
-                                            
-                                            if index + 1 < coreDataModel.dataLogbookLimitation.count {
-                                                Divider().padding(.horizontal, -16)
+                                        } else {
+                                            ForEach(dataLimitation.indices, id: \.self) {index in
+                                                GridRow {
+                                                    Group {
+                                                        Text(dataLimitation[index].text)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLimitation[index].period)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLimitation[index].status)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                    }.foregroundColor(fontColor(dataLimitation[index].color))
+                                                }
+                                                
+                                                if index + 1 < coreDataModel.dataLogbookLimitation.count {
+                                                    Divider().padding(.horizontal, -16)
+                                                }
                                             }
                                         }
                                     }

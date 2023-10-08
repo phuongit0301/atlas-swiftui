@@ -479,10 +479,10 @@ struct MapViewModal: View {
             }
         }.onAppear {
             updateMapOverlayViews()
-            if coreDataModel.dataSummaryInfo.route != "" {
-                tfRoute = coreDataModel.dataSummaryInfo.route ?? ""
-                selectedAddRoute = true
-            }
+//            if coreDataModel.dataSummaryInfo.route != "" {
+//                tfRoute = coreDataModel.dataSummaryInfo.route ?? ""
+//                selectedAddRoute = true
+//            }
         }.onChange(of: mapIconModel.num) { _ in
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
         }

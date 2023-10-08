@@ -106,20 +106,29 @@ struct RecencySectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(coreDataModel.dataExpiringSoon.indices, id: \.self) {index in
+                                        if coreDataModel.dataExpiringSoon.count == 0 {
                                             GridRow {
-                                                Group {
-                                                    Text(coreDataModel.dataExpiringSoon[index].type)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
+                                                Text("No expiring soon")
+                                                    .font(.system(size: 15, weight: .regular))
+                                                    .frame(height: 44, alignment: .leading)
+                                            }
+                                        } else {
+                                            ForEach(coreDataModel.dataExpiringSoon.indices, id: \.self) {index in
+                                                GridRow {
+                                                    Group {
+                                                        Text(coreDataModel.dataExpiringSoon[index].type)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(coreDataModel.dataExpiringSoon[index].expiryDate)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                    }.frame(height: 44)
                                                     
-                                                    Text(coreDataModel.dataExpiringSoon[index].expiryDate)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
                                                 }
-                                                
                                             }
                                         }
+                                        
                                     }
                                 }.padding()
                             }

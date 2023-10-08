@@ -24,6 +24,7 @@ struct ATLASApp: App {
     @AppStorage("uid") var userID: String = ""
     @AppStorage("isOnboarding") var isOnboarding: String = "0"
     @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
+    @AppStorage("isLogin") var isLogin: String = "0"
     
     let persistenceController = PersistenceController.shared
     let remoteServiceController = RemoteService.shared
@@ -58,6 +59,20 @@ struct ATLASApp: App {
                             OnboardingView()
                         } else {
                             ContentView()
+                                .task {
+                                    if isBoardingCompleted == "1" {
+                                        await coreDataModel.checkAndSyncData()
+                                    }
+                                }
+                                .task {
+                                    if isLogin == "1" {
+                                        print("fetch login")
+                                        coreDataModel.loading = true
+                                        await coreDataModel.checkAndSyncOrPostData()
+                                        isLogin = "0"
+                                        coreDataModel.loading = false
+                                    }
+                                }
                         }
                     } else {
                         LoginView()
@@ -69,11 +84,11 @@ struct ATLASApp: App {
                     locationViewModel.requestPermission()
                 }
             }
-            .onAppWentToBackground {
-                if !coreDataModel.loading && !coreDataModel.loadingInit {
-                    coreDataModel.updateFlightPlan()
-                }
-            }
+//            .onAppWentToBackground {
+//                if !coreDataModel.loading && !coreDataModel.loadingInit {
+//                    coreDataModel.updateFlightPlan()
+//                }
+//            }
             .environmentObject(network)
                 .environmentObject(tabModelState)
                 .environmentObject(sideMenuModelState)
@@ -92,17 +107,8 @@ struct ATLASApp: App {
                 .environmentObject(mapIconModel)
                 .environmentObject(onboardingModel)
                 .task {
-                    if isBoardingCompleted == "1" {
-                        await coreDataModel.checkAndSyncData()
-                    }
-                }
-                .task {
-                    if userID != "" {
-                        await coreDataModel.checkAndSyncData()
-                    }
-                }
-                .task {
                     coreDataModel.loading = true
+                    print("fetch reader")
                     await coreDataModel.initFetchData()
                     coreDataModel.loading = false
                 }

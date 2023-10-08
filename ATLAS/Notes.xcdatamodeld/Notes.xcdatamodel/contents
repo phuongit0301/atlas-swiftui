@@ -31,6 +31,7 @@
         <attribute name="upvoteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
+        <attribute name="voted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaComment" inverseName="posts" inverseEntity="AabbaComment"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AabbaMap" inverseName="posts" inverseEntity="AabbaMap"/>
     </entity>
@@ -177,20 +178,33 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="startDate" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="FlightPlan" representedClassName="FlightPlanList" syncable="YES">
-        <attribute name="flightInfoPob" optional="YES" attributeType="String"/>
-        <attribute name="fuelAdditionalTaxiRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelArrivalDelayRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelEnrouteWeatherRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelFlightLevelRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelOtherRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelReciprocalRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelTrackShorteningRemark" optional="YES" attributeType="String"/>
-        <attribute name="fuelZFWChangeRemark" optional="YES" attributeType="String"/>
+    <entity name="FlightOverview" representedClassName="FlightOverviewList" syncable="YES">
+        <attribute name="aircraft" optional="YES" attributeType="String"/>
+        <attribute name="blockTime" optional="YES" attributeType="String"/>
+        <attribute name="blockTimeFlightTime" optional="YES" attributeType="String"/>
+        <attribute name="callsign" optional="YES" attributeType="String"/>
+        <attribute name="caName" optional="YES" attributeType="String"/>
+        <attribute name="caPicker" optional="YES" attributeType="String"/>
+        <attribute name="chockOff" optional="YES" attributeType="String"/>
+        <attribute name="chockOn" optional="YES" attributeType="String"/>
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="dep" optional="YES" attributeType="String"/>
+        <attribute name="dest" optional="YES" attributeType="String"/>
+        <attribute name="eta" optional="YES" attributeType="String"/>
+        <attribute name="f0Name" optional="YES" attributeType="String"/>
+        <attribute name="f0Picker" optional="YES" attributeType="String"/>
+        <attribute name="flightTime" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="perActualLDW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="perActualTOW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="perActualZFW" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="night" optional="YES" attributeType="String"/>
+        <attribute name="password" optional="YES" attributeType="String"/>
+        <attribute name="pob" optional="YES" attributeType="String"/>
+        <attribute name="route" optional="YES" attributeType="String"/>
+        <attribute name="sta" optional="YES" attributeType="String"/>
+        <attribute name="std" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffArr" optional="YES" attributeType="String"/>
+        <attribute name="timeDiffDep" optional="YES" attributeType="String"/>
+        <attribute name="totalTime" optional="YES" attributeType="String"/>
     </entity>
     <entity name="FuelData" representedClassName="FuelDataList" syncable="YES">
         <attribute name="altn" optional="YES" attributeType="Binary"/>
@@ -343,6 +357,7 @@
         <attribute name="exam" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="instr" optional="YES" attributeType="String"/>
+        <attribute name="licenseNumber" optional="YES" attributeType="String"/>
         <attribute name="logId" optional="YES" attributeType="String"/>
         <attribute name="p1Day" optional="YES" attributeType="String"/>
         <attribute name="p1Night" optional="YES" attributeType="String"/>
@@ -352,17 +367,28 @@
         <attribute name="picNight" optional="YES" attributeType="String"/>
         <attribute name="picUUsDay" optional="YES" attributeType="String"/>
         <attribute name="picUUsNight" optional="YES" attributeType="String"/>
-        <attribute name="signature" optional="YES" attributeType="String"/>
+        <attribute name="signFileName" optional="YES" attributeType="String"/>
+        <attribute name="signFileUrl" optional="YES" attributeType="String"/>
     </entity>
     <entity name="LogbookLimitation" representedClassName="LogbookLimitationList" syncable="YES">
+        <attribute name="colour" optional="YES" attributeType="String"/>
         <attribute name="end" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="limit" optional="YES" attributeType="String"/>
+        <attribute name="periodText" optional="YES" attributeType="String"/>
         <attribute name="remoteId" optional="YES" attributeType="String"/>
         <attribute name="requirement" optional="YES" attributeType="String"/>
         <attribute name="start" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="statusText" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="MapRoute" representedClassName="MapRouteList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="airport" optional="YES" attributeType="String"/>
@@ -433,6 +459,7 @@
         <attribute name="upvoteCount" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
+        <attribute name="voted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NoteComment" inverseName="posts" inverseEntity="NoteComment"/>
         <relationship name="lists" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NoteAabbaPost" inverseName="posts" inverseEntity="NoteAabbaPost"/>
     </entity>
@@ -523,8 +550,10 @@
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="Signature" representedClassName="SignatureList" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageString" optional="YES" attributeType="String"/>
+        <attribute name="licenseNumber" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SummaryInfo" representedClassName="SummaryInfoList" syncable="YES">
         <attribute name="aircraft" optional="YES" attributeType="String"/>

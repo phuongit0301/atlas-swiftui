@@ -2,7 +2,7 @@
 //  LogbookLimitationList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 23/09/2023.
+//  Created by phuong phan on 08/10/2023.
 //
 //
 
@@ -16,14 +16,18 @@ extension LogbookLimitationList {
         return NSFetchRequest<LogbookLimitationList>(entityName: "LogbookLimitation")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var remoteId: String?
-    @NSManaged public var type: String?
-    @NSManaged public var requirement: String?
-    @NSManaged public var limit: String?
-    @NSManaged public var start: String?
     @NSManaged public var end: String?
+    @NSManaged public var id: UUID?
+    @NSManaged public var limit: String?
+    @NSManaged public var remoteId: String?
+    @NSManaged public var requirement: String?
+    @NSManaged public var start: String?
     @NSManaged public var text: String?
+    @NSManaged public var type: String?
+    @NSManaged public var status: String?
+    @NSManaged public var colour: String?
+    @NSManaged public var periodText: String?
+    @NSManaged public var statusText: String?
     
     public var unwrappedType: String {
         type ?? ""
@@ -47,6 +51,22 @@ extension LogbookLimitationList {
     
     public var unwrappedText: String {
         text ?? ""
+    }
+    
+    public var unwrappedStatus: String {
+        status ?? ""
+    }
+    
+    public var unwrappedColour: String {
+        colour ?? ""
+    }
+    
+    public var unwrappedPeriodText: String {
+        periodText ?? ""
+    }
+    
+    public var unwrappedStatusText: String {
+        statusText ?? ""
     }
 }
 

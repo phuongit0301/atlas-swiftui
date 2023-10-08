@@ -2,7 +2,7 @@
 //  LogbookEntriesList+CoreDataClass.swift
 //  ATLAS
 //
-//  Created by phuong phan on 22/09/2023.
+//  Created by phuong phan on 07/10/2023.
 //
 //
 

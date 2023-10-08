@@ -58,6 +58,81 @@ class RemoteService: ObservableObject {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_calendar_data") else { fatalError("Missing URL") }
         //make request
         var request = URLRequest(url: url)
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        do {
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
+                }
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        print("Update calendar successfully")
+                        return
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        
+        return true
+    }
+    
+    func getFlightStatsData() async -> ICalendarResponse?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flight_stats") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            let requestBody = [
+                "flight_number": "SQ806",
+                "dep": "VTBS",
+                "arr": "WSSS",
+                "sta": "16:00",
+                "std": "00:25"
+            ]
+            
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode(ICalendarResponse.self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+                 
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
+    }
+    
+    func postUserData(_ parameters: Any) async  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_user_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
         
         do {
             // Convert the request body to JSON data
@@ -65,26 +140,30 @@ class RemoteService: ObservableObject {
             // Set the request body data
             request.httpBody = requestData
             
-            // Set the Content-Type header to indicate JSON format
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            let (_, response) = try await URLSession.shared.data(for: request)
-            
-            do {
-                guard let response = response as? HTTPURLResponse else { return false }
-                
-                if response.statusCode == 200 {
-                    return true
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
                 }
-            } catch {
-                print("Error decoding: ", error)
-                return false
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    print("Tesponse User Data Status ======== \(response.statusCode)")
+                    if response.statusCode == 200 {
+                        print("Update User Data successfully")
+                        return
+                    }
+                }
             }
+            
+            dataTask.resume()
         } catch {
             print("Error: \(error)")
-            return false
+            return
         }
-        return false
+        
+        return
+        
     }
     
     func getFlightPlanDataV3() async -> FlightDataV30Json?  {
@@ -122,6 +201,39 @@ class RemoteService: ObservableObject {
                 print("Error: \(error)")
             }
         return nil
+    }
+    
+    func postFlightPlanDataV3(_ parameters: Any) async -> Bool  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_flights_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        do {
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
+                }
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        print("Update calendar successfully")
+                        return
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        
+        return true
     }
     
     func getFlightPlanData() async -> IFlightPlanDataModel?  {
@@ -315,6 +427,39 @@ class RemoteService: ObservableObject {
         return nil
     }
     
+    func postLogbookData(_ parameters: Any) async -> Bool  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_logbook_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        do {
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
+                }
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        print("Update calendar successfully")
+                        return
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        
+        return true
+    }
+    
     func getLimitationData() async -> ILimitationJson?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_limitation_data") else { fatalError("Missing URL") }
             //make request
@@ -348,6 +493,39 @@ class RemoteService: ObservableObject {
                 print("Error: \(error)")
             }
         return nil
+    }
+    
+    func postLimitationData(_ parameters: Any) async -> Bool  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_limitation_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        do {
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
+                }
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        print("Update calendar successfully")
+                        return
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        
+        return true
     }
     
     func getRecencyData() async -> IRecencyJson?  {
@@ -385,6 +563,39 @@ class RemoteService: ObservableObject {
         return nil
     }
     
+    func postRecencyData(_ parameters: Any) async -> Bool  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_recency_data") else { fatalError("Missing URL") }
+        //make request
+        var request = URLRequest(url: url)
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        do {
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Request error: ", error)
+                    return
+                }
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else { return }
+                    if response.statusCode == 200 {
+                        print("Update calendar successfully")
+                        return
+                    }
+                }
+            }
+            
+            dataTask.resume()
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+        
+        return true
+    }
+    
     func updateFuelData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_update_flightPlan_data") else { fatalError("Missing URL") }
             //make request
@@ -414,6 +625,37 @@ class RemoteService: ObservableObject {
                 completion(false)
                 print("Error: \(error)")
             }
+    }
+    
+    func getAabbaNoteData(_ parameters: Any) async -> [String: [INoteResponse]]?  {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_aabba_notes") else { fatalError("Missing URL") }
+            //make request
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            // Create the request body data
+            do {
+                // Convert the request body to JSON data
+                let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                // Set the request body data
+                request.httpBody = requestData
+                
+                // Set the Content-Type header to indicate JSON format
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                do {
+                    let decodedSearch = try JSONDecoder().decode([String: [INoteResponse]].self, from: data)
+                    return decodedSearch
+                } catch let error {
+                    print("Error decoding: ", error)
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        return nil
     }
     
     func updateMapData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
@@ -596,41 +838,6 @@ class RemoteService: ObservableObject {
             print("Error: \(error)")
         }
         return nil
-        
-//        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_notam_wx_data") else { fatalError("Missing URL") }
-//            //make request
-//            var request = URLRequest(url: url)
-//
-//            let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//            request.httpMethod = "POST"
-//            request.httpBody = postData
-//
-//            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-//                if let error = error {
-//                    print("Request error: ", error)
-//                    return
-//                }
-//
-//                DispatchQueue.main.async {
-//                    do {
-//                        guard let response = response as? HTTPURLResponse else { return }
-//                        if response.statusCode == 200 {
-//                            print("Update successfully")
-//                            return
-//                        } else {
-//                            return
-//                        }
-//                    } catch {
-//                        print("Error: \(error)")
-//                        return
-//                    }
-//
-//                }
-//
-//            }
-//
-//            dataTask.resume()
     }
     
     // End Update data for Pre Flight

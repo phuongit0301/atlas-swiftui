@@ -131,19 +131,28 @@ struct OverviewSubSectionView: View {
                                             
                                             Divider().padding(.horizontal, -16)
                                             
+                                            if dataLimitation.count == 0 {
+                                                GridRow {
+                                                    Group {
+                                                        Text("No limitations")
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                    }.frame(height: 44)
+                                                }
+                                            }
                                             ForEach(dataLimitation.indices, id: \.self) {index in
                                                 GridRow {
                                                     Group {
                                                         Text(dataLimitation[index].text)
-                                                            .font(.system(size: 17, weight: .regular))
+                                                            .font(.system(size: 15, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
                                                         Text(dataLimitation[index].period)
-                                                            .font(.system(size: 17, weight: .regular))
+                                                            .font(.system(size: 15, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
                                                         Text(dataLimitation[index].status)
-                                                            .font(.system(size: 17, weight: .regular))
+                                                            .font(.system(size: 15, weight: .regular))
                                                             .frame(alignment: .leading)
                                                     }.foregroundColor(fontColor(dataLimitation[index].color))
                                                 }

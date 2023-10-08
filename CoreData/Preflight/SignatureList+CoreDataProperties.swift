@@ -2,7 +2,7 @@
 //  SignatureList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 27/09/2023.
+//  Created by phuong phan on 08/10/2023.
 //
 //
 
@@ -18,6 +18,8 @@ extension SignatureList {
 
     @NSManaged public var id: UUID?
     @NSManaged public var imageString: String?
+    @NSManaged public var licenseNumber: String?
+    @NSManaged public var comment: String?
 
 }
 

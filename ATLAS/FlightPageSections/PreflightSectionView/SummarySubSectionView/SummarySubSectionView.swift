@@ -121,15 +121,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFltNo)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedCallsign ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedModel)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedModel ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedAircraft)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedAircraft ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -152,15 +152,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDep)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedDep ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedDest)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedDest ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedPob)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedPob ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -212,9 +212,9 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedStd ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedSta ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
@@ -233,10 +233,10 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    Text(coreDataModel.dataSummaryInfo.unwrappedFlightTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
 
                                 }.frame(height: 44)
@@ -251,7 +251,7 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
+                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTimeFlightTime ?? "")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
@@ -324,16 +324,16 @@ struct SummarySubSectionView: View {
                                             .disabled(!isEdit)
                                             .frame(width: proxy.size.width - 64, alignment: .leading)
                                             .onSubmit {
-                                                if coreDataModel.existDataSummaryInfo {
-                                                    coreDataModel.dataSummaryInfo.route = tfRoute
+                                                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                                                    item.route = tfRoute
                                                 } else {
-                                                    let item = SummaryInfoList(context: persistenceController.container.viewContext)
+                                                    let item = FlightOverviewList(context: persistenceController.container.viewContext)
                                                     item.route = tfRoute
                                                 }
                                                 
                                                 isRouteFormChange = true
                                                 coreDataModel.save()
-                                                coreDataModel.readSummaryInfo()
+                                                coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
                                             }
                                     }.frame(height: 44)
                                 }
@@ -454,8 +454,8 @@ struct SummarySubSectionView: View {
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
                 .onAppear {
-                    if coreDataModel.dataSummaryInfo.route != "" {
-                        tfRoute = coreDataModel.dataSummaryInfo.route ?? ""
+                    if coreDataModel.dataFlightOverview?.route != "" {
+                        tfRoute = coreDataModel.dataFlightOverview?.route ?? ""
                     }
                     
                     prepareData()
@@ -494,33 +494,33 @@ struct SummarySubSectionView: View {
     func create() {
         Task {
             self.isLoading = true
-        
-        var payloadEnroute: [Any] = []
-        var payloadDestination: [Any] = []
             
-        var payloadEnrouteMap: [String] = []
-        var payloadDestinationMap: [String] = []
-        
-        if enrouteAlternates.count > 0 {
-            for item in enrouteAlternates {
-                payloadEnroute.append([
-                    "Airport": item.altn,
-                    "std": item.eta
-                ])
-                payloadEnrouteMap.append(item.altn)
+            var payloadEnroute: [Any] = []
+            var payloadDestination: [Any] = []
+            
+            var payloadEnrouteMap: [String] = []
+            var payloadDestinationMap: [String] = []
+            
+            if enrouteAlternates.count > 0 {
+                for item in enrouteAlternates {
+                    payloadEnroute.append([
+                        "Airport": item.altn,
+                        "std": item.eta
+                    ])
+                    payloadEnrouteMap.append(item.altn)
+                }
             }
-        }
-        
-        if destinationAlternates.count > 0 {
-            for item in destinationAlternates {
-                payloadDestination.append([
-                    "Airport": item.altn,
-                    "std": item.eta
-                ])
-                payloadDestinationMap.append(item.altn)
+            
+            if destinationAlternates.count > 0 {
+                for item in destinationAlternates {
+                    payloadDestination.append([
+                        "Airport": item.altn,
+                        "std": item.eta
+                    ])
+                    payloadDestinationMap.append(item.altn)
+                }
             }
-        }
-        
+            
             let payloadNotam: [String: Any] = [
                 "depAirport": [
                     "Airport": "VTBS",
@@ -535,66 +535,82 @@ struct SummarySubSectionView: View {
             ]
             
             let payloadMap: [String: Any] = [
-                "depAirport": coreDataModel.dataSummaryInfo.unwrappedDepICAO,
-                "arrAirport": coreDataModel.dataSummaryInfo.unwrappedDestICAO,
+                "depAirport": coreDataModel.dataFlightOverview?.unwrappedDep ?? "",
+                "arrAirport": coreDataModel.dataFlightOverview?.unwrappedAircraft ?? "",
                 "enrAirports": payloadEnrouteMap,
                 "altnAirports": payloadDestinationMap,
                 "route": tfRoute
             ]
             
+            let payloadAabbaNote: [String: Any] = [
+                "user_id": "abc123",
+                "flight_number": coreDataModel.dataFlightOverview?.unwrappedCallsign
+            ]
+            
             async let trafficService = remoteService.updateMapTrafficData(payloadMap)
-            async let aabbaService = remoteService.updateMapAabbaData(payloadMap)
+            async let mapAabbaService = remoteService.updateMapAabbaData(payloadMap)
             async let waypointService = remoteService.updateMapWaypointData(payloadMap)
             async let airportService = remoteService.updateMapAirportData()
-            
-            // For Notam, MetarTaf
-//            async let notamService = remoteService.updateNotamData(payloadNotam)
+            async let notamService = remoteService.updateNotamData(payloadNotam)
+            async let aabbaNoteService = remoteService.getAabbaNoteData(payloadAabbaNote)
             
             //array handle call API parallel
-            let services = try await [trafficService, aabbaService, waypointService, airportService]
-            let servicesNotam: INotamWXDataJson = self.remoteService.load("testing_data.json")
+            let (responseTraffic, responseMapAabba, responseWaypoint, responseAirport, responseNotam, responseAabbaNote) = await (trafficService, mapAabbaService, waypointService, airportService, notamService, aabbaNoteService)
             
-            if (services[0] as! [ITrafficData]).count > 0 {
+            if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
                 await coreDataModel.deleteAllTrafficMap()
-                coreDataModel.initDataTraffic(services[0] as! [ITrafficData])
+                coreDataModel.initDataTraffic(responseTraffic)
             }
-
-            if (services[1] as! [IAabbaData]).count > 0 {
-                await coreDataModel.deleteAllAabbaCommentList()
-                await coreDataModel.deleteAllAabbaPostList()
-                await coreDataModel.deleteAllAabbMapList()
-                coreDataModel.initDataAabba(services[1] as! [IAabbaData])
+            
+            if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
+                await coreDataModel.deleteAllMapAabbaCommentList()
+                await coreDataModel.deleteAllMapAabbaPostList()
+                await coreDataModel.deleteAllMapAabbMapList()
+                coreDataModel.initDataAabba(responseMapAabba)
             }
-
-            if (services[2] as! [IWaypointData]).count > 0 {
+            
+            if let responseWaypoint = responseWaypoint, responseWaypoint.count > 0 {
                 await coreDataModel.deleteAllWaypointList()
-                coreDataModel.initDataWaypoint(services[2] as! [IWaypointData])
+                coreDataModel.initDataWaypoint(responseWaypoint)
             }
-
-            if (services[3] as! [IAirportData]).count > 0 {
+            
+            if let responseAirport = responseAirport, responseAirport.count > 0 {
                 await coreDataModel.deleteAllAirportList()
-                coreDataModel.initDataAirport(services[3] as! [IAirportData])
-                coreDataModel.initDataAirportMapColor(services[3] as! [IAirportData])
+                coreDataModel.initDataAirport(responseAirport)
+                coreDataModel.initDataAirportMapColor(responseAirport)
+            }
+            
+            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0 {
+                await coreDataModel.deleteAllAabbaNoteCommentList()
+                await coreDataModel.deleteAllAabbaNotePostList()
+                await coreDataModel.deleteAllAabbaNoteList()
+                
+                coreDataModel.initDataMapAabbaNotes(responseAabbaNote)
             }
             
             await coreDataModel.deleteAllMetaTaf()
             await coreDataModel.deleteAllNotam()
-            coreDataModel.initDepDataMetarTaf(servicesNotam.metarTafData.depMetarTaf, type: "depMetarTaf")
-            coreDataModel.initArrDataMetarTaf(servicesNotam.metarTafData.arrMetarTaf, type: "arrMetarTaf")
             
-            if servicesNotam.metarTafData.altnMetarTaf.count > 0 {
-                for item in servicesNotam.metarTafData.altnMetarTaf {
-                    coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
+            if let metarTafData = responseNotam?.metarTafData {
+                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
+                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
+                
+                if metarTafData.altnMetarTaf.count > 0 {
+                    for item in metarTafData.altnMetarTaf {
+                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
+                    }
+                }
+                
+                if metarTafData.enrMetarTaf.count > 0 {
+                    for item in metarTafData.enrMetarTaf {
+                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
+                    }
                 }
             }
             
-            if servicesNotam.metarTafData.enrMetarTaf.count > 0 {
-                for item in servicesNotam.metarTafData.enrMetarTaf {
-                    coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
-                }
+            if let notamsData = responseNotam?.notamsData {
+                coreDataModel.initDataNotams(notamsData)
             }
-            
-            coreDataModel.initDataNotams(servicesNotam.notamsData)
             
             coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
             coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
@@ -613,21 +629,21 @@ struct SummarySubSectionView: View {
                         do {
                             if let isNew = item.isNew {
                                 if isNew && item.eta != "" && item.altn != "" {
-                                   let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                                   newObject.id = UUID()
-                                   newObject.altn = item.altn
-                                   newObject.vis = item.vis
-                                   newObject.minima = item.minima
-                                   newObject.eta = item.eta
-                                   newObject.type = "enroute"
-
-                                   try persistenceController.container.viewContext.save()
-                                   print("saved Enroute successfully")
-
-                                   enrouteAlternates = []
-                               }
+                                    let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                                    newObject.id = UUID()
+                                    newObject.altn = item.altn
+                                    newObject.vis = item.vis
+                                    newObject.minima = item.minima
+                                    newObject.eta = item.eta
+                                    newObject.type = "enroute"
+                                    
+                                    try persistenceController.container.viewContext.save()
+                                    print("saved Enroute successfully")
+                                    
+                                    enrouteAlternates = []
+                                }
                             }
-                             
+                            
                         } catch {
                             print("Failed to Enroute save: \(error)")
                             // Rollback any changes in the managed object context
@@ -636,7 +652,7 @@ struct SummarySubSectionView: View {
                     }
                 }
             }
-
+            
             if (destinationAlternates.count > 0) {
                 persistenceController.container.viewContext.performAndWait {
                     for item in destinationAlternates {
@@ -672,73 +688,6 @@ struct SummarySubSectionView: View {
             
             self.isLoading = false
         }
-            
-        
-        //todo
-//        /ATLAS_get_map_traffic_data,
-        // inputJSON = {
-        //            "depAirport": "VTBS", Dep Field
-        //            "arrAirport": "WSSS", Dest Field
-        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
-        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
-        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
-        //        }
-        
-        
-//        /ATLAS_get_map_aabba_data,
-//        inputJSON = {
-        //            "depAirport": "VTBS", Dep Field
-        //            "arrAirport": "WSSS", Dest Field
-        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
-        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
-        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
-        //        }
-
-        
-        //        /ATLAS_get_map_waypoints_data
-//        inputJSON = {
-        //            "depAirport": "VTBS", Dep Field
-        //            "arrAirport": "WSSS", Dest Field
-        //            "enrAirports": ["WMKP", "WMKK"], Enroute airport
-        //            "altnAirports": ["WMKJ", "WIDD"], destination airport
-        //            "route": "VTBS/19L F410 KIGOB Y11 PASVA/F410 Y514 NUFFA DCT PIBAP DCT PASPU DCT NYLON DCT POSUB DCT SANAT WSSS/02L"
-        //        }
-        
-        
-//        /ATLAS_get_map_airports_data
-        
-        
-        // todo send POST to API /ATLAS_get_notam_wx_data
-//        inputJSON = {
-//                    "depAirport": {
-//                        "Airport": "VTBS",
-//                        "std": "2023-09-08 20:00"
-//                    },
-//                    "arrAirport": {
-//                        "Airport": "WSSS",
-//                        "sta": "2023-09-08 23:00"
-//                    },
-//                    "enrAirports": [
-//                        {
-//                            "Airport": "WMKK",
-//                            "eta": "2023-09-08 22:00"
-//                        },
-//                        {
-//                            "Airport": "WMKP",
-//                            "eta": "2023-09-08 22:00"
-//                        }
-//                    ],
-//                    "altnAirports": [
-//                        {
-//                            "Airport": "WMKJ",
-//                            "eta": "2023-09-08 22:00"
-//                        },
-//                        {
-//                            "Airport": "WIDD",
-//                            "eta": "2023-09-08 22:00"
-//                        }
-//                    ]
-//                }
     }
 }
 

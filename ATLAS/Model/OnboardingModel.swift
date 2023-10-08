@@ -45,7 +45,7 @@ struct Mobile: Hashable {
 }
 
 struct IProfile: Identifiable, Hashable {
-    var id = UUID()
+    var id = UUID().uuidString
     var user_id: String
     var userName: String
     var firstName: String
@@ -57,7 +57,7 @@ struct IProfile: Identifiable, Hashable {
 }
 
 struct IProvideExperience: Identifiable, Hashable {
-    var id = UUID()
+    var id = UUID().uuidString
     var modelName: String
     var pic: String
     var picUs: String
@@ -69,7 +69,7 @@ struct IProvideExperience: Identifiable, Hashable {
 }
 
 struct IProvideLimitation: Identifiable, Hashable {
-    var id = UUID()
+    var id = UUID().uuidString
     var limitationFlight: String
     var limitation: String
     var duration: String
@@ -79,7 +79,7 @@ struct IProvideLimitation: Identifiable, Hashable {
 }
 
 struct IProvideRecency: Identifiable, Hashable {
-    var id = UUID()
+    var id = UUID().uuidString
     var type: String
     var modelName: String
     var requirement: String
@@ -89,7 +89,7 @@ struct IProvideRecency: Identifiable, Hashable {
 }
 
 struct IProvideExpiry: Identifiable, Hashable {
-    var id = UUID()
+    var id = UUID().uuidString
     var expiredDate: String
     var requirement: String
     var documentType: String
@@ -105,4 +105,12 @@ class OnboardingModel: ObservableObject {
 
 class SignUpModel: ObservableObject {
     @Published var step = 1
+}
+
+struct IUserDataResponse: Codable {
+    var response_string: String
+    var recencies_ids: [String]
+    var limitation_ids: [String]
+    var expiry_ids: [String]
+    var visa_ids: [String]
 }

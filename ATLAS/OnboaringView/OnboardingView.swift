@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
+    @EnvironmentObject var remoteService: RemoteService
     @AppStorage("isOnboarding") var isOnboarding: String = ""
     @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     
@@ -39,34 +41,108 @@ struct OnboardingView: View {
                     Spacer()
                     
                     Button {
-                        isOnboarding = "0"
-                        isBoardingCompleted = "1"
-//                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
-////                            isLoading = true
-//                            let payload: [String: Any] = [
-//                                "yourProfile": onboardingModel.dataYourProfile,
-//                                "experience": onboardingModel.dataModelExperience,
-//                                "limitations": onboardingModel.dataModelLimitation,
-//                                "recencies": onboardingModel.dataModelRecency,
-//                                "expiry": onboardingModel.dataModelExpiry
-//                            ]
-//
-//                            print("payload=========\(payload)")
-//                            isOnboarding = "0"
-//                        }
+                        if isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid {
+                            Task {
+                                coreDataModel.loadingInit = true
+                                isLoading = true
+                                let payloadProfile = [
+                                    "id": onboardingModel.dataYourProfile.id,
+                                    "user_id": onboardingModel.dataYourProfile.user_id,
+                                    "userName": onboardingModel.dataYourProfile.userName,
+                                    "firstName": onboardingModel.dataYourProfile.firstName,
+                                    "lastName": onboardingModel.dataYourProfile.lastName,
+                                    "airline": onboardingModel.dataYourProfile.airline,
+                                    "mobile": [
+                                        "country": onboardingModel.dataYourProfile.mobile.country,
+                                        "number": onboardingModel.dataYourProfile.mobile.number
+                                    ],
+                                    "email": onboardingModel.dataYourProfile.email,
+                                    "subscribe": onboardingModel.dataYourProfile.subscribe
+                                ] as [String : Any]
+                                
+                                var payloadExperience: [Any] = []
+                                for item in onboardingModel.dataModelExperience {
+                                    payloadExperience.append([
+                                        "id": item.id,
+                                        "modelName": item.modelName,
+                                        "pic": item.pic,
+                                        "picUs": item.picUs,
+                                        "p1": item.p1,
+                                        "p2": item.p2,
+                                        "instr": item.instr,
+                                        "exam": item.exam,
+                                        "totalTime": item.totalTime
+                                    ])
+                                }
+                                
+                                var payloadLimitation: [Any] = []
+                                for item in onboardingModel.dataModelLimitation {
+                                    payloadLimitation.append([
+                                        "id": item.id,
+                                        "limitationFlight": item.limitationFlight,
+                                        "limitation": item.limitation,
+                                        "duration": item.duration,
+                                        "startDate": item.startDate,
+                                        "endDate": item.endDate,
+                                        "completed": item.completed
+                                    ])
+                                }
+                                
+                                var payloadRecency: [Any] = []
+                                for item in onboardingModel.dataModelRecency {
+                                    payloadRecency.append([
+                                        "id": item.id,
+                                        "type": item.type,
+                                        "modelName": item.modelName,
+                                        "requirement": item.requirement,
+                                        "frequency": item.frequency,
+                                        "periodStart": item.periodStart,
+                                        "completed": item.completed
+                                    ])
+                                }
+                                
+                                var payloadExpiry: [Any] = []
+                                for item in onboardingModel.dataModelExpiry {
+                                    payloadExpiry.append([
+                                        "id": item.id,
+                                        "expiredDate": item.expiredDate,
+                                        "requirement": item.requirement,
+                                        "documentType": item.documentType
+                                    ])
+                                }
+                                
+                                let payload: [String: Any] = [
+                                    "yourProfile": payloadProfile,
+                                    "experience": payloadExperience,
+                                    "limitations": payloadLimitation,
+                                    "recencies": payloadRecency,
+                                    "expiry": payloadExpiry
+                                ]
+                                
+                                await remoteService.postUserData(payload)
+                                isLoading = false
+                                coreDataModel.loadingInit = false
+                                isOnboarding = "0"
+                                isBoardingCompleted = "1"
+                            }
+                        }
                     } label: {
-                        Text("Complete Onboarding")
-                            .foregroundColor(.white)
-                            .font(.system(size: 15, weight: .semibold))
-                            .frame(height: 20)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill((isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid) ? Color.theme.azure : Color.theme.philippineGray3)
-                            )
-                        
-                    }
+                        HStack(alignment: .center, spacing: 16) {
+                            if isLoading {
+                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                            }
+                            Text("Complete Onboarding")
+                                .foregroundColor(.white)
+                                .font(.system(size: 15, weight: .semibold))
+                                .frame(height: 20)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill((isProfileValid && isExperienceValid && isLimitationValid && isRecencyValid && isExpiryValid) ? Color.theme.azure : Color.theme.philippineGray3)
+                                )
+                        }
+                    }.disabled(isLoading)
                 }
                 .padding()
                 .background(Color.white)

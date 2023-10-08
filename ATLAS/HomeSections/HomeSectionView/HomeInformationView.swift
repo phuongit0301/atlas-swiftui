@@ -119,33 +119,44 @@ struct HomeInformationView: View {
                                 
                                 Divider()
                                 
-                                ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
+                                if coreDataModel.dataEventCompleted.count == 0 {
                                     HStack {
-                                        Text(renderItemCompleted(coreDataModel.dataEventCompleted[index]))
+                                        Text("No flight plan completed")
                                             .font(.system(size: 15, weight: .regular))
                                             .foregroundColor(Color.black)
-                                        
                                         Spacer()
-                                        
-                                        Button(action: {
-                                            //TODO
-                                        }, label: {
-                                            Text("Report Submitted")
+                                    }.frame(height: 44)
+                                    .padding(.horizontal)
+                                } else {
+                                    
+                                    ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
+                                        HStack {
+                                            Text(renderItemCompleted(coreDataModel.dataEventCompleted[index]))
                                                 .font(.system(size: 15, weight: .regular))
                                                 .foregroundColor(Color.black)
-                                                .padding(.vertical, 8)
-                                                .padding(.horizontal)
-                                        }).background(Color.theme.tealDeer)
-                                            .cornerRadius(8)
-                                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
-                                            .buttonStyle(PlainButtonStyle())
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                //TODO
+                                            }, label: {
+                                                Text("Report Submitted")
+                                                    .font(.system(size: 15, weight: .regular))
+                                                    .foregroundColor(Color.black)
+                                                    .padding(.vertical, 8)
+                                                    .padding(.horizontal)
+                                            }).background(Color.theme.tealDeer)
+                                                .cornerRadius(8)
+                                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
+                                                .buttonStyle(PlainButtonStyle())
+                                            
+                                        }// End HStack
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal)
                                         
-                                    }// End HStack
-                                    .padding(.vertical, 4)
-                                    .padding(.horizontal)
-                                    
-                                    if index + 1 < coreDataModel.dataEventCompleted.count {
-                                        Divider()
+                                        if index + 1 < coreDataModel.dataEventCompleted.count {
+                                            Divider()
+                                        }
                                     }
                                 }
                             }
@@ -260,11 +271,13 @@ struct HomeInformationView: View {
                         VStack(alignment: .leading) {
                             Grid(alignment: .topLeading) {
                                 if dataLimitation.count == 0 {
-                                    Text("No Limitation")
-                                        .font(.system(size: 15, weight: .regular))
-                                        .foregroundColor(Color.black)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(alignment: .leading)
+                                    HStack {
+                                        Text("No Limitation")
+                                            .font(.system(size: 15, weight: .regular))
+                                            .foregroundColor(Color.black)
+                                        Spacer()
+                                    }.padding(.horizontal)
+                                    
                                 } else {
                                     ForEach(dataLimitation.indices, id: \.self) { index in
                                         GridRow {

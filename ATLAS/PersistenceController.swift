@@ -58,6 +58,7 @@ struct IScratchPad: Identifiable, Hashable {
 class CoreDataModelState: ObservableObject {
     var remoteService = RemoteService.shared
     let service = PersistenceController.shared
+    @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     
     @Published var loading: Bool = true
     @Published var loadingInit: Bool = false
@@ -65,6 +66,7 @@ class CoreDataModelState: ObservableObject {
     @Published var tagList: [TagList] = []
     @Published var tagListCabinDefects: [TagList] = []
     @Published var tagListWeather: [TagList] = []
+    @Published var dataNoteList: [NoteList] = []
     @Published var noteListIncludeCrew: [NoteList] = []
     @Published var preflightArray: [NoteList] = []
     @Published var departureArray: [NoteList] = []
@@ -77,6 +79,7 @@ class CoreDataModelState: ObservableObject {
     //    @Published var dataFlightPlan: FlightPlanList?
     //    @Published var dataEvents: [EventList] = []
     
+    @Published var dataNoteAabba: [NoteAabbaPostList] = []
     @Published var dataNoteAabbaPreflight: [NoteAabbaPostList] = []
     @Published var dataNoteAabbaDeparture: [NoteAabbaPostList] = []
     @Published var dataNoteAabbaEnroute: [NoteAabbaPostList] = []
@@ -98,7 +101,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataPostArrival: [NotePostList] = []
     @Published var dataPostArrivalRef: [NotePostList] = []
     
-    @Published var dataFlightPlan: FlightPlanList?
+    @Published var dataFlightOverview: FlightOverviewList?
     @Published var dataEvents: [EventList] = []
     @Published var dataEventDateRange: [EventDateRangeList] = []
     
@@ -155,7 +158,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataArrivalMetarTaf: MetarTafDataList?
     @Published var dataDestinationMetarTaf: MetarTafDataList?
     
-    @Published var dataMetarTaf: MetarTafDataList!
+    @Published var dataMetarTaf: [MetarTafDataList] = []
     @Published var existDataMetarTaf: Bool = false
     
     // For Altn Taf
@@ -204,6 +207,7 @@ class CoreDataModelState: ObservableObject {
     @Published var dataAirportColorMap: [AirportMapColorList] = []
     @Published var dataTrafficMap: [TrafficMapList] = []
     @Published var dataAabbaMap = [AabbaMapList]()
+    @Published var dataRouteMap = [MapRouteList]()
     
     // For Logbook
     @Published var dataLogbookLimitation = [LogbookLimitationList]()
@@ -235,6 +239,11 @@ class CoreDataModelState: ObservableObject {
     @Published var isRecencyLoading = false
     @Published var isRecencyExpiryLoading = false
     
+    
+    // For Signature
+    @Published var dataSignature: SignatureList?
+    
+    
     let dateFormatter = DateFormatter()
     
     init() {
@@ -250,51 +259,71 @@ class CoreDataModelState: ObservableObject {
             self.loadingInit = true
             Task {
                 async let calendarService = remoteService.getCalendarData()
-//                async let flightPlanService = remoteService.getFlightPlanDataV3()
+                async let flightPlanService = remoteService.getFlightPlanDataV3()
                 async let logbookService = remoteService.getLogbookData()
                 async let limitationService = remoteService.getLimitationData()
                 async let recencyService = remoteService.getRecencyData()
                 
                 //array handle call API parallel
-//                let services = await [calendarService, logbookService, limitationService, recencyService, flightPlanService]
-                let services = await [calendarService, logbookService, limitationService, recencyService]
+                let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
 
                 
                 DispatchQueue.main.async {
                     //For calendar
-                    if let dataDateRange = (services[0] as? ICalendarResponse)?.COP_date_ranges, dataDateRange.count > 0 {
-                        
+                    if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
                         self.initDataEventDateRange(dataDateRange)
                     }
                     
-                    if let events = (services[0] as? ICalendarResponse)?.events, events.count > 0 {
+                    if let events = responseCalendar?.events, events.count > 0 {
                         self.initDataEvent(events)
                     }
                     
                     // Init Logbook
-                    if let logbookEntry = (services[1] as? ILogbookJson)?.logbook_entry {
+                    if let logbookEntry = responseLogbook?.logbook_data {
                         self.initDataLogbookEntries(logbookEntry)
                     }
                     
-                    if let limitationData = (services[2] as? ILimitationJson)?.limitation_data {
+                    if let limitationData = responseLimitation?.limitation_data {
                         self.initDataLogbookLimitation(limitationData)
                     }
                     
-                    if let responseRecency = (services[3] as? IRecencyJson) {
+                    if let responseRecency = responseRecency {
                         // Init data recency
                         self.initDataRecency(responseRecency.recency_data)
 
                         self.initDataRecencyExpiry(responseRecency.expiry_data)
                     }
                     
-//                    if let notes = (services[4] as? FlightDataV30Json)?.notes, notes.count > 0 {
-//                        self.initDateNoteList(notes)
-//                    }
-//
-//                    if let colourAirport = (services[4] as? FlightDataV30Json)?.colour_airport, colourAirport.count > 0 {
-//                        self.initDataAirportColor(colourAirport)
-//                    }
+                    // For Flight Plan
+                    if let notes = responseFlightPlan?.notes, notes.count > 0 {
+                        self.initDataNoteList(notes)
+                    }
 
+                    if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
+                        self.initDataAirportColor(colourAirport)
+                    }
+                    
+                    if let route = responseFlightPlan?.route, route.count > 0 {
+                        self.initDataRouteMap(route)
+                    }
+                    
+                    if let notam = responseFlightPlan?.notam, notam.count > 0 {
+                        self.initDataFlightNotams(notam)
+                    }
+                    
+                    if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
+                        self.initDataFlightMetarTaf(metarTaf)
+                    }
+                    
+                    if let aabbaNotes = responseFlightPlan?.aabba_notes {
+                        self.initDataMapAabbaNotes(aabbaNotes)
+                    }
+                    
+                    if let flightOverview = responseFlightPlan?.flight_overview {
+                        self.initDataFlightOverview(flightOverview)
+                    }
+                    
+                    self.isBoardingCompleted = ""
                     
                     self.loadingInit = false
                     print("Fetch data")
@@ -304,35 +333,39 @@ class CoreDataModelState: ObservableObject {
     }
     
     @MainActor
-    func checkAndSyncOrPostData() async {
-        Task {
-            self.dataEvents = self.readEvents()
-            self.dataEventDateRange = self.readEventDateRange()
-            self.dataLogbookEntries = readDataLogbookEntries()
-            self.dataLogbookLimitation = readDataLogbookLimitation()
-            self.dataRecency = readDataRecency()
-            self.dataRecencyExpiry = readDataRecencyExpiry()
-            
-            async let serviceEvent = getOrPostEvent()
-            
-            if self.dataLogbookEntries.count > 0 {
-                // Post Logbook
-            }
-            
-            if self.dataLogbookLimitation.count > 0 {
-                // Post Logbook
-            }
-            
-            if self.dataRecency.count > 0 {
-                // Post data recency
-            }
-            
-            if self.dataRecencyExpiry.count > 0 {
-                // Post data recency expiry
-            }
-            
-            let _ = await [serviceEvent]
-        }
+    func checkAndSyncOrPostData() async -> [Any] {
+        self.dataEvents = self.readEvents()
+        self.dataEventDateRange = self.readEventDateRange()
+        self.dataLogbookEntries = readDataLogbookEntries()
+        self.dataLogbookLimitation = readDataLogbookLimitation()
+        self.dataRecency = readDataRecency()
+        self.dataRecencyExpiry = readDataRecencyExpiry()
+        // For Flight Overview
+        // NoteList
+        self.dataNoteList = self.readNoteList()
+        
+        self.dataAirportColorMap = readDataAirportMapColorList()
+        
+        self.dataRouteMap = readDataRouteMapList()
+        
+        self.dataNotams = readDataNotamsList()
+        
+        self.dataMetarTaf = readDataMetarTafList()
+        
+        self.dataNoteAabba = readDataNoteAabbaPostList("")
+        self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("preflight")
+        self.dataNoteAabbaDeparture = readDataNoteAabbaPostList("departure")
+        self.dataNoteAabbaEnroute = readDataNoteAabbaPostList("enroute")
+        self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
+        self.dataFlightOverview = readFlightOverview()
+        
+        async let eventService = getOrPostEvent()
+        async let logbookService = getOrPostLogbookEntries()
+        async let limitationService = getOrPostLogbookLimitation()
+        async let recencyService = getOrPostRecency()
+        async let flightPlanService = getOrPostFlightPlan()
+        
+        return await [eventService, logbookService, limitationService, recencyService, flightPlanService]
     }
     
     func syncDataMetarTaf() async {
@@ -361,13 +394,14 @@ class CoreDataModelState: ObservableObject {
             self.arrivalRefArray = self.read("arrivalref")
             self.scratchPadArray = self.readScratchPad()
             self.dataFPEnroute = self.readEnrouteList()
-            //        readFlightPlan()
+            
             self.readSummaryInfo()
             self.dataWaypointMap = self.readDataWaypontMapList()
             self.dataAirportMap = self.readDataAirportMapList()
             self.dataAirportColorMap = self.readDataAirportMapColorList()
             self.dataTrafficMap = self.readDataTrafficMapList()
             self.dataAabbaMap = self.readDataAabbaMapList()
+            self.dataRouteMap = self.readDataRouteMapList()
             
             self.dataLogbookEntries = self.readDataLogbookEntries()
             self.dataLogbookLimitation = self.readDataLogbookLimitation()
@@ -430,7 +464,7 @@ class CoreDataModelState: ObservableObject {
             self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
             self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
             
-            self.readDataMetarTafList()
+            self.dataMetarTaf = self.readDataMetarTafList()
             self.dataAltnTaf = self.readDataAltnTafList()
             // For Fuel
             self.readProjDelays()
@@ -449,20 +483,26 @@ class CoreDataModelState: ObservableObject {
             self.dataEvents = self.readEvents()
             self.dataEventCompleted = self.readEventsByStatus(status: "2")
             self.dataEventUpcoming = self.readEventsByStatus(status: "5")
+            
+            // For Overview
+            self.dataFlightOverview = self.readFlightOverview()
+            
+            // For signature
+            self.dataSignature = self.readSignature()
         }
     }
     
     // For V3.0
     
-    func getOrPostEvent() async {
+    func getOrPostEvent() async -> Bool {
         if dataEvents.count > 0 {
             var payloadEvent: [Any] = []
             var payloadEventDateRange: [Any] = []
             
             for item in dataEvents {
                 payloadEvent.append([
-                    "UUID": item.id ?? "",
-                    "status": item.status,
+                    "UUID": UUID().uuidString,
+                    "status": "\(item.status)",
                     "startDate": item.unwrappedStartDate,
                     "endDate": item.unwrappedEndDate,
                     "name": item.unwrappedName,
@@ -486,7 +526,7 @@ class CoreDataModelState: ObservableObject {
                 "COP_date_ranges": payloadEventDateRange
             ]
             
-            await remoteService.postCalendarData(payload)
+            return await remoteService.postCalendarData(payload)
         } else {
             // Get event data
             let calendarService = await remoteService.getCalendarData()
@@ -498,6 +538,435 @@ class CoreDataModelState: ObservableObject {
             if let events = calendarService?.events, events.count > 0 {
                 self.initDataEvent(events)
             }
+            print("=======get event=====")
+            return true
+        }
+    }
+    
+//    func postLogbookEntries() async -> Bool {
+//        
+//    }
+    
+    func getOrPostLogbookEntries() async -> Bool {
+        if dataLogbookEntries.count > 0 {
+            var payloadLogbook: [Any] = []
+            
+            for item in dataLogbookEntries {
+                payloadLogbook.append([
+                    "log_id": item.unwrappedLogId,
+                    "date": item.unwrappedDate,
+                    "aircraft_category": item.unwrappedAircraftCategory,
+                    "aircraft_type": item.unwrappedAircraftType,
+                    "aircraft": item.unwrappedAircraft,
+                    "departure": item.unwrappedDeparture,
+                    "destination": item.unwrappedDeparture,
+                    "pic_day": item.unwrappedPicDay,
+                    "pic_u_us_day": item.unwrappedPicUUsDay,
+                    "p1_day": item.unwrappedP1Day,
+                    "p2_day": item.unwrappedP2Day,
+                    "pic_night": item.unwrappedPicNight,
+                    "pic_u_us_night": item.unwrappedPicUUsNight,
+                    "p1_night": item.unwrappedP1Night,
+                    "p2_night": item.unwrappedP2Night,
+                    "instr": item.unwrappedInstr,
+                    "exam": item.unwrappedAircraft,
+                    "comments": item.unwrappedComments,
+                    "licence_number": dataSignature?.licenseNumber,
+                    "signature_base64dataurl": dataSignature?.imageString
+                ])
+            }
+            
+            let payload: [String: Any] = [
+                "user_id": "abc123",
+                "logbook_data": payloadLogbook,
+            ]
+            
+            print("=======post logbook=====")
+            return await remoteService.postLogbookData(payload)
+        } else {
+            let logbookService = await remoteService.getLogbookData()
+            
+            if let logbookEntry = logbookService?.logbook_data, logbookEntry.count > 0 {
+                self.initDataLogbookEntries(logbookEntry)
+            }
+            print("=======get logbook=====")
+            return true
+        }
+    }
+    
+    func getOrPostLogbookLimitation() async -> Bool {
+        if dataLogbookLimitation.count > 0 {
+            var payloadLimitation = [Any]()
+            
+            for item in dataLogbookLimitation {
+                payloadLimitation.append([
+                    "id": "\(item.id ?? UUID())",
+                    "limitation_type": item.unwrappedType,
+                    "limitation_requirement": item.unwrappedRequirement,
+                    "limitation_limit": item.unwrappedLimit,
+                    "limitation_start": item.unwrappedStart,
+                    "limitation_end": item.unwrappedEnd,
+                ] as [String : Any])
+            }
+            
+            let payload: [String: Any] = [
+                "user_id": "abc123",
+                "limitation_data": payloadLimitation,
+            ]
+            
+            print("=======post limitation=====")
+            return await remoteService.postLimitationData(payload)
+            
+        } else {
+            let limitationService = await remoteService.getLimitationData()
+            
+            if let limitationEntry = limitationService?.limitation_data, limitationEntry.count > 0 {
+                self.initDataLogbookLimitation(limitationEntry)
+            }
+            print("=======get limitation=====")
+            
+            return true
+        }
+    }
+    
+    func getOrPostRecency() async -> Bool {
+        if dataRecency.count > 0 {
+            var payloadRecency: [Any] = []
+            var payloadExpiry: [Any] = []
+            let payloadVisa: [Any] = []
+            
+            for item in dataRecency {
+                payloadRecency.append([
+                    "id": "\(item.id ?? UUID())",
+                    "recency_type": item.unwrappedType,
+                    "recency_requirement": item.unwrappedRequirement,
+                    "recency_limit": item.unwrappedLimit
+                ] as [String : Any])
+            }
+            
+            for item in dataRecencyExpiry {
+                payloadExpiry.append([
+                    "id": "\(item.id ?? UUID())",
+                    "medical": "",
+                    "sep": "",
+                    "base_check": "",
+                    "line_check": "",
+                    "instructor_rating": "",
+                    "examiner_rating": "",
+                    "passport": ""
+                ] as [String : Any])
+            }
+            
+            let payload: [String: Any] = [
+                "user_id": "abc123",
+                "recency_data": payloadRecency,
+                "expiry_data": payloadExpiry,
+//                "visa_data": [
+//                    {
+//                        "id": "fdf08e21-ecc1-4b3f-bc67-56e2ec17f165",
+//                        "visa": "RU",
+//                        "expiry": "2024-02-29"
+//                    }
+//                ]
+            ]
+            
+            print("=======post recency=====")
+            
+            return await remoteService.postRecencyData(payload)
+        } else {
+            let recencyService = await remoteService.getRecencyData()
+            
+            if let recencyData = recencyService?.recency_data, recencyData.count > 0 {
+                self.initDataRecency(recencyData)
+            }
+            
+            if let expiryData = recencyService?.expiry_data, expiryData.count > 0 {
+                self.initDataRecencyExpiry(expiryData)
+            }
+            print("=======get recency=====")
+            
+            return true
+        }
+    }
+    
+    func getOrPostFlightPlan() async -> Bool {
+        if dataRouteMap.count > 0 {
+            let payloadOverview: [String: String] = [
+                "callsign": dataFlightOverview?.callsign ?? "",
+                "model": dataFlightOverview?.model ?? "",
+                "aircraft": dataFlightOverview?.aircraft ?? "",
+                "dep": dataFlightOverview?.dep ?? "",
+                "dest": dataFlightOverview?.dest ?? "",
+                "pob": dataFlightOverview?.pob ?? "",
+                "std": dataFlightOverview?.std ?? "",
+                "sta": dataFlightOverview?.sta ?? "",
+                "time_diff_dep": dataFlightOverview?.timeDiffDep ?? "",
+                "time_diff_arr": dataFlightOverview?.timeDiffArr ?? "",
+                "blockTime": dataFlightOverview?.blockTime ?? "",
+                "flightTime": dataFlightOverview?.flightTime ?? "",
+                "blockTime_FlightTime": dataFlightOverview?.blockTimeFlightTime ?? "",
+                "chockOff": dataFlightOverview?.chockOff ?? "",
+                "ETA": dataFlightOverview?.eta ?? "",
+                "chockOn": dataFlightOverview?.chockOn ?? "",
+                "day": dataFlightOverview?.day ?? "",
+                "night": dataFlightOverview?.night ?? "",
+                "totalTime": dataFlightOverview?.totalTime ?? "",
+                "password": dataFlightOverview?.password ?? "",
+                "CAName": dataFlightOverview?.caName ?? "",
+                "CAPicker": dataFlightOverview?.caPicker ?? "",
+                "FOName": dataFlightOverview?.f0Name ?? "",
+                "FOPicker": dataFlightOverview?.f0Picker ?? ""
+            ]
+            
+            var payloadRoute: [Any] = []
+            
+            if dataRouteMap.count > 0 {
+                for item in dataRouteMap {
+                    payloadRoute.append([
+                        "lat": item.latitude,
+                        "long": item.longitude,
+                        "name": item.name
+                    ])
+                }
+            }
+            
+            var payloadColorMap: [Any] = []
+            if dataAirportColorMap.count > 0 {
+                for item in dataAirportColorMap {
+                    payloadColorMap.append([
+                        "airportID": item.unwrappedAirportId,
+                        "colour": item.unwrappedColour,
+                        "lat": item.unwrappedLatitude,
+                        "long": item.unwrappedLongitude,
+                        "metar": item.unwrappedMetar,
+                        "notams": item.unwrappedNotams,
+                        "selection": item.unwrappedSelection,
+                        "taf": item.unwrappedTaf
+                    ])
+                }
+            }
+            
+            var payloadNotams: [String: [Any]] = [:]
+            if dataNotams.count > 0 {
+                for item in dataNotams {
+                    var type = "preflight"
+                    
+                    if item.unwrappedType == "arrNotams" {
+                        type = "arrival"
+                    } else if item.unwrappedType == "depNotams" {
+                        type = "departure"
+                    } else if item.unwrappedType == "enrNotams" {
+                        type = "enroute"
+                    }
+                    
+                    if let itemAirport = item.airport {
+                        payloadNotams[itemAirport]?.append([
+                            "date": item.unwrappedDate,
+                            "id": item.id,
+                            "isChecked": item.isChecked,
+                            "notam": item.unwrappedNotam,
+                            "rank": item.unwrappedRank,
+                            "type": type,
+                            "category": item.unwrappedCategory
+                        ] as [String : Any])
+                    }
+                }
+            }
+            
+            var payloadMetarTaf: [String: [Any]] = [:]
+            if self.dataMetarTaf.count > 0 {
+                for item in dataMetarTaf {
+                    var type = "departure"
+                    
+                    if item.unwrappedType == "arrMetarTaf" {
+                        type = "arrival"
+                    } else if item.unwrappedType == "enrMetarTaf" {
+                        type = "enroute_alternates"
+                    } else if item.unwrappedType == "altnMetarTaf" {
+                        type = "destination_alternates"
+                    }
+                    
+                    payloadMetarTaf[type]?.append([
+                        "airportText": item.unwrappedAirport,
+                        "metar": item.unwrappedMetar,
+                        "taf": item.unwrappedTaf
+                    ])
+                }
+            }
+            
+            var payloadNoteList: [Any] = []
+            if dataNoteList.count > 0 {
+                for item in dataNoteList {
+                    var payloadTagList = [String]()
+                    
+                    if let tags = item.tags?.allObjects as? [TagList] {
+                        for tag in tags {
+                            payloadTagList.append(tag.name)
+                        }
+                    }
+                    
+                    payloadNoteList.append([
+                        "isDefault": item.isDefault,
+                        "name": item.unwrappedName,
+                        "createdAt": item.unwrappedCreatedAt,
+                        "type": item.unwrappedType,
+                        "includeCrew": item.includeCrew,
+                        "canDelete": item.canDelete,
+                        "fromParent": item.fromParent,
+                        "parentId": item.parentId ?? UUID().uuidString,
+                        "tags": payloadTagList,
+                        "favourite": item.isDefault
+                    ] as [String : Any])
+                }
+            }
+            
+            var payloadAabbaNoteList = [String: [Any]]()
+            if dataNoteAabba.count > 0 {
+                for item in dataNoteAabba {
+                    var payloadAabbaPostList: [Any] = []
+                    
+                    if let posts = item.posts?.allObjects as? [NotePostList], posts.count > 0 {
+                        for post in posts {
+                            var payloadAabbaCommentList: [Any] = []
+                            
+                            if let comments = post.comments?.allObjects as? [NoteCommentList], comments.count > 0 {
+                                for comment in comments {
+                                    payloadAabbaCommentList.append([
+                                        "comment_id": comment.unwrappedCommentId,
+                                        "post_id": comment.unwrappedPostId,
+                                        "user_id": comment.unwrappedUserId,
+                                        "comment_date": comment.unwrappedCommentDate,
+                                        "comment_text": comment.unwrappedCommentText,
+                                        "username": comment.unwrappedUserName
+                                    ])
+                                }
+                            }
+                            
+                            payloadAabbaPostList.append([
+                                "post_id": post.postId ?? "",
+                                "user_id": post.userId ?? "",
+                                "post_date": post.unwrappedPostDate,
+                                "post_title": post.unwrappedPostTitle,
+                                "post_text": post.unwrappedPostText,
+                                "upvote_count": post.unwrappedUpvoteCount,
+                                "comment_count": post.unwrappedCommentCount,
+                                "category": post.unwrappedCategory,
+                                "comments": payloadAabbaCommentList,
+                                "username": post.unwrappedUserName,
+                                "favourite": post.favourite,
+                                "blue": post.blue,
+                                "voted": post.voted
+                            ] as [String : Any])
+                        }
+                    }
+                    
+                    payloadAabbaNoteList[item.unwrappedType]?.append([
+                        "name": item.unwrappedName,
+                        "lat": item.unwrappedLatitude,
+                        "long": item.unwrappedLongitude,
+                        "post_count": item.unwrappedPostCount,
+                        "posts": payloadAabbaPostList
+                    ] as [String : Any])
+                    
+                }
+            }
+            
+            var payloadMapList: [Any] = []
+            if dataAabbaMap.count > 0 {
+                for item in dataAabbaMap {
+                    var payloadMapPostList: [Any] = []
+                    
+                    if let posts = item.posts?.allObjects as? [AabbaPostList], posts.count > 0 {
+                        for post in posts {
+                            var payloadMapCommentList: [Any] = []
+                            
+                            if let comments = post.comments?.allObjects as? [AabbaCommentList], comments.count > 0 {
+                                for comment in comments {
+                                    payloadMapCommentList.append([
+                                        "comment_id": comment.unwrappedCommentId,
+                                        "post_id": comment.unwrappedPostId,
+                                        "user_id": comment.unwrappedUserId,
+                                        "comment_date": comment.unwrappedCommentDate,
+                                        "comment_text": comment.unwrappedCommentText,
+                                        "username": comment.unwrappedUserName
+                                    ])
+                                }
+                            }
+                            
+                            payloadMapPostList.append([
+                                "post_id": post.postId ?? "",
+                                "user_id": post.userId ?? "",
+                                "post_date": post.postDate ?? "",
+                                "post_title": post.postTitle ?? "",
+                                "post_text": post.postText ?? "",
+                                "upvote_count": post.upvoteCount,
+                                "comment_count": post.commentCount ?? "0",
+                                "category": post.category ?? "",
+                                "comments": payloadMapCommentList,
+                                "username": post.userName ?? "",
+                                "voted": post.voted
+                            ] as [String : Any])
+                        }
+                    }
+                        
+                    payloadMapList.append([
+                        "name": item.unwrappedName,
+                        "lat": item.unwrappedLatitude,
+                        "long": item.unwrappedLongitude,
+                        "post_count": item.unwrappedPostCount,
+                        "posts": payloadMapPostList
+                    ] as [String : Any])
+                }
+            }
+            
+            let payload: [String: Any] = [
+                "status": "completed",
+                "flight_overview": payloadOverview,
+                "route": payloadRoute,
+                "colour_airport": payloadColorMap,
+                "notam": payloadNotams,
+                "metar_taf": payloadMetarTaf,
+                "notes": payloadNoteList,
+                "aabba_notes": payloadAabbaNoteList,
+                "aabba_map": payloadMapList
+            ]
+            
+            print("=======post flight plan=====")
+            
+            return await remoteService.postFlightPlanDataV3(payload)
+        } else {
+            let responseFlightPlan = await remoteService.getFlightPlanDataV3()
+            
+            if let notes = responseFlightPlan?.notes, notes.count > 0 {
+                self.initDataNoteList(notes)
+            }
+
+            if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
+                self.initDataAirportColor(colourAirport)
+            }
+            
+            if let route = responseFlightPlan?.route, route.count > 0 {
+                self.initDataRouteMap(route)
+            }
+            
+            if let notam = responseFlightPlan?.notam, notam.count > 0 {
+                self.initDataFlightNotams(notam)
+            }
+            
+            if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
+                self.initDataFlightMetarTaf(metarTaf)
+            }
+            
+            if let aabbaNotes = responseFlightPlan?.aabba_notes {
+                self.initDataMapAabbaNotes(aabbaNotes)
+            }
+            
+            if let flightOverview = responseFlightPlan?.flight_overview {
+                self.initDataFlightOverview(flightOverview)
+            }
+            
+            print("=======get flight plan=====")
+            return true
         }
     }
     
@@ -609,7 +1078,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDateNoteList(_ notes: [NotesV30Json]) {
+    func initDataNoteList(_ notes: [NotesV30Json]) {
         if notes.count > 0 {
             for item in notes {
                 var tags = [TagList]()
@@ -647,6 +1116,16 @@ class CoreDataModelState: ObservableObject {
                     }
                 }
             }
+            
+            self.readNoteListIncludeCrew()
+            self.preflightArray = self.read("preflight")
+            self.departureArray = self.read("departure")
+            self.enrouteArray = self.read("enroute")
+            self.arrivalArray = self.read("arrival")
+            self.preflightRefArray = self.read("preflightref")
+            self.departureRefArray = self.read("departureref")
+            self.enrouteRefArray = self.read("enrouteref")
+            self.arrivalRefArray = self.read("arrivalref")
         }
         
     }
@@ -868,6 +1347,38 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataRouteMap(_ data: [RouteV30Json]) {
+        if data.count > 0 {
+            data.forEach { item in
+                do {
+                    let newObj = MapRouteList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.name = item.name
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved data route map successfully")
+                        } catch {
+                            print("Failed to data route map save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
+                    }
+                } catch {
+                    print("could not unarchive array: \(error)")
+                }
+                
+            }
+            
+            self.dataRouteMap = readDataRouteMapList()
+        }
+    }
+    
     func initDataAirportColor(_ data: [IAirportColor]) {
 //        let depAirport = "VTBS"
 //        let arrAirport = "WSSS"
@@ -965,6 +1476,47 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func initDataFlightOverview(_ data: FlightOverviewV30Json) {
+        let newObj = FlightOverviewList(context: self.service.container.viewContext)
+        newObj.id = UUID()
+        newObj.caName = data.CAName
+        newObj.caPicker = data.CAPicker
+        newObj.eta = data.ETA
+        newObj.f0Name = data.FOName
+        newObj.f0Picker = data.FOPicker
+        newObj.aircraft = data.aircraft
+        newObj.blockTime = data.blockTime
+        newObj.blockTimeFlightTime = data.blockTime_FlightTime
+        newObj.callsign = data.callsign
+        newObj.chockOff = data.chockOff
+        newObj.chockOn = data.chockOn
+        newObj.day = data.day
+        newObj.dep = data.dep
+        newObj.dest = data.dest
+        newObj.flightTime = data.flightTime
+        newObj.model = data.model
+        newObj.night = data.night
+        newObj.password = data.password
+        newObj.pob = data.pob
+        newObj.sta = data.sta
+        newObj.std = data.std
+        newObj.timeDiffArr = data.time_diff_arr
+        newObj.timeDiffDep = data.time_diff_dep
+        newObj.totalTime = data.totalTime
+        
+        self.service.container.viewContext.performAndWait {
+            do {
+                try self.service.container.viewContext.save()
+                print("saved flight overview successfully")
+            } catch {
+                print("Failed to init flight overview: \(error)")
+            }
+
+        }
+        
+        self.dataFlightOverview = self.readFlightOverview()
+    }
+    
     func initDataAabba(_ data: [IAabbaData]) {
         if data.count > 0 {
             for item in data {
@@ -997,7 +1549,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postDate = post.post_date
                         newPost.postTitle = post.post_title
                         newPost.postText = post.post_text
-                        newPost.upvoteCount = Int32(post.upvote_count)
+                        newPost.upvoteCount = Int32(post.upvote_count) ?? 0
                         newPost.commentCount = post.comment_count
                         newPost.category = post.category
                         newPost.postUpdated = Date()
@@ -1056,7 +1608,9 @@ class CoreDataModelState: ObservableObject {
                 newObj.instr = item.instr
                 newObj.exam = item.exam
                 newObj.comments = item.comments
-                newObj.signature = item.signature
+                newObj.signFileName = item.sign_file_name
+                newObj.signFileUrl = item.sign_file_url
+                newObj.licenseNumber = item.licence_number
                 
                 service.container.viewContext.performAndWait {
                     do {
@@ -1088,6 +1642,10 @@ class CoreDataModelState: ObservableObject {
                 newObj.start = item.limitation_start
                 newObj.end = item.limitation_end
                 newObj.text = item.limitation_text
+                newObj.status = item.limitation_status
+                newObj.colour = item.limitation_colour
+                newObj.periodText = item.limitation_period_text
+                newObj.statusText = item.limitation_status_text
 
                 service.container.viewContext.performAndWait {
                     do {
@@ -1159,12 +1717,28 @@ class CoreDataModelState: ObservableObject {
         self.dataRecencyExpiry = readDataRecencyExpiry()
     }
     
+    func initDataMapAabbaNotes(_ data: [String: [INoteResponse]]) {
+        for row in data {
+            if row.value.count > 0 {
+                if row.key == "preflight" {
+                    self.initDataNoteAabbaPreflight(row.value)
+                } else if row.key == "departure" {
+                    self.initDataNoteAabbaDepature(row.value)
+                } else if row.key == "enroute" {
+                    self.initDataNoteAabbaEnroute(row.value)
+                } else if row.key == "arrival" {
+                    self.initDataNoteAabbaArrival(row.value)
+                }
+            }
+        }
+    }
+    
     func initDataNoteAabbaPreflight(_ data: [INoteResponse]) {
         if data.count > 0 {
             for item in data {
                 var posts = [NotePostList]()
                 
-                if item.post_count > 0 {
+                if (item.post_count as NSString).integerValue > 0 {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
@@ -1197,6 +1771,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.voted = post.voted
                         newPost.type = "preflight"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
@@ -1206,7 +1781,7 @@ class CoreDataModelState: ObservableObject {
                 let newObj = NoteAabbaPostList(context: service.container.viewContext)
 
                 newObj.id = UUID()
-                newObj.postCount = "\(item.post_count)"
+                newObj.postCount = item.post_count
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name
@@ -1235,7 +1810,7 @@ class CoreDataModelState: ObservableObject {
             for item in data {
                 var posts = [NotePostList]()
                 
-                if item.post_count > 0 {
+                if (item.post_count as NSString).integerValue > 0 {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
@@ -1268,6 +1843,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.voted = post.voted
                         newPost.type = "departure"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
@@ -1277,7 +1853,7 @@ class CoreDataModelState: ObservableObject {
                 let newObj = NoteAabbaPostList(context: service.container.viewContext)
 
                 newObj.id = UUID()
-                newObj.postCount = "\(item.post_count)"
+                newObj.postCount = item.post_count
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name
@@ -1297,7 +1873,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
 
-            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("departure")
+            self.dataNoteAabbaDeparture = readDataNoteAabbaPostList("departure")
         }
     }
     
@@ -1306,7 +1882,7 @@ class CoreDataModelState: ObservableObject {
             for item in data {
                 var posts = [NotePostList]()
                 
-                if item.post_count > 0 {
+                if (item.post_count as NSString).integerValue > 0 {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
@@ -1339,6 +1915,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.voted = post.voted
                         newPost.type = "enroute"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
@@ -1348,7 +1925,7 @@ class CoreDataModelState: ObservableObject {
                 let newObj = NoteAabbaPostList(context: service.container.viewContext)
 
                 newObj.id = UUID()
-                newObj.postCount = "\(item.post_count)"
+                newObj.postCount = item.post_count
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name
@@ -1368,7 +1945,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
 
-            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("enroute")
+            self.dataNoteAabbaEnroute = readDataNoteAabbaPostList("enroute")
         }
     }
     
@@ -1377,7 +1954,7 @@ class CoreDataModelState: ObservableObject {
             for item in data {
                 var posts = [NotePostList]()
                 
-                if item.post_count > 0 {
+                if (item.post_count as NSString).integerValue > 0 {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
@@ -1410,6 +1987,7 @@ class CoreDataModelState: ObservableObject {
                         newPost.postUpdated = Date()
                         newPost.favourite = post.favourite
                         newPost.blue = post.blue
+                        newPost.voted = post.voted
                         newPost.type = "arrival"
                         newPost.comments = NSSet(array: comments)
                         posts.append(newPost)
@@ -1419,7 +1997,7 @@ class CoreDataModelState: ObservableObject {
                 let newObj = NoteAabbaPostList(context: service.container.viewContext)
 
                 newObj.id = UUID()
-                newObj.postCount = "\(item.post_count)"
+                newObj.postCount = item.post_count
                 newObj.latitude = item.lat
                 newObj.longitude = item.long
                 newObj.name = item.name
@@ -1439,7 +2017,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
 
-            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("arrival")
+            self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
         }
     }
     
@@ -1695,6 +2273,93 @@ class CoreDataModelState: ObservableObject {
 
     }
     
+    func initDataFlightNotams(_ data: [String: [NotamV30Json]]) {
+        if data.count > 0 {
+            for row in data {
+                if row.value.count > 0 {
+                    row.value.forEach { item in
+                        let newObj = NotamsDataList(context: self.service.container.viewContext)
+                        newObj.id = UUID()
+                        
+                        if item.type == "departure" {
+                            newObj.type = "depNotams"
+                        } else if item.type == "arrival" {
+                            newObj.type = "arrNotams"
+                        } else if item.type == "enroute" {
+                            newObj.type = "enrNotams"
+                        } else {
+                            newObj.type = "altnNotams"
+                        }
+                        
+                        newObj.airport = row.key
+                        newObj.notam = item.notam
+                        newObj.date = item.date
+                        newObj.rank = item.rank
+                        newObj.isChecked = item.isChecked
+                        newObj.category = item.category
+                        
+                        self.service.container.viewContext.performAndWait {
+                            do {
+                                try self.service.container.viewContext.save()
+                                print("saved notams successfully")
+                            } catch {
+                                print("Failed to Notams depNotams save: \(error)")
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            
+            self.dataDepartureNotamsRef = self.readDataNotamsByType("depNotams")
+            self.dataEnrouteNotamsRef = self.readDataNotamsByType("enrNotams")
+            self.dataArrivalNotamsRef = self.readDataNotamsByType("arrNotams")
+            self.dataDestinationNotamsRef = self.readDataNotamsByType("destNotams")
+        }
+    }
+    
+    func initDataFlightMetarTaf(_ data: [String: [MetarTafV30Json]]) {
+        if data.count > 0 {
+            for row in data {
+                if row.value.count > 0 {
+                    row.value.forEach { item in
+                        let newObj = MetarTafDataList(context: self.service.container.viewContext)
+                        newObj.id = UUID()
+
+                        if row.key == "departure" {
+                            newObj.type = "depMetarTaf"
+                        } else if row.key == "arrival" {
+                            newObj.type = "arrMetarTaf"
+                        } else if row.key == "enroute_alternates" {
+                            newObj.type = "enrMetarTaf"
+                        } else {
+                            newObj.type = "altnMetarTaf"
+                        }
+
+                        newObj.airport = item.airportText
+                        newObj.std = ""
+                        newObj.metar = item.metar
+                        newObj.taf = item.taf
+
+                        self.service.container.viewContext.performAndWait {
+                            do {
+                                try self.service.container.viewContext.save()
+                                print("saved notams successfully")
+                            } catch {
+                                print("Failed to Notams depNotams save: \(error)")
+                            }
+
+                        }
+                    }
+                }
+            }
+            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
+            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
+            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
+            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
+        }
+    }
+    
     func initDepDataMetarTaf(_ metarTafData: IDepMetarTafWXChild, type: String) {
         do {
             let newObj = MetarTafDataList(context: service.container.viewContext)
@@ -1706,7 +2371,7 @@ class CoreDataModelState: ObservableObject {
             newObj.type = type
             try service.container.viewContext.save()
             existDataMetarTaf = true
-            readDataMetarTafList()
+            self.dataMetarTaf = readDataMetarTafList()
             print("saved Metar Taf successfully")
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -1728,7 +2393,7 @@ class CoreDataModelState: ObservableObject {
             newObj.type = type
             try service.container.viewContext.save()
             existDataMetarTaf = true
-            readDataMetarTafList()
+            self.dataMetarTaf = readDataMetarTafList()
             print("saved Metar Taf successfully")
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -1750,7 +2415,7 @@ class CoreDataModelState: ObservableObject {
             newObj.type = type
             try service.container.viewContext.save()
             existDataMetarTaf = true
-            readDataMetarTafList()
+            self.dataMetarTaf = readDataMetarTafList()
             print("saved Metar Taf successfully")
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -1961,48 +2626,57 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readFlightPlan() {
+    func readFlightOverview() -> FlightOverviewList? {
+        // create a temp array to save fetched notes
+        var data: FlightOverviewList?
         // initialize the fetch request
-        let request: NSFetchRequest<FlightPlanList> = FlightPlanList.fetchRequest()
+        let request: NSFetchRequest<FlightOverviewList> = FlightOverviewList.fetchRequest()
         // fetch with the request
         do {
-            let response: [FlightPlanList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                if let item = response.first {
-                    dataFlightPlan = item
-                }
-            } else {
-                let newPlanList = FlightPlanList(context: service.container.viewContext)
-                newPlanList.flightInfoPob = ""
-                newPlanList.perActualZFW = 0
-                newPlanList.perActualTOW = 0
-                newPlanList.perActualLDW = 0
-                newPlanList.fuelArrivalDelayRemark = ""
-                newPlanList.fuelAdditionalTaxiRemark = ""
-                newPlanList.fuelFlightLevelRemark = ""
-                newPlanList.fuelTrackShorteningRemark = ""
-                newPlanList.fuelEnrouteWeatherRemark = ""
-                newPlanList.fuelReciprocalRemark = ""
-                newPlanList.fuelZFWChangeRemark = ""
-                newPlanList.fuelOtherRemark = ""
-                
-                do {
-                    // Persist the data in this managed object context to the underlying store
-                    try service.container.viewContext.save()
-                    print("saved successfully")
-                } catch {
-                    // Something went wrong 😭
-                    print("Failed to save: \(error)")
-                    // Rollback any changes in the managed object context
-                    service.container.viewContext.rollback()
-                    
-                }
+            let response = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                data = response.first
             }
-            existDataFlightPlan = true
         } catch {
-            print("Could not fetch scratch pad from Core Data.")
+            print("Could not fetch flight overview from Core Data.")
         }
+        
+        // return results
+        return data
     }
+    
+    func readDataRouteMapList() -> [MapRouteList] {
+        // create a temp array to save fetched notes
+        var data: [MapRouteList] = []
+        // initialize the fetch request
+        let request: NSFetchRequest<MapRouteList> = MapRouteList.fetchRequest()
+        // fetch with the request
+        do {
+            data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch Map Route from Core Data.")
+        }
+        
+        // return results
+        return data
+    }
+    
+    func readNoteList() -> [NoteList] {
+        // create a temp array to save fetched notes
+        var results: [NoteList] = []
+        // initialize the fetch request
+        let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
+
+        do {
+            results = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch notes from Core Data.")
+        }
+
+        // return results
+        return results
+    }
+    
     
     func read(_ target: String = "preflight", predicateFormat: String? = "type = %@", fetchLimit: Int? = nil) -> [NoteList] {
         // create a temp array to save fetched notes
@@ -2586,19 +3260,21 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readDataMetarTafList() {
+    func readDataMetarTafList() -> [MetarTafDataList] {
+        var data: [MetarTafDataList] = []
+        
         let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
         do {
             let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
-                if let item = response.first {
-                    dataMetarTaf = item
-                    existDataMetarTaf = true
-                }
+                data = response
+                existDataMetarTaf = true
             }
         } catch {
             print("Could not fetch notams from Core Data.")
         }
+        
+        return data
     }
     
     func readDataAltnTafList() -> [AltnTafDataList] {
@@ -2727,7 +3403,7 @@ class CoreDataModelState: ObservableObject {
         let request: NSFetchRequest<NoteAabbaPostList> = NoteAabbaPostList.fetchRequest()
         
         // define filter and/or limit if needed
-        if predicateFormat != nil {
+        if target != "" {
             request.predicate = NSPredicate(format: "type == %@", target)
         }
         
@@ -3351,6 +4027,19 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
+    func readSignature() -> SignatureList? {
+        let request: NSFetchRequest<SignatureList> = SignatureList.fetchRequest()
+        do {
+            let response: [SignatureList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                return response.first
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        return nil
+    }
+    
     func initFlightLevel(_ data: IFlightLevelModel) {
         do {
             let newObject = FuelFlightLevelList(context: self.service.container.viewContext)
@@ -3524,149 +4213,149 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func updateFlightPlan() {
-        Task {
-            // do your job here
-            
-            let summaryPageData = [
-                "pob": dataSummaryInfo.pob ?? "",
-                "perActualZFW": dataFlightPlan?.perActualZFW ?? "",
-                "perActualTOW": dataFlightPlan?.perActualTOW ?? "",
-                "perActualLDW": dataFlightPlan?.perActualLDW ?? "",
-                "includedArrDelays": dataFuelExtra.includedArrDelays,
-                "includedFlightLevel": dataFuelExtra.includedFlightLevel,
-                "includedEnrWx": dataFuelExtra.includedEnrWx,
-                "includedReciprocalRwy": dataFuelExtra.includedReciprocalRwy,
-                "includedTaxi": dataFuelExtra.includedTaxi,
-                "includedTrackShortening": dataFuelExtra.includedTrackShortening,
-                "includedZFWchange": dataFuelExtra.includedZFWchange,
-                "includedOthers": dataFuelExtra.includedOthers,
-                "selectedArrDelays": dataFuelExtra.selectedArrDelays,
-                "selectedTaxi": dataFuelExtra.selectedTaxi,
-                "selectedTrackShortening": dataFuelExtra.selectedTrackShortening,
-                "selectedFlightLevel000": dataFuelExtra.selectedFlightLevel000,
-                "selectedFlightLevel00": dataFuelExtra.selectedFlightLevel00,
-                "selectedEnrWx": dataFuelExtra.selectedEnrWx,
-                "selectedReciprocalRwy": dataFuelExtra.selectedReciprocalRwy,
-                "selectedOthers000": dataFuelExtra.selectedOthers000,
-                "selectedOthers00": dataFuelExtra.selectedOthers00,
-                "remarkArrDelays": dataFuelExtra.remarkArrDelays ?? "",
-                "remarkTaxi": dataFuelExtra.remarkTaxi ?? "",
-                "remarkFlightLevel": dataFuelExtra.remarkFlightLevel ?? "",
-                "remarkTrackShortening": dataFuelExtra.remarkTrackShortening,
-                "remarkEnrWx": dataFuelExtra.remarkEnrWx,
-                "remarkReciprocalRwy": dataFuelExtra.remarkReciprocalRwy,
-                "remarkZFWChange": dataFuelExtra.remarkZFWChange,
-                "remarkOthers": dataFuelExtra.remarkOthers
-            ]
-            
-            let departurePageData = [
-                "atis": [
-                    "code": dataDepartureAtis.unwrappedCode,
-                    "time": dataDepartureAtis.unwrappedTime,
-                    "rwy": dataDepartureAtis.unwrappedRwy,
-                    "translvl": dataDepartureAtis.unwrappedRranslvl,
-                    "wind": dataDepartureAtis.unwrappedWind,
-                    "vis": dataDepartureAtis.unwrappedVis,
-                    "wx": dataDepartureAtis.unwrappedWx,
-                    "cloud": dataDepartureAtis.unwrappedCloud,
-                    "temp": dataDepartureAtis.unwrappedTemp,
-                    "dp": dataDepartureAtis.unwrappedDp,
-                    "qnh": dataDepartureAtis.unwrappedQnh,
-                    "remarks": dataDepartureAtis.unwrappedRemarks
-                ],
-                "atc": [
-                    "atcDep": dataDepartureAtc.unwrappedAtcDep,
-                    "atcSQ": dataDepartureAtc.unwrappedAtcSQ,
-                    "atcRte": dataDepartureAtc.unwrappedAtcRte,
-                    "atcFL": dataDepartureAtc.unwrappedAtcFL,
-                    "atcRwy": dataDepartureAtc.unwrappedAtcRwy
-                ],
-                "entries": [
-                    "entOff": dataDepartureEntries.unwrappedEntOff,
-                    "entFuelInTanks": dataDepartureEntries.unwrappedEntFuelInTanks,
-                    "entTaxi": dataDepartureEntries.unwrappedEntTaxi,
-                    "entTakeoff": dataDepartureEntries.unwrappedEntTakeoff
-                ]
-            ]
-            
-            var enroutePageData = []
-            
-            dataFPEnroute.forEach { item in
-                enroutePageData.append([
-                    "Cord": item.unwrappedCord,
-                    "Diff": item.unwrappedDiff,
-                    "Dis": item.unwrappedDis,
-                    "Drm": item.unwrappedDrm,
-                    "Gsp": item.unwrappedGsp,
-                    "Imt": item.unwrappedImt,
-                    "Msa": item.unwrappedMsa,
-                    "Pdn": item.unwrappedPdn,
-                    "Pfl": item.unwrappedPfl,
-                    "Pfrm": item.unwrappedPfrm,
-                    "aWind": item.unwrappedAwind,
-                    "actm": item.unwrappedActm,
-                    "adn": item.unwrappedAdn,
-                    "afl": item.unwrappedAfl,
-                    "afrm": item.unwrappedAfrm,
-                    "ata": item.unwrappedAta,
-                    "eta": item.unwrappedEta,
-                    "fDiff": item.unwrappedFdiff,
-                    "fWind": item.unwrappedFwind,
-                    "oat": item.unwrappedOat,
-                    "posn": item.unwrappedPosn,
-                    "tas": item.unwrappedTas,
-                    "vws": item.unwrappedVws,
-                    "zfrq": item.unwrappedZfrq,
-                    "ztm": item.unwrappedZtm
-                ])
-            }
-            
-            let arrivalPageData = [
-                "atis": [
-                    "code": dataArrivalAtis.unwrappedCode,
-                    "time": dataArrivalAtis.unwrappedTime,
-                    "rwy": dataArrivalAtis.unwrappedRwy,
-                    "translvl": dataArrivalAtis.unwrappedTransLvl,
-                    "wind": dataArrivalAtis.unwrappedWind,
-                    "vis": dataArrivalAtis.unwrappedVis,
-                    "wx": dataArrivalAtis.unwrappedWx,
-                    "cloud": dataArrivalAtis.unwrappedCloud,
-                    "temp": dataArrivalAtis.unwrappedTemp,
-                    "dp": dataArrivalAtis.unwrappedDp,
-                    "qnh": dataArrivalAtis.unwrappedQnh,
-                    "remarks": dataArrivalAtis.unwrappedRemarks
-                ],
-                "atc": [
-                    "atcDest": dataArrivalAtc.unwrappedAtcDest,
-                    "atcRwy": dataArrivalAtc.unwrappedAtcRwy,
-                    "atcArr": dataArrivalAtc.unwrappedAtcArr,
-                    "atcTransLvl": dataArrivalAtc.unwrappedAtcTransLvl
-                ],
-                "entries": [
-                    "entLdg": dataArrivalEntries.unwrappedEntLdg,
-                    "entFuelOnChocks": dataArrivalEntries.unwrappedEntFuelOnChocks,
-                    "entOn": dataArrivalEntries.unwrappedEntOn
-                ]
-            ]
-            
-            let payload = [
-                "company": "Test Company",
-                "fltno": dataSummaryInfo.unwrappedPlanNo,
-                "flightDate": dataSummaryInfo.unwrappedFlightDate,
-                "summaryPageData": summaryPageData,
-                "departurePageData": departurePageData,
-                "enroutePageData": enroutePageData,
-                "arrivalPageData": arrivalPageData
-            ]
-            
-            await self.remoteService.updateFuelData(payload, completion: { success in
-                if(success) {
-                    self.isUpdating = false
-                }
-            })
-        }
-    }
+//    func updateFlightPlan() {
+//        Task {
+//            // do your job here
+//
+//            let summaryPageData = [
+//                "pob": dataSummaryInfo.pob ?? "",
+//                "perActualZFW": dataFlightPlan?.perActualZFW ?? "",
+//                "perActualTOW": dataFlightPlan?.perActualTOW ?? "",
+//                "perActualLDW": dataFlightPlan?.perActualLDW ?? "",
+//                "includedArrDelays": dataFuelExtra.includedArrDelays,
+//                "includedFlightLevel": dataFuelExtra.includedFlightLevel,
+//                "includedEnrWx": dataFuelExtra.includedEnrWx,
+//                "includedReciprocalRwy": dataFuelExtra.includedReciprocalRwy,
+//                "includedTaxi": dataFuelExtra.includedTaxi,
+//                "includedTrackShortening": dataFuelExtra.includedTrackShortening,
+//                "includedZFWchange": dataFuelExtra.includedZFWchange,
+//                "includedOthers": dataFuelExtra.includedOthers,
+//                "selectedArrDelays": dataFuelExtra.selectedArrDelays,
+//                "selectedTaxi": dataFuelExtra.selectedTaxi,
+//                "selectedTrackShortening": dataFuelExtra.selectedTrackShortening,
+//                "selectedFlightLevel000": dataFuelExtra.selectedFlightLevel000,
+//                "selectedFlightLevel00": dataFuelExtra.selectedFlightLevel00,
+//                "selectedEnrWx": dataFuelExtra.selectedEnrWx,
+//                "selectedReciprocalRwy": dataFuelExtra.selectedReciprocalRwy,
+//                "selectedOthers000": dataFuelExtra.selectedOthers000,
+//                "selectedOthers00": dataFuelExtra.selectedOthers00,
+//                "remarkArrDelays": dataFuelExtra.remarkArrDelays ?? "",
+//                "remarkTaxi": dataFuelExtra.remarkTaxi ?? "",
+//                "remarkFlightLevel": dataFuelExtra.remarkFlightLevel ?? "",
+//                "remarkTrackShortening": dataFuelExtra.remarkTrackShortening,
+//                "remarkEnrWx": dataFuelExtra.remarkEnrWx,
+//                "remarkReciprocalRwy": dataFuelExtra.remarkReciprocalRwy,
+//                "remarkZFWChange": dataFuelExtra.remarkZFWChange,
+//                "remarkOthers": dataFuelExtra.remarkOthers
+//            ]
+//
+//            let departurePageData = [
+//                "atis": [
+//                    "code": dataDepartureAtis.unwrappedCode,
+//                    "time": dataDepartureAtis.unwrappedTime,
+//                    "rwy": dataDepartureAtis.unwrappedRwy,
+//                    "translvl": dataDepartureAtis.unwrappedRranslvl,
+//                    "wind": dataDepartureAtis.unwrappedWind,
+//                    "vis": dataDepartureAtis.unwrappedVis,
+//                    "wx": dataDepartureAtis.unwrappedWx,
+//                    "cloud": dataDepartureAtis.unwrappedCloud,
+//                    "temp": dataDepartureAtis.unwrappedTemp,
+//                    "dp": dataDepartureAtis.unwrappedDp,
+//                    "qnh": dataDepartureAtis.unwrappedQnh,
+//                    "remarks": dataDepartureAtis.unwrappedRemarks
+//                ],
+//                "atc": [
+//                    "atcDep": dataDepartureAtc.unwrappedAtcDep,
+//                    "atcSQ": dataDepartureAtc.unwrappedAtcSQ,
+//                    "atcRte": dataDepartureAtc.unwrappedAtcRte,
+//                    "atcFL": dataDepartureAtc.unwrappedAtcFL,
+//                    "atcRwy": dataDepartureAtc.unwrappedAtcRwy
+//                ],
+//                "entries": [
+//                    "entOff": dataDepartureEntries.unwrappedEntOff,
+//                    "entFuelInTanks": dataDepartureEntries.unwrappedEntFuelInTanks,
+//                    "entTaxi": dataDepartureEntries.unwrappedEntTaxi,
+//                    "entTakeoff": dataDepartureEntries.unwrappedEntTakeoff
+//                ]
+//            ]
+//
+//            var enroutePageData = []
+//
+//            dataFPEnroute.forEach { item in
+//                enroutePageData.append([
+//                    "Cord": item.unwrappedCord,
+//                    "Diff": item.unwrappedDiff,
+//                    "Dis": item.unwrappedDis,
+//                    "Drm": item.unwrappedDrm,
+//                    "Gsp": item.unwrappedGsp,
+//                    "Imt": item.unwrappedImt,
+//                    "Msa": item.unwrappedMsa,
+//                    "Pdn": item.unwrappedPdn,
+//                    "Pfl": item.unwrappedPfl,
+//                    "Pfrm": item.unwrappedPfrm,
+//                    "aWind": item.unwrappedAwind,
+//                    "actm": item.unwrappedActm,
+//                    "adn": item.unwrappedAdn,
+//                    "afl": item.unwrappedAfl,
+//                    "afrm": item.unwrappedAfrm,
+//                    "ata": item.unwrappedAta,
+//                    "eta": item.unwrappedEta,
+//                    "fDiff": item.unwrappedFdiff,
+//                    "fWind": item.unwrappedFwind,
+//                    "oat": item.unwrappedOat,
+//                    "posn": item.unwrappedPosn,
+//                    "tas": item.unwrappedTas,
+//                    "vws": item.unwrappedVws,
+//                    "zfrq": item.unwrappedZfrq,
+//                    "ztm": item.unwrappedZtm
+//                ])
+//            }
+//
+//            let arrivalPageData = [
+//                "atis": [
+//                    "code": dataArrivalAtis.unwrappedCode,
+//                    "time": dataArrivalAtis.unwrappedTime,
+//                    "rwy": dataArrivalAtis.unwrappedRwy,
+//                    "translvl": dataArrivalAtis.unwrappedTransLvl,
+//                    "wind": dataArrivalAtis.unwrappedWind,
+//                    "vis": dataArrivalAtis.unwrappedVis,
+//                    "wx": dataArrivalAtis.unwrappedWx,
+//                    "cloud": dataArrivalAtis.unwrappedCloud,
+//                    "temp": dataArrivalAtis.unwrappedTemp,
+//                    "dp": dataArrivalAtis.unwrappedDp,
+//                    "qnh": dataArrivalAtis.unwrappedQnh,
+//                    "remarks": dataArrivalAtis.unwrappedRemarks
+//                ],
+//                "atc": [
+//                    "atcDest": dataArrivalAtc.unwrappedAtcDest,
+//                    "atcRwy": dataArrivalAtc.unwrappedAtcRwy,
+//                    "atcArr": dataArrivalAtc.unwrappedAtcArr,
+//                    "atcTransLvl": dataArrivalAtc.unwrappedAtcTransLvl
+//                ],
+//                "entries": [
+//                    "entLdg": dataArrivalEntries.unwrappedEntLdg,
+//                    "entFuelOnChocks": dataArrivalEntries.unwrappedEntFuelOnChocks,
+//                    "entOn": dataArrivalEntries.unwrappedEntOn
+//                ]
+//            ]
+//
+//            let payload = [
+//                "company": "Test Company",
+//                "fltno": dataSummaryInfo.unwrappedPlanNo,
+//                "flightDate": dataSummaryInfo.unwrappedFlightDate,
+//                "summaryPageData": summaryPageData,
+//                "departurePageData": departurePageData,
+//                "enroutePageData": enroutePageData,
+//                "arrivalPageData": arrivalPageData
+//            ]
+//
+//            await self.remoteService.updateFuelData(payload, completion: { success in
+//                if(success) {
+//                    self.isUpdating = false
+//                }
+//            })
+//        }
+//    }
     
     
     // Update data for Flight Plan Enroute textfield
@@ -4038,7 +4727,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func deleteAllAabbaCommentList() async {
+    func deleteAllMapAabbaCommentList() async {
         let fetchRequest: NSFetchRequest<AabbaCommentList>
         fetchRequest = AabbaCommentList.fetchRequest()
         do {
@@ -4062,7 +4751,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func deleteAllAabbaPostList() async {
+    func deleteAllMapAabbaPostList() async {
         let fetchRequest: NSFetchRequest<AabbaPostList>
         fetchRequest = AabbaPostList.fetchRequest()
         do {
@@ -4086,7 +4775,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func deleteAllAabbMapList() async {
+    func deleteAllMapAabbMapList() async {
         let fetchRequest: NSFetchRequest<AabbaMapList>
         fetchRequest = AabbaMapList.fetchRequest()
         do {
@@ -4107,6 +4796,79 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Failed to Delete Traffic Map update: \(error)")
+        }
+    }
+    
+    // For Aabba Note
+    func deleteAllAabbaNoteCommentList() async {
+        let fetchRequest: NSFetchRequest<NoteCommentList>
+        fetchRequest = NoteCommentList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Aabba Note Comment: \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Aabba Note Comment: \(error)")
+        }
+    }
+    
+    func deleteAllAabbaNotePostList() async {
+        let fetchRequest: NSFetchRequest<NoteAabbaPostList>
+        fetchRequest = NoteAabbaPostList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Note Aabba Post List: \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Note Aabba Post List: \(error)")
+        }
+    }
+    
+    func deleteAllAabbaNoteList() async {
+        let fetchRequest: NSFetchRequest<NotePostList>
+        fetchRequest = NotePostList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Note Post List : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Note Post List: \(error)")
         }
     }
     

@@ -12,6 +12,8 @@ struct SignOffView: View {
     @State private var isSignatureModalPresented = false
     @State private var isSignatureViewModalPresented = false
     @State private var signatureImage: UIImage?
+    @State private var signatureTfLicense = ""
+    @State private var signatureTfComment = ""
     
     var body: some View {
         VStack {
@@ -44,19 +46,19 @@ struct SignOffView: View {
             SignatureView(image: signatureImage)
         }
         .sheet(isPresented: $isSignatureModalPresented) {
-            SignatureModalView(signatureImage: $signatureImage, isSignatureModalPresented: $isSignatureModalPresented)
+            SignatureModalView(signatureImage: $signatureImage, signatureTfLicense: $signatureTfLicense, signatureTfComment: $signatureTfComment, isSignatureModalPresented: $isSignatureModalPresented)
         }
     }
 }
 
 struct SignatureModalView: View {
     @Binding var signatureImage: UIImage?
+    @Binding var signatureTfLicense: String
+    @Binding var signatureTfComment: String
     @State private var isDrawing = false
     @State private var drawing = Drawing()
     @Binding var isSignatureModalPresented: Bool
     @State var temp: UIImage?
-    @State private var tfLicense = ""
-    @State private var tfComment = ""
     
     var body: some View {
             VStack {
@@ -72,8 +74,10 @@ struct SignatureModalView: View {
                     
                     Spacer()
                     Button(action: {
-                        signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(maxWidth: .infinity, maxHeight: .infinity).snapshot()
-                        isSignatureModalPresented = false
+                        if signatureTfLicense != "" && drawing.image != nil {
+                            signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(maxWidth: .infinity, maxHeight: .infinity).snapshot()
+                            isSignatureModalPresented = false
+                        }
                     }) {
                         Text("Done").font(.system(size: 17, weight: .semibold)).foregroundColor(handleBtnColor())
                     }
@@ -89,7 +93,7 @@ struct SignatureModalView: View {
 
                         Divider().padding(.horizontal, -16)
 
-                        TextField("Enter Licence Number", text: $tfLicense)
+                        TextField("Enter Licence Number", text: $signatureTfLicense)
                             .font(.system(size: 15)).frame(maxWidth: .infinity)
                             .padding(.vertical)
                             .frame(height: 55)
@@ -117,7 +121,12 @@ struct SignatureModalView: View {
                         
                         
                         Divider().padding(.horizontal, -16)
-                        
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .roundedCorner(12, corners: [.topLeft, .topRight])
+                        .padding(.horizontal)
+                    
+                    VStack {
                         SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing)
                             .frame(maxWidth: .infinity)
                             .frame(height: 144)
@@ -128,17 +137,19 @@ struct SignatureModalView: View {
                                         geometry.frame(in: .global).maxX < UIScreen.main.bounds.width ? 0.0 : 1.0
                                     )
                             })
-                    }.padding(.horizontal)
+                    }
+                    .padding(.horizontal)
                         .background(Color.white)
-                        .cornerRadius(8)
+                        .roundedCorner(12, corners: [.bottomLeft, .bottomRight])
                         .padding(.horizontal)
+                        .padding(.top, -8)
                     
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Comments (Optional)").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
                         
                         Divider().padding(.horizontal, -16)
                         
-                        TextField("Enter Comments", text: $tfComment)
+                        TextField("Enter Comments", text: $signatureTfComment)
                             .font(.system(size: 15)).frame(maxWidth: .infinity)
                             .padding(.vertical)
                             .frame(height: 55)
@@ -153,7 +164,7 @@ struct SignatureModalView: View {
     }
     
     func handleBtnColor() -> Color {
-        if(tfLicense != "" && drawing.image != nil) {
+        if(signatureTfLicense != "" && drawing.image != nil) {
             return Color.theme.azure
         }
         return Color.theme.philippineGray3

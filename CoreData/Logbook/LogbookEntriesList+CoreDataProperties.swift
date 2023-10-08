@@ -2,7 +2,7 @@
 //  LogbookEntriesList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 22/09/2023.
+//  Created by phuong phan on 07/10/2023.
 //
 //
 
@@ -16,26 +16,28 @@ extension LogbookEntriesList {
         return NSFetchRequest<LogbookEntriesList>(entityName: "LogbookEntries")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var logId: String?
-    @NSManaged public var date: String?
+    @NSManaged public var aircraft: String?
     @NSManaged public var aircraftCategory: String?
     @NSManaged public var aircraftType: String?
-    @NSManaged public var aircraft: String?
+    @NSManaged public var comments: String?
+    @NSManaged public var date: String?
     @NSManaged public var departure: String?
     @NSManaged public var destination: String?
-    @NSManaged public var picDay: String?
-    @NSManaged public var picUUsDay: String?
-    @NSManaged public var p1Day: String?
-    @NSManaged public var p2Day: String?
-    @NSManaged public var picNight: String?
-    @NSManaged public var picUUsNight: String?
-    @NSManaged public var p1Night: String?
-    @NSManaged public var p2Night: String?
-    @NSManaged public var instr: String?
     @NSManaged public var exam: String?
-    @NSManaged public var comments: String?
-    @NSManaged public var signature: String?
+    @NSManaged public var id: UUID?
+    @NSManaged public var instr: String?
+    @NSManaged public var logId: String?
+    @NSManaged public var p1Day: String?
+    @NSManaged public var p1Night: String?
+    @NSManaged public var p2Day: String?
+    @NSManaged public var p2Night: String?
+    @NSManaged public var picDay: String?
+    @NSManaged public var picNight: String?
+    @NSManaged public var picUUsDay: String?
+    @NSManaged public var picUUsNight: String?
+    @NSManaged public var signFileName: String?
+    @NSManaged public var signFileUrl: String?
+    @NSManaged public var licenseNumber: String?
     
     public var unwrappedLogId: String {
         logId ?? ""
@@ -109,8 +111,12 @@ extension LogbookEntriesList {
         comments ?? ""
     }
     
-    public var unwrappedSignature: String {
-        signature ?? ""
+    public var unwrappedSignFileName: String {
+        signFileName ?? ""
+    }
+    
+    public var unwrappedLicenseNumber: String {
+        licenseNumber ?? ""
     }
 }
 

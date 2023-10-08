@@ -228,6 +228,7 @@ struct CompleteYourProfileView: View {
             selectedAirline = ALTN_DROP_DOWN.first ?? ""
             selectedMobile = DataCountryDropdown.first ?? ""
             onboardingModel.dataYourProfile.email = email
+            onboardingModel.dataYourProfile.subscribe = "1"
             onboardingModel.dataYourProfile.user_id = userID
             onboardingModel.dataYourProfile.airline = selectedAirline
             onboardingModel.dataYourProfile.mobile.country = selectedMobile

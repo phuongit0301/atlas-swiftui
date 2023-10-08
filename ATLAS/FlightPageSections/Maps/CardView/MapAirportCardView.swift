@@ -119,58 +119,58 @@ struct MapAirportCardView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack {
-                            NewFlowLayout(alignment: .leading) {
-                                ForEach(coreDataModel.dataMetarTaf.unwrappedMetar.components(separatedBy: " "), id: \.self) { word in
-                                    if redWords.contains(word) {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.red)
-                                    } else if let number = Int(word), number < 3000 {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.red)
-                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.green)
-                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.green)
-                                    } else {
-                                        Text(word).font(.system(size: 17, weight: .regular))
-                                    }
-                                }
-                            }
+//                            NewFlowLayout(alignment: .leading) {
+//                                ForEach(coreDataModel.dataMetarTaf.unwrappedMetar.components(separatedBy: " "), id: \.self) { word in
+//                                    if redWords.contains(word) {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.red)
+//                                    } else if let number = Int(word), number < 3000 {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.red)
+//                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.green)
+//                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.green)
+//                                    } else {
+//                                        Text(word).font(.system(size: 17, weight: .regular))
+//                                    }
+//                                }
+//                            }
                             
                         }.frame(maxWidth: .infinity, alignment: .leading)
                         
                         Divider().padding(.horizontal, -16)
                         
                         HStack {
-                            NewFlowLayout(alignment: .leading) {
-                                ForEach(coreDataModel.dataMetarTaf.unwrappedTaf.components(separatedBy: " "), id: \.self) { word in
-                                    if redWords.contains(word) {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.red)
-                                    } else if let number = Int(word), number < 3000 {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.red)
-                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.green)
-                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
-                                        Text(word)
-                                            .font(.system(size: 17, weight: .regular))
-                                            .foregroundColor(.green)
-                                    } else {
-                                        Text(word).font(.system(size: 17, weight: .regular))
-                                    }
-                                }
-                            }
+//                            NewFlowLayout(alignment: .leading) {
+//                                ForEach(coreDataModel.dataMetarTaf.unwrappedTaf.components(separatedBy: " "), id: \.self) { word in
+//                                    if redWords.contains(word) {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.red)
+//                                    } else if let number = Int(word), number < 3000 {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.red)
+//                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.green)
+//                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+//                                        Text(word)
+//                                            .font(.system(size: 17, weight: .regular))
+//                                            .foregroundColor(.green)
+//                                    } else {
+//                                        Text(word).font(.system(size: 17, weight: .regular))
+//                                    }
+//                                }
+//                            }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                         
                     }

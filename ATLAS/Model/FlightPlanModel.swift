@@ -181,163 +181,6 @@ struct FieldString: View {
     }
 }
 
-struct FieldStringDefaultKB: View {
-    // Read the view model, to store the value of the text field
-    @EnvironmentObject var viewModel: ViewModelSummary
-    @EnvironmentObject var coreDataModel: CoreDataModelState
-    @EnvironmentObject var persistenceController: PersistenceController
-    
-    // Index: where in the dictionary the value will be stored
-    let name: String
-    
-    // Dedicated state var for each field
-    @State var field: String = ""
-    
-    var body: some View {
-        TextField("Enter remarks (optional)", text: $field)
-            .font(.system(size: 15))
-            .onAppear {
-                let item = coreDataModel.dataFuelExtra!
-                
-                switch name {
-                    case "remarkArrDelays":
-                        field = item.unwrappedRemarkArrDelays
-                    case "remarkTaxi":
-                        field = item.unwrappedRemarkTaxi
-                    case "remarkFlightLevel":
-                        field = item.unwrappedRemarkFlightLevel
-                    case "remarkTrackShortening":
-                        field = item.unwrappedRemarkTrackShortening
-                    case "remarkEnrWx":
-                        field = item.unwrappedRemarkEnrWx
-                    case "remarkReciprocalRwy":
-                        field = item.unwrappedRemarkReciprocalRwy
-                    case "remarkZFWChange":
-                        field = item.unwrappedRemarkZFWChange
-                    case "remarkOthers":
-                        field = item.unwrappedRemarkOthers
-                    default:
-                        field = ""
-                }
-            }
-            .onSubmit {
-                var item = coreDataModel.dataFuelExtra!
-                
-                if !coreDataModel.existDataFuelExtra {
-                    item = FuelExtraList(context: persistenceController.container.viewContext)
-                }
-                
-                switch name {
-                case "remarkArrDelays":
-                    item.remarkArrDelays = field
-                case "remarkTaxi":
-                    item.remarkTaxi = field
-                case "remarkFlightLevel":
-                    item.remarkFlightLevel = field
-                case "remarkTrackShortening":
-                    item.remarkTrackShortening = field
-                case "remarkEnrWx":
-                    item.remarkEnrWx = field
-                case "remarkReciprocalRwy":
-                    item.remarkReciprocalRwy = field
-                case "remarkZFWChange":
-                    item.remarkZFWChange = field
-                case "remarkOthers":
-                    item.remarkOthers = field
-                default:
-                    item.remarkArrDelays = field
-                }
-                
-                coreDataModel.save()
-                coreDataModel.readFlightPlan()
-            }
-    }
-}
-
-//struct FieldString: View {
-//    // Read the view model, to store the value of the text field
-//    @EnvironmentObject var viewModel: ViewModelSummary
-//    @EnvironmentObject var coreDataModel: CoreDataModelState
-//    @EnvironmentObject var persistenceController: PersistenceController
-//
-//    // Index: where in the dictionary the value will be stored
-//    let name: String
-//
-//    // Dedicated state var for each field
-//    @State var field: String = ""
-//    @FocusState var focusedTextField: FocusElement?
-//    @Binding var isEditing: Bool
-//    var setFocusToFalse: () -> Void
-//
-//    var body: some View {
-//        TextField("Enter remarks (optional)", text: $field)
-//            .font(.system(size: 15))
-//            .onAppear {
-//                let item = coreDataModel.dataFuelExtra!
-//
-//                switch name {
-//                    case "remarkArrDelays":
-//                        field = item.unwrappedRemarkArrDelays
-//                    case "remarkTaxi":
-//                        field = item.unwrappedRemarkTaxi
-//                    case "remarkFlightLevel":
-//                        field = item.unwrappedRemarkFlightLevel
-//                    case "remarkTrackShortening":
-//                        field = item.unwrappedRemarkTrackShortening
-//                    case "remarkEnrWx":
-//                        field = item.unwrappedRemarkEnrWx
-//                    case "remarkReciprocalRwy":
-//                        field = item.unwrappedRemarkReciprocalRwy
-//                    case "remarkZFWChange":
-//                        field = item.unwrappedRemarkZFWChange
-//                    case "remarkOthers":
-//                        field = item.unwrappedRemarkOthers
-//                    default:
-//                        field = ""
-//                }
-//            }
-//            .focused($focusedTextField, equals: .remarkArrDelays)
-////            .onReceive(Just(focusedTextField)) { newFocused in
-////                print("newFocused========\(newFocused)")
-//////                if newFocused {
-//////                    setFocusToFalse()
-//////                    isEditing = true
-//////                }
-////            }
-//            .onSubmit {
-//                var item = coreDataModel.dataFuelExtra!
-//
-//                if !coreDataModel.existDataFuelExtra {
-//                    item = FuelExtraList(context: persistenceController.container.viewContext)
-//                }
-//
-//                switch name {
-//                case "remarkArrDelays":
-//                    item.remarkArrDelays = field
-//                case "remarkTaxi":
-//                    item.remarkTaxi = field
-//                case "remarkFlightLevel":
-//                    item.remarkFlightLevel = field
-//                case "remarkTrackShortening":
-//                    item.remarkTrackShortening = field
-//                case "remarkEnrWx":
-//                    item.remarkEnrWx = field
-//                case "remarkReciprocalRwy":
-//                    item.remarkReciprocalRwy = field
-//                case "remarkZFWChange":
-//                    item.remarkZFWChange = field
-//                case "remarkOthers":
-//                    item.remarkOthers = field
-//                default:
-//                    item.remarkArrDelays = field
-//                }
-//
-//                coreDataModel.save()
-//                coreDataModel.readFlightPlan()
-//            }
-//    }
-//}
-
 struct CustomField: View {
     // Read the view model, to store the value of the text field
     @EnvironmentObject var viewModel: ViewModelSummary
@@ -570,7 +413,7 @@ struct IAabbaPostData: Codable {
     var post_date: String
     var post_title: String
     var post_text: String
-    var upvote_count: Int
+    var upvote_count: String
     var comment_count: String
     var category: String
     var username: String
@@ -886,7 +729,7 @@ struct FlightOverviewV30Json: Codable {
     let FOPicker: String
     let aircraft: String
     let blockTime: String
-//    let "blockTime-FlightTime": String
+    let blockTime_FlightTime: String
     let callsign: String
     let chockOff: String
     let chockOn: String
@@ -926,7 +769,7 @@ struct NotamV30Json: Codable {
     let category: String
     let date: String
     let id: String
-    let isChecked: String
+    let isChecked: Bool
     let notam: String
     let rank: String
     let type: String
@@ -959,5 +802,5 @@ struct FlightDataV30Json: Codable {
     let notam: [String: [NotamV30Json]]
     let metar_taf: [String: [MetarTafV30Json]]
     let notes: [NotesV30Json]
-    let aabba_notes: [String: [IAabbaData]]
+    let aabba_notes: [String: [INoteResponse]]
 }

@@ -68,7 +68,9 @@ struct ILogbookEntriesData: Decodable {
     var instr: String
     var exam: String
     var comments: String
-    var signature: String
+    var sign_file_name: String
+    var sign_file_url: String
+    var licence_number: String
 }
 
 struct ILogbookLimitationData: Decodable {
@@ -78,11 +80,25 @@ struct ILogbookLimitationData: Decodable {
     var limitation_limit: String
     var limitation_start: String
     var limitation_end: String
+    var limitation_status: String
+    var limitation_colour: String
     var limitation_text: String
+    var limitation_period_text: String
+    var limitation_status_text: String
+}
+
+struct ILogbookExperienceData: Decodable {
+    var model: String
+    var p1: String
+    var p2: String
+    var pic: String
+    var picUs: String
+    var totalTime: String
 }
 
 struct ILogbookJson: Decodable {
-    var logbook_entry: [ILogbookEntriesData]
+    var logbook_data: [ILogbookEntriesData]
+    var experience: [ILogbookExperienceData]
 }
 
 struct ILimitationJson: Decodable {

@@ -203,7 +203,7 @@ struct EntriesSubSectionView: View {
                                                         .frame(alignment: .leading)
                                                         .gridCellColumns(7)
                                                     
-                                                    Text(dataLogbookEntries[index].unwrappedSignature)
+                                                    Text("signature")
                                                         .font(.system(size: 15, weight: .regular))
                                                         .frame(alignment: .leading)
                                                         .gridCellColumns(6)

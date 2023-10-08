@@ -11,6 +11,7 @@ import Firebase
 struct LoginView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @EnvironmentObject var signupModel: SignUpModel
+    @AppStorage("isLogin") var isLogin: String = "0"
     
     @State var step = 1
     @State var email = ""
@@ -111,6 +112,7 @@ struct LoginView: View {
                                 print(authResult.user.uid)
                                 withAnimation {
                                     userID = authResult.user.uid
+                                    isLogin = "1"
                                 }
                             } else {
                                 showEmailNotVerified = true

@@ -47,7 +47,7 @@ let IPreflightTabs = [
     PreflightTab(title: "Notes", screenName: PreflightTabEnumeration.NotesScreen),
 ]
 
-struct INoteCommentResponse: Decodable {
+struct INoteCommentResponse: Codable {
     var comment_id: String
     var post_id: String
     var user_id: String
@@ -56,7 +56,7 @@ struct INoteCommentResponse: Decodable {
     var username: String
 }
 
-struct INotePostResponse: Decodable {
+struct INotePostResponse: Codable {
     var post_id: String
     var user_id: String
     var post_date: String
@@ -67,19 +67,20 @@ struct INotePostResponse: Decodable {
     var category: String
     var comments: [INoteCommentResponse]
     var username: String
+    var voted: Bool
     var favourite: Bool
     var blue: Bool
 }
 
-struct INoteResponse: Decodable {
+struct INoteResponse: Codable {
     var name: String
     var lat: String
     var long: String
-    var post_count: Int
+    var post_count: String
     var posts: [INotePostResponse]
 }
 
-struct INotePostJson: Decodable {
+struct INotePostJson: Codable {
     var departure: [INoteResponse]
     var arrival: [INoteResponse]
     var preflight: [INoteResponse]

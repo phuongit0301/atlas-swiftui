@@ -57,7 +57,7 @@ struct CalendarSectionView: View {
                 }.padding(.horizontal)
                 
                 HStack(spacing: 0) {
-                    CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3) + 64)
+                    CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3))
                     
                     CalendarInformationView()
                 }
@@ -65,7 +65,7 @@ struct CalendarSectionView: View {
             .background(Color.theme.antiFlashWhite)
             .sheet(isPresented: $showModal) {
                 EventModalView(showModal: $showModal)
-            }
+            }.frame(height: proxy.size.height + 200)
         }
     }
 }
