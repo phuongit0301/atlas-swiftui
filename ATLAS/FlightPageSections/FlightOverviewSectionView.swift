@@ -670,10 +670,10 @@ struct FlightOverviewSectionView: View {
                         
                         if isSync {
                             if let dataOverview = coreDataModel.dataFlightOverview {
-                                if selectedFO == SummaryDataDropDown.pic || selectedFO == SummaryDataDropDown.p1us {
+                                if selectedFO == SummaryDataDropDown.pic {
                                     picDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
                                     picNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
-                                } else if selectedFO == SummaryDataDropDown.p1 {
+                                } else if selectedFO == SummaryDataDropDown.p1 || selectedFO == SummaryDataDropDown.p1us {
                                     p1Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
                                     p1Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
                                 } else if selectedFO == SummaryDataDropDown.picus {
@@ -685,10 +685,10 @@ struct FlightOverviewSectionView: View {
                                 }
                             }
                         } else {
-                            if selectedCA == SummaryDataDropDown.pic || selectedCA == SummaryDataDropDown.p1us {
+                            if selectedCA == SummaryDataDropDown.pic {
                                 picDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
                                 picNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
-                            } else if selectedCA == SummaryDataDropDown.p1 {
+                            } else if selectedCA == SummaryDataDropDown.p1 || selectedCA == SummaryDataDropDown.p1us {
                                 p1Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
                                 p1Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
                             } else if selectedCA == SummaryDataDropDown.picus {
@@ -700,7 +700,7 @@ struct FlightOverviewSectionView: View {
                             }
                         }
                         
-                        let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: "", departure: coreDataModel.dataFlightOverview?.unwrappedDep ?? "", destination: coreDataModel.dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: coreDataModel.dataSignature?.unwrappedComment ?? "", sign_file_name: "", sign_file_url: coreDataModel.dataSignature?.unwrappedImageString ?? "", licence_number: coreDataModel.dataSignature?.unwrappedLicenseNumber ?? "")
+                        let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: coreDataModel.dataFlightOverview?.unwrappedAircraft, departure: coreDataModel.dataFlightOverview?.unwrappedDep ?? "", destination: coreDataModel.dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: coreDataModel.dataSignature?.unwrappedComment ?? "", sign_file_name: "", sign_file_url: coreDataModel.dataSignature?.unwrappedImageString ?? "", licence_number: coreDataModel.dataSignature?.unwrappedLicenseNumber ?? "")
                         
                         coreDataModel.initDataLogbookEntries([payload])
                         

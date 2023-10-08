@@ -560,7 +560,7 @@ struct SummarySubSectionView: View {
             
             let payloadMap: [String: Any] = [
                 "depAirport": coreDataModel.dataFlightOverview?.unwrappedDep ?? "",
-                "arrAirport": coreDataModel.dataFlightOverview?.unwrappedAircraft ?? "",
+                "arrAirport": coreDataModel.dataFlightOverview?.unwrappedDest ?? "",
                 "enrAirports": payloadEnrouteMap,
                 "altnAirports": payloadDestinationMap,
                 "route": tfRoute

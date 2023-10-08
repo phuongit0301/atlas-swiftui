@@ -129,7 +129,7 @@ class RemoteService: ObservableObject {
         return nil
     }
     
-    func postUserData(_ parameters: Any) async  {
+    func postUserData(_ parameters: Any, completion: @escaping (_ success: Bool) -> Void) async  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_user_data") else { fatalError("Missing URL") }
         //make request
         var request = URLRequest(url: url)
@@ -137,6 +137,7 @@ class RemoteService: ObservableObject {
         request.httpMethod = "POST"
         
         do {
+            print("parameters=======\(parameters)")
             // Convert the request body to JSON data
             let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
             // Set the request body data
@@ -150,22 +151,20 @@ class RemoteService: ObservableObject {
                 }
                 DispatchQueue.main.async {
                     guard let response = response as? HTTPURLResponse else { return }
-                    print("Tesponse User Data Status ======== \(response.statusCode)")
+                    print("Response User Data Status ======== \(response.statusCode)")
+                    print("Response======== \(response)")
                     if response.statusCode == 200 {
                         print("Update User Data successfully")
-                        return
+                        completion(true)
                     }
                 }
             }
             
             dataTask.resume()
         } catch {
+            completion(false)
             print("Error: \(error)")
-            return
         }
-        
-        return
-        
     }
     
     func getFlightPlanDataV3() async -> FlightDataV30Json?  {

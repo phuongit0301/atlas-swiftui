@@ -46,7 +46,6 @@ struct OnboardingView: View {
                                 coreDataModel.loadingInit = true
                                 isLoading = true
                                 let payloadProfile = [
-                                    "id": onboardingModel.dataYourProfile.id,
                                     "user_id": onboardingModel.dataYourProfile.user_id,
                                     "userName": onboardingModel.dataYourProfile.userName,
                                     "firstName": onboardingModel.dataYourProfile.firstName,
@@ -63,7 +62,6 @@ struct OnboardingView: View {
                                 var payloadExperience: [Any] = []
                                 for item in onboardingModel.dataModelExperience {
                                     payloadExperience.append([
-                                        "id": item.id,
                                         "modelName": item.modelName,
                                         "pic": item.pic,
                                         "picUs": item.picUs,
@@ -78,7 +76,6 @@ struct OnboardingView: View {
                                 var payloadLimitation: [Any] = []
                                 for item in onboardingModel.dataModelLimitation {
                                     payloadLimitation.append([
-                                        "id": item.id,
                                         "limitationFlight": item.limitationFlight,
                                         "limitation": item.limitation,
                                         "duration": item.duration,
@@ -91,7 +88,6 @@ struct OnboardingView: View {
                                 var payloadRecency: [Any] = []
                                 for item in onboardingModel.dataModelRecency {
                                     payloadRecency.append([
-                                        "id": item.id,
                                         "type": item.type,
                                         "modelName": item.modelName,
                                         "requirement": item.requirement,
@@ -104,7 +100,6 @@ struct OnboardingView: View {
                                 var payloadExpiry: [Any] = []
                                 for item in onboardingModel.dataModelExpiry {
                                     payloadExpiry.append([
-                                        "id": item.id,
                                         "expiredDate": item.expiredDate,
                                         "requirement": item.requirement,
                                         "documentType": item.documentType
@@ -119,11 +114,15 @@ struct OnboardingView: View {
                                     "expiry": payloadExpiry
                                 ]
                                 
-                                await remoteService.postUserData(payload)
-                                isLoading = false
-                                coreDataModel.loadingInit = false
-                                isOnboarding = "0"
-                                isBoardingCompleted = "1"
+                                await remoteService.postUserData(payload, completion: { success in
+                                    isLoading = false
+                                    coreDataModel.loadingInit = false
+                                    
+                                    if(success) {
+                                        isOnboarding = "0"
+                                        isBoardingCompleted = "1"
+                                    }
+                                })
                             }
                         }
                     } label: {

@@ -364,6 +364,7 @@ func getDestinationSplitTable(_ item: ListFlightInformationItem) -> AnyView {
 
 public struct HasToolbar: ViewModifier {
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var onboardingModel: OnboardingModel
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
@@ -418,6 +419,11 @@ public struct HasToolbar: ViewModifier {
                             do {
                                 try firebaseAuth.signOut()
                                 withAnimation {
+                                    onboardingModel.dataYourProfile = IProfile(user_id: "", userName: "", firstName: "", lastName: "", airline: "", mobile: Mobile(country: "", number: ""), email: "", subscribe: "")
+                                    onboardingModel.dataModelExperience = []
+                                    onboardingModel.dataModelLimitation = []
+                                    onboardingModel.dataModelRecency = []
+                                    onboardingModel.dataModelExpiry = []
                                     userID = ""
                                 }
                             } catch let signOutError as NSError {

@@ -61,11 +61,13 @@ struct ATLASApp: App {
                         } else {
                             ContentView()
                                 .task {
+                                    print("isBoardingCompleted======\(isBoardingCompleted)")
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
                                     }
                                 }
                                 .task {
+                                    print("isLogin======\(isLogin)")
                                     if isLogin == "1" {
                                         print("fetch login")
                                         coreDataModel.loading = true
@@ -81,6 +83,7 @@ struct ATLASApp: App {
                     }
                 }
             }.onAppear {
+                isOnboarding = "1"
                 if locationViewModel.authorizationStatus == .notDetermined {
                     locationViewModel.requestPermission()
                 }
