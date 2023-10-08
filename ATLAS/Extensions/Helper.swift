@@ -79,3 +79,39 @@ extension Date {
         return (min(startDate, endDate) ... max(startDate, endDate)) ~= self
     }
 }
+
+func convertUTCToLocalTime(timeString: String, timeDiff: String) -> String {
+    let timeDiffInt = (timeDiff as NSString).integerValue
+    // Create a DateFormatter
+    let dateFormatter = DateFormatter()
+    
+    // Set the input format of the timeString
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    
+    // Set the time zone of the input string to UTC
+    dateFormatter.timeZone = TimeZone(identifier: "UTC")
+    
+    // Parse the input time string to get a Date object
+    if let date = dateFormatter.date(from: timeString) {
+        // Create a Calendar instance
+        var calendar = Calendar.current
+        
+        // Set the time zone of the calendar to the local time zone (UTC + timeDiff hours)
+        calendar.timeZone = TimeZone(secondsFromGMT: timeDiffInt * 3600)!
+        
+        // Use the calendar to convert the Date object to the local time zone
+        let localDate = calendar.date(from: calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date))
+        
+        // Set the output format for the local time
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        // Set the time zone of the DateFormatter to the local time zone
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: timeDiffInt * 3600)
+        
+        // Format the local date as a string
+        return dateFormatter.string(from: localDate!)
+    }
+    
+    // Return nil if the conversion fails
+    return ""
+}

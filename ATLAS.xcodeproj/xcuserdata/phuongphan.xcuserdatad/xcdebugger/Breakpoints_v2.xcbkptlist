@@ -9544,8 +9544,8 @@
             filePath = "ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "552"
-            endingLineNumber = "552"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
             landmarkName = "create()"
             landmarkType = "7">
             <Locations>

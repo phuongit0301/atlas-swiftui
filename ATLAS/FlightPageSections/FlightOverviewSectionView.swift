@@ -54,6 +54,31 @@ struct FlightOverviewSectionView: View {
     @State private var isSync = false
     
     var body: some View {
+        
+        var std: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedStd ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedStd ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+            }
+        }
+        
+        var sta: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedSta ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedSta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+            }
+        }
+        
+        var eta: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedEta ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedEta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+            }
+        }
+        
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .center) {
@@ -266,10 +291,10 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedStd ?? "")
+                                    Text(std)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text((showUTC ? coreDataModel.dataFlightOverview?.unwrappedSta : coreDataModel.dataFlightOverview?.unwrappedSta) ?? "")
+                                    Text(sta)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -405,7 +430,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack {
-                                    Text((showUTC ? coreDataModel.dataFlightOverview?.unwrappedEta : coreDataModel.dataFlightOverview?.unwrappedEta) ?? "")
+                                    Text(eta)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     

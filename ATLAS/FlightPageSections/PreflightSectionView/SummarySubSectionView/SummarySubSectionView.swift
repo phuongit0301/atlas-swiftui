@@ -53,9 +53,31 @@ struct SummarySubSectionView: View {
     @State var destinationAlternates: [IAlternate] = []
     
     @State var isLoading = false
-//    var ALTN_DROP_DOWN: [String] = ["ALTN 1", "ALTN 1", "ALTN 1"]
     
     var body: some View {
+        var std: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedStd ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedStd ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+            }
+        }
+        
+        var sta: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedSta ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedSta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+            }
+        }
+        
+        var eta: String {
+            if showUTC {
+                return coreDataModel.dataFlightOverview?.unwrappedEta ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedEta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+            }
+        }
         
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
@@ -214,9 +236,9 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedStd ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(std).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedSta ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(sta).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 

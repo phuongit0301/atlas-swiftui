@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Sidebar: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
     var body: some View {
