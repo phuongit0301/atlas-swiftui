@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum RemoteError: Error {
     case error(String)
 }
 
 class RemoteService: ObservableObject {
+    @AppStorage("uid") var userID: String = ""
     static let shared = RemoteService()
     
     let baseURL = "https://accumulus-backend-atlas-lvketaariq-et.a.run.app"
@@ -27,7 +29,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "user_id": "abc123",
+                "user_id": userID,
             ]
             
             do {
@@ -175,7 +177,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "user_id": "abc123",
+                "user_id": userID,
                 "flight_number": "TR753"
             ]
             
@@ -401,7 +403,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "user_id": "abc123",
+                "user_id": userID,
             ] as [String : Any]
             
             do {
@@ -469,7 +471,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "user_id": "abc123",
+                "user_id": userID,
             ] as [String : Any]
             
             do {
@@ -537,7 +539,7 @@ class RemoteService: ObservableObject {
             
             // Create the request body data
             let requestBody = [
-                "user_id": "abc123",
+                "user_id": userID,
             ] as [String : Any]
             
             do {

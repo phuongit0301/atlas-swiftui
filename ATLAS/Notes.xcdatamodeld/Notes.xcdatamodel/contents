@@ -551,6 +551,7 @@
     </entity>
     <entity name="Signature" representedClassName="SignatureList" syncable="YES">
         <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="flightNumber" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageString" optional="YES" attributeType="String"/>
         <attribute name="licenseNumber" optional="YES" attributeType="String"/>

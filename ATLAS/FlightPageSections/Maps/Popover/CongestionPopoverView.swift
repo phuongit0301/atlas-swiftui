@@ -13,6 +13,8 @@ struct CongestionPopoverView: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
+    @AppStorage("uid") var userID: String = ""
+    
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
     @State var selectedTime = 1
@@ -73,7 +75,7 @@ struct CongestionPopoverView: View {
                                 
                                 let payloadPosts: [String: Any] = [
                                     "post_id": UUID().uuidString,
-                                    "user_id": "abc123",
+                                    "user_id": userID,
                                     "post_date": postDate,
                                     "post_title": "Arrival Delay",
                                     "post_text": "Arrival Delay \(selectedTime * 5) mins",

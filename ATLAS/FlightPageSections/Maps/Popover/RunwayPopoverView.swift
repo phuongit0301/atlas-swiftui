@@ -13,6 +13,8 @@ struct RunwayPopoverView: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
+    @AppStorage("uid") var userID: String = ""
+    
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
     @State var isUpdating = false
@@ -63,8 +65,8 @@ struct RunwayPopoverView: View {
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                             newPost.id = UUID()
-                            newPost.postId = ""
-                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postId = UUID().uuidString
+                            newPost.userId = userID
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Dry"
@@ -109,8 +111,8 @@ struct RunwayPopoverView: View {
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                             newPost.id = UUID()
-                            newPost.postId = ""
-                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postId = UUID().uuidString
+                            newPost.userId = userID
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Damp"
@@ -155,8 +157,8 @@ struct RunwayPopoverView: View {
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                             newPost.id = UUID()
-                            newPost.postId = ""
-                            newPost.userId = "abc122" // Todo: Change to user login
+                            newPost.postId = UUID().uuidString
+                            newPost.userId = userID
                             newPost.postDate = dateFormatter.string(from: Date())
                             newPost.postTitle = "Runway condition"
                             newPost.postText = "Wet"
@@ -207,7 +209,7 @@ struct RunwayPopoverView: View {
                                 
                                 let payloadPosts: [String: Any] = [
                                     "post_id": UUID().uuidString,
-                                    "user_id": "abc123",
+                                    "user_id": userID,
                                     "post_date": postDate,
                                     "post_title": "Runway condition",
                                     "post_text": "Slippery",
@@ -233,8 +235,8 @@ struct RunwayPopoverView: View {
                                     if(success) {
                                         let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                                         newPost.id = UUID()
-                                        newPost.postId = ""
-                                        newPost.userId = "abc122" // Todo: Change to user login
+                                        newPost.postId = UUID().uuidString
+                                        newPost.userId = userID
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Runway condition"
                                         newPost.postText = "Slippery"

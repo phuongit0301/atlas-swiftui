@@ -25,6 +25,8 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
     
+    @AppStorage("uid") var userID: String = ""
+    
     @State var isReference = false
     @State private var selectedCA = SummaryDataDropDown.pic
     @State private var selectedFO = SummaryDataDropDown.pic
@@ -543,7 +545,7 @@ struct SummarySubSectionView: View {
             ]
             
             let payloadAabbaNote: [String: Any] = [
-                "user_id": "abc123",
+                "user_id": userID,
                 "flight_number": coreDataModel.dataFlightOverview?.unwrappedCallsign
             ]
             

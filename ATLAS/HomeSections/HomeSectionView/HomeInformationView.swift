@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeInformationView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var yourFlightPlanModel: YourFlightPlanModel
     
     @State var isCollapseFlight = false
     @State var isCollapseExpiring = false
@@ -78,7 +79,7 @@ struct HomeInformationView: View {
                                 Divider()
                                 
                                 ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
-                                    NavigationLink(destination: HomeFlightSectionView()) {
+//                                    NavigationLink(destination: HomeFlightSectionView()) {
                                         HStack {
                                             Text(renderItem(coreDataModel.dataEventUpcoming[index]))
                                                 .font(.system(size: 15, weight: .regular))
@@ -99,7 +100,11 @@ struct HomeInformationView: View {
                                             }
                                         }.padding(.vertical, 11)
                                             .padding(.horizontal)
-                                    }
+                                            .onTapGesture {
+                                                yourFlightPlanModel.selectedEvent = coreDataModel.dataEventUpcoming[index]
+                                                yourFlightPlanModel.isActive = true
+                                            }
+//                                    }
                                     
                                     if index + 1 < coreDataModel.dataEventUpcoming.count {
                                         Divider()
@@ -313,6 +318,9 @@ struct HomeInformationView: View {
                     dataLimitation = checkLimitations(coreDataModel.dataLogbookEntries, coreDataModel.dataLogbookLimitation)
                 }
         } // End VStack
+        .background(
+            NavigationLink(destination: HomeFlightSectionView(), isActive: $yourFlightPlanModel.isActive) { EmptyView() }
+        )
     }
     
     func renderItem(_ item: EventList) -> String {

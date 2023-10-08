@@ -203,10 +203,21 @@ struct EntriesSubSectionView: View {
                                                         .frame(alignment: .leading)
                                                         .gridCellColumns(7)
                                                     
-                                                    Text("signature")
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                        .gridCellColumns(6)
+                                                    if let fileUrl = dataLogbookEntries[index].signFileUrl, fileUrl != "none" {
+                                                        if fileUrl.contains("http") {
+                                                            AsyncImage(url: URL(string: fileUrl)).frame(maxWidth: 50, maxHeight: 50)
+                                                        } else {
+                                                            if let uiImage = convertBase64ToImage(imageString: fileUrl) {
+                                                                Image(uiImage: uiImage).frame(maxWidth: 50, maxHeight: 50)
+                                                            }
+                                                        }
+                                                    } else {
+                                                        Text("None")
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                            .gridCellColumns(6)
+                                                    }
+                                                    
                                                 }.frame(height: 44, alignment: .center)
                                             }
                                             

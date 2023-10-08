@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ArrivalModalNoteCommentView: View {
+    @AppStorage("uid") var userID: String = ""
+    
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
@@ -164,8 +166,8 @@ struct ArrivalModalNoteCommentView: View {
                                     
                                     item.id = UUID()
                                     item.commentId = UUID().uuidString
-                                    item.postId = "cdead350-d303-4000-ad9c-c2a50b0ab1b7"
-                                    item.userId = "abc123"
+                                    item.postId = post.postId
+                                    item.userId = userID
                                     item.commentDate = dateFormatter.string(from: Date())
                                     item.commentText = tfComment.trimmingCharacters(in: .whitespacesAndNewlines)
                                     item.userName = "phuongpt"

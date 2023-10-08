@@ -13,6 +13,8 @@ struct VisibilityPopoverView: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
+    @AppStorage("uid") var userID: String = ""
+    
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
     @State var selectedRunway = 1
@@ -74,7 +76,7 @@ struct VisibilityPopoverView: View {
                                 
                                 let payloadPosts: [String: Any] = [
                                     "post_id": UUID().uuidString,
-                                    "user_id": "abc123",
+                                    "user_id": userID,
                                     "post_date": postDate,
                                     "post_title": "Runway Visibility",
                                     "post_text": "\(selectedRunway)nm",
@@ -101,8 +103,8 @@ struct VisibilityPopoverView: View {
                                         
                                         let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                                         newPost.id = UUID()
-                                        newPost.postId = ""
-                                        newPost.userId = "abc122" // Todo: Change to user login
+                                        newPost.postId = UUID().uuidString
+                                        newPost.userId = userID
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Runway Visibility"
                                         newPost.postText = "\(selectedRunway)nm"

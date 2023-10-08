@@ -13,6 +13,8 @@ struct GeneralPopoverView: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
+    @AppStorage("uid") var userID: String = ""
+    
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
     @State var tfPost: String = ""
@@ -66,7 +68,7 @@ struct GeneralPopoverView: View {
                                 
                                 let payloadPosts: [String: Any] = [
                                     "post_id": UUID().uuidString,
-                                    "user_id": "abc123",
+                                    "user_id": userID,
                                     "post_date": postDate,
                                     "post_title": "General",
                                     "post_text": tfPost,

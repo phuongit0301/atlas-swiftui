@@ -13,6 +13,8 @@ struct AskAabbaPopoverView: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var mapIconModel: MapIconModel
     
+    @AppStorage("uid") var userID: String = ""
+    
     @Binding var isShowing: Bool
     @State var selectedStation: AirportMapColorList?
     @State var tfPost: String = ""
@@ -66,7 +68,7 @@ struct AskAabbaPopoverView: View {
                                 
                                 let payloadPosts: [String: Any] = [
                                     "post_id": UUID().uuidString,
-                                    "user_id": "abc123",
+                                    "user_id": userID,
                                     "post_date": postDate,
                                     "post_title": "Ask Aabba",
                                     "post_text": tfPost,
@@ -92,8 +94,8 @@ struct AskAabbaPopoverView: View {
                                     if(success) {
                                         let newPost = AabbaPostList(context: persistenceController.container.viewContext)
                                         newPost.id = UUID()
-                                        newPost.postId = ""
-                                        newPost.userId = "abc122" // Todo: Change to user login
+                                        newPost.postId = UUID().uuidString
+                                        newPost.userId = userID
                                         newPost.postDate = postDate
                                         newPost.postTitle = "Ask Aabba"
                                         newPost.postText = tfPost

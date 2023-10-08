@@ -176,10 +176,10 @@ func convertImageToBase64(image: UIImage) -> String {
         return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
     }
     
-func convertBase64ToImage(imageString: String) -> UIImage {
+func convertBase64ToImage(imageString: String) -> UIImage? {
     let imageData = Data(base64Encoded: imageString,
                          options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-    return UIImage(data: imageData)!
+    return UIImage(data: imageData)
 }
 
 struct Drawing {

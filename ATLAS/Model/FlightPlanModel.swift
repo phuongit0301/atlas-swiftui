@@ -804,3 +804,8 @@ struct FlightDataV30Json: Codable {
     let notes: [NotesV30Json]
     let aabba_notes: [String: [INoteResponse]]
 }
+
+class YourFlightPlanModel: ObservableObject {
+    @Published var selectedEvent: EventList?
+    @Published var isActive = false
+}

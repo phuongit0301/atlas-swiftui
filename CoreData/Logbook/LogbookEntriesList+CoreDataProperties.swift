@@ -115,6 +115,10 @@ extension LogbookEntriesList {
         signFileName ?? ""
     }
     
+    public var unwrappedSignFileUrl: String {
+        signFileUrl ?? ""
+    }
+    
     public var unwrappedLicenseNumber: String {
         licenseNumber ?? ""
     }

@@ -20,7 +20,19 @@ extension SignatureList {
     @NSManaged public var imageString: String?
     @NSManaged public var licenseNumber: String?
     @NSManaged public var comment: String?
-
+    @NSManaged public var flightNumber: String?
+    
+    public var unwrappedImageString: String {
+        imageString ?? ""
+    }
+    
+    public var unwrappedLicenseNumber: String {
+        licenseNumber ?? ""
+    }
+    
+    public var unwrappedComment: String {
+        comment ?? ""
+    }
 }
 
 extension SignatureList : Identifiable {

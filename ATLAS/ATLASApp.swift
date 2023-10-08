@@ -44,6 +44,7 @@ struct ATLASApp: App {
     @StateObject var calendarModel = CalendarModel()
     @StateObject var mapIconModel = MapIconModel()
     @StateObject var onboardingModel = OnboardingModel()
+    @StateObject var yourFlightPlanModel = YourFlightPlanModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -106,6 +107,7 @@ struct ATLASApp: App {
                 .environmentObject(calendarModel)
                 .environmentObject(mapIconModel)
                 .environmentObject(onboardingModel)
+                .environmentObject(yourFlightPlanModel)
                 .task {
                     coreDataModel.loading = true
                     print("fetch reader")
