@@ -114,9 +114,10 @@ struct OnboardingView: View {
                                 
                                 await remoteService.postUserData(payload, completion: { success in
                                     isLoading = false
+                                    coreDataModel.loading = false
                                     coreDataModel.loadingInit = false
                                     
-                                    if(success) {
+                                    if success {
                                         isOnboarding = "0"
                                         isBoardingCompleted = "1"
                                     }

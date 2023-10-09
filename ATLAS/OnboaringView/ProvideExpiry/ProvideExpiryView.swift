@@ -30,7 +30,7 @@ struct ProvideExpiryView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         if onboardingModel.dataModelExpiry.count > 0 {
                             ForEach(onboardingModel.dataModelExpiry, id: \.self) {item in
-                                ExpiryRowView(dataModel: $onboardingModel.dataModelExpiry, item: item, width: proxy.size.width)
+                                ExpiryRowView(dataModel: $onboardingModel.dataModelExpiry, item: item, width: proxy.size.width).id(item.id)
                             }
                         }
                     }

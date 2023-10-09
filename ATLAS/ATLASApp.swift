@@ -67,7 +67,6 @@ struct ATLASApp: App {
                                 }
                                 .task {
                                     if isLogin == "1" {
-                                        print("fetch login")
                                         coreDataModel.loading = true
                                         await coreDataModel.checkAndSyncOrPostData()
                                         isLogin = "0"

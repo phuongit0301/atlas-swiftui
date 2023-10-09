@@ -11,13 +11,13 @@ struct ProvideExperienceView: View {
     @EnvironmentObject var onboardingModel: OnboardingModel
     @State private var selectedModel = ""
     
-    @State var currentPic = "0000:00"
-    @State var currentPicUs = "0000:00"
-    @State var currentP1 = "0000:00"
-    @State var currentP2 = "0000:00"
-    @State var currentInstr = "0000:00"
-    @State var currentExam = "0000:00"
-    @State var currentTotal = "0000:00"
+    @State var currentPic = "00000:00"
+    @State var currentPicUs = "00000:00"
+    @State var currentP1 = "00000:00"
+    @State var currentP2 = "00000:00"
+    @State var currentInstr = "00000:00"
+    @State var currentExam = "00000:00"
+    @State var currentTotal = "00000:00"
     
     @State var showPicModal = false
     @State var showPicUsModal = false

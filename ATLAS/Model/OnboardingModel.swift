@@ -27,6 +27,7 @@ let DataModelDropdown = ["A318", "A319", "A320", "A321", "A220", "A330", "A340",
 let DataLimitationDropdown = ["Maximum Flight Hours", "Maximum Duty Hours"]
 let DataRecencyDropdown = ["Landing", "LVO"]
 let DataExpiryDropdown = ["Instructor Rating 1", "Instructor Rating 2", "Instructor Rating 3"]
+let DataDocumentTypeDropdown = ["Medical", "SEP", "Base Check", "Line Check", "Instructor Rating", "Examiner Rating", "Passport"]
 
 struct IRecencyModel: Identifiable, Hashable {
     var id = UUID()
@@ -96,7 +97,7 @@ struct IProvideExpiry: Identifiable, Hashable {
 }
 
 class OnboardingModel: ObservableObject {
-    @Published var dataYourProfile: IProfile = IProfile(user_id: "", userName: "", firstName: "", lastName: "", airline: "", mobile: Mobile(country: "", number: ""), email: "", subscribe: "")
+    @Published var dataYourProfile: IProfile = IProfile(user_id: "", userName: "", firstName: "", lastName: "", airline: "", mobile: Mobile(country: "", number: ""), email: "", subscribe: "1")
     @Published var dataModelExperience = [IProvideExperience]()
     @Published var dataModelLimitation = [IProvideLimitation]()
     @Published var dataModelRecency = [IProvideRecency]()

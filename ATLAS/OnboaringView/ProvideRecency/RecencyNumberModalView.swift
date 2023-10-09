@@ -14,9 +14,11 @@ struct RecencyNumberModalView: View {
     @State var itemsA: ClosedRange<Int> = 0...9
     @State var itemsB: ClosedRange<Int> = 0...9
     @State var itemsC: ClosedRange<Int> = 0...9
+    @State var itemsD: ClosedRange<Int> = 0...9
     @State private var selectionA = 0
     @State private var selectionB = 0
     @State private var selectionC = 0
+    @State private var selectionD = 0
     
     var onChange: (_ value: String) -> Void
     
@@ -37,7 +39,7 @@ struct RecencyNumberModalView: View {
                 
                 Button(action: {
                     // assign value from modal to entries form
-                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)"
+                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)\(selectionD)"
                     onChange(selectionInOut)
                     self.isShowing = false
                 }) {
@@ -71,15 +73,23 @@ struct RecencyNumberModalView: View {
                         }
                     }.pickerStyle(.wheel)
                     .labelsHidden()
+                    
+                    Picker(selection: $selectionD, label: Text("")) {
+                        ForEach(itemsD, id: \.self) {
+                            Text("\($0)").tag("\($0)")
+                        }
+                    }.pickerStyle(.wheel)
+                    .labelsHidden()
                 }
             }
             Spacer()
             
         }.onAppear {
-            if selectionInOut.count >= 3 {
+            if selectionInOut.count >= 4 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
-                self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
-                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
+                self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
+                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
+                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
             }
         }
     }

@@ -203,16 +203,16 @@ struct LoginView: View {
             .padding(.top, 48)
             .background(Color.theme.antiFlashWhite)
             .formSheet(isPresented: $isShowResetPassword) {
-                ResetPasswordView(isShowResetPassword: $isShowResetPassword)
+                ResetPasswordView(isShowResetPassword: $isShowResetPassword).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $isShowSignup) {
-                SignUpView(step: $step, isShowing: $isShowSignup, userInfo: $userInfo)
+                SignUpView(step: $step, isShowing: $isShowSignup, userInfo: $userInfo).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $isShowVerifyEmail) {
-                VerifyEmailView(step: $step, isShowing: $isShowVerifyEmail, userInfo: $userInfo)
+                VerifyEmailView(step: $step, isShowing: $isShowVerifyEmail, userInfo: $userInfo).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $isShowCreatePassword) {
-                CreatePasswordView(step: $step, isShowing: $isShowCreatePassword)
+                CreatePasswordView(step: $step, isShowing: $isShowCreatePassword).interactiveDismissDisabled(true)
             }
             .onChange(of: isShowSignup) {newValue in
                 if !newValue && step == 2 {

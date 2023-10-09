@@ -13,7 +13,7 @@ struct ExpiryRowView: View {
     let width: CGFloat
     @State private var selectedType = ""
     @State private var txtRequirement = ""
-    @State private var txtDocumentType = ""
+    @State private var currentDocumentType = ""
     
     @State var currentDate = ""
     @State var showModal = false
@@ -36,10 +36,12 @@ struct ExpiryRowView: View {
                 Text("Document Type").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
                 
                 HStack(spacing: 8) {
-                    TextField("Enter Document Type", text: $txtDocumentType)
-                        .onChange(of: txtDocumentType) { newValue in
-                            dataModel[currentIndex].documentType = newValue
+                    Picker("", selection: $currentDocumentType) {
+                        ForEach(DataDocumentTypeDropdown, id: \.self) {
+                            Text($0).tag($0)
                         }
+                    }.pickerStyle(MenuPickerStyle())
+                    Spacer()
                 }.frame(height: 44)
                     .padding(.horizontal)
                     .background(Color.white)
@@ -50,7 +52,6 @@ struct ExpiryRowView: View {
                             .foregroundColor(.white)
                         
                     )
-                    .fixedSize(horizontal: false, vertical: true)
             }.frame(height: 44)
             
             VStack(alignment: .leading) {
@@ -73,8 +74,8 @@ struct ExpiryRowView: View {
                     }.frame(width: calculateWidthSummary(width - 64, 2))
                     HStack(alignment: .center, spacing: 8) {
                         TextField("Enter Requirement", text: $txtRequirement)
-                            .onChange(of: txtRequirement) { newValue in
-                                dataModel[currentIndex].requirement = newValue
+                            .onSubmit {
+                                dataModel[currentIndex].requirement = txtRequirement
                             }
                     }.frame(width: calculateWidthSummary(width - 64, 2))
                 }.frame(height: 44, alignment: .leading)
@@ -104,7 +105,9 @@ struct ExpiryRowView: View {
                         }
                         
                         if dataModel[currentIndex].documentType != "" {
-                            txtDocumentType = dataModel[currentIndex].documentType
+                            currentDocumentType = dataModel[currentIndex].documentType
+                        } else {
+                            currentDocumentType = DataDocumentTypeDropdown.first ?? ""
                         }
                         
                         if dataModel[currentIndex].requirement != "" {
@@ -115,6 +118,9 @@ struct ExpiryRowView: View {
             }
             .formSheet(isPresented: $showModal) {
                 LimitationTimeModalView(isShowing: $showModal, pickerType: $pickerType, currentDate: $currentDate, header: "Expiry Date", onChange: onChangeCurrentDate).interactiveDismissDisabled(true)
+            }
+            .onChange(of: currentDocumentType) { newValue in
+                dataModel[currentIndex].documentType = newValue
             }
     }
     

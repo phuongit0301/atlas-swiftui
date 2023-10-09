@@ -256,79 +256,77 @@ class CoreDataModelState: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dataEvents = readEvents()
         
-        if dataEvents.count == 0 {
-            self.loadingInit = true
-            Task {
-                async let calendarService = remoteService.getCalendarData()
-                async let flightPlanService = remoteService.getFlightPlanDataV3()
-                async let logbookService = remoteService.getLogbookData()
-                async let limitationService = remoteService.getLimitationData()
-                async let recencyService = remoteService.getRecencyData()
-                
-                //array handle call API parallel
-                let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
-
-                
-                DispatchQueue.main.async {
-                    //For calendar
-                    if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
-                        self.initDataEventDateRange(dataDateRange)
-                    }
-                    
-                    if let events = responseCalendar?.events, events.count > 0 {
-                        self.initDataEvent(events)
-                    }
-                    
-                    // Init Logbook
-                    if let logbookEntry = responseLogbook?.logbook_data {
-                        self.initDataLogbookEntries(logbookEntry)
-                    }
-                    
-                    if let limitationData = responseLimitation?.limitation_data {
-                        self.initDataLogbookLimitation(limitationData)
-                    }
-                    
-                    if let responseRecency = responseRecency {
-                        // Init data recency
-                        self.initDataRecency(responseRecency.recency_data)
-
-                        self.initDataRecencyExpiry(responseRecency.expiry_data)
-                    }
-                    
-                    // For Flight Plan
-                    if let notes = responseFlightPlan?.notes, notes.count > 0 {
-                        self.initDataNoteList(notes)
-                    }
-
-                    if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
-                        self.initDataAirportColor(colourAirport)
-                    }
-                    
-                    if let route = responseFlightPlan?.route, route.count > 0 {
-                        self.initDataRouteMap(route)
-                    }
-                    
-                    if let notam = responseFlightPlan?.notam, notam.count > 0 {
-                        self.initDataFlightNotams(notam)
-                    }
-                    
-                    if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
-                        self.initDataFlightMetarTaf(metarTaf)
-                    }
-                    
-                    if let aabbaNotes = responseFlightPlan?.aabba_notes {
-                        self.initDataMapAabbaNotes(aabbaNotes)
-                    }
-                    
-                    if let flightOverview = responseFlightPlan?.flight_overview {
-                        self.initDataFlightOverview(flightOverview)
-                    }
-                    
-                    self.isBoardingCompleted = ""
-                    
-                    self.loadingInit = false
-                    print("Fetch data")
+        self.loadingInit = true
+        Task {
+            async let calendarService = remoteService.getCalendarData()
+            async let flightPlanService = remoteService.getFlightPlanDataV3()
+            async let logbookService = remoteService.getLogbookData()
+            async let limitationService = remoteService.getLimitationData()
+            async let recencyService = remoteService.getRecencyData()
+            
+            //array handle call API parallel
+            let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
+            
+            
+            DispatchQueue.main.async {
+                //For calendar
+                if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
+                    self.initDataEventDateRange(dataDateRange)
                 }
+                
+                if let events = responseCalendar?.events, events.count > 0 {
+                    self.initDataEvent(events)
+                }
+                
+                // Init Logbook
+                if let logbookEntry = responseLogbook?.logbook_data {
+                    self.initDataLogbookEntries(logbookEntry)
+                }
+                
+                if let limitationData = responseLimitation?.limitation_data {
+                    self.initDataLogbookLimitation(limitationData)
+                }
+                
+                if let responseRecency = responseRecency {
+                    // Init data recency
+                    self.initDataRecency(responseRecency.recency_data)
+                    
+                    self.initDataRecencyExpiry(responseRecency.expiry_data)
+                }
+                
+                // For Flight Plan
+                if let notes = responseFlightPlan?.notes, notes.count > 0 {
+                    self.initDataNoteList(notes)
+                }
+                
+                if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
+                    self.initDataAirportColor(colourAirport)
+                }
+                
+                if let route = responseFlightPlan?.route, route.count > 0 {
+                    self.initDataRouteMap(route)
+                }
+                
+                if let notam = responseFlightPlan?.notam, notam.count > 0 {
+                    self.initDataFlightNotams(notam)
+                }
+                
+                if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
+                    self.initDataFlightMetarTaf(metarTaf)
+                }
+                
+                if let aabbaNotes = responseFlightPlan?.aabba_notes {
+                    self.initDataMapAabbaNotes(aabbaNotes)
+                }
+                
+                if let flightOverview = responseFlightPlan?.flight_overview {
+                    self.initDataFlightOverview(flightOverview)
+                }
+                
+                self.isBoardingCompleted = ""
+                
+                self.loadingInit = false
+                print("Fetch data")
             }
         }
     }

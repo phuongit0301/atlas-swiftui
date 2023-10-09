@@ -126,25 +126,24 @@ class RemoteService: ObservableObject {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        // Convert the request body to JSON data
+        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
+        // Set the request body data
+        request.httpBody = postData
         
         do {
-            // Convert the request body to JSON data
-            let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            // Set the request body data
-            request.httpBody = requestData
-            
-            
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
                     print("Request error: ", error)
+                    completion(false)
                     return
                 }
+
                 DispatchQueue.main.async {
                     guard let response = response as? HTTPURLResponse else { return }
-                    print("Response User Data Status ======== \(response.statusCode)")
-                    print("Response======== \(response)")
                     if response.statusCode == 200 {
-                        print("Update User Data successfully")
+                        print("Update calendar successfully")
                         completion(true)
                     }
                 }
@@ -152,8 +151,8 @@ class RemoteService: ObservableObject {
             
             dataTask.resume()
         } catch {
-            completion(false)
             print("Error: \(error)")
+            completion(false)
         }
     }
     

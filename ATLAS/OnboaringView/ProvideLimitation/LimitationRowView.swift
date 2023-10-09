@@ -13,14 +13,14 @@ struct LimitationRowView: View {
     let width: CGFloat
     @State private var selectedLimitationFlight = ""
     
-    @State var currentLimitation = "000"
+    @State var currentLimitation = "0000"
     
-    @State var currentDuration = "000"
+    @State var currentDuration = "0000"
     
     @State var currentStartDate = ""
     @State var currentEndDate = ""
     
-    @State var currentCompleted = "000"
+    @State var currentCompleted = "0000"
     
     @State var showLimitationModal = false
     @State var showDurationModal = false

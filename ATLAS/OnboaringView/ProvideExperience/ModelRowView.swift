@@ -14,13 +14,13 @@ struct ModelRowView: View {
     let width: CGFloat
     @State private var selectedModel = ""
     
-    @State var currentPic = "0000:00"
-    @State var currentPicUs = "0000:00"
-    @State var currentP1 = "0000:00"
-    @State var currentP2 = "0000:00"
+    @State var currentPic = "00000:00"
+    @State var currentPicUs = "00000:00"
+    @State var currentP1 = "00000:00"
+    @State var currentP2 = "00000:00"
 //    @State var currentInstr = "00:00"
 //    @State var currentExam = "00:00"
-    @State var currentTotal = "0000:00"
+    @State var currentTotal = "00000:00"
     
     @State var showPicModal = false
     @State var showPicUsModal = false
@@ -180,46 +180,25 @@ struct ModelRowView: View {
                 }
             }
             .formSheet(isPresented: $showPicModal) {
-                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic, onChange: onChangePic)
+                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic, onChange: onChangePic).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showPicUsModal) {
-                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs, onChange: onChangePicUs)
+                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs, onChange: onChangePicUs).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showP1Modal) {
-                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1, onChange: onChangeP1)
+                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1, onChange: onChangeP1).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showP2Modal) {
-                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2, onChange: onChangeP2)
+                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2, onChange: onChangeP2).interactiveDismissDisabled(true)
             }
-//            .formSheet(isPresented: $showInstrModal) {
-//                OnboardingTimeModalView(isShowing: $showInstrModal, currentDate: $currentInstr)
+//            .formSheet(isPresented: $showTotalModal) {
+//                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal, onChange: onChangeTotalTime)
 //            }
-//            .formSheet(isPresented: $showExamModal) {
-//                OnboardingTimeModalView(isShowing: $showExamModal, currentDate: $currentExam)
-//            }
-            .formSheet(isPresented: $showTotalModal) {
-                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal, onChange: onChangeTotalTime)
-            }
             .onChange(of: selectedModel) { newValue in
                 if dataModel[currentIndex].modelName != newValue {
                     dataModel[currentIndex].modelName = newValue
                 }
             }
-//            .onChange(of: currentPic) { newValue in
-//                dataModel[currentIndex].pic = newValue
-//            }
-//            .onChange(of: currentPicUs) { newValue in
-//                dataModel[currentIndex].picUs = newValue
-//            }
-//            .onChange(of: currentP1) { newValue in
-//                dataModel[currentIndex].p1 = newValue
-//            }
-//            .onChange(of: currentP2) { newValue in
-//                dataModel[currentIndex].p2 = newValue
-//            }
-//            .onChange(of: currentTotal) { newValue in
-//                dataModel[currentIndex].totalTime = newValue
-//            }
     }
 
     func onChangePic(_ value: String) {
@@ -232,14 +211,32 @@ struct ModelRowView: View {
     
     func onChangeP1(_ value: String) {
         dataModel[currentIndex].p1 = value
+        calculateTotalTime()
     }
     
     func onChangeP2(_ value: String) {
         dataModel[currentIndex].p2 = value
+        calculateTotalTime()
     }
     
-    func onChangeTotalTime(_ value: String) {
-        dataModel[currentIndex].totalTime = value
+    func calculateTotalTime() {
+        var num1 = 0
+        var num2 = 0
+        
+        if dataModel[currentIndex].p1 != "" {
+            let arr = dataModel[currentIndex].p1.components(separatedBy: ":")
+            num1 += (arr[0] as NSString).integerValue
+            num2 += (arr[1] as NSString).integerValue
+        }
+        
+        if dataModel[currentIndex].p2 != "" {
+            let arr = dataModel[currentIndex].p2.components(separatedBy: ":")
+            num1 += (arr[0] as NSString).integerValue
+            num2 += (arr[1] as NSString).integerValue
+        }
+        
+        let str = "\(String(format: "%05d", num1)):\(String(format: "%02d", num2))"
+        dataModel[currentIndex].totalTime = str
     }
     
     func onPic() {

@@ -19,7 +19,7 @@ struct CompleteYourProfileView: View {
     @State private var phone = ""
     @State private var selectedAirline = ""
     @State private var selectedMobile = ""
-    @State private var showUTC = true
+    @State private var isSubscribe = true
     
     var body: some View {
         ScrollView {
@@ -208,7 +208,7 @@ struct CompleteYourProfileView: View {
                         
                         Spacer()
                         
-                        Toggle(isOn: $showUTC) {
+                        Toggle(isOn: $isSubscribe) {
                             Text("").font(.system(size: 15, weight: .regular))
                                 .foregroundStyle(Color.black)
                         }.fixedSize(horizontal: true, vertical: false)
@@ -228,10 +228,36 @@ struct CompleteYourProfileView: View {
             selectedAirline = AIRLINE_DROP_DOWN.first ?? ""
             selectedMobile = DataCountryDropdown.first ?? ""
             onboardingModel.dataYourProfile.email = email
-            onboardingModel.dataYourProfile.subscribe = "1"
             onboardingModel.dataYourProfile.user_id = userID
             onboardingModel.dataYourProfile.airline = selectedAirline
-            onboardingModel.dataYourProfile.mobile.country = selectedMobile
+            
+            if onboardingModel.dataYourProfile.userName != "" {
+                username = onboardingModel.dataYourProfile.userName
+            }
+            
+            if onboardingModel.dataYourProfile.firstName != "" {
+                firstName = onboardingModel.dataYourProfile.firstName
+            }
+            
+            if onboardingModel.dataYourProfile.lastName != "" {
+                lastName = onboardingModel.dataYourProfile.lastName
+            }
+            
+            if onboardingModel.dataYourProfile.airline != "" {
+                selectedAirline = onboardingModel.dataYourProfile.airline
+            }
+            
+            if onboardingModel.dataYourProfile.mobile.country != "" {
+                selectedMobile = onboardingModel.dataYourProfile.mobile.country
+            } else {
+                onboardingModel.dataYourProfile.mobile.country = selectedMobile
+            }
+            
+            if onboardingModel.dataYourProfile.mobile.number != "" {
+                phone = onboardingModel.dataYourProfile.mobile.number
+            }
+            
+            isSubscribe = onboardingModel.dataYourProfile.subscribe == "1" ? true : false
         }
         .onChange(of: selectedAirline) { newValue in
             onboardingModel.dataYourProfile.airline = newValue
@@ -239,7 +265,7 @@ struct CompleteYourProfileView: View {
         .onChange(of: selectedMobile) { newValue in
             onboardingModel.dataYourProfile.mobile.country = newValue
         }
-        .onChange(of: showUTC) { newValue in
+        .onChange(of: isSubscribe) { newValue in
             onboardingModel.dataYourProfile.subscribe = newValue ? "1" : "0"
         }
     }

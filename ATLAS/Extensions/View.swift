@@ -370,6 +370,8 @@ public struct HasToolbar: ViewModifier {
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @AppStorage("uid") var userID: String = ""
+    @AppStorage("isOnboarding") var isOnboarding: String = ""
+    @AppStorage("isLogin") var isLogin: String = ""
 
     public func body(content: Content) -> some View {
         if verticalSizeClass == .regular && horizontalSizeClass == .compact {
@@ -425,6 +427,8 @@ public struct HasToolbar: ViewModifier {
                                     onboardingModel.dataModelRecency = []
                                     onboardingModel.dataModelExpiry = []
                                     userID = ""
+                                    isOnboarding = ""
+                                    isLogin = ""
                                 }
                             } catch let signOutError as NSError {
                                 print("Error signing out: %@", signOutError)
@@ -697,9 +701,14 @@ extension String {
         // test@email.com -> true
         // test.com -> false
         
-        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+//        let regex = try! NSRegularExpression(pattern: "^[\\p{L}0-9!#$%&'*+\\/=?^_`{|}~-][\\p{L}0-9.!#$%&'*+\\/=?^_`{|}~-]{0,63}@[\\p{L}0-9-]+(?:\\.[\\p{L}0-9-]{2,7})*$", options: .caseInsensitive)
+//
+//        return regex.firstMatch(in: self, range: NSRange(location: 0, length: count)) != nil
+        let regExMatchEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let predicateEmail = NSPredicate(format:"SELF MATCHES %@", regExMatchEmail)
         
-        return regex.firstMatch(in: self, range: NSRange(location: 0, length: count)) != nil
+        return predicateEmail.evaluate(with: self)
         
     }
 }

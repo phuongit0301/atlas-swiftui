@@ -15,13 +15,13 @@ struct RecencyRowView: View {
     
     @State var currentModel = ""
     
-    @State var currentRequirement = "000"
+    @State var currentRequirement = "0000"
     
-    @State var currentFrequency = "000"
+    @State var currentFrequency = "0000"
     
     @State var currentPeriodDate = ""
     
-    @State var currentCompleted = "000"
+    @State var currentCompleted = "0000"
     
     @State var showModelModal = false
     @State var showRequirementModal = false
@@ -67,30 +67,30 @@ struct RecencyRowView: View {
             }.frame(height: 44)
             
             VStack(alignment: .leading) {
-                HStack {
+                HStack(spacing: 10) {
                     Text("Model")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                        .frame(width: 100, alignment: .leading)
                     Text("Requirement")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 54, 5), alignment: .leading)
                     Text("Frequency")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 44, 5), alignment: .leading)
                     Text("Current Period Start")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 54, 5), alignment: .leading)
                     Text("Completed")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
-                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                        .frame(width: calculateWidthSummary(width - 54, 5), alignment: .leading)
                 }.frame(height: 44, alignment: .leading)
                 
-                HStack {
+                HStack(spacing: 10) {
                     HStack(alignment: .center, spacing: 8) {
                         Picker("", selection: $currentModel) {
                             ForEach(DataModelDropdown, id: \.self) {
@@ -98,30 +98,30 @@ struct RecencyRowView: View {
                             }
                         }.pickerStyle(MenuPickerStyle())
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    }.frame(width: 100)
                     HStack(alignment: .center, spacing: 8) {
                         FlightTimeButtonTimeStepper(onToggle: onRequirement, value: "\(currentRequirement)")
                             .fixedSize()
                         Text("Landings").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    }.frame(width: calculateWidthSummary(width - 44, 5))
                     HStack(alignment: .center, spacing: 8) {
                         FlightTimeButtonTimeStepper(onToggle: onFrequency, value: "\(currentFrequency)")
                             .fixedSize()
                         Text("Days").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    }.frame(width: calculateWidthSummary(width - 54, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onPeriodDate, value: currentPeriodDate)
                             .fixedSize()
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    }.frame(width: calculateWidthSummary(width - 54, 5))
                     HStack(alignment: .center, spacing: 8) {
                         FlightTimeButtonTimeStepper(onToggle: onCompleted, value: "\(currentCompleted)")
                             .fixedSize()
                         Text("Landing").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
                         Spacer()
-                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    }.frame(width: calculateWidthSummary(width - 54, 5))
                 }.frame(height: 44, alignment: .leading)
             }.frame(maxWidth: .infinity)
             
