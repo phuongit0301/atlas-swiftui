@@ -186,6 +186,7 @@ struct FlightForm: View {
             event.dest = tfDest
             event.startDate = dateFormatter.string(from: startDate!)
             event.endDate = dateFormatter.string(from: endDate!)
+            event.status = 5
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()

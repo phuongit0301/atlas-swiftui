@@ -132,6 +132,7 @@ struct COPForm: View {
             event.type = selectedEvent.rawValue
             event.startDate = dateFormatter.string(from: startDate!)
             event.endDate = dateFormatter.string(from: endDate!)
+            event.status = 5
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()

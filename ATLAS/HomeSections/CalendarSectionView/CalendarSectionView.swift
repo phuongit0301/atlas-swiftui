@@ -64,7 +64,7 @@ struct CalendarSectionView: View {
             }// end VStack
             .background(Color.theme.antiFlashWhite)
             .sheet(isPresented: $showModal) {
-                EventModalView(showModal: $showModal)
+                EventModalView(showModal: $showModal).interactiveDismissDisabled(true)
             }.frame(height: proxy.size.height + 200)
         }
     }

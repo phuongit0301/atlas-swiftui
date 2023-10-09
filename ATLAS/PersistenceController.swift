@@ -268,6 +268,7 @@ class CoreDataModelState: ObservableObject {
             let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
             
             
+            print("sync after signup")
             DispatchQueue.main.async {
                 //For calendar
                 if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {

@@ -128,7 +128,7 @@ class RemoteService: ObservableObject {
         request.httpMethod = "POST"
         // Convert the request body to JSON data
         let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
+        print("json=============\(String(data: postData!, encoding: .utf8)!)")
         // Set the request body data
         request.httpBody = postData
         

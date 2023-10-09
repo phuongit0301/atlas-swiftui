@@ -190,6 +190,7 @@ struct OtherEventForm: View {
             event.location = tfLocation
             event.startDate = dateFormatter.string(from: startDate!)
             event.endDate = dateFormatter.string(from: endDate!)
+            event.status = 5
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()

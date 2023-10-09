@@ -112,7 +112,9 @@ struct OnboardingView: View {
                                     "expiry": payloadExpiry
                                 ]
                                 
+                                print("=======start post======")
                                 await remoteService.postUserData(payload, completion: { success in
+                                    print("=======success======\(success)")
                                     isLoading = false
                                     coreDataModel.loading = false
                                     coreDataModel.loadingInit = false

@@ -61,6 +61,7 @@ struct ATLASApp: App {
                         } else {
                             ContentView()
                                 .task {
+                                    print("isBoardingCompleted========\(isBoardingCompleted)")
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
                                     }
