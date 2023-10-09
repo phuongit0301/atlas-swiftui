@@ -24,6 +24,7 @@ struct COPForm: View {
     let dateFormatterTime = DateFormatter()
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
+    let timeFormatterToSave = DateFormatter()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -115,13 +116,16 @@ struct COPForm: View {
         dateFormatterTime.dateFormat = "yyyy-MM-dd HHmm"
         dateFormatter.dateFormat = "yyyy-MM-dd"
         timeFormatter.dateFormat = "HHmm"
+        timeFormatterToSave.dateFormat = "HH:mm"
         
         let startDateFm = dateFormatter.string(from: selectedStartDate)
         let startTimeFm = timeFormatter.string(from: selectedStartTime)
+        let startTimeFmSave = timeFormatterToSave.string(from: selectedStartTime)
         
         let endDateFm = dateFormatter.string(from: selectedEndDate)
         let endTimeFm = timeFormatter.string(from: selectedEndTime)
-
+        let endTimeFmSave = timeFormatterToSave.string(from: selectedEndTime)
+        
         let startDate = dateFormatterTime.date(from: "\(startDateFm) \(startTimeFm)")
         let endDate = dateFormatterTime.date(from: "\(endDateFm) \(endTimeFm)")
         
@@ -130,12 +134,14 @@ struct COPForm: View {
             event.id = UUID()
             event.name = tfEventName
             event.type = selectedEvent.rawValue
-            event.startDate = dateFormatter.string(from: startDate!)
-            event.endDate = dateFormatter.string(from: endDate!)
+            event.startDate = "\(startDateFm) \(startTimeFmSave)"
+            event.endDate = "\(endDateFm) \(endTimeFmSave)"
             event.status = 5
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()
+            coreDataModel.dataEventCompleted = coreDataModel.readEventsByStatus(status: "2")
+            coreDataModel.dataEventUpcoming = coreDataModel.readEventsByStatus(status: "5")
             
             self.showModal.toggle()
         }

@@ -23,7 +23,7 @@ struct CalendarView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State private var dateRange: [ClosedRange<Date>] = CalendarModel().dateRange
-    
+    private let dateFormatter = DateFormatter()
     // Draw BG Event
     @State var countDate = 1
     
@@ -41,7 +41,7 @@ struct CalendarView: View {
             CalendarViewComponent(
                 calendar: calendar,
                 date: $selectedDate,
-                entries: $entries,
+                entries: $coreDataModel.dataEvents,
                 events: $coreDataModel.dataEvents,
                 content: { (date, dateRange) in
                     VStack(alignment: .center, spacing: 0) {
@@ -137,14 +137,16 @@ struct CalendarView: View {
     }
     
     func numberOfEventsInDate(date: Date) -> Int {
-        var count: Int = 0
-        for entry in entries {
-            if calendar.isDate(date, inSameDayAs: entry.timestamp) {
-                count += 1
-            }
-        }
-        return count
-    }
+           var count: Int = 0
+           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+           
+           for entry in coreDataModel.dataEvents {
+               if let startDate = dateFormatter.date(from: entry.startDate!), calendar.isDate(date, inSameDayAs: startDate) {
+                   count += 1
+               }
+           }
+           return count
+       }
     
     func eventsOfRange(date: Date) -> Color {
         for range in dateRange {
@@ -165,7 +167,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     // Injected dependencies
     private var calendar: Calendar
     @Binding private var date: Date
-    @Binding private var entries: [IEntries]
+    @Binding private var entries: [EventList]
     @Binding private var events: [EventList]
     private let content: (Date, ClosedRange<Date>?) -> Day
     private let trailing: (Date) -> Trailing
@@ -184,7 +186,7 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
     init(
         calendar: Calendar,
         date: Binding<Date>,
-        entries: Binding<[IEntries]>,
+        entries: Binding<[EventList]>,
         events: Binding<[EventList]>,
         @ViewBuilder content: @escaping (Date, ClosedRange<Date>?) -> Day,
         @ViewBuilder trailing: @escaping (Date) -> Trailing,
@@ -419,7 +421,7 @@ private extension CalendarViewComponent {
 private extension CalendarViewComponent {
     func countEventByRow(_ events: [EventList], _ days: [Date]) -> [String: Any] {
         let dateFormmater = DateFormatter()
-        dateFormmater.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormmater.dateFormat = "yyyy-MM-dd"
         var tempIndex = [String: Any]()
         
         for (i, event) in events.enumerated() {
@@ -431,8 +433,10 @@ private extension CalendarViewComponent {
                     space = 0
                 }
                 
-                let startDate = dateFormmater.date(from: event.unwrappedStartDate)
-                let endDate = dateFormmater.date(from: event.unwrappedEndDate)
+                let arrStartDate = event.unwrappedStartDate.components(separatedBy: " ")
+                let arrEndDate = event.unwrappedEndDate.components(separatedBy: " ")
+                let startDate = dateFormmater.date(from: arrStartDate[0])
+                let endDate = dateFormmater.date(from: arrEndDate[0])
                 let rowCompare = dateFormmater.date(from: dateFormat(row))
                 
                 let dateString = dateFormmater.string(from: row)
@@ -460,6 +464,8 @@ private extension CalendarViewComponent {
                             tempIndex[keyPath: strRowNum] = i + 1
                             tempIndex[keyPath: strSpace] = space
                         }
+                    } else {
+                        space += 1
                     }
                 }
                 else {
@@ -474,7 +480,7 @@ private extension CalendarViewComponent {
     
     func dateFormat(_ date: Date) -> String {
         let dateFormmater = DateFormatter()
-        dateFormmater.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormmater.dateFormat = "yyyy-MM-dd"
         return dateFormmater.string(from: date)
     }
 }

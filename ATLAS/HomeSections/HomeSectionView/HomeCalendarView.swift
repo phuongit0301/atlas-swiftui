@@ -129,10 +129,13 @@ struct HomeCalendarView: View {
     }
     
     func dateHasEvents(date: Date) -> Bool {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         for entry in coreDataModel.dataEvents {
-            if let startDate = entry.startDate, let startDateFormat = dateFormatter.date(from: startDate) {
-                if calendar.isDate(date, inSameDayAs: startDateFormat) {
+            let arrStartDate = entry.unwrappedStartDate.components(separatedBy: " ")
+            
+            if let startDate = dateFormatter.date(from: arrStartDate[0]) {
+                if calendar.isDate(date, inSameDayAs: startDate) {
                     return true
                 }
             }
@@ -143,14 +146,17 @@ struct HomeCalendarView: View {
     }
     
     func eventsOfDate(date: Date) -> Color {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         for entry in coreDataModel.dataEvents {
-            if let startDate = entry.startDate, let startDateFormat = dateFormatter.date(from: startDate) {
-                if calendar.isDate(date, inSameDayAs: startDateFormat) {
+            let arrStartDate = entry.unwrappedStartDate.components(separatedBy: " ")
+            
+            if let startDate = dateFormatter.date(from: arrStartDate[0]) {
+                if calendar.isDate(date, inSameDayAs: startDate) {
                     if entry.status == 1 {
                         return Color.theme.lavenderGray
                     }
                     
-                    if entry.status == 2 {
+                    if entry.status == 2 || entry.status == 5 {
                         return Color.theme.azure
                     }
                     
