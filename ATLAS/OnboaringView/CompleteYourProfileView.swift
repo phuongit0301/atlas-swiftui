@@ -121,7 +121,7 @@ struct CompleteYourProfileView: View {
                         
                         HStack(spacing: 8) {
                             Picker("", selection: $selectedAirline) {
-                                ForEach(ALTN_DROP_DOWN, id: \.self) {
+                                ForEach(AIRLINE_DROP_DOWN, id: \.self) {
                                     Text($0).tag($0)
                                 }
                             }.pickerStyle(MenuPickerStyle())
@@ -225,7 +225,7 @@ struct CompleteYourProfileView: View {
                         .foregroundColor(.white)
                 )
         }.onAppear {
-            selectedAirline = ALTN_DROP_DOWN.first ?? ""
+            selectedAirline = AIRLINE_DROP_DOWN.first ?? ""
             selectedMobile = DataCountryDropdown.first ?? ""
             onboardingModel.dataYourProfile.email = email
             onboardingModel.dataYourProfile.subscribe = "1"

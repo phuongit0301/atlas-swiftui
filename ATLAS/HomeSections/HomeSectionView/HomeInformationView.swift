@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeInformationView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var yourFlightPlanModel: YourFlightPlanModel
+    @EnvironmentObject var remoteService: RemoteService
     
     @State var isCollapseFlight = false
     @State var isCollapseExpiring = false
@@ -101,8 +102,48 @@ struct HomeInformationView: View {
                                         }.padding(.vertical, 11)
                                             .padding(.horizontal)
                                             .onTapGesture {
-                                                yourFlightPlanModel.selectedEvent = coreDataModel.dataEventUpcoming[index]
-                                                yourFlightPlanModel.isActive = true
+                                                Task {
+                                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                                                    let currentEvent = coreDataModel.dataEventUpcoming[index]
+                                                    
+                                                    yourFlightPlanModel.selectedEvent = currentEvent
+                                                    yourFlightPlanModel.isActive = true
+                                                    
+                                                    if let startDate = dateFormatter.date(from: currentEvent.unwrappedStartDate),
+                                                       let endDate = dateFormatter.date(from: currentEvent.unwrappedEndDate) {
+                                                        
+                                                        dateFormatter.dateFormat = "HH:mm"
+                                                        let startTime = dateFormatter.string(from: startDate)
+                                                        let endTime = dateFormatter.string(from: endDate)
+                                                        
+                                                        let requestBody = [
+                                                            "flight_number": currentEvent.unwrappedName,
+                                                            "dep": currentEvent.unwrappedDep,
+                                                            "arr": currentEvent.unwrappedDest,
+                                                            "sta": startTime,
+                                                            "std": endTime
+                                                        ]
+                                                        
+//                                                        let requestBody = [
+//                                                            "flight_number": "SQ806",
+//                                                            "dep": "VTBS",
+//                                                            "arr": "WSSS",
+//                                                            "sta": "16:00",
+//                                                            "std": "00:25"
+//                                                        ]
+                                                        
+                                                        coreDataModel.loadingInitFuel = true
+
+                                                        await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
+                                                            if success {
+                                                                coreDataModel.loadingInitFuel = false
+                                                                yourFlightPlanModel.selectedEvent = currentEvent
+                                                                yourFlightPlanModel.isActive = true
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                               
                                             }
 //                                    }
                                     

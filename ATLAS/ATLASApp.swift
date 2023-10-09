@@ -29,7 +29,7 @@ struct ATLASApp: App {
     let persistenceController = PersistenceController.shared
     let remoteServiceController = RemoteService.shared
     
-    @ObservedObject var apiManager = APIManager.shared
+//    @ObservedObject var apiManager = APIManager.shared
     @StateObject var tabModelState = TabModelState()
     @StateObject var mainTabModelState = MainTabModelState()
     @StateObject var flightNoteModelState = FlightNoteModelState()
@@ -61,13 +61,11 @@ struct ATLASApp: App {
                         } else {
                             ContentView()
                                 .task {
-                                    print("isBoardingCompleted======\(isBoardingCompleted)")
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
                                     }
                                 }
                                 .task {
-                                    print("isLogin======\(isLogin)")
                                     if isLogin == "1" {
                                         print("fetch login")
                                         coreDataModel.loading = true
@@ -83,7 +81,6 @@ struct ATLASApp: App {
                     }
                 }
             }.onAppear {
-                isOnboarding = "1"
                 if locationViewModel.authorizationStatus == .notDetermined {
                     locationViewModel.requestPermission()
                 }

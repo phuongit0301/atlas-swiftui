@@ -46,6 +46,9 @@
 		3E2BA86A2AD25952009ABCC2 /* FlightOverviewList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8682AD25952009ABCC2 /* FlightOverviewList+CoreDataProperties.swift */; };
 		3E2BA8712AD30C92009ABCC2 /* SignatureList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA86F2AD30C92009ABCC2 /* SignatureList+CoreDataClass.swift */; };
 		3E2BA8722AD30C92009ABCC2 /* SignatureList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8702AD30C92009ABCC2 /* SignatureList+CoreDataProperties.swift */; };
+		3E2BA8752AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8732AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataClass.swift */; };
+		3E2BA8762AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8742AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataProperties.swift */; };
+		3E2BA8782AD3B165009ABCC2 /* CommonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8772AD3B165009ABCC2 /* CommonModel.swift */; };
 		3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E351CD62A17C02700207FF1 /* FlightPageModel.swift */; };
 		3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */; };
 		3E3FCBEC2A21C905008017FA /* AircraftReferenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */; };
@@ -123,8 +126,6 @@
 		3E4A37202A5C361500027C61 /* HistoricalDelaysList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A371C2A5C361500027C61 /* HistoricalDelaysList+CoreDataProperties.swift */; };
 		3E4A37392A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37352A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift */; };
 		3E4A373A2A5C691500027C61 /* FuelTaxiList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37362A5C691500027C61 /* FuelTaxiList+CoreDataProperties.swift */; };
-		3E4A375B2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */; };
-		3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */; };
 		3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */; };
 		3E4A37662A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */; };
 		3E4A37732A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A376F2A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift */; };
@@ -319,8 +320,6 @@
 		3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */; };
 		3EB9DAD92A750F5D009AEDFB /* FuelTaxiRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */; };
 		3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */; };
-		3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */; };
-		3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */; };
 		3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DADF2A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift */; };
 		3EB9DAE22A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */; };
 		3EB9DAE52A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE32A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift */; };
@@ -503,6 +502,9 @@
 		3E2BA8682AD25952009ABCC2 /* FlightOverviewList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlightOverviewList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E2BA86F2AD30C92009ABCC2 /* SignatureList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E2BA8702AD30C92009ABCC2 /* SignatureList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignatureList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E2BA8732AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackFlownList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E2BA8742AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackFlownList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E2BA8772AD3B165009ABCC2 /* CommonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModel.swift; sourceTree = "<group>"; };
 		3E351CD62A17C02700207FF1 /* FlightPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPageModel.swift; sourceTree = "<group>"; };
 		3E3FCBE92A21C8E3008017FA /* NoteReferenceForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReferenceForm.swift; sourceTree = "<group>"; };
 		3E3FCBEB2A21C905008017FA /* AircraftReferenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftReferenceContainer.swift; sourceTree = "<group>"; };
@@ -580,8 +582,6 @@
 		3E4A371C2A5C361500027C61 /* HistoricalDelaysList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoricalDelaysList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A37352A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A37362A5C691500027C61 /* FuelTaxiList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E4A376F2A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -777,8 +777,6 @@
 		3EB99CE42A51AA1D0091BC08 /* ButtonStepperMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStepperMultiple.swift; sourceTree = "<group>"; };
 		3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTaxiRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelTrackMilesRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB9DADF2A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelEnrWXRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB9DAE32A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1109,6 +1107,7 @@
 				3E7290FF2ABC2429000FF295 /* LogbookModel.swift */,
 				3E7291412AC26583000FF295 /* PreflightModel.swift */,
 				3E7292412AC99DE4000FF295 /* OnboardingModel.swift */,
+				3E2BA8772AD3B165009ABCC2 /* CommonModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1638,6 +1637,7 @@
 				3E72923B2AC99926000FF295 /* LoginView */,
 				3EF221912AAC5738000B8FFB /* example1.ics */,
 				3EE170992AAC25DB004DA27C /* example.ics */,
+				3E5AF6492A18FF2900A97ECF /* FlightPageSections */,
 				3EE170712AA82D59004DA27C /* HomeSections */,
 				3E63FC582A9AD144004BD54B /* Park Information */,
 				3E086D972A9501C200BE00AD /* ATLAS.entitlements */,
@@ -1648,7 +1648,6 @@
 				3E3FCC052A24B59C008017FA /* Slideover */,
 				3E8250552A1BADF0008F616D /* Fonts */,
 				3E5AF6522A19978900A97ECF /* Components */,
-				3E5AF6492A18FF2900A97ECF /* FlightPageSections */,
 				3E5AF6322A18622F00A97ECF /* Info.plist */,
 				3E03C64B2A15D4C20099ACA3 /* Extensions */,
 				C5F9C8192A1487870076396F /* ATLASApp.swift */,
@@ -1962,6 +1961,8 @@
 		C56AF5112A565FC900BD07A1 /* FuelPage */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BA8732AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataClass.swift */,
+				3E2BA8742AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataProperties.swift */,
 				3E086D832A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataClass.swift */,
 				3E086D842A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataProperties.swift */,
 				3E870BA22A736A140036DE3B /* ProjDelaysListRef+CoreDataClass.swift */,
@@ -1980,10 +1981,6 @@
 				3EB9DAE02A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift */,
 				3E4A37612A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift */,
 				3E4A37622A5CCDFE00027C61 /* FuelEnrWXList+CoreDataProperties.swift */,
-				3EB9DADB2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift */,
-				3EB9DADC2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift */,
-				3E4A37572A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift */,
-				3E4A37582A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift */,
 				3EB9DAD72A750F5C009AEDFB /* FuelTaxiRefList+CoreDataClass.swift */,
 				3EB9DAD82A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift */,
 				3E4A37352A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift */,
@@ -2263,6 +2260,7 @@
 				3E7291522AC3081A000FF295 /* RouteAlternateList+CoreDataProperties.swift in Sources */,
 				3EB9DAE22A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
 				3EEBE6862AB6795800421AFF /* CustomPopOverView.swift in Sources */,
+				3E2BA8752AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataClass.swift in Sources */,
 				3EFA5EEB2A3C04CC001ED6CF /* SidebarItem.swift in Sources */,
 				3E3FCC142A24FE2A008017FA /* EnrouteSplit.swift in Sources */,
 				3E7291ED2AC6ACC2000FF295 /* ClipboardEnrouteNoteView.swift in Sources */,
@@ -2300,6 +2298,7 @@
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E7291FB2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift in Sources */,
 				3E72926D2ACC6355000FF295 /* SummaryInfoList+CoreDataClass.swift in Sources */,
+				3E2BA8782AD3B165009ABCC2 /* CommonModel.swift in Sources */,
 				3E2BA8662AD1CC54009ABCC2 /* LogbookLimitationList+CoreDataProperties.swift in Sources */,
 				3E7292352AC86E61000FF295 /* SlideoverArrivalNoteRelevantList.swift in Sources */,
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
@@ -2385,7 +2384,6 @@
 				3EE170742AA82D7E004DA27C /* HomeSectionView.swift in Sources */,
 				3E7292602ACABDEC000FF295 /* ProvideExpiryView.swift in Sources */,
 				3E7292112AC85B2F000FF295 /* SlideoverCrewBriefing.swift in Sources */,
-				3EB9DADD2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataClass.swift in Sources */,
 				3E72913F2AC1BE0D000FF295 /* NoteTagItem.swift in Sources */,
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,
@@ -2406,7 +2404,6 @@
 				C5A8DE0C2A4EB38F0045EB32 /* ReciprocalRwyView.swift in Sources */,
 				3E2BA8422AD05EF0009ABCC2 /* AirportMapColorList+CoreDataProperties.swift in Sources */,
 				C5A8DE0A2A4EB3830045EB32 /* EnrouteWeatherView.swift in Sources */,
-				3EB9DADE2A769A6F009AEDFB /* FuelTrackMilesRefList+CoreDataProperties.swift in Sources */,
 				3EEBE6A02AB7F6AB00421AFF /* CustomAirportAnnotationView.swift in Sources */,
 				3E72920D2AC84018000FF295 /* SlideoverOverviewView.swift in Sources */,
 				3E3FCC482A270851008017FA /* projArrDelaysChart.swift in Sources */,
@@ -2448,7 +2445,6 @@
 				3E3FCC502A28822A008017FA /* NavigationModel.swift in Sources */,
 				3EE170852AA83207004DA27C /* MainTabbarScrollable.swift in Sources */,
 				3E72912F2AC04854000FF295 /* SummarySubSectionView.swift in Sources */,
-				3E4A375B2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataClass.swift in Sources */,
 				3E4A364A2A566ACE00027C61 /* ArrivalATCList+CoreDataClass.swift in Sources */,
 				C5A8DE022A4E8D7F0045EB32 /* TrackMilesView.swift in Sources */,
 				3EF221AD2AAF4837000B8FFB /* FlightDetail.swift in Sources */,
@@ -2484,7 +2480,6 @@
 				3E870BA02A73647F0036DE3B /* ProjDelaysList+CoreDataClass.swift in Sources */,
 				3E7292132AC85F90000FF295 /* SlideoverDeparture.swift in Sources */,
 				3EFA5F082A421261001ED6CF /* NoteFormSplit.swift in Sources */,
-				3E4A375C2A5CC9A700027C61 /* FuelTrackMilesList+CoreDataProperties.swift in Sources */,
 				3EE170832AA82E38004DA27C /* ChatSectionView.swift in Sources */,
 				3E72921B2AC86132000FF295 /* SlideoverDepartureNoteItemList.swift in Sources */,
 				3E3FCC422A270851008017FA /* flightLevelView.swift in Sources */,
@@ -2499,6 +2494,7 @@
 				3E72910C2ABC5F9E000FF295 /* RecencyModel.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
 				3E2BA8612AD1C2DE009ABCC2 /* LogbookEntriesList+CoreDataClass.swift in Sources */,
+				3E2BA8762AD39B26009ABCC2 /* FuelTrackFlownList+CoreDataProperties.swift in Sources */,
 				3E4E10222A6552520026802B /* AISearchDetailSplitView.swift in Sources */,
 				3E3FCC0D2A24E66C008017FA /* DepartureSplit.swift in Sources */,
 				3EFA5EEF2A3D5D8C001ED6CF /* FlightPlanModel.swift in Sources */,

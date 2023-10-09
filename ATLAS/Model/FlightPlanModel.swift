@@ -522,7 +522,7 @@ struct ISubDelaysModel: Codable {
     var delay: Int
 }
 
-struct IDelaysModel: Decodable {
+struct IDelaysModel: Codable {
     var delays: [ISubDelaysModel]
     var arrTimeDelay: Int
     var arrTimeDelayWX: Int
@@ -530,41 +530,41 @@ struct IDelaysModel: Decodable {
     var ymax: Int
 }
 
-struct IHistoricalDelaysModel: Decodable {
+struct IHistoricalDelaysModel: Codable {
     var days3: IDelaysModel
     var week1: IDelaysModel
     var months3: IDelaysModel
 }
 
 // For Proj Delay
-struct IDelays2Model: Decodable {
+struct IDelays2Model: Codable {
     var time: String
     var delay: Double
     var mindelay: Double
     var maxdelay: Double
 }
 
-struct IProjDelaysModel: Decodable {
+struct IProjDelaysModel: Codable {
     var delays: [IDelays2Model]
     var expectedDelay: Double
     var eta: String
 }
 
 // For Taxi
-struct ITimesModel: Decodable {
+struct ITimesModel: Codable {
     var date: String
     var condition: String
     var taxiTime: Int
 }
 
-struct IFlight3Model: Decodable {
+struct IFlight3Model: Codable {
     var times: [ITimesModel]
     var aveTime: Int
     var aveDiff: Int
     var ymax: Int
 }
 
-struct ITaxiModel: Decodable {
+struct ITaxiModel: Codable {
     var flights3: IFlight3Model
     var week1: IFlight3Model
     var months3: IFlight3Model
@@ -576,20 +576,20 @@ struct IFlights3TrackMile: Decodable {
     var trackMilesDiff: Int
 }
 
-struct ITrackMileFlightModel: Decodable {
-    var trackMiles: [IFlights3TrackMile]
-    var sumNM: Int
-    var sumMINS: Int
+struct ITrackFlownFlightModel: Codable {
+    var name: String
+    var lat: String
+    var long: String
 }
 
-struct ITrackMilesModel: Decodable {
-    var flights3: ITrackMileFlightModel
-    var week1: ITrackMileFlightModel
-    var months3: ITrackMileFlightModel
+struct ITrackFlownModel: Decodable {
+    var flights3: [ITrackFlownFlightModel]
+    var flights2: [ITrackFlownFlightModel]
+    var flights1: [ITrackFlownFlightModel]
 }
 
 // EnrWX
-struct ITrackMileEnrWXSubModel: Decodable {
+struct ITrackMileEnrWXSubModel: Codable {
     var date: String
     var condition: String
     var trackMilesDiff: Int
@@ -608,38 +608,36 @@ struct IEnrWXModel: Decodable {
 }
 
 // Flight Level
-struct IFlvlFlight3SubModel: Decodable {
+struct IFlvlFlight3SubModel: Codable {
     var waypoint: String
     var condition: String
     var flightLevel: Int
 }
 
-struct IFlvlFlight3Model: Decodable {
+struct IFlvlFlight3Model: Codable {
     var flightLevels: [IFlvlFlight3SubModel]
     var aveDiff: Int
 }
 
-struct IFlightLevelModel: Decodable {
+struct IFlightLevelModel: Codable {
     var flights3: IFlvlFlight3Model
     var week1: IFlvlFlight3Model
     var months3: IFlvlFlight3Model
 }
 
 //Reciprocal RWY
-struct IReciprocalRwyModel: Decodable {
+struct IReciprocalRwyModel: Codable {
     var trackMiles: [ITrackMileEnrWXSubModel]
     var aveNM: Int
     var aveMINS: Int
 }
 
-struct IFuelDataModel: Decodable {
+struct IFuelDataModel: Codable {
+    let taxi: ITaxiModel
+    let flightLevel: IFlightLevelModel
+    let trackFlown: [String: [ITrackFlownFlightModel]]
     let historicalDelays: IHistoricalDelaysModel
     let projDelays: IProjDelaysModel
-    let taxi: ITaxiModel
-    let trackMiles: ITrackMilesModel
-    let enrWX: IEnrWXModel
-    let flightLevel: IFlightLevelModel
-    let reciprocalRwy: IReciprocalRwyModel
 }
 
 struct IDepMetarTafWXChild: Decodable {

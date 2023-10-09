@@ -89,25 +89,16 @@ class RemoteService: ObservableObject {
         return true
     }
     
-    func getFlightStatsData() async -> ICalendarResponse?  {
+    func getFlightStatsData(_ parameters: Any) async -> IFuelDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flight_stats") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             
-            // Create the request body data
-            let requestBody = [
-                "flight_number": "SQ806",
-                "dep": "VTBS",
-                "arr": "WSSS",
-                "sta": "16:00",
-                "std": "00:25"
-            ]
-            
             do {
                 // Convert the request body to JSON data
-                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+                let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
                 // Set the request body data
                 request.httpBody = requestData
                 
@@ -117,7 +108,7 @@ class RemoteService: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
                 do {
-                    let decodedSearch = try JSONDecoder().decode(ICalendarResponse.self, from: data)
+                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)
@@ -137,7 +128,6 @@ class RemoteService: ObservableObject {
         request.httpMethod = "POST"
         
         do {
-            print("parameters=======\(parameters)")
             // Convert the request body to JSON data
             let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
             // Set the request body data
@@ -315,44 +305,44 @@ class RemoteService: ObservableObject {
         return nil
     }
     
-    func getFuelData() async -> IFuelDataModel?  {
-        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_fuel_data") else { fatalError("Missing URL") }
-            //make request
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpMethod = "POST"
-            
-            // Create the request body data
-            let requestBody = [
-                "airline": "accumulus air",
-                "fltno": "EK352",
-                "eta": "18:00",
-                "arr": "SIN",
-                "dep": "DXB"
-            ]
-            
-            do {
-                // Convert the request body to JSON data
-                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
-                // Set the request body data
-                request.httpBody = requestData
-                
-                // Set the Content-Type header to indicate JSON format
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                
-                let (data, _) = try await URLSession.shared.data(for: request)
-                
-                do {
-                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
-                    return decodedSearch
-                } catch let error {
-                    print("Error decoding: ", error)
-                }
-            } catch {
-                print("Error: \(error)")
-            }
-        return nil
-    }
+//    func getFuelData() async -> IFuelDataModel?  {
+//        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_fuel_data") else { fatalError("Missing URL") }
+//            //make request
+//            var request = URLRequest(url: url)
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.httpMethod = "POST"
+//
+//            // Create the request body data
+//            let requestBody = [
+//                "airline": "accumulus air",
+//                "fltno": "EK352",
+//                "eta": "18:00",
+//                "arr": "SIN",
+//                "dep": "DXB"
+//            ]
+//
+//            do {
+//                // Convert the request body to JSON data
+//                let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+//                // Set the request body data
+//                request.httpBody = requestData
+//
+//                // Set the Content-Type header to indicate JSON format
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//                let (data, _) = try await URLSession.shared.data(for: request)
+//
+//                do {
+//                    let decodedSearch = try JSONDecoder().decode(IFuelDataModel.self, from: data)
+//                    return decodedSearch
+//                } catch let error {
+//                    print("Error decoding: ", error)
+//                }
+//            } catch {
+//                print("Error: \(error)")
+//            }
+//        return nil
+//    }
     
     func getMapData() async -> IMapDataModel?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_data") else { fatalError("Missing URL") }

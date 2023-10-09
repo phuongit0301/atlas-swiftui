@@ -312,20 +312,12 @@
         <attribute name="taxiTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="timesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTaxi" inverseName="times" inverseEntity="FuelTaxi"/>
     </entity>
-    <entity name="FuelTrackMiles" representedClassName="FuelTrackMilesList" syncable="YES">
+    <entity name="FuelTrackFlown" representedClassName="FuelTrackFlownList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="sumMINS" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="sumNM" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <relationship name="trackMiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FuelTrackMilesRef" inverseName="trackMilesRef" inverseEntity="FuelTrackMilesRef"/>
-    </entity>
-    <entity name="FuelTrackMilesRef" representedClassName="FuelTrackMilesRefList" syncable="YES">
-        <attribute name="condition" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
-        <attribute name="phase" optional="YES" attributeType="String"/>
-        <attribute name="trackMilesDiff" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="trackMilesRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FuelTrackMiles" inverseName="trackMiles" inverseEntity="FuelTrackMiles"/>
     </entity>
     <entity name="HistoricalDelays" representedClassName="HistoricalDelaysList" syncable="YES">
         <attribute name="arrTimeDelay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>

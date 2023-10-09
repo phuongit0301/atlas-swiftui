@@ -12,7 +12,8 @@ import Charts
 struct historicalDelaysViewBasic: View {
     @Binding var dataHistoricalDelays: [HistoricalDelaysList]
     @SceneStorage("historyTimeframe") private var timeframe: delayTimeframe = .days
-    @State var delays: [ArrivalDelays]?
+    @State var delays: [ArrivalDelays] = []
+    @State var filteredDelays: [ArrivalDelays] = []
     
     @State private var showWeather = true
     var body: some View {
@@ -48,7 +49,7 @@ struct historicalDelaysViewBasic: View {
                             .foregroundColor(.secondary)
                         Text("\(arrTimeDelayWX.formatted()) mins")
                             .font(.headline)
-                        historicalDelaysChartBasic(arrivalDelays: delays ?? [], eta: eta, arrTimeDelay: arrTimeDelayWX, ymax: ymax)
+                        historicalDelaysChartBasic(arrivalDelays: $delays, eta: eta, arrTimeDelay: arrTimeDelayWX, ymax: ymax)
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     } else {
@@ -57,8 +58,7 @@ struct historicalDelaysViewBasic: View {
                             .foregroundColor(.secondary)
                         Text("\(arrTimeDelay.formatted()) mins")
                             .font(.headline)
-                        let filteredDelays = delays?.filter { $0.condition != "Added delay due WX" }
-                        historicalDelaysChartBasic(arrivalDelays: filteredDelays ?? [], eta: eta, arrTimeDelay: arrTimeDelay, ymax: ymax)
+                        historicalDelaysChartBasic(arrivalDelays: $filteredDelays, eta: eta, arrTimeDelay: arrTimeDelay, ymax: ymax)
                             .frame(minHeight: 300)
                             .chartYScale(domain: 0 ... ymax) // set dynamic domain to max of y value
                     }
@@ -78,6 +78,9 @@ struct historicalDelaysViewBasic: View {
     func handleData() {
         let items = dataFilter()
         delays = delaysFunc(items)
+        if delays.count > 0 {
+            filteredDelays = delays.filter { $0.condition != "Added delay due WX" }
+        }
     }
     
     func dataFilter() -> [String: HistoricalDelaysList?] {
@@ -87,7 +90,7 @@ struct historicalDelaysViewBasic: View {
         
         // flight3, week1, months3
         dataHistoricalDelays.forEach { item in
-            if item.type == "flights3" {
+            if item.type == "days3" {
                 days = item
             } else if item.type == "week1" {
                 week1 = item
@@ -99,7 +102,7 @@ struct historicalDelaysViewBasic: View {
         return ["days": days, "week1": week1, "weeks3": weeks3]
     }
     // switcher by period
-    func delaysFunc(_ dataFilter: [String: HistoricalDelaysList?]) -> [ArrivalDelays]? {
+    func delaysFunc(_ dataFilter: [String: HistoricalDelaysList?]) -> [ArrivalDelays] {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         
@@ -240,7 +243,7 @@ struct historicalDelaysViewBasic: View {
 
 
 struct historicalDelaysChartBasic: View {
-    var arrivalDelays: [ArrivalDelays]
+    @Binding var arrivalDelays: [ArrivalDelays]
     var eta: Date
     var arrTimeDelay: Int
     var ymax: Int

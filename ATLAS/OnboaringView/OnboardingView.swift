@@ -47,7 +47,7 @@ struct OnboardingView: View {
                                 isLoading = true
                                 let payloadProfile = [
                                     "user_id": onboardingModel.dataYourProfile.user_id,
-                                    "userName": onboardingModel.dataYourProfile.userName,
+                                    "username": onboardingModel.dataYourProfile.userName,
                                     "firstName": onboardingModel.dataYourProfile.firstName,
                                     "lastName": onboardingModel.dataYourProfile.lastName,
                                     "airline": onboardingModel.dataYourProfile.airline,
@@ -62,13 +62,11 @@ struct OnboardingView: View {
                                 var payloadExperience: [Any] = []
                                 for item in onboardingModel.dataModelExperience {
                                     payloadExperience.append([
-                                        "modelName": item.modelName,
+                                        "model": item.modelName,
                                         "pic": item.pic,
                                         "picUs": item.picUs,
                                         "p1": item.p1,
                                         "p2": item.p2,
-                                        "instr": item.instr,
-                                        "exam": item.exam,
                                         "totalTime": item.totalTime
                                     ])
                                 }
@@ -89,7 +87,7 @@ struct OnboardingView: View {
                                 for item in onboardingModel.dataModelRecency {
                                     payloadRecency.append([
                                         "type": item.type,
-                                        "modelName": item.modelName,
+                                        "model": item.modelName,
                                         "requirement": item.requirement,
                                         "frequency": item.frequency,
                                         "periodStart": item.periodStart,
@@ -100,9 +98,9 @@ struct OnboardingView: View {
                                 var payloadExpiry: [Any] = []
                                 for item in onboardingModel.dataModelExpiry {
                                     payloadExpiry.append([
-                                        "expiredDate": item.expiredDate,
-                                        "requirement": item.requirement,
-                                        "documentType": item.documentType
+                                        "expiryDate": item.expiredDate,
+//                                        "requirement": item.requirement,
+                                        "type": item.documentType
                                     ])
                                 }
                                 

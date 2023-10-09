@@ -23,57 +23,61 @@ struct StatisticsView: View {
 #endif
    
     var body: some View {
-        WidthThresholdReader(widthThreshold: 800) { proxy in
-            VStack {
-                HStack {
-                    HStack {
-                        Text("Statistics").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                    }.padding()
-                    .background(.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 1))
-                }.padding()
-                
-                ScrollView(.vertical) {
-                    VStack(spacing: 16) {
-                        Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-                            if proxy.isCompact {
-                                projArrivalDelaysViewBasic(dataProjDelays: $coreDataModel.dataProjDelays)
-                                historicalDelaysViewBasic(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
-                            } else {
-                                GridRow {
-                                    projArrivalDelaysViewBasic(dataProjDelays: $coreDataModel.dataProjDelays)
-                                    historicalDelaysViewBasic(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
+        VStack(spacing: 0) {
+            if coreDataModel.loadingInitFuel {
+                HStack(alignment: .center) {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+                }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .background(Color.black.opacity(0.3))
+            } else {
+                WidthThresholdReader(widthThreshold: 800) { proxy in
+                    VStack {
+                        HStack {
+                            HStack {
+                                Text("Statistics").font(.system(size: 20, weight: .semibold)).foregroundColor(.black).frame(maxWidth: .infinity, alignment: .leading)
+                                Spacer()
+                            }.padding()
+                            .background(.white)
+                            .cornerRadius(8)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 1))
+                        }.padding()
+                        
+                        ScrollView(.vertical) {
+                            VStack(spacing: 16) {
+                                Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+                                    if proxy.isCompact {
+                                        projArrivalDelaysViewBasic(dataProjDelays: $coreDataModel.dataProjDelays)
+                                        historicalDelaysViewBasic(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
+                                    } else {
+                                        GridRow {
+                                            projArrivalDelaysViewBasic(dataProjDelays: $coreDataModel.dataProjDelays)
+                                            historicalDelaysViewBasic(dataHistoricalDelays: $coreDataModel.dataHistoricalDelays)
+                                        }
+                                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                        .padding([.horizontal, .bottom], 16)
+                                        .frame(maxWidth: .infinity)
+                                        GridRow {
+                                            taxiViewBasic(dataProjTaxi: $coreDataModel.dataProjTaxi)
+                                            flightLevelViewBasic(dataFlightLevel: $coreDataModel.dataFlightLevel)
+                                        }
+                                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding([.horizontal, .bottom], 16)
+                                        .frame(maxWidth: .infinity)
+                                        GridRow {
+                                            MapViewModalTrackFlown()
+                                        }
+                                        .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding([.horizontal, .bottom], 16)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 500)
+                                    }
                                 }
-                                .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .padding([.horizontal, .bottom], 16)
-                                .frame(maxWidth: .infinity)
-                                GridRow {
-                                    taxiViewBasic(dataProjTaxi: $coreDataModel.dataProjTaxi)
-                                }
-                                .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding([.horizontal, .bottom], 16)
-                                .frame(maxWidth: .infinity)
-                                GridRow {
-                                    flightLevelViewBasic(dataFlightLevel: $coreDataModel.dataFlightLevel)
-                                }
-                                .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding([.horizontal, .bottom], 16)
-                                .frame(maxWidth: .infinity)
-                                GridRow {
-//                                    MapViewModalTrackFlown()
-                                }
-                                .containerShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding([.horizontal, .bottom], 16)
-                                .frame(maxWidth: .infinity)
                             }
-                        }
+                        }.padding(.vertical)
                     }
-                }.padding(.vertical)
+                }
             }
         }.task {
             await waitForResponse()
