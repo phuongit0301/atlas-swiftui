@@ -229,8 +229,8 @@ struct MapViewModalTrackFlown: View {
         var locationCoordinate = [CLLocationCoordinate2D]()
         
         // starting point (departure airport)
-        if let firstItem = payload.first {
-            let firstCoord = CLLocationCoordinate2D(latitude: (firstItem.latitude! as NSString).doubleValue, longitude: (firstItem.longitude! as NSString).doubleValue)
+        if let firstItem = payload.first, let latitude = firstItem.latitude, let longitude = firstItem.longitude {
+            let firstCoord = CLLocationCoordinate2D(latitude: (latitude as NSString).doubleValue, longitude: (longitude as NSString).doubleValue)
             let firstImage = UIImage(named: "icon_circle_fill_blue")
             
             let firstAnnotation = CustomRouteAnnotation(coordinate: firstCoord, title: (payload.first?.name as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: firstImage)
@@ -243,18 +243,20 @@ struct MapViewModalTrackFlown: View {
         // rest of route
         for item in payload {
             if item != payload.first || item != payload.last {
-                let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-                //let annotation = CustomRouteAnnotation(coordinate: coord, title: itemExists.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle_fill_blue"))
-                
-                locationCoordinate.append(coord)
-                //mapView.addAnnotation(annotation)
-                routeDatas.append(SRoute(name: "", latitude: item.latitude!, longitude: item.longitude!))
+                if let latitude = item.latitude, let longitude = item.longitude {
+                    let coord = CLLocationCoordinate2D(latitude: (latitude as NSString).doubleValue, longitude: (longitude as NSString).doubleValue)
+                    //let annotation = CustomRouteAnnotation(coordinate: coord, title: itemExists.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle_fill_blue"))
+                    
+                    locationCoordinate.append(coord)
+                    //mapView.addAnnotation(annotation)
+                    routeDatas.append(SRoute(name: "", latitude: item.latitude!, longitude: item.longitude!))
+                }
             }
         }
     
         // last point (arrival airport)
-        if let lastItem = payload.last {
-            let lastCoord = CLLocationCoordinate2D(latitude: (lastItem.latitude! as NSString).doubleValue, longitude: (lastItem.longitude! as NSString).doubleValue)
+        if let lastItem = payload.last, let latitude = lastItem.latitude, let longitude = lastItem.longitude {
+            let lastCoord = CLLocationCoordinate2D(latitude: (latitude as NSString).doubleValue, longitude: (longitude as NSString).doubleValue)
             let lastImage = UIImage(named: "icon_circle_fill_blue")
             
             let lastAnnotation = CustomRouteAnnotation(coordinate: lastCoord, title: lastItem.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: lastImage)
