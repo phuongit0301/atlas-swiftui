@@ -51,6 +51,7 @@
         <attribute name="notams" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="selection" optional="YES" attributeType="String"/>
         <attribute name="taf" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="airportMapColorList" inverseEntity="Event"/>
     </entity>
     <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
         <attribute name="answer" optional="YES" attributeType="String"/>
@@ -172,6 +173,13 @@
         <attribute name="startDate" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="airportMapColorList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
+        <relationship name="flightOverviewList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlightOverview" inverseName="events" inverseEntity="FlightOverview"/>
+        <relationship name="mapRouteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapRoute" inverseName="events" inverseEntity="MapRoute"/>
+        <relationship name="metarTafList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MetarTafData" inverseName="events" inverseEntity="MetarTafData"/>
+        <relationship name="notamsDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NotamsData" inverseName="events" inverseEntity="NotamsData"/>
+        <relationship name="noteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="events" inverseEntity="Note"/>
+        <relationship name="notePostList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NotePost" inverseName="events" inverseEntity="NotePost"/>
     </entity>
     <entity name="EventDateRange" representedClassName="EventDateRangeList" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="String"/>
@@ -205,6 +213,7 @@
         <attribute name="timeDiffArr" optional="YES" attributeType="String"/>
         <attribute name="timeDiffDep" optional="YES" attributeType="String"/>
         <attribute name="totalTime" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="flightOverviewList" inverseEntity="Event"/>
     </entity>
     <entity name="FuelData" representedClassName="FuelDataList" syncable="YES">
         <attribute name="altn" optional="YES" attributeType="Binary"/>
@@ -381,6 +390,7 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="mapRouteList" inverseEntity="Event"/>
     </entity>
     <entity name="MetarTafData" representedClassName="MetarTafDataList" syncable="YES">
         <attribute name="airport" optional="YES" attributeType="String"/>
@@ -389,6 +399,7 @@
         <attribute name="std" optional="YES" attributeType="String"/>
         <attribute name="taf" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="metarTafList" inverseEntity="Event"/>
     </entity>
     <entity name="NotamsData" representedClassName="NotamsDataList" syncable="YES">
         <attribute name="airport" optional="YES" attributeType="String"/>
@@ -399,6 +410,7 @@
         <attribute name="notam" optional="YES" attributeType="String"/>
         <attribute name="rank" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="notamsDataList" inverseEntity="Event"/>
     </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
         <attribute name="canDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -410,6 +422,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="noteList" inverseEntity="Event"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>
     </entity>
     <entity name="NoteAabbaPost" representedClassName="NoteAabbaPostList" syncable="YES">
@@ -453,6 +466,7 @@
         <attribute name="userName" optional="YES" attributeType="String"/>
         <attribute name="voted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NoteComment" inverseName="posts" inverseEntity="NoteComment"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="notePostList" inverseEntity="Event"/>
         <relationship name="lists" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NoteAabbaPost" inverseName="posts" inverseEntity="NoteAabbaPost"/>
     </entity>
     <entity name="PerfData" representedClassName="PerfDataList" syncable="YES">

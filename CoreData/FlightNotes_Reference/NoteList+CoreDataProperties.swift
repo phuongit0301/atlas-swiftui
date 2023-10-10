@@ -2,7 +2,7 @@
 //  NoteList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 28/09/2023.
+//  Created by phuong phan on 10/10/2023.
 //
 //
 
@@ -16,16 +16,17 @@ extension NoteList {
         return NSFetchRequest<NoteList>(entityName: "Note")
     }
 
+    @NSManaged public var canDelete: Bool
+    @NSManaged public var createdAt: String?
+    @NSManaged public var fromParent: Bool
     @NSManaged public var id: UUID?
+    @NSManaged public var includeCrew: Bool
     @NSManaged public var isDefault: Bool
     @NSManaged public var name: String?
-    @NSManaged public var createdAt: String?
-    @NSManaged public var type: String?
-    @NSManaged public var includeCrew: Bool
-    @NSManaged public var canDelete: Bool
-    @NSManaged public var fromParent: Bool
     @NSManaged public var parentId: UUID?
+    @NSManaged public var type: String?
     @NSManaged public var tags: NSSet?
+    @NSManaged public var events: NSSet?
     
     public var unwrappedName: String {
         name ?? ""
@@ -54,6 +55,23 @@ extension NoteList {
 
     @objc(removeTags:)
     @NSManaged public func removeFromTags(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for events
+extension NoteList {
+
+    @objc(addEventsObject:)
+    @NSManaged public func addToEvents(_ value: EventList)
+
+    @objc(removeEventsObject:)
+    @NSManaged public func removeFromEvents(_ value: EventList)
+
+    @objc(addEvents:)
+    @NSManaged public func addToEvents(_ values: NSSet)
+
+    @objc(removeEvents:)
+    @NSManaged public func removeFromEvents(_ values: NSSet)
 
 }
 

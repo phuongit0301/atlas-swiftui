@@ -2,7 +2,7 @@
 //  AirportMapColorList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 06/10/2023.
+//  Created by phuong phan on 10/10/2023.
 //
 //
 
@@ -25,6 +25,7 @@ extension AirportMapColorList {
     @NSManaged public var notams: Data?
     @NSManaged public var selection: String?
     @NSManaged public var taf: String?
+    @NSManaged public var events: NSSet?
     
     public var unwrappedAirportId: String {
         airportId ?? ""
@@ -68,6 +69,23 @@ extension AirportMapColorList {
         
         return []
     }
+}
+
+// MARK: Generated accessors for events
+extension AirportMapColorList {
+
+    @objc(addEventsObject:)
+    @NSManaged public func addToEvents(_ value: EventList)
+
+    @objc(removeEventsObject:)
+    @NSManaged public func removeFromEvents(_ value: EventList)
+
+    @objc(addEvents:)
+    @NSManaged public func addToEvents(_ values: NSSet)
+
+    @objc(removeEvents:)
+    @NSManaged public func removeFromEvents(_ values: NSSet)
+
 }
 
 extension AirportMapColorList : Identifiable {
