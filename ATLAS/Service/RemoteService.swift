@@ -168,7 +168,7 @@ class RemoteService: ObservableObject {
                 "user_id": userID,
                 "flight_number": "TR753"
             ]
-            
+        print("requestBody==========\(requestBody)")
             do {
                 // Convert the request body to JSON data
                 let requestData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
@@ -182,6 +182,7 @@ class RemoteService: ObservableObject {
                 
                 do {
                     let decodedSearch = try JSONDecoder().decode(FlightDataV30Json.self, from: data)
+                    print("data overview==========\(decodedSearch)")
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)

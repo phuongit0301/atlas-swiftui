@@ -41,7 +41,8 @@ struct IEventResponse: Codable {
 }
 
 struct ICalendarResponse: Codable {
-    var COP_date_ranges: [IDateRangeResponse]
+//    var COP_date_ranges: [IDateRangeResponse]
+    var COP_date_ranges: [IDateRangeResponse]?
     var events: [IEventResponse]
 }
 

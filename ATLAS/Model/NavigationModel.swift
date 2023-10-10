@@ -166,7 +166,7 @@ class MainTabModelState: ObservableObject {
         IMainTabs(id: UUID(), name: "Calendar", screenName: MainNavigationEnumeration.CalendarSectionView, isShowTabbar: true, isDisabled: false),
         IMainTabs(id: UUID(), name: "Logbook", screenName: MainNavigationEnumeration.LogbookSectionView, isShowTabbar: true, isDisabled: false),
         IMainTabs(id: UUID(), name: "Recency", screenName: MainNavigationEnumeration.RecencySectionView, isShowTabbar: true, isDisabled: false),
-        IMainTabs(id: UUID(), name: "AABBA", screenName: MainNavigationEnumeration.AABBASectionView, isShowTabbar: true, isDisabled: false),
+//        IMainTabs(id: UUID(), name: "AABBA", screenName: MainNavigationEnumeration.AABBASectionView, isShowTabbar: true, isDisabled: false),
         IMainTabs(id: UUID(), name: "Chat", screenName: MainNavigationEnumeration.ChatSectionView, isShowTabbar: true, isDisabled: true),
     ]
     

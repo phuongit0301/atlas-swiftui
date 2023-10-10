@@ -60,18 +60,22 @@ struct ATLASApp: App {
                             OnboardingView()
                         } else {
                             ContentView()
+                                .onAppear {
+                                    Task {
+                                        print("isLogin========\(isLogin)")
+                                        if isLogin == "1" {
+                                            coreDataModel.loading = true
+                                            print("inside sync=======")
+                                            await coreDataModel.checkAndSyncOrPostData()
+                                            isLogin = "0"
+                                            coreDataModel.loading = false
+                                        }
+                                    }
+                                }
                                 .task {
                                     print("isBoardingCompleted========\(isBoardingCompleted)")
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
-                                    }
-                                }
-                                .task {
-                                    if isLogin == "1" {
-                                        coreDataModel.loading = true
-                                        await coreDataModel.checkAndSyncOrPostData()
-                                        isLogin = "0"
-                                        coreDataModel.loading = false
                                     }
                                 }
                         }

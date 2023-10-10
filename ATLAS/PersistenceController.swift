@@ -359,13 +359,20 @@ class CoreDataModelState: ObservableObject {
         self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
         self.dataFlightOverview = readFlightOverview()
         
-        async let eventService = getOrPostEvent()
-        async let logbookService = getOrPostLogbookEntries()
-        async let limitationService = getOrPostLogbookLimitation()
-        async let recencyService = getOrPostRecency()
-        async let flightPlanService = getOrPostFlightPlan()
+        await getOrPostFlightPlan()
+        await getOrPostEvent()
+        await getOrPostLogbookEntries()
+        await getOrPostLogbookLimitation()
+        await getOrPostRecency()
         
-        return await [eventService, logbookService, limitationService, recencyService, flightPlanService]
+//        async let eventService = getOrPostEvent()
+//        async let logbookService = getOrPostLogbookEntries()
+//        async let limitationService = getOrPostLogbookLimitation()
+//        async let recencyService = getOrPostRecency()
+//        async let flightPlanService = getOrPostFlightPlan()
+//
+//        return await [eventService, logbookService, limitationService, recencyService, flightPlanService]
+        return []
     }
     
     func syncDataMetarTaf() async {
