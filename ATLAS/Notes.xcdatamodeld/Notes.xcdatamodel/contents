@@ -544,10 +544,20 @@
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="RecencyExpiry" representedClassName="RecencyExpiryList" syncable="YES">
+    <entity name="RecencyDocument" representedClassName="RecencyDocumentList" syncable="YES">
         <attribute name="expiredDate" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="requirement" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="RecencyExperience" representedClassName="RecencyExperienceList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="p1" optional="YES" attributeType="String"/>
+        <attribute name="p2" optional="YES" attributeType="String"/>
+        <attribute name="pic" optional="YES" attributeType="String"/>
+        <attribute name="picUs" optional="YES" attributeType="String"/>
+        <attribute name="totalTime" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RouteAlternate" representedClassName="RouteAlternateList" syncable="YES">
         <attribute name="altn" optional="YES" attributeType="String"/>

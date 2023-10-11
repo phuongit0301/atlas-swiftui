@@ -82,43 +82,47 @@ struct RowAlternates: View {
                 }
             }
             .formSheet(isPresented: $isShowModal) {
-                VStack {
-                    HStack(alignment: .center) {
-                        Button(action: {
-                            self.isShowModal.toggle()
-                        }) {
-                            Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                        }
-                        
-                        Spacer()
-                        
-                        Text("ETA").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
-                        
-                        Spacer()
-                        Button(action: {
-                            // assign value from modal to entries form
-                            self.currentDateEta = currentDateEtaTemp
-                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                            
-                            if itemList.count > 0 {
-                                itemList[currentIndex].eta = dateFormatter.string(from: currentDateEtaTemp)
-                                isRouteFormChange = true
-                            }
-                            self.isShowModal.toggle()
-                        }) {
-                            Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                        }
-                    }.padding()
-                        .background(.white)
-                        .roundedCorner(12, corners: [.topLeft, .topRight])
-                    
-                    Divider()
-                    
+                GeometryReader { proxy in
                     VStack {
-                        DatePicker("", selection: $currentDateEtaTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
-                            .environment(\.locale, Locale(identifier: "en_GB"))
+                        HStack(alignment: .center) {
+                            Button(action: {
+                                self.isShowModal.toggle()
+                            }) {
+                                Text("Cancel").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                            }.buttonStyle(PlainButtonStyle())
+                                .contentShape(Rectangle())
+                            
+                            Spacer()
+                            
+                            Text("ETA").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                            
+                            Spacer()
+                            Button(action: {
+                                // assign value from modal to entries form
+                                self.currentDateEta = currentDateEtaTemp
+                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                                
+                                if itemList.count > 0 {
+                                    itemList[currentIndex].eta = dateFormatter.string(from: currentDateEtaTemp)
+                                    isRouteFormChange = true
+                                }
+                                self.isShowModal.toggle()
+                            }) {
+                                Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                            }.buttonStyle(PlainButtonStyle())
+                                .contentShape(Rectangle())
+                        }.padding()
+                            .background(.white)
+                            .roundedCorner(12, corners: [.topLeft, .topRight])
+                        
+                        Divider()
+                        
+                        VStack {
+                            DatePicker("", selection: $currentDateEtaTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
+                                .environment(\.locale, Locale(identifier: "en_GB"))
+                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }.onAppear {
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"

@@ -218,7 +218,9 @@ class CoreDataModelState: ObservableObject {
     let monthsAhead = 6
     @Published var dataExpiringSoon = [DocumentExpiry]()
     @Published var dataRecency = [RecencyList]()
-    @Published var dataRecencyExpiry = [RecencyExpiryList]()
+    @Published var dataRecencyExpiry = [RecencyDocumentList]()
+    @Published var dataRecencyDocument = [RecencyDocumentList]()
+    @Published var dataRecencyExperience = [RecencyExperienceList]()
     
     // For Route Alternate
     @Published var dataAlternate = [RouteAlternateList]()
@@ -248,6 +250,9 @@ class CoreDataModelState: ObservableObject {
     @Published var selectedEvent: EventList?
     @Published var isEventActive = false
     
+    @Published var selectedSidebar: EventList?
+    
+    @Published var isLoginLoading = false
     
     let dateFormatter = DateFormatter()
     
@@ -262,26 +267,27 @@ class CoreDataModelState: ObservableObject {
         
         self.loadingInit = true
         Task {
-            async let calendarService = remoteService.getCalendarData()
-            async let flightPlanService = remoteService.getFlightPlanDataV3()
+//            async let calendarService = remoteService.getCalendarData()
+//            async let flightPlanService = remoteService.getFlightPlanDataV3()
             async let logbookService = remoteService.getLogbookData()
             async let limitationService = remoteService.getLimitationData()
             async let recencyService = remoteService.getRecencyData()
             
             //array handle call API parallel
-            let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
+//            let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
+            let (responseLogbook, responseLimitation, responseRecency) = await (logbookService, limitationService, recencyService)
             
             
             print("sync after signup")
             DispatchQueue.main.async {
                 //For calendar
-                if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
-                    self.initDataEventDateRange(dataDateRange)
-                }
-                
-                if let events = responseCalendar?.events, events.count > 0 {
-                    self.initDataEvent(events)
-                }
+//                if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
+//                    self.initDataEventDateRange(dataDateRange)
+//                }
+//
+//                if let events = responseCalendar?.events, events.count > 0 {
+//                    self.initDataEvent(events)
+//                }
                 
                 // Init Logbook
                 if let logbookEntry = responseLogbook?.logbook_data {
@@ -299,34 +305,38 @@ class CoreDataModelState: ObservableObject {
                     self.initDataRecencyExpiry(responseRecency.expiry_data)
                 }
                 
-                // For Flight Plan
-                if let notes = responseFlightPlan?.notes, notes.count > 0 {
-                    self.initDataNoteList(notes)
-                }
-                
-                if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
-                    self.initDataAirportColor(colourAirport)
-                }
-                
-                if let route = responseFlightPlan?.route, route.count > 0 {
-                    self.initDataRouteMap(route)
-                }
-                
-                if let notam = responseFlightPlan?.notam, notam.count > 0 {
-                    self.initDataFlightNotams(notam)
-                }
-                
-                if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
-                    self.initDataFlightMetarTaf(metarTaf)
-                }
-                
-                if let aabbaNotes = responseFlightPlan?.aabba_notes {
-                    self.initDataMapAabbaNotes(aabbaNotes)
-                }
-                
-                if let flightOverview = responseFlightPlan?.flight_overview {
-                    self.initDataFlightOverview(flightOverview)
-                }
+//                if responseFlightPlan.count > 0 {
+//                    for item in responseFlightPlan {
+//                        // For Flight Plan
+//                        if item.notes.count > 0 {
+//                            self.initDataNoteList(item.notes)
+//                        }
+//                        
+//                        if item.colour_airport.count > 0 {
+//                            self.initDataAirportColor(item.colour_airport)
+//                        }
+//                        
+//                        if item.route.count > 0 {
+//                            self.initDataRouteMap(item.route)
+//                        }
+//                        
+//                        if item.notam.count > 0 {
+//                            self.initDataFlightNotams(item.notam)
+//                        }
+//                        
+//                        if item.metar_taf.count > 0 {
+//                            self.initDataFlightMetarTaf(item.metar_taf)
+//                        }
+//                        
+//                        if item.aabba_notes != nil {
+//                            self.initDataMapAabbaNotes(item.aabba_notes)
+//                        }
+//                        
+//                        if item.flight_overview != nil {
+//                            self.initDataFlightOverview(item.flight_overview)
+//                        }
+//                    }
+//                }
                 
                 self.isBoardingCompleted = ""
                 
@@ -365,12 +375,13 @@ class CoreDataModelState: ObservableObject {
             self.dataFlightOverview = readFlightOverview()
             
             group.addTask {
-                await self.getOrPostFlightPlan()
+                await self.getOrPostEvent()
             }
             
             group.addTask {
-                await self.getOrPostEvent()
+                await self.getOrPostFlightPlan()
             }
+            
             group.addTask {
                 await self.getOrPostLogbookEntries()
             }
@@ -432,6 +443,8 @@ class CoreDataModelState: ObservableObject {
             // For Recency
             self.dataRecency = self.readDataRecency()
             self.dataRecencyExpiry = self.readDataRecencyExpiry()
+            self.dataRecencyDocument = self.readDataRecencyDocument()
+            self.dataRecencyExperience = self.readDataRecencyExperience()
             self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyExpiry, monthsAhead: self.monthsAhead)
             
             self.dataAlternate = self.readDataAlternate()
@@ -967,33 +980,53 @@ class CoreDataModelState: ObservableObject {
         } else {
             let responseFlightPlan = await remoteService.getFlightPlanDataV3()
             
-            if let notes = responseFlightPlan?.notes, notes.count > 0 {
-                self.initDataNoteList(notes)
-            }
-
-            if let colourAirport = responseFlightPlan?.colour_airport, colourAirport.count > 0 {
-                self.initDataAirportColor(colourAirport)
+            if responseFlightPlan.count > 0 {
+                await withTaskGroup(of: Void.self) { group in
+                    for item in responseFlightPlan {
+                        if item.notes.count > 0 {
+                            group.addTask {
+                                self.initDataNoteList(item.notes)
+                            }
+                        }
+                        
+                        if item.colour_airport.count > 0 {
+                            group.addTask {
+                                self.initDataAirportColor(item.colour_airport)
+                            }
+                        }
+                        
+                        if item.route.count > 0 {
+                            group.addTask {
+                                self.initDataRouteMap(item.route)
+                            }
+                        }
+                        
+                        if item.notam.count > 0 {
+                            group.addTask {
+                                self.initDataFlightNotams(item.notam)
+                            }
+                        }
+                        
+                        if item.metar_taf.count > 0 {
+                            group.addTask {
+                                self.initDataFlightMetarTaf(item.metar_taf)
+                            }
+                        }
+                        
+                        if item.aabba_notes.count > 0 {
+                            group.addTask {
+                                self.initDataMapAabbaNotes(item.aabba_notes)
+                            }
+                        }
+                        
+                        group.addTask {
+                            self.initDataFlightOverview(item.flight_overview)
+                        }
+                    }
+                   
+                }
             }
             
-            if let route = responseFlightPlan?.route, route.count > 0 {
-                self.initDataRouteMap(route)
-            }
-            
-            if let notam = responseFlightPlan?.notam, notam.count > 0 {
-                self.initDataFlightNotams(notam)
-            }
-            
-            if let metarTaf = responseFlightPlan?.metar_taf, metarTaf.count > 0 {
-                self.initDataFlightMetarTaf(metarTaf)
-            }
-            
-            if let aabbaNotes = responseFlightPlan?.aabba_notes {
-                self.initDataMapAabbaNotes(aabbaNotes)
-            }
-            
-            if let flightOverview = responseFlightPlan?.flight_overview {
-                self.initDataFlightOverview(flightOverview)
-            }
             
             print("=======get flight plan=====")
             return true
@@ -1729,9 +1762,9 @@ class CoreDataModelState: ObservableObject {
     func initDataRecencyExpiry(_ data: [String: String]) {
         for key in data.keys {
             if key != "id" {
-                let newObj = RecencyExpiryList(context: service.container.viewContext)
+                let newObj = RecencyDocumentList(context: service.container.viewContext)
                 newObj.id = UUID()
-                newObj.name = key
+                newObj.type = key
                 newObj.expiredDate = data[key]
                 
                 service.container.viewContext.performAndWait {
@@ -2679,6 +2712,26 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
+    func readFlightOverviewById(_ id: UUID) -> FlightOverviewList? {
+        // create a temp array to save fetched notes
+        var data: FlightOverviewList?
+        // initialize the fetch request
+        let request: NSFetchRequest<FlightOverviewList> = FlightOverviewList.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        // fetch with the request
+        do {
+            let response = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch flight overview from Core Data.")
+        }
+        
+        // return results
+        return data
+    }
+    
     func readDataRouteMapList() -> [MapRouteList] {
         // create a temp array to save fetched notes
         var data: [MapRouteList] = []
@@ -3531,17 +3584,49 @@ class CoreDataModelState: ObservableObject {
         return data
     }
     
-    func readDataRecencyExpiry() -> [RecencyExpiryList] {
-        var data: [RecencyExpiryList] = []
+    func readDataRecencyExpiry() -> [RecencyDocumentList] {
+        var data: [RecencyDocumentList] = []
         
-        let request: NSFetchRequest<RecencyExpiryList> = RecencyExpiryList.fetchRequest()
+        let request: NSFetchRequest<RecencyDocumentList> = RecencyDocumentList.fetchRequest()
         do {
-            let response: [RecencyExpiryList] = try service.container.viewContext.fetch(request)
+            let response: [RecencyDocumentList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 data = response
             }
         } catch {
             print("Could not fetch Recency Expiry from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataRecencyDocument() -> [RecencyDocumentList] {
+        var data: [RecencyDocumentList] = []
+        
+        let request: NSFetchRequest<RecencyDocumentList> = RecencyDocumentList.fetchRequest()
+        do {
+            let response: [RecencyDocumentList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Recency Document from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataRecencyExperience() -> [RecencyExperienceList] {
+        var data: [RecencyExperienceList] = []
+        
+        let request: NSFetchRequest<RecencyExperienceList> = RecencyExperienceList.fetchRequest()
+        do {
+            let response: [RecencyExperienceList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Recency Document from Core Data.")
         }
         
         return data
@@ -3575,6 +3660,23 @@ class CoreDataModelState: ObservableObject {
             }
         } catch {
             print("Could not fetch Recency Expiry from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readDataRecencyDocumentById(_ id: UUID) -> RecencyDocumentList? {
+        var data: RecencyDocumentList?
+        
+        let request: NSFetchRequest<RecencyDocumentList> = RecencyDocumentList.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        do {
+            let response: [RecencyDocumentList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch Recency Document from Core Data.")
         }
         
         return data
@@ -5110,7 +5212,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func extractExpiringDocuments(expiryData: [RecencyExpiryList], monthsAhead: Int) -> [DocumentExpiry] {
+    func extractExpiringDocuments(expiryData: [RecencyDocumentList], monthsAhead: Int) -> [DocumentExpiry] {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         // Get the current date
@@ -5126,7 +5228,7 @@ class CoreDataModelState: ObservableObject {
                     // Check if the expiry date is within the next 6 months
                     if expiryDate <= sixMonthsFromNow {
                         let documentExpiry = DocumentExpiry(id: UUID().uuidString,
-                                                            type: row.unwrappedName,
+                                                            type: row.unwrappedType,
                                                             expiryDate: dateFormatter.string(from: expiryDate))
                         expiringDocuments.append(documentExpiry)
                     }

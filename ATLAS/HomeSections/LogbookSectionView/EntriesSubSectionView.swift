@@ -137,94 +137,102 @@ struct EntriesSubSectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(dataLogbookEntries.indices, id: \.self) {index in
-                                            GridRow {
-                                                Group {
-                                                    Text(dataLogbookEntries[index].unwrappedDate)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedAircraftType)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedAircraft)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedDeparture)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedDestination)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedPicDay)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                }.frame(height: 44, alignment: .center)
-                                                
-                                                Group {
-                                                    Text(dataLogbookEntries[index].unwrappedPicUUsDay)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedP1Day)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedP2Day)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedPicNight)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedPicUUsNight)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedP1Night)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(dataLogbookEntries[index].unwrappedP2Night)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                }.frame(height: 44, alignment: .center)
-                                            }
-                                            
-                                            GridRow {
-                                                Group {
-                                                    Text(dataLogbookEntries[index].unwrappedComments)
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                        .gridCellColumns(7)
-                                                    
-                                                    if let fileUrl = dataLogbookEntries[index].signFileUrl, fileUrl != "none" {
-                                                        if fileUrl.contains("http") {
-                                                            AsyncImage(url: URL(string: fileUrl)).frame(maxWidth: 50, maxHeight: 50)
-                                                        } else {
-                                                            if let uiImage = convertBase64ToImage(imageString: fileUrl) {
-                                                                Image(uiImage: uiImage).frame(maxWidth: 50, maxHeight: 50)
-                                                            }
-                                                        }
-                                                    } else {
-                                                        Text("None")
+                                        if dataLogbookEntries.count == 0 {
+                                            HStack {
+                                                Text("No Logbook Entries saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                                Spacer()
+                                            }.frame(height: 44)
+                                        } else {
+                                            ForEach(dataLogbookEntries.indices, id: \.self) {index in
+                                                GridRow {
+                                                    Group {
+                                                        Text(dataLogbookEntries[index].unwrappedDate)
                                                             .font(.system(size: 15, weight: .regular))
                                                             .frame(alignment: .leading)
-                                                            .gridCellColumns(6)
-                                                    }
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedAircraftType)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedAircraft)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedDeparture)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedDestination)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedPicDay)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                    }.frame(height: 44, alignment: .center)
                                                     
-                                                }.frame(height: 44, alignment: .center)
-                                            }
-                                            
-                                            if index + 1 < dataLogbookEntries.count {
-                                                Divider().padding(.horizontal, -16)
+                                                    Group {
+                                                        Text(dataLogbookEntries[index].unwrappedPicUUsDay)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedP1Day)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedP2Day)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedPicNight)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedPicUUsNight)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedP1Night)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text(dataLogbookEntries[index].unwrappedP2Night)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                    }.frame(height: 44, alignment: .center)
+                                                }
+                                                
+                                                GridRow {
+                                                    Group {
+                                                        Text(dataLogbookEntries[index].unwrappedComments)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                            .gridCellColumns(7)
+                                                        
+                                                        if let fileUrl = dataLogbookEntries[index].signFileUrl, fileUrl != "none" {
+                                                            if fileUrl.contains("http") {
+                                                                AsyncImage(url: URL(string: fileUrl)).frame(width: 100, height: 80)
+                                                            } else {
+                                                                if let uiImage = convertBase64ToImage(imageString: fileUrl) {
+                                                                    Image(uiImage: uiImage).resizable().scaledToFit().frame(width: 100, height: 80)
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Text("None")
+                                                                .font(.system(size: 15, weight: .regular))
+                                                                .frame(alignment: .leading)
+                                                                .gridCellColumns(6)
+                                                        }
+                                                        
+                                                    }.frame(height: 44, alignment: .center)
+                                                }
+                                                
+                                                if index + 1 < dataLogbookEntries.count {
+                                                    Divider().padding(.horizontal, -16)
+                                                }
                                             }
                                         }
+                                        
                                     }
                                     
                                 }//End VStack

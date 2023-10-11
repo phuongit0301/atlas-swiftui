@@ -29,7 +29,7 @@ struct ButtonDateStepper: View {
     
     func parseDateString(_ value: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/M | HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         let timeString = dateFormatter.string(from: value)
         return timeString
     }

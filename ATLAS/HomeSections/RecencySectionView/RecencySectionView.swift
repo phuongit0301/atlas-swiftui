@@ -29,11 +29,13 @@ struct RecencySectionView: View {
     @State var isCollapse = false
     @State var isCollapseRecency = false
     @State var isCollapseDocument = false
+    @State var isShowDocumentModal = false
     @State private var selectedPicker = ""
     @State private var selectedExpiring = ""
     @State private var selectedExpirySoon = ""
     @State var progress = 0.0
     @State private var count = 0
+    @State private var isEdit = false
 //    let monthsAhead = 6
     let dateFormatter = DateFormatter()
     
@@ -197,38 +199,46 @@ struct RecencySectionView: View {
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(coreDataModel.dataRecency.indices, id: \.self) {index in
-                                            GridRow {
-                                                Group {
-                                                    Text(coreDataModel.dataRecency[index].unwrappedType)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text("B737")
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    HStack(alignment: .top) {
-                                                        VStack(alignment: .leading, spacing: 16) {
-                                                            Text(coreDataModel.dataRecency[index].unwrappedRequirement)
-                                                                .font(.system(size: 17, weight: .regular))
-                                                                .frame(alignment: .leading)
-                                                            Text("\(count) / \(coreDataModel.dataRecency[index].unwrappedRequirement) landings in the last \(coreDataModel.dataRecency[index].unwrappedLimit) days")
-                                                                .foregroundColor(Color.theme.azure)
-                                                                .font(.system(size: 17, weight: .regular))
-                                                                .frame(alignment: .leading)
+                                        if coreDataModel.dataRecency.count == 0 {
+                                            HStack {
+                                                Text("No recency saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                                Spacer()
+                                            }.frame(height: 44)
+                                        } else {
+                                            ForEach(coreDataModel.dataRecency.indices, id: \.self) {index in
+                                                GridRow {
+                                                    Group {
+                                                        Text(coreDataModel.dataRecency[index].unwrappedType)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        Text("B737")
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                        HStack(alignment: .top) {
+                                                            VStack(alignment: .leading, spacing: 16) {
+                                                                Text(coreDataModel.dataRecency[index].unwrappedRequirement)
+                                                                    .font(.system(size: 17, weight: .regular))
+                                                                    .frame(alignment: .leading)
+                                                                Text("\(count) / \(coreDataModel.dataRecency[index].unwrappedRequirement) landings in the last \(coreDataModel.dataRecency[index].unwrappedLimit) days")
+                                                                    .foregroundColor(Color.theme.azure)
+                                                                    .font(.system(size: 17, weight: .regular))
+                                                                    .frame(alignment: .leading)
+                                                            }
+                                                            ProgressView(value: progress).frame(width: 220).padding(.top, 8)
                                                         }
-                                                        ProgressView(value: progress).frame(width: 220).padding(.top, 8)
+                                                        
                                                     }
                                                     
                                                 }
                                                 
-                                            }
-                                            
-                                            if index + 1 < coreDataModel.dataRecency.count {
-                                                Divider().padding(.horizontal, -16)
+                                                if index + 1 < coreDataModel.dataRecency.count {
+                                                    Divider().padding(.horizontal, -16)
+                                                }
                                             }
                                         }
+                                        
                                     }
                                 }.padding()
                             }
@@ -274,7 +284,7 @@ struct RecencySectionView: View {
                                     //                                    }.pickerStyle(MenuPickerStyle()).fixedSize()
                                     
                                     Button(action: {
-                                        // ToDo
+                                        self.isShowDocumentModal.toggle()
                                     }, label: {
                                         Text("Add")
                                             .font(.system(size: 17, weight: .regular)).textCase(nil)
@@ -286,48 +296,58 @@ struct RecencySectionView: View {
                                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
                                         .cornerRadius(8)
                                     
-                                    Text("Edit")
-                                        .font(.system(size: 17, weight: .regular)).textCase(nil)
-                                        .foregroundColor(Color.theme.azure)
+                                    Button(action: {
+                                        isEdit.toggle()
+                                    }, label: {
+                                        Text(isEdit ? "Done" : "Edit")
+                                            .font(.system(size: 17, weight: .regular)).textCase(nil)
+                                            .foregroundColor(Color.theme.azure)
+                                    }).buttonStyle(PlainButtonStyle())
                                 }
                             }.padding()
                             
                             if !isCollapseDocument {
                                 VStack(alignment: .leading) {
-                                    Grid(alignment: .topLeading, horizontalSpacing: 8, verticalSpacing: 12) {
-                                        GridRow {
+                                        HStack {
                                             Text("Type")
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
+                                                .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                             
                                             Text("Expire Date")
                                                 .font(.system(size: 15, weight: .medium))
                                                 .foregroundColor(Color.black)
-                                                .frame(alignment: .leading)
+                                                .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                         }
                                         
                                         Divider().padding(.horizontal, -16)
                                         
-                                        ForEach(coreDataModel.dataRecencyExpiry.indices, id: \.self) {index in
-                                            GridRow {
-                                                Group {
-                                                    Text(coreDataModel.dataRecencyExpiry[index].unwrappedName)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                    
-                                                    Text(coreDataModel.dataRecencyExpiry[index].unwrappedExpiredDate)
-                                                        .font(.system(size: 17, weight: .regular))
-                                                        .frame(alignment: .leading)
+                                        if coreDataModel.dataRecencyDocument.count == 0 {
+                                            HStack {
+                                                Text("No documents saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                                                Spacer()
+                                            }.frame(height: 44)
+                                        } else {
+                                            ForEach(coreDataModel.dataRecencyDocument.indices, id: \.self) {index in
+                                                if isEdit {
+                                                    RecencyDocumentRowEdit(width: proxy.size.width, item: coreDataModel.dataRecencyDocument[index], itemList: $coreDataModel.dataRecencyDocument)
+                                                } else {
+                                                    HStack {
+                                                        Text(coreDataModel.dataRecencyDocument[index].unwrappedType)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                                        
+                                                        Text(coreDataModel.dataRecencyDocument[index].unwrappedExpiredDate)
+                                                            .font(.system(size: 17, weight: .regular))
+                                                            .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                                    }.frame(height: 44)
                                                 }
                                                 
-                                            }
-                                            
-                                            if index + 1 < coreDataModel.dataRecencyExpiry.count {
-                                                Divider().padding(.horizontal, -16)
+                                                if index + 1 < coreDataModel.dataRecencyDocument.count {
+                                                    Divider().padding(.horizontal, -16)
+                                                }
                                             }
                                         }
-                                    }
                                 }.padding()
                             }
                             
@@ -335,11 +355,14 @@ struct RecencySectionView: View {
                             .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     } // End Section
                 }
-            }.onAppear {
+            }.keyboardAvoidView()
+            .onAppear {
                 let data = calculateRecencyPercentage(coreDataModel.dataLogbookEntries, recencyRequirement, recencyLimit)
                 self.progress = data.percentage
                 self.count = data.count
             }
+        }.sheet(isPresented: $isShowDocumentModal) {
+            RecencyDocumentFormView(isShowing: $isShowDocumentModal).interactiveDismissDisabled(true)
         }
     }
     

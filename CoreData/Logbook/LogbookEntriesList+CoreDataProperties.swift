@@ -108,7 +108,7 @@ extension LogbookEntriesList {
     }
     
     public var unwrappedComments: String {
-        comments ?? ""
+        comments ?? "-"
     }
     
     public var unwrappedSignFileName: String {

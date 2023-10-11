@@ -11,6 +11,8 @@ struct OnboardingView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
     @EnvironmentObject var remoteService: RemoteService
+    @EnvironmentObject var persistenceController: PersistenceController
+    
     @AppStorage("isOnboarding") var isOnboarding: String = ""
     @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     
@@ -69,6 +71,17 @@ struct OnboardingView: View {
                                         "p2": item.p2,
                                         "totalTime": item.totalTime
                                     ])
+                                    
+                                    let newObject = RecencyExperienceList(context: persistenceController.container.viewContext)
+                                    newObject.id = UUID()
+                                    newObject.model = item.modelName
+                                    newObject.pic = item.pic
+                                    newObject.picUs = item.picUs
+                                    newObject.p1 = item.p1
+                                    newObject.p2 = item.p2
+                                    newObject.totalTime = item.totalTime
+                                    
+                                    coreDataModel.save()
                                 }
                                 
                                 var payloadLimitation: [Any] = []
@@ -81,6 +94,22 @@ struct OnboardingView: View {
                                         "endDate": item.endDate,
                                         "completed": item.completed
                                     ])
+                                    
+                                    let newObj = LogbookLimitationList(context: persistenceController.container.viewContext)
+                                    
+                                    newObj.id = UUID()
+                                    newObj.remoteId = UUID().uuidString
+                                    newObj.type = item.limitationFlight
+                                    newObj.requirement = ""
+                                    newObj.limit = item.limitation
+                                    newObj.start = item.startDate
+                                    newObj.end = item.endDate
+                                    newObj.text = ""
+                                    newObj.status = item.completed
+                                    newObj.colour = "black"
+                                    newObj.periodText = "\(item.startDate) to \(item.endDate)"
+                                    newObj.statusText = "\(item.completed) / "
+                                    coreDataModel.save()
                                 }
                                 
                                 var payloadRecency: [Any] = []
@@ -102,6 +131,14 @@ struct OnboardingView: View {
 //                                        "requirement": item.requirement,
                                         "type": item.documentType
                                     ])
+                                    
+                                    let newObject = RecencyDocumentList(context: persistenceController.container.viewContext)
+                                    newObject.id = UUID()
+                                    newObject.type = item.documentType
+                                    newObject.expiredDate = item.expiredDate
+                                    newObject.requirement = item.requirement
+                                    
+                                    coreDataModel.save()
                                 }
                                 
                                 let payload: [String: Any] = [

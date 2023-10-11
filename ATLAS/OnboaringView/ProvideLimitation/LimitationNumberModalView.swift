@@ -39,7 +39,7 @@ struct LimitationNumberModalView: View {
                 
                 Button(action: {
                     // assign value from modal to entries form
-                    self.selectionInOut = "\(selectionA)\(selectionB)\(selectionC)\(selectionD)"
+                    self.selectionInOut = "\(selectionA)\(selectionB):\(selectionC)\(selectionD)"
                     onChange(selectionInOut)
                     self.isShowing = false
                 }) {

@@ -56,7 +56,8 @@ struct DepartureNoteItemRelevantList: View {
                     HStack {
                         Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                         Spacer()
-                    }.padding(.horizontal)
+                    }.frame(height: 44)
+                        .padding(.horizontal)
                 } else {
                     VStack(spacing: 0) {
                         List {

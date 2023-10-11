@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
     @EnvironmentObject var signupModel: SignUpModel
     @AppStorage("isLogin") var isLogin: String = "0"
@@ -110,6 +111,7 @@ struct LoginView: View {
                             
                             if let authResult = authResult, authResult.user.isEmailVerified {
                                 print(authResult.user.uid)
+                                coreDataModel.isLoginLoading = true
                                 withAnimation {
                                     userID = authResult.user.uid
                                     isLogin = "1"

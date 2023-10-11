@@ -26,7 +26,10 @@ struct LimitationsSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     @State var isCollapse = false
+    @State var isShowModal = false
     @State var dataLimitation: [ILimitationResult] = []
+    @State var dataModelLimitation = [IProvideLimitation]()
+    
     let dateFormatter = DateFormatter()
     
     var body: some View {
@@ -43,7 +46,9 @@ struct LimitationsSubSectionView: View {
                                 Spacer()
                                 
                                 Button(action: {
-                                    // Todo
+                                    let obj = IProvideLimitation(limitationFlight: "", limitation: "", duration: "", startDate: "", endDate: "", completed: "")
+                                    dataModelLimitation.append(obj)
+                                    self.isShowModal = true
                                 }, label: {
                                     Text("Add Item")
                                         .font(.system(size: 17, weight: .regular)).textCase(nil)
@@ -118,8 +123,8 @@ struct LimitationsSubSectionView: View {
                 }
                 
             }
-        }.onAppear {
-            dataLimitation = checkLimitations(coreDataModel.dataLogbookEntries, coreDataModel.dataLogbookLimitation)
+        }.sheet(isPresented: $isShowModal) {
+            LimitationSubsectionFormView(isShowing: $isShowModal).interactiveDismissDisabled(true)
         }
     }
     

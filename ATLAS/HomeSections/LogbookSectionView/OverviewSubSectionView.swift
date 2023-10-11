@@ -61,7 +61,7 @@ struct OverviewSubSectionView: View {
     @State private var dataTotalTime = [String: [String: Int]]()
     @State private var dataLogbookEntries = [String]()
     
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var firstLoading = true
     
     @State var dataLimitation: [ILimitationResult] = []
@@ -367,7 +367,7 @@ struct OverviewSubSectionView: View {
                 let (earliestDate, latestDate) = findEarliestAndLatestDates(logbookEntries: coreDataModel.dataLogbookEntries)
                 if let earliestDate = earliestDate, let latestDate = latestDate {
                     let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                    let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
+                    let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
                     
                     selectedStartDate = dateFormatter.string(from: earliestDate)
                     selectedEndDate = dateFormatter.string(from: latestDate)
@@ -388,7 +388,7 @@ struct OverviewSubSectionView: View {
 
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -401,7 +401,7 @@ struct OverviewSubSectionView: View {
 
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue, previousTotalTimeData: coreDataModel.dataRecencyExperience)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -413,7 +413,7 @@ struct OverviewSubSectionView: View {
 
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, newValue)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -464,26 +464,68 @@ struct OverviewSubSectionView: View {
         
     }
     
-    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String) -> ([ILobookTotalTimeDataResponse], [String: [String: Int]]) {
+    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String, previousTotalTimeData: [RecencyExperienceList]) -> ([ILobookTotalTimeDataResponse], [String: [String: Int]]) {
+
         let dateFormatter = DateFormatter()
         let dateFormatter1 = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter1.dateFormat = "HH:mm:ss"
-
+        
+        // Initialize aircraftTypeTotals and rowTotals here
+        var aircraftTypeTotals: [String: [String: Int]] = [:]
+        var rowTotals: [String: [String: Int]] = [:]
+        
+        // Find the earliest date in logbookEntries
+        var earliestLogbookEntryDate: Date? = logbookEntries.map { dateFormatter.date(from: $0.date ?? "")! }.min()
+        
+        // Check if the selected start date is before the earliest date
+        if let earliestDate = earliestLogbookEntryDate, startDate < earliestDate {
+            for entry in previousTotalTimeData {
+                if var totals = aircraftTypeTotals[entry.unwrappedModel] {
+                    totals["pic"] = (totals["pic"] ?? 0) + parseTime(entry.pic)
+                    totals["picUs"] = (totals["picUs"] ?? 0) + parseTime(entry.picUs)
+                    totals["p1"] = (totals["p1"] ?? 0) + parseTime(entry.p1)
+                    totals["p2"] = (totals["p2"] ?? 0) + parseTime(entry.p2)
+                    totals["instr"] = (totals["instr"] ?? 0) // Add logic for instr if needed
+                    totals["exam"] = (totals["exam"] ?? 0) // Add logic for exam if needed
+                    aircraftTypeTotals[entry.unwrappedModel] = totals
+                } else {
+                    aircraftTypeTotals[entry.unwrappedModel] = [
+                        "pic": parseTime(entry.pic),
+                        "picUs": parseTime(entry.picUs),
+                        "p1": parseTime(entry.p1),
+                        "p2": parseTime(entry.p2),
+                        "instr": 0, // Add default value for instr if needed
+                        "exam": 0 // Add default value for exam if needed
+                    ]
+                }
+                
+                // Add the previousTotalTimeData to rowTotals as well
+                if var rowTotal = rowTotals["total"] {
+                    rowTotal["pic"] = (rowTotal["pic"] ?? 0) + parseTime(entry.pic)
+                    rowTotal["picUs"] = (rowTotal["picUs"] ?? 0) + parseTime(entry.picUs)
+                    rowTotal["p1"] = (rowTotal["p1"] ?? 0) + parseTime(entry.p1)
+                    rowTotal["p2"] = (rowTotal["p2"] ?? 0) + parseTime(entry.p2)
+                    rowTotal["instr"] = (rowTotal["instr"] ?? 0) // Add logic for instr if needed
+                    rowTotal["exam"] = (rowTotal["exam"] ?? 0) // Add logic for exam if needed
+                    rowTotals["total"] = rowTotal
+                } else {
+                    rowTotals["total"] = [
+                        "pic": parseTime(entry.pic),
+                        "picUs": parseTime(entry.picUs),
+                        "p1": parseTime(entry.p1),
+                        "p2": parseTime(entry.p2),
+                        "instr": 0, // Add default value for instr if needed
+                        "exam": 0 // Add default value for exam if needed
+                    ]
+                }
+            }
+        }
+        
         var filteredEntries = [ILobookTotalTimeData]()
-
         for entry in logbookEntries {
             if let dateString = entry.date, let entryDate = dateFormatter.date(from: dateString),
                entryDate >= startDate && entryDate <= endDate {
-
-//                let aircraftType = entry.unwrappedAircraftType
-//                let pic = parseTime(entry.unwrappedPicDay) + parseTime(entry.unwrappedPicNight)
-//                let picUs = parseTime(entry.unwrappedPicUUsDay) + parseTime(entry.unwrappedPicUUsNight)
-//                let p1 = parseTime(entry.unwrappedP1Day) + parseTime(entry.unwrappedP1Night)
-//                let p2 = parseTime(entry.unwrappedP2Day) + parseTime(entry.unwrappedP2Night)
-//                let instr = parseTime(entry.unwrappedInstr)
-//                let exam = parseTime(entry.unwrappedExam)
-
                 let aircraftType = entry.unwrappedAircraftType
                 let pic = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
                 let picUs = calculateTotalTime(entry, dayNightFilter: dayNightFilter, timeKey: "picUUs")
@@ -492,21 +534,11 @@ struct OverviewSubSectionView: View {
                 let instr = parseTime(entry.unwrappedInstr)
                 let exam = parseTime(entry.unwrappedExam)
                 
-                // Apply day/night filter
-//                if dayNightFilter == "Day" && (pic + picUs + p1 + p2) == 0 {
-//                    continue
-//                } else if dayNightFilter == "Night" && (pic + picUs + p1 + p2) == 0 {
-//                    continue
-//                }
-                
                 let logbookEntry = ILobookTotalTimeData(aircraftType: aircraftType, pic: pic, picUUs: picUs, p1: p1, p2: p2, instr: instr, exam: exam, date: entryDate, totalTime: p1 + p2)
                 
                 filteredEntries.append(logbookEntry)
             }
         }
-        
-        var aircraftTypeTotals: [String: [String: Int]] = [:]
-        var rowTotals: [String: [String: Int]] = [:]
         
         for entry in filteredEntries {
             if var totals = aircraftTypeTotals[entry.aircraftType] {
@@ -528,14 +560,14 @@ struct OverviewSubSectionView: View {
                 ]
             }
             
-            if var totals = rowTotals["total"] {
-                totals["pic"] = (totals["pic"] ?? 0) + entry.pic
-                totals["picUs"] = (totals["picUs"] ?? 0) + entry.picUUs
-                totals["p1"] = (totals["p1"] ?? 0) + entry.p1
-                totals["p2"] = (totals["p2"] ?? 0) + entry.p2
-                totals["instr"] = (totals["instr"] ?? 0) + entry.instr
-                totals["exam"] = (totals["exam"] ?? 0) + entry.exam
-                rowTotals["total"] = totals
+            if var rowTotal = rowTotals["total"] {
+                rowTotal["pic"] = (rowTotal["pic"] ?? 0) + entry.pic
+                rowTotal["picUs"] = (rowTotal["picUs"] ?? 0) + entry.picUUs
+                rowTotal["p1"] = (rowTotal["p1"] ?? 0) + entry.p1
+                rowTotal["p2"] = (rowTotal["p2"] ?? 0) + entry.p2
+                rowTotal["instr"] = (rowTotal["instr"] ?? 0) + entry.instr
+                rowTotal["exam"] = (rowTotal["exam"] ?? 0) + entry.exam
+                rowTotals["total"] = rowTotal
             } else {
                 rowTotals["total"] = [
                     "pic": entry.pic,
@@ -560,11 +592,9 @@ struct OverviewSubSectionView: View {
             let totalP1P2 = seconds2Timestamp(totals["p1"]! + totals["p2"]!)
             
             let tableRow = ILobookTotalTimeDataResponse(aircraftType: aircraftType, pic: totalPic, picUUs: totalPicUs, p1: totalP1, p2: totalP2, instr: totalInstr, exam: totalExam, totalTime: totalP1P2)
-
             tableData.append(tableRow)
         }
         
-        isLoading = false
         return (tableData, rowTotals)
     }
     

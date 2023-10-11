@@ -61,6 +61,7 @@ struct SignatureModalView: View {
     @State var temp: UIImage?
     
     var body: some View {
+        GeometryReader { proxy in
             VStack {
                 HStack(alignment: .center) {
                     Button(action: {
@@ -75,7 +76,8 @@ struct SignatureModalView: View {
                     Spacer()
                     Button(action: {
                         if signatureTfLicense != "" && drawing.image != nil {
-                            signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(maxWidth: .infinity, maxHeight: .infinity).snapshot()
+                            let img = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(width: proxy.size.width, height: 144).snapshot()
+                            let str = convertImageToBase64(image: img)
                             isSignatureModalPresented = false
                         }
                     }) {
@@ -88,11 +90,12 @@ struct SignatureModalView: View {
                     .frame(height: 44)
                 
                 VStack(spacing: 8) {
+                    
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Licence Number").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
-
+                        
                         Divider().padding(.horizontal, -16)
-
+                        
                         TextField("Enter Licence Number", text: $signatureTfLicense)
                             .font(.system(size: 15)).frame(maxWidth: .infinity)
                             .padding(.vertical)
@@ -139,10 +142,10 @@ struct SignatureModalView: View {
                             })
                     }
                     .padding(.horizontal)
-                        .background(Color.white)
-                        .roundedCorner(12, corners: [.bottomLeft, .bottomRight])
-                        .padding(.horizontal)
-                        .padding(.top, -8)
+                    .background(Color.white)
+                    .roundedCorner(12, corners: [.bottomLeft, .bottomRight])
+                    .padding(.horizontal)
+                    .padding(.top, -8)
                     
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Comments (Optional)").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black).frame(height: 44)
@@ -160,7 +163,8 @@ struct SignatureModalView: View {
                 }
                 
                 Spacer()
-        }.background(Color.theme.antiFlashWhite)
+            }.background(Color.theme.antiFlashWhite)
+        }
     }
     
     func handleBtnColor() -> Color {

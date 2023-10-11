@@ -156,7 +156,7 @@ class RemoteService: ObservableObject {
         }
     }
     
-    func getFlightPlanDataV3() async -> FlightDataV30Json?  {
+    func getFlightPlanDataV3() async -> [FlightDataV30Json]  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flights_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -166,7 +166,6 @@ class RemoteService: ObservableObject {
             // Create the request body data
             let requestBody = [
                 "user_id": userID,
-                "flight_number": "TR753"
             ]
         
             do {
@@ -181,7 +180,7 @@ class RemoteService: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
                 do {
-                    let decodedSearch = try JSONDecoder().decode(FlightDataV30Json.self, from: data)
+                    let decodedSearch = try JSONDecoder().decode([FlightDataV30Json].self, from: data)
                     return decodedSearch
                 } catch let error {
                     print("Error decoding: ", error)
@@ -190,7 +189,7 @@ class RemoteService: ObservableObject {
             } catch {
                 print("Error: \(error)")
             }
-        return nil
+        return []
     }
     
     func postFlightPlanDataV3(_ parameters: Any) async -> Bool  {

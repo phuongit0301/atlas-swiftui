@@ -59,24 +59,26 @@ struct ATLASApp: App {
                         if isOnboarding == "1" {
                             OnboardingView()
                         } else {
-                            ContentView()
-                                .onAppear {
-                                    Task {
-                                        print("isLogin========\(isLogin)")
-                                        if isLogin == "1" {
-                                            coreDataModel.loading = true
-                                            print("inside sync=======")
-                                            await coreDataModel.checkAndSyncOrPostData()
-                                            isLogin = "0"
-                                            coreDataModel.loading = false
-                                        }
-                                        
-                                        print("isBoardingCompleted========\(isBoardingCompleted)")
-                                        if isBoardingCompleted == "1" {
-                                            await coreDataModel.checkAndSyncData()
-                                        }
+                            VStack {
+                                if coreDataModel.isLoginLoading {
+                                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+                                } else {
+                                    ContentView()
+                                }
+                            }.onAppear {
+                                Task {
+                                    if isLogin == "1" {
+                                        coreDataModel.isLoginLoading = true
+                                        await coreDataModel.checkAndSyncOrPostData()
+                                        isLogin = "0"
+                                        coreDataModel.isLoginLoading = false
+                                    }
+                                    
+                                    if isBoardingCompleted == "1" {
+                                        await coreDataModel.checkAndSyncData()
                                     }
                                 }
+                            }
                         }
                     } else {
                         LoginView()

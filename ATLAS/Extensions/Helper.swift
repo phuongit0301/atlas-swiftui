@@ -73,7 +73,7 @@ func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
 
 extension Date {
     func isBetweeen(startDate: Date, endDate: Date) -> Bool {
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         return (min(startDate, endDate) ... max(startDate, endDate)) ~= self

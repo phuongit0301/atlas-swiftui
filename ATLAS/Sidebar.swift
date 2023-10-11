@@ -12,6 +12,9 @@ struct Sidebar: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
+    @State private var showUpcoming = true
+    @State private var showCompleted = true
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center, spacing: 0) {
@@ -26,31 +29,63 @@ struct Sidebar: View {
             }.padding(.top)
                 .frame(maxWidth: .infinity)
             
+            Text("Home")
+                .foregroundColor(Color.theme.eerieBlack)
+                .font(.system(size: 20, weight: .semibold))
+                .padding(.horizontal)
             
-            List(selection: $sideMenuState.selectedMenu) {
-                ForEach(sideMenuState.mainMenu, id: \.self) { item in
-                    Group {
-                        if !item.subMenuItems.isEmpty {
-                            Section(header:
-                                Text(item.name)
-                                    .foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .semibold))
-                            ) {
-                                ForEach(item.subMenuItems, id: \.self) { row in
-                                    SidebarItem(item: row, selectedItem: $sideMenuState.selectedMenu)
-                                }
+            ScrollView {
+                VStack (alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Upcoming Flights")
+                                .foregroundColor(Color.theme.eerieBlack)
+                                .font(.system(size: 20, weight: .semibold))
+                            
+                            Spacer()
+                            
+                            Image(systemName: showUpcoming ? "chevron.down" : "chevron.up")
+                                .foregroundColor(Color.theme.azure)
+                                .font(.system(size: 15))
+                        }.frame(height: 44)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showCompleted.toggle()
                             }
-                        } else {
-                            Section(header:
-                                Text(item.name)
-                                    .foregroundColor(Color.theme.sonicSilver).font(.system(size: 17, weight: .semibold))
-                            ) {
-                                EmptyView()
-                            }.listStyle(.insetGrouped)
+                        
+                        ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
+                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedSidebar)
                         }
-                    }
+                    }.padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                    
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Completed Flights")
+                                .foregroundColor(Color.theme.eerieBlack)
+                                .font(.system(size: 20, weight: .semibold))
+                                
+                            Spacer()
+                            
+                            Image(systemName: showCompleted ? "chevron.down" : "chevron.up")
+                                .foregroundColor(Color.theme.azure)
+                                .font(.system(size: 15))
+                        }.frame(height: 44)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showCompleted.toggle()
+                            }
+                        
+                        ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
+                            SidebarItem(item: $coreDataModel.dataEventCompleted[index], selectedItem: $coreDataModel.selectedSidebar)
+                        }
+                    }.padding(.horizontal)
                 }
-            }.scrollContentBackground(.hidden)
+            }
         }.background(Color.theme.cultured)
+//            .background(
+//                NavigationLink(destination: HomeFlightSectionView(), isActive: $coreDataModel.isEventActive) { EmptyView() }
+//            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

@@ -98,7 +98,8 @@ struct HomeInformationView: View {
                                                     .scaledToFit()
                                                     .aspectRatio(contentMode: .fit)
                                             }
-                                        }.padding(.vertical, 11)
+                                        }.id(UUID())
+                                        .padding(.vertical, 11)
                                             .padding(.horizontal)
                                             .contentShape(Rectangle())
                                             .onTapGesture {
@@ -136,11 +137,7 @@ struct HomeInformationView: View {
                                                         coreDataModel.loadingInitFuel = true
 
                                                         await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
-                                                            if success {
-                                                                coreDataModel.loadingInitFuel = false
-                                                                coreDataModel.selectedEvent = currentEvent
-                                                                coreDataModel.isEventActive = true
-                                                            }
+                                                            coreDataModel.loadingInitFuel = false
                                                         })
                                                     }
                                                 }
