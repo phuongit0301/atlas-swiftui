@@ -2,7 +2,7 @@
 //  EventDateRangeList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 07/10/2023.
+//  Created by phuong phan on 10/10/2023.
 //
 //
 
@@ -16,9 +16,10 @@ extension EventDateRangeList {
         return NSFetchRequest<EventDateRangeList>(entityName: "EventDateRange")
     }
 
+    @NSManaged public var endDate: String?
     @NSManaged public var id: UUID?
     @NSManaged public var startDate: String?
-    @NSManaged public var endDate: String?
+    @NSManaged public var events: EventList?
     
     public var unwrappedStartDate: String {
         startDate ?? ""

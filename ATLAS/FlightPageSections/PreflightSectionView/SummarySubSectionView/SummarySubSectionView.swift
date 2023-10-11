@@ -52,30 +52,32 @@ struct SummarySubSectionView: View {
     @State var enrouteAlternates: [IAlternate] = []
     @State var destinationAlternates: [IAlternate] = []
     
+    @State private var dataFlightOverview: FlightOverviewList?
+    
     @State var isLoading = false
     
     var body: some View {
         var std: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedStd ?? ""
+                return dataFlightOverview?.unwrappedStd ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedStd ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffDep ?? "")
             }
         }
         
         var sta: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedSta ?? ""
+                return dataFlightOverview?.unwrappedSta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedSta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
             }
         }
         
         var eta: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedEta ?? ""
+                return dataFlightOverview?.unwrappedEta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedEta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
             }
         }
         
@@ -145,15 +147,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedCallsign ?? "")
+                                    Text(dataFlightOverview?.unwrappedCallsign ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedModel ?? "")
+                                    Text(dataFlightOverview?.unwrappedModel ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedAircraft ?? "")
+                                    Text(dataFlightOverview?.unwrappedAircraft ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -176,15 +178,15 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedDep ?? "")
+                                    Text(dataFlightOverview?.unwrappedDep ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedDest ?? "")
+                                    Text(dataFlightOverview?.unwrappedDest ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedPob ?? "")
+                                    Text(dataFlightOverview?.unwrappedPob ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -257,10 +259,10 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(dataFlightOverview?.unwrappedBlockTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                                    Text(dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
 
                                 }.frame(height: 44)
@@ -275,7 +277,7 @@ struct SummarySubSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTimeFlightTime ?? "")
+                                    Text(dataFlightOverview?.unwrappedBlockTimeFlightTime ?? "")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
@@ -348,7 +350,7 @@ struct SummarySubSectionView: View {
                                             .disabled(!isEdit)
                                             .frame(width: proxy.size.width - 64, alignment: .leading)
                                             .onSubmit {
-                                                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                                                if dataFlightOverview != nil, let item = dataFlightOverview {
                                                     item.route = tfRoute
                                                 } else {
                                                     let item = FlightOverviewList(context: persistenceController.container.viewContext)
@@ -357,7 +359,7 @@ struct SummarySubSectionView: View {
                                                 
                                                 isRouteFormChange = true
                                                 coreDataModel.save()
-                                                coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                                                dataFlightOverview = coreDataModel.readFlightOverview()
                                             }
                                     }.frame(height: 44)
                                 }
@@ -478,11 +480,15 @@ struct SummarySubSectionView: View {
                 .background(Color.theme.antiFlashWhite)
                 .keyboardAvoidView()
                 .onAppear {
-                    if coreDataModel.dataFlightOverview?.route != "" {
-                        tfRoute = coreDataModel.dataFlightOverview?.route ?? ""
+                    if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                        dataFlightOverview = overviewList.first
+                        
+                        if dataFlightOverview?.route != "" {
+                            tfRoute = dataFlightOverview?.route ?? ""
+                        }
+                        
+                        prepareData()
                     }
-                    
-                    prepareData()
                 }
                 .overlay(Group {
                     if isLoading {
@@ -496,11 +502,12 @@ struct SummarySubSectionView: View {
     }
     
     func prepareData() {
-        if coreDataModel.dataAlternate.count > 0 {
+        if let dataAlternate = coreDataModel.selectedEvent?.routeAlternate?.allObjects as? [RouteAlternateList], dataAlternate.count > 0 {
             enrouteAlternates = []
             destinationAlternates = []
             
-            for item in coreDataModel.dataAlternate {
+            print("dataAlternate========\(dataAlternate)")
+            for item in dataAlternate {
                 if item.type == "enroute" {
                     enrouteAlternates.append(
                         IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "", isNew: false, isDeleted: false)
@@ -559,8 +566,8 @@ struct SummarySubSectionView: View {
             ]
             
             let payloadMap: [String: Any] = [
-                "depAirport": coreDataModel.dataFlightOverview?.unwrappedDep ?? "",
-                "arrAirport": coreDataModel.dataFlightOverview?.unwrappedDest ?? "",
+                "depAirport": dataFlightOverview?.unwrappedDep ?? "",
+                "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
                 "enrAirports": payloadEnrouteMap,
                 "altnAirports": payloadDestinationMap,
                 "route": tfRoute
@@ -568,84 +575,86 @@ struct SummarySubSectionView: View {
             
             let payloadAabbaNote: [String: Any] = [
                 "user_id": userID,
-                "flight_number": coreDataModel.dataFlightOverview?.unwrappedCallsign
+                "flight_number": dataFlightOverview?.unwrappedCallsign
             ]
             
-            async let trafficService = remoteService.updateMapTrafficData(payloadMap)
-            async let mapAabbaService = remoteService.updateMapAabbaData(payloadMap)
-            async let waypointService = remoteService.updateMapWaypointData(payloadMap)
-            async let airportService = remoteService.updateMapAirportData()
-            async let notamService = remoteService.updateNotamData(payloadNotam)
-            async let aabbaNoteService = remoteService.getAabbaNoteData(payloadAabbaNote)
+//            async let trafficService = remoteService.updateMapTrafficData(payloadMap)
+//            async let mapAabbaService = remoteService.updateMapAabbaData(payloadMap)
+//            async let waypointService = remoteService.updateMapWaypointData(payloadMap)
+//            async let airportService = remoteService.updateMapAirportData()
+//            async let notamService = remoteService.updateNotamData(payloadNotam)
+//            async let aabbaNoteService = remoteService.getAabbaNoteData(payloadAabbaNote)
+//
+//            //array handle call API parallel
+//            let (responseTraffic, responseMapAabba, responseWaypoint, responseAirport, responseNotam, responseAabbaNote) = await (trafficService, mapAabbaService, waypointService, airportService, notamService, aabbaNoteService)
+//
+//            if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
+//                await coreDataModel.deleteAllTrafficMap()
+//                coreDataModel.initDataTraffic(responseTraffic)
+//            }
+//
+//            if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
+//                await coreDataModel.deleteAllMapAabbaCommentList()
+//                await coreDataModel.deleteAllMapAabbaPostList()
+//                await coreDataModel.deleteAllMapAabbMapList()
+//                coreDataModel.initDataAabba(responseMapAabba)
+//            }
+//
+//            if let responseWaypoint = responseWaypoint, responseWaypoint.count > 0 {
+//                await coreDataModel.deleteAllWaypointList()
+//                coreDataModel.initDataWaypoint(responseWaypoint)
+//            }
+//
+//            if let responseAirport = responseAirport, responseAirport.count > 0 {
+//                await coreDataModel.deleteAllAirportList()
+//                coreDataModel.initDataAirport(responseAirport)
+//                coreDataModel.initDataAirportMapColor(responseAirport)
+//            }
+//
+//            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0 {
+//                await coreDataModel.deleteAllAabbaNoteCommentList()
+//                await coreDataModel.deleteAllAabbaNotePostList()
+//                await coreDataModel.deleteAllAabbaNoteList()
+//
+//                coreDataModel.initDataMapAabbaNotes(responseAabbaNote)
+//            }
+//
+//            await coreDataModel.deleteAllMetaTaf()
+//            await coreDataModel.deleteAllNotam()
+//
+//            if let metarTafData = responseNotam?.metarTafData {
+//                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
+//                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
+//
+//                if metarTafData.altnMetarTaf.count > 0 {
+//                    for item in metarTafData.altnMetarTaf {
+//                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
+//                    }
+//                }
+//
+//                if metarTafData.enrMetarTaf.count > 0 {
+//                    for item in metarTafData.enrMetarTaf {
+//                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
+//                    }
+//                }
+//            }
+//
+//            if let notamsData = responseNotam?.notamsData {
+//                coreDataModel.initDataNotams(notamsData)
+//            }
+//
+//            coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
+//            coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
+//            coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
+//            coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
+//            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+//            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+//            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
+//            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
+//            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
+//            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
             
-            //array handle call API parallel
-            let (responseTraffic, responseMapAabba, responseWaypoint, responseAirport, responseNotam, responseAabbaNote) = await (trafficService, mapAabbaService, waypointService, airportService, notamService, aabbaNoteService)
-            
-            if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
-                await coreDataModel.deleteAllTrafficMap()
-                coreDataModel.initDataTraffic(responseTraffic)
-            }
-            
-            if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
-                await coreDataModel.deleteAllMapAabbaCommentList()
-                await coreDataModel.deleteAllMapAabbaPostList()
-                await coreDataModel.deleteAllMapAabbMapList()
-                coreDataModel.initDataAabba(responseMapAabba)
-            }
-            
-            if let responseWaypoint = responseWaypoint, responseWaypoint.count > 0 {
-                await coreDataModel.deleteAllWaypointList()
-                coreDataModel.initDataWaypoint(responseWaypoint)
-            }
-            
-            if let responseAirport = responseAirport, responseAirport.count > 0 {
-                await coreDataModel.deleteAllAirportList()
-                coreDataModel.initDataAirport(responseAirport)
-                coreDataModel.initDataAirportMapColor(responseAirport)
-            }
-            
-            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0 {
-                await coreDataModel.deleteAllAabbaNoteCommentList()
-                await coreDataModel.deleteAllAabbaNotePostList()
-                await coreDataModel.deleteAllAabbaNoteList()
-                
-                coreDataModel.initDataMapAabbaNotes(responseAabbaNote)
-            }
-            
-            await coreDataModel.deleteAllMetaTaf()
-            await coreDataModel.deleteAllNotam()
-            
-            if let metarTafData = responseNotam?.metarTafData {
-                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
-                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
-                
-                if metarTafData.altnMetarTaf.count > 0 {
-                    for item in metarTafData.altnMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
-                    }
-                }
-                
-                if metarTafData.enrMetarTaf.count > 0 {
-                    for item in metarTafData.enrMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
-                    }
-                }
-            }
-            
-            if let notamsData = responseNotam?.notamsData {
-                coreDataModel.initDataNotams(notamsData)
-            }
-            
-            coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
-            coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
-            coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
-            coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
-            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
-            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
-            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
-            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
+            var routeAlternateList = [RouteAlternateList]()
             
             if (enrouteAlternates.count > 0) {
                 persistenceController.container.viewContext.performAndWait {
@@ -661,13 +670,22 @@ struct SummarySubSectionView: View {
                                     newObject.eta = item.eta
                                     newObject.type = "enroute"
                                     
+                                    routeAlternateList.append(newObject)
                                     try persistenceController.container.viewContext.save()
                                     print("saved Enroute successfully")
-                                    
-                                    enrouteAlternates = []
+                                }
+                            } else {
+                                if let newObject = coreDataModel.readDataAlternateById(item.id) {
+                                    newObject.altn = item.altn
+                                    newObject.vis = item.vis
+                                    newObject.minima = item.minima
+                                    newObject.eta = item.eta
+                                    newObject.type = "enroute"
+                                    routeAlternateList.append(newObject)
                                 }
                             }
                             
+                            coreDataModel.save()
                         } catch {
                             print("Failed to Enroute save: \(error)")
                             // Rollback any changes in the managed object context
@@ -690,13 +708,23 @@ struct SummarySubSectionView: View {
                                     newObject.minima = item.minima
                                     newObject.eta = item.eta
                                     newObject.type = "destination"
+                                    routeAlternateList.append(newObject)
                                     
                                     try persistenceController.container.viewContext.save()
                                     print("saved Enroute successfully")
-                                    
-                                    destinationAlternates = []
+                                }
+                            } else {
+                                if let newObject = coreDataModel.readDataAlternateById(item.id) {
+                                    newObject.altn = item.altn
+                                    newObject.vis = item.vis
+                                    newObject.minima = item.minima
+                                    newObject.eta = item.eta
+                                    newObject.type = "destination"
+                                    routeAlternateList.append(newObject)
                                 }
                             }
+                            
+                            coreDataModel.save()
                         } catch {
                             print("Failed to Destination save: \(error)")
                             // Rollback any changes in the managed object context
@@ -705,6 +733,10 @@ struct SummarySubSectionView: View {
                     }
                 }
             }
+            
+            coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+            enrouteAlternates = []
+            destinationAlternates = []
             
             coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
             coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()

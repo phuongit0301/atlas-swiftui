@@ -244,6 +244,10 @@ class CoreDataModelState: ObservableObject {
     // For Signature
     @Published var dataSignature: SignatureList?
     
+    // For event
+    @Published var selectedEvent: EventList?
+    @Published var isEventActive = false
+    
     
     let dateFormatter = DateFormatter()
     
@@ -333,46 +337,58 @@ class CoreDataModelState: ObservableObject {
     }
     
     @MainActor
-    func checkAndSyncOrPostData() async -> [Any] {
-        self.dataEvents = self.readEvents()
-        self.dataEventDateRange = self.readEventDateRange()
-        self.dataLogbookEntries = readDataLogbookEntries()
-        self.dataLogbookLimitation = readDataLogbookLimitation()
-        self.dataRecency = readDataRecency()
-        self.dataRecencyExpiry = readDataRecencyExpiry()
-        // For Flight Overview
-        // NoteList
-        self.dataNoteList = self.readNoteList()
-        
-        self.dataAirportColorMap = readDataAirportMapColorList()
-        
-        self.dataRouteMap = readDataRouteMapList()
-        
-        self.dataNotams = readDataNotamsList()
-        
-        self.dataMetarTaf = readDataMetarTafList()
-        
-        self.dataNoteAabba = readDataNoteAabbaPostList("")
-        self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("preflight")
-        self.dataNoteAabbaDeparture = readDataNoteAabbaPostList("departure")
-        self.dataNoteAabbaEnroute = readDataNoteAabbaPostList("enroute")
-        self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
-        self.dataFlightOverview = readFlightOverview()
-        
-        await getOrPostFlightPlan()
-        await getOrPostEvent()
-        await getOrPostLogbookEntries()
-        await getOrPostLogbookLimitation()
-        await getOrPostRecency()
-        
-//        async let eventService = getOrPostEvent()
-//        async let logbookService = getOrPostLogbookEntries()
-//        async let limitationService = getOrPostLogbookLimitation()
-//        async let recencyService = getOrPostRecency()
-//        async let flightPlanService = getOrPostFlightPlan()
-//
-//        return await [eventService, logbookService, limitationService, recencyService, flightPlanService]
-        return []
+    func checkAndSyncOrPostData() async {
+        await withTaskGroup(of: Void.self) { group in
+            self.dataEvents = self.readEvents()
+            self.dataEventDateRange = self.readEventDateRange()
+            self.dataLogbookEntries = readDataLogbookEntries()
+            self.dataLogbookLimitation = readDataLogbookLimitation()
+            self.dataRecency = readDataRecency()
+            self.dataRecencyExpiry = readDataRecencyExpiry()
+            // For Flight Overview
+            // NoteList
+            self.dataNoteList = self.readNoteList()
+            
+            self.dataAirportColorMap = readDataAirportMapColorList()
+            
+            self.dataRouteMap = readDataRouteMapList()
+            
+            self.dataNotams = readDataNotamsList()
+            
+            self.dataMetarTaf = readDataMetarTafList()
+            
+            self.dataNoteAabba = readDataNoteAabbaPostList("")
+            self.dataNoteAabbaPreflight = readDataNoteAabbaPostList("preflight")
+            self.dataNoteAabbaDeparture = readDataNoteAabbaPostList("departure")
+            self.dataNoteAabbaEnroute = readDataNoteAabbaPostList("enroute")
+            self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
+            self.dataFlightOverview = readFlightOverview()
+            
+            group.addTask {
+                await self.getOrPostFlightPlan()
+            }
+            
+            group.addTask {
+                await self.getOrPostEvent()
+            }
+            group.addTask {
+                await self.getOrPostLogbookEntries()
+            }
+            group.addTask {
+                await self.getOrPostLogbookLimitation()
+            }
+            group.addTask {
+                await self.getOrPostRecency()
+            }
+            
+    //        async let eventService = getOrPostEvent()
+    //        async let logbookService = getOrPostLogbookEntries()
+    //        async let limitationService = getOrPostLogbookLimitation()
+    //        async let recencyService = getOrPostRecency()
+    //        async let flightPlanService = getOrPostFlightPlan()
+    //
+    //        return await [eventService, logbookService, limitationService, recencyService, flightPlanService]
+        }
     }
     
     func syncDataMetarTaf() async {
@@ -1332,28 +1348,32 @@ class CoreDataModelState: ObservableObject {
         
         if airportInformation.count > 0 {
             airportInformation.forEach { item in
-                let newObj = AirportMapColorList(context: service.container.viewContext)
-                
-                newObj.id = UUID()
-                newObj.airportId = item.airportID
-                newObj.latitude = item.lat
-                newObj.longitude = item.long
-                newObj.selection = item.selection
-                newObj.colour = item.colour
-//                newObj.notams = item.notams
-                newObj.metar = item.metar
-                newObj.taf = item.taf
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved data airport color successfully")
-                    } catch {
-                        print("Failed to data airport color save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                do {
+                    let newObj = AirportMapColorList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.airportId = item.airportID
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    newObj.selection = item.selection
+                    newObj.colour = item.colour
+                    newObj.notams = try NSKeyedArchiver.archivedData(withRootObject: item.notams, requiringSecureCoding: true)
+                    newObj.metar = item.metar
+                    newObj.taf = item.taf
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved data airport color successfully")
+                        } catch {
+                            print("Failed to data airport color save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
+                } catch {
+                    print("could not unarchive array: \(error)")
                 }
             }
             
@@ -3542,6 +3562,23 @@ class CoreDataModelState: ObservableObject {
         
         return data
     }
+    
+    func readDataAlternateById(_ id: UUID) -> RouteAlternateList? {
+        var data: RouteAlternateList?
+        
+        let request: NSFetchRequest<RouteAlternateList> = RouteAlternateList.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        do {
+            let response: [RouteAlternateList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch Recency Expiry from Core Data.")
+        }
+        
+        return data
+    }
 
     func readHistoricalDelays() {
         do {
@@ -4727,6 +4764,25 @@ class CoreDataModelState: ObservableObject {
             
             if(response.count > 0) {
                 data = response
+            }
+        } catch {
+            print("Could not fetch Event from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readEventsById(id: String = "") -> EventList? {
+        var data: EventList?
+        
+        let request: NSFetchRequest<EventList> = EventList.fetchRequest()
+        
+        do {
+            request.predicate = NSPredicate(format: "id == %@", id)
+            let response: [EventList] = try service.container.viewContext.fetch(request)
+            
+            if(response.count > 0) {
+                data = response.first
             }
         } catch {
             print("Could not fetch Event from Core Data.")

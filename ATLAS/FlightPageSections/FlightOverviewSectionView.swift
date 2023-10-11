@@ -49,6 +49,8 @@ struct FlightOverviewSectionView: View {
     @State private var signatureImage: UIImage?
     @State private var signatureTfLicense: String = ""
     @State private var signatureTfComment: String = ""
+
+    @State private var dataFlightOverview: FlightOverviewList?
     
     //For switch crew
     @State private var isSync = false
@@ -57,25 +59,25 @@ struct FlightOverviewSectionView: View {
         
         var std: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedStd ?? ""
+                return dataFlightOverview?.unwrappedStd ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedStd ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffDep ?? "")
             }
         }
         
         var sta: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedSta ?? ""
+                return dataFlightOverview?.unwrappedSta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedSta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
             }
         }
         
         var eta: String {
             if showUTC {
-                return coreDataModel.dataFlightOverview?.unwrappedEta ?? ""
+                return dataFlightOverview?.unwrappedEta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: coreDataModel.dataFlightOverview?.unwrappedEta ?? "", timeDiff: coreDataModel.dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
             }
         }
         
@@ -162,7 +164,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedCallsign ?? "")
+                                    Text(dataFlightOverview?.unwrappedCallsign ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -184,14 +186,14 @@ struct FlightOverviewSectionView: View {
                                         text: $tfAircraft
                                     ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                         .onSubmit {
-                                            if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                                            if dataFlightOverview != nil, let item = dataFlightOverview {
                                                 item.aircraft = tfAircraft
                                             } else {
                                                 let item = FlightOverviewList(context: persistenceController.container.viewContext)
                                                 item.aircraft = tfAircraft
                                             }
                                             coreDataModel.save()
-                                            coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                                            dataFlightOverview = coreDataModel.readFlightOverview()
                                         }
                                 }.frame(height: 44)
                                 
@@ -213,12 +215,12 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedDep ?? "")
+                                    Text(dataFlightOverview?.unwrappedDep ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedDest ?? "")
+                                    Text(dataFlightOverview?.unwrappedDest ?? "")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .regular))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -233,14 +235,14 @@ struct FlightOverviewSectionView: View {
                                             tfPob = String(newOutput.prefix(3))
                                         }
                                         .onSubmit {
-                                            if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                                            if dataFlightOverview != nil, let item = dataFlightOverview {
                                                 item.pob = tfPob
                                             } else {
                                                 let item = FlightOverviewList(context: persistenceController.container.viewContext)
                                                 item.pob = tfPob
                                             }
                                             coreDataModel.save()
-                                            coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                                            dataFlightOverview = coreDataModel.readFlightOverview()
                                         }
 
                                 }.frame(height: 44)
@@ -313,7 +315,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTime ?? "")
+                                    Text(dataFlightOverview?.unwrappedBlockTime ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
@@ -332,7 +334,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedBlockTimeFlightTime ?? "")
+                                    Text(dataFlightOverview?.unwrappedBlockTimeFlightTime ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
@@ -408,10 +410,10 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedDay ?? "")
+                                    Text(dataFlightOverview?.unwrappedDay ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(coreDataModel.dataFlightOverview?.unwrappedNight ?? "")
+                                    Text(dataFlightOverview?.unwrappedNight ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -434,7 +436,7 @@ struct FlightOverviewSectionView: View {
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    Text(coreDataModel.dataFlightOverview?.totalTime ?? "")
+                                    Text(dataFlightOverview?.totalTime ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -517,9 +519,9 @@ struct FlightOverviewSectionView: View {
                                         VStack(alignment: .leading) {
                                             HStack {
                                                 if isSync {
-                                                    Text(coreDataModel.dataFlightOverview?.unwrappedF0Name ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                    Text(dataFlightOverview?.unwrappedF0Name ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 } else {
-                                                    Text(coreDataModel.dataFlightOverview?.unwrappedCaName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                    Text(dataFlightOverview?.unwrappedCaName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 }
                                                 HStack {
                                                     Picker("", selection: $selectedFO) {
@@ -544,9 +546,9 @@ struct FlightOverviewSectionView: View {
                                         VStack(alignment: .leading, spacing: 0) {
                                             HStack {
                                                 if isSync {
-                                                    Text(coreDataModel.dataFlightOverview?.unwrappedCaName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                    Text(dataFlightOverview?.unwrappedCaName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 } else {
-                                                    Text(coreDataModel.dataFlightOverview?.unwrappedF0Name ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                    Text(dataFlightOverview?.unwrappedF0Name ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 }
 
                                                 HStack {
@@ -576,48 +578,52 @@ struct FlightOverviewSectionView: View {
                 .keyboardAvoidView()
             // end VStack
             .onAppear {
-                if let ca = coreDataModel.dataFlightOverview?.unwrappedCaPicker {
-                    selectedCA = SummaryDataDropDown(rawValue: ca) ?? SummaryDataDropDown.pic
+                if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                    dataFlightOverview = overviewList.first
+
+                    if let ca = dataFlightOverview?.unwrappedCaPicker {
+                        selectedCA = SummaryDataDropDown(rawValue: ca) ?? SummaryDataDropDown.pic
+                    }
+                    
+                    if let f0 = dataFlightOverview?.unwrappedF0Picker {
+                        selectedFO = SummaryDataDropDown(rawValue: f0) ?? SummaryDataDropDown.pic
+                    }
+                    
+                    if let model = dataFlightOverview?.model {
+                        selectedModelPicker = model
+                    }
+                    
+                    currentDateFlightTime = dataFlightOverview?.unwrappedFlightTime ?? ""
+                    tfPob = dataFlightOverview?.unwrappedPob ?? ""
+                    tfAircraft = dataFlightOverview?.unwrappedAircraft ?? ""
                 }
-                
-                if let f0 = coreDataModel.dataFlightOverview?.unwrappedF0Picker {
-                    selectedFO = SummaryDataDropDown(rawValue: f0) ?? SummaryDataDropDown.pic
-                }
-                
-                if let model = coreDataModel.dataFlightOverview?.model {
-                    selectedModelPicker = model
-                }
-                
-                currentDateFlightTime = coreDataModel.dataFlightOverview?.unwrappedFlightTime ?? ""
-                tfPob = coreDataModel.dataFlightOverview?.unwrappedPob ?? ""
-                tfAircraft = coreDataModel.dataFlightOverview?.unwrappedAircraft ?? ""
             }
             .onChange(of: selectedCA) { value in
-                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                if dataFlightOverview != nil, let item = dataFlightOverview {
                     item.caPicker = value.rawValue
                     coreDataModel.save()
-                    coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                    dataFlightOverview = coreDataModel.readFlightOverview()
                 }
             }
             .onChange(of: selectedFO) { value in
-                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                if dataFlightOverview != nil, let item = dataFlightOverview {
                     item.f0Picker = value.rawValue
                     coreDataModel.save()
-                    coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                    dataFlightOverview = coreDataModel.readFlightOverview()
                 }
             }
             .onChange(of: selectedModelPicker) { value in
-                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                if dataFlightOverview != nil, let item = dataFlightOverview {
                     item.model = value
                     coreDataModel.save()
-                    coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                    dataFlightOverview = coreDataModel.readFlightOverview()
                 }
             }
             .onChange(of: currentDateFlightTime) { value in
-                if coreDataModel.dataFlightOverview != nil, let item = coreDataModel.dataFlightOverview {
+                if dataFlightOverview != nil, let item = dataFlightOverview {
                     item.flightTime = value
                     coreDataModel.save()
-                    coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                    dataFlightOverview = coreDataModel.readFlightOverview()
                 }
             }
             .onChange(of: signatureImage) { _ in
@@ -655,7 +661,7 @@ struct FlightOverviewSectionView: View {
                         coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")
                         coreDataModel.dataNoteAabbaEnroute = coreDataModel.readDataNoteAabbaPostList("enroute")
                         coreDataModel.dataNoteAabbaArrival = coreDataModel.readDataNoteAabbaPostList("arrival")
-                        coreDataModel.dataFlightOverview = coreDataModel.readFlightOverview()
+                        dataFlightOverview = coreDataModel.readFlightOverview()
                         
                         dateFormatter.dateFormat = "yyyy-MM-dd"
                         
@@ -669,38 +675,38 @@ struct FlightOverviewSectionView: View {
                         var p2Night = "00:00"
                         
                         if isSync {
-                            if let dataOverview = coreDataModel.dataFlightOverview {
+                            if let dataOverview = dataFlightOverview {
                                 if selectedFO == SummaryDataDropDown.pic {
-                                    picDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                    picNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                    picDay = dataFlightOverview?.day ?? "00:00"
+                                    picNight = dataFlightOverview?.night ?? "00:00"
                                 } else if selectedFO == SummaryDataDropDown.p1 || selectedFO == SummaryDataDropDown.p1us {
-                                    p1Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                    p1Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                    p1Day = dataFlightOverview?.day ?? "00:00"
+                                    p1Night = dataFlightOverview?.night ?? "00:00"
                                 } else if selectedFO == SummaryDataDropDown.picus {
-                                    picUsDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                    picUsNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                    picUsDay = dataFlightOverview?.day ?? "00:00"
+                                    picUsNight = dataFlightOverview?.night ?? "00:00"
                                 } else if selectedFO == SummaryDataDropDown.p2 {
-                                    p2Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                    p2Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                    p2Day = dataFlightOverview?.day ?? "00:00"
+                                    p2Night = dataFlightOverview?.night ?? "00:00"
                                 }
                             }
                         } else {
                             if selectedCA == SummaryDataDropDown.pic {
-                                picDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                picNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                picDay = dataFlightOverview?.day ?? "00:00"
+                                picNight = dataFlightOverview?.night ?? "00:00"
                             } else if selectedCA == SummaryDataDropDown.p1 || selectedCA == SummaryDataDropDown.p1us {
-                                p1Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                p1Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                p1Day = dataFlightOverview?.day ?? "00:00"
+                                p1Night = dataFlightOverview?.night ?? "00:00"
                             } else if selectedCA == SummaryDataDropDown.picus {
-                                picUsDay = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                picUsNight = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                picUsDay = dataFlightOverview?.day ?? "00:00"
+                                picUsNight = dataFlightOverview?.night ?? "00:00"
                             } else if selectedCA == SummaryDataDropDown.p2 {
-                                p2Day = coreDataModel.dataFlightOverview?.day ?? "00:00"
-                                p2Night = coreDataModel.dataFlightOverview?.night ?? "00:00"
+                                p2Day = dataFlightOverview?.day ?? "00:00"
+                                p2Night = dataFlightOverview?.night ?? "00:00"
                             }
                         }
                         
-                        let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: coreDataModel.dataFlightOverview?.unwrappedAircraft ?? "", departure: coreDataModel.dataFlightOverview?.unwrappedDep ?? "", destination: coreDataModel.dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: coreDataModel.dataSignature?.unwrappedComment ?? "", sign_file_name: "", sign_file_url: coreDataModel.dataSignature?.unwrappedImageString ?? "", licence_number: coreDataModel.dataSignature?.unwrappedLicenseNumber ?? "")
+                        let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: dataFlightOverview?.unwrappedAircraft ?? "", departure: dataFlightOverview?.unwrappedDep ?? "", destination: dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: coreDataModel.dataSignature?.unwrappedComment ?? "", sign_file_name: "", sign_file_url: coreDataModel.dataSignature?.unwrappedImageString ?? "", licence_number: coreDataModel.dataSignature?.unwrappedLicenseNumber ?? "")
                         
                         coreDataModel.initDataLogbookEntries([payload])
                         
@@ -843,7 +849,7 @@ struct FlightOverviewSectionView: View {
     }
     
     func checkBtnValid() -> Bool {
-        let overview = coreDataModel.dataFlightOverview
+        let overview = dataFlightOverview
         return selectedModelPicker != "" && overview?.unwrappedFlightTime != "" && overview?.unwrappedChockOff != "" && overview?.unwrappedChockOn != "" && selectedCA.rawValue != "" && selectedFO.rawValue != ""
     }
 }

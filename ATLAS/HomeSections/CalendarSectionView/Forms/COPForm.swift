@@ -137,6 +137,7 @@ struct COPForm: View {
             event.startDate = "\(startDateFm) \(startTimeFmSave)"
             event.endDate = "\(endDateFm) \(endTimeFmSave)"
             event.status = 5
+            event.flightStatus = FlightStatusEnum.UPCOMING.rawValue
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()

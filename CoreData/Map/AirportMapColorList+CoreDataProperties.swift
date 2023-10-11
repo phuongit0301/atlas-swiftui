@@ -58,7 +58,7 @@ extension AirportMapColorList {
     public var unwrappedNotams: [String] {
         do {
             if let notams = notams {
-                if let data = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSArray.self, from: notams) as? [String] {
+                if let data = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData as? [String] {
                     return data
                 }
             }

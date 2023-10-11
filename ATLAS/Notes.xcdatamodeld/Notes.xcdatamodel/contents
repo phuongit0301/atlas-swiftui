@@ -53,6 +53,10 @@
         <attribute name="taf" optional="YES" attributeType="String"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="airportMapColorList" inverseEntity="Event"/>
     </entity>
+    <entity name="AirportMapColorNotams" representedClassName="AirportMapColorNotamsList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="AISearch" representedClassName="AISearchList" syncable="YES">
         <attribute name="answer" optional="YES" attributeType="String"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" defaultDateTimeInterval="712279380" usesScalarValueType="NO"/>
@@ -167,24 +171,28 @@
         <attribute name="dep" optional="YES" attributeType="String"/>
         <attribute name="dest" optional="YES" attributeType="String"/>
         <attribute name="endDate" optional="YES" attributeType="String"/>
+        <attribute name="flightStatus" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="startDate" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <relationship name="airportMapColorList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
+        <relationship name="airportMapColorList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
+        <relationship name="eventDateRangeList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateRange" inverseName="events" inverseEntity="EventDateRange"/>
         <relationship name="flightOverviewList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlightOverview" inverseName="events" inverseEntity="FlightOverview"/>
         <relationship name="mapRouteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapRoute" inverseName="events" inverseEntity="MapRoute"/>
         <relationship name="metarTafList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MetarTafData" inverseName="events" inverseEntity="MetarTafData"/>
         <relationship name="notamsDataList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NotamsData" inverseName="events" inverseEntity="NotamsData"/>
         <relationship name="noteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="events" inverseEntity="Note"/>
         <relationship name="notePostList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NotePost" inverseName="events" inverseEntity="NotePost"/>
+        <relationship name="routeAlternate" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RouteAlternate" inverseName="events" inverseEntity="RouteAlternate"/>
     </entity>
     <entity name="EventDateRange" representedClassName="EventDateRangeList" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="startDate" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventDateRangeList" inverseEntity="Event"/>
     </entity>
     <entity name="FlightOverview" representedClassName="FlightOverviewList" syncable="YES">
         <attribute name="aircraft" optional="YES" attributeType="String"/>
@@ -548,6 +556,7 @@
         <attribute name="minima" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="vis" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="routeAlternate" inverseEntity="Event"/>
     </entity>
     <entity name="ScratchPad" representedClassName="ScratchPadList" syncable="YES">
         <attribute name="content" attributeType="String" defaultValueString=""/>

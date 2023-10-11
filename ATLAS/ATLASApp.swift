@@ -70,12 +70,11 @@ struct ATLASApp: App {
                                             isLogin = "0"
                                             coreDataModel.loading = false
                                         }
-                                    }
-                                }
-                                .task {
-                                    print("isBoardingCompleted========\(isBoardingCompleted)")
-                                    if isBoardingCompleted == "1" {
-                                        await coreDataModel.checkAndSyncData()
+                                        
+                                        print("isBoardingCompleted========\(isBoardingCompleted)")
+                                        if isBoardingCompleted == "1" {
+                                            await coreDataModel.checkAndSyncData()
+                                        }
                                     }
                                 }
                         }
@@ -87,6 +86,13 @@ struct ATLASApp: App {
             }.onAppear {
                 if locationViewModel.authorizationStatus == .notDetermined {
                     locationViewModel.requestPermission()
+                }
+                
+                Task {
+                    coreDataModel.loading = true
+                    print("fetch reader")
+                    await coreDataModel.initFetchData()
+                    coreDataModel.loading = false
                 }
             }
 //            .onAppWentToBackground {
@@ -112,12 +118,6 @@ struct ATLASApp: App {
                 .environmentObject(mapIconModel)
                 .environmentObject(onboardingModel)
                 .environmentObject(yourFlightPlanModel)
-                .task {
-                    coreDataModel.loading = true
-                    print("fetch reader")
-                    await coreDataModel.initFetchData()
-                    coreDataModel.loading = false
-                }
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
         }

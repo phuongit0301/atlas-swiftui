@@ -191,6 +191,53 @@ struct FlightForm: View {
             event.startDate = "\(startDateFm) \(startTimeFmSave)"
             event.endDate = "\(endDateFm) \(endTimeFmSave)"
             event.status = 5
+            event.flightStatus = FlightStatusEnum.UPCOMING.rawValue
+            
+            // Create Date Range
+            let newDateRange = EventDateRangeList(context: persistenceController.container.viewContext)
+            newDateRange.id = UUID()
+            newDateRange.startDate = "\(startDateFm) \(startTimeFmSave)"
+            newDateRange.endDate = "\(endDateFm) \(endTimeFmSave)"
+            
+            // Create Flight Overview
+            let newObj = FlightOverviewList(context: persistenceController.container.viewContext)
+            newObj.id = UUID()
+            newObj.callsign = tfEventName
+            newObj.dep = tfDep
+            newObj.dest = tfDest
+            newObj.std = "\(startDateFm) \(startTimeFmSave)"
+            newObj.sta = "\(endDateFm) \(endTimeFmSave)"
+            
+            newObj.caName = ""
+            newObj.caPicker = ""
+            newObj.eta = ""
+            newObj.f0Name = ""
+            newObj.f0Picker = ""
+            newObj.aircraft = ""
+            newObj.blockTime = ""
+            newObj.blockTimeFlightTime = ""
+            newObj.chockOff = ""
+            newObj.chockOn = ""
+            newObj.day = ""
+            newObj.flightTime = ""
+            newObj.model = ""
+            newObj.night = ""
+            newObj.password = ""
+            newObj.pob = ""
+            newObj.timeDiffArr = ""
+            newObj.timeDiffDep = ""
+            newObj.totalTime = ""
+            
+            // add relationship with overview
+            event.eventDateRangeList = NSSet(array: [newDateRange])
+            event.flightOverviewList = NSSet(array: [newObj])
+            event.notePostList = NSSet(array: [])
+            event.noteList = NSSet(array: [])
+            event.notamsDataList = NSSet(array: [])
+            event.metarTafList = NSSet(array: [])
+            event.mapRouteList = NSSet(array: [])
+            event.airportMapColorList = NSSet(array: [])
+            
             coreDataModel.save()
             
             coreDataModel.dataEvents = coreDataModel.readEvents()

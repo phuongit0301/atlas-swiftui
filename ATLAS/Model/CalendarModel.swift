@@ -128,3 +128,11 @@ struct IEventByRow: Identifiable, Hashable {
 //    var endDate?: Date
 }
                 
+//completed, upcoming, standby, leave
+enum FlightStatusEnum: String, CaseIterable, Identifiable {
+    case COMPLETED = "completed"
+    case UPCOMING = "upcoming"
+    case STANDBY = "standby"
+    case LEAVE = "leave"
+    var id: Self { self }
+}

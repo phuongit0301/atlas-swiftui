@@ -33,10 +33,6 @@ extension MapRouteList {
     public var unwrappedName: String {
         name ?? ""
     }
-    
-    public var unwrappedEvents: String {
-        events ?? ""
-    }
 }
 
 // MARK: Generated accessors for events

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeInformationView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @EnvironmentObject var yourFlightPlanModel: YourFlightPlanModel
     @EnvironmentObject var remoteService: RemoteService
     
     @State var isCollapseFlight = false
@@ -101,13 +100,14 @@ struct HomeInformationView: View {
                                             }
                                         }.padding(.vertical, 11)
                                             .padding(.horizontal)
+                                            .contentShape(Rectangle())
                                             .onTapGesture {
                                                 Task {
                                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                                                     let currentEvent = coreDataModel.dataEventUpcoming[index]
                                                     
-                                                    yourFlightPlanModel.selectedEvent = currentEvent
-                                                    yourFlightPlanModel.isActive = true
+                                                    coreDataModel.selectedEvent = currentEvent
+                                                    coreDataModel.isEventActive = true
                                                     
                                                     if let startDate = dateFormatter.date(from: currentEvent.unwrappedStartDate),
                                                        let endDate = dateFormatter.date(from: currentEvent.unwrappedEndDate) {
@@ -138,8 +138,8 @@ struct HomeInformationView: View {
                                                         await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
                                                             if success {
                                                                 coreDataModel.loadingInitFuel = false
-                                                                yourFlightPlanModel.selectedEvent = currentEvent
-                                                                yourFlightPlanModel.isActive = true
+                                                                coreDataModel.selectedEvent = currentEvent
+                                                                coreDataModel.isEventActive = true
                                                             }
                                                         })
                                                     }
@@ -361,7 +361,7 @@ struct HomeInformationView: View {
                 }
         } // End VStack
         .background(
-            NavigationLink(destination: HomeFlightSectionView(), isActive: $yourFlightPlanModel.isActive) { EmptyView() }
+            NavigationLink(destination: HomeFlightSectionView(), isActive: $coreDataModel.isEventActive) { EmptyView() }
         )
     }
     
