@@ -364,6 +364,7 @@ func getDestinationSplitTable(_ item: ListFlightInformationItem) -> AnyView {
 
 public struct HasToolbar: ViewModifier {
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var coreDateModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
@@ -407,11 +408,13 @@ public struct HasToolbar: ViewModifier {
                     
                     ToolbarItem(placement: .principal) {
                         HStack(alignment: .center) {
-                            Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            Text(coreDateModel.selectedEvent?.unwrappedName ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                             
-                            Text(sideMenuState.selectedMenu?.flight ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            if let dep = coreDateModel.selectedEvent?.dep, let dest = coreDateModel.selectedEvent?.dest {
+                                Text("\(dep)-\(dest)").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            }
                             
-                            Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            Text(coreDateModel.selectedEvent?.startDate ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                         }
                     }
                     

@@ -77,6 +77,7 @@ struct IProvideLimitation: Identifiable, Hashable {
     var startDate: String
     var endDate: String
     var completed: String
+    var isNew: Bool = true
 }
 
 struct IProvideRecency: Identifiable, Hashable {

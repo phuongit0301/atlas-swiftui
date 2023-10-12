@@ -60,6 +60,19 @@ struct OnboardingView: View {
                                     "email": onboardingModel.dataYourProfile.email,
                                     "subscribe": onboardingModel.dataYourProfile.subscribe
                                 ] as [String : Any]
+                                let newObjectUser = UserProfileList(context: persistenceController.container.viewContext)
+                                newObjectUser.id = UUID()
+                                newObjectUser.userId = onboardingModel.dataYourProfile.user_id
+                                newObjectUser.username = onboardingModel.dataYourProfile.userName
+                                newObjectUser.firstName = onboardingModel.dataYourProfile.firstName
+                                newObjectUser.lastName = onboardingModel.dataYourProfile.lastName
+                                newObjectUser.airline = onboardingModel.dataYourProfile.airline
+                                newObjectUser.mobileCountry = onboardingModel.dataYourProfile.mobile.country
+                                newObjectUser.mobileNumber = onboardingModel.dataYourProfile.mobile.number
+                                newObjectUser.email = onboardingModel.dataYourProfile.email
+                                newObjectUser.isSubscribe = onboardingModel.dataYourProfile.subscribe == "1" ? true : false
+                                
+                                coreDataModel.save()
                                 
                                 var payloadExperience: [Any] = []
                                 for item in onboardingModel.dataModelExperience {

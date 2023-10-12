@@ -300,6 +300,9 @@
 		3E77234B2AD6C97A000C7AA3 /* LimitationSubsectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77234A2AD6C97A000C7AA3 /* LimitationSubsectionFormView.swift */; };
 		3E77234E2AD6DAED000C7AA3 /* RecencyExperienceList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77234C2AD6DAEC000C7AA3 /* RecencyExperienceList+CoreDataClass.swift */; };
 		3E77234F2AD6DAED000C7AA3 /* RecencyExperienceList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77234D2AD6DAED000C7AA3 /* RecencyExperienceList+CoreDataProperties.swift */; };
+		3E7723522AD7879E000C7AA3 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3E7723512AD7879E000C7AA3 /* FirebaseDatabase */; };
+		3E77235A2AD789CF000C7AA3 /* UserProfileList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7723582AD789CF000C7AA3 /* UserProfileList+CoreDataClass.swift */; };
+		3E77235B2AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7723592AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift */; };
 		3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6432A18E0EA00A97ECF /* OverviewView.swift */; };
 		3E7F68312A1F640500EC2CA3 /* HomeFlightSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF6332A187E3500A97ECF /* HomeFlightSectionView.swift */; };
 		3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */; };
@@ -766,6 +769,8 @@
 		3E77234A2AD6C97A000C7AA3 /* LimitationSubsectionFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LimitationSubsectionFormView.swift; sourceTree = "<group>"; };
 		3E77234C2AD6DAEC000C7AA3 /* RecencyExperienceList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyExperienceList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E77234D2AD6DAED000C7AA3 /* RecencyExperienceList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyExperienceList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E7723582AD789CF000C7AA3 /* UserProfileList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E7723592AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E7F68362A2045F300EC2CA3 /* TabViewCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCustom.swift; sourceTree = "<group>"; };
 		3E7F683D2A20ABA500EC2CA3 /* PresentationDetentReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentReference.swift; sourceTree = "<group>"; };
 		3E7F683F2A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDetentsViewModifier.swift; sourceTree = "<group>"; };
@@ -920,6 +925,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E7723522AD7879E000C7AA3 /* FirebaseDatabase in Frameworks */,
 				3EECB85E2A716481009D4971 /* FirebaseAppDistribution-Beta in Frameworks */,
 				3EECB8622A716481009D4971 /* FirebaseAuthCombine-Community in Frameworks */,
 				3EECB8602A716481009D4971 /* FirebaseAuth in Frameworks */,
@@ -1581,6 +1587,22 @@
 			path = LimitationsSubSectionView;
 			sourceTree = "<group>";
 		};
+		3E7723502AD7879E000C7AA3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E7723572AD78915000C7AA3 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3E7723582AD789CF000C7AA3 /* UserProfileList+CoreDataClass.swift */,
+				3E7723592AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		3E7F683C2A20AB9500EC2CA3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1643,6 +1665,7 @@
 				3ED7547B2A11E1BD003072A1 /* ATLASTests */,
 				3ED754852A11E1BD003072A1 /* ATLASUITests */,
 				3ED754692A11E1BA003072A1 /* Products */,
+				3E7723502AD7879E000C7AA3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1928,6 +1951,7 @@
 		C56AF50F2A565EEB00BD07A1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3E7723572AD78915000C7AA3 /* User */,
 				3E7291592AC3C1FA000FF295 /* Preflight */,
 				3E7291152ABD42A0000FF295 /* Logbook */,
 				3EEBE6542AB1AE5000421AFF /* Map */,
@@ -2103,6 +2127,7 @@
 				3EECB85F2A716481009D4971 /* FirebaseAuth */,
 				3EECB8612A716481009D4971 /* FirebaseAuthCombine-Community */,
 				3EE170952AAC2138004DA27C /* iCalendarParser */,
+				3E7723512AD7879E000C7AA3 /* FirebaseDatabase */,
 			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
@@ -2301,6 +2326,7 @@
 				3E870BA12A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
 				3E7291282ABEA46C000FF295 /* RecencyList+CoreDataClass.swift in Sources */,
+				3E77235B2AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift in Sources */,
 				3E7292572ACAB100000FF295 /* ProvideRecencyView.swift in Sources */,
 				3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */,
 				3E3FCC3D2A270851008017FA /* historicalDelaysChart.swift in Sources */,
@@ -2655,6 +2681,7 @@
 				3E2BA8962AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift in Sources */,
 				C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */,
 				3E4E10262A65677D0026802B /* ScratchPadSplitView.swift in Sources */,
+				3E77235A2AD789CF000C7AA3 /* UserProfileList+CoreDataClass.swift in Sources */,
 				3EF221AF2AAF485D000B8FFB /* COPDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3033,6 +3060,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3E7723512AD7879E000C7AA3 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
 		3EE170952AAC2138004DA27C /* iCalendarParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */;

@@ -85,11 +85,11 @@ struct LimitationNumberModalView: View {
             Spacer()
             
         }.onAppear {
-            if selectionInOut.count >= 4 {
+            if selectionInOut.count >= 5 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
-                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
-                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
+                self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
+                self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
             }
         }
     }

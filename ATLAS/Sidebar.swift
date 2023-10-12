@@ -16,7 +16,7 @@ struct Sidebar: View {
     @State private var showCompleted = true
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .center, spacing: 0) {
                 VStack(spacing: 0) {
                     Text("Captain Muhammad Adil").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
@@ -26,13 +26,15 @@ struct Sidebar: View {
                     .background(Color.theme.tealDeer.opacity(0.25))
                     .cornerRadius(12)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.theme.electricBlue, lineWidth: 2))
-            }.padding(.top)
+            }.padding(.vertical)
                 .frame(maxWidth: .infinity)
+                .padding(.vertical, 4)
             
             Text("Home")
                 .foregroundColor(Color.theme.eerieBlack)
                 .font(.system(size: 20, weight: .semibold))
                 .padding(.horizontal)
+                .frame(height: 44)
             
             ScrollView {
                 VStack (alignment: .leading, spacing: 8) {
@@ -50,11 +52,11 @@ struct Sidebar: View {
                         }.frame(height: 44)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                showCompleted.toggle()
+                                showUpcoming.toggle()
                             }
                         
                         ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
-                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedSidebar)
+                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
                         }
                     }.padding(.horizontal)
                         .frame(maxWidth: .infinity)
@@ -77,8 +79,18 @@ struct Sidebar: View {
                             }
                         
                         ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
-                            SidebarItem(item: $coreDataModel.dataEventCompleted[index], selectedItem: $coreDataModel.selectedSidebar)
+                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
                         }
+                    }.padding(.horizontal)
+                    
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Logbook")
+                                .foregroundColor(Color.theme.eerieBlack)
+                                .font(.system(size: 20, weight: .semibold))
+                                
+                            Spacer()
+                        }.frame(height: 44)
                     }.padding(.horizontal)
                 }
             }

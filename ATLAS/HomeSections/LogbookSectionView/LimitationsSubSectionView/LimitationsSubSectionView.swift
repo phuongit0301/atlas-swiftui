@@ -27,8 +27,9 @@ struct LimitationsSubSectionView: View {
     
     @State var isCollapse = false
     @State var isShowModal = false
-    @State var dataLimitation: [ILimitationResult] = []
+    @State var isEdit = false
     @State var dataModelLimitation = [IProvideLimitation]()
+    @State private var currentIndex = -1
     
     let dateFormatter = DateFormatter()
     
@@ -36,96 +37,105 @@ struct LimitationsSubSectionView: View {
         GeometryReader { proxy in
             HStack(spacing: 0) {
                 List {
-                    Section {
-                        VStack(alignment: .leading, spacing: 0) {
-                            HStack {
-                                HStack(alignment: .center) {
-                                    Text("Limitations").font(.system(size: 20, weight: .semibold)).foregroundStyle(Color.black)
-                                }
-                                
-                                Spacer()
-                                
-                                Button(action: {
-                                    let obj = IProvideLimitation(limitationFlight: "", limitation: "", duration: "", startDate: "", endDate: "", completed: "")
-                                    dataModelLimitation.append(obj)
-                                    self.isShowModal = true
-                                }, label: {
-                                    Text("Add Item")
-                                        .font(.system(size: 17, weight: .regular)).textCase(nil)
-                                        .foregroundColor(Color.theme.azure)
-                                }).buttonStyle(PlainButtonStyle())
-                            }.contentShape(Rectangle())
-                                .padding()
-                            
-                            if !isCollapse {
-                                VStack(alignment: .leading) {
-                                    Grid(alignment: .topLeading, horizontalSpacing: 8, verticalSpacing: 12) {
-                                        GridRow {
-                                            Text("Limitation")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(width: proxy.size.width - 534, alignment: .leading)
-                                            
-                                            Text("Period")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(width: 240, alignment: .leading)
-                                            
-                                            Text("Status")
-                                                .font(.system(size: 15, weight: .medium))
-                                                .foregroundColor(Color.black)
-                                                .frame(width: 208, alignment: .leading)
-                                        }
-                                        
-                                        Divider().padding(.horizontal, -16)
-                                        
-                                        if dataLimitation.count == 0 {
-                                            GridRow {
-                                                Group {
-                                                    Text("No limitations")
-                                                        .font(.system(size: 15, weight: .regular))
-                                                        .frame(alignment: .leading)
-                                                }.frame(height: 44)
-                                            }
-                                        } else {
-                                            ForEach(dataLimitation.indices, id: \.self) {index in
-                                                GridRow {
-                                                    Group {
-                                                        Text(dataLimitation[index].text)
-                                                            .font(.system(size: 17, weight: .regular))
-                                                            .frame(alignment: .leading)
-                                                        
-                                                        Text(dataLimitation[index].period)
-                                                            .font(.system(size: 17, weight: .regular))
-                                                            .frame(alignment: .leading)
-                                                        
-                                                        Text(dataLimitation[index].status)
-                                                            .font(.system(size: 17, weight: .regular))
-                                                            .frame(alignment: .leading)
-                                                    }.foregroundColor(fontColor(dataLimitation[index].color))
-                                                }
-                                                
-                                                if index + 1 < coreDataModel.dataLogbookLimitation.count {
-                                                    Divider().padding(.horizontal, -16)
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                }.padding()
-                                
-                            }
-                            
-                        }.listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    } // End Section
+                    HStack {
+                        HStack(alignment: .center) {
+                            Text("Limitations").font(.system(size: 20, weight: .semibold)).foregroundStyle(Color.black)
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            let obj = IProvideLimitation(limitationFlight: "", limitation: "", duration: "", startDate: "", endDate: "", completed: "")
+                            dataModelLimitation.append(obj)
+                            self.isShowModal = true
+                        }, label: {
+                            Text("Add Item")
+                                .font(.system(size: 17, weight: .regular)).textCase(nil)
+                                .foregroundColor(Color.theme.azure)
+                        }).buttonStyle(PlainButtonStyle())
+                    }.contentShape(Rectangle())
+                        .padding()
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     
+                    VStack {
+                        HStack {
+                            Text("Limitation")
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(Color.black)
+                                .frame(width: proxy.size.width - 558, alignment: .leading)
+
+                            Text("Period")
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(Color.black)
+                                .frame(width: 250, alignment: .leading)
+
+                            Text("Status")
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(Color.black)
+                                .frame(width: 220, alignment: .leading)
+                        }
+                        
+                        Divider().padding(.horizontal, -24)
+                    }.listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: -14, trailing: 16))
+                        .frame(height: 44)
+                        .padding(.horizontal)
+                    
+                    if coreDataModel.dataLogbookLimitation.count == 0 {
+                        HStack {
+                            Text("No limitations")
+                                .font(.system(size: 15, weight: .regular))
+                                .frame(alignment: .leading)
+                        }.frame(height: 44)
+                    } else {
+                        ForEach(coreDataModel.dataLogbookLimitation.indices, id: \.self) {index in
+                            VStack {
+                                HStack {
+                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedText)
+                                        .foregroundColor(fontColor(coreDataModel.dataLogbookLimitation[index].unwrappedColour))
+                                        .font(.system(size: 17, weight: .regular))
+                                        .frame(width: proxy.size.width - 558, alignment: .leading)
+                                    
+                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedPeriodText)
+                                        .foregroundColor(fontColor(coreDataModel.dataLogbookLimitation[index].unwrappedColour))
+                                        .font(.system(size: 17, weight: .regular))
+                                        .frame(width: 250, alignment: .leading)
+                                    
+                                    Text(coreDataModel.dataLogbookLimitation[index].unwrappedStatusText)
+                                        .foregroundColor(fontColor(coreDataModel.dataLogbookLimitation[index].unwrappedColour))
+                                        .font(.system(size: 17, weight: .regular))
+                                        .frame(width: 220, alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                if index + 1 < coreDataModel.dataLogbookLimitation.count {
+                                    Divider().padding(.horizontal, -16)
+                                }
+                            }.id(UUID())
+                                .swipeActions(allowsFullSwipe: false) {
+                                    Button {
+                                        edit(index)
+                                    } label: {
+                                        Text("Update").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                    }.tint(Color.theme.orangePeel)
+                                }.padding(.bottom, index + 1 == coreDataModel.dataLogbookLimitation.count ? 8 : 0)
+                                .padding(.leading, index + 1 == coreDataModel.dataLogbookLimitation.count ? 4 : 0)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        }
+                    }
                 }
                 
             }
         }.sheet(isPresented: $isShowModal) {
-            LimitationSubsectionFormView(isShowing: $isShowModal).interactiveDismissDisabled(true)
+            LimitationSubsectionFormView(isShowing: $isShowModal, isEdit: $isEdit, currentIndex: $currentIndex).interactiveDismissDisabled(true)
         }
+    }
+        
+    func edit(_ index: Int) {
+        self.isEdit.toggle()
+        self.currentIndex = index
+        self.isShowModal.toggle()
     }
     
     func fontColor(_ color: String) -> Color {
