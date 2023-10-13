@@ -2,7 +2,7 @@
 //  NoteAabbaPostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 28/09/2023.
+//  Created by phuong phan on 13/10/2023.
 //
 //
 
@@ -17,13 +17,14 @@ extension NoteAabbaPostList {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var includeCrew: Bool
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
     @NSManaged public var name: String?
     @NSManaged public var postCount: String?
     @NSManaged public var type: String?
-    @NSManaged public var includeCrew: Bool
     @NSManaged public var posts: NSSet?
+    @NSManaged public var events: NSSet?
     
     public var unwrappedLatitude: String {
         latitude ?? ""
@@ -60,6 +61,23 @@ extension NoteAabbaPostList {
 
     @objc(removePosts:)
     @NSManaged public func removeFromPosts(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for events
+extension NoteAabbaPostList {
+
+    @objc(addEventsObject:)
+    @NSManaged public func addToEvents(_ value: EventList)
+
+    @objc(removeEventsObject:)
+    @NSManaged public func removeFromEvents(_ value: EventList)
+
+    @objc(addEvents:)
+    @NSManaged public func addToEvents(_ values: NSSet)
+
+    @objc(removeEvents:)
+    @NSManaged public func removeFromEvents(_ values: NSSet)
 
 }
 

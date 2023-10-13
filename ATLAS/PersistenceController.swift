@@ -254,6 +254,12 @@ class CoreDataModelState: ObservableObject {
     @Published var selectedSidebar: EventList?
     
     @Published var isLoginLoading = false
+    @Published var isTrafficLoading = false
+    @Published var isMapAabbaLoading = false
+    @Published var isMapWaypointLoading = false
+    @Published var isMapAirportLoading = false
+    @Published var isAabbaNoteLoading = false
+    @Published var isNotamLoading = false
     
     let dateFormatter = DateFormatter()
     
@@ -1434,13 +1440,8 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirportMapColor(_ data: [IAirportData]) {
-        let depAirport = "VTBS"
-        let arrAirport = "WSSS"
-        let enrAirports = ["WMKK", "WMKP"]
-        let altnAirports = ["WMKJ", "WIDD"]
-        
-        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
+    func initDataAirportMapColor(_ data: [IAirportData], _ payload: [String: Any]) {
+        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: payload["depAirport"] as! String, arrAirport: payload["arrAirport"] as! String, enrAirports: payload["enrAirports"] as! [String], altnAirports: payload["altnAirports"] as! [String])
         
         if airportInformation.count > 0 {
             airportInformation.forEach { item in
@@ -1968,7 +1969,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.notePostList = NSSet(array: payloadNoteAabba + (event.notePostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2055,7 +2056,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.notePostList = NSSet(array: payloadNoteAabba + (event.notePostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2142,7 +2143,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.notePostList = NSSet(array: payloadNoteAabba + (event.notePostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2229,7 +2230,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.notePostList = NSSet(array: payloadNoteAabba + (event.notePostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -5311,23 +5312,37 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func deleteAllAabbaNoteList() async {
-        let fetchRequest: NSFetchRequest<NotePostList>
-        fetchRequest = NotePostList.fetchRequest()
+    func deleteAllAabbaNoteList(_ event: EventList) async {
         do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
-            service.container.viewContext.performAndWait {
-                do {
-                    for object in objects {
-                        service.container.viewContext.delete(object)
+            if let objects = event.noteAabbaPostList?.allObjects as? [NoteAabbaPostList] {
+                service.container.viewContext.performAndWait {
+                    do {
+                        for object in objects {
+                            
+                            
+                            if let posts = object.posts?.allObjects as? [NotePostList] {
+                                for post in posts {
+                                    post.removeFromComments([])
+//                                    service.container.viewContext.delete(post)
+////                                    service.container.viewContext.delete(post.comments as? NSManagedObject ?? [)
+//
+//                                    if let comments = post.comments?.allObjects as? [NoteCommentList] {
+//                                        for comment in comments {
+//                                            service.container.viewContext.delete(comment)
+//                                        }
+//                                    }
+                                }
+                            }
+                            object.removeFromPosts([])
+                            service.container.viewContext.delete(object)
+//                            service.container.viewContext.delete(object.posts)
+                        }
+                        
+                        // Save the deletions to the persistent store
+                        try service.container.viewContext.save()
+                    } catch {
+                        print("Failed to delete Note Post List : \(error)")
                     }
-                    
-                    // Save the deletions to the persistent store
-                    try service.container.viewContext.save()
-                } catch {
-                    print("Failed to delete Note Post List : \(error)")
                 }
             }
         } catch {

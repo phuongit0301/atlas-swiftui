@@ -177,7 +177,7 @@ struct COPForm: View {
             // add relationship with overview
             event.eventDateRangeList = NSSet(array: [newDateRange])
             event.flightOverviewList = NSSet(array: [newObj])
-            event.notePostList = NSSet(array: [])
+            event.noteAabbaPostList = NSSet(array: [])
             event.noteList = NSSet(array: [])
             event.notamsDataList = NSSet(array: [])
             event.metarTafList = NSSet(array: [])

@@ -493,27 +493,20 @@ class RemoteService: ObservableObject {
         request.httpMethod = "POST"
         request.httpBody = postData
         
-        do {
-            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error {
-                    print("Request error: ", error)
-                    return
-                }
-                DispatchQueue.main.async {
-                    guard let response = response as? HTTPURLResponse else { return }
-                    if response.statusCode == 200 {
-                        print("Update calendar successfully")
-                        return
-                    }
-                }
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Request error: ", error)
+                return
             }
+            guard let response = response as? HTTPURLResponse else { return }
             
-            dataTask.resume()
-        } catch {
-            print("Error: \(error)")
-            return false
+            if response.statusCode == 200 {
+                print("Update Limitation successfully")
+                return
+            }
         }
         
+        dataTask.resume()
         return true
     }
     
@@ -777,12 +770,16 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_airports_data
-    func getMapAirportData() async -> [IAirportData]? {
+    func getMapAirportData(_ parameters: Any) async -> [IAirportData]? {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_airports_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             
         do {
+            // Convert the request body to JSON data
+            let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            // Set the request body data
+            request.httpBody = requestData
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
@@ -816,7 +813,7 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
             let (data, _) = try await URLSession.shared.data(for: request)
-
+            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
                 let decodedSearch = try JSONDecoder().decode(INotamWXDataJson.self, from: data)
                 return decodedSearch

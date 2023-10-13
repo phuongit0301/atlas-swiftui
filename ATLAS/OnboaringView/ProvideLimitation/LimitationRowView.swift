@@ -15,7 +15,7 @@ struct LimitationRowView: View {
     
     @State var currentLimitation = "00:00"
     
-    @State var currentDuration = "00:00"
+    @State var currentDuration = "000"
     
     @State var currentStartDate = ""
     @State var currentEndDate = ""
@@ -177,7 +177,7 @@ struct LimitationRowView: View {
                 LimitationNumberModalView(isShowing: $showLimitationModal, selectionInOut: $currentLimitation, header: "Limitation", onChange: onChangeLimitation).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showDurationModal) {
-                LimitationNumberModalView(isShowing: $showDurationModal, selectionInOut: $currentDuration, header: "Duration", onChange: onChangeDuration).interactiveDismissDisabled(true)
+                LimitationDurationModalView(isShowing: $showDurationModal, selectionInOut: $currentDuration, header: "Duration", onChange: onChangeDuration).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showStartDateModal) {
                 LimitationTimeModalView(isShowing: $showStartDateModal, pickerType: $pickerType, currentDate: $currentStartDate, header: "Start Date", onChange: onChangeStartDate).interactiveDismissDisabled(true)

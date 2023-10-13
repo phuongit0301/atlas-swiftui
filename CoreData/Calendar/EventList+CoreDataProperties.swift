@@ -2,7 +2,7 @@
 //  EventList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/10/2023.
+//  Created by phuong phan on 13/10/2023.
 //
 //
 
@@ -19,22 +19,22 @@ extension EventList {
     @NSManaged public var dep: String?
     @NSManaged public var dest: String?
     @NSManaged public var endDate: String?
+    @NSManaged public var flightStatus: String?
     @NSManaged public var id: UUID?
     @NSManaged public var location: String?
     @NSManaged public var name: String?
     @NSManaged public var startDate: String?
     @NSManaged public var status: Int32
     @NSManaged public var type: String?
-    @NSManaged public var flightStatus: String?
     @NSManaged public var airportMapColorList: NSSet?
+    @NSManaged public var eventDateRangeList: NSSet?
     @NSManaged public var flightOverviewList: NSSet?
     @NSManaged public var mapRouteList: NSSet?
     @NSManaged public var metarTafList: NSSet?
     @NSManaged public var notamsDataList: NSSet?
     @NSManaged public var noteList: NSSet?
-    @NSManaged public var notePostList: NSSet?
-    @NSManaged public var eventDateRangeList: NSSet?
     @NSManaged public var routeAlternate: NSSet?
+    @NSManaged public var noteAabbaPostList: NSSet?
     
     public var unwrappedStartDate: String {
         startDate ?? ""
@@ -79,6 +79,23 @@ extension EventList {
 
     @objc(removeAirportMapColorList:)
     @NSManaged public func removeFromAirportMapColorList(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for eventDateRangeList
+extension EventList {
+
+    @objc(addEventDateRangeListObject:)
+    @NSManaged public func addToEventDateRangeList(_ value: EventDateRangeList)
+
+    @objc(removeEventDateRangeListObject:)
+    @NSManaged public func removeFromEventDateRangeList(_ value: EventDateRangeList)
+
+    @objc(addEventDateRangeList:)
+    @NSManaged public func addToEventDateRangeList(_ values: NSSet)
+
+    @objc(removeEventDateRangeList:)
+    @NSManaged public func removeFromEventDateRangeList(_ values: NSSet)
 
 }
 
@@ -167,40 +184,6 @@ extension EventList {
 
 }
 
-// MARK: Generated accessors for notePostList
-extension EventList {
-
-    @objc(addNotePostListObject:)
-    @NSManaged public func addToNotePostList(_ value: NotePostList)
-
-    @objc(removeNotePostListObject:)
-    @NSManaged public func removeFromNotePostList(_ value: NotePostList)
-
-    @objc(addNotePostList:)
-    @NSManaged public func addToNotePostList(_ values: NSSet)
-
-    @objc(removeNotePostList:)
-    @NSManaged public func removeFromNotePostList(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for eventDateRangeList
-extension EventList {
-
-    @objc(addEventDateRangeListObject:)
-    @NSManaged public func addToEventDateRangeList(_ value: EventDateRangeList)
-
-    @objc(removeEventDateRangeListObject:)
-    @NSManaged public func removeFromEventDateRangeList(_ value: EventDateRangeList)
-
-    @objc(addEventDateRangeList:)
-    @NSManaged public func addToEventDateRangeList(_ values: NSSet)
-
-    @objc(removeEventDateRangeList:)
-    @NSManaged public func removeFromEventDateRangeList(_ values: NSSet)
-
-}
-
 // MARK: Generated accessors for routeAlternate
 extension EventList {
 
@@ -215,6 +198,23 @@ extension EventList {
 
     @objc(removeRouteAlternate:)
     @NSManaged public func removeFromRouteAlternate(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for noteAabbaPostList
+extension EventList {
+
+    @objc(addNoteAabbaPostListObject:)
+    @NSManaged public func addToNoteAabbaPostList(_ value: NoteAabbaPostList)
+
+    @objc(removeNoteAabbaPostListObject:)
+    @NSManaged public func removeFromNoteAabbaPostList(_ value: NoteAabbaPostList)
+
+    @objc(addNoteAabbaPostList:)
+    @NSManaged public func addToNoteAabbaPostList(_ values: NSSet)
+
+    @objc(removeNoteAabbaPostList:)
+    @NSManaged public func removeFromNoteAabbaPostList(_ values: NSSet)
 
 }
 

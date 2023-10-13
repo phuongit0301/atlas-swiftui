@@ -23,8 +23,26 @@ struct ClipboardSummaryView: View {
     
     @State var enrouteAlternates: [IAlternate] = []
     @State var destinationAlternates: [IAlternate] = []
+    @State private var dataFlightOverview: FlightOverviewList?
     
     var body: some View {
+        var std: String {
+            if showUTC {
+                return dataFlightOverview?.unwrappedStd ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+            }
+        }
+        
+        var sta: String {
+            if showUTC {
+                return dataFlightOverview?.unwrappedSta ?? ""
+            } else {
+                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+            }
+        }
+        
+        
         VStack(spacing: 8) {
             VStack(spacing: 0) {
                 HStack(alignment: .center, spacing: 0) {
@@ -71,15 +89,15 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text(coreDataModel.dataSummaryInfo.unwrappedFltNo)
+                            Text(dataFlightOverview?.unwrappedCallsign ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text(coreDataModel.dataSummaryInfo.unwrappedModel)
+                            Text(dataFlightOverview?.unwrappedModel ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text(coreDataModel.dataSummaryInfo.unwrappedAircraft)
+                            Text(dataFlightOverview?.unwrappedAircraft ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
@@ -102,15 +120,15 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text(coreDataModel.dataSummaryInfo.unwrappedDep)
+                            Text(dataFlightOverview?.unwrappedDep ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text(coreDataModel.dataSummaryInfo.unwrappedDest)
+                            Text(dataFlightOverview?.unwrappedDest ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text(coreDataModel.dataSummaryInfo.unwrappedPob)
+                            Text(dataFlightOverview?.unwrappedPob ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
@@ -166,9 +184,9 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStdUTC : coreDataModel.dataSummaryInfo.unwrappedStdLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                            Text(std).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text(showUTC ? coreDataModel.dataSummaryInfo.unwrappedStaUTC : coreDataModel.dataSummaryInfo.unwrappedStaLocal).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                            Text(sta).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
                             Text("").frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
                         }.frame(height: 44)
@@ -191,13 +209,13 @@ struct ClipboardSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text(coreDataModel.dataSummaryInfo.unwrappedBlkTime).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                            Text(renderTime(std, sta)).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
                             
-                            Text("XXXXX").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+                            Text(dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
                             
-                            Text(calculateTime(coreDataModel.dataSummaryInfo.unwrappedFltTime, coreDataModel.dataSummaryInfo.unwrappedBlkTime))
+                            Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
                                 .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                 .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
                         }.frame(height: 44)
@@ -249,7 +267,7 @@ struct ClipboardSummaryView: View {
                             Divider().padding(.horizontal, -16)
                             
                             HStack {
-                                Text("XXXX")
+                                Text(dataFlightOverview?.unwrappedRoute ?? "")
                                     .frame(width: width - 64, alignment: .leading)
                                     .foregroundStyle(Color.black)
                                     .font(.system(size: 15, weight: .regular))
@@ -322,5 +340,74 @@ struct ClipboardSummaryView: View {
                 .cornerRadius(8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
         }// end VStack
+        .onAppear {
+            if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                dataFlightOverview = overviewList.first
+                
+                prepareData()
+            }
+        }
+    }
+    
+    func prepareData() {
+        if let dataAlternate = coreDataModel.selectedEvent?.routeAlternate?.allObjects as? [RouteAlternateList], dataAlternate.count > 0 {
+            enrouteAlternates = []
+            destinationAlternates = []
+            
+            for item in dataAlternate {
+                if item.type == "enroute" {
+                    enrouteAlternates.append(
+                        IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "", isNew: false, isDeleted: false)
+                    )
+                } else {
+                    destinationAlternates.append(
+                        IAlternate(id: item.id ?? UUID(), altn: item.altn ?? "", vis: item.vis, minima: item.minima, eta: item.eta ?? "", isNew: false, isDeleted: false)
+                    )
+                }
+                
+            }
+        }
+    }
+    
+    func renderTime(_ startDate: String, _ endDate: String) -> String {
+        if startDate != "" && endDate != "" {
+            let startTime = startDate.components(separatedBy: " ")
+            let endTime = endDate.components(separatedBy: " ")
+            
+            return calculateTime(startTime[1], endTime[1])
+        }
+        return ""
+    }
+    
+    func renderBlockFlightTime(_ startDate: String, _ endDate: String) -> String {
+        if startDate != "" && endDate != "" {
+            return calculateTime(startDate, endDate)
+        }
+        return ""
+    }
+    
+    func calculateEta() -> String {
+        return calculateTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", dataFlightOverview?.unwrappedChockOff ?? "00:00")
+    }
+    
+    func calculateTotalTime() -> String {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        var hour = "00"
+        var minute = "00"
+        
+        if let unwrappedChockOff = dataFlightOverview?.unwrappedChockOff, let unwrappedChockOn = dataFlightOverview?.unwrappedChockOn {
+            if let chockOff = dateFormatter.date(from: unwrappedChockOff), let chockOn = dateFormatter.date(from: unwrappedChockOn) {
+                let diffComponents = Calendar.current.dateComponents([.hour, .minute], from: chockOff, to: chockOn)
+                
+                if let dhour = diffComponents.hour, dhour > 0 {
+                    hour = "\(dhour)"
+                }
+                
+                if let dminute = diffComponents.minute, dminute > 0 {
+                    minute = "\(dminute)"
+                }
+            }
+        }
+        return "\(hour):\(minute)"
     }
 }

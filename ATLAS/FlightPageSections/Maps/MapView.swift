@@ -53,8 +53,11 @@ struct MapViewModal: View {
 
     var body: some View {
         VStack {
-            if coreDataModel.imageLoading {
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white)).padding(.leading)
+            if coreDataModel.imageLoading || coreDataModel.isTrafficLoading || coreDataModel.isMapAabbaLoading || coreDataModel.isMapAirportLoading || coreDataModel.isMapWaypointLoading {
+                VStack {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black))
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.3))
             } else {
                 ZStack(alignment: .top) {
                     MapView(
@@ -646,7 +649,7 @@ struct MapViewModal: View {
                 image = UIImage(named: "icon_circle_red")
             }
             
-            let annotation = CustomAnnotation(coordinate: coord, title: item.airportId!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: image)
+            let annotation = CustomAirportColorAnnotation(coordinate: coord, title: item.airportId!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: image)
             
             if let id = item.airportId {
                 airportIds.append(id)

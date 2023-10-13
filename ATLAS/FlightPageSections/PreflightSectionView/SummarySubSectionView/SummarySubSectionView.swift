@@ -24,6 +24,7 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
+    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
     
     @AppStorage("uid") var userID: String = ""
     
@@ -521,148 +522,127 @@ struct SummarySubSectionView: View {
     }
     
     func create() {
-        Task {
-            self.isLoading = true
-            
-            var payloadEnroute: [Any] = []
-            var payloadDestination: [Any] = []
-            
-            var payloadEnrouteMap: [String] = []
-            var payloadDestinationMap: [String] = []
-            
-            if enrouteAlternates.count > 0 {
+        self.isLoading = true
+        
+        var payloadEnroute: [Any] = []
+        var payloadDestination: [Any] = []
+        
+        var payloadEnrouteMap: [String] = []
+        var payloadDestinationMap: [String] = []
+        
+        var enrAirportNotam: [String: String] = [:]
+        
+        if enrouteAlternates.count > 0 {
+            for item in enrouteAlternates {
+                payloadEnroute.append([
+                    "Airport": item.altn,
+                    "eta": item.eta
+                ])
+                payloadEnrouteMap.append(item.altn)
+                enrAirportNotam[item.altn] = item.eta
+            }
+        }
+        
+        var destAirportNotam: [String: String] = [:]
+        if destinationAlternates.count > 0 {
+            for item in destinationAlternates {
+                payloadDestination.append([
+                    "Airport": item.altn,
+                    "eta": item.eta
+                ])
+                payloadDestinationMap.append(item.altn)
+                destAirportNotam[item.altn] = item.eta
+            }
+        }
+        
+        var depAirportNotam: [String: String] = [:]
+        depAirportNotam[dataFlightOverview?.unwrappedDep ?? ""] = dataFlightOverview?.unwrappedStd
+        
+        var arrAirportNotam: [String: String] = [:]
+        arrAirportNotam[dataFlightOverview?.unwrappedDest ?? ""] = dataFlightOverview?.unwrappedSta
+        
+        flightPlanDetailModel.enrAirportNotam = enrAirportNotam
+        flightPlanDetailModel.destAirportNotam = destAirportNotam
+        flightPlanDetailModel.depAirportNotam = depAirportNotam
+        flightPlanDetailModel.arrAirportNotam = arrAirportNotam
+        
+        let payloadNotam: [String: Any] = [
+            "depAirport": [
+                "Airport": dataFlightOverview?.unwrappedDep ?? "",
+                "std": dataFlightOverview?.unwrappedStd ?? ""
+            ],
+            "arrAirport": [
+                "Airport": dataFlightOverview?.unwrappedDest ?? "",
+                "sta": dataFlightOverview?.unwrappedSta ?? ""
+            ],
+            "enrAirports": payloadEnroute,
+            "altnAirports": payloadDestination
+        ]
+        
+        let payloadMap: [String: Any] = [
+            "depAirport": dataFlightOverview?.unwrappedDep ?? "",
+            "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
+            "enrAirports": payloadEnrouteMap,
+            "altnAirports": payloadDestinationMap,
+            "route": tfRoute
+        ]
+        
+        let payloadAabbaNote: [String: Any] = [
+            "depAirport": dataFlightOverview?.unwrappedDep ?? "",
+            "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
+            "enrALTNS": payloadEnrouteMap,
+            "destALTNS": payloadDestinationMap,
+        ]
+        
+        handleTraffic(payloadMap)
+        handleMapAabba(payloadMap)
+        handleWaypoint(payloadMap)
+        handleAirport(payloadMap)
+        handleAabbaNote(payloadAabbaNote)
+        handleNotam(payloadNotam)
+        
+        var routeAlternateList = [RouteAlternateList]()
+        
+        persistenceController.container.viewContext.performAndWait {
+            if (enrouteAlternates.count > 0) {
                 for item in enrouteAlternates {
-                    payloadEnroute.append([
-                        "Airport": item.altn,
-                        "std": item.eta
-                    ])
-                    payloadEnrouteMap.append(item.altn)
-                }
-            }
-            
-            if destinationAlternates.count > 0 {
-                for item in destinationAlternates {
-                    payloadDestination.append([
-                        "Airport": item.altn,
-                        "std": item.eta
-                    ])
-                    payloadDestinationMap.append(item.altn)
-                }
-            }
-            
-            let payloadNotam: [String: Any] = [
-                "depAirport": [
-                    "Airport": "VTBS",
-                    "std": "2023-09-08 20:00"
-                ],
-                "arrAirport": [
-                    "Airport": "WSSS",
-                    "sta": "2023-09-08 23:00"
-                ],
-                "enrAirports": payloadEnroute,
-                "altnAirports": payloadDestination
-            ]
-            
-            let payloadMap: [String: Any] = [
-                "depAirport": dataFlightOverview?.unwrappedDep ?? "",
-                "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
-                "enrAirports": payloadEnrouteMap,
-                "altnAirports": payloadDestinationMap,
-                "route": tfRoute
-            ]
-            
-            let payloadAabbaNote: [String: Any] = [
-                "user_id": userID,
-                "flight_number": dataFlightOverview?.unwrappedCallsign
-            ]
-            
-            print("payloadMap======\(payloadMap)")
-            print("payloadAabbaNote======\(payloadAabbaNote)")
-            
-            async let trafficService = remoteService.getMapTrafficData(payloadMap)
-            async let mapAabbaService = remoteService.getMapAabbaData(payloadMap)
-            async let waypointService = remoteService.getMapWaypointData(payloadMap)
-            async let airportService = remoteService.getMapAirportData()
-            async let notamService = remoteService.getNotamData(payloadNotam)
-            async let aabbaNoteService = remoteService.getAabbaNoteData(payloadAabbaNote)
-
-            //array handle call API parallel
-            let (responseTraffic, responseMapAabba, responseWaypoint, responseAirport, responseNotam, responseAabbaNote) = await (trafficService, mapAabbaService, waypointService, airportService, notamService, aabbaNoteService)
-
-            if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
-                await coreDataModel.deleteAllTrafficMap()
-                coreDataModel.initDataTraffic(responseTraffic)
-            }
-
-            if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
-                await coreDataModel.deleteAllMapAabbaCommentList()
-                await coreDataModel.deleteAllMapAabbaPostList()
-                await coreDataModel.deleteAllMapAabbMapList()
-                coreDataModel.initDataAabba(responseMapAabba)
-            }
-
-            if let responseWaypoint = responseWaypoint, responseWaypoint.count > 0 {
-                await coreDataModel.deleteAllWaypointList()
-                coreDataModel.initDataWaypoint(responseWaypoint)
-            }
-
-            if let responseAirport = responseAirport, responseAirport.count > 0 {
-                await coreDataModel.deleteAllAirportList()
-                coreDataModel.initDataAirport(responseAirport)
-                coreDataModel.initDataAirportMapColor(responseAirport)
-            }
-
-            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0, let eventList = coreDataModel.selectedEvent {
-                await coreDataModel.deleteAllAabbaNoteCommentList()
-                await coreDataModel.deleteAllAabbaNotePostList()
-                await coreDataModel.deleteAllAabbaNoteList()
-
-                coreDataModel.initDataMapAabbaNotes(responseAabbaNote, eventList)
-            }
-            
-            //Todo: just loading for Notams, MetaTaf
-            await coreDataModel.deleteAllMetaTaf()
-            await coreDataModel.deleteAllNotam()
-
-            if let metarTafData = responseNotam?.metarTafData {
-                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
-                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
-
-                if metarTafData.altnMetarTaf.count > 0 {
-                    for item in metarTafData.altnMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
+                    do {
+                        let isNew = item.isNew ?? false
+                        if isNew {
+                            if item.eta != "" && item.altn != "" {
+                                let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                                newObject.id = UUID()
+                                newObject.altn = item.altn
+                                newObject.vis = item.vis
+                                newObject.minima = item.minima
+                                newObject.eta = item.eta
+                                newObject.type = "enroute"
+                                
+                                routeAlternateList.append(newObject)
+                                try persistenceController.container.viewContext.save()
+                                print("saved Enroute successfully")
+                            }
+                        } else {
+                            if let newObject = coreDataModel.readDataAlternateById(item.id) {
+                                newObject.altn = item.altn
+                                newObject.vis = item.vis
+                                newObject.minima = item.minima
+                                newObject.eta = item.eta
+                                routeAlternateList.append(newObject)
+                            }
+                        }
+                    } catch {
+                        print("Failed to Enroute save: \(error)")
+                        // Rollback any changes in the managed object context
+                        persistenceController.container.viewContext.rollback()
                     }
                 }
-
-                if metarTafData.enrMetarTaf.count > 0 {
-                    for item in metarTafData.enrMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
-                    }
-                }
-            }
-
-            if let notamsData = responseNotam?.notamsData {
-                coreDataModel.initDataNotams(notamsData)
-            }
-
-            coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
-            coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
-            coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
-            coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
-            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
-            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
-            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
-            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
-            
-            var routeAlternateList = [RouteAlternateList]()
-            
-            persistenceController.container.viewContext.performAndWait {
-                if (enrouteAlternates.count > 0) {
-                    for item in enrouteAlternates {
+                
+                if (destinationAlternates.count > 0) {
+                    for item in destinationAlternates {
                         do {
                             let isNew = item.isNew ?? false
+                            
                             if isNew {
                                 if item.eta != "" && item.altn != "" {
                                     let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
@@ -671,9 +651,9 @@ struct SummarySubSectionView: View {
                                     newObject.vis = item.vis
                                     newObject.minima = item.minima
                                     newObject.eta = item.eta
-                                    newObject.type = "enroute"
-                                    
+                                    newObject.type = "destination"
                                     routeAlternateList.append(newObject)
+                                    
                                     try persistenceController.container.viewContext.save()
                                     print("saved Enroute successfully")
                                 }
@@ -687,62 +667,160 @@ struct SummarySubSectionView: View {
                                 }
                             }
                         } catch {
-                            print("Failed to Enroute save: \(error)")
+                            print("Failed to Destination save: \(error)")
                             // Rollback any changes in the managed object context
                             persistenceController.container.viewContext.rollback()
                         }
                     }
-                    
-                    if (destinationAlternates.count > 0) {
-                        for item in destinationAlternates {
-                            do {
-                                let isNew = item.isNew ?? false
-                                
-                                if isNew {
-                                    if item.eta != "" && item.altn != "" {
-                                        let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                                        newObject.id = UUID()
-                                        newObject.altn = item.altn
-                                        newObject.vis = item.vis
-                                        newObject.minima = item.minima
-                                        newObject.eta = item.eta
-                                        newObject.type = "destination"
-                                        routeAlternateList.append(newObject)
-                                        
-                                        try persistenceController.container.viewContext.save()
-                                        print("saved Enroute successfully")
-                                    }
-                                } else {
-                                    if let newObject = coreDataModel.readDataAlternateById(item.id) {
-                                        newObject.altn = item.altn
-                                        newObject.vis = item.vis
-                                        newObject.minima = item.minima
-                                        newObject.eta = item.eta
-                                        routeAlternateList.append(newObject)
-                                    }
-                                }
-                            } catch {
-                                print("Failed to Destination save: \(error)")
-                                // Rollback any changes in the managed object context
-                                persistenceController.container.viewContext.rollback()
-                            }
-                        }
+                }
+            }
+            
+            coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+        }
+        
+        coreDataModel.save()
+        
+        enrouteAlternates = []
+        destinationAlternates = []
+        
+        coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
+        coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+        prepareData()
+        
+        self.isLoading = false
+    }
+    
+    func handleTraffic(_ payload: [String: Any]) {
+        Task {
+            print("handle traffic")
+            coreDataModel.isTrafficLoading = true
+            let responseTraffic = await remoteService.getMapTrafficData(payload)
+            
+            if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
+                print("inside handle traffic======\(responseTraffic)")
+                await coreDataModel.deleteAllTrafficMap()
+                
+                coreDataModel.initDataTraffic(responseTraffic)
+            }
+            print("end handle traffic")
+            coreDataModel.isTrafficLoading = false
+        }
+    }
+    
+    func handleMapAabba(_ payload: [String: Any]) {
+        Task {
+            print("handle map aabba")
+            coreDataModel.isMapAabbaLoading = true
+            let responseMapAabba = await remoteService.getMapAabbaData(payload)
+            
+            if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
+                print("inside map aabba======\(responseMapAabba)")
+                await coreDataModel.deleteAllMapAabbaCommentList()
+                await  coreDataModel.deleteAllMapAabbaPostList()
+                await coreDataModel.deleteAllMapAabbMapList()
+                
+                coreDataModel.initDataAabba(responseMapAabba)
+            }
+            print("end map aabba")
+            coreDataModel.isMapAabbaLoading = false
+        }
+    }
+    
+    func handleWaypoint(_ payload: [String: Any]) {
+        Task {
+            print("handle waypoint")
+            coreDataModel.isMapWaypointLoading = true
+            let responseWaypoint = await remoteService.getMapWaypointData(payload)
+            
+            if let responseWaypoint = responseWaypoint, responseWaypoint.count > 0 {
+                print("inside waypoint======\(responseWaypoint)")
+                await coreDataModel.deleteAllWaypointList()
+                coreDataModel.initDataWaypoint(responseWaypoint)
+            }
+            print("end waypoint")
+            coreDataModel.isMapWaypointLoading = false
+        }
+    }
+    
+    func handleAirport(_ payload: [String: Any]) {
+        Task {
+            print("handle aiport")
+            coreDataModel.isMapAirportLoading = true
+            let responseAirport = await remoteService.getMapAirportData(payload)
+            
+            if let responseAirport = responseAirport, responseAirport.count > 0 {
+                print("inside aiport======\(responseAirport)")
+                await coreDataModel.deleteAllAirportList()
+                coreDataModel.initDataAirport(responseAirport)
+                coreDataModel.initDataAirportMapColor(responseAirport, payload)
+            }
+            print("end aiport")
+            coreDataModel.isMapAirportLoading = false
+        }
+    }
+    
+    func handleAabbaNote(_ payload: [String: Any]) {
+        Task {
+            print("handle aabba note")
+            coreDataModel.isAabbaNoteLoading = true
+            let responseAabbaNote = await remoteService.getAabbaNoteData(payload)
+            
+            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0, let eventList = coreDataModel.selectedEvent {
+                print("inside aabba note ===== \(responseAabbaNote)")
+                //            await coreDataModel.deleteAllAabbaNoteList(eventList)
+                //            await coreDataModel.deleteAllAabbaNotePostList(eventList)
+                //            await coreDataModel.deleteAllAabbaNoteCommentList()
+                coreDataModel.initDataMapAabbaNotes(responseAabbaNote, eventList)
+            }
+            print("end aabba note")
+            coreDataModel.isAabbaNoteLoading = false
+        }
+    }
+    
+    func handleNotam(_ payload: [String: Any]) {
+        Task {
+            print("handle notam")
+            coreDataModel.isNotamLoading = true
+            let responseNotam = await remoteService.getNotamData(payload)
+            
+            if let metarTafData = responseNotam?.metarTafData {
+                print("inside metar")
+                await coreDataModel.deleteAllMetaTaf()
+                
+                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
+                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
+                
+                if metarTafData.altnMetarTaf.count > 0 {
+                    for item in metarTafData.altnMetarTaf {
+                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
                     }
                 }
                 
-                coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+                if metarTafData.enrMetarTaf.count > 0 {
+                    for item in metarTafData.enrMetarTaf {
+                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
+                    }
+                }
             }
             
-            coreDataModel.save()
+            if let notamsData = responseNotam?.notamsData {
+                print("inside notam")
+                await coreDataModel.deleteAllNotam()
+                coreDataModel.initDataNotams(notamsData)
+            }
             
-            enrouteAlternates = []
-            destinationAlternates = []
-            
-            coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
-            coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
-            prepareData()
-            
-            self.isLoading = false
+            coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
+            coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
+            coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
+            coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
+            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
+            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
+            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
+            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
+            print("end Notam")
+            coreDataModel.isNotamLoading = false
         }
     }
     

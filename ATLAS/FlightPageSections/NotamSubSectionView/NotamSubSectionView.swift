@@ -11,13 +11,18 @@ import SwiftUI
 struct NotamSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
     @StateObject var notamSection = NotamSection()
     // initialise state variables
     @State private var isSortDate = true
-    @State var arrDepNotams = [NotamsDataList]()
-    @State var arrArrNotams = [NotamsDataList]()
+    @State var arrDepNotams = [String: [NotamsDataList]]()
+    @State var arrDepNotamsDate = [String: String]()
+    @State var arrArrNotams = [String: [NotamsDataList]]()
+    @State var arrArrNotamsDate = [String: String]()
     @State var arrEnrNotams = [String: [NotamsDataList]]()
+    @State var arrEnrNotamsDate = [String: String]()
     @State var arrDestNotams = [String: [NotamsDataList]]()
+    @State var arrDestNotamsDate = [String: String]()
     
     //For collpase and expand
     @State private var isDepShow = true
@@ -34,404 +39,380 @@ struct NotamSubSectionView: View {
     @State private var showUTC = true
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        if coreDataModel.isNotamLoading {
             HStack(alignment: .center) {
-                Text("NOTAMS")
-                    .font(.system(size: 17, weight: .semibold))
-                    .padding(.leading)
-                Spacer()
-                
-                HStack {
-                    Toggle(isOn: $showUTC) {
-                        Text("Local").font(.system(size: 17, weight: .regular))
-                            .foregroundStyle(Color.black)
-                    }
-                    Text("UTC").font(.system(size: 17, weight: .regular))
-                        .foregroundStyle(Color.black)
-                }.fixedSize()
-            }.frame(height: 52)
-                .padding(.bottom, 8)
+                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .background(Color.black.opacity(0.3))
+        } else {
             
-            //scrollable outer list section
-            ScrollView {
-                // Dep NOTAM section
-                VStack(spacing: 0) {
-                    HStack(alignment: .center, spacing: 0) {
-                        HStack(alignment: .center, spacing: 8) {
-                            Text("Departure NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-                            
-                            if isDepShow {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            } else {
-                                Image(systemName: "chevron.up")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                            
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                self.isDepShow.toggle()
-                            }
-                        
-                        Spacer()
-                        
-                        HStack(alignment: .center, spacing: 16) {
-                            HStack(alignment: .center, spacing: 0) {
-                                Toggle(isOn: $isSortDate) {
-                                    Text("Most Recent")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                }.padding(.horizontal)
-                                
-                                Text("Most Relevant")
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                            }.fixedSize()
-                            
-                            Picker("", selection: $selectionDep) {
-                                Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                                ForEach(notamSection.dataDropDown, id: \.self) {
-                                    Text($0).tag($0)
-                                }
-                            }
-                        }.fixedSize()
-                    }.frame(height: 54)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .center) {
+                    Text("NOTAMS")
+                        .font(.system(size: 17, weight: .semibold))
+                        .padding(.leading)
+                    Spacer()
                     
-                    if isDepShow {
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .foregroundColor(Color.black)
-                                Spacer()
-                            }.frame(height: 44)
-                            
-                            if arrDepNotams.count > 0 {
-                                Divider().padding(.horizontal, -16)
-                            }
-                            
-                            ForEach(arrDepNotams.indices, id: \.self) { index in
-                                HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(arrDepNotams[index].unwrappedNotam)
-                                        .font(.system(size: 15, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        arrDepNotams[index].isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                        coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
-                                    }) {
-                                        if arrDepNotams[index].isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.bottom, 8)
+                    HStack {
+                        Toggle(isOn: $showUTC) {
+                            Text("Local").font(.system(size: 17, weight: .regular))
+                                .foregroundStyle(Color.black)
+                        }
+                        Text("UTC").font(.system(size: 17, weight: .regular))
+                            .foregroundStyle(Color.black)
+                    }.fixedSize()
+                }.frame(height: 52)
+                    .padding(.bottom, 8)
+                
+                //scrollable outer list section
+                ScrollView {
+                    // Dep NOTAM section
+                    VStack(spacing: 0) {
+                        HStack(alignment: .center, spacing: 0) {
+                            HStack(alignment: .center, spacing: 8) {
+                                Text("Departure NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                                 
-                                if index + 1 < arrDepNotams.count {
-                                    Divider().padding(.horizontal, -16)
+                                if isDepShow {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "chevron.up")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
                                 }
-                            }
-                        }
-                    }
-                }.padding(.horizontal)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                
-                // Enr NOTAM section
-                
-                VStack(spacing: 0) {
-                    HStack(alignment: .center, spacing: 0) {
-                        HStack(alignment: .center, spacing: 8) {
-                            Text("Enroute Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-
-                            if isEnrShow {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            } else {
-                                Image(systemName: "chevron.up")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            self.isEnrShow.toggle()
-                        }
-
-                        Spacer()
-
-                        HStack(alignment: .center, spacing: 16) {
-                            HStack(alignment: .center, spacing: 0) {
-                                Toggle(isOn: $isSortDate) {
-                                    Text("Most Recent")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                }.padding(.horizontal)
-
-                                Text("Most Relevant")
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                            }.fixedSize()
-
-                            Picker("", selection: $selectionEnr) {
-                                Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                                ForEach(notamSection.dataDropDown, id: \.self) {
-                                    Text($0).tag($0)
+                                
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.isDepShow.toggle()
                                 }
-                            }
-                        }.fixedSize()
-                    }.frame(height: 54)
-
-                    if isEnrShow {
-                        ForEach(Array(arrEnrNotams.keys), id: \.self) {key in
-                            NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], key: key)
-                        }
-                    }
-                }.padding(.horizontal)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                
-                // Arr NOTAM section
-                VStack(spacing: 0) {
-                    HStack(alignment: .center, spacing: 0) {
-                        HStack(alignment: .center, spacing: 8) {
-                            Text("Arrival NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-
-                            if isArrShow {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            } else {
-                                Image(systemName: "chevron.up")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                self.isArrShow.toggle()
-                            }
-
-                        Spacer()
-
-                        HStack(alignment: .center, spacing: 16) {
-                            HStack(alignment: .center, spacing: 0) {
-                                Toggle(isOn: $isSortDate) {
-                                    Text("Most Recent")
-                                        .font(.system(size: 17, weight: .regular))
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                }.padding(.horizontal)
-
-                                Text("Most Relevant")
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                            }.fixedSize()
-
-                            Picker("", selection: $selectionArr) {
-                                Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                                ForEach(notamSection.dataDropDown, id: \.self) {
-                                    Text($0).tag($0)
-                                }
-                            }
-                        }.fixedSize()
-                    }.frame(height: 54)
-
-                    if isArrShow {
-                        VStack(alignment: .leading) {
-                            HStack(spacing: 0) {
-                                Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .foregroundColor(Color.black)
-                                Spacer()
-                            }.frame(height: 44)
-
-                            if arrArrNotams.count > 0 {
-                                Divider().padding(.horizontal, -16)
-                            }
-
-                            ForEach(arrArrNotams.indices, id: \.self) { index in
+                            
+                            Spacer()
+                            
+                            HStack(alignment: .center, spacing: 16) {
                                 HStack(alignment: .center, spacing: 0) {
-                                    // notam text
-                                    Text(arrArrNotams[index].unwrappedNotam).font(.system(size: 15, weight: .regular))
-                                    Spacer()
-                                    // star function to add to reference
-                                    Button(action: {
-                                        arrArrNotams[index].isChecked.toggle()
-                                        coreDataModel.save()
-                                        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                        coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                                        coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
-                                    }) {
-                                        if arrArrNotams[index].isChecked {
-                                            Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
-                                        } else {
-                                            Image(systemName: "star").foregroundColor(Color.theme.azure)
-                                        }
-                                    }.fixedSize()
-                                        .buttonStyle(PlainButtonStyle())
-                                }.padding(.bottom, 8)
-
-                                if arrArrNotams.count > 0 && index + 1 < arrArrNotams.count {
-                                    Divider().padding(.horizontal, -16)
-                                }
-                            }
-                        }
-                    }
-                }.padding(.horizontal)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                
-                // Destination NOTAM section
-                VStack(spacing: 0) {
-                    HStack(alignment: .center, spacing: 0) {
-                        HStack(alignment: .center, spacing: 8) {
-                            Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
-
-                            if isDestShow {
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            } else {
-                                Image(systemName: "chevron.up")
-                                    .foregroundColor(Color.blue)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                self.isDestShow.toggle()
-                            }
-
-                        Spacer()
-
-                        HStack(alignment: .center, spacing: 16) {
-                            HStack(alignment: .center, spacing: 0) {
-                                Toggle(isOn: $isSortDate) {
-                                    Text("Most Recent")
-                                        .font(.system(size: 17, weight: .regular))
+                                    Toggle(isOn: $isSortDate) {
+                                        Text("Most Recent")
+                                            .font(.system(size: 17, weight: .regular))
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }.padding(.horizontal)
+                                    
+                                    Text("Most Relevant")
+                                        .font(.system(size: 17, weight: .semibold))
                                         .frame(maxWidth: .infinity, alignment: .trailing)
-                                }.padding(.horizontal)
-
-                                Text("Most Relevant")
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                }.fixedSize()
+                                
+                                Picker("", selection: $selectionDep) {
+                                    Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                                    ForEach(notamSection.dataDropDown, id: \.self) {
+                                        Text($0).tag($0)
+                                    }
+                                }
                             }.fixedSize()
-
-                            Picker("", selection: $selectionDest) {
-                                Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                                ForEach(notamSection.dataDropDown, id: \.self) {
-                                    Text($0).tag($0)
+                        }.frame(height: 54)
+                        
+                        if isDepShow {
+                            ForEach(Array(arrDepNotams.keys), id: \.self) {key in
+                                NotamSubSectionRowView(item: arrDepNotams[key] ?? [], dates: flightPlanDetailModel.depAirportNotam, key: key)
+                            }
+                        }
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                    
+                    // Enr NOTAM section
+                    
+                    VStack(spacing: 0) {
+                        HStack(alignment: .center, spacing: 0) {
+                            HStack(alignment: .center, spacing: 8) {
+                                Text("Enroute Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
+                                
+                                if isEnrShow {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "chevron.up")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
                                 }
                             }
-                        }.fixedSize()
-                    }.frame(height: 54)
-
-                    if isDestShow {
-                        ForEach(Array(arrDestNotams.keys), id: \.self) {key in
-                            NotamSubSectionRowView(item: arrDestNotams[key] ?? [], key: key)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                self.isEnrShow.toggle()
+                            }
+                            
+                            Spacer()
+                            
+                            HStack(alignment: .center, spacing: 16) {
+                                HStack(alignment: .center, spacing: 0) {
+                                    Toggle(isOn: $isSortDate) {
+                                        Text("Most Recent")
+                                            .font(.system(size: 17, weight: .regular))
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }.padding(.horizontal)
+                                    
+                                    Text("Most Relevant")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                }.fixedSize()
+                                
+                                Picker("", selection: $selectionEnr) {
+                                    Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                                    ForEach(notamSection.dataDropDown, id: \.self) {
+                                        Text($0).tag($0)
+                                    }
+                                }
+                            }.fixedSize()
+                        }.frame(height: 54)
+                        
+                        if isEnrShow {
+                            ForEach(Array(arrEnrNotams.keys), id: \.self) {key in
+                                NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], dates: flightPlanDetailModel.enrAirportNotam, key: key)
+                            }
                         }
-                    }
-                }.padding(.horizontal)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-            }.padding(.bottom, 32)
-        }.padding(.horizontal, 16)
-            .background(Color.theme.antiFlashWhite)
-            .onChange(of: selectionDep) { newValue in
-                var temp = [NotamsDataList]()
-                coreDataModel.dataNotams.forEach { item in
-                    let category = item.category ?? ""
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                     
-                    if item.type == "depNotams" && category == selectionDep {
-                        temp.append(item)
+                    // Arr NOTAM section
+                    VStack(spacing: 0) {
+                        HStack(alignment: .center, spacing: 0) {
+                            HStack(alignment: .center, spacing: 8) {
+                                Text("Arrival NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
+                                
+                                if isArrShow {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "chevron.up")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.isArrShow.toggle()
+                                }
+                            
+                            Spacer()
+                            
+                            HStack(alignment: .center, spacing: 16) {
+                                HStack(alignment: .center, spacing: 0) {
+                                    Toggle(isOn: $isSortDate) {
+                                        Text("Most Recent")
+                                            .font(.system(size: 17, weight: .regular))
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }.padding(.horizontal)
+                                    
+                                    Text("Most Relevant")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                }.fixedSize()
+                                
+                                Picker("", selection: $selectionArr) {
+                                    Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                                    ForEach(notamSection.dataDropDown, id: \.self) {
+                                        Text($0).tag($0)
+                                    }
+                                }
+                            }.fixedSize()
+                        }.frame(height: 54)
+                        
+                        if isArrShow {
+                            ForEach(Array(arrArrNotams.keys), id: \.self) {key in
+                                NotamSubSectionRowView(item: arrArrNotams[key] ?? [], dates: flightPlanDetailModel.arrAirportNotam, key: key)
+                            }
+                        }
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                    
+                    // Destination NOTAM section
+                    VStack(spacing: 0) {
+                        HStack(alignment: .center, spacing: 0) {
+                            HStack(alignment: .center, spacing: 8) {
+                                Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
+                                
+                                if isDestShow {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    Image(systemName: "chevron.up")
+                                        .foregroundColor(Color.blue)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.isDestShow.toggle()
+                                }
+                            
+                            Spacer()
+                            
+                            HStack(alignment: .center, spacing: 16) {
+                                HStack(alignment: .center, spacing: 0) {
+                                    Toggle(isOn: $isSortDate) {
+                                        Text("Most Recent")
+                                            .font(.system(size: 17, weight: .regular))
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }.padding(.horizontal)
+                                    
+                                    Text("Most Relevant")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                }.fixedSize()
+                                
+                                Picker("", selection: $selectionDest) {
+                                    Text("All NOTAMs").tag("").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+                                    ForEach(notamSection.dataDropDown, id: \.self) {
+                                        Text($0).tag($0)
+                                    }
+                                }
+                            }.fixedSize()
+                        }.frame(height: 54)
+                        
+                        if isDestShow {
+                            ForEach(Array(arrDestNotams.keys), id: \.self) {key in
+                                NotamSubSectionRowView(item: arrDestNotams[key] ?? [], dates: flightPlanDetailModel.destAirportNotam, key: key)
+                            }
+                        }
+                    }.padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+                }.padding(.bottom, 32)
+            }.padding(.horizontal, 16)
+                .background(Color.theme.antiFlashWhite)
+                .onChange(of: selectionDep) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "depNotams" && category == selectionDep {
+                            if let airport = item.airport {
+                                if temp[airport] != nil {
+                                    temp[airport]?.append(item)
+                                } else {
+                                    temp.updateValue([item], forKey: airport)
+                                }
+                            }
+                        }
                     }
+                    arrDepNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
                 }
-                arrDepNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-            }
-//            .onChange(of: selectionEnr) { newValue in
-//                var temp = [NotamsDataList]()
-//                coreDataModel.dataNotams.forEach { item in
-//                    let category = item.category ?? ""
-//
-//                    if item.type == "enrNotams" && category == selectionEnr  {
-//                        temp.append(item)
-//                    }
-//                }
-//                arrEnrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-//            }
-            .onChange(of: selectionArr) { newValue in
-                var temp = [NotamsDataList]()
-                coreDataModel.dataNotams.forEach { item in
-                    let category = item.category ?? ""
+                .onChange(of: selectionEnr) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
 
-                    if item.type == "arrNotams" && category == selectionArr  {
-                        temp.append(item)
-                    }
-                }
-                arrArrNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-            }
-//            .onChange(of: selectionDest) { newValue in
-//                var temp = [NotamsDataList]()
-//                coreDataModel.dataNotams.forEach { item in
-//                    let category = item.category ?? ""
-//
-//                    if item.type == "destNotams" && category == selectionDest  {
-//                        temp.append(item)
-//                    }
-//                }
-//                arrDestNotams = sortNotams(notamsDict: temp, sortKey: isSortDate)
-//            }
-            .onAppear {
-                coreDataModel.dataNotams.forEach { item in
-                    if item.type == "arrNotams" {
-                        arrArrNotams.append(item)
-                    } else if item.type == "depNotams" {
-                        arrDepNotams.append(item)
-                    } else if item.type == "enrNotams" {
-                        if let airport = item.airport {
-                            if arrEnrNotams[airport] != nil {
-                                arrEnrNotams[airport]?.append(item)
-                            } else {
-                                arrEnrNotams.updateValue([item], forKey: airport)
-                            }
-                        }
-                    } else {
-                        if let airport = item.airport {
-                            if arrDestNotams[airport] != nil {
-                                arrDestNotams[airport]?.append(item)
-                            } else {
-                                arrDestNotams.updateValue([item], forKey: airport)
+                        if item.type == "enrNotams" && category == selectionEnr  {
+                            if let airport = item.airport {
+                                if temp[airport] != nil {
+                                    temp[airport]?.append(item)
+                                } else {
+                                    temp.updateValue([item], forKey: airport)
+                                }
                             }
                         }
                     }
+                    arrEnrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
                 }
-                
-                arrDepNotams = sortNotams(notamsDict: arrDepNotams, sortKey: isSortDate)
-                arrArrNotams = sortNotams(notamsDict: arrArrNotams, sortKey: isSortDate)
-                arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDate)
-                arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDate)
-            }
-            .navigationTitle("NOTAMS")
-            .background(Color(.systemGroupedBackground))
+                .onChange(of: selectionArr) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "arrNotams" && category == selectionArr  {
+                            if let airport = item.airport {
+                                if temp[airport] != nil {
+                                    temp[airport]?.append(item)
+                                } else {
+                                    temp.updateValue([item], forKey: airport)
+                                }
+                            }
+                        }
+                    }
+                    arrArrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                }
+                .onChange(of: selectionDest) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "destNotams" && category == selectionArr  {
+                            if let airport = item.airport {
+                                if temp[airport] != nil {
+                                    temp[airport]?.append(item)
+                                } else {
+                                    temp.updateValue([item], forKey: airport)
+                                }
+                            }
+                        }
+                    }
+                    arrDestNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                }
+                .onAppear {
+                    coreDataModel.dataNotams.forEach { item in
+                        if item.type == "arrNotams" {
+                            if let airport = item.airport {
+                                if arrArrNotams[airport] != nil {
+                                    arrArrNotams[airport]?.append(item)
+                                } else {
+                                    arrArrNotams.updateValue([item], forKey: airport)
+                                    arrArrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+                                }
+                            }
+                        } else if item.type == "depNotams" {
+                            if let airport = item.airport {
+                                if arrDepNotams[airport] != nil {
+                                    arrDepNotams[airport]?.append(item)
+                                } else {
+                                    arrDepNotams.updateValue([item], forKey: airport)
+                                    arrDepNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+                                }
+                            }
+                        } else if item.type == "enrNotams" {
+                            if let airport = item.airport {
+                                if arrEnrNotams[airport] != nil {
+                                    arrEnrNotams[airport]?.append(item)
+                                } else {
+                                    arrEnrNotams.updateValue([item], forKey: airport)
+                                    arrEnrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+                                }
+                            }
+                        } else {
+                            if let airport = item.airport {
+                                if arrDestNotams[airport] != nil {
+                                    arrDestNotams[airport]?.append(item)
+                                } else {
+                                    arrDestNotams.updateValue([item], forKey: airport)
+                                    arrDestNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+                                }
+                            }
+                        }
+                    }
+                    
+                    arrDepNotams = sortNotamsArray(notamsDict: arrDepNotams, sortKey: isSortDate)
+                    arrArrNotams = sortNotamsArray(notamsDict: arrArrNotams, sortKey: isSortDate)
+                    arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDate)
+                    arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDate)
+                }
+                .navigationTitle("NOTAMS")
+                .background(Color(.systemGroupedBackground))
+        }
     }
     
     func sortNotamsArray(notamsDict: [String: [NotamsDataList]], sortKey: Bool) -> [String: [NotamsDataList]] {
@@ -479,6 +460,5 @@ struct NotamSubSectionView: View {
             
             return sortedNotams
         }
-
 }
 

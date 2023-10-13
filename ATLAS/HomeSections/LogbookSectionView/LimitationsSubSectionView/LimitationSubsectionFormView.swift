@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LimitationSubsectionFormView: View {
+    @AppStorage("uid") var userID: String = ""
+    @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
@@ -42,10 +44,12 @@ struct LimitationSubsectionFormView: View {
                         Spacer()
                         
                         Button(action: {
-                            updateOrCreate()
-                            currentIndex = -1
-                            isEdit = false
-                            self.isShowing.toggle()
+                            Task {
+                                await updateOrCreate()
+                                currentIndex = -1
+                                isEdit = false
+                                self.isShowing.toggle()
+                            }
                         }) {
                             Text("Done").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
                         }
@@ -88,13 +92,37 @@ struct LimitationSubsectionFormView: View {
         }
     }
     
-    func updateOrCreate() {
+    func updateOrCreate() async {
+        var payloadLimitation = [Any]()
+        
+        for item in itemList {
+            let limit = Int(item.duration)
+            
+            payloadLimitation.append([
+                "id": UUID().uuidString,
+                "limitation_type": item.limitationFlight,
+                "limitation_requirement": parseToInt(item.limitation),
+                "limitation_limit": "\(limit ?? 0)",
+                "limitation_start": item.startDate,
+                "limitation_end": item.endDate,
+                "limitation_status": parseToInt(item.completed),
+            ] as [String : Any])
+        }
+        
+        let payload: [String: Any] = [
+            "user_id": userID,
+            "limitation_data": payloadLimitation,
+        ]
+        
+        print("payload=========\(payload)")
+        await remoteService.postLimitationData(payload)
+        
         persistenceController.container.viewContext.performAndWait {
             if (itemList.count > 0) {
                 for item in itemList {
                     if item.isNew {
                         let newObj = LogbookLimitationList(context: persistenceController.container.viewContext)
-                        
+
                         newObj.id = UUID()
                         newObj.remoteId = UUID().uuidString
                         newObj.type = item.limitationFlight
@@ -124,8 +152,13 @@ struct LimitationSubsectionFormView: View {
                     }
                 }
             }
-            
+
             coreDataModel.dataLogbookLimitation = coreDataModel.readDataLogbookLimitation()
         }
+    }
+    
+    func parseToInt(_ str: String) -> String {
+        let arr = str.components(separatedBy: ":")
+        return "\(Int(arr[0]+arr[1]) ?? 0)"
     }
 }

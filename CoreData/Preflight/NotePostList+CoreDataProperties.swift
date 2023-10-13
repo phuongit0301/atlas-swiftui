@@ -2,7 +2,7 @@
 //  NotePostList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/10/2023.
+//  Created by phuong phan on 13/10/2023.
 //
 //
 
@@ -37,7 +37,23 @@ extension NotePostList {
     @NSManaged public var voted: Bool
     @NSManaged public var comments: NSSet?
     @NSManaged public var lists: NoteAabbaPostList?
-    @NSManaged public var events: NSSet?
+
+}
+
+// MARK: Generated accessors for comments
+extension NotePostList {
+
+    @objc(addCommentsObject:)
+    @NSManaged public func addToComments(_ value: NoteCommentList)
+
+    @objc(removeCommentsObject:)
+    @NSManaged public func removeFromComments(_ value: NoteCommentList)
+
+    @objc(addComments:)
+    @NSManaged public func addToComments(_ values: NSSet)
+
+    @objc(removeComments:)
+    @NSManaged public func removeFromComments(_ values: NSSet)
     
     public var unwrappedCategory: String {
         category ?? ""
@@ -82,40 +98,6 @@ extension NotePostList {
     public var unwrappedUserName: String {
         userName ?? ""
     }
-}
-
-// MARK: Generated accessors for comments
-extension NotePostList {
-
-    @objc(addCommentsObject:)
-    @NSManaged public func addToComments(_ value: NoteCommentList)
-
-    @objc(removeCommentsObject:)
-    @NSManaged public func removeFromComments(_ value: NoteCommentList)
-
-    @objc(addComments:)
-    @NSManaged public func addToComments(_ values: NSSet)
-
-    @objc(removeComments:)
-    @NSManaged public func removeFromComments(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for events
-extension NotePostList {
-
-    @objc(addEventsObject:)
-    @NSManaged public func addToEvents(_ value: EventList)
-
-    @objc(removeEventsObject:)
-    @NSManaged public func removeFromEvents(_ value: EventList)
-
-    @objc(addEvents:)
-    @NSManaged public func addToEvents(_ values: NSSet)
-
-    @objc(removeEvents:)
-    @NSManaged public func removeFromEvents(_ values: NSSet)
-
 }
 
 extension NotePostList : Identifiable {

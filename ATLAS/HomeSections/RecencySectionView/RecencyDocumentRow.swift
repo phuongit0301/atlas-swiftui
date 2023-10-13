@@ -15,7 +15,7 @@ struct RecencyDocumentRow: View {
     @Binding var itemList: [IDocument]
     
     @State private var currentExpiredDate = Date()
-    @State private var tfDocumentType = ""
+    @State private var currentDocumentType = ""
     @State private var tfRequirement = ""
     @State private var currentIndex = -1
     
@@ -38,14 +38,23 @@ struct RecencyDocumentRow: View {
                     
                     Text("Document Type").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                     
-                    TextField("Enter Document Type",text: $tfDocumentType)
-                        .frame(alignment: .leading)
-                        .onSubmit {
-                            if itemList.count > 0 {
-                                itemList[currentIndex].type = tfDocumentType
-                                
+                    HStack(spacing: 8) {
+                        Picker("", selection: $currentDocumentType) {
+                            ForEach(DataDocumentTypeDropdown, id: \.self) {
+                                Text($0).tag($0)
                             }
-                        }
+                        }.pickerStyle(MenuPickerStyle())
+                        Spacer()
+                    }.frame(height: 44)
+                        .padding(.horizontal)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(lineWidth: 1)
+                                .foregroundColor(.white)
+                            
+                        )
                 }.frame(height: 44)
                 
                 HStack {
@@ -80,12 +89,21 @@ struct RecencyDocumentRow: View {
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         itemList[currentIndex].expiredDate = dateFormatter.string(from: newValue)
                     }
+                    .onChange(of: currentDocumentType) { newValue in
+                        itemList[currentIndex].type = newValue
+                    }
                     .onAppear {
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         if let selectedIndex = itemList.firstIndex(of: item) {
                             currentIndex = selectedIndex
-                            tfDocumentType = itemList[currentIndex].type
+//                            tfDocumentType = itemList[currentIndex].type
                             tfRequirement = itemList[currentIndex].requirement ?? ""
+                            
+                            if itemList[currentIndex].type != "" {
+                                currentDocumentType = itemList[currentIndex].type
+                            } else {
+                                currentDocumentType = DataDocumentTypeDropdown.first ?? ""
+                            }
                             
                             if let expiredDate = dateFormatter.date(from: itemList[currentIndex].expiredDate) {
                                 currentExpiredDate = expiredDate

@@ -128,12 +128,13 @@ struct HomeInformationView: View {
                                                         //Todo: Adill will amend
                                                         let requestBody = [
                                                             "flight_number": "SQ806",
-                                                            "dep": "VTBS",
-                                                            "arr": "WSSS",
+                                                            "dep": "BKK",
+                                                            "arr": "SIN",
                                                             "sta": "16:00",
                                                             "std": "00:25"
                                                         ]
                                                         
+                                                        print("stat======\(requestBody)")
                                                         coreDataModel.loadingInitFuel = true
 
                                                         await coreDataModel.syncDataFlightStats(requestBody, callback: { success in

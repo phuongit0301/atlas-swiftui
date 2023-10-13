@@ -10,8 +10,10 @@ import Combine
 import UIKit
 
 struct ClipboardCrewBriefingSummaryView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     let width: CGFloat
     @State private var isCollapseFlightInfo = true
+    @State private var dataFlightOverview: FlightOverviewList?
     
     var body: some View {
         VStack(spacing: 8) {
@@ -56,11 +58,11 @@ struct ClipboardCrewBriefingSummaryView: View {
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
-                            Text("XXXXXXXX")
+                            Text(dataFlightOverview?.flightTime ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
-                            Text("XXXXXXXX")
+                            Text(dataFlightOverview?.unwrappedPassword ?? "")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .regular))
                                 .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
@@ -72,5 +74,10 @@ struct ClipboardCrewBriefingSummaryView: View {
                 .cornerRadius(8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
         }// end VStack
+        .onAppear {
+            if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                dataFlightOverview = overviewList.first
+            }
+        }
     }
 }

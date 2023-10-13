@@ -11,12 +11,13 @@ struct NotamSubSectionRowView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var item: [NotamsDataList]
+    var dates: [String: String]
     let key: String
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(spacing: 0) {
-                Text("\(key) ETD DD/MM/YY HHMM").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                Text("\(key) \(dates[key] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                 Spacer()
             }.frame(height: 44)
 
