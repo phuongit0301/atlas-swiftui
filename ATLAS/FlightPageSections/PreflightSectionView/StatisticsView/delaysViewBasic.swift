@@ -111,6 +111,9 @@ struct historicalDelaysViewBasic: View {
                 var temp = [ArrivalDelays]()
                 
                 if let days = dataFilter["days"] {
+                    if days?.delays == nil {
+                        return []
+                    }
                     let items = (days?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
@@ -122,6 +125,9 @@ struct historicalDelaysViewBasic: View {
                 var temp = [ArrivalDelays]()
                 
                 if let weeks = dataFilter["week1"] {
+                    if weeks?.delays == nil {
+                        return []
+                    }
                     let items = (weeks?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
@@ -133,6 +139,9 @@ struct historicalDelaysViewBasic: View {
                 var temp = [ArrivalDelays]()
                 
                 if let months = dataFilter["weeks3"] {
+                    if months?.delays == nil {
+                        return []
+                    }
                     let items = (months?.delays?.allObjects as! [HistorycalDelaysRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
@@ -302,7 +311,7 @@ struct historicalDelaysChartBasic: View {
 
 
 struct projArrivalDelaysViewBasic: View {
-    @Binding var dataProjDelays: ProjDelaysList
+    @Binding var dataProjDelays: ProjDelaysList?
     
     var body: some View {
         let fetchedDelays: [String: Any] = fetchProjArrivalDelays(dataProjDelays)

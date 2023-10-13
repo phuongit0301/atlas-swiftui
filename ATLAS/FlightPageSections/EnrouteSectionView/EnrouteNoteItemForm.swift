@@ -35,6 +35,7 @@ struct EnrouteNoteItemForm: View {
                         Button(action: {
                             textNote = ""
                             tagListSelected = []
+                            currentIndex = -1
                             self.showSheet.toggle()
                         }) {
                             Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
@@ -137,6 +138,7 @@ struct EnrouteNoteItemForm: View {
                 .onAppear {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].unwrappedName
+                        isIncludeBriefing = itemList[currentIndex].includeCrew
                         
                         let tags = itemList[currentIndex].tags?.allObjects ?? []
                         
@@ -170,6 +172,7 @@ struct EnrouteNoteItemForm: View {
 
             viewModel.save()
 
+            currentIndex = -1
             textNote = ""
             tagListSelected = []
             self.resetData()
@@ -187,6 +190,7 @@ struct EnrouteNoteItemForm: View {
             
             viewModel.save()
             
+            currentIndex = -1
             textNote = ""
             tagListSelected = []
             self.resetData()

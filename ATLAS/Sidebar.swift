@@ -55,8 +55,10 @@ struct Sidebar: View {
                                 showUpcoming.toggle()
                             }
                         
-                        ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
-                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
+                        if showUpcoming {
+                            ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
+                                SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
+                            }
                         }
                     }.padding(.horizontal)
                         .frame(maxWidth: .infinity)
@@ -78,8 +80,10 @@ struct Sidebar: View {
                                 showCompleted.toggle()
                             }
                         
-                        ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
-                            SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
+                        if showCompleted {
+                            ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
+                                SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
+                            }
                         }
                     }.padding(.horizontal)
                     

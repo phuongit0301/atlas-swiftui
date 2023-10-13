@@ -203,6 +203,7 @@
         <attribute name="caPicker" optional="YES" attributeType="String"/>
         <attribute name="chockOff" optional="YES" attributeType="String"/>
         <attribute name="chockOn" optional="YES" attributeType="String"/>
+        <attribute name="crewName" optional="YES" attributeType="String"/>
         <attribute name="day" optional="YES" attributeType="String"/>
         <attribute name="dep" optional="YES" attributeType="String"/>
         <attribute name="dest" optional="YES" attributeType="String"/>
@@ -553,10 +554,14 @@
     <entity name="RecencyExperience" representedClassName="RecencyExperienceList" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="model" optional="YES" attributeType="String"/>
-        <attribute name="p1" optional="YES" attributeType="String"/>
-        <attribute name="p2" optional="YES" attributeType="String"/>
-        <attribute name="pic" optional="YES" attributeType="String"/>
-        <attribute name="picUs" optional="YES" attributeType="String"/>
+        <attribute name="p1Day" optional="YES" attributeType="String"/>
+        <attribute name="p1Night" optional="YES" attributeType="String"/>
+        <attribute name="p2Day" optional="YES" attributeType="String"/>
+        <attribute name="p2Night" optional="YES" attributeType="String"/>
+        <attribute name="picDay" optional="YES" attributeType="String"/>
+        <attribute name="picNight" optional="YES" attributeType="String"/>
+        <attribute name="picUsDay" optional="YES" attributeType="String"/>
+        <attribute name="picUsNight" optional="YES" attributeType="String"/>
         <attribute name="totalTime" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RouteAlternate" representedClassName="RouteAlternateList" syncable="YES">

@@ -78,20 +78,28 @@ struct OnboardingView: View {
                                 for item in onboardingModel.dataModelExperience {
                                     payloadExperience.append([
                                         "model": item.modelName,
-                                        "pic": item.pic,
-                                        "picUs": item.picUs,
-                                        "p1": item.p1,
-                                        "p2": item.p2,
+                                        "picDay": item.picDay,
+                                        "picUsDay": item.picUsDay,
+                                        "p1Day": item.p1Day,
+                                        "p2Day": item.p2Day,
+                                        "picNight": item.picNight,
+                                        "picUsNight": item.picUsNight,
+                                        "p1Night": item.p1Night,
+                                        "p2Night": item.p2Night,
                                         "totalTime": item.totalTime
                                     ])
                                     
                                     let newObject = RecencyExperienceList(context: persistenceController.container.viewContext)
                                     newObject.id = UUID()
                                     newObject.model = item.modelName
-                                    newObject.pic = item.pic
-                                    newObject.picUs = item.picUs
-                                    newObject.p1 = item.p1
-                                    newObject.p2 = item.p2
+                                    newObject.picDay = item.picDay
+                                    newObject.picUsDay = item.picUsDay
+                                    newObject.p1Day = item.p1Day
+                                    newObject.p2Day = item.p2Day
+                                    newObject.picNight = item.picNight
+                                    newObject.picUsNight = item.picUsNight
+                                    newObject.p1Night = item.p1Night
+                                    newObject.p2Night = item.p2Night
                                     newObject.totalTime = item.totalTime
                                     
                                     coreDataModel.save()
@@ -291,7 +299,7 @@ struct OnboardingView: View {
         var bool = false
         
         for item in onboardingModel.dataModelExperience {
-            if item.modelName != "" && item.pic != "" && item.picUs != "" && item.p1 != "" && item.p2 != "" && item.totalTime != "" {
+            if item.modelName != "" && item.picDay != "" && item.picUsDay != "" && item.p1Day != "" && item.p2Day != "" && item.picNight != "" && item.picUsNight != "" && item.p1Night != "" && item.p2Night != "" && item.totalTime != "" {
                 bool = true
             } else {
                 bool = false

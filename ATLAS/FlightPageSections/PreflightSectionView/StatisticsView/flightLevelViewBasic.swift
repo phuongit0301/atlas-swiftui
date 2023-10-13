@@ -76,10 +76,14 @@ struct flightLevelViewBasic: View {
     func flightLevelsFunc() -> [FlightLevel] {
         let data = dataFilter()
         var temp = [FlightLevel]()
-
+        
         switch timeframe {
             case .threeFlights:
                 if let threeFlights = data["flights3"] {
+                    if threeFlights?.flightLevels == nil {
+                        return []
+                    }
+                    
                     let items = (threeFlights?.flightLevels?.allObjects as! [FuelFlightLevelRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
@@ -89,6 +93,10 @@ struct flightLevelViewBasic: View {
                 return temp
             case .week:
                 if let weeks = data["flights2"] {
+                    if weeks?.flightLevels == nil {
+                        return []
+                    }
+                    
                     let items = (weeks?.flightLevels?.allObjects as! [FuelFlightLevelRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in
@@ -98,6 +106,10 @@ struct flightLevelViewBasic: View {
                 return temp
             case .months:
                 if let months = data["flights1"] {
+                    if months?.flightLevels == nil {
+                        return []
+                    }
+                    
                     let items = (months?.flightLevels?.allObjects as! [FuelFlightLevelRefList]).sorted(by: {$0.order < $1.order})
                     
                     items.forEach {item in

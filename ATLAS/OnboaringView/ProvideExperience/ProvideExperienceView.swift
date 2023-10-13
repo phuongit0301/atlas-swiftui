@@ -39,7 +39,7 @@ struct ProvideExperienceView: View {
                         Spacer()
                         
                         Button(action: {
-                            let obj = IProvideExperience(modelName: "", pic: "", picUs: "", p1: "", p2: "", instr: "", exam: "", totalTime: "")
+                            let obj = IProvideExperience(modelName: "", picDay: "", picUsDay: "", p1Day: "", p2Day: "", picNight: "", picUsNight: "", p1Night: "", p2Night: "", instr: "", exam: "", totalTime: "")
                             onboardingModel.dataModelExperience.append(obj)
                         }, label: {
                             Text("Add Model").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)

@@ -61,6 +61,9 @@ struct taxiViewBasic: View {
         let fetchedTimes = dataFilter()
         var temp = [TaxiTimes]()
         if let threeFlights = fetchedTimes["flights3"] {
+            if threeFlights?.times == nil {
+                return []
+            }
             let items = (threeFlights?.times?.allObjects as! [FuelTaxiRefList]).sorted(by: {$0.order < $1.order})
             
             items.forEach {item in

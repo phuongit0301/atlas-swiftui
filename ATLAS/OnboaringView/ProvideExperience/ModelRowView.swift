@@ -14,18 +14,26 @@ struct ModelRowView: View {
     let width: CGFloat
     @State private var selectedModel = ""
     
-    @State var currentPic = "00000:00"
-    @State var currentPicUs = "00000:00"
-    @State var currentP1 = "00000:00"
-    @State var currentP2 = "00000:00"
+    @State var currentPicDay = "00000:00"
+    @State var currentPicNight = "00000:00"
+    @State var currentPicUsDay = "00000:00"
+    @State var currentPicUsNight = "00000:00"
+    @State var currentP1Day = "00000:00"
+    @State var currentP1Night = "00000:00"
+    @State var currentP2Day = "00000:00"
+    @State var currentP2Night = "00000:00"
 //    @State var currentInstr = "00:00"
 //    @State var currentExam = "00:00"
     @State var currentTotal = "00000:00"
     
-    @State var showPicModal = false
-    @State var showPicUsModal = false
-    @State var showP1Modal = false
-    @State var showP2Modal = false
+    @State var showPicDayModal = false
+    @State var showPicNightModal = false
+    @State var showPicUsDayModal = false
+    @State var showPicUsNightModal = false
+    @State var showP1DayModal = false
+    @State var showP1NightModal = false
+    @State var showP2DayModal = false
+    @State var showP2NightModal = false
 //    @State var showInstrModal = false
 //    @State var showExamModal = false
     @State var showTotalModal = false
@@ -67,74 +75,126 @@ struct ModelRowView: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Text("PIC")
+                    Text("PIC Day")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
                         .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
-                    Text("PIC(u/us)")
+                    Text("PIC Night")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
                         .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
-                    Text("P1")
+                    Text("PIC(u/us) Day")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
                         .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
-                    Text("P2")
+                    Text("PIC(u/us) Night")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
                         .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
-//                    Text("Instr")
-//                        .font(.system(size: 15, weight: .medium))
-//                        .foregroundColor(Color.black)
-//                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
-//                    Text("Exam")
-//                        .font(.system(size: 15, weight: .medium))
-//                        .foregroundColor(Color.black)
-//                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
-                    Text("Total Time (P1+P2)")
+                    Text("")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Color.black)
                         .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                    //                    Text("Instr")
+                    //                        .font(.system(size: 15, weight: .medium))
+                    //                        .foregroundColor(Color.black)
+                    //                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
+                    //                    Text("Exam")
+                    //                        .font(.system(size: 15, weight: .medium))
+                    //                        .foregroundColor(Color.black)
+                    //                        .frame(width: calculateWidthSummary(width - 64, 7), alignment: .leading)
                 }.frame(height: 44, alignment: .leading)
                 
                 HStack {
                     HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onPic, value: currentPic)
+                        FlightTimeButtonTimeStepper(onToggle: onPicDay, value: currentPicDay)
                             .fixedSize()
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onPicUs, value: currentPicUs)
+                        FlightTimeButtonTimeStepper(onToggle: onPicNight, value: currentPicNight)
                             .fixedSize()
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onP1, value: currentP1)
+                        FlightTimeButtonTimeStepper(onToggle: onPicUsDay, value: currentPicUsDay)
                             .fixedSize()
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
-                        FlightTimeButtonTimeStepper(onToggle: onP2, value: currentP2)
+                        FlightTimeButtonTimeStepper(onToggle: onPicUsNight, value: currentPicUsNight)
                             .fixedSize()
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
-//                    HStack {
-//                        FlightTimeButtonTimeStepper(onToggle: onInstr, value: currentInstr)
-//                            .fixedSize()
-//                        Spacer()
-//                    }.frame(width: calculateWidthSummary(width - 64, 5))
-//                    HStack {
-//                        FlightTimeButtonTimeStepper(onToggle: onExam, value: currentExam)
-//                            .fixedSize()
-//                        Spacer()
-//                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    Text("")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                }.frame(height: 44, alignment: .leading)
+            }
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("P1 Day")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                    Text("P1 Night")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                    Text("P2 Day")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                    Text("P2 Night")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                    Text("Total Time (P1+P2)")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(Color.black)
+                        .frame(width: calculateWidthSummary(width - 64, 5), alignment: .leading)
+                }
+                
+                HStack {
+                    HStack {
+                        FlightTimeButtonTimeStepper(onToggle: onP1Day, value: currentP1Day)
+                            .fixedSize()
+                        Spacer()
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    HStack {
+                        FlightTimeButtonTimeStepper(onToggle: onP1Night, value: currentP1Night)
+                            .fixedSize()
+                        Spacer()
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    HStack {
+                        FlightTimeButtonTimeStepper(onToggle: onP2Day, value: currentP2Day)
+                            .fixedSize()
+                        Spacer()
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    HStack {
+                        FlightTimeButtonTimeStepper(onToggle: onP2Night, value: currentP2Night)
+                            .fixedSize()
+                        Spacer()
+                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    //                    HStack {
+                    //                        FlightTimeButtonTimeStepper(onToggle: onInstr, value: currentInstr)
+                    //                            .fixedSize()
+                    //                        Spacer()
+                    //                    }.frame(width: calculateWidthSummary(width - 64, 5))
+                    //                    HStack {
+                    //                        FlightTimeButtonTimeStepper(onToggle: onExam, value: currentExam)
+                    //                            .fixedSize()
+                    //                        Spacer()
+                    //                    }.frame(width: calculateWidthSummary(width - 64, 5))
                     HStack {
                         FlightTimeButtonTimeStepper(onToggle: onTotal, value: currentTotal)
                             .fixedSize()
                         Spacer()
                     }.frame(width: calculateWidthSummary(width - 64, 5))
                 }.frame(height: 44, alignment: .leading)
-            }.frame(maxWidth: .infinity)
+            }
             
         }.id(UUID())
             .padding()
@@ -157,20 +217,36 @@ struct ModelRowView: View {
                             self.selectedModel = DataModelDropdown.first ?? ""
                         }
                         
-                        if dataModel[matchingIndex].pic != "" {
-                            self.currentPic = dataModel[matchingIndex].pic
+                        if dataModel[matchingIndex].picDay != "" {
+                            self.currentPicDay = dataModel[matchingIndex].picDay
                         }
                         
-                        if dataModel[matchingIndex].picUs != "" {
-                            self.currentPicUs = dataModel[matchingIndex].picUs
+                        if dataModel[matchingIndex].picNight != "" {
+                            self.currentPicNight = dataModel[matchingIndex].picNight
                         }
                         
-                        if dataModel[matchingIndex].p1 != "" {
-                            self.currentP1 = dataModel[matchingIndex].p1
+                        if dataModel[matchingIndex].picUsDay != "" {
+                            self.currentPicUsDay = dataModel[matchingIndex].picUsDay
                         }
                         
-                        if dataModel[matchingIndex].p2 != "" {
-                            self.currentP2 = dataModel[matchingIndex].p2
+                        if dataModel[matchingIndex].picUsNight != "" {
+                            self.currentPicUsNight = dataModel[matchingIndex].picUsNight
+                        }
+                        
+                        if dataModel[matchingIndex].p1Day != "" {
+                            self.currentP1Day = dataModel[matchingIndex].p1Day
+                        }
+                        
+                        if dataModel[matchingIndex].p1Night != "" {
+                            self.currentP1Night = dataModel[matchingIndex].p1Night
+                        }
+                        
+                        if dataModel[matchingIndex].p2Day != "" {
+                            self.currentP2Day = dataModel[matchingIndex].p2Day
+                        }
+                        
+                        if dataModel[matchingIndex].p2Night != "" {
+                            self.currentP2Night = dataModel[matchingIndex].p2Night
                         }
                         
                         if dataModel[matchingIndex].totalTime != "" {
@@ -179,17 +255,29 @@ struct ModelRowView: View {
                     }
                 }
             }
-            .formSheet(isPresented: $showPicModal) {
-                OnboardingTimeModalView(isShowing: $showPicModal, selectionInOut: $currentPic, onChange: onChangePic).interactiveDismissDisabled(true)
+            .formSheet(isPresented: $showPicDayModal) {
+                OnboardingTimeModalView(isShowing: $showPicDayModal, selectionInOut: $currentPicDay, onChange: onChangePicDay).interactiveDismissDisabled(true)
             }
-            .formSheet(isPresented: $showPicUsModal) {
-                OnboardingTimeModalView(isShowing: $showPicUsModal, selectionInOut: $currentPicUs, onChange: onChangePicUs).interactiveDismissDisabled(true)
+            .formSheet(isPresented: $showPicNightModal) {
+                OnboardingTimeModalView(isShowing: $showPicNightModal, selectionInOut: $currentPicNight, onChange: onChangePicNight).interactiveDismissDisabled(true)
             }
-            .formSheet(isPresented: $showP1Modal) {
-                OnboardingTimeModalView(isShowing: $showP1Modal, selectionInOut: $currentP1, onChange: onChangeP1).interactiveDismissDisabled(true)
+            .formSheet(isPresented: $showPicUsDayModal) {
+                OnboardingTimeModalView(isShowing: $showPicUsDayModal, selectionInOut: $currentPicUsDay, onChange: onChangePicUsDay).interactiveDismissDisabled(true)
             }
-            .formSheet(isPresented: $showP2Modal) {
-                OnboardingTimeModalView(isShowing: $showP2Modal, selectionInOut: $currentP2, onChange: onChangeP2).interactiveDismissDisabled(true)
+            .formSheet(isPresented: $showPicUsNightModal) {
+                OnboardingTimeModalView(isShowing: $showPicUsNightModal, selectionInOut: $currentPicUsNight, onChange: onChangePicUsNight).interactiveDismissDisabled(true)
+            }
+            .formSheet(isPresented: $showP1DayModal) {
+                OnboardingTimeModalView(isShowing: $showP1DayModal, selectionInOut: $currentP1Day, onChange: onChangeP1Day).interactiveDismissDisabled(true)
+            }
+            .formSheet(isPresented: $showP1NightModal) {
+                OnboardingTimeModalView(isShowing: $showP1NightModal, selectionInOut: $currentP1Night, onChange: onChangeP1Night).interactiveDismissDisabled(true)
+            }
+            .formSheet(isPresented: $showP2DayModal) {
+                OnboardingTimeModalView(isShowing: $showP2DayModal, selectionInOut: $currentP2Day, onChange: onChangeP2Day).interactiveDismissDisabled(true)
+            }
+            .formSheet(isPresented: $showP2NightModal) {
+                OnboardingTimeModalView(isShowing: $showP2NightModal, selectionInOut: $currentP2Night, onChange: onChangeP2Night).interactiveDismissDisabled(true)
             }
 //            .formSheet(isPresented: $showTotalModal) {
 //                OnboardingTimeModalView(isShowing: $showTotalModal, selectionInOut: $currentTotal, onChange: onChangeTotalTime)
@@ -201,21 +289,39 @@ struct ModelRowView: View {
             }
     }
 
-    func onChangePic(_ value: String) {
-        dataModel[currentIndex].pic = value
+    func onChangePicDay(_ value: String) {
+        dataModel[currentIndex].picDay = value
     }
 
-    func onChangePicUs(_ value: String) {
-        dataModel[currentIndex].picUs = value
+    func onChangePicUsDay(_ value: String) {
+        dataModel[currentIndex].picUsDay = value
     }
     
-    func onChangeP1(_ value: String) {
-        dataModel[currentIndex].p1 = value
+    func onChangeP1Day(_ value: String) {
+        dataModel[currentIndex].p1Day = value
         calculateTotalTime()
     }
     
-    func onChangeP2(_ value: String) {
-        dataModel[currentIndex].p2 = value
+    func onChangeP2Day(_ value: String) {
+        dataModel[currentIndex].p2Day = value
+        calculateTotalTime()
+    }
+    
+    func onChangePicNight(_ value: String) {
+        dataModel[currentIndex].picNight = value
+    }
+
+    func onChangePicUsNight(_ value: String) {
+        dataModel[currentIndex].picUsNight = value
+    }
+    
+    func onChangeP1Night(_ value: String) {
+        dataModel[currentIndex].p1Night = value
+        calculateTotalTime()
+    }
+    
+    func onChangeP2Night(_ value: String) {
+        dataModel[currentIndex].p2Night = value
         calculateTotalTime()
     }
     
@@ -223,36 +329,74 @@ struct ModelRowView: View {
         var num1 = 0
         var num2 = 0
         
-        if dataModel[currentIndex].p1 != "" {
-            let arr = dataModel[currentIndex].p1.components(separatedBy: ":")
+        if dataModel[currentIndex].p1Day != "" {
+            let arr = dataModel[currentIndex].p1Day.components(separatedBy: ":")
             num1 += (arr[0] as NSString).integerValue
             num2 += (arr[1] as NSString).integerValue
         }
         
-        if dataModel[currentIndex].p2 != "" {
-            let arr = dataModel[currentIndex].p2.components(separatedBy: ":")
+        if dataModel[currentIndex].p2Day != "" {
+            let arr = dataModel[currentIndex].p2Day.components(separatedBy: ":")
             num1 += (arr[0] as NSString).integerValue
             num2 += (arr[1] as NSString).integerValue
         }
         
+        if dataModel[currentIndex].p1Night != "" {
+            let arr = dataModel[currentIndex].p1Night.components(separatedBy: ":")
+            num1 += (arr[0] as NSString).integerValue
+            num2 += (arr[1] as NSString).integerValue
+        }
+        
+        if dataModel[currentIndex].p2Night != "" {
+            let arr = dataModel[currentIndex].p2Night.components(separatedBy: ":")
+            num1 += (arr[0] as NSString).integerValue
+            num2 += (arr[1] as NSString).integerValue
+        }
+        
+        if num2 > 59 {
+            let temp = Int(num2 / 60)
+            let tempMod = num2 % 60
+            num1 += temp
+            num2 = tempMod
+            print("temp========\(temp)")
+            print("tempMod========\(tempMod)")
+            print("num1========\(num1)")
+            print("num2========\(num2)")
+        }
         let str = "\(String(format: "%05d", num1)):\(String(format: "%02d", num2))"
         dataModel[currentIndex].totalTime = str
     }
     
-    func onPic() {
-        self.showPicModal.toggle()
+    func onPicDay() {
+        self.showPicDayModal.toggle()
+    }
+
+    func onPicNight() {
+        self.showPicNightModal.toggle()
     }
     
-    func onPicUs() {
-        self.showPicUsModal.toggle()
+    func onPicUsDay() {
+        self.showPicUsDayModal.toggle()
+    }
+
+    func onPicUsNight() {
+        self.showPicUsNightModal.toggle()
     }
     
-    func onP1() {
-        self.showP1Modal.toggle()
+    func onP1Day() {
+        self.showP1DayModal.toggle()
+    }
+
+    func onP1Night() {
+        self.showP1NightModal.toggle()
     }
     
-    func onP2() {
-        self.showP2Modal.toggle()
+    func onP2Day() {
+        self.showP2DayModal.toggle()
+    }
+
+    func onP2Night() {
+        self.showP2NightModal.toggle()
     }
     
 //    func onInstr() {

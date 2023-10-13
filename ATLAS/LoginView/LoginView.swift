@@ -119,22 +119,6 @@ struct LoginView: View {
                             
                             if let authResult = authResult, authResult.user.isEmailVerified {
                                 print(authResult.user.uid)
-                                
-//                                ref.child("users").child(authResult.user.uid).observeSingleEvent(of: .value, with: { snapshot in
-//                                  // Get user value
-//                                  let value = snapshot.value as? NSDictionary
-//                                  let username = value?["username"] as? String ?? ""
-//                                  let firstName = value?["firstName"] as? String ?? ""
-//                                  let lastName = value?["lastName"] as? String ?? ""
-//
-//                                    print("value========\(value)")
-//                                    print("username========\(username)")
-//                                    print("firstName========\(firstName)")
-//                                    print("lastName========\(lastName)")
-//                                }) { error in
-//                                  print("Error fetch data firebase: \(error.localizedDescription)")
-//                                }
-                                
                                 coreDataModel.isLoginLoading = true
                                 withAnimation {
                                     userID = authResult.user.uid

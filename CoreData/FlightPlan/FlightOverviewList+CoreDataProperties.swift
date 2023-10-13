@@ -2,7 +2,7 @@
 //  FlightOverviewList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/10/2023.
+//  Created by phuong phan on 12/10/2023.
 //
 //
 
@@ -11,37 +11,38 @@ import CoreData
 
 
 extension FlightOverviewList {
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FlightOverviewList> {
         return NSFetchRequest<FlightOverviewList>(entityName: "FlightOverview")
     }
-    
-    @NSManaged public var caName: String?
-    @NSManaged public var caPicker: String?
-    @NSManaged public var eta: String?
-    @NSManaged public var f0Name: String?
-    @NSManaged public var f0Picker: String?
+
     @NSManaged public var aircraft: String?
     @NSManaged public var blockTime: String?
     @NSManaged public var blockTimeFlightTime: String?
     @NSManaged public var callsign: String?
-    @NSManaged public var id: UUID?
+    @NSManaged public var caName: String?
+    @NSManaged public var caPicker: String?
     @NSManaged public var chockOff: String?
     @NSManaged public var chockOn: String?
     @NSManaged public var day: String?
     @NSManaged public var dep: String?
     @NSManaged public var dest: String?
+    @NSManaged public var eta: String?
+    @NSManaged public var f0Name: String?
+    @NSManaged public var f0Picker: String?
     @NSManaged public var flightTime: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var model: String?
     @NSManaged public var night: String?
     @NSManaged public var password: String?
     @NSManaged public var pob: String?
+    @NSManaged public var route: String?
     @NSManaged public var sta: String?
     @NSManaged public var std: String?
     @NSManaged public var timeDiffArr: String?
     @NSManaged public var timeDiffDep: String?
     @NSManaged public var totalTime: String?
-    @NSManaged public var route: String?
+    @NSManaged public var crewName: String?
     @NSManaged public var events: NSSet?
     
     public var unwrappedCaName: String {
@@ -144,6 +145,9 @@ extension FlightOverviewList {
         route ?? ""
     }
     
+    public var unwrappedCrewName: String {
+        crewName ?? ""
+    }
 }
 
 // MARK: Generated accessors for events

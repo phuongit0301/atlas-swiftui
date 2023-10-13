@@ -19,7 +19,10 @@ struct SidebarItem: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(item.unwrappedName).foregroundColor(.white).font(.system(size: 17, weight: .semibold))
-                        Text("\(item.dep ?? "")-\(item.dest ?? "")").foregroundColor(.white).font(.system(size: 13, weight: .regular))
+                        
+                        if let dep = item.dep, let dest = item.dest {
+                            Text("\(dep)-\(dest)").foregroundColor(.white).font(.system(size: 13, weight: .regular))
+                        }
                     }
                     Spacer()
                     Text(item.unwrappedStartDate).foregroundColor(.white).font(.system(size: 15, weight: .regular))

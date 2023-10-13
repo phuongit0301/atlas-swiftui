@@ -19,6 +19,7 @@ struct FlightOverviewSectionView: View {
     @State private var tfAircraft: String = ""
     @State private var tfPob: String = ""
     @State private var tfPassword: String = ""
+    @State private var tfCrewName: String = ""
     
     //For Modal Flight Time
     @State private var currentDateFlightTime: String = "00:00"
@@ -55,6 +56,8 @@ struct FlightOverviewSectionView: View {
     //For switch crew
     @State private var isSync = false
     
+    let dateFormatter = DateFormatter()
+    
     var body: some View {
         
         var std: String {
@@ -73,13 +76,13 @@ struct FlightOverviewSectionView: View {
             }
         }
         
-        var eta: String {
-            if showUTC {
-                return dataFlightOverview?.unwrappedEta ?? ""
-            } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
-            }
-        }
+//        var eta: String {
+//            if showUTC {
+//                return dataFlightOverview?.unwrappedEta ?? ""
+//            } else {
+//                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+//            }
+//        }
         
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
@@ -440,11 +443,11 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack {
-                                    Text(eta)
+                                    Text(calculateEta())
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    Text(dataFlightOverview?.totalTime ?? "")
+                                    Text(calculateTotalTime())
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -482,12 +485,32 @@ struct FlightOverviewSectionView: View {
                             VStack(spacing: 0) {
                                 HStack(spacing: 0) {
                                     Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
+                                    
                                     HStack(spacing: 0) {
-                                        Text("CA").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
-
+                                        if isSync {
+                                            TextField(
+                                                "Enter name",
+                                                text: $tfCrewName
+                                            ).onSubmit {
+                                                    if dataFlightOverview != nil, let item = dataFlightOverview {
+                                                        item.crewName = tfCrewName
+                                                    } else {
+                                                        let item = FlightOverviewList(context: persistenceController.container.viewContext)
+                                                        item.crewName = tfCrewName
+                                                    }
+                                                    
+                                                    coreDataModel.save()
+                                                    
+                                                    if dataFlightOverview != nil, let item = dataFlightOverview, let id = item.id {
+                                                        dataFlightOverview = coreDataModel.readFlightOverviewById(id)
+                                                    }
+                                                }
+                                        } else {
+                                            Text("UserName").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                        }
+                                        
                                         Spacer()
-
+                                        
                                         Button(action: {
                                             self.isSync.toggle()
                                         }, label: {
@@ -496,11 +519,32 @@ struct FlightOverviewSectionView: View {
                                                 .aspectRatio(contentMode: .fit)
                                         }).padding(.trailing)
                                             .buttonStyle(PlainButtonStyle())
-
+                                        
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
-                                    Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-
+                                    
+                                    if isSync {
+                                        Text("UserName").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold)).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    } else {
+                                        TextField(
+                                            "Enter name",
+                                            text: $tfCrewName
+                                        ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                            .onSubmit {
+                                                if dataFlightOverview != nil, let item = dataFlightOverview {
+                                                    item.crewName = tfCrewName
+                                                } else {
+                                                    let item = FlightOverviewList(context: persistenceController.container.viewContext)
+                                                    item.crewName = tfCrewName
+                                                }
+                                                
+                                                coreDataModel.save()
+                                                
+                                                if dataFlightOverview != nil, let item = dataFlightOverview, let id = item.id {
+                                                    dataFlightOverview = coreDataModel.readFlightOverviewById(id)
+                                                }
+                                            }
+                                    }
+                                    
                                 }.frame(height: 44, alignment: .leading)
 
                                 Divider().padding(.horizontal, -16)
@@ -586,6 +630,7 @@ struct FlightOverviewSectionView: View {
             // end VStack
             .onAppear {
                 if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     dataFlightOverview = overviewList.first
 
                     if let ca = dataFlightOverview?.unwrappedCaPicker {
@@ -600,7 +645,51 @@ struct FlightOverviewSectionView: View {
                         selectedModelPicker = model
                     }
                     
+                    if let crewName = dataFlightOverview?.unwrappedCrewName {
+                        tfCrewName = crewName
+                    }
+                    
+                    if let tempDateChockOff = dataFlightOverview?.unwrappedChockOff, let tempChockOffFormat = dateFormatter.date(from: tempDateChockOff) {
+                        currentDateChockOff = tempChockOffFormat
+                    }
+                    
+                    if let tempDateChockOn = dataFlightOverview?.unwrappedChockOn, let tempChockOnFormat = dateFormatter.date(from: tempDateChockOn) {
+                        currentDateChockOn = tempChockOnFormat
+                    }
+                    
                     currentDateFlightTime = dataFlightOverview?.unwrappedFlightTime ?? ""
+                    tfPob = dataFlightOverview?.unwrappedPob ?? ""
+                    tfAircraft = dataFlightOverview?.unwrappedAircraft ?? ""
+                }
+            }
+            .onChange(of: coreDataModel.selectedEvent?.id) {_ in
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                
+                if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                    dataFlightOverview = overviewList.first
+
+                    if let ca = dataFlightOverview?.unwrappedCaPicker {
+                        selectedCA = SummaryDataDropDown(rawValue: ca) ?? SummaryDataDropDown.pic
+                    }
+
+                    if let f0 = dataFlightOverview?.unwrappedF0Picker {
+                        selectedFO = SummaryDataDropDown(rawValue: f0) ?? SummaryDataDropDown.pic
+                    }
+
+                    if let model = dataFlightOverview?.model {
+                        selectedModelPicker = model
+                    }
+                    
+                    if let tempDateChockOff = dataFlightOverview?.unwrappedChockOff, let tempChockOffFormat = dateFormatter.date(from: tempDateChockOff) {
+                        currentDateChockOff = tempChockOffFormat
+                    }
+                    
+                    if let tempDateChockOn = dataFlightOverview?.unwrappedChockOn, let tempChockOnFormat = dateFormatter.date(from: tempDateChockOn) {
+                        currentDateChockOn = tempChockOnFormat
+                    }
+                    
+                    currentDateFlightTime = dataFlightOverview?.unwrappedFlightTime ?? ""
+                    
                     tfPob = dataFlightOverview?.unwrappedPob ?? ""
                     tfAircraft = dataFlightOverview?.unwrappedAircraft ?? ""
                 }
@@ -911,5 +1000,28 @@ struct FlightOverviewSectionView: View {
             return calculateTime(startDate, endDate)
         }
         return ""
+    }
+    
+    func calculateEta() -> String {
+        dateFormatter.dateFormat = "HH:mm"
+        let timeChockOff = dateFormatter.string(from: currentDateChockOff)
+        return calculateTime(currentDateFlightTime, timeChockOff)
+    }
+    
+    func calculateTotalTime() -> String {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        let diffComponents = Calendar.current.dateComponents([.hour, .minute], from: currentDateChockOff, to: currentDateChockOn)
+        var hour = "00"
+        var minute = "00"
+        
+        if let dhour = diffComponents.hour, dhour > 0 {
+            hour = "\(dhour)"
+        }
+        
+        if let dminute = diffComponents.minute, dminute > 0 {
+            minute = "\(dminute)"
+        }
+        return "\(hour):\(minute)"
     }
 }

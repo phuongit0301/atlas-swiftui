@@ -107,14 +107,14 @@ struct OnboardingTimeModalView: View {
             }
             Spacer()
         }.onAppear {
-            if selectionInOut.count >= 7 {
+            if selectionInOut.count >= 8 {
                 self.selectionA = Int(selectionInOut.suffix(selectionInOut.count).prefix(1)) ?? 0
                 self.selectionB = Int(selectionInOut.suffix(selectionInOut.count - 1).prefix(1)) ?? 0
                 self.selectionC = Int(selectionInOut.suffix(selectionInOut.count - 2).prefix(1)) ?? 0
                 self.selectionD = Int(selectionInOut.suffix(selectionInOut.count - 3).prefix(1)) ?? 0
                 self.selectionE = Int(selectionInOut.suffix(selectionInOut.count - 4).prefix(1)) ?? 0
                 self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 6).prefix(1)) ?? 0
-                self.selectionF = Int(selectionInOut.suffix(selectionInOut.count - 7).prefix(1)) ?? 0
+                self.selectionG = Int(selectionInOut.suffix(selectionInOut.count - 7).prefix(1)) ?? 0
             }
         }
     }

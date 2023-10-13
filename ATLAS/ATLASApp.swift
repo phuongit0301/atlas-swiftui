@@ -65,15 +65,18 @@ struct ATLASApp: App {
                                 } else {
                                     ContentView()
                                 }
-                            }.onAppear {
+                            }
+                            .onAppear {
                                 Task {
-                                    if isLogin == "1" {
+                                    // After user login
+                                    if userID != "" && isBoardingCompleted == "" {
                                         coreDataModel.isLoginLoading = true
                                         await coreDataModel.checkAndSyncOrPostData()
                                         isLogin = "0"
                                         coreDataModel.isLoginLoading = false
                                     }
                                     
+                                    // After Onboarding
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
                                     }
@@ -93,6 +96,7 @@ struct ATLASApp: App {
                 Task {
                     coreDataModel.loading = true
                     print("fetch reader")
+                    await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.initFetchData()
                     coreDataModel.loading = false
                 }

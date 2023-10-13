@@ -36,6 +36,7 @@ struct NoteItemForm: View {
                         Button(action: {
                             textNote = ""
                             tagListSelected = []
+                            currentIndex = -1
                             self.showSheet.toggle()
                         }) {
                             Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
@@ -185,7 +186,8 @@ struct NoteItemForm: View {
             }
             
             viewModel.save()
-
+            
+            currentIndex = -1
             textNote = ""
             tagListSelected = []
             self.resetData()
@@ -203,6 +205,7 @@ struct NoteItemForm: View {
             
             viewModel.save()
             
+            currentIndex = -1
             textNote = ""
             tagListSelected = []
             self.resetData()

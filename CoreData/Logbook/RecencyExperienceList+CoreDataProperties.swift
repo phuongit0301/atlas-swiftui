@@ -2,7 +2,7 @@
 //  RecencyExperienceList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 11/10/2023.
+//  Created by phuong phan on 12/10/2023.
 //
 //
 
@@ -18,30 +18,50 @@ extension RecencyExperienceList {
 
     @NSManaged public var id: UUID?
     @NSManaged public var model: String?
-    @NSManaged public var pic: String?
-    @NSManaged public var picUs: String?
-    @NSManaged public var p1: String?
-    @NSManaged public var p2: String?
+    @NSManaged public var picDay: String?
+    @NSManaged public var picUsDay: String?
+    @NSManaged public var p1Day: String?
+    @NSManaged public var p2Day: String?
     @NSManaged public var totalTime: String?
+    @NSManaged public var picUsNight: String?
+    @NSManaged public var picNight: String?
+    @NSManaged public var p1Night: String?
+    @NSManaged public var p2Night: String?
     
     public var unwrappedModel: String {
         model ?? ""
     }
     
-    public var unwrappedPic: String {
-        pic ?? ""
+    public var unwrappedPicDay: String {
+        picDay ?? ""
     }
     
-    public var unwrappedPicUs: String {
-        picUs ?? ""
+    public var unwrappedPicUsDay: String {
+        picUsDay ?? ""
     }
     
-    public var unwrappedP1: String {
-        p1 ?? ""
+    public var unwrappedP1Day: String {
+        p1Day ?? ""
     }
     
-    public var unwrappedP2: String {
-        p2 ?? ""
+    public var unwrappedP2Day: String {
+        p2Day ?? ""
+    }
+    
+    public var unwrappedPicNight: String {
+        picNight ?? ""
+    }
+    
+    public var unwrappedPicUsNight: String {
+        picUsNight ?? ""
+    }
+    
+    public var unwrappedP1Night: String {
+        p1Night ?? ""
+    }
+    
+    public var unwrappedP2Night: String {
+        p2Night ?? ""
     }
     
     public var unwrappedTotalTime: String {

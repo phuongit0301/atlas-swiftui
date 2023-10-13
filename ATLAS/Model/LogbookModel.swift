@@ -89,10 +89,14 @@ struct ILogbookLimitationData: Decodable {
 
 struct ILogbookExperienceData: Decodable {
     var model: String
-    var p1: String
-    var p2: String
-    var pic: String
-    var picUs: String
+    var picDay: String
+    var picUsDay: String
+    var p1Day: String
+    var p2Day: String
+    var picNight: String
+    var picUsNight: String
+    var p1Night: String
+    var p2Night: String
     var totalTime: String
 }
 

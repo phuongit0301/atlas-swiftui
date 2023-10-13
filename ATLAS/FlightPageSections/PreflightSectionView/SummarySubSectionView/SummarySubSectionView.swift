@@ -576,11 +576,14 @@ struct SummarySubSectionView: View {
                 "flight_number": dataFlightOverview?.unwrappedCallsign
             ]
             
-            async let trafficService = remoteService.updateMapTrafficData(payloadMap)
-            async let mapAabbaService = remoteService.updateMapAabbaData(payloadMap)
-            async let waypointService = remoteService.updateMapWaypointData(payloadMap)
-            async let airportService = remoteService.updateMapAirportData()
-            async let notamService = remoteService.updateNotamData(payloadNotam)
+            print("payloadMap======\(payloadMap)")
+            print("payloadAabbaNote======\(payloadAabbaNote)")
+            
+            async let trafficService = remoteService.getMapTrafficData(payloadMap)
+            async let mapAabbaService = remoteService.getMapAabbaData(payloadMap)
+            async let waypointService = remoteService.getMapWaypointData(payloadMap)
+            async let airportService = remoteService.getMapAirportData()
+            async let notamService = remoteService.getNotamData(payloadNotam)
             async let aabbaNoteService = remoteService.getAabbaNoteData(payloadAabbaNote)
 
             //array handle call API parallel
@@ -609,14 +612,15 @@ struct SummarySubSectionView: View {
                 coreDataModel.initDataAirportMapColor(responseAirport)
             }
 
-            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0 {
+            if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0, let eventList = coreDataModel.selectedEvent {
                 await coreDataModel.deleteAllAabbaNoteCommentList()
                 await coreDataModel.deleteAllAabbaNotePostList()
                 await coreDataModel.deleteAllAabbaNoteList()
 
-                coreDataModel.initDataMapAabbaNotes(responseAabbaNote)
+                coreDataModel.initDataMapAabbaNotes(responseAabbaNote, eventList)
             }
-
+            
+            //Todo: just loading for Notams, MetaTaf
             await coreDataModel.deleteAllMetaTaf()
             await coreDataModel.deleteAllNotam()
 

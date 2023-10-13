@@ -200,7 +200,7 @@ class RemoteService: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = postData
-        
+        print("json=============\(String(data: postData!, encoding: .utf8)!)")
         do {
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
@@ -689,7 +689,7 @@ class RemoteService: ObservableObject {
     // Update data for Pre Flight
     
     //ATLAS_get_map_traffic_data
-    func updateMapTrafficData(_ parameters: Any) async -> [ITrafficData]?  {
+    func getMapTrafficData(_ parameters: Any) async -> [ITrafficData]?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_traffic_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -719,7 +719,7 @@ class RemoteService: ObservableObject {
     
     
     //ATLAS_get_map_aabba_data
-    func updateMapAabbaData(_ parameters: Any) async -> [IAabbaData]?  {
+    func getMapAabbaData(_ parameters: Any) async -> [IAabbaData]?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_aabba_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -748,7 +748,7 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_waypoints_data
-    func updateMapWaypointData(_ parameters: Any) async -> [IWaypointData]?  {
+    func getMapWaypointData(_ parameters: Any) async -> [IWaypointData]?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_waypoints_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -777,7 +777,7 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_airports_data
-    func updateMapAirportData() async -> [IAirportData]? {
+    func getMapAirportData() async -> [IAirportData]? {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_airports_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -801,7 +801,7 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_notam_wx_data
-    func updateNotamData(_ parameters: Any) async -> INotamWXDataJson?  {
+    func getNotamData(_ parameters: Any) async -> INotamWXDataJson?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_notam_wx_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"

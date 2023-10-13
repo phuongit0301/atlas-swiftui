@@ -386,6 +386,8 @@ public struct HasToolbar: ViewModifier {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
+                            coreDateModel.selectedEvent = nil
+                            coreDateModel.isEventActive = false
                             dismiss()
                         }) {
                             Image("icon_arrow_left")
