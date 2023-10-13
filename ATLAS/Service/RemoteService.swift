@@ -128,7 +128,7 @@ class RemoteService: ObservableObject {
         request.httpMethod = "POST"
         // Convert the request body to JSON data
         let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-        print("json=============\(String(data: postData!, encoding: .utf8)!)")
+//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
         // Set the request body data
         request.httpBody = postData
         
@@ -200,7 +200,7 @@ class RemoteService: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = postData
-        print("json=============\(String(data: postData!, encoding: .utf8)!)")
+//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
         do {
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
@@ -813,7 +813,7 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
             let (data, _) = try await URLSession.shared.data(for: request)
-            print("json=============\(String(data: data, encoding: .utf8)!)")
+//            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
                 let decodedSearch = try JSONDecoder().decode(INotamWXDataJson.self, from: data)
                 return decodedSearch

@@ -81,7 +81,10 @@ struct NoteSubSectionView: View {
                 }.padding(.horizontal, 16)
                     .background(Color.theme.antiFlashWhite)
                     .padding(.bottom)
-            }.onChange(of: mapIconModel.num) { _ in
+            }.onAppear {
+                resetData()
+            }
+            .onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
             }.sheet(isPresented: $showModalComment) {
                 ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflight).interactiveDismissDisabled(true)
@@ -105,6 +108,7 @@ struct NoteSubSectionView: View {
         viewModel.preflightRefArray = viewModel.read("preflightref")
         viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
         viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
+        viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

@@ -17,6 +17,8 @@ struct MetarTafSubSectionView: View {
     @State private var isArrShow = true
     @State private var isDestShow = true
     
+    @State private var metarTafList = [MetarTafDataList]()
+    
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
@@ -323,6 +325,22 @@ struct MetarTafSubSectionView: View {
             }.padding(.bottom)
                 .padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    if let eventMetarTafList = coreDataModel.selectedEvent?.metarTafList?.allObjects as? [MetarTafDataList] {
+                        metarTafList = eventMetarTafList
+                        for item in eventMetarTafList {
+                            if item.unwrappedType == "depMetarTaf" {
+                                coreDataModel.dataDepartureMetarTaf = item
+                            } else if item.unwrappedType == "enrMetarTaf" {
+                                coreDataModel.dataEnrouteMetarTaf = item
+                            } else if item.unwrappedType == "arrMetarTaf" {
+                                coreDataModel.dataArrivalMetarTaf = item
+                            } else {
+                                coreDataModel.dataDestinationMetarTaf = item
+                            }
+                        }
+                    }
+                }
         }
     }
     

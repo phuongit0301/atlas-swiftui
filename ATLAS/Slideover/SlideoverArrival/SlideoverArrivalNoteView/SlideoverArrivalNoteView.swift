@@ -51,6 +51,8 @@ struct SlideoverArrivalNoteView: View {
                 .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(8)
+        }.onAppear {
+            resetData()
         }
     }
     

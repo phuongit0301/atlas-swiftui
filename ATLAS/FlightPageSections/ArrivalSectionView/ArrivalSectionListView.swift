@@ -81,7 +81,10 @@ struct ArrivalSectionListView: View {
                 }.padding(.horizontal, 16)
                     .background(Color.theme.antiFlashWhite)
                     .padding(.bottom)
-            }.onChange(of: mapIconModel.num) { _ in
+            }.onAppear {
+                resetData()
+            }
+            .onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaArrival = viewModel.readDataNoteAabbaPostList("arrival")
             }.sheet(isPresented: $showModalComment) {
                 ArrivalModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
@@ -106,6 +109,8 @@ struct ArrivalSectionListView: View {
         
         viewModel.dataPostArrival = viewModel.readDataPostList("arrival", "")
         viewModel.dataPostArrivalRef = viewModel.readDataPostList("arrival", "ref")
+        
+        viewModel.dataNoteAabbaArrival = viewModel.readDataNoteAabbaPostList("arrival")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

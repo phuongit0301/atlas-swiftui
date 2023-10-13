@@ -460,27 +460,27 @@ class CoreDataModelState: ObservableObject {
 //            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=3c03dc234f4d074c7954855f4aa8e8e9")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
-            self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
+//            self.dataNoteAabbaPreflight = self.readDataNoteAabbaPostList("preflight")
             
-            self.dataPostPreflight = self.readDataPostList("preflight", "")
-            self.dataPostPreflightRef = self.readDataPostList("preflight", "ref")
+//            self.dataPostPreflight = self.readDataPostList("preflight", "")
+//            self.dataPostPreflightRef = self.readDataPostList("preflight", "ref")
+//
+//            self.dataPostDeparture = self.readDataPostList("departure", "")
+//            self.dataPostDepartureRef = self.readDataPostList("departure", "ref")
+//
+//            self.dataPostEnroute = self.readDataPostList("enroute", "")
+//            self.dataPostEnrouteRef = self.readDataPostList("enroute", "ref")
+//
+//            self.dataPostArrival = self.readDataPostList("arrival", "")
+//            self.dataPostArrivalRef = self.readDataPostList("arrival", "ref")
             
-            self.dataPostDeparture = self.readDataPostList("departure", "")
-            self.dataPostDepartureRef = self.readDataPostList("departure", "ref")
-            
-            self.dataPostEnroute = self.readDataPostList("enroute", "")
-            self.dataPostEnrouteRef = self.readDataPostList("enroute", "ref")
-            
-            self.dataPostArrival = self.readDataPostList("arrival", "")
-            self.dataPostArrivalRef = self.readDataPostList("arrival", "ref")
-            
-            self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
-            self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")
-            self.dataNoteAabbaArrival = self.readDataNoteAabbaPostList("arrival")
-            self.dataNoteAabbaPreflightRef = self.readDataNoteAabbaPostList("preflightref")
-            self.dataNoteAabbaDepartureRef = self.readDataNoteAabbaPostList("departureref")
-            self.dataNoteAabbaEnrouteRef = self.readDataNoteAabbaPostList("enrouteref")
-            self.dataNoteAabbaArrivalRef = self.readDataNoteAabbaPostList("arrivalref")
+//            self.dataNoteAabbaDeparture = self.readDataNoteAabbaPostList("departure")
+//            self.dataNoteAabbaEnroute = self.readDataNoteAabbaPostList("enroute")
+//            self.dataNoteAabbaArrival = self.readDataNoteAabbaPostList("arrival")
+//            self.dataNoteAabbaPreflightRef = self.readDataNoteAabbaPostList("preflightref")
+//            self.dataNoteAabbaDepartureRef = self.readDataNoteAabbaPostList("departureref")
+//            self.dataNoteAabbaEnrouteRef = self.readDataNoteAabbaPostList("enrouteref")
+//            self.dataNoteAabbaArrivalRef = self.readDataNoteAabbaPostList("arrivalref")
             
             self.readSummaryRoute()
             self.readPerfData()
@@ -496,20 +496,20 @@ class CoreDataModelState: ObservableObject {
             self.readArrivalAtc()
             self.readArrivalAtis()
             self.readArrivalEntries()
-            self.dataNotams = self.readDataNotamsList()
-            self.dataNotamsRef = self.readDataNotamsRefList()
-            self.dataDepartureNotamsRef = self.readDataNotamsByType("depNotams")
-            self.dataEnrouteNotamsRef = self.readDataNotamsByType("enrNotams")
-            self.dataArrivalNotamsRef = self.readDataNotamsByType("arrNotams")
-            self.dataDestinationNotamsRef = self.readDataNotamsByType("destNotams")
+//            self.dataNotams = self.readDataNotamsList()
+//            self.dataNotamsRef = self.readDataNotamsRefList()
+//            self.dataDepartureNotamsRef = self.readDataNotamsByType("depNotams")
+//            self.dataEnrouteNotamsRef = self.readDataNotamsByType("enrNotams")
+//            self.dataArrivalNotamsRef = self.readDataNotamsByType("arrNotams")
+//            self.dataDestinationNotamsRef = self.readDataNotamsByType("destNotams")
             
-            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
-            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
-            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
-            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
+//            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
+//            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
+//            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
+//            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
             
-            self.dataMetarTaf = self.readDataMetarTafList()
-            self.dataAltnTaf = self.readDataAltnTafList()
+//            self.dataMetarTaf = self.readDataMetarTafList()
+//            self.dataAltnTaf = self.readDataAltnTafList()
             // For Fuel
             
             self.readProjTaxi()
@@ -1014,7 +1014,7 @@ class CoreDataModelState: ObservableObject {
             "aabba_map": payloadMapList
         ]
         
-        print("=======post flight plan payload===== \(payload)")
+//        print("=======post flight plan payload===== \(payload)")
         
         return await remoteService.postFlightPlanDataV3(payload)
     }
@@ -2313,24 +2313,28 @@ class CoreDataModelState: ObservableObject {
     }
     
     func insertDataNotams(airport: String, type: String, category: String, item: INotamWXChildJson) {
-        
-        let newObj = NotamsDataList(context: self.service.container.viewContext)
-        newObj.id = UUID()
-        newObj.airport = airport
-        newObj.type = type
-        newObj.notam = item.notam
-        newObj.date = item.date
-        newObj.rank = item.rank
-        newObj.isChecked = false
-        newObj.category = category
-        self.service.container.viewContext.performAndWait {
-            do {
-                try self.service.container.viewContext.save()
-                print("saved notams successfully")
-            } catch {
-                print("Failed to Notams depNotams save: \(error)")
+        if let eventList = self.selectedEvent {
+            let newObj = NotamsDataList(context: self.service.container.viewContext)
+            newObj.id = UUID()
+            newObj.airport = airport
+            newObj.type = type
+            newObj.notam = item.notam
+            newObj.date = item.date
+            newObj.rank = item.rank
+            newObj.isChecked = false
+            newObj.category = category
+            
+            eventList.notamsDataList = NSSet(array: (eventList.notamsDataList ?? []) + [newObj])
+            
+            self.service.container.viewContext.performAndWait {
+                do {
+                    try self.service.container.viewContext.save()
+                    print("saved notams successfully")
+                } catch {
+                    print("Failed to Notams depNotams save: \(error)")
+                }
+                
             }
-
         }
     }
     
@@ -2601,26 +2605,29 @@ class CoreDataModelState: ObservableObject {
                 print("Failed to Notams depNotams save: \(error)")
             }
             
-            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
-            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
-            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
-            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
+//            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")
+//            self.dataEnrouteMetarTaf = self.readDataMetarTafByType("enrMetarTaf")
+//            self.dataArrivalMetarTaf = self.readDataMetarTafByType("arrMetarTaf")
+//            self.dataDestinationMetarTaf = self.readDataMetarTafByType("altnMetarTaf")
         }
     }
     
     func initDepDataMetarTaf(_ metarTafData: IDepMetarTafWXChild, type: String) {
         do {
-            let newObj = MetarTafDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.airport = metarTafData.airport
-            newObj.std = metarTafData.std
-            newObj.metar = metarTafData.metar
-            newObj.taf = metarTafData.taf
-            newObj.type = type
-            try service.container.viewContext.save()
-            existDataMetarTaf = true
-            self.dataMetarTaf = readDataMetarTafList()
-            print("saved Metar Taf successfully")
+            if let eventList = self.selectedEvent {
+                let newObj = MetarTafDataList(context: service.container.viewContext)
+                newObj.id = UUID()
+                newObj.airport = metarTafData.airport
+                newObj.std = metarTafData.std
+                newObj.metar = metarTafData.metar
+                newObj.taf = metarTafData.taf
+                newObj.type = type
+                
+                eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + [newObj])
+                
+                try service.container.viewContext.save()
+                print("saved Metar Taf successfully")
+            }
         } catch {
             print("Failed to Metar Taf save: \(error)")
             existDataMetarTaf = false
@@ -2632,17 +2639,20 @@ class CoreDataModelState: ObservableObject {
     
     func initArrDataMetarTaf(_ metarTafData: IArrMetarTafWXChild, type: String) {
         do {
-            let newObj = MetarTafDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.airport = metarTafData.airport
-            newObj.std = metarTafData.sta
-            newObj.metar = metarTafData.metar
-            newObj.taf = metarTafData.taf
-            newObj.type = type
-            try service.container.viewContext.save()
-            existDataMetarTaf = true
-            self.dataMetarTaf = readDataMetarTafList()
-            print("saved Metar Taf successfully")
+            if let eventList = self.selectedEvent {
+                let newObj = MetarTafDataList(context: service.container.viewContext)
+                newObj.id = UUID()
+                newObj.airport = metarTafData.airport
+                newObj.std = metarTafData.sta
+                newObj.metar = metarTafData.metar
+                newObj.taf = metarTafData.taf
+                newObj.type = type
+                
+                eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + [newObj])
+                
+                try service.container.viewContext.save()
+                print("saved Metar Taf successfully")
+            }
         } catch {
             print("Failed to Metar Taf save: \(error)")
             existDataMetarTaf = false
@@ -2652,25 +2662,43 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initEnrDataMetarTaf(_ metarTafData: IAltnMetarTafWXChild, type: String) {
+    func initEnrDataMetarTaf(_ metarTafData: [IAltnMetarTafWXChild], type: String) {
         do {
-            let newObj = MetarTafDataList(context: service.container.viewContext)
-            newObj.id = UUID()
-            newObj.airport = metarTafData.airport
-            newObj.std = metarTafData.eta
-            newObj.metar = metarTafData.metar
-            newObj.taf = metarTafData.taf
-            newObj.type = type
-            try service.container.viewContext.save()
-            existDataMetarTaf = true
-            self.dataMetarTaf = readDataMetarTafList()
-            print("saved Metar Taf successfully")
+            if let eventList = self.selectedEvent {
+                var temp = [MetarTafDataList]()
+                
+                for item in metarTafData  {
+                    let newObj = MetarTafDataList(context: service.container.viewContext)
+                    newObj.id = UUID()
+                    newObj.airport = item.airport
+                    newObj.std = item.eta
+                    newObj.metar = item.metar
+                    newObj.taf = item.taf
+                    newObj.type = type
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved Metar Taf successfully")
+                        } catch {
+                            print("Failed to Metar Taf save: \(error)")
+                            existDataMetarTaf = false
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
+                    }
+                    
+                    eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + temp)
+                    try service.container.viewContext.save()
+                    print("saved Metar Taf successfully")
+                }
+            }
         } catch {
             print("Failed to Metar Taf save: \(error)")
             existDataMetarTaf = false
             // Rollback any changes in the managed object context
             service.container.viewContext.rollback()
-            
         }
     }
     
@@ -3471,80 +3499,98 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataNotamsByType(_ target: String = "") -> [NotamsDataList] {
-        var data: [NotamsDataList] = []
+        var temp = [NotamsDataList]()
         
-        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
-        
-        if target != "" {
-            request.predicate = NSPredicate(format: "type == %@ AND isChecked == %@", argumentArray: [target, 1])
-        }
-        do {
-            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
+        if let data = self.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList], data.count > 0 {
+            for item in data {
+                if item.type == target && item.isChecked {
+                    temp.append(item)
+                }
             }
-        } catch {
-            print("Could not fetch notams from Core Data.")
         }
         
-        return data
+        return temp
     }
     
     func readDataNotamsList() -> [NotamsDataList] {
-        var data: [NotamsDataList] = []
-        
-        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
-        do {
-            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch notams from Core Data.")
-        }
-        
-        return data
+//        var data: [NotamsDataList] = []
+//
+//        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
+//        do {
+//            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response
+//            }
+//        } catch {
+//            print("Could not fetch notams from Core Data.")
+//        }
+//
+//        return data
+        return self.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList] ?? []
     }
     
     func readDataNotamsRefList() -> [NotamsDataList] {
-        var data: [NotamsDataList] = []
+//        var data: [NotamsDataList] = []
+//
+//        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
+//        do {
+//            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                response.forEach {item in
+//                    if item.isChecked {
+//                        data.append(item)
+//                    }
+//                }
+//            }
+//        } catch {
+//            print("Could not fetch notams from Core Data.")
+//        }
+//
+//        return data
+        var temp: [NotamsDataList] = []
         
-        let request: NSFetchRequest<NotamsDataList> = NotamsDataList.fetchRequest()
-        do {
-            let response: [NotamsDataList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                response.forEach {item in
+        if let data = self.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList] {
+            if(data.count > 0) {
+                data.forEach {item in
                     if item.isChecked {
-                        data.append(item)
+                        temp.append(item)
                     }
                 }
             }
-        } catch {
-            print("Could not fetch notams from Core Data.")
         }
-        
-        return data
-        
+        return temp
     }
     
     func readDataMetarTafByType(_ target: String = "") -> MetarTafDataList? {
-        var data: MetarTafDataList?
+        var temp: MetarTafDataList?
         
-        let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
-        
-        if target != "" {
-            request.predicate = NSPredicate(format: "type == %@", argumentArray: [target, 1])
-        }
-        do {
-            let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response.first
+        if let data = self.selectedEvent?.metarTafList?.allObjects as? [MetarTafDataList], data.count > 0 {
+            for item in data {
+                if item.type == target {
+                    temp = item
+                }
             }
-        } catch {
-            print("Could not fetch notams from Core Data.")
         }
         
-        return data
+        return temp
+        
+//        var data: MetarTafDataList?
+//
+//        let request: NSFetchRequest<MetarTafDataList> = MetarTafDataList.fetchRequest()
+//
+//        if target != "" {
+//            request.predicate = NSPredicate(format: "type == %@", argumentArray: [target, 1])
+//        }
+//        do {
+//            let response: [MetarTafDataList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response.first
+//            }
+//        } catch {
+//            print("Could not fetch notams from Core Data.")
+//        }
+//
+//        return data
     }
     
     func readDataMetarTafList() -> [MetarTafDataList] {
@@ -3685,54 +3731,70 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataNoteAabbaPostList(_ target: String = "", predicateFormat: String? = "type = %@") -> [NoteAabbaPostList] {
-        var data: [NoteAabbaPostList] = []
+        var temp = [NoteAabbaPostList]()
         
-        let request: NSFetchRequest<NoteAabbaPostList> = NoteAabbaPostList.fetchRequest()
-        
-        // define filter and/or limit if needed
-        if target != "" {
-            request.predicate = NSPredicate(format: "type == %@", target)
-        }
-        
-        do {
-            let response: [NoteAabbaPostList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
+        if let data = self.selectedEvent?.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], data.count > 0 {
+            if target == "" {
+                return data
             }
-        } catch {
-            print("Could not fetch Note Aabba Post List from Core Data.")
+            
+            for item in data {
+                if item.type == target {
+                    temp = [item]
+                }
+            }
         }
-        
-        return data
+        return temp
     }
 
     
     func readDataPostList(_ target: String = "", _ ref: String = "") -> [NotePostList] {
-        var data: [NotePostList] = []
+        var temp: [NotePostList] = []
         
-        let request: NSFetchRequest<NotePostList> = NotePostList.fetchRequest()
-        
-        // define filter and/or limit if needed
-        if target != "" {
+        if let noteAabbaPostList = self.selectedEvent?.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], noteAabbaPostList.count > 0 {
             
-            if ref != "" {
-                request.predicate = NSPredicate(format: "type == %@ AND fromParent == %@", argumentArray: [target, 1])
-            } else {
-                request.predicate = NSPredicate(format: "type == %@", target)
+            let data = noteAabbaPostList.first(where: { $0.type == target })
+            
+            if let posts = data?.posts?.allObjects as? [NotePostList] {
+                for item in posts {
+                    if ref != "" {
+                        if item.type == target && item.fromParent {
+                            temp.append(item)
+                        }
+                    } else {
+                        if item.type == target {
+                            temp.append(item)
+                        }
+                    }
+                }
             }
-           
         }
-        
-        do {
-            let response: [NotePostList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Note Aabba Post List from Core Data.")
-        }
-        
-        return data
+        return temp
+//        var data: [NotePostList] = []
+//
+//        let request: NSFetchRequest<NotePostList> = NotePostList.fetchRequest()
+//
+//        // define filter and/or limit if needed
+//        if target != "" {
+//
+//            if ref != "" {
+//                request.predicate = NSPredicate(format: "type == %@ AND fromParent == %@", argumentArray: [target, 1])
+//            } else {
+//                request.predicate = NSPredicate(format: "type == %@", target)
+//            }
+//
+//        }
+//
+//        do {
+//            let response: [NotePostList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response
+//            }
+//        } catch {
+//            print("Could not fetch Note Aabba Post List from Core Data.")
+//        }
+//
+//        return data
     }
 
     
@@ -5318,12 +5380,11 @@ class CoreDataModelState: ObservableObject {
                 service.container.viewContext.performAndWait {
                     do {
                         for object in objects {
-                            
+                            service.container.viewContext.delete(object)
                             
                             if let posts = object.posts?.allObjects as? [NotePostList] {
                                 for post in posts {
-                                    post.removeFromComments([])
-//                                    service.container.viewContext.delete(post)
+                                    service.container.viewContext.delete(post)
 ////                                    service.container.viewContext.delete(post.comments as? NSManagedObject ?? [)
 //
 //                                    if let comments = post.comments?.allObjects as? [NoteCommentList] {
@@ -5333,8 +5394,7 @@ class CoreDataModelState: ObservableObject {
 //                                    }
                                 }
                             }
-                            object.removeFromPosts([])
-                            service.container.viewContext.delete(object)
+                            
 //                            service.container.viewContext.delete(object.posts)
                         }
                         
@@ -5423,27 +5483,45 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllNotam() async {
-        let fetchRequest: NSFetchRequest<NotamsDataList>
-        fetchRequest = NotamsDataList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+        if let objects = self.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
-                        service.container.viewContext.delete(object)
+                        print("object======\(object)")
+                        do {
+                            try service.container.viewContext.delete(object)
+                        } catch {
+                            print("Failed to delete Notam : \(error)")
+                        }
                     }
-                    
                     // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
                     print("Failed to delete Notam : \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Notam update: \(error)")
         }
+//        let fetchRequest: NSFetchRequest<NotamsDataList>
+//        fetchRequest = NotamsDataList.fetchRequest()
+//        do {
+//            // Perform the fetch request
+//            let objects = try service.container.viewContext.fetch(fetchRequest)
+//
+//            service.container.viewContext.performAndWait {
+//                do {
+//                    for object in objects {
+//                        service.container.viewContext.delete(object)
+//                    }
+//
+//                    // Save the deletions to the persistent store
+//                    try service.container.viewContext.save()
+//                } catch {
+//                    print("Failed to delete Notam : \(error)")
+//                }
+//            }
+//        } catch {
+//            print("Failed to Delete Notam update: \(error)")
+//        }
     }
     
     func extractExpiringDocuments(expiryData: [RecencyDocumentList], monthsAhead: Int) -> [DocumentExpiry] {

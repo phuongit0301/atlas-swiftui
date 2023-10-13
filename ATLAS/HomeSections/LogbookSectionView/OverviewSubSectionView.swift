@@ -364,6 +364,11 @@ struct OverviewSubSectionView: View {
                     }
                 }
                 
+                if coreDataModel.dataRecencyExpiry.count > 0 {
+                    let models: [String] = Array(Set(coreDataModel.dataRecencyExperience.map{$0.unwrappedModel}))
+                    dataLogbookEntries = dataLogbookEntries + models
+                }
+                
                 if coreDataModel.dataLogbookEntries.count == 0 {
                     if selectedStartDate != "" && selectedEndDate != "" {
                         let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)

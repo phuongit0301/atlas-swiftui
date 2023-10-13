@@ -81,7 +81,10 @@ struct EnrouteSectionListView: View {
                 }.padding(.horizontal, 16)
                     .background(Color.theme.antiFlashWhite)
                     .padding(.bottom)
-            }.onChange(of: mapIconModel.num) { _ in
+            }.onAppear {
+                resetData()
+            }
+            .onChange(of: mapIconModel.num) { _ in
                 viewModel.dataNoteAabbaEnroute = viewModel.readDataNoteAabbaPostList("enroute")
             }.sheet(isPresented: $showModalComment) {
                 EnrouteModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
@@ -106,6 +109,8 @@ struct EnrouteSectionListView: View {
         
         viewModel.dataPostEnroute = viewModel.readDataPostList("enroute", "")
         viewModel.dataPostEnrouteRef = viewModel.readDataPostList("enroute", "ref")
+        
+        viewModel.dataNoteAabbaEnroute = viewModel.readDataNoteAabbaPostList("enroute")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

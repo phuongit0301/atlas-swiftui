@@ -714,7 +714,7 @@ struct SummarySubSectionView: View {
             let responseMapAabba = await remoteService.getMapAabbaData(payload)
             
             if let responseMapAabba = responseMapAabba, responseMapAabba.count > 0 {
-                print("inside map aabba======\(responseMapAabba)")
+//                print("inside map aabba======\(responseMapAabba)")
                 await coreDataModel.deleteAllMapAabbaCommentList()
                 await  coreDataModel.deleteAllMapAabbaPostList()
                 await coreDataModel.deleteAllMapAabbMapList()
@@ -766,10 +766,9 @@ struct SummarySubSectionView: View {
             let responseAabbaNote = await remoteService.getAabbaNoteData(payload)
             
             if let responseAabbaNote = responseAabbaNote, responseAabbaNote.count > 0, let eventList = coreDataModel.selectedEvent {
-                print("inside aabba note ===== \(responseAabbaNote)")
-                //            await coreDataModel.deleteAllAabbaNoteList(eventList)
-                //            await coreDataModel.deleteAllAabbaNotePostList(eventList)
-                //            await coreDataModel.deleteAllAabbaNoteCommentList()
+                await coreDataModel.deleteAllAabbaNoteList(eventList)
+//                await coreDataModel.deleteAllAabbaNotePostList(eventList)
+//                await coreDataModel.deleteAllAabbaNoteCommentList()
                 coreDataModel.initDataMapAabbaNotes(responseAabbaNote, eventList)
             }
             print("end aabba note")
@@ -791,15 +790,11 @@ struct SummarySubSectionView: View {
                 coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
                 
                 if metarTafData.altnMetarTaf.count > 0 {
-                    for item in metarTafData.altnMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "altnMetarTaf")
-                    }
+                    coreDataModel.initEnrDataMetarTaf(metarTafData.altnMetarTaf, type: "altnMetarTaf")
                 }
                 
                 if metarTafData.enrMetarTaf.count > 0 {
-                    for item in metarTafData.enrMetarTaf {
-                        coreDataModel.initEnrDataMetarTaf(item, type: "enrMetarTaf")
-                    }
+                    coreDataModel.initEnrDataMetarTaf(metarTafData.enrMetarTaf, type: "enrMetarTaf")
                 }
             }
             

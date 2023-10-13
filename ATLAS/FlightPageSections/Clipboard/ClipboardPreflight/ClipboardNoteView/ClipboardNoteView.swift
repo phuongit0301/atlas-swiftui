@@ -64,6 +64,8 @@ struct ClipboardNoteView: View {
                 resetData: resetData,
                 isCreateFromClipboard: true
             ).interactiveDismissDisabled(true)
+        }.onAppear {
+            resetData()
         }
     }
     
