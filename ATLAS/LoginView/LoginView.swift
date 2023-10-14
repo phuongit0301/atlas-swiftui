@@ -13,10 +13,11 @@ import Firebase
 
 struct LoginView: View {
     //For firebase
-    
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
+    @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var signupModel: SignUpModel
+    @EnvironmentObject var persistenceController: PersistenceController
     @AppStorage("isLogin") var isLogin: String = "0"
     
     @State var step = 1
@@ -108,37 +109,26 @@ struct LoginView: View {
                     }.padding(.bottom, 8)
                     
                     Button {
-//                        var ref: DatabaseReference!
-//                        ref = Database.database().reference()
-                        
-                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                            if let error = error {
-                                message = error.localizedDescription
-                                return
-                            }
-                            
-                            if let authResult = authResult, authResult.user.isEmailVerified {
-                                print(authResult.user.uid)
-                                coreDataModel.isLoginLoading = true
-                                withAnimation {
-                                    userID = authResult.user.uid
-                                    isLogin = "1"
-                                }
-                            } else {
-                                showEmailNotVerified = true
-                            }
+                        Task {
+                            await signIn()
                         }
                     } label: {
-                        Text("Sign In")
-                            .foregroundColor(.white)
-                            .font(.system(size: 15, weight: .semibold))
-                            .frame(height: 20)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(validate())
-                            )
+                        HStack(alignment: .center, spacing: 16) {
+                            if coreDataModel.isLoginLoading {
+                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                            }
+                            
+                            Text("Sign In")
+                                .foregroundColor(.white)
+                                .font(.system(size: 15, weight: .semibold))
+                                .frame(height: 20)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(validate())
+                                )
+                        }
                             
                     }
                     
@@ -241,6 +231,43 @@ struct LoginView: View {
             return Color.theme.azure
         }
         return Color.theme.philippineGray3
+    }
+    
+    func signIn() async {
+        do {
+            coreDataModel.isLoginLoading = true
+            
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            
+            if authResult.user.isEmailVerified {
+                print(authResult.user.uid)
+                let response = await remoteService.getUserData(["user_id": authResult.user.uid])
+                
+                let newObject = UserProfileList(context: persistenceController.container.viewContext)
+                newObject.id = UUID()
+                newObject.username = response?.username
+                newObject.email = response?.email
+                newObject.firstName = response?.firstname
+                newObject.lastName = response?.lastname
+                newObject.airline = response?.airline
+                
+                coreDataModel.save()
+                
+                coreDataModel.dataUser = coreDataModel.readUser()
+                
+                withAnimation {
+                    userID = authResult.user.uid
+                    isLogin = "1"
+                    coreDataModel.isLoginLoading = false
+                }
+            } else {
+                showEmailNotVerified = true
+                coreDataModel.isLoginLoading = false
+            }
+        } catch {
+            message = error.localizedDescription
+            return
+        }
     }
 }
 

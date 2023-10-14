@@ -67,7 +67,7 @@ struct MainView: View {
 
                     }
                     .hasMainTabbar()
-                    .hasToolbar()
+                    .hasMainToolbar()
                 }
                 
             }

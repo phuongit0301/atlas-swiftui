@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct FlightForm: View {
+    @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var selectedEvent: EventDataDropDown
     @Binding var showModal: Bool
     var width: CGFloat = 0
+    @State var isLoading = false
     
     @State private var selectedReminder = ReminderDataDropDown.before
     @State var tfEventName: String = ""
@@ -37,7 +39,7 @@ struct FlightForm: View {
                         self.showModal.toggle()
                     }) {
                         Text("Cancel").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
-                    }
+                    }.buttonStyle(PlainButtonStyle())
                     
                     Spacer()
                     
@@ -48,8 +50,14 @@ struct FlightForm: View {
                     Button(action: {
                         addEvent()
                     }) {
-                        Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
-                    }
+                        HStack(alignment: .center, spacing: 16) {
+                            if isLoading {
+                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                            }
+                            Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                        }
+                    }.buttonStyle(PlainButtonStyle())
+                        .disabled(isLoading)
                 }
                 .padding()
                 .background(.white)
@@ -165,94 +173,124 @@ struct FlightForm: View {
     }
     
     private func addEvent() {
-        dateFormatterTime.dateFormat = "yyyy-MM-dd HHmm"
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        timeFormatter.dateFormat = "HHmm"
-        timeFormatterToSave.dateFormat = "HH:mm"
-        
-        let startDateFm = dateFormatter.string(from: selectedStartDate)
-        let startTimeFm = timeFormatter.string(from: selectedStartTime)
-        let startTimeFmSave = timeFormatterToSave.string(from: selectedStartTime)
-        
-        let endDateFm = dateFormatter.string(from: selectedEndDate)
-        let endTimeFm = timeFormatter.string(from: selectedEndTime)
-        let endTimeFmSave = timeFormatterToSave.string(from: selectedEndTime)
-
-        let startDate = dateFormatterTime.date(from: "\(startDateFm) \(startTimeFm)")
-        let endDate = dateFormatterTime.date(from: "\(endDateFm) \(endTimeFm)")
-        
-        if tfEventName != "" && startDate != nil && endDate != nil && startDate! <= endDate! {
-            do {
-                let event = EventList(context: persistenceController.container.viewContext)
-                event.id = UUID()
-                event.type = selectedEvent.rawValue
-                event.name = tfEventName
-                event.dep = tfDep
-                event.dest = tfDest
-                event.startDate = "\(startDateFm) \(startTimeFmSave)"
-                event.endDate = "\(endDateFm) \(endTimeFmSave)"
-                event.status = 5
-                event.flightStatus = FlightStatusEnum.UPCOMING.rawValue
+        Task {
+            dateFormatterTime.dateFormat = "yyyy-MM-dd HHmm"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            timeFormatter.dateFormat = "HHmm"
+            timeFormatterToSave.dateFormat = "HH:mm"
+            
+            let startDateFm = dateFormatter.string(from: selectedStartDate)
+            let startTimeFm = timeFormatter.string(from: selectedStartTime)
+            let startTimeFmSave = timeFormatterToSave.string(from: selectedStartTime)
+            
+            let endDateFm = dateFormatter.string(from: selectedEndDate)
+            let endTimeFm = timeFormatter.string(from: selectedEndTime)
+            let endTimeFmSave = timeFormatterToSave.string(from: selectedEndTime)
+            
+            let startDate = dateFormatterTime.date(from: "\(startDateFm) \(startTimeFm)")
+            let endDate = dateFormatterTime.date(from: "\(endDateFm) \(endTimeFm)")
+            
+            if tfEventName != "" && startDate != nil && endDate != nil && startDate! <= endDate! {
+                isLoading = true
                 
-                // Create Date Range
-                let newDateRange = EventDateRangeList(context: persistenceController.container.viewContext)
-                newDateRange.id = UUID()
-                newDateRange.startDate = "\(startDateFm) \(startTimeFmSave)"
-                newDateRange.endDate = "\(endDateFm) \(endTimeFmSave)"
+                let payload = [
+                    "dep": tfDep,
+                    "arr": tfDest,
+                    "sta": "\(startDateFm) \(startTimeFmSave)",
+                    "std": "\(endDateFm) \(endTimeFmSave)"
+                ]
+                let response = await remoteService.getSectorData(payload)
                 
-                // Create Flight Overview
-                let newObj = FlightOverviewList(context: persistenceController.container.viewContext)
-                newObj.id = UUID()
-                newObj.callsign = tfEventName
-                newObj.dep = tfDep
-                newObj.dest = tfDest
-                newObj.std = "\(startDateFm) \(startTimeFmSave)"
-                newObj.sta = "\(endDateFm) \(endTimeFmSave)"
-                
-                newObj.caName = ""
-                newObj.caPicker = ""
-                newObj.eta = ""
-                newObj.f0Name = ""
-                newObj.f0Picker = ""
-                newObj.aircraft = ""
-                newObj.blockTime = ""
-                newObj.blockTimeFlightTime = ""
-                newObj.chockOff = ""
-                newObj.chockOn = ""
-                newObj.day = ""
-                newObj.flightTime = ""
-                newObj.model = ""
-                newObj.night = ""
-                newObj.password = ""
-                newObj.pob = ""
-                newObj.timeDiffArr = ""
-                newObj.timeDiffDep = ""
-                newObj.totalTime = ""
-                
-                // add relationship with overview
-                event.eventDateRangeList = NSSet(array: [newDateRange])
-                event.flightOverviewList = NSSet(array: [newObj])
-                event.noteAabbaPostList = NSSet(array: [])
-                event.noteList = NSSet(array: [])
-                event.notamsDataList = NSSet(array: [])
-                event.metarTafList = NSSet(array: [])
-                event.mapRouteList = NSSet(array: [])
-                event.airportMapColorList = NSSet(array: [])
-
-                try persistenceController.container.viewContext.save()
-                
-                coreDataModel.dataEvents = coreDataModel.readEvents()
-                coreDataModel.dataEventCompleted = coreDataModel.readEventsByStatus(status: "2")
-                coreDataModel.dataEventUpcoming = coreDataModel.readEventsByStatus(status: "5")
-                
-                self.showModal.toggle()
-            } catch {
-                self.showModal.toggle()
-                // Something went wrong 😭
-                print("Failed to save: \(error)")
-                // Rollback any changes in the managed object context
-                persistenceController.container.viewContext.rollback()
-                
+                do {
+                    let eventSector = EventSectorList(context: persistenceController.container.viewContext)
+                    eventSector.id = UUID()
+                    eventSector.depLat = response?.depLat
+                    eventSector.depLong = response?.depLong
+                    eventSector.depTimeDiff = response?.dep_time_diff
+                    eventSector.depSunriseTime = response?.dep_sunrise_time
+                    eventSector.depSunsetTime = response?.dep_sunset_time
+                    eventSector.depNextSunriseTime = response?.dep_next_sunrise_time
+                    eventSector.arrLat = response?.arrLat
+                    eventSector.arrLong = response?.arrLong
+                    eventSector.arrTimeDiff = response?.arr_time_diff
+                    eventSector.arrSunriseTime = response?.arr_sunrise_time
+                    eventSector.arrSunsetTime = response?.arr_sunset_time
+                    eventSector.arrNextSunriseTime = response?.arr_next_sunrise_time
+                    try persistenceController.container.viewContext.save()
+                    
+                    let event = EventList(context: persistenceController.container.viewContext)
+                    event.id = UUID()
+                    event.type = selectedEvent.rawValue
+                    event.name = tfEventName
+                    event.dep = tfDep
+                    event.dest = tfDest
+                    event.startDate = "\(startDateFm) \(startTimeFmSave)"
+                    event.endDate = "\(endDateFm) \(endTimeFmSave)"
+                    event.status = 5
+                    event.flightStatus = FlightStatusEnum.UPCOMING.rawValue
+                    
+                    // Create Date Range
+                    let newDateRange = EventDateRangeList(context: persistenceController.container.viewContext)
+                    newDateRange.id = UUID()
+                    newDateRange.startDate = "\(startDateFm) \(startTimeFmSave)"
+                    newDateRange.endDate = "\(endDateFm) \(endTimeFmSave)"
+                    
+                    // Create Flight Overview
+                    let newObj = FlightOverviewList(context: persistenceController.container.viewContext)
+                    newObj.id = UUID()
+                    newObj.callsign = tfEventName
+                    newObj.dep = tfDep
+                    newObj.dest = tfDest
+                    newObj.std = "\(startDateFm) \(startTimeFmSave)"
+                    newObj.sta = "\(endDateFm) \(endTimeFmSave)"
+                    
+                    newObj.caName = ""
+                    newObj.caPicker = ""
+                    newObj.eta = ""
+                    newObj.f0Name = ""
+                    newObj.f0Picker = ""
+                    newObj.aircraft = ""
+                    newObj.blockTime = ""
+                    newObj.blockTimeFlightTime = ""
+                    newObj.chockOff = ""
+                    newObj.chockOn = ""
+                    newObj.day = ""
+                    newObj.flightTime = ""
+                    newObj.model = ""
+                    newObj.night = ""
+                    newObj.password = ""
+                    newObj.pob = ""
+                    newObj.timeDiffArr = ""
+                    newObj.timeDiffDep = ""
+                    newObj.totalTime = ""
+                    
+                    // add relationship with overview
+                    event.eventDateRangeList = NSSet(array: [newDateRange])
+                    event.flightOverviewList = NSSet(array: [newObj])
+                    event.noteAabbaPostList = NSSet(array: [])
+                    event.noteList = NSSet(array: [])
+                    event.notamsDataList = NSSet(array: [])
+                    event.metarTafList = NSSet(array: [])
+                    event.mapRouteList = NSSet(array: [])
+                    event.airportMapColorList = NSSet(array: [])
+                    event.eventSector = eventSector
+                    
+                    try persistenceController.container.viewContext.save()
+                    
+                    coreDataModel.dataEvents = coreDataModel.readEvents()
+                    coreDataModel.dataEventCompleted = coreDataModel.readEventsByStatus(status: "2")
+                    coreDataModel.dataEventUpcoming = coreDataModel.readEventsByStatus(status: "5")
+                    
+                    isLoading = false
+                    self.showModal.toggle()
+                } catch {
+                    self.showModal.toggle()
+                    // Something went wrong 😭
+                    print("Failed to save: \(error)")
+                    // Rollback any changes in the managed object context
+                    persistenceController.container.viewContext.rollback()
+                    
+                }
             }
         }
     }

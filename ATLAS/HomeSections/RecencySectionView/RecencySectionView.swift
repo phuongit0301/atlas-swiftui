@@ -36,6 +36,7 @@ struct RecencySectionView: View {
     @State var progress = 0.0
     @State private var count = 0
     @State private var isEdit = false
+    @State private var isEditRecency = false
 //    let monthsAhead = 6
     let dateFormatter = DateFormatter()
     
@@ -165,6 +166,14 @@ struct RecencySectionView: View {
                                 }
                                 
                                 Spacer()
+                                
+                                Button(action: {
+                                    isEditRecency.toggle()
+                                }, label: {
+                                    Text("Edit")
+                                        .font(.system(size: 17, weight: .regular)).textCase(nil)
+                                        .foregroundColor(Color.theme.azure)
+                                }).buttonStyle(PlainButtonStyle())
                                 
                                 //                                HStack {
                                 //                                    Picker("", selection: $selectedExpirySoon) {
@@ -363,6 +372,8 @@ struct RecencySectionView: View {
             }
         }.sheet(isPresented: $isShowDocumentModal) {
             RecencyDocumentFormView(isShowing: $isShowDocumentModal).interactiveDismissDisabled(true)
+        }.sheet(isPresented: $isEditRecency) {
+            RecencySectionFormView(isShowing: $isEditRecency)
         }
     }
     

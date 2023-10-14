@@ -42,6 +42,10 @@ extension View {
         ModifiedContent(content: self, modifier: HasToolbar())
     }
     
+    func hasMainToolbar() -> some View {
+        ModifiedContent(content: self, modifier: HasMainToolbar())
+    }
+    
     func hasTabbar() -> some View {
         ModifiedContent(content: self, modifier: HasTabbar())
     }
@@ -443,6 +447,89 @@ public struct HasToolbar: ViewModifier {
 //                                    .scaledToFit()
 //                                    .aspectRatio(contentMode: .fit).accentColor(.black)
 //                                
+                                Text("Logout").font(.system(size: 17)).foregroundColor(.black)
+                        }
+                    }
+                }
+        }
+    }
+}
+
+public struct HasMainToolbar: ViewModifier {
+    @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var coreDateModel: CoreDataModelState
+    @EnvironmentObject var onboardingModel: OnboardingModel
+    // Custom Back button
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @AppStorage("uid") var userID: String = ""
+    @AppStorage("isOnboarding") var isOnboarding: String = ""
+    @AppStorage("isLogin") var isLogin: String = ""
+
+    public func body(content: Content) -> some View {
+        if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+            content
+        } else {
+            content
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden()
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarBackground(.white, for: .navigationBar)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            coreDateModel.selectedEvent = nil
+                            coreDateModel.isEventActive = false
+                            dismiss()
+                        }) {
+                            Image("icon_arrow_left")
+                                .frame(width: 41, height: 72)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            
+                        }) {
+                            Image("icon_arrow_right")
+                                .frame(width: 41, height: 72)
+                                .scaledToFit()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .principal) {
+                        HStack(alignment: .center) {
+                            Text(coreDateModel.dataUser?.username ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            let firebaseAuth = Auth.auth()
+                            do {
+                                try firebaseAuth.signOut()
+                                withAnimation {
+                                    onboardingModel.dataYourProfile = IProfile(user_id: "", userName: "", firstName: "", lastName: "", airline: "", mobile: Mobile(country: "", number: ""), email: "", subscribe: "")
+                                    onboardingModel.dataModelExperience = []
+                                    onboardingModel.dataModelLimitation = []
+                                    onboardingModel.dataModelRecency = []
+                                    onboardingModel.dataModelExpiry = []
+                                    userID = ""
+                                    isOnboarding = ""
+                                    isLogin = ""
+                                }
+                            } catch let signOutError as NSError {
+                                print("Error signing out: %@", signOutError)
+                            }
+                        }) {
+//                                Image(systemName: "rectangle.portrait.and.arrow.right")
+//                                    .scaledToFit()
+//                                    .aspectRatio(contentMode: .fit).accentColor(.black)
+//
                                 Text("Logout").font(.system(size: 17)).foregroundColor(.black)
                         }
                     }

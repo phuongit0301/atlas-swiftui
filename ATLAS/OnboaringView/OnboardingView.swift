@@ -143,6 +143,20 @@ struct OnboardingView: View {
                                         "periodStart": item.periodStart,
                                         "completed": item.completed
                                     ])
+                                    
+                                    let newObject = RecencyList(context: persistenceController.container.viewContext)
+                                    newObject.id = UUID()
+                                    newObject.type = item.type
+                                    newObject.model = item.modelName
+                                    newObject.requirement = item.requirement
+                                    newObject.limit = item.frequency
+                                    newObject.periodStart = item.periodStart
+                                    newObject.status = item.completed
+                                    newObject.text = "\(item.requirement) in \(item.frequency) days"
+                                    newObject.percentage = "\(item.requirement) in \(item.frequency) days"
+                                    newObject.blueText = "\(item.completed)/\(item.requirement) in \(item.frequency) days"
+                                    
+                                    coreDataModel.save()
                                 }
                                 
                                 var payloadExpiry: [Any] = []

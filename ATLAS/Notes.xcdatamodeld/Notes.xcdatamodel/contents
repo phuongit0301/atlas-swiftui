@@ -180,6 +180,7 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="airportMapColorList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
         <relationship name="eventDateRangeList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateRange" inverseName="events" inverseEntity="EventDateRange"/>
+        <relationship name="eventSector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventSector" inverseName="event" inverseEntity="EventSector"/>
         <relationship name="flightOverviewList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlightOverview" inverseName="events" inverseEntity="FlightOverview"/>
         <relationship name="mapRouteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapRoute" inverseName="events" inverseEntity="MapRoute"/>
         <relationship name="metarTafList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MetarTafData" inverseName="events" inverseEntity="MetarTafData"/>
@@ -193,6 +194,22 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="startDate" optional="YES" attributeType="String"/>
         <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventDateRangeList" inverseEntity="Event"/>
+    </entity>
+    <entity name="EventSector" representedClassName="EventSectorList" syncable="YES">
+        <attribute name="arrLat" optional="YES" attributeType="String"/>
+        <attribute name="arrLong" optional="YES" attributeType="String"/>
+        <attribute name="arrNextSunriseTime" optional="YES" attributeType="String"/>
+        <attribute name="arrSunriseTime" optional="YES" attributeType="String"/>
+        <attribute name="arrSunsetTime" optional="YES" attributeType="String"/>
+        <attribute name="arrTimeDiff" optional="YES" attributeType="String"/>
+        <attribute name="depLat" optional="YES" attributeType="String"/>
+        <attribute name="depLong" optional="YES" attributeType="String"/>
+        <attribute name="depNextSunriseTime" optional="YES" attributeType="String"/>
+        <attribute name="depSunriseTime" optional="YES" attributeType="String"/>
+        <attribute name="depSunsetTime" optional="YES" attributeType="String"/>
+        <attribute name="depTimeDiff" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventSector" inverseEntity="Event"/>
     </entity>
     <entity name="FlightOverview" representedClassName="FlightOverviewList" syncable="YES">
         <attribute name="aircraft" optional="YES" attributeType="String"/>
@@ -539,9 +556,14 @@
         <relationship name="delayRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjDelays" inverseName="delays" inverseEntity="ProjDelays"/>
     </entity>
     <entity name="Recency" representedClassName="RecencyList" syncable="YES">
+        <attribute name="blueText" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="limit" optional="YES" attributeType="String"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="percentage" optional="YES" attributeType="String"/>
+        <attribute name="periodStart" optional="YES" attributeType="String"/>
         <attribute name="requirement" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>

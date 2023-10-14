@@ -52,6 +52,9 @@ struct FlightOverviewSectionView: View {
     @State private var signatureTfComment: String = ""
 
     @State private var dataFlightOverview: FlightOverviewList?
+    @State private var dataEventSector: EventSectorList?
+    
+    @State private var dayNight = (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
     
     //For switch crew
     @State private var isSync = false
@@ -59,12 +62,19 @@ struct FlightOverviewSectionView: View {
     let dateFormatter = DateFormatter()
     
     var body: some View {
+        var stdLocal: String {
+            return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
+        }
+        
+        var staLocal: String {
+            return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
+        }
         
         var std: String {
             if showUTC {
                 return dataFlightOverview?.unwrappedStd ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+                return stdLocal
             }
         }
         
@@ -72,17 +82,17 @@ struct FlightOverviewSectionView: View {
             if showUTC {
                 return dataFlightOverview?.unwrappedSta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return staLocal
             }
         }
         
-//        var eta: String {
-//            if showUTC {
-//                return dataFlightOverview?.unwrappedEta ?? ""
-//            } else {
-//                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
-//            }
-//        }
+        var eta: String {
+            if showUTC {
+                return calculateEta()
+            } else {
+                return convertUTCToLocalTime(timeString: calculateEta(), timeDiff: dataEventSector?.unwrappedArrTimeDiff ?? "")
+            }
+        }
         
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
@@ -421,10 +431,10 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(dataFlightOverview?.unwrappedDay ?? "")
+                                    Text("\(dayNight.day.hours):\(dayNight.day.minutes)")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedNight ?? "")
+                                    Text("\(dayNight.night.hours):\(dayNight.night.minutes)")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -443,7 +453,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack {
-                                    Text(calculateEta())
+                                    Text(eta)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
@@ -638,6 +648,10 @@ struct FlightOverviewSectionView: View {
                 .keyboardAvoidView()
             // end VStack
             .onAppear {
+                if let sectorList = coreDataModel.selectedEvent?.eventSector as? EventSectorList {
+                    dataEventSector = sectorList
+                }
+                
                 if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     dataFlightOverview = overviewList.first
@@ -674,9 +688,14 @@ struct FlightOverviewSectionView: View {
                     tfPob = dataFlightOverview?.unwrappedPob ?? ""
                     tfAircraft = dataFlightOverview?.unwrappedAircraft ?? ""
                 }
+                
+                self.dayNight = calculateDayNight(stdLocal, staLocal)
             }
             .onChange(of: coreDataModel.selectedEvent?.id) {_ in
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                if let sectorList = coreDataModel.selectedEvent?.eventSector as? EventSectorList {
+                    dataEventSector = sectorList
+                }
                 
                 if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
                     dataFlightOverview = overviewList.first
@@ -1018,6 +1037,8 @@ struct FlightOverviewSectionView: View {
     func calculateEta() -> String {
         dateFormatter.dateFormat = "HH:mm"
         let timeChockOff = dateFormatter.string(from: currentDateChockOff)
+        print("timeChockOff=======\(timeChockOff)")
+        print("currentDateFlightTime=======\(currentDateFlightTime)")
         return calculateTime(currentDateFlightTime, timeChockOff)
     }
     
@@ -1036,5 +1057,16 @@ struct FlightOverviewSectionView: View {
             minute = "\(dminute)"
         }
         return "\(hour):\(minute)"
+    }
+    
+    func calculateDayNight(_ stdLocal: String, _ staLocal: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+
+        if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" || stdLocal == "" || staLocal == ""  {
+            return (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
+        }
+        
+        print("dataFlightOverview=========\(dataFlightOverview)")
+        print("dataEventSector=========\(dataEventSector)")
+        return calculateDayNightDuration(dataFlightOverview?.unwrappedChockOff ?? "", dataFlightOverview?.unwrappedChockOn ?? "", stdLocal, staLocal, dataEventSector?.depSunriseTime ?? "00:00", dataEventSector?.depNextSunriseTime ?? "00:00", dataEventSector?.depSunsetTime ?? "00:00", dataEventSector?.arrSunsetTime ?? "00:00", dataEventSector?.arrSunriseTime ?? "00:00", dataEventSector?.arrNextSunriseTime ?? "00:00")
     }
 }

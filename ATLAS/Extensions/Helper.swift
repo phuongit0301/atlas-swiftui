@@ -115,3 +115,100 @@ func convertUTCToLocalTime(timeString: String, timeDiff: String) -> String {
     // Return nil if the conversion fails
     return ""
 }
+
+func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ departureLocal: String, _ arrivalLocal: String, _ departureSunrise: String, _ departureNextSunrise: String, _ departureSunset: String, _ arrivalSunset: String, _ arrivalSunrise: String, _ arrivalNextSunrise: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+    // Create DateFormatters for parsing the time strings
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    
+    var departureDaylight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    var departureNight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    var arrivalDaylight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    var arrivalNight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    var departureToArrival: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    
+    let (departureSunrise1, departureNextSunrise1) = processDateStrings(departureUTC, departureSunrise, departureNextSunrise)  ?? ("", "")
+    let (departureSunset1, departureNextSunset1) = processDateStrings(departureUTC, departureSunset, departureSunset) ?? ("", "")
+    let (arrivalSunrise1, arrivalNextSunrise1) = processDateStrings(arrivalUTC, arrivalSunrise, arrivalNextSunrise) ?? ("", "")
+    let (arrivalSunset1, arrivalNextSunset1) = processDateStrings(arrivalUTC, arrivalSunset, arrivalSunset) ?? ("", "")
+
+    // Create Calendar instances for working with dates and times
+    let calendar = Calendar.current
+
+    // Function to calculate the time difference in hours and minutes
+    func calculateTimeDifference(_ start: Date, _ end: Date) -> (hours: Int, minutes: Int) {
+        let components = calendar.dateComponents([.hour, .minute], from: start, to: end)
+        return (components.hour ?? 0, components.minute ?? 0)
+    }
+    
+    if let departureSunrise1 = dateFormatter.date(from: departureSunrise1), let departureSunset1 = dateFormatter.date(from: departureSunset1) {
+        departureDaylight = calculateTimeDifference(departureSunrise1, departureSunset1)
+    }
+    
+    if let departureSunset1 = dateFormatter.date(from: departureSunset1), let departureNextSunrise1 = dateFormatter.date(from: departureNextSunrise1) {
+        departureNight =  calculateTimeDifference(departureSunset1, departureNextSunrise1)
+    }
+    
+    if let arrivalSunrise1 = dateFormatter.date(from: arrivalSunrise1), let arrivalSunset1 = dateFormatter.date(from: arrivalSunset1) {
+        arrivalDaylight =  calculateTimeDifference(arrivalSunrise1, arrivalSunset1)
+    }
+    
+    if let arrivalSunset1 = dateFormatter.date(from: arrivalSunset1), let arrivalNextSunrise1 = dateFormatter.date(from: arrivalNextSunrise1) {
+        arrivalNight =  calculateTimeDifference(arrivalSunset1, arrivalNextSunrise1)
+    }
+    
+    if let departureUTCDate = dateFormatter.date(from: departureUTC), let arrivalUTCDate = dateFormatter.date(from: arrivalUTC) {
+        departureToArrival = calculateTimeDifference(departureUTCDate, arrivalUTCDate)
+    }
+    
+    let dayDuration = minimumDuration(departureDaylight, arrivalDaylight, departureToArrival)
+    let nightDuration = minimumDuration(departureNight, arrivalNight, departureToArrival)
+    
+    return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
+}
+
+func minimumDuration(_ durationA: (hours: Int, minutes: Int), _ durationB: (hours: Int, minutes: Int), _ durationC: (hours: Int, minutes: Int)) -> (hours: Int, minutes: Int) {
+    let durations = [durationA, durationB, durationC]
+    
+    // Sort the durations based on total minutes
+    let sortedDurations = durations.sorted { (a, b) in
+        let totalMinutesA = a.hours * 60 + a.minutes
+        let totalMinutesB = b.hours * 60 + b.minutes
+        return totalMinutesA < totalMinutesB
+    }
+    
+    // The first element in sortedDurations will be the minimum duration
+    return sortedDurations[0]
+}
+
+func processDateStrings(_ dateStringA: String, _ timeStringB: String, _ timeStringC: String) -> (String, String)? {
+    // Create a DateFormatter to parse dateStringA
+    let dateFormatterA = DateFormatter()
+    dateFormatterA.dateFormat = "yyyy-MM-dd HH:mm"
+    
+    // Parse dateStringA into a Date object
+    if let dateA = dateFormatterA.date(from: dateStringA) {
+        // Create a Calendar instance
+        let calendar = Calendar.current
+        
+        // Add zero days to dateA for date string B
+//        if let dateForB = dateA {
+            // Create a DateFormatter to format the combined date and time
+            let dateFormatterCombined = DateFormatter()
+            dateFormatterCombined.dateFormat = "yyyy-MM-dd HH:mm"
+            
+            // Format dateForB with timeStringB
+            let combinedDateB = dateFormatterCombined.string(from: dateA)
+            
+            // Add one day to dateA for date string C
+            if let dateForC = calendar.date(byAdding: .day, value: 1, to: dateA) {
+                // Format dateForC with timeStringC
+                let combinedDateC = dateFormatterCombined.string(from: dateForC)
+                
+                return (combinedDateB, combinedDateC)
+            }
+//        }
+    }
+    
+    return nil
+}

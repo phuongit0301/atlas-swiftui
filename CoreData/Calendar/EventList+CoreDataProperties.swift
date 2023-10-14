@@ -2,7 +2,7 @@
 //  EventList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 13/10/2023.
+//  Created by phuong phan on 14/10/2023.
 //
 //
 
@@ -35,6 +35,7 @@ extension EventList {
     @NSManaged public var noteList: NSSet?
     @NSManaged public var routeAlternate: NSSet?
     @NSManaged public var noteAabbaPostList: NSSet?
+    @NSManaged public var eventSector: EventSectorList?
     
     public var unwrappedStartDate: String {
         startDate ?? ""

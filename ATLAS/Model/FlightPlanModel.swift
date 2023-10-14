@@ -807,3 +807,26 @@ class YourFlightPlanModel: ObservableObject {
     @Published var selectedEvent: EventList?
     @Published var isActive = false
 }
+
+struct SectorDataJson: Codable {
+    let depLat: String
+    let depLong: String
+    let dep_time_diff: String
+    let dep_sunrise_time: String
+    let dep_sunset_time: String
+    let dep_next_sunrise_time: String
+    let arrLat: String
+    let arrLong: String
+    let arr_time_diff: String
+    let arr_sunrise_time: String
+    let arr_sunset_time: String
+    let arr_next_sunrise_time: String
+}
+
+struct UserProfileDataJson: Codable {
+    let username: String
+    let email: String
+    let firstname: String
+    let lastname: String
+    let airline: String
+}

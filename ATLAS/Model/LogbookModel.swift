@@ -112,9 +112,14 @@ struct ILimitationJson: Decodable {
 struct IRecencyData: Decodable {
     var id: String
     var recency_type: String
+    var recency_aircraft_model: String
     var recency_requirement: String
     var recency_limit: String
+    var recency_period_start: String
+    var recency_status: String
     var recency_text: String
+    var recency_percentage: String
+    var recency_blue_text: String
 }
 
 struct IVisaData: Decodable {

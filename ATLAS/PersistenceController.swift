@@ -253,6 +253,9 @@ class CoreDataModelState: ObservableObject {
     
     @Published var selectedSidebar: EventList?
     
+    // For User Profile
+    @Published var dataUser: UserProfileList?
+    
     @Published var isLoginLoading = false
     @Published var isTrafficLoading = false
     @Published var isMapAabbaLoading = false
@@ -411,7 +414,7 @@ class CoreDataModelState: ObservableObject {
     }
     
     func syncDataMetarTaf() async {
-        let response = await remoteService.getFlightPlanWX()
+//        let response = await remoteService.getFlightPlanWX()
         
 //        if let metarTafData = response {
 //            self.updateDataMetarTaf(metarTafData)
@@ -456,6 +459,7 @@ class CoreDataModelState: ObservableObject {
             self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyExpiry, monthsAhead: self.monthsAhead)
             
             self.dataAlternate = self.readDataAlternate()
+            self.dataUser = self.readUser()
             self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/3e919cac9c01/8000/2/0_1.png")
 //            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=3c03dc234f4d074c7954855f4aa8e8e9")
 //            self.prepareDataForWaypointMap()
@@ -1014,7 +1018,7 @@ class CoreDataModelState: ObservableObject {
             "aabba_map": payloadMapList
         ]
         
-        print("=======post flight plan payload===== \(payload)")
+//        print("=======post flight plan payload===== \(payload)")
         
         return await remoteService.postFlightPlanDataV3(payload)
     }
@@ -1849,10 +1853,15 @@ class CoreDataModelState: ObservableObject {
                 
                 newObj.id = UUID()
                 newObj.type = item.recency_type
-                newObj.text = item.recency_text
-                newObj.limit = item.recency_limit
+                newObj.model = item.recency_aircraft_model
                 newObj.requirement = item.recency_requirement
-
+                newObj.limit = item.recency_limit
+                newObj.periodStart = item.recency_period_start
+                newObj.status = item.recency_status
+                newObj.text = item.recency_text
+                newObj.percentage = item.recency_percentage
+                newObj.blueText = item.recency_blue_text
+                
                 service.container.viewContext.performAndWait {
                     do {
                         try service.container.viewContext.save()
@@ -3648,6 +3657,22 @@ class CoreDataModelState: ObservableObject {
             if(response.count > 0) {
                 data = response
                 existDataAltnTaf = true
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readUser() -> UserProfileList? {
+        var data: UserProfileList?
+        
+        let request: NSFetchRequest<UserProfileList> = UserProfileList.fetchRequest()
+        do {
+            let response: [UserProfileList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
             }
         } catch {
             print("Could not fetch notams from Core Data.")

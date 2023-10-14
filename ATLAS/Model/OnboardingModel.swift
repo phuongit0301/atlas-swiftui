@@ -85,13 +85,14 @@ struct IProvideLimitation: Identifiable, Hashable {
 }
 
 struct IProvideRecency: Identifiable, Hashable {
-    var id = UUID().uuidString
+    var id = UUID()
     var type: String
     var modelName: String
     var requirement: String
     var frequency: String
     var periodStart: String
     var completed: String
+    var isNew: Bool = true
 }
 
 struct IProvideExpiry: Identifiable, Hashable {
