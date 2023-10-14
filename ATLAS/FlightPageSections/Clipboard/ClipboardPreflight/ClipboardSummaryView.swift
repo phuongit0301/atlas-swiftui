@@ -170,54 +170,54 @@ struct ClipboardSummaryView: View {
                             Text("STD")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                             Text("STA")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("")
-                                .foregroundStyle(Color.black)
-                                .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                         }.frame(height: 44)
                         
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
                             Text(std).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                             Text(sta).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("").frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                         }.frame(height: 44)
                         
                         HStack(spacing: 0) {
                             Text("Block Time")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                             Text("Flight Time")
                                 .foregroundStyle(Color.black)
                                 .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            Text("Block Time - Flight Time")
-                                .foregroundStyle(Color.black)
-                                .font(.system(size: 15, weight: .semibold))
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                         }.frame(height: 44)
                         
                         Divider().padding(.horizontal, -16)
                         
                         HStack(spacing: 0) {
                             Text(renderTime(std, sta)).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                             
                             Text(dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
-                            
+                                .frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
+                        }.frame(height: 44)
+                        
+                        HStack(spacing: 0) {
+                            Text("Block Time - Flight Time")
+                                .foregroundStyle(Color.black)
+                                .font(.system(size: 15, weight: .semibold))
+                                .frame(width: calculateWidthSummary(width - 32, 1), alignment: .leading)
+                        }.frame(height: 44)
+                        
+                        HStack(spacing: 0) {
                             Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
                                 .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                .frame(width: calculateWidthSummary(width - 32, 3), alignment: .leading)
+                                .frame(width: calculateWidthSummary(width - 32, 1), alignment: .leading)
                         }.frame(height: 44)
                     }// End VStack
                 }// end If

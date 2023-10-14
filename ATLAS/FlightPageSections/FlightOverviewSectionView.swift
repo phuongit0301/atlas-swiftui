@@ -555,6 +555,15 @@ struct FlightOverviewSectionView: View {
                                             SecureField("Enter Password",text: $tfPassword)
                                                 .font(.system(size: 15, weight: .regular))
                                                 .foregroundStyle(Color.black)
+                                                .onSubmit {
+                                                    if let item = dataFlightOverview, let id = item.id {
+                                                        item.password = tfPassword
+                                                        
+                                                        coreDataModel.save()
+                                                        dataFlightOverview = coreDataModel.readFlightOverviewById(id)
+                                                        
+                                                    }
+                                                }
                                         }.frame(height: 44)
 
                                         Spacer()
@@ -647,6 +656,10 @@ struct FlightOverviewSectionView: View {
                     
                     if let crewName = dataFlightOverview?.unwrappedCrewName {
                         tfCrewName = crewName
+                    }
+                    
+                    if let password = dataFlightOverview?.unwrappedPassword {
+                        tfPassword = password
                     }
                     
                     if let tempDateChockOff = dataFlightOverview?.unwrappedChockOff, let tempChockOffFormat = dateFormatter.date(from: tempDateChockOff) {

@@ -153,15 +153,15 @@ struct ClipboardFlightOverviewView: View {
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
-                                    Text(dataFlightOverview?.unwrappedDep ?? "")
+                                    Text("Dep")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedDest ?? "")
+                                    Text("Dest")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedPob ?? "")
+                                    Text("POB")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
@@ -221,15 +221,11 @@ struct ClipboardFlightOverviewView: View {
                                     Text("STD")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("STA")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -237,26 +233,21 @@ struct ClipboardFlightOverviewView: View {
                                 HStack(spacing: 0) {
                                     Text(std)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(sta)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("").frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
                                     Text("Block Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Flight Time")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Block Time - Flight Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -265,17 +256,27 @@ struct ClipboardFlightOverviewView: View {
                                     Text(renderTime(std, sta))
                                         .font(.system(size: 15, weight: .regular))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                     Text(dataFlightOverview?.unwrappedFlightTime ?? "")
                                         .font(.system(size: 15, weight: .regular))
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    
-                                    Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
-                                        .font(.system(size: 15, weight: .regular))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    Text("Block Time - Flight Time")
                                         .foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                Divider().padding(.horizontal, -16)
+                                
+                                HStack(spacing: 0) {
+                                    Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// end If
@@ -314,15 +315,11 @@ struct ClipboardFlightOverviewView: View {
                                     Text("Chocks Off")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("ETA")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Chocks On")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -330,15 +327,11 @@ struct ClipboardFlightOverviewView: View {
                                 HStack(spacing: 0) {
                                     Text(dataFlightOverview?.unwrappedChockOff ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    
-                                    Text(calculateEta())
-                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                     Text(dataFlightOverview?.unwrappedChockOn ?? "")
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
                                 }.frame(height: 44)
                                 
@@ -347,15 +340,11 @@ struct ClipboardFlightOverviewView: View {
                                     Text("Day")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text("Night")
                                         .foregroundStyle(Color.black)
                                         .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Total Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                                 
                                 Divider().padding(.horizontal, -16)
@@ -363,13 +352,30 @@ struct ClipboardFlightOverviewView: View {
                                 HStack(spacing: 0) {
                                     Text(dataFlightOverview?.unwrappedDay ?? "")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(dataFlightOverview?.unwrappedNight ?? "")
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    Text("ETA")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                    Text("Total Time")
+                                        .foregroundStyle(Color.black)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+                                }.frame(height: 44)
+                                
+                                HStack(spacing: 0) {
+                                    Text(calculateEta())
+                                        .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(calculateTotalTime())
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
                             }// End VStack
                         }// End if
@@ -408,13 +414,13 @@ struct ClipboardFlightOverviewView: View {
                                     Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     HStack(spacing: 0) {
-                                        Text("CA").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                        Text("Username").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
 
                                         Spacer()
                                         
                                     }.frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
 
-                                    Text("FO").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                    Text(dataFlightOverview?.unwrappedCrewName ?? "").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
 
                                 }.frame(height: 44, alignment: .leading)
 
@@ -423,7 +429,7 @@ struct ClipboardFlightOverviewView: View {
                                 HStack(alignment: .top, spacing: 0) {
                                     VStack(alignment: .leading) {
                                         HStack(alignment: .center) {
-                                            Text("Password")
+                                            Text(dataFlightOverview?.unwrappedPassword ?? "")
                                                 .font(.system(size: 15, weight: .regular))
                                                 .foregroundStyle(Color.black)
                                         }.frame(height: 44)
@@ -440,7 +446,7 @@ struct ClipboardFlightOverviewView: View {
 
                                         VStack(alignment: .leading) {
                                             HStack {
-                                                Text("Muhammad Adil").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                Text(dataFlightOverview?.unwrappedCaPicker ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                             }.frame(height: 44)
 
                                             Spacer()
@@ -456,7 +462,7 @@ struct ClipboardFlightOverviewView: View {
 
                                         VStack(alignment: .leading, spacing: 0) {
                                             HStack {
-                                                Text(dataFlightOverview?.unwrappedCrewName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+                                                Text(dataFlightOverview?.unwrappedF0Picker ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                             }.frame(height: 44)
                                             
                                             Spacer()
@@ -471,6 +477,7 @@ struct ClipboardFlightOverviewView: View {
                         .cornerRadius(8)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                 }// end ScrollView
+                .padding(.bottom, 32)
             }.padding(.horizontal, 16)
                 .background(Color.theme.antiFlashWhite)
             // end VStack
