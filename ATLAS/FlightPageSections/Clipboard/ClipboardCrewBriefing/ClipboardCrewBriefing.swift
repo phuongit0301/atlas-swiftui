@@ -13,8 +13,6 @@ struct ClipboardCrewBriefing: View {
     @EnvironmentObject var mapIconModel: MapIconModel
     
     @State private var showUTC = true
-    @State var dataCabin = [TagList]()
-    @State var dataWeather = [TagList]()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -45,16 +43,12 @@ struct ClipboardCrewBriefing: View {
                     VStack(spacing: 8) {
                         ClipboardCrewBriefingSummaryView(width: proxy.size.width)
                         
-                        if dataCabin.count > 0, let firstItem = dataCabin.first {
-                            if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
-                                ClipboardTagView(notes: notes, tag: firstItem)
-                            }
+                        if coreDataModel.tagListCabinDefects.count > 0 {
+                            ClipboardTagView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
                         }
 
-                        if dataWeather.count > 0, let firstItem = dataWeather.first {
-                            if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
-                                ClipboardTagView(notes: notes, tag: firstItem)
-                            }
+                        if coreDataModel.tagListWeather.count > 0 {
+                            ClipboardTagView(itemList: $coreDataModel.tagListWeather, tag: "Weather")
                         }
                         
                         ClipboardCrewBriefingNoteView(width: proxy.size.width)
@@ -66,16 +60,12 @@ struct ClipboardCrewBriefing: View {
             .padding(.bottom, 32)
             .background(Color.theme.antiFlashWhite)
             .onAppear {
-                dataCabin = coreDataModel.tagListCabinDefects
-                dataWeather = coreDataModel.tagListWeather
-            }
-            .onChange(of: mapIconModel.num) { _ in
-                coreDataModel.tagList = coreDataModel.readTag()
                 coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
                 coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
-                
-                dataCabin = coreDataModel.tagListCabinDefects
-                dataWeather = coreDataModel.tagListWeather
+            }
+            .onChange(of: mapIconModel.num) { _ in
+                coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
+                coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
             }
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct SlideoverCrewBriefing: View {
     @EnvironmentObject var refState: ScreenReferenceModel
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @State private var showUTC = true
     
@@ -33,25 +34,29 @@ struct SlideoverCrewBriefing: View {
                     ScrollView {
                         VStack(spacing: 8) {
                             ClipboardCrewBriefingSummaryView(width: proxy.size.width)
-                            
-                            if coreDataModel.tagListCabinDefects.count > 0, let firstItem = coreDataModel.tagListCabinDefects.first {
-                                if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
-                                    ClipboardTagView(notes: notes, tag: firstItem)
-                                }
+
+                            if coreDataModel.tagListCabinDefects.count > 0 {
+                                ClipboardTagView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
                             }
-                            
-                            if coreDataModel.tagListWeather.count > 0, let firstItem = coreDataModel.tagListWeather.first {
-                                if let notes = firstItem.notes?.allObjects as? [NoteList], notes.count > 0 {
-                                    ClipboardTagView(notes: notes, tag: firstItem)
-                                }
+
+                            if coreDataModel.tagListWeather.count > 0 {
+                                ClipboardTagView(itemList: $coreDataModel.tagListWeather, tag: "Weather")
                             }
-                            
+
                             ClipboardCrewBriefingNoteView(width: proxy.size.width)
                         }
                     }
                 }.padding(.horizontal, 16)
             }.padding(.bottom, 32)
                 .background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
+                    coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
+                }
+                .onChange(of: mapIconModel.num) { _ in
+                    coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Cabin Defects")
+                    coreDataModel.tagListWeather = coreDataModel.readTagByName("Weather")
+                }
         }
     }
 }

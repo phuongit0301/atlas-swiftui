@@ -12,9 +12,9 @@ struct ClipboardTagView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
-    var notes: [NoteList]
-    let tag: TagList
-    @State var noteList: [NoteList] = []
+    @Binding var itemList: [CabinDefectModel]
+    let tag: String
+
     @State var isShowing = true
     @State private var isLoading = true
     
@@ -26,7 +26,7 @@ struct ClipboardTagView: View {
                         self.isShowing.toggle()
                     }, label: {
                         HStack(alignment: .center, spacing: 8) {
-                            Text(tag.name).font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
+                            Text(tag).font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
                             
                             if isShowing {
                                 Image(systemName: "chevron.down")
@@ -45,74 +45,71 @@ struct ClipboardTagView: View {
                     Spacer()
                 }.frame(height: 54)
                 
-                if isLoading {
-                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).padding(.leading)
-                } else {
-                    VStack(spacing: 0) {
-                        if isShowing {
-                            if noteList.count <= 0 {
-                                HStack(spacing: 0) {
-                                    Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular))
-                                    Spacer()
-                                }.frame(height: 44, alignment: .leading)
-                            } else {
-                                VStack(spacing: 0) {
-                                    ForEach(noteList.indices, id: \.self) { index in
-                                        if noteList[index].isDefault {
-                                            VStack(spacing: 0) {
-                                                HStack(alignment: .center) {
-                                                    Image(systemName: "line.3.horizontal")
-                                                        .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                                        .frame(width: 22, height: 22)
-                                                        .scaledToFit()
-                                                        .aspectRatio(contentMode: .fit)
+                VStack(spacing: 0) {
+                    if isShowing {
+                        if itemList.count <= 0 {
+                            HStack(spacing: 0) {
+                                Text("No note saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 15, weight: .regular))
+                                Spacer()
+                            }.frame(height: 44, alignment: .leading)
+                        } else {
+                            VStack(spacing: 0) {
+                                ForEach(itemList.indices, id: \.self) { index in
+                                    if itemList[index].postIsDefault {
+                                        VStack(spacing: 0) {
+                                            HStack(alignment: .center) {
+                                                Image(systemName: "line.3.horizontal")
+                                                    .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                    .frame(width: 22, height: 22)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                                
+                                                VStack(alignment: .leading, spacing: 8) {
+                                                    Text(itemList[index].postName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
                                                     
-                                                    VStack(alignment: .leading, spacing: 8) {
-                                                        Text(noteList[index].unwrappedName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
+                                                    HStack(spacing: 8) {
+                                                        Text(itemList[index].tagName).padding(.vertical, 4)
+                                                            .padding(.horizontal, 12)
+                                                            .font(.system(size: 11, weight: .regular))
+                                                            .background(Color.white)
+                                                            .foregroundColor(Color.black)
+                                                            .cornerRadius(12)
+                                                            .overlay(
+                                                                RoundedRectangle(cornerRadius: 12)
+                                                                    .stroke(Color.black, lineWidth: 1)
+                                                            )
                                                         
-                                                        HStack(spacing: 8) {
-                                                            Text(tag.name).padding(.vertical, 4)
-                                                                .padding(.horizontal, 12)
-                                                                .font(.system(size: 11, weight: .regular))
-                                                                .background(Color.white)
-                                                                .foregroundColor(Color.black)
-                                                                .cornerRadius(12)
-                                                                .overlay(
-                                                                    RoundedRectangle(cornerRadius: 12)
-                                                                        .stroke(Color.black, lineWidth: 1)
-                                                                )
+                                                        Text(renderDate(itemList[index].postDate)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                    }
+                                                }
+                                                
+                                                Spacer()
+                                                
+                                                Button(action: {
+                                                    if let notes = coreDataModel.selectedEvent?.noteList?.allObjects as? [NoteList], notes.count > 0 {
+                                                        
+                                                        if let currentNoteIndex = notes.firstIndex(where: {$0.id == itemList[index].postId}) {
+                                                            itemList[index].postIsDefault.toggle()
+                                                            notes[currentNoteIndex].isDefault.toggle()
                                                             
-                                                            Text(renderDate(notes[index].unwrappedCreatedAt)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                            coreDataModel.save()
+                                                            mapIconModel.numAabba += 1
                                                         }
                                                     }
-                                                    
-                                                    Spacer()
-                                                    
-                                                    Button(action: {
-                                                        noteList[index].isDefault.toggle()
-                                                        coreDataModel.save()
-                                                        mapIconModel.numAabba += 1
-                                                    }, label: {
-                                                        if noteList[index].isDefault {
-                                                            Image(systemName: "star.fill")
-                                                                .foregroundColor(Color.theme.azure)
-                                                                .font(.system(size: 22))
-                                                        } else {
-                                                            Image(systemName: "star")
-                                                                .foregroundColor(Color.theme.azure)
-                                                                .font(.system(size: 22))
-                                                        }
-                                                    }).buttonStyle(PlainButtonStyle())
-                                                    
-                                                }.padding(.vertical, 8)
-                                                if index + 1 < noteList.count {
-                                                    Divider().padding(.horizontal, -16)
-                                                }
-                                            }.id(UUID())
-                                        }
-                                    }.onMove(perform: move)
-                                }.padding(.bottom, 8)
-                            }
+                                                }, label: {
+                                                    Image(systemName: "star.fill")
+                                                        .foregroundColor(Color.theme.azure)
+                                                        .font(.system(size: 22))
+                                                }).buttonStyle(PlainButtonStyle())    
+                                            }.padding(.vertical, 8)
+                                            
+                                            if index + 1 < itemList.count {
+                                                Divider().padding(.horizontal, -16)
+                                            }
+                                        }.id(UUID())
+                                    }
+                                }.onMove(perform: move)
+                            }.padding(.bottom, 8)
                         }
                     }
                 }
@@ -120,24 +117,11 @@ struct ClipboardTagView: View {
                 .background(Color.white)
                 .cornerRadius(8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                .onAppear {
-                    prepareData()
-                }
         }
-    }
-    
-    func prepareData() {
-        self.isLoading = true
-        for item in notes {
-            if item.isDefault {
-                self.noteList.append(item)
-            }
-        }
-        self.isLoading = false
     }
     
     private func move(from source: IndexSet, to destination: Int) {
-        self.noteList.move(fromOffsets: source, toOffset: destination)
+        self.itemList.move(fromOffsets: source, toOffset: destination)
     }
     
     func renderDate(_ date: String) -> String {

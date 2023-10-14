@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoteSubSectionView: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
     
@@ -57,7 +57,7 @@ struct NoteSubSectionView: View {
                         header: header,
                         showSheet: $showSheet,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.preflightArray,
+                        itemList: $coreDataModel.preflightArray,
                         isShowList: $isShowListNote,
                         geoWidth: proxy.size.width,
                         resetData: resetData
@@ -70,7 +70,7 @@ struct NoteSubSectionView: View {
                         showSheet: $showSheet,
                         showModalComment: $showModalComment,
                         currentIndex: $currentIndex,
-                        itemList: $viewModel.dataPostPreflight,
+                        itemList: $coreDataModel.dataPostPreflight,
                         isShowList: $isShowListRelevent,
                         postIndex: $postIndex,
                         geoWidth: proxy.size.width,
@@ -85,14 +85,16 @@ struct NoteSubSectionView: View {
                 resetData()
             }
             .onChange(of: mapIconModel.num) { _ in
-                viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
+                coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
+                coreDataModel.preflightArray = coreDataModel.read("preflight")
+                coreDataModel.preflightRefArray = coreDataModel.read("preflightref")
             }.sheet(isPresented: $showModalComment) {
-                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflight).interactiveDismissDisabled(true)
+                ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $coreDataModel.dataPostPreflight).interactiveDismissDisabled(true)
             }.sheet(isPresented: $showSheet) {
                 NoteItemForm(
                     textNote: $textNote,
-                    tagList: $viewModel.tagList,
-                    itemList: $viewModel.preflightArray,
+                    tagList: $coreDataModel.tagList,
+                    itemList: $coreDataModel.preflightArray,
                     currentIndex: $currentIndex,
                     showSheet: $showSheet,
                     type: "preflight",
@@ -104,11 +106,11 @@ struct NoteSubSectionView: View {
     }
     
     private func resetData() {
-        viewModel.preflightArray = viewModel.read("preflight")
-        viewModel.preflightRefArray = viewModel.read("preflightref")
-        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
-        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
-        viewModel.dataNoteAabbaPreflight = viewModel.readDataNoteAabbaPostList("preflight")
+        coreDataModel.preflightArray = coreDataModel.read("preflight")
+        coreDataModel.preflightRefArray = coreDataModel.read("preflightref")
+        coreDataModel.dataPostPreflight = coreDataModel.readDataPostList("preflight", "")
+        coreDataModel.dataPostPreflightRef = coreDataModel.readDataPostList("preflight", "ref")
+        coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
 
         if self.currentIndex > -1 {
             self.currentIndex = -1

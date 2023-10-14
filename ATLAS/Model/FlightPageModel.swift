@@ -601,3 +601,12 @@ class FlightNoteModelState: ObservableObject {
 class NotamSection: ObservableObject {
     @Published var dataDropDown: [String] = ["Runway", "Taxiway", "Approach/Departure", "Navaid", "Obstacles", "Others"]
 }
+
+struct CabinDefectModel: Codable {
+    var id = UUID()
+    var postId: UUID
+    var postName: String
+    var postDate: String
+    var tagName: String
+    var postIsDefault: Bool
+}
