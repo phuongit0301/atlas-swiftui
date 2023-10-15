@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CoreLocation
 
 struct FlightOverviewSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
@@ -54,7 +55,9 @@ struct FlightOverviewSectionView: View {
     @State private var dataFlightOverview: FlightOverviewList?
     @State private var dataEventSector: EventSectorList?
     
-    @State private var dayNight = (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
+    @State private var dayHours: String = ""
+    @State private var nightHours: String = ""
+    
     
     //For switch crew
     @State private var isSync = false
@@ -439,10 +442,10 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text("\(dayNight.day.hours):\(dayNight.day.minutes)")
+                                    Text(dayHours)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text("\(dayNight.night.hours):\(dayNight.night.minutes)")
+                                    Text(nightHours)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -696,8 +699,9 @@ struct FlightOverviewSectionView: View {
                     tfPob = dataFlightOverview?.unwrappedPob ?? ""
                     tfAircraft = dataFlightOverview?.unwrappedAircraft ?? ""
                 }
-                
-                self.dayNight = calculateDayNight(stdLocal, staLocal)
+                let dayNight = calculateDayNight()
+                self.dayHours = dayNight.day
+                self.nightHours = dayNight.night
             }
             .onChange(of: coreDataModel.selectedEvent?.id) {_ in
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -779,7 +783,9 @@ struct FlightOverviewSectionView: View {
                         dataFlightOverview = coreDataModel.readFlightOverviewById(id)
                     }
                 }
-                self.dayNight = calculateDayNight(stdLocal, staLocal)
+                let dayNight = calculateDayNight()
+                self.dayHours = dayNight.day
+                self.nightHours = dayNight.night
             }
             .onChange(of: currentDateChockOn) { value in
                 if dataFlightOverview != nil, let item = dataFlightOverview {
@@ -790,7 +796,9 @@ struct FlightOverviewSectionView: View {
                         dataFlightOverview = coreDataModel.readFlightOverviewById(id)
                     }
                 }
-                self.dayNight = calculateDayNight(stdLocal, staLocal)
+                let dayNight = calculateDayNight()
+                self.dayHours = dayNight.day
+                self.nightHours = dayNight.night
             }
             .onChange(of: signatureImage) { _ in
                 if let signatureImage = signatureImage {
@@ -1054,25 +1062,65 @@ struct FlightOverviewSectionView: View {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         
         let diffComponents = Calendar.current.dateComponents([.hour, .minute], from: currentDateChockOff, to: currentDateChockOn)
-        var hour = "00"
-        var minute = "00"
+        var hour: Int = 0
+        var minute: Int = 0
         
         if let dhour = diffComponents.hour, dhour > 0 {
-            hour = "\(dhour)"
+            hour = dhour
         }
         
         if let dminute = diffComponents.minute, dminute > 0 {
-            minute = "\(dminute)"
+            minute = dminute
         }
-        return "\(hour):\(minute)"
+        let hourString = String(format: "%02d", hour)
+        let minuteString = String(format: "%02d", minute)
+        return "\(hourString):\(minuteString)"
     }
     
-    func calculateDayNight(_ stdLocal: String, _ staLocal: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+    func calculateDayNight() -> (day: String, night: String) {
 
-        if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" || stdLocal == "" || staLocal == ""  {
-            return (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
+        if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" {
+            return (day: "00:00", night: "00:00")
         }
         
-        return calculateDayNightDuration(dataFlightOverview?.unwrappedChockOff ?? "", dataFlightOverview?.unwrappedChockOn ?? "", dataEventSector?.depSunriseTime ?? "00:00", dataEventSector?.depNextSunriseTime ?? "00:00", dataEventSector?.depSunsetTime ?? "00:00", dataEventSector?.arrSunsetTime ?? "00:00", dataEventSector?.arrSunriseTime ?? "00:00", dataEventSector?.arrNextSunriseTime ?? "00:00")
+        let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
+        let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
+        
+        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
+        
+        func formatTime(hours: Int, minutes: Int) -> String {
+            let hourString = String(format: "%02d", hours)
+            let minuteString = String(format: "%02d", minutes)
+            return "\(hourString):\(minuteString)"
+        }
+
+        func calculateNightTime(dayTime: (hours: Int, minutes: Int), duration: String) -> String {
+            // Convert dayTime to minutes
+            let dayTimeMinutes = dayTime.hours * 60 + dayTime.minutes
+
+            // Parse the duration string to get hours and minutes
+            let durationComponents = duration.components(separatedBy: ":")
+            if durationComponents.count == 2,
+               let durationHours = Int(durationComponents[0]),
+               let durationMinutes = Int(durationComponents[1]) {
+                
+                // Calculate nightTime in minutes
+                let totalMinutes = durationHours * 60 + durationMinutes - dayTimeMinutes
+                
+                // Convert totalMinutes back to hours and minutes
+                let nightTimeHours = totalMinutes / 60
+                let nightTimeMinutes = totalMinutes % 60
+
+                // Format nightTime as "HH:mm"
+                return formatTime(hours: nightTimeHours, minutes: nightTimeMinutes)
+            }
+
+            // Return a default value or handle an invalid duration string
+            return "00:00"
+        }
+        
+        return (day: formatTime(hours: dayNight.day.hours, minutes: dayNight.day.minutes), night: calculateNightTime(dayTime: dayNight.day, duration: calculateTotalTime()))
     }
+    
+    
 }

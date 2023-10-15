@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
+import Solar
 
 func calculateTime(_ startTime: String, _ endTime: String) -> String {
     var eTempTime = 0
@@ -141,126 +143,59 @@ func convertUTCToLocalTime(timeString: String, timeDiff: String) -> String {
     return ""
 }
 
-func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ departureSunrise: String, _ departureNextSunrise: String, _ departureSunset: String, _ arrivalSunset: String, _ arrivalSunrise: String, _ arrivalNextSunrise: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
-    // Create DateFormatters for parsing the time strings
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-    
-    var departureDaylight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    var departureNight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    var arrivalDaylight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    var arrivalNight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    var departureToArrival: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    
-    print("departureSunrise=========\(departureSunrise)")
-    print("departureSunset=========\(departureSunset)")
-    print("arrivalSunrise=========\(arrivalSunrise)")
-    print("arrivalSunset=========\(arrivalSunset)")
-    print("arrivalNextSunrise=========\(arrivalNextSunrise)")
-    print("departureNextSunrise=========\(departureNextSunrise)")
-    
-    let (departureSunrise1, departureNextSunrise1) = processDateStrings(departureUTC, departureSunrise, departureNextSunrise)  ?? ("", "")
-    let (departureSunset1, _) = processDateStrings(departureUTC, departureSunset, departureSunset) ?? ("", "")
-    let (arrivalSunrise1, arrivalNextSunrise1) = processDateStrings(arrivalUTC, arrivalSunrise, arrivalNextSunrise) ?? ("", "")
-    let (arrivalSunset1, _) = processDateStrings(arrivalUTC, arrivalSunset, arrivalSunset) ?? ("", "")
 
-    print("departureSunrise1=========\(departureSunrise1)")
-    print("departureSunset1=========\(departureSunset1)")
-    print("arrivalSunrise1=========\(arrivalSunrise1)")
-    print("arrivalSunset1=========\(arrivalSunset1)")
-    print("arrivalNextSunrise1=========\(arrivalNextSunrise1)")
-    print("departureNextSunrise1=========\(departureNextSunrise1)")
+func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocationCoordinate2D, destinationLocation: CLLocationCoordinate2D, chocksOff: Date, chocksOn: Date, averageGroundSpeedKph: Double) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+    
+    let departureTime = chocksOff
+    let arrivalTime = chocksOn
+    let coordinate₀ = CLLocation(latitude: departureLocation.latitude, longitude: departureLocation.longitude)
+    let coordinate₁ = CLLocation(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)
+    let distanceKm = coordinate₀.distance(from: coordinate₁)  / 1000.0
+    let timeStep: TimeInterval = 1800  // 30mins in seconds
+    
+    var totalDaylightHours: Double = 0
+    var totalNightHours: Double = 0
+    var currentTime = departureTime
+    
+    while currentTime < arrivalTime {
+        let currentSegmentDistance = (currentTime.timeIntervalSince(departureTime)) / 3600 * averageGroundSpeedKph
+        let currentSegmentPercentage = currentSegmentDistance / distanceKm
+        let currentLatitude = departureLocation.latitude + (destinationLocation.latitude - departureLocation.latitude) * currentSegmentPercentage
+        let currentLongitude = departureLocation.longitude + (destinationLocation.longitude - departureLocation.longitude) * currentSegmentPercentage
+//        print("currentSegmentDistance=========\(currentSegmentDistance)")
+//        print("currentSegmentPercentage=========\(currentSegmentPercentage)")
+//        print("currentLatitude=========\(currentLatitude)")
+//        print("currentLongitude=========\(currentLongitude)")
+        let solar = Solar(for: currentTime, coordinate: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
 
-    // Create Calendar instances for working with dates and times
-    let calendar = Calendar.current
+        if solar?.isDaytime != nil {
+            totalDaylightHours += timeStep
+//            print("totalDaylightHours=========\(totalDaylightHours)")
 
-    // Function to calculate the time difference in hours and minutes
-    func calculateTimeDifference(_ start: Date, _ end: Date) -> (hours: Int, minutes: Int) {
-        let components = calendar.dateComponents([.hour, .minute], from: start, to: end)
-        return (components.hour ?? 0, components.minute ?? 0)
+        } else {
+            totalNightHours += timeStep
+//            print("totalNightHours=========\(totalNightHours)")
+
+        }
+        
+        currentTime = currentTime.addingTimeInterval(timeStep)
+//        print("currentTime=========\(currentTime)")
+
     }
-    
-    if let departureSunrise1 = dateFormatter.date(from: departureSunrise1), let departureSunset1 = dateFormatter.date(from: departureSunset1) {
-        departureDaylight = calculateTimeDifference(departureSunrise1, departureSunset1)
-    }
-    
-    if let departureSunset1 = dateFormatter.date(from: departureSunset1), let departureNextSunrise1 = dateFormatter.date(from: departureNextSunrise1) {
-        departureNight =  calculateTimeDifference(departureSunset1, departureNextSunrise1)
-    }
-    
-    if let arrivalSunrise1 = dateFormatter.date(from: arrivalSunrise1), let arrivalSunset1 = dateFormatter.date(from: arrivalSunset1) {
-        arrivalDaylight =  calculateTimeDifference(arrivalSunrise1, arrivalSunset1)
-    }
-    
-    if let arrivalSunset1 = dateFormatter.date(from: arrivalSunset1), let arrivalNextSunrise1 = dateFormatter.date(from: arrivalNextSunrise1) {
-        arrivalNight =  calculateTimeDifference(arrivalSunset1, arrivalNextSunrise1)
-    }
-    
-    if let departureUTCDate = dateFormatter.date(from: departureUTC), let arrivalUTCDate = dateFormatter.date(from: arrivalUTC) {
-        departureToArrival = calculateTimeDifference(departureUTCDate, arrivalUTCDate)
-    }
-    
-    let dayDuration = minimumDuration(departureDaylight, arrivalDaylight, departureToArrival)
-    let nightDuration = minimumDuration(departureNight, arrivalNight, departureToArrival)
-    
-    print("dayDuration=========\(dayDuration)")
-    print("nightDuration=========\(nightDuration)")
+//    print("totalDaylightHours=========\(totalDaylightHours)")
+//    print("totalNightHours=========\(totalNightHours)")
+    let dayDuration = doubleToHoursMinutesTuple(totalDaylightHours)
+    let nightDuration = doubleToHoursMinutesTuple(totalNightHours)
+//    print("dayDuration=========\(dayDuration)")
+//    print("nightDuration=========\(nightDuration)")
+
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
 }
 
-func minimumDuration(_ durationA: (hours: Int, minutes: Int), _ durationB: (hours: Int, minutes: Int), _ durationC: (hours: Int, minutes: Int)) -> (hours: Int, minutes: Int) {
-    let durations = [durationA, durationB, durationC]
-    
-    // Sort the durations based on total minutes
-    let sortedDurations = durations.sorted { (a, b) in
-        let totalMinutesA = a.hours * 60 + a.minutes
-        let totalMinutesB = b.hours * 60 + b.minutes
-        return totalMinutesA < totalMinutesB
-    }
-    
-    // The first element in sortedDurations will be the minimum duration
-    return sortedDurations[0]
-}
+func doubleToHoursMinutesTuple(_ durationInSeconds: Double) -> (hours: Int, minutes: Int) {
+    let totalMinutes = Int(durationInSeconds) / 60
+    let hours = totalMinutes / 60
+    let minutes = totalMinutes % 60
 
-func processDateStrings(_ dateTimeStringA: String, _ timeStringB: String, _ timeStringC: String) -> (String, String)? {
-    // Create a DateFormatter to parse dateStringA
-    let dateFormatter = DateFormatter()
-    let dateTimeFormatter = DateFormatter()
-    let timeFormatter = DateFormatter()
-    
-//    print("dateTimeStringA=========\(dateTimeStringA)")
-//    print("timeStringB=========\(timeStringB)")
-//    print("timeStringC=========\(timeStringC)")
-    
-    dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    timeFormatter.dateFormat = "HH:mm"
-    
-    // Parse dateStringA into a Date object
-    let dateA = dateTimeFormatter.date(from: dateTimeStringA)
-    // Create a Calendar instance
-    let calendar = Calendar.current
-    // Add dateA with time string B
-    let dateStringA = dateFormatter.string(from: dateA!)
-    let dateTimeStringB = "\(dateStringA) \(timeStringB)"
-    let dateTimeB = dateTimeFormatter.date(from: dateTimeStringB)
-    
-//    print("dateStringA=========\(dateStringA)")
-//    print("dateTimeStringB=========\(dateTimeStringB)")
-//    print("dateTimeB=========\(dateTimeB)")
-    
-    // Add one day to dateA for date string C
-    if let dateC = calendar.date(byAdding: .day, value: 1, to: dateA!) {
-        // Add dateC with time string C
-        let dateStringC = dateFormatter.string(from: dateC)
-        let dateTimeStringC = "\(dateStringC) \(timeStringC)"
-        let dateTimeC = dateTimeFormatter.date(from: dateTimeStringC)
-        
-//        print("dateStringC=========\(dateStringC)")
-//        print("dateTimeStringC=========\(dateTimeStringC)")
-//        print("dateTimeC=========\(dateTimeC)")
-        
-        return (dateTimeFormatter.string(from: dateTimeB!), dateTimeFormatter.string(from: dateTimeC!))
-    }
-    return nil
+    return (hours, minutes)
 }
