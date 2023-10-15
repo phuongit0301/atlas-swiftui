@@ -196,8 +196,8 @@ struct FlightForm: View {
                 let payload = [
                     "dep": tfDep,
                     "arr": tfDest,
-                    "sta": "\(startDateFm) \(startTimeFmSave)",
-                    "std": "\(endDateFm) \(endTimeFmSave)"
+                    "std": "\(startDateFm) \(startTimeFmSave)",
+                    "sta": "\(endDateFm) \(endTimeFmSave)"
                 ]
                 let response = await remoteService.getSectorData(payload)
                 

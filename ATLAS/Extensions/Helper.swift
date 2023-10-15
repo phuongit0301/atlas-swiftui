@@ -71,6 +71,31 @@ func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
     return "\(String(format:"%02d:%02d", components.hour ?? 0, components.minute ?? 0))"
 }
 
+func addDurationToDateTime(_ dateTimeString: String, _ durationString: String) -> String? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+
+    guard let dateTime = dateFormatter.date(from: dateTimeString) else {
+        return nil // Invalid date-time format
+    }
+
+    let durationFormatter = DateFormatter()
+    durationFormatter.dateFormat = "HH:mm"
+    
+    guard let durationComponents = durationFormatter.date(from: durationString) else {
+        return nil // Invalid duration format
+    }
+
+    let calendar = Calendar.current
+    let newDateTime = calendar.date(byAdding: .hour, value: calendar.component(.hour, from: durationComponents), to: dateTime)!
+    let finalDateTime = calendar.date(byAdding: .minute, value: calendar.component(.minute, from: durationComponents), to: newDateTime)!
+    
+    let resultFormatter = DateFormatter()
+    resultFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+
+    return resultFormatter.string(from: finalDateTime)
+}
+
 extension Date {
     func isBetweeen(startDate: Date, endDate: Date) -> Bool {
         let dateFormatter = DateFormatter()
@@ -116,7 +141,7 @@ func convertUTCToLocalTime(timeString: String, timeDiff: String) -> String {
     return ""
 }
 
-func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ departureLocal: String, _ arrivalLocal: String, _ departureSunrise: String, _ departureNextSunrise: String, _ departureSunset: String, _ arrivalSunset: String, _ arrivalSunrise: String, _ arrivalNextSunrise: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ departureSunrise: String, _ departureNextSunrise: String, _ departureSunset: String, _ arrivalSunset: String, _ arrivalSunrise: String, _ arrivalNextSunrise: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
     // Create DateFormatters for parsing the time strings
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -127,10 +152,24 @@ func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ d
     var arrivalNight: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
     var departureToArrival: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
     
+    print("departureSunrise=========\(departureSunrise)")
+    print("departureSunset=========\(departureSunset)")
+    print("arrivalSunrise=========\(arrivalSunrise)")
+    print("arrivalSunset=========\(arrivalSunset)")
+    print("arrivalNextSunrise=========\(arrivalNextSunrise)")
+    print("departureNextSunrise=========\(departureNextSunrise)")
+    
     let (departureSunrise1, departureNextSunrise1) = processDateStrings(departureUTC, departureSunrise, departureNextSunrise)  ?? ("", "")
-    let (departureSunset1, departureNextSunset1) = processDateStrings(departureUTC, departureSunset, departureSunset) ?? ("", "")
+    let (departureSunset1, _) = processDateStrings(departureUTC, departureSunset, departureSunset) ?? ("", "")
     let (arrivalSunrise1, arrivalNextSunrise1) = processDateStrings(arrivalUTC, arrivalSunrise, arrivalNextSunrise) ?? ("", "")
-    let (arrivalSunset1, arrivalNextSunset1) = processDateStrings(arrivalUTC, arrivalSunset, arrivalSunset) ?? ("", "")
+    let (arrivalSunset1, _) = processDateStrings(arrivalUTC, arrivalSunset, arrivalSunset) ?? ("", "")
+
+    print("departureSunrise1=========\(departureSunrise1)")
+    print("departureSunset1=========\(departureSunset1)")
+    print("arrivalSunrise1=========\(arrivalSunrise1)")
+    print("arrivalSunset1=========\(arrivalSunset1)")
+    print("arrivalNextSunrise1=========\(arrivalNextSunrise1)")
+    print("departureNextSunrise1=========\(departureNextSunrise1)")
 
     // Create Calendar instances for working with dates and times
     let calendar = Calendar.current
@@ -164,6 +203,8 @@ func calculateDayNightDuration(_ departureUTC: String, _ arrivalUTC: String, _ d
     let dayDuration = minimumDuration(departureDaylight, arrivalDaylight, departureToArrival)
     let nightDuration = minimumDuration(departureNight, arrivalNight, departureToArrival)
     
+    print("dayDuration=========\(dayDuration)")
+    print("nightDuration=========\(nightDuration)")
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
 }
 
@@ -181,34 +222,45 @@ func minimumDuration(_ durationA: (hours: Int, minutes: Int), _ durationB: (hour
     return sortedDurations[0]
 }
 
-func processDateStrings(_ dateStringA: String, _ timeStringB: String, _ timeStringC: String) -> (String, String)? {
+func processDateStrings(_ dateTimeStringA: String, _ timeStringB: String, _ timeStringC: String) -> (String, String)? {
     // Create a DateFormatter to parse dateStringA
-    let dateFormatterA = DateFormatter()
-    dateFormatterA.dateFormat = "yyyy-MM-dd HH:mm"
+    let dateFormatter = DateFormatter()
+    let dateTimeFormatter = DateFormatter()
+    let timeFormatter = DateFormatter()
+    
+//    print("dateTimeStringA=========\(dateTimeStringA)")
+//    print("timeStringB=========\(timeStringB)")
+//    print("timeStringC=========\(timeStringC)")
+    
+    dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    timeFormatter.dateFormat = "HH:mm"
     
     // Parse dateStringA into a Date object
-    if let dateA = dateFormatterA.date(from: dateStringA) {
-        // Create a Calendar instance
-        let calendar = Calendar.current
-        
-        // Add zero days to dateA for date string B
-//        if let dateForB = dateA {
-            // Create a DateFormatter to format the combined date and time
-            let dateFormatterCombined = DateFormatter()
-            dateFormatterCombined.dateFormat = "yyyy-MM-dd HH:mm"
-            
-            // Format dateForB with timeStringB
-            let combinedDateB = dateFormatterCombined.string(from: dateA)
-            
-            // Add one day to dateA for date string C
-            if let dateForC = calendar.date(byAdding: .day, value: 1, to: dateA) {
-                // Format dateForC with timeStringC
-                let combinedDateC = dateFormatterCombined.string(from: dateForC)
-                
-                return (combinedDateB, combinedDateC)
-            }
-//        }
-    }
+    let dateA = dateTimeFormatter.date(from: dateTimeStringA)
+    // Create a Calendar instance
+    let calendar = Calendar.current
+    // Add dateA with time string B
+    let dateStringA = dateFormatter.string(from: dateA!)
+    let dateTimeStringB = "\(dateStringA) \(timeStringB)"
+    let dateTimeB = dateTimeFormatter.date(from: dateTimeStringB)
     
+//    print("dateStringA=========\(dateStringA)")
+//    print("dateTimeStringB=========\(dateTimeStringB)")
+//    print("dateTimeB=========\(dateTimeB)")
+    
+    // Add one day to dateA for date string C
+    if let dateC = calendar.date(byAdding: .day, value: 1, to: dateA!) {
+        // Add dateC with time string C
+        let dateStringC = dateFormatter.string(from: dateC)
+        let dateTimeStringC = "\(dateStringC) \(timeStringC)"
+        let dateTimeC = dateTimeFormatter.date(from: dateTimeStringC)
+        
+//        print("dateStringC=========\(dateStringC)")
+//        print("dateTimeStringC=========\(dateTimeStringC)")
+//        print("dateTimeC=========\(dateTimeC)")
+        
+        return (dateTimeFormatter.string(from: dateTimeB!), dateTimeFormatter.string(from: dateTimeC!))
+    }
     return nil
 }

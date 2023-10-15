@@ -70,9 +70,17 @@ struct FlightOverviewSectionView: View {
             return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
         }
         
+        var stdUTC: String {
+            return dataFlightOverview?.unwrappedStd ?? ""
+        }
+        
+        var staUTC: String {
+            return dataFlightOverview?.unwrappedSta ?? ""
+        }
+        
         var std: String {
             if showUTC {
-                return dataFlightOverview?.unwrappedStd ?? ""
+                return stdUTC
             } else {
                 return stdLocal
             }
@@ -80,7 +88,7 @@ struct FlightOverviewSectionView: View {
         
         var sta: String {
             if showUTC {
-                return dataFlightOverview?.unwrappedSta ?? ""
+                return staUTC
             } else {
                 return staLocal
             }
@@ -335,7 +343,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(renderTime(std, sta))
+                                    Text(renderTime(stdUTC, staUTC))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
@@ -354,7 +362,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(renderBlockFlightTime(currentDateFlightTime, renderTime(std, sta)))
+                                    Text(renderBlockFlightTime(currentDateFlightTime, renderTime(stdUTC, staUTC)))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
@@ -771,6 +779,7 @@ struct FlightOverviewSectionView: View {
                         dataFlightOverview = coreDataModel.readFlightOverviewById(id)
                     }
                 }
+                self.dayNight = calculateDayNight(stdLocal, staLocal)
             }
             .onChange(of: currentDateChockOn) { value in
                 if dataFlightOverview != nil, let item = dataFlightOverview {
@@ -781,6 +790,7 @@ struct FlightOverviewSectionView: View {
                         dataFlightOverview = coreDataModel.readFlightOverviewById(id)
                     }
                 }
+                self.dayNight = calculateDayNight(stdLocal, staLocal)
             }
             .onChange(of: signatureImage) { _ in
                 if let signatureImage = signatureImage {
@@ -1035,11 +1045,9 @@ struct FlightOverviewSectionView: View {
     }
     
     func calculateEta() -> String {
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         let timeChockOff = dateFormatter.string(from: currentDateChockOff)
-        print("timeChockOff=======\(timeChockOff)")
-        print("currentDateFlightTime=======\(currentDateFlightTime)")
-        return calculateTime(currentDateFlightTime, timeChockOff)
+        return addDurationToDateTime(timeChockOff, currentDateFlightTime) ?? ""
     }
     
     func calculateTotalTime() -> String {
@@ -1065,8 +1073,6 @@ struct FlightOverviewSectionView: View {
             return (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
         }
         
-        print("dataFlightOverview=========\(dataFlightOverview)")
-        print("dataEventSector=========\(dataEventSector)")
-        return calculateDayNightDuration(dataFlightOverview?.unwrappedChockOff ?? "", dataFlightOverview?.unwrappedChockOn ?? "", stdLocal, staLocal, dataEventSector?.depSunriseTime ?? "00:00", dataEventSector?.depNextSunriseTime ?? "00:00", dataEventSector?.depSunsetTime ?? "00:00", dataEventSector?.arrSunsetTime ?? "00:00", dataEventSector?.arrSunriseTime ?? "00:00", dataEventSector?.arrNextSunriseTime ?? "00:00")
+        return calculateDayNightDuration(dataFlightOverview?.unwrappedChockOff ?? "", dataFlightOverview?.unwrappedChockOn ?? "", dataEventSector?.depSunriseTime ?? "00:00", dataEventSector?.depNextSunriseTime ?? "00:00", dataEventSector?.depSunsetTime ?? "00:00", dataEventSector?.arrSunsetTime ?? "00:00", dataEventSector?.arrSunriseTime ?? "00:00", dataEventSector?.arrNextSunriseTime ?? "00:00")
     }
 }
