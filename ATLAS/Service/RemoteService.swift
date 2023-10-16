@@ -126,30 +126,21 @@ class RemoteService: ObservableObject {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        // Convert the request body to JSON data
-        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
-        // Set the request body data
-        request.httpBody = postData
         
         do {
-            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error {
-                    print("Request error: ", error)
-                    completion(false)
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    guard let response = response as? HTTPURLResponse else { return }
-                    if response.statusCode == 200 {
-                        print("Update calendar successfully")
-                        completion(true)
-                    }
-                }
-            }
+            // Convert the request body to JSON data
+            let requestData: Data? = try JSONSerialization.data(withJSONObject: parameters, options: [])
+//            print("json=============\(String(data: requestData!, encoding: .utf8)!)")
+            // Set the request body data
+            request.httpBody = requestData
             
-            dataTask.resume()
+            let (_, response) = try await URLSession.shared.data(for: request)
+            guard let response = response as? HTTPURLResponse else { return }
+            
+            if response.statusCode == 200 {
+                print("Create Profile successfully")
+                completion(true)
+            }
         } catch {
             print("Error: \(error)")
             completion(false)
@@ -196,33 +187,29 @@ class RemoteService: ObservableObject {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_flights_data") else { fatalError("Missing URL") }
         //make request
         var request = URLRequest(url: url)
-        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = postData
-//        print("json=============\(String(data: postData!, encoding: .utf8)!)")
+
         do {
-            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error {
-                    print("Request error: ", error)
-                    return
-                }
-                DispatchQueue.main.async {
-                    guard let response = response as? HTTPURLResponse else { return }
-                    if response.statusCode == 200 {
-                        print("Update calendar successfully")
-                        return
-                    }
-                }
-            }
+            // Convert the request body to JSON data
+            let requestData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+            print("json=============\(String(data: requestData!, encoding: .utf8)!)")
+            // Set the request body data
+            request.httpBody = requestData
             
-            dataTask.resume()
+            let (_, response) = try await URLSession.shared.data(for: request)
+            guard let response = response as? HTTPURLResponse else { return false }
+            
+            if response.statusCode == 200 {
+                print("Update Flight Plan successfully")
+                return true
+            }
         } catch {
             print("Error: \(error)")
             return false
         }
-        
-        return true
+        return false
     }
     
     func getFlightPlanData() async -> IFlightPlanDataModel?  {
@@ -472,7 +459,8 @@ class RemoteService: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = postData
-        
+//        let convertedString = String(data: postData!, encoding: .utf8)
+//        print("convertedString======\(convertedString)")
         do {
             let (_, response) = try await URLSession.shared.data(for: request)
             guard let response = response as? HTTPURLResponse else { return false }

@@ -15,13 +15,13 @@ struct RecencyRowView: View {
     
     @State var currentModel = ""
     
-    @State var currentRequirement = "0000"
+    @State var currentRequirement = "0"
     
-    @State var currentFrequency = "0000"
+    @State var currentFrequency = "0"
     
     @State var currentPeriodDate = ""
     
-    @State var currentCompleted = "0000"
+    @State var currentCompleted = "0"
     
     @State var showModelModal = false
     @State var showRequirementModal = false
@@ -176,7 +176,7 @@ struct RecencyRowView: View {
                 }
             }
             .formSheet(isPresented: $showRequirementModal) {
-                LimitationNumberModalView(isShowing: $showRequirementModal, selectionInOut: $currentRequirement, header: "Requirement", onChange: onChangeRequirement).interactiveDismissDisabled(true)
+                RecencyNumberModalView(isShowing: $showRequirementModal, selectionInOut: $currentRequirement, header: "Requirement", onChange: onChangeRequirement).interactiveDismissDisabled(true)
             }
             .formSheet(isPresented: $showFrequencyModal) {
                 RecencyNumberModalView(isShowing: $showFrequencyModal, selectionInOut: $currentFrequency, header: "Frequency", onChange: onChangeFrequency).interactiveDismissDisabled(true)

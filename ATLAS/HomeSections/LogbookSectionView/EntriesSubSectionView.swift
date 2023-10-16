@@ -211,7 +211,7 @@ struct EntriesSubSectionView: View {
                                                         
                                                         if let fileUrl = dataLogbookEntries[index].signFileUrl, fileUrl != "none" {
                                                             if fileUrl.contains("http") {
-                                                                AsyncImage(url: URL(string: fileUrl)).frame(width: 100, height: 80)
+                                                                AsyncImage(url: URL(string: fileUrl)).scaledToFit().frame(maxWidth: 100, maxHeight: 80)
                                                             } else {
                                                                 if let uiImage = convertBase64ToImage(imageString: fileUrl) {
                                                                     Image(uiImage: uiImage).resizable().scaledToFit().frame(width: 100, height: 80)

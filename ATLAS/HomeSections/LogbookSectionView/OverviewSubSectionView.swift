@@ -364,14 +364,14 @@ struct OverviewSubSectionView: View {
                     }
                 }
                 
-                if coreDataModel.dataRecencyExpiry.count > 0 {
+                if coreDataModel.dataRecencyExperience.count > 0 {
                     let models: [String] = Array(Set(coreDataModel.dataRecencyExperience.map{$0.unwrappedModel}))
                     dataLogbookEntries = dataLogbookEntries + models
                 }
                 
                 if coreDataModel.dataLogbookEntries.count == 0 {
                     if selectedStartDate != "" && selectedEndDate != "" {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         
                         selectedDate = "From \(selectedStartDate) to \(selectedEndDate)"
                         self.dataTable = dataTable
@@ -382,7 +382,7 @@ struct OverviewSubSectionView: View {
                     let (earliestDate, latestDate) = findEarliestAndLatestDates(logbookEntries: coreDataModel.dataLogbookEntries)
                     if let earliestDate = earliestDate, let latestDate = latestDate {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         
                         selectedStartDate = dateFormatter.string(from: earliestDate)
                         selectedEndDate = dateFormatter.string(from: latestDate)
@@ -404,7 +404,7 @@ struct OverviewSubSectionView: View {
                 
                 if coreDataModel.dataLogbookEntries.count == 0 {
                     if selectedStartDate != "" && selectedEndDate != "" {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         
                         selectedDate = "From \(selectedStartDate) to \(selectedEndDate)"
                         self.dataTable = dataTable
@@ -414,7 +414,7 @@ struct OverviewSubSectionView: View {
                 } else {
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -424,7 +424,7 @@ struct OverviewSubSectionView: View {
                 
                 if coreDataModel.dataLogbookEntries.count == 0 {
                     if selectedStartDate != "" && selectedEndDate != "" {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         
                         selectedDate = "From \(selectedStartDate) to \(selectedEndDate)"
                         self.dataTable = dataTable
@@ -434,7 +434,7 @@ struct OverviewSubSectionView: View {
                 } else {
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, selectedAircraft)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: newValue, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -445,7 +445,7 @@ struct OverviewSubSectionView: View {
                 
                 if coreDataModel.dataLogbookEntries.count == 0 {
                     if selectedStartDate != "" && selectedEndDate != "" {
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: [], startDate: dateFormatter.date(from: selectedStartDate)!, endDate: dateFormatter.date(from: selectedEndDate)!, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         
                         selectedDate = "From \(selectedStartDate) to \(selectedEndDate)"
                         self.dataTable = dataTable
@@ -455,7 +455,7 @@ struct OverviewSubSectionView: View {
                 } else {
                     if let earliestDate = dateFormatter.date(from: selectedStartDate), let latestDate = dateFormatter.date(from: selectedEndDate) {
                         let dataArr = filterDataByAircraftType(coreDataModel.dataLogbookEntries, newValue)
-                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience)
+                        let (dataTable, dataTotalTime) = prepareTableData(logbookEntries: dataArr, startDate: earliestDate, endDate: latestDate, dayNightFilter: selectedDayNight, previousTotalTimeData: coreDataModel.dataRecencyExperience, aircraftFilter: selectedAircraft)
                         self.dataTable = dataTable
                         self.dataTotalTime = dataTotalTime
                     }
@@ -506,7 +506,7 @@ struct OverviewSubSectionView: View {
         
     }
     
-    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String, previousTotalTimeData: [RecencyExperienceList]) -> ([ILobookTotalTimeDataResponse], [String: [String: Int]]) {
+    func prepareTableData(logbookEntries: [LogbookEntriesList], startDate: Date, endDate: Date, dayNightFilter: String, previousTotalTimeData: [RecencyExperienceList], aircraftFilter: String) -> ([ILobookTotalTimeDataResponse], [String: [String: Int]]) {
 
         let dateFormatter = DateFormatter()
         let dateFormatter1 = DateFormatter()
@@ -518,63 +518,8 @@ struct OverviewSubSectionView: View {
         var rowTotals: [String: [String: Int]] = [:]
         
         if logbookEntries.count == 0 {
-            print("startDate=======\(startDate)")
-            print("endDate=======\(endDate)")
-            print("previousTotalTimeData=======\(previousTotalTimeData)")
-            print("logbookEntries=======\(logbookEntries)")
-            
             for entry in previousTotalTimeData {
-                if var totals = aircraftTypeTotals[entry.unwrappedModel] {
-                    totals["pic"] = (totals["pic"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
-                    totals["picUs"] = (totals["picUs"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs")
-                    totals["p1"] = (totals["p1"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1")
-                    totals["p2"] = (totals["p2"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2")
-                    totals["instr"] = (totals["instr"] ?? 0) // Add logic for instr if needed
-                    totals["exam"] = (totals["exam"] ?? 0) // Add logic for exam if needed
-                    aircraftTypeTotals[entry.unwrappedModel] = totals
-                } else {
-                    aircraftTypeTotals[entry.unwrappedModel] = [
-                        "pic": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic"),
-                        "picUs": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs"),
-                        "p1": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1"),
-                        "p2": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2"),
-                        "instr": 0, // Add default value for instr if needed
-                        "exam": 0 // Add default value for exam if needed
-                    ]
-                }
-                
-                // Add the previousTotalTimeData to rowTotals as well
-                if var rowTotal = rowTotals["total"] {
-                    rowTotal["pic"] = (rowTotal["pic"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
-                    rowTotal["picUs"] = (rowTotal["picUs"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs")
-                    rowTotal["p1"] = (rowTotal["p1"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1")
-                    rowTotal["p2"] = (rowTotal["p2"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2")
-                    rowTotal["instr"] = (rowTotal["instr"] ?? 0) // Add logic for instr if needed
-                    rowTotal["exam"] = (rowTotal["exam"] ?? 0) // Add logic for exam if needed
-                    rowTotals["total"] = rowTotal
-                } else {
-                    rowTotals["total"] = [
-                        "pic": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic"),
-                        "picUs": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs"),
-                        "p1": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1"),
-                        "p2": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2"),
-                        "instr": 0, // Add default value for instr if needed
-                        "exam": 0 // Add default value for exam if needed
-                    ]
-                }
-            }
-        } else {
-            // Find the earliest date in logbookEntries
-            var earliestLogbookEntryDate: Date? = logbookEntries.map { dateFormatter.date(from: $0.date ?? "")! }.min()
-            
-            print("earliestDate=======\(earliestLogbookEntryDate)")
-            print("startDate=======\(startDate)")
-            print("endDate=======\(endDate)")
-            print("previousTotalTimeData=======\(previousTotalTimeData)")
-            print("logbookEntries=======\(logbookEntries)")
-            // Check if the selected start date is before the earliest date
-            if let earliestDate = earliestLogbookEntryDate, startDate < earliestDate {
-                for entry in previousTotalTimeData {
+                if aircraftFilter == entry.unwrappedModel || aircraftFilter == "" {
                     if var totals = aircraftTypeTotals[entry.unwrappedModel] {
                         totals["pic"] = (totals["pic"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
                         totals["picUs"] = (totals["picUs"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs")
@@ -612,6 +557,55 @@ struct OverviewSubSectionView: View {
                             "instr": 0, // Add default value for instr if needed
                             "exam": 0 // Add default value for exam if needed
                         ]
+                    }
+                }
+            }
+        } else {
+            // Find the earliest date in logbookEntries
+            var earliestLogbookEntryDate: Date? = logbookEntries.map { dateFormatter.date(from: $0.date ?? "")! }.min()
+
+            // Check if the selected start date is before the earliest date
+            if let earliestDate = earliestLogbookEntryDate, startDate < earliestDate {
+                for entry in previousTotalTimeData {
+                    if aircraftFilter == entry.unwrappedModel || aircraftFilter == "" {
+                        if var totals = aircraftTypeTotals[entry.unwrappedModel] {
+                            totals["pic"] = (totals["pic"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
+                            totals["picUs"] = (totals["picUs"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs")
+                            totals["p1"] = (totals["p1"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1")
+                            totals["p2"] = (totals["p2"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2")
+                            totals["instr"] = (totals["instr"] ?? 0) // Add logic for instr if needed
+                            totals["exam"] = (totals["exam"] ?? 0) // Add logic for exam if needed
+                            aircraftTypeTotals[entry.unwrappedModel] = totals
+                        } else {
+                            aircraftTypeTotals[entry.unwrappedModel] = [
+                                "pic": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic"),
+                                "picUs": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs"),
+                                "p1": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1"),
+                                "p2": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2"),
+                                "instr": 0, // Add default value for instr if needed
+                                "exam": 0 // Add default value for exam if needed
+                            ]
+                        }
+                        
+                        // Add the previousTotalTimeData to rowTotals as well
+                        if var rowTotal = rowTotals["total"] {
+                            rowTotal["pic"] = (rowTotal["pic"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic")
+                            rowTotal["picUs"] = (rowTotal["picUs"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs")
+                            rowTotal["p1"] = (rowTotal["p1"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1")
+                            rowTotal["p2"] = (rowTotal["p2"] ?? 0) + calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2")
+                            rowTotal["instr"] = (rowTotal["instr"] ?? 0) // Add logic for instr if needed
+                            rowTotal["exam"] = (rowTotal["exam"] ?? 0) // Add logic for exam if needed
+                            rowTotals["total"] = rowTotal
+                        } else {
+                            rowTotals["total"] = [
+                                "pic": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "pic"),
+                                "picUs": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "picUs"),
+                                "p1": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p1"),
+                                "p2": calculateTotalTimePrevious(entry, dayNightFilter: dayNightFilter, timeKey: "p2"),
+                                "instr": 0, // Add default value for instr if needed
+                                "exam": 0 // Add default value for exam if needed
+                            ]
+                        }
                     }
                 }
             }

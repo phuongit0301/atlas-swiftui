@@ -16,6 +16,7 @@ struct RecencySectionFormView: View {
     @State private var itemList = [IProvideRecency]()
     
     @State var isEdit: Bool = false
+    @State var isLoading = false
     @State var isChanged = 0
     
     var body: some View {
@@ -43,7 +44,7 @@ struct RecencySectionFormView: View {
                             }
                         }) {
                             Text("Done").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-                        }
+                        }.disabled(isLoading)
                     }.padding()
                         .background(.white)
                         .overlay(Rectangle().inset(by: 0.17).stroke(.black.opacity(0.3), lineWidth: 0.33))
@@ -54,7 +55,7 @@ struct RecencySectionFormView: View {
                             Text("Update your recencies").font(.system(size: 20, weight: .regular)).foregroundColor(Color.black)
                             Spacer()
                             Button(action: {
-                                let obj = IProvideRecency(type: "", modelName: "", requirement: "", frequency: "", periodStart: "", completed: "", isNew: true)
+                                let obj = IProvideRecency(remoteId: UUID().uuidString, type: "", modelName: "", requirement: "", frequency: "", periodStart: "", completed: "", isNew: true)
                                 
                                 itemList.append(obj)
                             }, label: {
@@ -75,7 +76,7 @@ struct RecencySectionFormView: View {
         }.onAppear {
             if coreDataModel.dataRecency.count > 0 {
                 for item in coreDataModel.dataRecency {
-                    let obj = IProvideRecency(type: item.unwrappedType, modelName: item.unwrappedModel, requirement: item.unwrappedRequirement, frequency: item.unwrappedLimit, periodStart: item.unwrappedPeriodStart, completed: item.unwrappedStatus)
+                    let obj = IProvideRecency(remoteId: item.unwrappedRemoteId, type: item.unwrappedType, modelName: item.unwrappedModel, requirement: item.unwrappedRequirement, frequency: item.unwrappedLimit, periodStart: item.unwrappedPeriodStart, completed: item.unwrappedStatus)
                     
                     itemList.append(obj)
                 }
@@ -83,7 +84,7 @@ struct RecencySectionFormView: View {
         }.onChange(of: isChanged) {_ in
             if coreDataModel.dataRecency.count > 0 {
                 for item in coreDataModel.dataRecency {
-                    let obj = IProvideRecency(type: item.unwrappedType, modelName: item.unwrappedModel, requirement: item.unwrappedRequirement, frequency: item.unwrappedLimit, periodStart: item.unwrappedPeriodStart, completed: item.unwrappedStatus)
+                    let obj = IProvideRecency(remoteId: item.unwrappedRemoteId, type: item.unwrappedType, modelName: item.unwrappedModel, requirement: item.unwrappedRequirement, frequency: item.unwrappedLimit, periodStart: item.unwrappedPeriodStart, completed: item.unwrappedStatus)
                     
                     itemList.append(obj)
                 }
@@ -92,38 +93,41 @@ struct RecencySectionFormView: View {
     }
     
     func update() async {
+        isLoading = true
         var payloadRecency = [Any]()
         
         for item in itemList {
             payloadRecency.append([
-                "id": item.isNew ? UUID().uuidString : item.id,
-                "type": item.type,
-                "model": item.modelName,
-                "requirement": item.requirement,
-                "frequency": item.frequency,
-                "periodStart": item.periodStart,
-                "completed": item.completed
+                "id": item.remoteId,
+                "recency_type": item.type,
+                "recency_aircraft_model": item.modelName,
+                "recency_requirement": item.requirement,
+                "recency_limit": item.frequency,
+                "recency_period_start": item.periodStart,
+                "recency_status": item.completed
             ] as [String : Any])
         }
         
         var payloadVisa: [Any] = []
         for item in coreDataModel.dataRecencyDocument {
-            payloadVisa.append([
-                "expiryDate": item.unwrappedExpiredDate,
-                "type": item.unwrappedType
-            ])
+            if item.unwrappedType.lowercased().contains("visa") {
+                payloadVisa.append([
+                    "expiry": item.unwrappedExpiredDate,
+                    "visa": item.unwrappedType.lowercased().replacingOccurrences(of: "visa", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+                ])
+            }
         }
         
         var payloadExpiry: [Any] = []
-        payloadExpiry.append(["id": "6e8456d1-6c70-4a3d-8c82-09e8398b091e",
-                              "medical": "2024-02-29",
-                              "sep": "2024-02-29",
-                              "base_check": "2024-02-29",
-                              "line_check": "2024-02-29",
-                              "instructor_rating": "2024-02-29",
-                              "examiner_rating": "2024-02-29",
-                              "passport": "2024-02-29"
-                          ])
+        for item in coreDataModel.dataRecencyDocument {
+            var temp = [String: Any]()
+            let key = item.unwrappedType.lowercased().replacingOccurrences(of: " ", with:
+            "_")
+            
+            temp[key] = item.unwrappedExpiredDate
+            
+            payloadExpiry.append(temp)
+        }
         
         let payload: [String: Any] = [
             "user_id": userID,
@@ -132,45 +136,19 @@ struct RecencySectionFormView: View {
             "visa_data": payloadVisa
         ]
         
+        print("payload=======\(payload)")
         await remoteService.postRecencyData(payload)
-        
-        persistenceController.container.viewContext.performAndWait {
-            if (itemList.count > 0) {
-                for item in itemList {
-                    if item.isNew {
-                        let newObj = RecencyList(context: persistenceController.container.viewContext)
-                        newObj.id = UUID()
-                        newObj.limit = item.frequency
-                        newObj.requirement = item.requirement
-                        newObj.periodStart = item.periodStart
-                        newObj.type = item.type
-                        newObj.model = item.modelName
-                        newObj.status = item.completed
-                        newObj.text = "\(item.requirement) in \(item.frequency) days"
-                        newObj.percentage = "\(((Double(item.completed) ?? 0) / (Double(item.requirement) ?? 0)))"
-                        newObj.blueText = "\(item.completed)/\(item.requirement) in \(item.frequency) days"
-                        coreDataModel.save()
-                    } else {
-                        if let currentIndex = coreDataModel.dataRecency.firstIndex(where: {$0.id == item.id}) {
-                            coreDataModel.dataRecency[currentIndex].limit = item.frequency
-                            coreDataModel.dataRecency[currentIndex].requirement = item.requirement
-                            coreDataModel.dataRecency[currentIndex].periodStart = item.periodStart
-                            coreDataModel.dataRecency[currentIndex].type = item.type
-                            coreDataModel.dataRecency[currentIndex].model = item.modelName
-                            coreDataModel.dataRecency[currentIndex].status = item.completed
-                            coreDataModel.dataRecency[currentIndex].text = "\(item.requirement) in \(item.frequency) days"
-                            coreDataModel.dataRecency[currentIndex].percentage = "0"
-                            coreDataModel.dataRecency[currentIndex].blueText = "\(item.completed)/\(item.requirement) in \(item.frequency) days"
-                            coreDataModel.save()
-                        }
-                        
-                    }
-                }
-            }
+        let response = await remoteService.getRecencyData()
 
-            isChanged += 1
-            itemList = []
-            coreDataModel.dataRecency = coreDataModel.readDataRecency()
+        if let recencyData = response?.recency_data, recencyData.count > 0 {
+            await coreDataModel.deleteAllRecencyList()
+            coreDataModel.dataRecency = []
+            coreDataModel.initDataRecency(recencyData)
         }
+
+        isChanged += 1
+        itemList = []
+        isLoading = false
+        coreDataModel.dataRecency = coreDataModel.readDataRecency()
     }
 }

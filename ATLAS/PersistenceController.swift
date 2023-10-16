@@ -359,6 +359,7 @@ class CoreDataModelState: ObservableObject {
     @MainActor
     func checkAndSyncOrPostData() async {
         await withTaskGroup(of: Void.self) { group in
+            self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyDocument, monthsAhead: self.monthsAhead)
             self.dataEvents = self.readEvents()
             self.dataEventDateRange = self.readEventDateRange()
             self.dataLogbookEntries = readDataLogbookEntries()
@@ -1010,7 +1011,9 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 let payload: [String: Any] = [
-                    "status": "completed",
+                    "user_id": userID,
+                    "flight_number": dataSelected?.callsign ?? "",
+                    "status": selectedEvent?.flightStatus ?? FlightStatusEnum.UPCOMING.rawValue,
                     "flight_overview": payloadOverview,
                     "route": payloadRoute,
                     "colour_airport": payloadColorMap,
@@ -1024,7 +1027,6 @@ class CoreDataModelState: ObservableObject {
                 arrPayload.append(payload)
             }
                     print("=======post flight plan payload===== \(arrPayload)")
-//            return true
             return await remoteService.postFlightPlanDataV3(arrPayload)
         }
         return true
@@ -1266,7 +1268,9 @@ class CoreDataModelState: ObservableObject {
         }
         
         let payload: [String: Any] = [
-            "status": "completed",
+            "user_id": userID,
+            "flight_number": dataSelected?.callsign ?? "",
+            "status": selectedEvent?.flightStatus ?? FlightStatusEnum.UPCOMING.rawValue,
             "flight_overview": payloadOverview,
             "route": payloadRoute,
             "colour_airport": payloadColorMap,
@@ -2134,6 +2138,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.text = item.recency_text
                 newObj.percentage = item.recency_percentage
                 newObj.blueText = item.recency_blue_text
+                newObj.remoteId = item.id
                 
                 service.container.viewContext.performAndWait {
                     do {
@@ -3297,6 +3302,8 @@ class CoreDataModelState: ObservableObject {
         if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList] {
             if(data.count > 0) {
                 data.forEach {item in
+                    print("target=========\(target)")
+                    print("item.type=========\(item.type)")
                     if item.type == target {
                         temp.append(item)
                     }
@@ -4810,6 +4817,30 @@ class CoreDataModelState: ObservableObject {
     func deleteAllTrackFlown() async {
         let fetchRequest: NSFetchRequest<FuelTrackFlownList>
         fetchRequest = FuelTrackFlownList.fetchRequest()
+        do {
+            // Perform the fetch request
+            let objects = try service.container.viewContext.fetch(fetchRequest)
+            
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    
+                    // Save the deletions to the persistent store
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Proj Taxi : \(error)")
+                }
+            }
+        } catch {
+            print("Failed to Delete Proj Taxi: \(error)")
+        }
+    }
+    
+    func deleteAllRecencyList() async {
+        let fetchRequest: NSFetchRequest<RecencyList>
+        fetchRequest = RecencyList.fetchRequest()
         do {
             // Perform the fetch request
             let objects = try service.container.viewContext.fetch(fetchRequest)

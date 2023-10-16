@@ -38,7 +38,7 @@ struct MapViewModalTrackFlown: View {
     @State var selectedRouteFlights3 = true
     @State var selectedRouteFlights2 = true
     @State var selectedRouteFlights1 = true
-    @State var selectedWaypoint = true
+    @State var selectedWaypoint = false
     
     @State private var isLoading = true
     @State private var selectedTraffic = false

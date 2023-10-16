@@ -569,6 +569,7 @@
         <attribute name="model" optional="YES" attributeType="String"/>
         <attribute name="percentage" optional="YES" attributeType="String"/>
         <attribute name="periodStart" optional="YES" attributeType="String"/>
+        <attribute name="remoteId" optional="YES" attributeType="String"/>
         <attribute name="requirement" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ArrivalNoteItemList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
     @State var header: String = "" // "Aircraft Status"
@@ -131,12 +131,12 @@ struct ArrivalNoteItemList: View {
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button(role: .destructive) {
-                                        if let found = viewModel.arrivalRefArray.first(where: {$0.parentId == itemList[index].id}) {
-                                            viewModel.delete(found)
+                                        if let found = coreDataModel.arrivalRefArray.first(where: {$0.parentId == itemList[index].id}) {
+                                            coreDataModel.delete(found)
                                         }
                                         
-                                        viewModel.delete(itemList[index])
-                                        viewModel.save()
+                                        coreDataModel.delete(itemList[index])
+                                        coreDataModel.save()
                                         resetData()
                                     } label: {
                                         Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
@@ -157,9 +157,6 @@ struct ArrivalNoteItemList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     
@@ -179,34 +176,37 @@ struct ArrivalNoteItemList: View {
     }
     
     private func addQR(_ index: Int) {
-        let data = itemList[index]
-        let item = NoteList(context: persistenceController.container.viewContext)
-        item.id = UUID()
-        item.name = data.name
-        item.isDefault = false
-        item.createdAt = dateFormatter.string(from: Date())
-        item.canDelete = true
-        item.fromParent = true
-        item.type = "arrivalref"
-        item.includeCrew = data.includeCrew
-        item.parentId = data.id
-        
-        if let tags = data.tags {
-            item.addToTags(tags)
+        if let eventList = coreDataModel.selectedEvent {
+            let data = itemList[index]
+            let item = NoteList(context: persistenceController.container.viewContext)
+            item.id = UUID()
+            item.name = data.name
+            item.isDefault = false
+            item.createdAt = dateFormatter.string(from: Date())
+            item.canDelete = true
+            item.fromParent = true
+            item.type = "arrivalref"
+            item.includeCrew = data.includeCrew
+            item.parentId = data.id
+            
+            if let tags = data.tags {
+                item.addToTags(tags)
+            }
+            
+            eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
+            data.isDefault = true
+            coreDataModel.save()
+            resetData()
         }
-        
-        data.isDefault = true
-        viewModel.save()
-        resetData()
     }
     
     private func removeQR(_ index: Int) {
         itemList[index].isDefault = false
 
-        if let found = viewModel.arrivalRefArray.first(where: {$0.parentId == viewModel.arrivalArray[index].id}) {
-            viewModel.delete(found)
+        if let found = coreDataModel.arrivalRefArray.first(where: {$0.parentId == coreDataModel.arrivalArray[index].id}) {
+            coreDataModel.delete(found)
         }
-        viewModel.save()
+        coreDataModel.save()
         resetData()
     }
 }

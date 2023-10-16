@@ -185,6 +185,7 @@ struct OnboardingView: View {
                                 ]
                                 
                                 print("=======start post======")
+                                print("=======payload======\(payload)")
                                 await remoteService.postUserData(payload, completion: { success in
                                     print("=======success======\(success)")
                                     isLoading = false

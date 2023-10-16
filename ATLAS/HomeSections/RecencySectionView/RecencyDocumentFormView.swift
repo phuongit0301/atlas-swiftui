@@ -17,10 +17,13 @@ struct IDocument: Identifiable, Hashable {
 }
 
 struct RecencyDocumentFormView: View {
+    @AppStorage("uid") var userID: String = ""
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var remoteService: RemoteService
     
     @Binding var isShowing: Bool
+    @State var isLoading: Bool = false
     @State var itemList: [IDocument] = []
     
     let dateFormatter = DateFormatter()
@@ -43,11 +46,13 @@ struct RecencyDocumentFormView: View {
                         Spacer()
                         
                         Button(action: {
-                            create()
-                            self.isShowing.toggle()
+                            Task {
+                                await create()
+                            }
                         }) {
                             Text("Done").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.theme.azure)
-                        }
+                        }.buttonStyle(PlainButtonStyle())
+                            .disabled(isLoading)
                     }.padding()
                         .background(.white)
                         .overlay(Rectangle().inset(by: 0.17).stroke(.black.opacity(0.3), lineWidth: 0.33))
@@ -58,7 +63,7 @@ struct RecencyDocumentFormView: View {
                             Text("Update your documents").font(.system(size: 20, weight: .regular)).foregroundColor(Color.black)
                             Spacer()
                             Button(action: {
-                                dateFormatter.dateFormat = "yyyy-MM-dd HHmm"
+                                dateFormatter.dateFormat = "yyyy-MM-dd"
                                 itemList.append(IDocument(type: "", expiredDate: dateFormatter.string(from: Date()), isNew: true, isDeleted: false))
                             }, label: {
                                 Text("Add Item").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -81,7 +86,40 @@ struct RecencyDocumentFormView: View {
         }
     }
     
-    func create() {
+    func create() async {
+        isLoading = true
+        coreDataModel.dataRecencyDocument = coreDataModel.readDataRecencyDocument()
+        
+        let payloadRecency = [Any]()
+        
+        let payloadVisa: [Any] = []
+        
+        var payloadExpiry: [String: Any] = [:]
+                
+        for item in itemList {
+            let key = item.type.lowercased().replacingOccurrences(of: " ", with:
+            "_")
+            
+            payloadExpiry.updateValue(item.expiredDate, forKey: key)
+        }
+        
+        for item in coreDataModel.dataRecencyDocument {
+            let key = item.unwrappedType.lowercased().replacingOccurrences(of: " ", with:
+            "_")
+            
+            payloadExpiry.updateValue(item.unwrappedExpiredDate, forKey: key)
+        }
+        
+        let payload: [String: Any] = [
+            "user_id": userID,
+            "recency_data": payloadRecency,
+            "expiry_data": [payloadExpiry],
+            "visa_data": payloadVisa
+        ]
+        
+        print("payload=======\(payload)")
+        await remoteService.postRecencyData(payload)
+        
         persistenceController.container.viewContext.performAndWait {
             if (itemList.count > 0) {
                 for item in itemList {
@@ -127,7 +165,11 @@ struct RecencyDocumentFormView: View {
                 }
             }
             
+            isLoading = false
+            isShowing.toggle()
+            coreDataModel.dataRecency = coreDataModel.readDataRecency()
             coreDataModel.dataRecencyDocument = coreDataModel.readDataRecencyDocument()
+            coreDataModel.dataExpiringSoon = coreDataModel.extractExpiringDocuments(expiryData: coreDataModel.dataRecencyDocument, monthsAhead: coreDataModel.monthsAhead)
         }
     }
 }

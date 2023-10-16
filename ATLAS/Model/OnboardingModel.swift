@@ -86,6 +86,7 @@ struct IProvideLimitation: Identifiable, Hashable {
 
 struct IProvideRecency: Identifiable, Hashable {
     var id = UUID()
+    var remoteId: String
     var type: String
     var modelName: String
     var requirement: String

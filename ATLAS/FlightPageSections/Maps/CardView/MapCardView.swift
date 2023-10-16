@@ -21,6 +21,16 @@ struct CardTextField: View {
     }
 }
 
+struct MapTrafficCardView: View {
+    var title: String?
+    
+    var body: some View {
+        HStack {
+            Text(title ?? "").font(.system(size: 15).weight(.semibold)).foregroundColor(.black)
+        }
+    }
+}
+
 struct MapCardView: View {
     var payload: AabbaMapList?
     var parentAabbaIndex: Int
@@ -36,14 +46,14 @@ struct MapCardView: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            //todo
-                        }, label: {
-                            HStack {
-                                Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold))
-                                    .foregroundColor(Color.theme.azure)
-                            }.contentShape(Rectangle())
-                        })
+//                        Button(action: {
+//                            //todo
+//                        }, label: {
+//                            HStack {
+//                                Text("Done").font(Font.custom("SF Pro", size: 15).weight(.semibold))
+//                                    .foregroundColor(Color.theme.azure)
+//                            }.contentShape(Rectangle())
+//                        })
                     }
                     
                 }.background(Color.white.opacity(0.75))

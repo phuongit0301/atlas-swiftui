@@ -169,9 +169,6 @@ struct DepartureNoteItemRelevantList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

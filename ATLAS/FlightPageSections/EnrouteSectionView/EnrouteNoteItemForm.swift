@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct EnrouteNoteItemForm: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
     @Binding var tagList: [TagList]
@@ -24,6 +24,7 @@ struct EnrouteNoteItemForm: View {
     @State private var animate = false
     
     var resetData: () -> Void
+    var isCreateFromClipboard: Bool?
     let dateFormatter = DateFormatter()
     
     var body: some View {
@@ -155,28 +156,45 @@ struct EnrouteNoteItemForm: View {
     }
     
     func save() {
-        let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        if !name.isEmpty {
-            let item = NoteList(context: persistenceController.container.viewContext)
-            item.id = UUID()
-            item.name = name
-            item.isDefault = false
-            item.createdAt = dateFormatter.string(from: Date())
-            item.canDelete = true
-            item.fromParent = false
-            item.type = type
-            item.includeCrew = isIncludeBriefing
-            item.addToTags(NSSet(array: tagListSelected))
-
-            viewModel.save()
-
-            currentIndex = -1
-            textNote = ""
-            tagListSelected = []
-            self.resetData()
-            self.showSheet.toggle()
+        if let eventList = coreDataModel.selectedEvent {
+            let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            if !name.isEmpty {
+                let item = NoteList(context: persistenceController.container.viewContext)
+                item.id = UUID()
+                item.name = name
+                item.isDefault = (isCreateFromClipboard ?? false) ? true : false
+                item.createdAt = dateFormatter.string(from: Date())
+                item.canDelete = true
+                item.fromParent = false
+                item.type = type
+                item.includeCrew = isIncludeBriefing
+                item.addToTags(NSSet(array: tagListSelected))
+                
+                if isCreateFromClipboard != nil {
+                    let child = NoteList(context: persistenceController.container.viewContext)
+                    child.id = UUID()
+                    child.name = name
+                    child.isDefault = true
+                    child.createdAt = dateFormatter.string(from: Date())
+                    child.canDelete = true
+                    child.fromParent = true
+                    child.type = "\(type)ref"
+                    child.includeCrew = isIncludeBriefing
+                    child.parentId = item.id
+                    child.addToTags(NSSet(array: tagListSelected))
+                }
+                
+                eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
+                coreDataModel.save()
+                
+                currentIndex = -1
+                textNote = ""
+                tagListSelected = []
+                self.resetData()
+                self.showSheet.toggle()
+            }
         }
     }
     
@@ -188,7 +206,7 @@ struct EnrouteNoteItemForm: View {
             itemList[currentIndex].tags = NSSet(array: tagListSelected)
             itemList[currentIndex].includeCrew = isIncludeBriefing
             
-            viewModel.save()
+            coreDataModel.save()
             
             currentIndex = -1
             textNote = ""

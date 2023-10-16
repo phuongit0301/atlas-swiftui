@@ -167,9 +167,6 @@ struct ArrivalNoteItemRelevantList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

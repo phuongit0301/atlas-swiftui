@@ -72,9 +72,17 @@ struct FlightOverviewSectionView: View {
             return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
         }
         
+        var stdUTC: String {
+            return dataFlightOverview?.unwrappedStd ?? ""
+        }
+        
+        var staUTC: String {
+            return dataFlightOverview?.unwrappedSta ?? ""
+        }
+
         var std: String {
             if showUTC {
-                return dataFlightOverview?.unwrappedStd ?? ""
+                return stdUTC
             } else {
                 return stdLocal
             }
@@ -82,7 +90,7 @@ struct FlightOverviewSectionView: View {
         
         var sta: String {
             if showUTC {
-                return dataFlightOverview?.unwrappedSta ?? ""
+                return staUTC
             } else {
                 return staLocal
             }
@@ -95,6 +103,7 @@ struct FlightOverviewSectionView: View {
                 return convertUTCToLocalTime(timeString: calculateEta(), timeDiff: dataEventSector?.unwrappedArrTimeDiff ?? "")
             }
         }
+
         
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
@@ -337,7 +346,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(renderTime(std, sta))
+                                    Text(renderTime(stdUTC, staUTC))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
@@ -356,7 +365,7 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(renderBlockFlightTime(currentDateFlightTime, renderTime(std, sta)))
+                                    Text(renderBlockFlightTime(currentDateFlightTime, renderTime(stdUTC, staUTC)))
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
                                 }.frame(height: 44)
@@ -564,7 +573,7 @@ struct FlightOverviewSectionView: View {
                                 HStack(alignment: .top, spacing: 0) {
                                     VStack(alignment: .leading) {
                                         HStack(alignment: .center) {
-                                            SecureField("Enter Password",text: $tfPassword)
+                                            TextField("Enter Password", text: $tfPassword)
                                                 .font(.system(size: 15, weight: .regular))
                                                 .foregroundStyle(Color.black)
                                                 .onSubmit {
@@ -1094,8 +1103,7 @@ struct FlightOverviewSectionView: View {
         let minuteString = String(format: "%02d", minute)
         return "\(hourString):\(minuteString)"
     }
-    
-    
+        
     func calculateDayNight() -> (day: String, night: String) {
         if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" {
             return (day: "00:00", night: "00:00")
@@ -1111,11 +1119,11 @@ struct FlightOverviewSectionView: View {
             let minuteString = String(format: "%02d", minutes)
             return "\(hourString):\(minuteString)"
         }
-        
+
         func calculateNightTime(dayTime: (hours: Int, minutes: Int), duration: String) -> String {
             // Convert dayTime to minutes
             let dayTimeMinutes = dayTime.hours * 60 + dayTime.minutes
-            
+
             // Parse the duration string to get hours and minutes
             let durationComponents = duration.components(separatedBy: ":")
             if durationComponents.count == 2,
@@ -1128,11 +1136,11 @@ struct FlightOverviewSectionView: View {
                 // Convert totalMinutes back to hours and minutes
                 let nightTimeHours = totalMinutes / 60
                 let nightTimeMinutes = totalMinutes % 60
-                
+
                 // Format nightTime as "HH:mm"
                 return formatTime(hours: nightTimeHours, minutes: nightTimeMinutes)
             }
-            
+
             // Return a default value or handle an invalid duration string
             return "00:00"
         }

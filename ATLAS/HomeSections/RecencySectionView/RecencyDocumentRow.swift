@@ -67,7 +67,7 @@ struct RecencyDocumentRow: View {
                 
                 HStack {
                     HStack {
-                        DatePicker("", selection: $currentExpiredDate, displayedComponents: [.date, .hourAndMinute]).labelsHidden().environment(\.locale, Locale(identifier: "en_GB"))
+                        DatePicker("", selection: $currentExpiredDate, displayedComponents: [.date]).labelsHidden().environment(\.locale, Locale(identifier: "en_GB"))
                     }.frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
                     
                     HStack {
@@ -86,14 +86,14 @@ struct RecencyDocumentRow: View {
                     .cornerRadius(8)
                     .padding(.horizontal)
                     .onChange(of: currentExpiredDate) { newValue in
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
                         itemList[currentIndex].expiredDate = dateFormatter.string(from: newValue)
                     }
                     .onChange(of: currentDocumentType) { newValue in
                         itemList[currentIndex].type = newValue
                     }
                     .onAppear {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
                         if let selectedIndex = itemList.firstIndex(of: item) {
                             currentIndex = selectedIndex
 //                            tfDocumentType = itemList[currentIndex].type

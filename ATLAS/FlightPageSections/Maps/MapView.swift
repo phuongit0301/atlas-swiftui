@@ -33,8 +33,8 @@ struct MapViewModal: View {
     @State var selectedWeather = true
     @State var selectedAddRoute = false
     @State var selectedAABBA = true
-    @State var selectedWaypoint = true
-    @State var selectedAirport = true
+    @State var selectedWaypoint = false
+    @State var selectedAirport = false
     
     @State private var showPopoverWeather = false
     @State private var showPopoverTurbulence = false
@@ -78,10 +78,11 @@ struct MapViewModal: View {
                                 self.showLayer = false
                             }, label: {
                                 HStack {
-                                    Text("SIN - BER")
-                                        .font(.system(size: 17, weight: .semibold)).foregroundColor(showRoute ? Color.white : Color.black)
-                                        .padding(.vertical, 8)
-                                        .padding(.horizontal)
+                                    if let dep = coreDataModel.selectedEvent?.dep, let dest = coreDataModel.selectedEvent?.dest {
+                                        Text("\(dep)-\(dest)").font(.system(size: 17, weight: .semibold)).foregroundColor(showRoute ? Color.white : Color.black)
+                                            .padding(.vertical, 8)
+                                            .padding(.horizontal)
+                                    }
                                 }.contentShape(Rectangle())
                             }).frame(alignment: .center)
                                 .background(showRoute ? Color.theme.azure : Color.white)
@@ -666,10 +667,16 @@ struct MapViewModal: View {
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
             var defaultImage = UIImage(named: "icon_airplane_orange")
             
-            if item.colour == "unfilled" {
+            // Todo: get orange and blue icons
+            if item.colour == "orange" {
+                defaultImage = UIImage(named: "icon_airplane_orange")
+            } else if item.colour == "blue" {
+                defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
+            } else {
                 defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
             }
-            let annotation = CustomTrafficAnnotation(coordinate: coord, title: item.unwrappedCallsign, subtitle: item.trueTrack, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
+            
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: "", flightNum: item.unwrappedCallsign, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
             mapView.addAnnotation(annotation)
         }
     }
@@ -795,8 +802,13 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return annotationView
         } else if annotation is CustomTrafficAnnotation {
             let annotationView = CustomTrafficAnnotationView(annotation: annotation, reuseIdentifier: "CustomTrafficAnnotationView")
+            let annotationData = annotation as? CustomTrafficAnnotation
+            let customView = MapTrafficCardView(title: annotationData?.flightNum as? String)
+            let callout = MapCalloutView(rootView: AnyView(customView))
+
+            annotationView.detailCalloutAccessoryView = callout
             annotationView.canShowCallout = true
-            annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
+            
             return annotationView
         } else if annotation is CustomAabbaAnnotation {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")
@@ -880,20 +892,22 @@ class Coordinator: NSObject, MKMapViewDelegate {
     // For selected annotation
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Calculate the angle by which the annotation view is rotated
-        if view is CustomTrafficAnnotationView {
-            let annotation = view.annotation as? CustomTrafficAnnotation
-            
-//            let calloutOffset = CGPoint(x: view.frame.midX, y: view.frame.midY)
-            // Calculate the angle by which the annotation view is rotated
-            let rotationAngle = annotation?.rotationAngle
-            // Apply the inverse rotation to the callout view
-            let calloutOffset = CGPoint(x: -sin(rotationAngle!) * view.frame.midX, y: -cos(rotationAngle!) * view.frame.midY)
-                                                    
-            view.calloutOffset = calloutOffset
-            view.detailCalloutAccessoryView?.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
-            // Adjust the transform of the callout view to cancel the annotation rotation
-//            view.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
-        } else if view is CustomAabbaAnnotationView {
+//        if view is CustomTrafficAnnotationView {
+//            let annotation = view.annotation as? CustomTrafficAnnotation
+//
+////            let calloutOffset = CGPoint(x: view.frame.midX, y: view.frame.midY)
+//            // Calculate the angle by which the annotation view is rotated
+//            let rotationAngle = annotation?.rotationAngle
+//            // Apply the inverse rotation to the callout view
+//            let calloutOffset = CGPoint(x: -sin(rotationAngle!) * view.frame.midX, y: -cos(rotationAngle!) * view.frame.midY)
+//
+//            view.calloutOffset = calloutOffset
+//            view.detailCalloutAccessoryView?.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
+//            // Adjust the transform of the callout view to cancel the annotation rotation
+////            view.transform = CGAffineTransform(rotationAngle: CGFloat(90 * 3.14 / 180))
+//        } else
+        
+        if view is CustomAabbaAnnotationView {
             let annotationView = view.annotation as? CustomAabbaAnnotation
             annotationView?.setValue("", forKey: "title")
             

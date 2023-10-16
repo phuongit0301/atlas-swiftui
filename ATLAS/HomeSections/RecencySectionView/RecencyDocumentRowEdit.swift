@@ -36,12 +36,12 @@ struct RecencyDocumentRowEdit: View {
             }.frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
             
             HStack {
-                DatePicker("", selection: $currentExpiredDate, displayedComponents: [.date, .hourAndMinute]).labelsHidden().environment(\.locale, Locale(identifier: "en_GB"))
+                DatePicker("", selection: $currentExpiredDate, displayedComponents: [.date]).labelsHidden().environment(\.locale, Locale(identifier: "en_GB"))
                 Spacer()
             }.frame(width: calculateWidthSummary(width - 32, 2), alignment: .leading)
         }.frame(height: 44)
         .onAppear {
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             if let selectedIndex = itemList.firstIndex(of: item) {
                 currentIndex = selectedIndex
                 tfDocumentType = itemList[currentIndex].unwrappedType
@@ -52,7 +52,7 @@ struct RecencyDocumentRowEdit: View {
             }
         }
         .onChange(of: currentExpiredDate) { newValue in
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             itemList[currentIndex].expiredDate = dateFormatter.string(from: newValue)
             coreDataModel.save()
         }

@@ -2,7 +2,7 @@
 //  RecencyList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 14/10/2023.
+//  Created by phuong phan on 16/10/2023.
 //
 //
 
@@ -26,6 +26,7 @@ extension RecencyList {
     @NSManaged public var text: String?
     @NSManaged public var percentage: String?
     @NSManaged public var blueText: String?
+    @NSManaged public var remoteId: String?
     
     public var unwrappedLimit: String {
         limit ?? ""
@@ -61,6 +62,10 @@ extension RecencyList {
     
     public var unwrappedBlueText: String {
         blueText ?? ""
+    }
+    
+    public var unwrappedRemoteId: String {
+        remoteId ?? ""
     }
 }
 

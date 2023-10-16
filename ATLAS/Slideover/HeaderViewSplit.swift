@@ -61,11 +61,13 @@ struct HeaderViewSplit: View {
                     
                     HStack(alignment: .center, spacing: 0) {
                         Picker("", selection: $selectedEvent) {
-                            ForEach(coreDataModel.dataEventUpcoming + coreDataModel.dataEventCompleted, id: \.self) { item in
-                                Text("\(item.unwrappedName) \(item.unwrappedStartDate)").tag(item)
+                            ForEach(dataEvents, id: \.self) { item in
+                                Text("\(item.unwrappedName) \(item.unwrappedStartDate)").tag(item as EventList?)
                             }
                         }.labelsHidden()
+                            .id(UUID())
                     }.frame(maxWidth: .infinity)
+                        .Print("currentIndex======\(currentIndex)")
                     
                     if isNext {
                         if let screen = item {
@@ -93,9 +95,12 @@ struct HeaderViewSplit: View {
             }.padding()
         }.background(.white)
             .onAppear {
-                dataEvents = coreDataModel.dataEventUpcoming + coreDataModel.dataEventCompleted
-                
+                dataEvents = coreDataModel.readEvents()
+                coreDataModel.selectedEvent = dataEvents.first
                 selectedEvent = dataEvents.first
+            }
+            .onChange(of: selectedEvent) {newValue in
+                coreDataModel.selectedEvent = newValue
             }
         Rectangle().fill(Color.black.opacity(0.3)).frame(height: 1)
     }

@@ -89,15 +89,15 @@ struct SummarySubSectionView: View {
                     
                     Spacer()
                     
-                    HStack {
-                        Toggle(isOn: $showUTC) {
-                            Text("Local").font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(Color.black)
-                        }
-                        Text("UTC").font(.system(size: 17, weight: .regular))
-                            .foregroundStyle(Color.black)
-                    }.fixedSize()
-                    
+//                    HStack {
+//                        Toggle(isOn: $showUTC) {
+//                            Text("Local").font(.system(size: 17, weight: .regular))
+//                                .foregroundStyle(Color.black)
+//                        }
+//                        Text("UTC").font(.system(size: 17, weight: .regular))
+//                            .foregroundStyle(Color.black)
+//                    }.fixedSize()
+//
                 }.frame(height: 52)
                     .padding(.leading, 16)
                     .padding(.bottom, 8)
@@ -594,6 +594,7 @@ struct SummarySubSectionView: View {
             "destALTNS": payloadDestinationMap,
         ]
         
+        print("payloadNotam========\(payloadNotam)")
         handleTraffic(payloadMap)
         handleMapAabba(payloadMap)
         handleWaypoint(payloadMap)

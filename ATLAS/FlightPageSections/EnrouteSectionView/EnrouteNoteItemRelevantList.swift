@@ -167,9 +167,6 @@ struct EnrouteNoteItemRelevantList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

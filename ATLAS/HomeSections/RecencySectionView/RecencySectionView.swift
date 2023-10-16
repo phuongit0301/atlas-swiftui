@@ -22,8 +22,10 @@ struct DocumentExpiry {
 }
 
 struct RecencySectionView: View {
+    @AppStorage("uid") var userID: String = ""
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var recencySection = RecencySection()
+    @EnvironmentObject var remoteService: RemoteService
     
 //    @State var dataExpiringSoon = [DocumentExpiry]()
     @State var isCollapse = false
@@ -36,6 +38,7 @@ struct RecencySectionView: View {
     @State var progress = 0.0
     @State private var count = 0
     @State private var isEdit = false
+    @State private var isLoading = false
     @State private var isEditRecency = false
 //    let monthsAhead = 6
     let dateFormatter = DateFormatter()
@@ -221,21 +224,22 @@ struct RecencySectionView: View {
                                                             .font(.system(size: 17, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
-                                                        Text("B737")
+                                                        Text(coreDataModel.dataRecency[index].unwrappedModel)
                                                             .font(.system(size: 17, weight: .regular))
                                                             .frame(alignment: .leading)
                                                         
                                                         HStack(alignment: .top) {
                                                             VStack(alignment: .leading, spacing: 16) {
-                                                                Text(coreDataModel.dataRecency[index].unwrappedRequirement)
+                                                                Text(coreDataModel.dataRecency[index].unwrappedText)
                                                                     .font(.system(size: 17, weight: .regular))
                                                                     .frame(alignment: .leading)
-                                                                Text("\(count) / \(coreDataModel.dataRecency[index].unwrappedRequirement) landings in the last \(coreDataModel.dataRecency[index].unwrappedLimit) days")
+                                                                Text(coreDataModel.dataRecency[index].unwrappedBlueText)
                                                                     .foregroundColor(Color.theme.azure)
                                                                     .font(.system(size: 17, weight: .regular))
                                                                     .frame(alignment: .leading)
                                                             }
-                                                            ProgressView(value: progress).frame(width: 220).padding(.top, 8)
+                                                            //Todo Int(coreDataModel.dataRecency[index].unwrappedPercentage) ?? 0
+                                                            ProgressView(value: (coreDataModel.dataRecency[index].unwrappedPercentage as NSString).doubleValue).frame(width: 220).padding(.top, 8)
                                                         }
                                                         
                                                     }
@@ -305,13 +309,28 @@ struct RecencySectionView: View {
                                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
                                         .cornerRadius(8)
                                     
-                                    Button(action: {
-                                        isEdit.toggle()
-                                    }, label: {
-                                        Text(isEdit ? "Done" : "Edit")
-                                            .font(.system(size: 17, weight: .regular)).textCase(nil)
-                                            .foregroundColor(Color.theme.azure)
-                                    }).buttonStyle(PlainButtonStyle())
+                                    if isEdit {
+                                        Button(action: {
+                                            Task {
+                                                await update()
+                                            }
+                                        }, label: {
+                                            Text("Done")
+                                                .font(.system(size: 17, weight: .regular)).textCase(nil)
+                                                .foregroundColor(Color.theme.azure)
+                                        }).buttonStyle(PlainButtonStyle())
+                                            .disabled(isLoading)
+                                    } else {
+                                        Button(action: {
+                                            isEdit = true
+                                        }, label: {
+                                            Text("Edit")
+                                                .font(.system(size: 17, weight: .regular)).textCase(nil)
+                                                .foregroundColor(Color.theme.azure)
+                                        }).buttonStyle(PlainButtonStyle())
+                                            .disabled(isLoading)
+                                    }
+                                    
                                 }
                             }.padding()
                             
@@ -406,6 +425,60 @@ struct RecencySectionView: View {
 //        return []
 //    }
 //
+    
+    func update() async {
+        isLoading = true
+        coreDataModel.dataRecencyDocument = coreDataModel.readDataRecencyDocument()
+        
+        var payloadRecency = [Any]()
+        
+        for item in coreDataModel.dataRecency {
+            payloadRecency.append([
+                "id": item.unwrappedRemoteId,
+                "recency_type": item.unwrappedType,
+                "recency_aircraft_model": item.unwrappedModel,
+                "recency_requirement": item.unwrappedRequirement,
+                "recency_limit": item.unwrappedLimit,
+                "recency_period_start": item.unwrappedPeriodStart,
+                "recency_status": item.unwrappedStatus
+            ] as [String : Any])
+        }
+        
+        var payloadVisa: [Any] = []
+        for item in coreDataModel.dataRecencyDocument {
+            if item.unwrappedType.lowercased().contains("visa") {
+                payloadVisa.append([
+                    "expiry": item.unwrappedExpiredDate,
+                    "visa": item.unwrappedType.lowercased().replacingOccurrences(of: "visa", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+                ])
+            }
+        }
+        
+        var payloadExpiry: [String: Any] = [:]
+        for item in coreDataModel.dataRecencyDocument {
+            let key = item.unwrappedType.lowercased().replacingOccurrences(of: " ", with:
+            "_")
+            
+            payloadExpiry.updateValue(item.unwrappedExpiredDate, forKey: key)
+        }
+        
+        let payload: [String: Any] = [
+            "user_id": userID,
+            "recency_data": payloadRecency,
+            "expiry_data": [payloadExpiry],
+            "visa_data": payloadVisa
+        ]
+        
+        print("payload=======\(payload)")
+        await remoteService.postRecencyData(payload)
+
+        isLoading = false
+        isEdit = false
+        coreDataModel.dataRecency = coreDataModel.readDataRecency()
+        coreDataModel.dataRecencyDocument = coreDataModel.readDataRecencyDocument()
+        coreDataModel.dataExpiringSoon = coreDataModel.extractExpiringDocuments(expiryData: coreDataModel.dataRecencyDocument, monthsAhead: coreDataModel.monthsAhead)
+    }
+    
     func calculateRecencyPercentage(_ logbookEntries: [LogbookEntriesList], _ recencyRequirement: Int, _ recencyLimit: Int) -> (count: Int, percentage: Double) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

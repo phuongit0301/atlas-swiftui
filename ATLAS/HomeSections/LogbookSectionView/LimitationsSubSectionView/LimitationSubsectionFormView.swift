@@ -101,11 +101,11 @@ struct LimitationSubsectionFormView: View {
             payloadLimitation.append([
                 "id": UUID().uuidString,
                 "limitation_type": item.limitationFlight,
-                "limitation_requirement": parseToInt(item.limitation),
+                "limitation_requirement": item.limitation,
                 "limitation_limit": "\(limit ?? 0)",
                 "limitation_start": item.startDate,
                 "limitation_end": item.endDate,
-                "limitation_status": parseToInt(item.completed),
+                "limitation_status": item.completed,
             ] as [String : Any])
         }
         
