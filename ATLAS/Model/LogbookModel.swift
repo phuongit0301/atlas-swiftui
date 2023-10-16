@@ -129,7 +129,6 @@ struct IVisaData: Decodable {
 }
 
 struct IExpiryData: Decodable {
-    var id: String
     var medical: String
     var sep: String
     var base_check: String

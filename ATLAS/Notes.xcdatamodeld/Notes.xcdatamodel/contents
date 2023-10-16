@@ -593,6 +593,12 @@
         <attribute name="picUsNight" optional="YES" attributeType="String"/>
         <attribute name="totalTime" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="RecencyExpiry" representedClassName="RecencyExpiryList" syncable="YES">
+        <attribute name="expiredDate" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="requirement" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="RouteAlternate" representedClassName="RouteAlternateList" syncable="YES">
         <attribute name="altn" optional="YES" attributeType="String"/>
         <attribute name="eta" optional="YES" attributeType="String"/>

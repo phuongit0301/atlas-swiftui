@@ -52,6 +52,7 @@ struct SignOffView: View {
 }
 
 struct SignatureModalView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @Binding var signatureImage: UIImage?
     @Binding var signatureTfLicense: String
     @Binding var signatureTfComment: String
@@ -59,6 +60,8 @@ struct SignatureModalView: View {
     @State private var drawing = Drawing()
     @Binding var isSignatureModalPresented: Bool
     @State var temp: UIImage?
+    
+    @State var dataSignature: SignatureList?
     
     var body: some View {
         GeometryReader { proxy in
@@ -76,8 +79,8 @@ struct SignatureModalView: View {
                     Spacer()
                     Button(action: {
                         if signatureTfLicense != "" && drawing.image != nil {
-                            let img = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(width: proxy.size.width, height: 144).snapshot()
-                            let str = convertImageToBase64(image: img)
+                            signatureImage = SignatureCanvasView(isDrawing: $isDrawing, drawing: $drawing).frame(width: proxy.size.width, height: 144).snapshot()
+//                            signatureImage = convertImageToBase64(image: img)
                             isSignatureModalPresented = false
                         }
                     }) {
@@ -164,6 +167,13 @@ struct SignatureModalView: View {
                 
                 Spacer()
             }.background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    if let selectedEvent = coreDataModel.selectedEvent {
+                        if let response = coreDataModel.getSignature(selectedEvent.unwrappedName) {
+                            signatureTfLicense = response.unwrappedLicenseNumber
+                        }
+                    }
+                }
         }
     }
     

@@ -801,15 +801,25 @@ struct FlightOverviewSectionView: View {
                 }
                 .onChange(of: signatureImage) { _ in
                     if let signatureImage = signatureImage {
-                        let str = convertImageToBase64(image: signatureImage)
-                        let newObj = SignatureList(context: persistenceController.container.viewContext)
-                        newObj.id = UUID()
-                        newObj.flightNumber = dataFlightOverview?.unwrappedCallsign
-                        newObj.imageString = str
-                        newObj.licenseNumber = signatureTfLicense
-                        newObj.comment = signatureTfComment
+                        if let flightNum = coreDataModel.selectedEvent?.unwrappedName, let newObj = coreDataModel.getSignature(flightNum) {
+                            newObj.flightNumber = dataFlightOverview?.unwrappedCallsign
+                            newObj.licenseNumber = signatureTfLicense
+                            newObj.comment = signatureTfComment
+                            
+                            coreDataModel.save()
+                        } else {
+                            let str = convertImageToBase64(image: signatureImage)
+                            let newObj = SignatureList(context: persistenceController.container.viewContext)
+                            newObj.id = UUID()
+                            newObj.flightNumber = dataFlightOverview?.unwrappedCallsign
+                            newObj.imageString = str
+                            newObj.licenseNumber = signatureTfLicense
+                            newObj.comment = signatureTfComment
+                            
+                            coreDataModel.save()
+                        }
                         
-                        coreDataModel.save()
+                        
                         
                         Task {
                             await withTaskGroup(of: Void.self) { group in
@@ -836,6 +846,14 @@ struct FlightOverviewSectionView: View {
                                 coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")
                                 coreDataModel.dataNoteAabbaEnroute = coreDataModel.readDataNoteAabbaPostList("enroute")
                                 coreDataModel.dataNoteAabbaArrival = coreDataModel.readDataNoteAabbaPostList("arrival")
+                                
+                                if let selectedEvent = coreDataModel.selectedEvent, let id = selectedEvent.id {
+                                    coreDataModel.selectedEvent?.status = 2
+                                    coreDataModel.selectedEvent?.flightStatus = FlightStatusEnum.COMPLETED.rawValue
+                                    coreDataModel.save()
+                                    coreDataModel.selectedEvent = coreDataModel.readEventsById(id)
+                                }
+                                
                                 
                                 if let overview = dataFlightOverview, let id = overview.id {
                                     dataFlightOverview = coreDataModel.readFlightOverviewById(id)
@@ -897,7 +915,7 @@ struct FlightOverviewSectionView: View {
                                 }
                                 
                                 group.addTask {
-                                    await coreDataModel.postFlightPlan()
+                                    await coreDataModel.postFlightPlanObject()
                                 }
                             }
                         }
@@ -1031,7 +1049,7 @@ struct FlightOverviewSectionView: View {
     
     func checkBtnValid() -> Bool {
         let overview = dataFlightOverview
-        return selectedModelPicker != "" && overview?.unwrappedFlightTime != "" && overview?.unwrappedChockOff != "" && overview?.unwrappedChockOn != "" && selectedCA.rawValue != "" && selectedFO.rawValue != ""
+        return coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue && selectedModelPicker != "" && overview?.unwrappedFlightTime != "" && overview?.unwrappedChockOff != "" && overview?.unwrappedChockOn != "" && selectedCA.rawValue != "" && selectedFO.rawValue != ""
     }
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {

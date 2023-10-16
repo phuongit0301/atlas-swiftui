@@ -167,7 +167,7 @@ struct OnboardingView: View {
                                         "type": item.documentType
                                     ])
                                     
-                                    let newObject = RecencyDocumentList(context: persistenceController.container.viewContext)
+                                    let newObject = RecencyExpiryList(context: persistenceController.container.viewContext)
                                     newObject.id = UUID()
                                     newObject.type = item.documentType
                                     newObject.expiredDate = item.expiredDate

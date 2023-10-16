@@ -99,7 +99,7 @@ struct HomeInformationView: View {
                                                     .aspectRatio(contentMode: .fit)
                                             }
                                         }.id(UUID())
-                                        .padding(.vertical, 11)
+                                            .frame(height: 44)
                                             .padding(.horizontal)
                                             .contentShape(Rectangle())
                                             .onTapGesture {
@@ -173,22 +173,66 @@ struct HomeInformationView: View {
                                             
                                             Spacer()
                                             
-                                            Button(action: {
-                                                //TODO
-                                            }, label: {
-                                                Text("Report Submitted")
+                                            HStack {
+                                                Text(coreDataModel.dataEventCompleted[index].unwrappedName)
                                                     .font(.system(size: 15, weight: .regular))
                                                     .foregroundColor(Color.black)
-                                                    .padding(.vertical, 8)
-                                                    .padding(.horizontal)
-                                            }).background(Color.theme.tealDeer)
-                                                .cornerRadius(8)
-                                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
-                                                .buttonStyle(PlainButtonStyle())
+
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                    .frame(width: 11, height: 22)
+                                                    .scaledToFit()
+                                                    .aspectRatio(contentMode: .fit)
+                                            }
+//                                            Button(action: {
+//                                                //TODO
+//                                            }, label: {
+//                                                Text("Report Submitted")
+//                                                    .font(.system(size: 15, weight: .regular))
+//                                                    .foregroundColor(Color.black)
+//                                                    .padding(.vertical, 8)
+//                                                    .padding(.horizontal)
+//                                            }).background(Color.theme.tealDeer)
+//                                                .cornerRadius(8)
+//                                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 0))
+//                                                .buttonStyle(PlainButtonStyle())
                                             
                                         }// End HStack
-                                        .padding(.vertical, 4)
+                                        .frame(height: 44)
                                         .padding(.horizontal)
+                                        .onTapGesture {
+                                            Task {
+                                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                                                let currentEvent = coreDataModel.dataEventUpcoming[index]
+                                                
+                                                coreDataModel.selectedEvent = currentEvent
+                                                coreDataModel.isEventActive = true
+                                                
+                                                if let startDate = dateFormatter.date(from: currentEvent.unwrappedStartDate),
+                                                   let endDate = dateFormatter.date(from: currentEvent.unwrappedEndDate) {
+                                                    
+                                                    dateFormatter.dateFormat = "HH:mm"
+                                                    let startTime = dateFormatter.string(from: startDate)
+                                                    let endTime = dateFormatter.string(from: endDate)
+                                                    
+                                                    let requestBody = [
+                                                        "flight_number": currentEvent.unwrappedName,
+                                                        "dep": currentEvent.unwrappedDep,
+                                                        "arr": currentEvent.unwrappedDest,
+                                                        "std": startTime,
+                                                        "sta": endTime
+                                                    ]
+                                                    
+                                                    print("stat======\(requestBody)")
+                                                    coreDataModel.loadingInitFuel = true
+
+                                                    await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
+                                                        coreDataModel.loadingInitFuel = false
+                                                    })
+                                                }
+                                            }
+                                           
+                                        }
                                         
                                         if index + 1 < coreDataModel.dataEventCompleted.count {
                                             Divider()
