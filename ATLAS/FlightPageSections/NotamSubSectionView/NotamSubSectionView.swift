@@ -366,8 +366,7 @@ struct NotamSubSectionView: View {
                 }
                 .onAppear {
                     coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                    print("coreDataModel.dataNotams==========\(coreDataModel.dataNotams)")
-                    print("coreDataModel1111==========\(coreDataModel.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList] ?? [])")
+                    
                     coreDataModel.dataNotams.forEach { item in
                         if item.type == "arrNotams" {
                             if let airport = item.airport {

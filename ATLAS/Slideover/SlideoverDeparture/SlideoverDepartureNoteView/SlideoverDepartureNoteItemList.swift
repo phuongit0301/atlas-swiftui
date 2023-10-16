@@ -120,9 +120,6 @@ struct SlideoverDepartureNoteItemList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

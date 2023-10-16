@@ -1459,11 +1459,12 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirportMapColor(_ data: [IAirportData], _ payload: [String: Any]) {
-        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: payload["depAirport"] as! String, arrAirport: payload["arrAirport"] as! String, enrAirports: payload["enrAirports"] as! [String], altnAirports: payload["altnAirports"] as! [String])
-        
-        if airportInformation.count > 0 {
-            airportInformation.forEach { item in
+    func initDataAirportMapColor(_ data: [IAirportColor], _ payload: [String: Any]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+//        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: payload["depAirport"] as! String, arrAirport: payload["arrAirport"] as! String, enrAirports: payload["enrAirports"] as! [String], altnAirports: payload["altnAirports"] as! [String])
+        if data.count > 0 {
+            data.forEach { item in
                 do {
                     let newObj = AirportMapColorList(context: service.container.viewContext)
                     
@@ -1473,9 +1474,14 @@ class CoreDataModelState: ObservableObject {
                     newObj.longitude = item.long
                     newObj.selection = item.selection
                     newObj.colour = item.colour
-                    newObj.notams = try NSKeyedArchiver.archivedData(withRootObject: item.notams, requiringSecureCoding: true)
+                    newObj.notams = item.notams
                     newObj.metar = item.metar
                     newObj.taf = item.taf
+                    newObj.arrDelay = item.arr_delay
+                    newObj.depDelay = item.dep_delay
+                    newObj.arrDelayColour = item.arr_delay_colour
+                    newObj.depDelayColour = item.dep_delay_colour
+                    newObj.updatedAt = dateFormatter.string(from: Date())
                     
                     service.container.viewContext.performAndWait {
                         do {
@@ -1551,7 +1557,9 @@ class CoreDataModelState: ObservableObject {
 //        let altnAirports = ["WMKJ", "WIDD"]
 //
 //        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: depAirport, arrAirport: arrAirport, enrAirports: enrAirports, altnAirports: altnAirports)
-//
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
         if data.count > 0 {
             var payloadMapColor = [AirportMapColorList]()
             
@@ -1565,9 +1573,14 @@ class CoreDataModelState: ObservableObject {
                     newObj.longitude = item.long
                     newObj.selection = item.selection
                     newObj.colour = item.colour
-                    newObj.notams = try NSKeyedArchiver.archivedData(withRootObject: item.notams, requiringSecureCoding: true)
+                    newObj.notams = item.notams
                     newObj.metar = item.metar
                     newObj.taf = item.taf
+                    newObj.arrDelay = item.arr_delay
+                    newObj.depDelay = item.dep_delay
+                    newObj.arrDelayColour = item.arr_delay_colour
+                    newObj.depDelayColour = item.dep_delay_colour
+                    newObj.updatedAt = dateFormatter.string(from: Date())
                     
                     payloadMapColor.append(newObj)
                     
@@ -1603,27 +1616,28 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func extractAirportInformation(allAirportsData: [IAirportData], depAirport: String, arrAirport: String, enrAirports: [String], altnAirports: [String]) -> [IAirportColor] {
-        var airportInfo: [IAirportColor] = []
-        
-        for airportData in allAirportsData {
-            if airportData.airport_id == depAirport {
-                airportInfo.append(
-                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Departure", colour: "blue", notams: [], metar: "", taf: "")
-                )
-            } else if airportData.airport_id == arrAirport {
-                airportInfo.append(
-                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Arrival", colour: "blue", notams: [], metar: "", taf: "")
-                )
-            } else if enrAirports.contains(airportData.airport_id) || altnAirports.contains(airportData.airport_id) {
-                airportInfo.append(
-                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "ALTN", colour: "green", notams: [], metar: "", taf: "")
-                )
-            }
-        }
-        
-        return airportInfo
-    }
+//    func extractAirportInformation(allAirportsData: [IAirportData], depAirport: String, arrAirport: String, enrAirports: [String], altnAirports: [String]) -> [IAirportColor] {
+//        var airportInfo: [IAirportColor] = []
+//
+//        for airportData in allAirportsData {
+//            if airportData.airport_id == depAirport {
+//                airportInfo.append(
+//
+//                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Departure", colour: "blue", notams: "", metar: "", taf: "")
+//                )
+//            } else if airportData.airport_id == arrAirport {
+//                airportInfo.append(
+//                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "Arrival", colour: "blue", notams: "", metar: "", taf: "")
+//                )
+//            } else if enrAirports.contains(airportData.airport_id) || altnAirports.contains(airportData.airport_id) {
+//                airportInfo.append(
+//                    IAirportColor(airportID: airportData.airport_id, lat: airportData.lat, long: airportData.long, selection: "ALTN", colour: "green", notams: "", metar: "", taf: "")
+//                )
+//            }
+//        }
+//
+//        return airportInfo
+//    }
     
     func initDataTraffic(_ data: [ITrafficData]) {
         if data.count > 0 {
@@ -5489,51 +5503,89 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllAirportList() async {
-        let fetchRequest: NSFetchRequest<AirportMapList>
-        fetchRequest = AirportMapList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+        if let objects = self.selectedEvent?.airportMapColorList?.allObjects as? [AirportMapColorList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
                         service.container.viewContext.delete(object)
                     }
-                    
-                    // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
-                    print("Failed to delete Altn Taf : \(error)")
+                    print("Failed to delete Airport Map Color List: \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Traffic Map update: \(error)")
         }
+        
+        if let objects = self.selectedEvent?.airportMapList?.allObjects as? [AirportMapList] {
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Airport Map List: \(error)")
+                }
+            }
+        }
+//        let fetchRequest: NSFetchRequest<AirportMapList>
+//        fetchRequest = AirportMapList.fetchRequest()
+//        do {
+//            // Perform the fetch request
+//            let objects = try service.container.viewContext.fetch(fetchRequest)
+//
+//            service.container.viewContext.performAndWait {
+//                do {
+//                    for object in objects {
+//                        service.container.viewContext.delete(object)
+//                    }
+//
+//                    // Save the deletions to the persistent store
+//                    try service.container.viewContext.save()
+//                } catch {
+//                    print("Failed to delete Altn Taf : \(error)")
+//                }
+//            }
+//        } catch {
+//            print("Failed to Delete Traffic Map update: \(error)")
+//        }
     }
     
-    func deleteAllMetaTaf() async {
-        let fetchRequest: NSFetchRequest<MetarTafDataList>
-        fetchRequest = MetarTafDataList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+    func deleteAllMetarTaf() async {
+        if let objects = self.selectedEvent?.metarTafList?.allObjects as? [MetarTafDataList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
                         service.container.viewContext.delete(object)
                     }
-                    
-                    // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
-                    print("Failed to delete Metar Taf : \(error)")
+                    print("Failed to delete Metar Taf List: \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Metar Taf update: \(error)")
         }
+        
+//        let fetchRequest: NSFetchRequest<MetarTafDataList>
+//        fetchRequest = MetarTafDataList.fetchRequest()
+//        do {
+//            // Perform the fetch request
+//            let objects = try service.container.viewContext.fetch(fetchRequest)
+//
+//            service.container.viewContext.performAndWait {
+//                do {
+//                    for object in objects {
+//                        service.container.viewContext.delete(object)
+//                    }
+//
+//                    // Save the deletions to the persistent store
+//                    try service.container.viewContext.save()
+//                } catch {
+//                    print("Failed to delete Metar Taf : \(error)")
+//                }
+//            }
+//        } catch {
+//            print("Failed to Delete Metar Taf update: \(error)")
+//        }
     }
     
     func deleteAllNotam() async {

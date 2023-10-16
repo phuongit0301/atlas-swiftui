@@ -16,11 +16,13 @@ class CustomAirportColorAnnotation: NSObject, MKAnnotation {
     let title: String?
     let subtitle: String?
     let image: UIImage?
+    let item: AirportMapColorList?
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, image: UIImage?) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, image: UIImage?, item: AirportMapColorList?) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.image = image
+        self.item = item
     }
 }

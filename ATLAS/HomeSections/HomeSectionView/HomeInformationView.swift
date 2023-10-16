@@ -117,21 +117,12 @@ struct HomeInformationView: View {
                                                         let startTime = dateFormatter.string(from: startDate)
                                                         let endTime = dateFormatter.string(from: endDate)
                                                         
-//                                                        let requestBody = [
-//                                                            "flight_number": currentEvent.unwrappedName,
-//                                                            "dep": currentEvent.unwrappedDep,
-//                                                            "arr": currentEvent.unwrappedDest,
-//                                                            "sta": startTime,
-//                                                            "std": endTime
-//                                                        ]
-//
-                                                        //Todo: Adill will amend
                                                         let requestBody = [
-                                                            "flight_number": "SQ806",
-                                                            "dep": "BKK",
-                                                            "arr": "SIN",
-                                                            "sta": "16:00",
-                                                            "std": "00:25"
+                                                            "flight_number": currentEvent.unwrappedName,
+                                                            "dep": currentEvent.unwrappedDep,
+                                                            "arr": currentEvent.unwrappedDest,
+                                                            "std": startTime,
+                                                            "sta": endTime
                                                         ]
                                                         
                                                         print("stat======\(requestBody)")
@@ -250,7 +241,7 @@ struct HomeInformationView: View {
                         .padding()
                     
                     if !isCollapseExpiring {
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 0) {
                             ForEach(coreDataModel.dataExpiringSoon.indices, id: \.self) { index in
                                 HStack(spacing: 0) {
                                     Text(coreDataModel.dataExpiringSoon[index].type)

@@ -373,6 +373,8 @@ struct IAirportData: Decodable {
     var airport_id: String
     var lat: String
     var long: String
+    var dep_delay: String
+    var arr_delay: String
 }
 
 struct IAirportDataJson: Decodable {
@@ -443,9 +445,13 @@ struct IAirportColor: Codable {
     var long: String
     var selection: String
     var colour: String
-    var notams: [String]
+    var notams: String
     var metar: String
     var taf: String
+    var arr_delay: String
+    var dep_delay: String
+    var arr_delay_colour: String
+    var dep_delay_colour: String
 }
 
 struct IMapDataModel: Decodable {
@@ -461,6 +467,7 @@ struct IWaypointDataJsonResponse: Decodable {
 
 struct IAirportDataJsonResponse: Decodable {
     let all_airports_data: [IAirportData]
+    let colour_airports_data: [IAirportColor]
 }
 
 struct IWaypoints: Decodable {

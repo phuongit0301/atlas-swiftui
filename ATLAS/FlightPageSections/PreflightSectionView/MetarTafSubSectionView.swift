@@ -25,7 +25,6 @@ struct MetarTafSubSectionView: View {
                 HStack(alignment: .center) {
                     Text("METAR & TAF")
                         .font(.system(size: 17, weight: .semibold))
-                        .padding(.leading, 16)
                     
                     Spacer()
                     
@@ -94,7 +93,7 @@ struct MetarTafSubSectionView: View {
                         
                         if isDepShow {
                             if coreDataModel.dataDepartureMetarTaf == nil {
-                                HStack {
+                                HStack(alignment: .center) {
                                     Text("No Departure METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                 }.frame(height: 44)
@@ -158,7 +157,7 @@ struct MetarTafSubSectionView: View {
                         
                         if isEnrShow {
                             if coreDataModel.dataEnrouteMetarTaf == nil {
-                                HStack {
+                                HStack(alignment: .center) {
                                     Text("No Enroute Alternates METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                 }.frame(height: 44)
@@ -223,7 +222,7 @@ struct MetarTafSubSectionView: View {
                         
                         if isArrShow {
                             if coreDataModel.dataArrivalMetarTaf == nil {
-                                HStack {
+                                HStack(alignment: .center) {
                                     Text("No Arrival METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                 }.frame(height: 44)
@@ -286,7 +285,7 @@ struct MetarTafSubSectionView: View {
                         
                         if isDestShow {
                             if coreDataModel.dataDestinationMetarTaf == nil {
-                                HStack {
+                                HStack(alignment: .center) {
                                     Text("No Destination Alternates METAR & TAF saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
                                     Spacer()
                                 }.frame(height: 44)

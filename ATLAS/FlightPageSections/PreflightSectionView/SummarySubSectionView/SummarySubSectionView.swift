@@ -748,11 +748,14 @@ struct SummarySubSectionView: View {
             coreDataModel.isMapAirportLoading = true
             let responseAirport = await remoteService.getMapAirportData(payload)
             
-            if let responseAirport = responseAirport, responseAirport.count > 0 {
-                print("inside aiport======\(responseAirport)")
+            if let responseAirportAll = responseAirport?.all_airports_data, responseAirportAll.count > 0 {
+//                print("inside aiport======\(responseAirportAll)")
                 await coreDataModel.deleteAllAirportList()
-                coreDataModel.initDataAirport(responseAirport)
-                coreDataModel.initDataAirportMapColor(responseAirport, payload)
+                coreDataModel.initDataAirport(responseAirportAll)
+            }
+            
+            if let responseColorAirport = responseAirport?.colour_airports_data, responseColorAirport.count > 0 {
+                coreDataModel.initDataAirportMapColor(responseColorAirport, payload)
             }
             print("end aiport")
             coreDataModel.isMapAirportLoading = false
@@ -784,7 +787,7 @@ struct SummarySubSectionView: View {
             
             if let metarTafData = responseNotam?.metarTafData {
                 print("inside metar")
-                await coreDataModel.deleteAllMetaTaf()
+                await coreDataModel.deleteAllMetarTaf()
                 
                 coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
                 coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")

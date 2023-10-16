@@ -1,84 +1,2932 @@
 {
-    "airport_data": [
+    "all_airports_data": [
         {
-            "airport_id": "WIBS",
-            "lat": "1.37",
-            "long": "102.14"
+            "airport_id": "AYPY",
+            "lat": "-9.44338",
+            "long": "147.22",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
-            "airport_id": "WIBT",
-            "lat": "1.0527",
-            "long": "103.393"
+            "airport_id": "BIKF",
+            "lat": "63.985",
+            "long": "-22.605556",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYHZ",
+            "lat": "44.8808",
+            "long": "-63.5086",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYLW",
+            "lat": "49.9561",
+            "long": "-119.378",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYOW",
+            "lat": "45.3225",
+            "long": "-75.6692",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYQB",
+            "lat": "46.7911",
+            "long": "-71.3933",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYQR",
+            "lat": "50.4319",
+            "long": "-104.666",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYTZ",
+            "lat": "43.6285",
+            "long": "-79.396",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYUL",
+            "lat": "45.4657",
+            "long": "-73.7455",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYVR",
+            "lat": "49.1939",
+            "long": "-123.184",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYWG",
+            "lat": "49.91",
+            "long": "-97.2399",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYXE",
+            "lat": "52.1708",
+            "long": "-106.7",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYYC",
+            "lat": "51.1139",
+            "long": "-114.02",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYYJ",
+            "lat": "48.6469",
+            "long": "-123.426",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "CYYZ",
+            "lat": "43.6797",
+            "long": "-79.6227",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DAAG",
+            "lat": "36.691",
+            "long": "3.21541",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DABB",
+            "lat": "36.8222",
+            "long": "7.80917",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DAOO",
+            "lat": "35.6239",
+            "long": "-0.621183",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DBBB",
+            "lat": "6.35723",
+            "long": "2.38435",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DGAA",
+            "lat": "5.60519",
+            "long": "-0.166786",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DIAP",
+            "lat": "5.26139",
+            "long": "-3.92629",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DNAA",
+            "lat": "9.00679",
+            "long": "7.26317",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DNKN",
+            "lat": "12.0476",
+            "long": "8.52462",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DNMM",
+            "lat": "6.57737",
+            "long": "3.32116",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DNPO",
+            "lat": "5.01549",
+            "long": "6.94959",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DRRN",
+            "lat": "13.4815",
+            "long": "2.18361",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DTMB",
+            "lat": "35.7581",
+            "long": "10.7547",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DTTA",
+            "lat": "36.8511",
+            "long": "10.2272",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "DTTJ",
+            "lat": "33.875",
+            "long": "10.7755",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EBBR",
+            "lat": "50.9014",
+            "long": "4.48444",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDB",
+            "lat": "52.38",
+            "long": "13.5225",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDF",
+            "lat": "50.0333",
+            "long": "8.57056",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDH",
+            "lat": "53.6304",
+            "long": "9.98823",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDK",
+            "lat": "50.8659",
+            "long": "7.14274",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDL",
+            "lat": "51.2895",
+            "long": "6.76678",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDM",
+            "lat": "48.3538",
+            "long": "11.7861",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDS",
+            "lat": "48.6899",
+            "long": "9.22196",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDT",
+            "lat": "52.5597",
+            "long": "13.2877",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EDDV",
+            "lat": "52.4611",
+            "long": "9.68508",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EFHK",
+            "lat": "60.3172",
+            "long": "24.9633",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGAA",
+            "lat": "54.6575",
+            "long": "-6.21583",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGBB",
+            "lat": "52.4539",
+            "long": "-1.74803",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGCC",
+            "lat": "53.3537",
+            "long": "-2.27495",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGGD",
+            "lat": "51.3827",
+            "long": "-2.71909",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGGP",
+            "lat": "53.3336",
+            "long": "-2.84972",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGGW",
+            "lat": "51.8747",
+            "long": "-0.368333",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGKK",
+            "lat": "51.1481",
+            "long": "-0.190278",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGLL",
+            "lat": "51.4775",
+            "long": "-0.461389",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGNT",
+            "lat": "55.0375",
+            "long": "-1.69167",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGNX",
+            "lat": "52.8311",
+            "long": "-1.32806",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGPF",
+            "lat": "55.8719",
+            "long": "-4.43306",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGPH",
+            "lat": "55.95",
+            "long": "-3.3725",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EGSS",
+            "lat": "51.885",
+            "long": "0.235",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EHAM",
+            "lat": "52.3086",
+            "long": "4.76389",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EHEH",
+            "lat": "51.4501",
+            "long": "5.37453",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EIDW",
+            "lat": "53.4213",
+            "long": "-6.27007",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EKCH",
+            "lat": "55.6179",
+            "long": "12.656",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ENBR",
+            "lat": "60.2934",
+            "long": "5.21814",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ENGM",
+            "lat": "60.1939",
+            "long": "11.1004",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EPKK",
+            "lat": "50.0777",
+            "long": "19.7848",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EPWA",
+            "lat": "52.1657",
+            "long": "20.9671",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ESGG",
+            "lat": "57.6628",
+            "long": "12.2798",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ESSA",
+            "lat": "59.6519",
+            "long": "17.9186",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "EVRA",
+            "lat": "56.9236",
+            "long": "23.9711",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FACT",
+            "lat": "-33.9648",
+            "long": "18.6017",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FALE",
+            "lat": "-29.6144",
+            "long": "31.1197",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FAOR",
+            "lat": "-26.1392",
+            "long": "28.246",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FAPE",
+            "lat": "-33.9849",
+            "long": "25.6173",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FIMP",
+            "lat": "-20.4302",
+            "long": "57.6836",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FKKD",
+            "lat": "4.00608",
+            "long": "9.71948",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FMEE",
+            "lat": "-20.8871",
+            "long": "55.5103",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FMMI",
+            "lat": "-18.7969",
+            "long": "47.4788",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FNLU",
+            "lat": "-8.85837",
+            "long": "13.2312",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FVFA",
+            "lat": "-18.0959",
+            "long": "25.839",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FVHA",
+            "lat": "-17.9318",
+            "long": "31.0928",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "FZAA",
+            "lat": "-4.38575",
+            "long": "15.4446",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GCFV",
+            "lat": "28.4527",
+            "long": "-13.8638",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GCLP",
+            "lat": "27.9319",
+            "long": "-15.3866",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GCRR",
+            "lat": "28.9455",
+            "long": "-13.6052",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GMAD",
+            "lat": "30.325",
+            "long": "-9.41307",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GMMN",
+            "lat": "33.3675",
+            "long": "-7.58997",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GMMX",
+            "lat": "31.6069",
+            "long": "-8.0363",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GMTT",
+            "lat": "35.7269",
+            "long": "-5.91689",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GOOY",
+            "lat": "14.7397",
+            "long": "-17.4902",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "GVAC",
+            "lat": "16.7414",
+            "long": "-22.9494",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HAAB",
+            "lat": "8.97789",
+            "long": "38.7993",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HECA",
+            "lat": "30.1219",
+            "long": "31.4056",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HEGN",
+            "lat": "27.1783",
+            "long": "33.7994",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HESH",
+            "lat": "27.9773",
+            "long": "34.395",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HKJK",
+            "lat": "-1.31924",
+            "long": "36.9278",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HKMO",
+            "lat": "-4.03483",
+            "long": "39.5942",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HSSS",
+            "lat": "15.5895",
+            "long": "32.5532",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HTAR",
+            "lat": "-3.36779",
+            "long": "36.6333",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HTDA",
+            "lat": "-6.87811",
+            "long": "39.2026",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HTDO",
+            "lat": "-6.17044",
+            "long": "35.7526",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HTKJ",
+            "lat": "-3.42941",
+            "long": "37.0745",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "HUEN",
+            "lat": "0.042386",
+            "long": "32.4435",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KABQ",
+            "lat": "35.0402",
+            "long": "-106.609",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KALB",
+            "lat": "42.7483",
+            "long": "-73.8017",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KAMA",
+            "lat": "35.2194",
+            "long": "-101.706",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KATL",
+            "lat": "33.6367",
+            "long": "-84.4281",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KAUS",
+            "lat": "30.1945",
+            "long": "-97.6699",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBDL",
+            "lat": "41.9392",
+            "long": "-72.6833",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBNA",
+            "lat": "36.1245",
+            "long": "-86.6782",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBOS",
+            "lat": "42.3643",
+            "long": "-71.0052",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBTV",
+            "lat": "44.4719",
+            "long": "-73.1533",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBUF",
+            "lat": "42.9405",
+            "long": "-78.7322",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBUR",
+            "lat": "34.2007",
+            "long": "-118.359",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KBWI",
+            "lat": "39.1753",
+            "long": "-76.6683",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KCLE",
+            "lat": "41.4117",
+            "long": "-81.8498",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KCLT",
+            "lat": "35.214",
+            "long": "-80.9431",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KCMH",
+            "lat": "39.998",
+            "long": "-82.8919",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KCVG",
+            "lat": "39.0488",
+            "long": "-84.6678",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KDAL",
+            "lat": "32.8471",
+            "long": "-96.8518",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KDCA",
+            "lat": "38.8522",
+            "long": "-77.0378",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KDEN",
+            "lat": "39.8617",
+            "long": "-104.673",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KDFW",
+            "lat": "32.8968",
+            "long": "-97.038",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KDTW",
+            "lat": "42.2125",
+            "long": "-83.3533",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KELP",
+            "lat": "31.8072",
+            "long": "-106.378",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KEWR",
+            "lat": "40.6925",
+            "long": "-74.1686",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KFAT",
+            "lat": "36.7762",
+            "long": "-119.718",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KFLL",
+            "lat": "26.0726",
+            "long": "-80.1527",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KHOU",
+            "lat": "29.6454",
+            "long": "-95.2789",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KHPN",
+            "lat": "41.067",
+            "long": "-73.7076",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KIAD",
+            "lat": "38.9445",
+            "long": "-77.4558",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KIAH",
+            "lat": "29.9844",
+            "long": "-95.3414",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KIND",
+            "lat": "39.7173",
+            "long": "-86.2944",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KISP",
+            "lat": "40.7952",
+            "long": "-73.1002",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KJAX",
+            "lat": "30.4941",
+            "long": "-81.6879",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KJFK",
+            "lat": "40.6397",
+            "long": "-73.7789",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KLAS",
+            "lat": "36.0801",
+            "long": "-115.152",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KLAX",
+            "lat": "33.9425",
+            "long": "-118.408",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KLGA",
+            "lat": "40.775",
+            "long": "-73.875",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KLGB",
+            "lat": "33.8177",
+            "long": "-118.152",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMCI",
+            "lat": "39.2976",
+            "long": "-94.7139",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMCO",
+            "lat": "28.4294",
+            "long": "-81.309",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMDW",
+            "lat": "41.7861",
+            "long": "-87.7525",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMFE",
+            "lat": "26.1758",
+            "long": "-98.2386",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMHT",
+            "lat": "42.9326",
+            "long": "-71.4357",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMIA",
+            "lat": "25.7932",
+            "long": "-80.2906",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMKE",
+            "lat": "42.9472",
+            "long": "-87.8966",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMSP",
+            "lat": "44.882",
+            "long": "-93.2218",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KMSY",
+            "lat": "29.9934",
+            "long": "-90.258",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KOAK",
+            "lat": "37.7213",
+            "long": "-122.221",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KOMA",
+            "lat": "41.3032",
+            "long": "-95.8941",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KONT",
+            "lat": "34.056",
+            "long": "-117.601",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KORD",
+            "lat": "41.9786",
+            "long": "-87.9047",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KORL",
+            "lat": "28.5455",
+            "long": "-81.3329",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPBI",
+            "lat": "26.6832",
+            "long": "-80.0956",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPDX",
+            "lat": "45.5887",
+            "long": "-122.598",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPHL",
+            "lat": "39.8719",
+            "long": "-75.2411",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPHX",
+            "lat": "33.4343",
+            "long": "-112.012",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPIT",
+            "lat": "40.4915",
+            "long": "-80.2329",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPNS",
+            "lat": "30.4734",
+            "long": "-87.1866",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPSP",
+            "lat": "33.8297",
+            "long": "-116.507",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPVD",
+            "lat": "41.7326",
+            "long": "-71.4204",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KPWM",
+            "lat": "43.6462",
+            "long": "-70.3093",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KRDU",
+            "lat": "35.8776",
+            "long": "-78.7875",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KROC",
+            "lat": "43.1189",
+            "long": "-77.6724",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KRSW",
+            "lat": "26.5362",
+            "long": "-81.7552",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSAN",
+            "lat": "32.7336",
+            "long": "-117.19",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSAT",
+            "lat": "29.5337",
+            "long": "-98.4698",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSBA",
+            "lat": "34.4262",
+            "long": "-119.84",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSEA",
+            "lat": "47.449",
+            "long": "-122.309",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSFO",
+            "lat": "37.619",
+            "long": "-122.375",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSJC",
+            "lat": "37.3626",
+            "long": "-121.929",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSLC",
+            "lat": "40.7884",
+            "long": "-111.978",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSMF",
+            "lat": "38.6954",
+            "long": "-121.591",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSNA",
+            "lat": "33.6757",
+            "long": "-117.868",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSRQ",
+            "lat": "27.3954",
+            "long": "-82.5544",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSTL",
+            "lat": "38.7487",
+            "long": "-90.37",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KSYR",
+            "lat": "43.1112",
+            "long": "-76.1063",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KTLH",
+            "lat": "30.3965",
+            "long": "-84.3503",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "KTPA",
+            "lat": "27.9755",
+            "long": "-82.5332",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LBSF",
+            "lat": "42.6967",
+            "long": "23.4114",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEAL",
+            "lat": "38.2822",
+            "long": "-0.558156",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEBB",
+            "lat": "43.3011",
+            "long": "-2.91061",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEBL",
+            "lat": "41.2971",
+            "long": "2.07846",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEIB",
+            "lat": "38.8729",
+            "long": "1.37312",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEMD",
+            "lat": "40.4719",
+            "long": "-3.56264",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEMG",
+            "lat": "36.6749",
+            "long": "-4.49911",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEPA",
+            "lat": "39.5517",
+            "long": "2.73881",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEVC",
+            "lat": "39.4893",
+            "long": "-0.481625",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LEZL",
+            "lat": "37.418",
+            "long": "-5.89311",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFBD",
+            "lat": "44.8283",
+            "long": "-0.715556",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFBO",
+            "lat": "43.6291",
+            "long": "1.36382",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFLL",
+            "lat": "45.7256",
+            "long": "5.08111",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFML",
+            "lat": "43.4393",
+            "long": "5.22142",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFMN",
+            "lat": "43.6584",
+            "long": "7.21587",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFPG",
+            "lat": "49.0097",
+            "long": "2.54778",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LFRS",
+            "lat": "47.1532",
+            "long": "-1.61073",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LGAV",
+            "lat": "37.9364",
+            "long": "23.9445",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LGIR",
+            "lat": "35.3397",
+            "long": "25.1803",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LGRP",
+            "lat": "36.4054",
+            "long": "28.0862",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LGTS",
+            "lat": "40.5197",
+            "long": "22.9709",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LHBP",
+            "lat": "47.4298",
+            "long": "19.2611",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LICC",
+            "lat": "37.4668",
+            "long": "15.0664",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LICJ",
+            "lat": "38.176",
+            "long": "13.091",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIMC",
+            "lat": "45.6306",
+            "long": "8.72811",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIPE",
+            "lat": "44.5354",
+            "long": "11.2887",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIPZ",
+            "lat": "45.5053",
+            "long": "12.3519",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIRF",
+            "lat": "41.8003",
+            "long": "12.2389",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIRN",
+            "lat": "40.886",
+            "long": "14.2908",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LIRP",
+            "lat": "43.6839",
+            "long": "10.3927",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LKPR",
+            "lat": "50.1008",
+            "long": "14.26",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LLBG",
+            "lat": "32.0114",
+            "long": "34.8867",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LMML",
+            "lat": "35.8575",
+            "long": "14.4775",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LOWW",
+            "lat": "48.1103",
+            "long": "16.5697",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LPFR",
+            "lat": "37.0144",
+            "long": "-7.96591",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LPPR",
+            "lat": "41.2356",
+            "long": "-8.67806",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LPPT",
+            "lat": "38.7813",
+            "long": "-9.13592",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LROP",
+            "lat": "44.5711",
+            "long": "26.085",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LSGG",
+            "lat": "46.2381",
+            "long": "6.10895",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LSZH",
+            "lat": "47.4647",
+            "long": "8.54917",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LTAC",
+            "lat": "40.1281",
+            "long": "32.995",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LTAF",
+            "lat": "36.9822",
+            "long": "35.2804",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LTAI",
+            "lat": "36.8987",
+            "long": "30.8005",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LTBA",
+            "lat": "41.2753",
+            "long": "28.7519",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LTFJ",
+            "lat": "40.8986",
+            "long": "29.3092",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "LYBE",
+            "lat": "44.8184",
+            "long": "20.3091",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MGGT",
+            "lat": "14.5817",
+            "long": "-90.5267",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MHLM",
+            "lat": "15.4526",
+            "long": "-87.9236",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MHRO",
+            "lat": "16.3168",
+            "long": "-86.523",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MHTG",
+            "lat": "14.0617",
+            "long": "-87.2169",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMAA",
+            "lat": "16.7571",
+            "long": "-99.754",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMGL",
+            "lat": "20.5218",
+            "long": "-103.311",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMMX",
+            "lat": "19.4363",
+            "long": "-99.0721",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMMY",
+            "lat": "25.7785",
+            "long": "-100.107",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMTJ",
+            "lat": "32.5411",
+            "long": "-116.97",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MMUN",
+            "lat": "21.0365",
+            "long": "-86.8771",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MNMG",
+            "lat": "12.1415",
+            "long": "-86.1682",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MPTO",
+            "lat": "9.07136",
+            "long": "-79.3835",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MROC",
+            "lat": "9.99386",
+            "long": "-84.2088",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MSLP",
+            "lat": "13.4408",
+            "long": "-89.0556",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MUHA",
+            "lat": "22.9892",
+            "long": "-82.4091",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "MZBZ",
+            "lat": "17.5391",
+            "long": "-88.3082",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NFFN",
+            "lat": "-17.7554",
+            "long": "177.443",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NZHN",
+            "lat": "-37.8667",
+            "long": "175.332",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NZNS",
+            "lat": "-41.2983",
+            "long": "173.221",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NZPM",
+            "lat": "-40.3206",
+            "long": "175.617",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NZRO",
+            "lat": "-38.1092",
+            "long": "176.317",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "NZWB",
+            "lat": "-41.5183",
+            "long": "173.87",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OEJN",
+            "lat": "21.6796",
+            "long": "39.1565",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OERK",
+            "lat": "24.9578",
+            "long": "46.6989",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OIII",
+            "lat": "35.6892",
+            "long": "51.3134",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OMAA",
+            "lat": "24.433",
+            "long": "54.6511",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OMDB",
+            "lat": "25.2528",
+            "long": "55.3644",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OMSJ",
+            "lat": "25.3286",
+            "long": "55.5172",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "OTHH",
+            "lat": "25.2731",
+            "long": "51.6081",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "PANC",
+            "lat": "61.1744",
+            "long": "-149.996",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "PHKO",
+            "lat": "19.7388",
+            "long": "-156.046",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "PHLI",
+            "lat": "21.976",
+            "long": "-159.339",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "PHNL",
+            "lat": "21.3206",
+            "long": "-157.924",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "PHTO",
+            "lat": "19.7214",
+            "long": "-155.048",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RCTP",
+            "lat": "25.0777",
+            "long": "121.233",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RJAA",
+            "lat": "35.7653",
+            "long": "140.386",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RJBB",
+            "lat": "34.4305",
+            "long": "135.2302",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RJFF",
+            "lat": "33.5859",
+            "long": "130.451",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RJGG",
+            "lat": "34.8584",
+            "long": "136.805",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RJTT",
+            "lat": "35.5533",
+            "long": "139.781",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RKPK",
+            "lat": "35.1795",
+            "long": "128.938",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RKSI",
+            "lat": "37.4633",
+            "long": "126.44",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ROAH",
+            "lat": "26.1958",
+            "long": "127.646",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RPLL",
+            "lat": "14.5086",
+            "long": "121.02",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "RPVM",
+            "lat": "10.3075",
+            "long": "123.979",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAAR",
+            "lat": "-32.9036",
+            "long": "-60.785",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SABE",
+            "lat": "-34.5589",
+            "long": "-58.4164",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SACO",
+            "lat": "-31.3236",
+            "long": "-64.208",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAEZ",
+            "lat": "-34.8222",
+            "long": "-58.5358",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAME",
+            "lat": "-32.8317",
+            "long": "-68.7929",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SARI",
+            "lat": "-25.7373",
+            "long": "-54.4734",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SASA",
+            "lat": "-24.856",
+            "long": "-65.4862",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SASJ",
+            "lat": "-24.3928",
+            "long": "-65.0978",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAWH",
+            "lat": "-54.8433",
+            "long": "-68.2958",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAZM",
+            "lat": "-37.9342",
+            "long": "-57.5733",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SAZS",
+            "lat": "-41.1512",
+            "long": "-71.1575",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBAR",
+            "lat": "-10.984",
+            "long": "-37.0703",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBBE",
+            "lat": "-1.37925",
+            "long": "-48.4763",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBBR",
+            "lat": "-15.8692",
+            "long": "-47.9208",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBBV",
+            "lat": "2.84139",
+            "long": "-60.6922",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBCG",
+            "lat": "-20.4687",
+            "long": "-54.6725",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBCT",
+            "lat": "-25.5285",
+            "long": "-49.1758",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBCY",
+            "lat": "-15.6529",
+            "long": "-56.1167",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBEG",
+            "lat": "-3.03861",
+            "long": "-60.0497",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBFL",
+            "lat": "-27.6703",
+            "long": "-48.5525",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBFZ",
+            "lat": "-3.77628",
+            "long": "-38.5326",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBGO",
+            "lat": "-16.632",
+            "long": "-49.2207",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBJP",
+            "lat": "-7.14583",
+            "long": "-34.9486",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBJV",
+            "lat": "-26.2245",
+            "long": "-48.7974",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBMO",
+            "lat": "-9.51081",
+            "long": "-35.7917",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBMQ",
+            "lat": "0.050664",
+            "long": "-51.0722",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBNT",
+            "lat": "-5.76806",
+            "long": "-35.3761",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBPA",
+            "lat": "-29.9944",
+            "long": "-51.1714",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBPJ",
+            "lat": "-10.2915",
+            "long": "-48.357",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBPV",
+            "lat": "-8.70929",
+            "long": "-63.9023",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBRB",
+            "lat": "-9.86889",
+            "long": "-67.8981",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBRF",
+            "lat": "-8.12649",
+            "long": "-34.9236",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBSL",
+            "lat": "-2.58536",
+            "long": "-44.2341",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBSV",
+            "lat": "-12.9086",
+            "long": "-38.3225",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBTE",
+            "lat": "-5.05994",
+            "long": "-42.8235",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBUL",
+            "lat": "-18.8836",
+            "long": "-48.2253",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SBVT",
+            "lat": "-20.2581",
+            "long": "-40.2864",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SCEL",
+            "lat": "-33.3928",
+            "long": "-70.7856",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SGAS",
+            "lat": "-25.24",
+            "long": "-57.52",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SKBO",
+            "lat": "4.70159",
+            "long": "-74.1469",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SPIM",
+            "lat": "-12.0219",
+            "long": "-77.1143",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SPJL",
+            "lat": "-15.4671",
+            "long": "-70.1582",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "SPQT",
+            "lat": "-3.78474",
+            "long": "-73.3088",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "TNCM",
+            "lat": "18.041",
+            "long": "-63.1089",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "UKBB",
+            "lat": "50.345",
+            "long": "30.8947",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "UKFF",
+            "lat": "45.0522",
+            "long": "33.9751",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ULLI",
+            "lat": "59.8003",
+            "long": "30.2625",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "URSS",
+            "lat": "43.4499",
+            "long": "39.9566",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "UUEE",
+            "lat": "55.9728",
+            "long": "37.4147",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VAAH",
+            "lat": "23.0772",
+            "long": "72.6347",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VABB",
+            "lat": "19.0887",
+            "long": "72.8679",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VAPO",
+            "lat": "18.5821",
+            "long": "73.9197",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VECC",
+            "lat": "22.6547",
+            "long": "88.4467",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VHHH",
+            "lat": "22.3089",
+            "long": "113.915",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VIDP",
+            "lat": "28.5665",
+            "long": "77.1031",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VOBL",
+            "lat": "13.1979",
+            "long": "77.7063",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VOCI",
+            "lat": "10.152",
+            "long": "76.4019",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VOGO",
+            "lat": "15.3808",
+            "long": "73.8314",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VOHS",
+            "lat": "17.2313",
+            "long": "78.4299",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VOMM",
+            "lat": "12.99",
+            "long": "80.1693",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VTBD",
+            "lat": "13.9126",
+            "long": "100.607",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VTBS",
+            "lat": "13.6811",
+            "long": "100.747",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VTCC",
+            "lat": "18.7668",
+            "long": "98.9626",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VTSP",
+            "lat": "8.1132",
+            "long": "98.3169",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VVNB",
+            "lat": "21.2212",
+            "long": "105.807",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "VVTS",
+            "lat": "10.8188",
+            "long": "106.652",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "WAAA",
+            "lat": "-5.06163",
+            "long": "119.554",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "WADD",
+            "lat": "-8.74817",
+            "long": "115.167",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "WARR",
+            "lat": "-7.37983",
+            "long": "112.787",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "WBKK",
+            "lat": "5.93721",
+            "long": "116.051",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
             "airport_id": "WIDD",
             "lat": "1.12103",
-            "long": "104.119"
+            "long": "104.119",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
-            "airport_id": "WIDN",
-            "lat": "0.922683",
-            "long": "104.532"
+            "airport_id": "WIII",
+            "lat": "-6.12556",
+            "long": "106.656",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
-            "airport_id": "WIDS",
-            "lat": "-0.479189",
-            "long": "104.579"
-        },
-        {
-            "airport_id": "WIOM",
-            "lat": "3.34812",
-            "long": "106.258"
-        },
-        {
-            "airport_id": "WIPR",
-            "lat": "-0.352808",
-            "long": "102.335"
-        },
-        {
-            "airport_id": "WMAU",
-            "lat": "2.383",
-            "long": "103.867"
-        },
-        {
-            "airport_id": "WMBT",
-            "lat": "2.81818",
-            "long": "104.16"
+            "airport_id": "WIMM",
+            "lat": "3.64222",
+            "long": "98.8853",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
             "airport_id": "WMKJ",
             "lat": "1.64131",
-            "long": "103.67"
+            "long": "103.67",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
             "airport_id": "WMKK",
             "lat": "2.74558",
-            "long": "101.71"
+            "long": "101.71",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
-            "airport_id": "WMKM",
-            "lat": "2.26336",
-            "long": "102.252"
-        },
-        {
-            "airport_id": "WSAP",
-            "lat": "1.36042",
-            "long": "103.91"
-        },
-        {
-            "airport_id": "WSAT",
-            "lat": "1.38726",
-            "long": "103.709"
-        },
-        {
-            "airport_id": "WSSL",
-            "lat": "1.41695",
-            "long": "103.868"
+            "airport_id": "WMKP",
+            "lat": "5.29714",
+            "long": "100.277",
+            "dep_delay": "0",
+            "arr_delay": "0"
         },
         {
             "airport_id": "WSSS",
             "lat": "1.35019",
-            "long": "103.994"
+            "long": "103.994",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YAYE",
+            "lat": "-25.1861",
+            "long": "130.976",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBAS",
+            "lat": "-23.8067",
+            "long": "133.902",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBBN",
+            "lat": "-27.3842",
+            "long": "153.117",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBCG",
+            "lat": "-28.1644",
+            "long": "153.505",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBCS",
+            "lat": "-16.8858",
+            "long": "145.755",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBHM",
+            "lat": "-20.3581",
+            "long": "148.952",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBMA",
+            "lat": "-20.6639",
+            "long": "139.489",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBMK",
+            "lat": "-21.1717",
+            "long": "149.18",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBNA",
+            "lat": "-28.8339",
+            "long": "153.562",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBPN",
+            "lat": "-20.495",
+            "long": "148.552",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBRK",
+            "lat": "-23.3819",
+            "long": "150.475",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBRM",
+            "lat": "-17.9447",
+            "long": "122.232",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBSU",
+            "lat": "-26.6033",
+            "long": "153.091",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBTL",
+            "lat": "-19.2525",
+            "long": "146.765",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YBUD",
+            "lat": "-24.9039",
+            "long": "152.319",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YCFS",
+            "lat": "-30.3206",
+            "long": "153.116",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YDPO",
+            "lat": "-41.1697",
+            "long": "146.43",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YEML",
+            "lat": "-23.5675",
+            "long": "148.179",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YGEL",
+            "lat": "-28.7961",
+            "long": "114.707",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YGLA",
+            "lat": "-23.8697",
+            "long": "151.223",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YHBA",
+            "lat": "-25.3189",
+            "long": "152.88",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMAY",
+            "lat": "-36.0678",
+            "long": "146.958",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMHB",
+            "lat": "-42.8361",
+            "long": "147.51",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMIA",
+            "lat": "-34.2292",
+            "long": "142.086",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMLT",
+            "lat": "-41.5453",
+            "long": "147.214",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMML",
+            "lat": "-37.6733",
+            "long": "144.843",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMRB",
+            "lat": "-22.0578",
+            "long": "148.077",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YMTG",
+            "lat": "-37.7456",
+            "long": "140.785",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YNWN",
+            "lat": "-23.4178",
+            "long": "119.803",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YOLD",
+            "lat": "-30.485",
+            "long": "136.877",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPAD",
+            "lat": "-34.945",
+            "long": "138.531",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPBO",
+            "lat": "-23.1711",
+            "long": "117.745",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPDN",
+            "lat": "-12.4147",
+            "long": "130.877",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPKA",
+            "lat": "-20.7122",
+            "long": "116.773",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPKG",
+            "lat": "-30.7894",
+            "long": "121.462",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPKU",
+            "lat": "-15.7781",
+            "long": "128.708",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPLC",
+            "lat": "-34.6053",
+            "long": "135.88",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPMQ",
+            "lat": "-31.4358",
+            "long": "152.863",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPPD",
+            "lat": "-20.3778",
+            "long": "118.626",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YPPH",
+            "lat": "-31.9403",
+            "long": "115.967",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YSCB",
+            "lat": "-35.3069",
+            "long": "149.195",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YSDU",
+            "lat": "-32.2167",
+            "long": "148.575",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YSSY",
+            "lat": "-33.9461",
+            "long": "151.177",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YSTW",
+            "lat": "-31.0839",
+            "long": "150.847",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YSWG",
+            "lat": "-35.1653",
+            "long": "147.466",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "YWLM",
+            "lat": "-32.795",
+            "long": "151.834",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZBAA",
+            "lat": "40.0725",
+            "long": "116.598",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZBTJ",
+            "lat": "39.1244",
+            "long": "117.346",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZBYN",
+            "lat": "37.7469",
+            "long": "112.628",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZGGG",
+            "lat": "23.3924",
+            "long": "113.299",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZGKL",
+            "lat": "25.2181",
+            "long": "110.039",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZGNN",
+            "lat": "22.6083",
+            "long": "108.172",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZGSZ",
+            "lat": "22.6393",
+            "long": "113.811",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZHHH",
+            "lat": "30.7838",
+            "long": "114.208",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZLXY",
+            "lat": "34.4471",
+            "long": "108.752",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSAM",
+            "lat": "24.544",
+            "long": "118.128",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSHC",
+            "lat": "30.2295",
+            "long": "120.434",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSJN",
+            "lat": "36.8572",
+            "long": "117.216",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSPD",
+            "lat": "31.1434",
+            "long": "121.805",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSQD",
+            "lat": "36.2661",
+            "long": "120.374",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZSSS",
+            "lat": "31.1979",
+            "long": "121.336",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZUCK",
+            "lat": "29.7192",
+            "long": "106.642",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZUUU",
+            "lat": "30.5785",
+            "long": "103.947",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZWWW",
+            "lat": "43.9071",
+            "long": "87.4742",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZYCC",
+            "lat": "43.9962",
+            "long": "125.685",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZYHB",
+            "lat": "45.6234",
+            "long": "126.25",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZYTL",
+            "lat": "38.9657",
+            "long": "121.539",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        },
+        {
+            "airport_id": "ZYTX",
+            "lat": "41.6398",
+            "long": "123.483",
+            "dep_delay": "0",
+            "arr_delay": "0"
+        }
+    ],
+    "colour_airports_data": [
+        {
+            "airportID": "VTBS",
+            "lat": "13.6811",
+            "long": "100.747",
+            "selection": "departure",
+            "arr_delay": "0",
+            "dep_delay": "0",
+            "arr_delay_colour": "green",
+            "dep_delay_colour": "green",
+            "colour": "blue",
+            "notams": "",
+            "metar": "VTBS 150330Z 10006KT 060V130 9999 FEW020 SCT035 31/25 Q1010 NOSIG",
+            "taf": "TAF VTBS 142300Z 1500/1606 35005KT 9999 FEW020 BECMG 1506/1508 06008KT BECMG 1514/1516 35005KT BECMG 1603/1605 05008KT"
+        },
+        {
+            "airportID": "WSSS",
+            "lat": "1.35019",
+            "long": "103.994",
+            "selection": "arrival",
+            "arr_delay": "0",
+            "dep_delay": "0",
+            "arr_delay_colour": "green",
+            "dep_delay_colour": "green",
+            "colour": "blue",
+            "notams": "",
+            "metar": "WSSS 150330Z 16008KT 120V200 9999 FEW018 FEW020TCU BKN300 32/25 Q1012 NOSIG",
+            "taf": "TAF WSSS 142300Z 1500/1606 19009KT 9999 FEW015 SCT020"
+        },
+        {
+            "airportID": "WMKP",
+            "lat": "5.29714",
+            "long": "100.277",
+            "selection": "ALTN",
+            "arr_delay": "0",
+            "dep_delay": "0",
+            "arr_delay_colour": "green",
+            "dep_delay_colour": "green",
+            "colour": "green",
+            "notams": "",
+            "metar": "WMKP 150330Z 20004KT 160V240 9000 FEW020 31/24 Q1012 NOSIG",
+            "taf": "TAF WMKP 142300Z 1500/1600 VRB03KT 9000 SCT020 TEMPO 1500/1505 5000 TSRA FEW010 FEW017CB TEMPO 1505/1510 23009KT 7000 -TSRA FEW010 FEW017CB BECMG 1511/1513 VRB03KT 8000 SCT025"
+        },
+        {
+            "airportID": "VTSP",
+            "lat": "8.1132",
+            "long": "98.3169",
+            "selection": "ALTN",
+            "arr_delay": "0",
+            "dep_delay": "0",
+            "arr_delay_colour": "green",
+            "dep_delay_colour": "green",
+            "colour": "amber",
+            "notams": "",
+            "metar": "VTSP 150330Z VRB02KT 9999 FEW020 30/24 Q1011 NOSIG",
+            "taf": "TAF VTSP 142300Z 1500/1606 29005KT 9999 SCT020 TEMPO 1500/1508 -TSRA FEW018CB SCT020 BKN100"
         }
     ]
 }

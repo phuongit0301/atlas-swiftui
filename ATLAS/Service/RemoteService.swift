@@ -679,7 +679,7 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_airports_data
-    func getMapAirportData(_ parameters: Any) async -> [IAirportData]? {
+    func getMapAirportData(_ parameters: Any) async -> IAirportDataJsonResponse? {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_airports_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -687,16 +687,18 @@ class RemoteService: ObservableObject {
         do {
             // Convert the request body to JSON data
             let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            print("json=============\(String(data: requestData, encoding: .utf8)!)")
             // Set the request body data
             request.httpBody = requestData
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            let (data, _) = try await URLSession.shared.data(for: request)
-            
+//            let (data, _) = try await URLSession.shared.data(for: request)
+            let data: IAirportDataJsonResponse = load("airport_data.json")
+//            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
-                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
-                return decodedSearch.all_airports_data
+//                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
+                return data
             } catch let error {
                 print("Error decoding: ", error)
             }

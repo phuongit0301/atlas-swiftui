@@ -2,7 +2,7 @@
 //  EventList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 14/10/2023.
+//  Created by phuong phan on 15/10/2023.
 //
 //
 
@@ -36,6 +36,7 @@ extension EventList {
     @NSManaged public var routeAlternate: NSSet?
     @NSManaged public var noteAabbaPostList: NSSet?
     @NSManaged public var eventSector: EventSectorList?
+    @NSManaged public var airportMapList: NSSet?
     
     public var unwrappedStartDate: String {
         startDate ?? ""
@@ -216,6 +217,23 @@ extension EventList {
 
     @objc(removeNoteAabbaPostList:)
     @NSManaged public func removeFromNoteAabbaPostList(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for airportMapList
+extension EventList {
+
+    @objc(addAirportMapListObject:)
+    @NSManaged public func addToAirportMapList(_ value: AirportMapList)
+
+    @objc(removeAirportMapListObject:)
+    @NSManaged public func removeFromAirportMapList(_ value: AirportMapList)
+
+    @objc(addAirportMapList:)
+    @NSManaged public func addToAirportMapList(_ values: NSSet)
+
+    @objc(removeAirportMapList:)
+    @NSManaged public func removeFromAirportMapList(_ values: NSSet)
 
 }
 

@@ -649,7 +649,7 @@ struct MapViewModal: View {
                 image = UIImage(named: "icon_circle_red")
             }
             
-            let annotation = CustomAirportColorAnnotation(coordinate: coord, title: item.airportId!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: image)
+            let annotation = CustomAirportColorAnnotation(coordinate: coord, title: item.airportId!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: image, item: item)
             
             if let id = item.airportId {
                 airportIds.append(id)
@@ -841,7 +841,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationView.addSubview(annotationLabel)
             return annotationView
         }  else if annotation is CustomAirportColorAnnotation {
-            let annotationView = CustomAirportColorAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportAnnotationView")
+            let annotationView = CustomAirportColorAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportColorAnnotationView")
             annotationView.canShowCallout = true
             
             // Add Title beside icons
@@ -908,6 +908,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             let annotationView = view.annotation as? CustomAirportColorAnnotation
             parent.mapIconModel.showModal = true
             parent.mapIconModel.titleModal = annotationView?.title ?? ""
+            parent.mapIconModel.airportSelected = annotationView?.item 
         }
 //
 //

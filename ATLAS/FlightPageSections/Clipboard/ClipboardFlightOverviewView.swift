@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CoreLocation
 
 struct ClipboardFlightOverviewView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
@@ -23,16 +24,28 @@ struct ClipboardFlightOverviewView: View {
     @State private var isCollapseCrew = true
     
     @State private var dataFlightOverview: FlightOverviewList?
+    @State private var dataEventSector: EventSectorList?
+    
+    @State private var dayHours: String = ""
+    @State private var nightHours: String = ""
     
     //For switch crew
     @State private var isSync = false
     
     var body: some View {
+        var stdLocal: String {
+            return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
+        }
+        
+        var staLocal: String {
+            return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataEventSector?.unwrappedDepTimeDiff ?? "")
+        }
+        
         var std: String {
             if showUTC {
                 return dataFlightOverview?.unwrappedStd ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedStd ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffDep ?? "")
+                return stdLocal
             }
         }
         
@@ -40,15 +53,15 @@ struct ClipboardFlightOverviewView: View {
             if showUTC {
                 return dataFlightOverview?.unwrappedSta ?? ""
             } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedSta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return staLocal
             }
         }
         
         var eta: String {
             if showUTC {
-                return dataFlightOverview?.unwrappedEta ?? ""
+                return calculateEta()
             } else {
-                return convertUTCToLocalTime(timeString: dataFlightOverview?.unwrappedEta ?? "", timeDiff: dataFlightOverview?.unwrappedTimeDiffArr ?? "")
+                return convertUTCToLocalTime(timeString: calculateEta(), timeDiff: dataEventSector?.unwrappedArrTimeDiff ?? "")
             }
         }
         
@@ -350,10 +363,10 @@ struct ClipboardFlightOverviewView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    Text(dataFlightOverview?.unwrappedDay ?? "")
+                                    Text(dayHours)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedNight ?? "")
+                                    Text(nightHours)
                                         .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                 }.frame(height: 44)
@@ -370,7 +383,7 @@ struct ClipboardFlightOverviewView: View {
                                 }.frame(height: 44)
                                 
                                 HStack(spacing: 0) {
-                                    Text(calculateEta())
+                                    Text(eta)
                                         .font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     Text(calculateTotalTime())
@@ -414,7 +427,7 @@ struct ClipboardFlightOverviewView: View {
                                     Text("Password").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                     
                                     HStack(spacing: 0) {
-                                        Text("Username").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
+                                        Text("\(coreDataModel.dataUser?.unwrappedFirstName ?? "") \(coreDataModel.dataUser?.unwrappedLastName ?? "")").foregroundStyle(Color.black).font(.system(size: 15, weight: .semibold))
 
                                         Spacer()
                                         
@@ -485,6 +498,18 @@ struct ClipboardFlightOverviewView: View {
                 if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
                     dataFlightOverview = overviewList.first
                 }
+                
+                if let sectorList = coreDataModel.selectedEvent?.eventSector as? EventSectorList {
+                    dataEventSector = sectorList
+                }
+                
+                let dayNight = calculateDayNight()
+                self.dayHours = dayNight.day
+                self.nightHours = dayNight.night
+            }.onChange(of: showUTC) { _ in
+                let dayNight = calculateDayNight()
+                self.dayHours = dayNight.day
+                self.nightHours = dayNight.night
             }
         }//end geometry
     }
@@ -507,27 +532,88 @@ struct ClipboardFlightOverviewView: View {
     }
     
     func calculateEta() -> String {
-        return calculateTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", dataFlightOverview?.unwrappedChockOff ?? "00:00")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        if let timeChockOff = dataFlightOverview?.unwrappedChockOff, let flightTime = dataFlightOverview?.unwrappedFlightTime {
+            return addDurationToDateTime(timeChockOff, flightTime) ?? ""
+        }
+        return ""
     }
     
     func calculateTotalTime() -> String {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        var hour = "00"
-        var minute = "00"
         
-        if let unwrappedChockOff = dataFlightOverview?.unwrappedChockOff, let unwrappedChockOn = dataFlightOverview?.unwrappedChockOn {
-            if let chockOff = dateFormatter.date(from: unwrappedChockOff), let chockOn = dateFormatter.date(from: unwrappedChockOn) {
-                let diffComponents = Calendar.current.dateComponents([.hour, .minute], from: chockOff, to: chockOn)
+        if let chockOff = dataFlightOverview?.unwrappedChockOff, let chockOn = dataFlightOverview?.unwrappedChockOn {
+            if let chockOffDate = dateFormatter.date(from: chockOff), let chockOnDate = dateFormatter.date(from: chockOn) {
+                let diffComponents = Calendar.current.dateComponents([.hour, .minute], from: chockOffDate, to: chockOnDate)
+                var hour: Int = 0
+                var minute: Int = 0
                 
                 if let dhour = diffComponents.hour, dhour > 0 {
-                    hour = "\(dhour)"
+                    hour = dhour
                 }
                 
                 if let dminute = diffComponents.minute, dminute > 0 {
-                    minute = "\(dminute)"
+                    minute = dminute
                 }
+                let hourString = String(format: "%02d", hour)
+                let minuteString = String(format: "%02d", minute)
+                return "\(hourString):\(minuteString)"
             }
         }
-        return "\(hour):\(minute)"
+        return "00:00"
+    }
+    
+    
+    func calculateDayNight() -> (day: String, night: String) {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" {
+            return (day: "00:00", night: "00:00")
+        }
+        
+        let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
+        let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
+        
+        var dayNight = (day: (hours: 0, minutes: 0), night: (hours: 0, minutes: 0))
+        
+        if let dateChockOff = dataFlightOverview?.unwrappedChockOff, let dateChockOn = dataFlightOverview?.unwrappedChockOn {
+            if let currentDateChockOff = dateFormatter.date(from: dateChockOff), let currentDateChockOn = dateFormatter.date(from: dateChockOn) {
+                dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
+            }
+        }
+        
+        
+        func formatTime(hours: Int, minutes: Int) -> String {
+            let hourString = String(format: "%02d", hours)
+            let minuteString = String(format: "%02d", minutes)
+            return "\(hourString):\(minuteString)"
+        }
+        
+        func calculateNightTime(dayTime: (hours: Int, minutes: Int), duration: String) -> String {
+            // Convert dayTime to minutes
+            let dayTimeMinutes = dayTime.hours * 60 + dayTime.minutes
+            
+            // Parse the duration string to get hours and minutes
+            let durationComponents = duration.components(separatedBy: ":")
+            if durationComponents.count == 2,
+               let durationHours = Int(durationComponents[0]),
+               let durationMinutes = Int(durationComponents[1]) {
+                
+                // Calculate nightTime in minutes
+                let totalMinutes = durationHours * 60 + durationMinutes - dayTimeMinutes
+                
+                // Convert totalMinutes back to hours and minutes
+                let nightTimeHours = totalMinutes / 60
+                let nightTimeMinutes = totalMinutes % 60
+                
+                // Format nightTime as "HH:mm"
+                return formatTime(hours: nightTimeHours, minutes: nightTimeMinutes)
+            }
+            
+            // Return a default value or handle an invalid duration string
+            return "00:00"
+        }
+        
+        return (day: formatTime(hours: dayNight.day.hours, minutes: dayNight.day.minutes), night: calculateNightTime(dayTime: dayNight.day, duration: calculateTotalTime()))
     }
 }

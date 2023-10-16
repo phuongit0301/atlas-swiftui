@@ -45,8 +45,6 @@
 		3E2BA8922AD4FD06009ABCC2 /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8842AD4FD06009ABCC2 /* NoteList+CoreDataProperties.swift */; };
 		3E2BA8952AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8872AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift */; };
 		3E2BA8962AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8882AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift */; };
-		3E2BA8972AD4FD06009ABCC2 /* AirportMapColorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8892AD4FD06009ABCC2 /* AirportMapColorList+CoreDataClass.swift */; };
-		3E2BA8982AD4FD06009ABCC2 /* AirportMapColorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA88A2AD4FD06009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */; };
 		3E2BA8992AD4FD06009ABCC2 /* NotamsDataList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA88B2AD4FD06009ABCC2 /* NotamsDataList+CoreDataClass.swift */; };
 		3E2BA89A2AD4FD06009ABCC2 /* NotamsDataList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA88C2AD4FD06009ABCC2 /* NotamsDataList+CoreDataProperties.swift */; };
 		3E2BA8A72AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8A32AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift */; };
@@ -320,13 +318,19 @@
 		3E9A2C502AD91DCB0071F44C /* NotePostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C4C2AD91DCB0071F44C /* NotePostList+CoreDataProperties.swift */; };
 		3E9A2C572AD91E300071F44C /* NoteAabbaPostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C532AD91E300071F44C /* NoteAabbaPostList+CoreDataClass.swift */; };
 		3E9A2C582AD91E300071F44C /* NoteAabbaPostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C542AD91E300071F44C /* NoteAabbaPostList+CoreDataProperties.swift */; };
-		3E9A2C5F2ADA3F590071F44C /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C5B2ADA3F590071F44C /* EventList+CoreDataClass.swift */; };
-		3E9A2C602ADA3F590071F44C /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C5C2ADA3F590071F44C /* EventList+CoreDataProperties.swift */; };
 		3E9A2C652ADA42C00071F44C /* EventSectorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C632ADA42C00071F44C /* EventSectorList+CoreDataClass.swift */; };
 		3E9A2C662ADA42C00071F44C /* EventSectorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C642ADA42C00071F44C /* EventSectorList+CoreDataProperties.swift */; };
 		3E9A2C682ADA84040071F44C /* RecencySectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C672ADA84040071F44C /* RecencySectionFormView.swift */; };
 		3E9A2C6B2ADA8A2B0071F44C /* RecencyList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C692ADA8A2B0071F44C /* RecencyList+CoreDataClass.swift */; };
 		3E9A2C6C2ADA8A2B0071F44C /* RecencyList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C6A2ADA8A2B0071F44C /* RecencyList+CoreDataProperties.swift */; };
+		3E9A2C982ADBCFEB0071F44C /* AirportMapColorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C962ADBCFEB0071F44C /* AirportMapColorList+CoreDataClass.swift */; };
+		3E9A2C992ADBCFEB0071F44C /* AirportMapColorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C972ADBCFEB0071F44C /* AirportMapColorList+CoreDataProperties.swift */; };
+		3E9A2C9E2ADBDE6F0071F44C /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C9A2ADBDE6F0071F44C /* EventList+CoreDataClass.swift */; };
+		3E9A2C9F2ADBDE6F0071F44C /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2C9B2ADBDE6F0071F44C /* EventList+CoreDataProperties.swift */; };
+		3E9A2CA42ADBDED80071F44C /* AirportMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CA22ADBDED80071F44C /* AirportMapList+CoreDataClass.swift */; };
+		3E9A2CA52ADBDED80071F44C /* AirportMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CA32ADBDED80071F44C /* AirportMapList+CoreDataProperties.swift */; };
+		3E9A2CA72ADC06190071F44C /* SlideoverRowTextAlternates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CA62ADC06190071F44C /* SlideoverRowTextAlternates.swift */; };
+		3E9A2CAA2ADC15230071F44C /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9A2CA92ADC15230071F44C /* Solar */; };
 		3EB99CD32A4C16F00091BC08 /* FlightPlanSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */; };
 		3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CD42A4C56770091BC08 /* CustomStepper.swift */; };
 		3EB99CDF2A4FB6A50091BC08 /* ModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB99CDE2A4FB6A50091BC08 /* ModalPicker.swift */; };
@@ -372,8 +376,6 @@
 		3EEBE6432AB1A8D200421AFF /* traffic_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE6422AB1A8D200421AFF /* traffic_data.json */; };
 		3EEBE64C2AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6442AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift */; };
 		3EEBE64D2AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6452AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift */; };
-		3EEBE6502AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6482AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift */; };
-		3EEBE6512AB1AE2300421AFF /* AirportMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6492AB1AE2300421AFF /* AirportMapList+CoreDataProperties.swift */; };
 		3EEBE65D2AB1E59A00421AFF /* waypoint_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE63B2AB1A0FC00421AFF /* waypoint_data.json */; };
 		3EEBE6632AB1FA0400421AFF /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6622AB1FA0400421AFF /* CustomAnnotationView.swift */; };
 		3EEBE6652AB1FCEC00421AFF /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEBE6642AB1FCEC00421AFF /* CustomAnnotation.swift */; };
@@ -514,8 +516,6 @@
 		3E2BA8842AD4FD06009ABCC2 /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E2BA8872AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapRouteList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E2BA8882AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapRouteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E2BA8892AD4FD06009ABCC2 /* AirportMapColorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E2BA88A2AD4FD06009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E2BA88B2AD4FD06009ABCC2 /* NotamsDataList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E2BA88C2AD4FD06009ABCC2 /* NotamsDataList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotamsDataList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E2BA8A32AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventDateRangeList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -789,13 +789,18 @@
 		3E9A2C4C2AD91DCB0071F44C /* NotePostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotePostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2C532AD91E300071F44C /* NoteAabbaPostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2C542AD91E300071F44C /* NoteAabbaPostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteAabbaPostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E9A2C5B2ADA3F590071F44C /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E9A2C5C2ADA3F590071F44C /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2C632ADA42C00071F44C /* EventSectorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventSectorList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2C642ADA42C00071F44C /* EventSectorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventSectorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2C672ADA84040071F44C /* RecencySectionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecencySectionFormView.swift; sourceTree = "<group>"; };
 		3E9A2C692ADA8A2B0071F44C /* RecencyList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2C6A2ADA8A2B0071F44C /* RecencyList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E9A2C962ADBCFEB0071F44C /* AirportMapColorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E9A2C972ADBCFEB0071F44C /* AirportMapColorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E9A2C9A2ADBDE6F0071F44C /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E9A2C9B2ADBDE6F0071F44C /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E9A2CA22ADBDED80071F44C /* AirportMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E9A2CA32ADBDED80071F44C /* AirportMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E9A2CA62ADC06190071F44C /* SlideoverRowTextAlternates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverRowTextAlternates.swift; sourceTree = "<group>"; };
 		3EB99CD22A4C16F00091BC08 /* FlightPlanSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightPlanSegmented.swift; sourceTree = "<group>"; };
 		3EB99CD42A4C56770091BC08 /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
 		3EB99CDE2A4FB6A50091BC08 /* ModalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPicker.swift; sourceTree = "<group>"; };
@@ -844,8 +849,6 @@
 		3EEBE6422AB1A8D200421AFF /* traffic_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traffic_data.json; sourceTree = "<group>"; };
 		3EEBE6442AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EEBE6452AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3EEBE6482AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EEBE6492AB1AE2300421AFF /* AirportMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EEBE6622AB1FA0400421AFF /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		3EEBE6642AB1FCEC00421AFF /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		3EEBE6662AB2A08A00421AFF /* CircleAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotation.swift; sourceTree = "<group>"; };
@@ -931,6 +934,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E9A2CAA2ADC15230071F44C /* Solar in Frameworks */,
 				3E7723522AD7879E000C7AA3 /* FirebaseDatabase in Frameworks */,
 				3EECB85E2A716481009D4971 /* FirebaseAppDistribution-Beta in Frameworks */,
 				3EECB8622A716481009D4971 /* FirebaseAuthCombine-Community in Frameworks */,
@@ -1066,6 +1070,7 @@
 				3EECB8522A6BC477009D4971 /* NoteDestinationSplit.swift */,
 				3E72920C2AC84018000FF295 /* SlideoverOverviewView.swift */,
 				3E72920E2AC852AB000FF295 /* SlideoverPreflightView.swift */,
+				3E9A2CA62ADC06190071F44C /* SlideoverRowTextAlternates.swift */,
 				3E7292102AC85B2F000FF295 /* SlideoverCrewBriefing.swift */,
 				3E72922A2AC86DDF000FF295 /* SlideoverArrival */,
 				3E7292142AC860CD000FF295 /* SlideoverDeparture */,
@@ -1841,10 +1846,12 @@
 		3EEBE6542AB1AE5000421AFF /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3E9A2CA22ADBDED80071F44C /* AirportMapList+CoreDataClass.swift */,
+				3E9A2CA32ADBDED80071F44C /* AirportMapList+CoreDataProperties.swift */,
+				3E9A2C962ADBCFEB0071F44C /* AirportMapColorList+CoreDataClass.swift */,
+				3E9A2C972ADBCFEB0071F44C /* AirportMapColorList+CoreDataProperties.swift */,
 				3E2BA8872AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift */,
 				3E2BA8882AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift */,
-				3E2BA8892AD4FD06009ABCC2 /* AirportMapColorList+CoreDataClass.swift */,
-				3E2BA88A2AD4FD06009ABCC2 /* AirportMapColorList+CoreDataProperties.swift */,
 				3E2BA85B2AD1A02D009ABCC2 /* AabbaPostList+CoreDataClass.swift */,
 				3E2BA85C2AD1A02D009ABCC2 /* AabbaPostList+CoreDataProperties.swift */,
 				3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */,
@@ -1855,8 +1862,6 @@
 				3E7290F82ABB2B70000FF295 /* TrafficMapList+CoreDataProperties.swift */,
 				3EEBE6442AB1AE2300421AFF /* WaypointMapList+CoreDataClass.swift */,
 				3EEBE6452AB1AE2300421AFF /* WaypointMapList+CoreDataProperties.swift */,
-				3EEBE6482AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift */,
-				3EEBE6492AB1AE2300421AFF /* AirportMapList+CoreDataProperties.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1891,10 +1896,10 @@
 		3EF221932AAEBFEC000B8FFB /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				3E9A2C9A2ADBDE6F0071F44C /* EventList+CoreDataClass.swift */,
+				3E9A2C9B2ADBDE6F0071F44C /* EventList+CoreDataProperties.swift */,
 				3E9A2C632ADA42C00071F44C /* EventSectorList+CoreDataClass.swift */,
 				3E9A2C642ADA42C00071F44C /* EventSectorList+CoreDataProperties.swift */,
-				3E9A2C5B2ADA3F590071F44C /* EventList+CoreDataClass.swift */,
-				3E9A2C5C2ADA3F590071F44C /* EventList+CoreDataProperties.swift */,
 				3E2BA8A32AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift */,
 				3E2BA8A42AD5431A009ABCC2 /* EventDateRangeList+CoreDataProperties.swift */,
 			);
@@ -2137,6 +2142,7 @@
 				3EECB8612A716481009D4971 /* FirebaseAuthCombine-Community */,
 				3EE170952AAC2138004DA27C /* iCalendarParser */,
 				3E7723512AD7879E000C7AA3 /* FirebaseDatabase */,
+				3E9A2CA92ADC15230071F44C /* Solar */,
 			);
 			productName = ATLAS;
 			productReference = 3ED754682A11E1BA003072A1 /* ATLAS.app */;
@@ -2214,6 +2220,7 @@
 				3E03C62E2A14B3CC0099ACA3 /* XCRemoteSwiftPackageReference "similarity-search-kit" */,
 				3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */,
+				3E9A2CA82ADC15230071F44C /* XCRemoteSwiftPackageReference "Solar" */,
 			);
 			productRefGroup = 3ED754692A11E1BA003072A1 /* Products */;
 			projectDirPath = "";
@@ -2356,6 +2363,7 @@
 				3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */,
 				3E7291362AC188DD000FF295 /* RowAlternates.swift in Sources */,
 				3ECD577D2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift in Sources */,
+				3E9A2C982ADBCFEB0071F44C /* AirportMapColorList+CoreDataClass.swift in Sources */,
 				3E4A366D2A570B9A00027C61 /* TagList+CoreDataProperties.swift in Sources */,
 				3E7291FB2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift in Sources */,
 				3E72926D2ACC6355000FF295 /* SummaryInfoList+CoreDataClass.swift in Sources */,
@@ -2378,6 +2386,7 @@
 				3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */,
 				3EEBE6AB2AB873C700421AFF /* AabbaCommentList+CoreDataClass.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
+				3E9A2C9F2ADBDE6F0071F44C /* EventList+CoreDataProperties.swift in Sources */,
 				3E4E10202A65519A0026802B /* PreviousSearchSplitView.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				3EE170702AA827EE004DA27C /* MainView.swift in Sources */,
@@ -2409,6 +2418,7 @@
 				3E7723442AD69946000C7AA3 /* CustomModalView.swift in Sources */,
 				3EB99CE32A508F220091BC08 /* ModalPickerMultiple.swift in Sources */,
 				3EB99CD52A4C56770091BC08 /* CustomStepper.swift in Sources */,
+				3E9A2C992ADBCFEB0071F44C /* AirportMapColorList+CoreDataProperties.swift in Sources */,
 				3E9A2C682ADA84040071F44C /* RecencySectionFormView.swift in Sources */,
 				3E4A368E2A570BA800027C61 /* FuelTableList+CoreDataProperties.swift in Sources */,
 				3E7291CD2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift in Sources */,
@@ -2491,11 +2501,12 @@
 				3EE170772AA82DF8004DA27C /* CalendarSectionView.swift in Sources */,
 				3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */,
 				3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */,
-				3E2BA8972AD4FD06009ABCC2 /* AirportMapColorList+CoreDataClass.swift in Sources */,
 				3E72913D2AC1BE04000FF295 /* NoteItemForm.swift in Sources */,
+				3E9A2CA52ADBDED80071F44C /* AirportMapList+CoreDataProperties.swift in Sources */,
 				3E7291232ABDDD0B000FF295 /* CustomAirportColorAnnotationView.swift in Sources */,
 				3E7291082ABC251F000FF295 /* LogbookSegmented.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
+				3E9A2C9E2ADBDE6F0071F44C /* EventList+CoreDataClass.swift in Sources */,
 				3E4A368F2A570BA800027C61 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
 				3E3FCBF02A21C924008017FA /* DepartureReferenceContainer.swift in Sources */,
 				3E7291BF2AC5B549000FF295 /* ClipboardPreflight.swift in Sources */,
@@ -2503,7 +2514,6 @@
 				3EEBE6962AB6816A00421AFF /* GeneralPopoverView.swift in Sources */,
 				3E72920B2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift in Sources */,
 				3E7F683E2A20ABA500EC2CA3 /* PresentationDetentReference.swift in Sources */,
-				3E9A2C602ADA3F590071F44C /* EventList+CoreDataProperties.swift in Sources */,
 				3E03C64D2A15D4D80099ACA3 /* Color.swift in Sources */,
 				3EEBE6C12AB88CE700421AFF /* MapPostView.swift in Sources */,
 				3E4A36D02A5A4A6400027C61 /* ArrivalATISList+CoreDataProperties.swift in Sources */,
@@ -2522,9 +2532,9 @@
 				3E086D722A945DEA00BE00AD /* Helper.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
 				3E7292042AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift in Sources */,
-				3E9A2C5F2ADA3F590071F44C /* EventList+CoreDataClass.swift in Sources */,
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */,
+				3E9A2CA42ADBDED80071F44C /* AirportMapList+CoreDataClass.swift in Sources */,
 				3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */,
 				3E9A2C582AD91E300071F44C /* NoteAabbaPostList+CoreDataProperties.swift in Sources */,
 				3E7292522ACAA21B000FF295 /* LimitationTimeModalView.swift in Sources */,
@@ -2576,14 +2586,12 @@
 				3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */,
 				3E9A2C6C2ADA8A2B0071F44C /* RecencyList+CoreDataProperties.swift in Sources */,
 				3E4E101C2A652A2D0026802B /* ClipboardAISearchResult.swift in Sources */,
-				3EEBE6502AB1AE2300421AFF /* AirportMapList+CoreDataClass.swift in Sources */,
 				3E7291062ABC24E2000FF295 /* EntriesSubSectionView.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
 				3E72921D2AC8613F000FF295 /* SlideoverDepartureNoteRelevantList.swift in Sources */,
 				3EE170892AA859F7004DA27C /* HomeCalendarView.swift in Sources */,
 				3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */,
 				3E72920F2AC852AB000FF295 /* SlideoverPreflightView.swift in Sources */,
-				3EEBE6512AB1AE2300421AFF /* AirportMapList+CoreDataProperties.swift in Sources */,
 				3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */,
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
 				3E7291F12AC6ACE0000FF295 /* ClipboardEnrouteNoteRelevantList.swift in Sources */,
@@ -2603,7 +2611,6 @@
 				3E4A369B2A570BA800027C61 /* FuelExtraList+CoreDataProperties.swift in Sources */,
 				3EEBE6712AB3547C00421AFF /* CustomRouteAnnotation.swift in Sources */,
 				3E2BA8A72AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift in Sources */,
-				3E2BA8982AD4FD06009ABCC2 /* AirportMapColorList+CoreDataProperties.swift in Sources */,
 				3EFA5EF62A3F0E6B001ED6CF /* HeaderViewSplit.swift in Sources */,
 				3E4A368D2A570BA800027C61 /* DepartureEntriesList+CoreDataProperties.swift in Sources */,
 				3EEBE6842AB6747300421AFF /* WeatherPopoverView.swift in Sources */,
@@ -2681,6 +2688,7 @@
 				C5F9C81A2A1487870076396F /* ATLASApp.swift in Sources */,
 				3E72923D2AC99951000FF295 /* ResetPasswordView.swift in Sources */,
 				3EEBE6882AB67B0000421AFF /* AskAabbaPopoverView.swift in Sources */,
+				3E9A2CA72ADC06190071F44C /* SlideoverRowTextAlternates.swift in Sources */,
 				3E2BA8622AD1C2DE009ABCC2 /* LogbookEntriesList+CoreDataProperties.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
 				3E4A36C22A57B3C700027C61 /* RemoteService.swift in Sources */,
@@ -3053,6 +3061,14 @@
 				kind = branch;
 			};
 		};
+		3E9A2CA82ADC15230071F44C /* XCRemoteSwiftPackageReference "Solar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ceeK/Solar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		3EE170942AAC2137004DA27C /* XCRemoteSwiftPackageReference "iCalendarParser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dmail-me/iCalendarParser.git";
@@ -3076,6 +3092,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		3E9A2CA92ADC15230071F44C /* Solar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E9A2CA82ADC15230071F44C /* XCRemoteSwiftPackageReference "Solar" */;
+			productName = Solar;
 		};
 		3EE170952AAC2138004DA27C /* iCalendarParser */ = {
 			isa = XCSwiftPackageProductDependency;

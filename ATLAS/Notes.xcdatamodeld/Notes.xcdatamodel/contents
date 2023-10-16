@@ -40,17 +40,23 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="airportMapList" inverseEntity="Event"/>
     </entity>
     <entity name="AirportMapColor" representedClassName="AirportMapColorList" syncable="YES">
         <attribute name="airportId" optional="YES" attributeType="String"/>
+        <attribute name="arrDelay" optional="YES" attributeType="String"/>
+        <attribute name="arrDelayColour" optional="YES" attributeType="String"/>
         <attribute name="colour" optional="YES" attributeType="String"/>
+        <attribute name="depDelay" optional="YES" attributeType="String"/>
+        <attribute name="depDelayColour" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="metar" optional="YES" attributeType="String"/>
-        <attribute name="notams" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="notams" optional="YES" attributeType="String" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="selection" optional="YES" attributeType="String"/>
         <attribute name="taf" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="airportMapColorList" inverseEntity="Event"/>
     </entity>
     <entity name="AirportMapColorNotams" representedClassName="AirportMapColorNotamsList" syncable="YES">
@@ -179,6 +185,7 @@
         <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="airportMapColorList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
+        <relationship name="airportMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMap" inverseName="events" inverseEntity="AirportMap"/>
         <relationship name="eventDateRangeList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateRange" inverseName="events" inverseEntity="EventDateRange"/>
         <relationship name="eventSector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventSector" inverseName="event" inverseEntity="EventSector"/>
         <relationship name="flightOverviewList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlightOverview" inverseName="events" inverseEntity="FlightOverview"/>

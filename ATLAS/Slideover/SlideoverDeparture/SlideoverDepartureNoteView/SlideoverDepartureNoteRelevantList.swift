@@ -113,9 +113,6 @@ struct SlideoverDepartureNoteRelevantList: View {
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

@@ -272,5 +272,6 @@ class MapIconModel: ObservableObject {
     @Published var numAabba: Int = 1 // For reload Map when update or add new comment, vote
     @Published var showModal: Bool = false
     @Published var titleModal: String = ""
+    @Published var airportSelected: AirportMapColorList?
 }
 

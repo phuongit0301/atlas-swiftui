@@ -2,7 +2,7 @@
 //  AirportMapColorList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/10/2023.
+//  Created by phuong phan on 15/10/2023.
 //
 //
 
@@ -22,11 +22,16 @@ extension AirportMapColorList {
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
     @NSManaged public var metar: String?
-    @NSManaged public var notams: Data?
+    @NSManaged public var notams: String?
     @NSManaged public var selection: String?
     @NSManaged public var taf: String?
+    @NSManaged public var arrDelay: String?
+    @NSManaged public var depDelay: String?
+    @NSManaged public var arrDelayColour: String?
+    @NSManaged public var depDelayColour: String?
+    @NSManaged public var updatedAt: String?
     @NSManaged public var events: NSSet?
-    
+
     public var unwrappedAirportId: String {
         airportId ?? ""
     }
@@ -55,19 +60,28 @@ extension AirportMapColorList {
         taf ?? ""
     }
     
-    public var unwrappedNotams: [String] {
-        do {
-            if let notams = notams {
-                if let data = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData as? [String] {
-                    return data
-                }
-            }
-            return []
-        } catch {
-            print("could not unarchive array: \(error)")
-        }
-        
-        return []
+    public var unwrappedNotams: String {
+        notams ?? ""
+    }
+    
+    public var unwrappedArrDelay: String {
+        arrDelay ?? ""
+    }
+    
+    public var unwrappedDepDelay: String {
+        depDelay ?? ""
+    }
+    
+    public var unwrappedArrDelayColour: String {
+        arrDelayColour ?? ""
+    }
+    
+    public var unwrappedDepDelayColour: String {
+        depDelayColour ?? ""
+    }
+    
+    public var unwrappedUpdatedAt: String {
+        updatedAt ?? ""
     }
 }
 

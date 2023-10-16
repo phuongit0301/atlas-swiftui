@@ -115,15 +115,11 @@ struct SlideoverEnrouteNoteRelevantList: View {
                                     Divider().padding(.horizontal, -16)
                                 }
                             }.id(UUID())
-                                .padding(.bottom, 8)
                                 .frame(maxWidth: geoWidth, alignment: .leading)
                         }
                     }
                 }
             }
-            
-            Spacer()
-            
         }
     }
     

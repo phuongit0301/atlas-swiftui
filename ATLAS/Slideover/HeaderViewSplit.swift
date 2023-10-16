@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HeaderViewSplit: View {
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @Environment(\.dismiss) private var dismiss
     var viewInformationModel = ListReferenceModel()
     
@@ -19,6 +20,14 @@ struct HeaderViewSplit: View {
     var isNext: Bool = false
     @State var item: ListFlightInformationItem?
     @State private var isActive: Bool = false
+    @State private var selectedEvent: EventList?
+    @State private var dataEvents: [EventList] = []
+    
+    @State var currentIndex = 0 {
+        didSet {
+            selectedEvent = dataEvents[currentIndex]
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -51,12 +60,11 @@ struct HeaderViewSplit: View {
                     }
                     
                     HStack(alignment: .center, spacing: 0) {
-                        
-                        Text(sideMenuState.selectedMenu?.name ?? "").foregroundColor(Color.theme.eerieBlack).font(.system(size: 17, weight: .semibold))
-                        
-                        if sideMenuState.selectedMenu?.date != nil {
-                            Text(sideMenuState.selectedMenu?.date ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 5).font(.system(size: 17, weight: .semibold))
-                        }
+                        Picker("", selection: $selectedEvent) {
+                            ForEach(coreDataModel.dataEventUpcoming + coreDataModel.dataEventCompleted, id: \.self) { item in
+                                Text("\(item.unwrappedName) \(item.unwrappedStartDate)").tag(item)
+                            }
+                        }.labelsHidden()
                     }.frame(maxWidth: .infinity)
                     
                     if isNext {
@@ -84,6 +92,11 @@ struct HeaderViewSplit: View {
                 
             }.padding()
         }.background(.white)
+            .onAppear {
+                dataEvents = coreDataModel.dataEventUpcoming + coreDataModel.dataEventCompleted
+                
+                selectedEvent = dataEvents.first
+            }
         Rectangle().fill(Color.black.opacity(0.3)).frame(height: 1)
     }
 }

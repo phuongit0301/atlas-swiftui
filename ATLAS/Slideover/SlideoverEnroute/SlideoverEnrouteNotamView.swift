@@ -32,24 +32,21 @@ struct SlideoverEnrouteNotamView: View {
                             .aspectRatio(contentMode: .fit)
                     }
                     
+                    Spacer()
                 }.contentShape(Rectangle())
                     .onTapGesture {
                         self.isShow.toggle()
                     }
-                
-                Spacer()
-                
             }.frame(height: 54)
             
             if isShow {
-                VStack(alignment: .leading) {
-                    if itemList.count <= 0 {
-                        HStack {
-                            Text("No NOTAMs saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
-                            Spacer()
-                        }.frame(height: 44)
-                    } else {
-                        
+                if itemList.count <= 0 {
+                    HStack {
+                        Text("No NOTAMs saved").foregroundColor(Color.theme.philippineGray2).font(.system(size: 17, weight: .regular))
+                        Spacer()
+                    }.frame(height: 44)
+                } else {
+                    VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Text("[STATION NAME]: ETD DD/MM/YY HHMM")
                                 .font(.system(size: 15, weight: .semibold))

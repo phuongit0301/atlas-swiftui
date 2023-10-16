@@ -1,5 +1,5 @@
 //
-//  RowAlternates.swift
+//  RowTextAlternates.swift
 //  ATLAS
 //
 //  Created by phuong phan on 25/09/2023.
