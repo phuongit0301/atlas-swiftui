@@ -11,8 +11,10 @@ struct FlightForm: View {
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
+    @EnvironmentObject var calendarModel: CalendarModel
     @Binding var selectedEvent: EventDataDropDown
     @Binding var showModal: Bool
+    @Binding var isEdit: Bool
     var width: CGFloat = 0
     @State var isLoading = false
     
@@ -170,6 +172,32 @@ struct FlightForm: View {
             Spacer()
         }
         .background(Color.theme.antiFlashWhite)
+        .onAppear {
+            if isEdit {
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                timeFormatter.dateFormat = "HHmm"
+                
+                tfEventName = calendarModel.selectedEvent?.unwrappedName ?? ""
+                tfDep = calendarModel.selectedEvent?.unwrappedDep ?? ""
+                tfDest = calendarModel.selectedEvent?.unwrappedDest ?? ""
+                
+                if let startDate = calendarModel.selectedEvent?.unwrappedStartDate, let startDateFormat = dateFormatter.date(from: startDate) {
+                    selectedStartDate = startDateFormat
+                }
+                
+                if let startTime = calendarModel.selectedEvent?.unwrappedStartDate, let startTimeFormat = timeFormatter.date(from: startTime) {
+                    selectedStartTime = startTimeFormat
+                }
+                
+                if let endDate = calendarModel.selectedEvent?.unwrappedEndDate, let endDateFormat = dateFormatter.date(from: endDate) {
+                    selectedEndDate = endDateFormat
+                }
+                
+                if let endTime = calendarModel.selectedEvent?.unwrappedEndDate, let endTimeFormat = timeFormatter.date(from: endTime) {
+                    selectedEndTime = endTimeFormat
+                }
+            }
+        }
     }
     
     private func addEvent() {
@@ -293,11 +321,5 @@ struct FlightForm: View {
                 }
             }
         }
-    }
-}
-
-struct FlightForm_Previews: PreviewProvider {
-    static var previews: some View {
-        FlightForm(selectedEvent: .constant(EventDataDropDown.flight), showModal: .constant(true), width: 200)
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OtherEventDetail: View {
     @Binding var event: EventList?
+    @Binding var showModal: Bool
+    @Binding var isEdit: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,7 +20,8 @@ struct OtherEventDetail: View {
                 Spacer()
                 
                 Button(action: {
-                    // Todo
+                    self.isEdit.toggle()
+                    self.showModal.toggle()
                 }, label: {
                     Text("Edit").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
                 }).buttonStyle(PlainButtonStyle())

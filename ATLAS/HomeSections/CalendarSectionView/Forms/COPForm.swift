@@ -12,6 +12,7 @@ struct COPForm: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var selectedEvent: EventDataDropDown
     @Binding var showModal: Bool
+    @Binding var isEdit: Bool
     @State private var selectedStartDate = Date()
     @State private var selectedStartTime = Date()
     @State private var selectedEndDate = Date()
@@ -192,11 +193,5 @@ struct COPForm: View {
             
             self.showModal.toggle()
         }
-    }
-}
-
-struct COPForm_Previews: PreviewProvider {
-    static var previews: some View {
-        COPForm(selectedEvent: .constant(EventDataDropDown.cop), showModal: .constant(true), width: 200)
     }
 }

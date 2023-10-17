@@ -11,6 +11,8 @@ import iCalendarParser
 struct CalendarSectionView: View {
     @State var showModal = false
     @State var showLoading = false
+    @State var isEdit = false
+    
     @EnvironmentObject var coreDataModel: CoreDataModelState
     
     var body: some View {
@@ -59,12 +61,12 @@ struct CalendarSectionView: View {
                 HStack(spacing: 0) {
                     CalendarView(calendar: Calendar(identifier: .gregorian)).frame(width: (proxy.size.width * 2 / 3))
                     
-                    CalendarInformationView()
+                    CalendarInformationView(showModal: $showModal, isEdit: $isEdit)
                 }
             }// end VStack
             .background(Color.theme.antiFlashWhite)
             .sheet(isPresented: $showModal) {
-                EventModalView(showModal: $showModal).interactiveDismissDisabled(true)
+                EventModalView(showModal: $showModal, isEdit: $isEdit).interactiveDismissDisabled(true)
             }.frame(height: proxy.size.height + 200)
         }
     }

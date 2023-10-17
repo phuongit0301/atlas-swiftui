@@ -9,17 +9,19 @@ import SwiftUI
 
 struct CalendarInformationView: View {
     @EnvironmentObject var calendarModel: CalendarModel
+    @Binding var showModal: Bool
+    @Binding var isEdit: Bool
     
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 if calendarModel.selectedEvent != nil {
                     if calendarModel.selectedEvent?.type == "Flight" {
-                        FlightDetail(event: $calendarModel.selectedEvent)
+                        FlightDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
                     } else if calendarModel.selectedEvent?.type == "COP" {
-                        COPDetail(event: $calendarModel.selectedEvent)
+                        COPDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
                     } else {
-                        OtherEventDetail(event: $calendarModel.selectedEvent)
+                        OtherEventDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
                     }
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
@@ -45,11 +47,5 @@ struct CalendarInformationView: View {
             }.padding(.top, 8)
                 .padding(.trailing)
         }
-    }
-}
-
-struct CalendarInformationView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarInformationView()
     }
 }

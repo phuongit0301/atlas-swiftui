@@ -12,6 +12,7 @@ struct OtherEventForm: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var selectedEvent: EventDataDropDown
     @Binding var showModal: Bool
+    @Binding var isEdit: Bool
     var width: CGFloat = 0
     
     @State private var selectedReminder = ReminderDataDropDown.before
@@ -250,11 +251,5 @@ struct OtherEventForm: View {
             
             self.showModal.toggle()
         }
-    }
-}
-
-struct OtherEventForm_Previews: PreviewProvider {
-    static var previews: some View {
-        OtherEventForm(selectedEvent: .constant(EventDataDropDown.otherEvent), showModal: .constant(true), width: 200)
     }
 }
