@@ -58,6 +58,7 @@ struct FlightOverviewSectionView: View {
     @State private var dayHours: String = ""
     @State private var nightHours: String = ""
     
+    
     //For switch crew
     @State private var isSync = false
     
