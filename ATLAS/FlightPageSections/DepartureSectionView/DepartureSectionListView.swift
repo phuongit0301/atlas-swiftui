@@ -23,6 +23,8 @@ struct DepartureSectionListView: View {
     @State private var itemList = [NoteList]()
     var header: String = "Your Notes"
     
+    let dateFormmater = DateFormatter()
+    
     var body: some View {
         GeometryReader {proxy in
             ScrollView {
@@ -33,7 +35,7 @@ struct DepartureSectionListView: View {
                             .padding(.leading)
                         Spacer()
                         
-                        Text("Last Update: DD/MM/YY HHMM").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                        Text("Last Update: \(renderTitle())").foregroundColor(.black).font(.system(size: 15, weight: .regular))
                         
                         Button(action: {
                             // Todo
@@ -114,5 +116,17 @@ struct DepartureSectionListView: View {
         if self.currentIndex > -1 {
             self.currentIndex = -1
         }
+    }
+    
+    func renderTitle() -> String {
+        dateFormmater.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        let toDate = Date()
+        
+        if let updatedAt = mapIconModel.airportSelected?.unwrappedUpdatedAt, let fromDate = dateFormmater.date(from: updatedAt) {
+            let delta = Calendar.current.dateComponents([.hour, .minute], from: fromDate, to: toDate)
+            return  "\(String(format: "%02d", delta.hour ?? 0)) hrs \(String(format: "%02d", delta.minute ?? 0)) mins ago"
+        }
+        return ""
     }
 }

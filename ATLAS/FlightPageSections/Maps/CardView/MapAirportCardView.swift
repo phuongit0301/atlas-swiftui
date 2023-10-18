@@ -25,6 +25,8 @@ struct MapAirportCardView: View {
     @State var dataNotams: [NotamsDataList] = []
     let dateFormmater = DateFormatter()
     
+    let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -233,9 +235,33 @@ struct MapAirportCardView: View {
                                                     Spacer()
                                                 }.frame(height: 44)
                                             } else {
-                                                HStack {
-                                                    Text(mapIconModel.airportSelected?.unwrappedMetar ?? "").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                                }.padding(.vertical, 8)
+                                                if let metar = mapIconModel.airportSelected?.unwrappedMetar {
+                                                    HStack {
+                                                        NewFlowLayout(alignment: .leading) {
+                                                            ForEach(metar.components(separatedBy: " "), id: \.self) { word in
+                                                                if redWords.contains(word) {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.red)
+                                                                } else if let number = Int(word), number < 3000 {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.red)
+                                                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.green)
+                                                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.green)
+                                                                } else {
+                                                                    Text(word).font(.system(size: 15, weight: .regular))
+                                                                }
+                                                            }
+                                                        }
+                                                    }.padding(.vertical, 8)
+                                                }
                                             }
                                         }
                                         
@@ -253,9 +279,33 @@ struct MapAirportCardView: View {
                                                     Spacer()
                                                 }.frame(height: 44)
                                             } else {
-                                                HStack {
-                                                    Text(mapIconModel.airportSelected?.unwrappedTaf ?? "").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                                }.padding(.vertical, 8)
+                                                if let taf = mapIconModel.airportSelected?.unwrappedTaf {
+                                                    HStack {
+                                                        NewFlowLayout(alignment: .leading) {
+                                                            ForEach(taf.components(separatedBy: " "), id: \.self) { word in
+                                                                if redWords.contains(word) {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.red)
+                                                                } else if let number = Int(word), number < 3000 {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.red)
+                                                                } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.green)
+                                                                } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                                    Text(word)
+                                                                        .font(.system(size: 15, weight: .regular))
+                                                                        .foregroundColor(.green)
+                                                                } else {
+                                                                    Text(word).font(.system(size: 15, weight: .regular))
+                                                                }
+                                                            }
+                                                        }
+                                                    }.padding(.vertical, 8)
+                                                }
                                             }
                                         }
                                     }

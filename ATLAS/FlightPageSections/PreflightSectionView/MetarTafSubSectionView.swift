@@ -18,6 +18,7 @@ struct MetarTafSubSectionView: View {
     @State private var isDestShow = true
     
     @State private var metarTafList = [MetarTafDataList]()
+    let redWords: [String] = ["TEMPO", "RA", "SHRA", "RESHRA", "-SHRA", "+SHRA", "TS", "TSRA", "-TSRA", "+TSRA", "RETS"]
     
     var body: some View {
         GeometryReader { proxy in
@@ -109,19 +110,67 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataDepartureMetarTaf?.unwrappedMetar ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
-                                    
+                                    if let departureMetarTaf = coreDataModel.dataDepartureMetarTaf?.unwrappedMetar {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(departureMetarTaf.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
+
                                     Text("TAF")
                                         .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
                                         .frame(height: 44)
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataDepartureMetarTaf?.unwrappedTaf ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let departureTaf = coreDataModel.dataDepartureMetarTaf?.unwrappedTaf {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(departureTaf.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                 }.padding(.bottom)
                             }
                             
@@ -174,9 +223,33 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataEnrouteMetarTaf?.unwrappedMetar ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let enrouteMetar = coreDataModel.dataEnrouteMetarTaf?.unwrappedMetar {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(enrouteMetar.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                     
                                     Text("TAF")
                                         .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
@@ -184,9 +257,33 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataEnrouteMetarTaf?.unwrappedTaf ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let enrouteTaf = coreDataModel.dataEnrouteMetarTaf?.unwrappedTaf {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(enrouteTaf.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                     
                                 }.padding(.bottom)
                             }
@@ -238,9 +335,33 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataArrivalMetarTaf?.unwrappedMetar ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let arrivalMetar = coreDataModel.dataArrivalMetarTaf?.unwrappedMetar {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(arrivalMetar.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                     
                                     Text("TAF")
                                         .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
@@ -248,9 +369,34 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataArrivalMetarTaf?.unwrappedTaf ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let arrivalTaf = coreDataModel.dataArrivalMetarTaf?.unwrappedTaf {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(arrivalTaf.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
+                                    
                                 }.padding(.bottom)
                             }
                         }
@@ -300,9 +446,33 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataDestinationMetarTaf?.unwrappedMetar ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let destinationMetar = coreDataModel.dataDestinationMetarTaf?.unwrappedMetar {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(destinationMetar.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                     
                                     Text("TAF")
                                         .font(.system(size: 15, weight: .medium)).foregroundColor(Color.black)
@@ -310,9 +480,33 @@ struct MetarTafSubSectionView: View {
                                     
                                     Divider().padding(.horizontal, -16)
                                     
-                                    Text(coreDataModel.dataDestinationMetarTaf?.unwrappedTaf ?? "")
-                                        .font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
-                                        .padding(.vertical, 8)
+                                    if let destinationTaf = coreDataModel.dataDestinationMetarTaf?.unwrappedTaf {
+                                        HStack {
+                                            NewFlowLayout(alignment: .leading) {
+                                                ForEach(destinationTaf.components(separatedBy: " "), id: \.self) { word in
+                                                    if redWords.contains(word) {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if let number = Int(word), number < 3000 {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.red)
+                                                    } else if word.range(of: #"^\d{3}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else if word.range(of: #"\d+KT"#, options: .regularExpression) != nil || word.range(of: #"^\d{4}$"#, options: .regularExpression) != nil {
+                                                        Text(word)
+                                                            .font(.system(size: 15, weight: .regular))
+                                                            .foregroundColor(.green)
+                                                    } else {
+                                                        Text(word).font(.system(size: 15, weight: .regular))
+                                                    }
+                                                }
+                                            }
+                                        }.padding(.vertical, 8)
+                                    }
                                 }.padding(.bottom)
                             }
                         }

@@ -34,7 +34,7 @@ struct MapViewModal: View {
     @State var selectedAddRoute = false
     @State var selectedAABBA = true
     @State var selectedWaypoint = false
-    @State var selectedAirport = false
+    @State var selectedAirport = true
     
     @State private var showPopoverWeather = false
     @State private var showPopoverTurbulence = false
@@ -67,7 +67,8 @@ struct MapViewModal: View {
                         dataAabbaMap: coreDataModel.dataAabbaMap,
                         currentLocation: locationViewModel.currentLocation,
                         mapType: mapType,
-                        isLoading: isLoading
+                        isLoading: isLoading,
+                        routeDatas: routeDatas
                     ).overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
                         .cornerRadius(8)
                     
@@ -752,18 +753,24 @@ struct MapView: UIViewRepresentable {
     let currentLocation: CLLocationCoordinate2D
     let mapType: MKMapType
     var isLoading: Bool
+    var routeDatas: [SRoute]
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
     func makeUIView(context: Context) -> MKMapView {
 //        let mapView = MKMapView()
+        if routeDatas.count > 0 {
+            let regionCustom: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: ((routeDatas[1].latitude) as NSString).doubleValue, longitude: ((routeDatas[1].longitude) as NSString).doubleValue), span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
+            mapView.setRegion(regionCustom, animated: true)
+        }
+        
         mapView.mapType = mapType
 //        mapView.region = region
-        mapView.setRegion(region, animated: true)
+//
         
         mapView.showsUserLocation = false
         mapView.showsScale = true
-        mapView.showsTraffic = true
+        mapView.showsTraffic = false
         
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomAnnotationView")
         mapView.register(CustomRouteAnnotationView.self, forAnnotationViewWithReuseIdentifier: "CustomRouteAnnotationView")
@@ -779,8 +786,11 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
-//        view.showsUserLocation = true
-        view.setCenter(currentLocation, animated: true)
+        view.showsUserLocation = false
+        
+        if routeDatas.count > 0 {
+            view.setCenter(CLLocationCoordinate2D(latitude: ((routeDatas[1].latitude) as NSString).doubleValue, longitude: ((routeDatas[1].longitude) as NSString).doubleValue), animated: true)
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -848,15 +858,16 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationView.addSubview(annotationLabel)
             
             let index = (annotation as! CustomAabbaAnnotation).index ?? 0
-            let itemAabba = parent.dataAabbaMap[index]
-
-            let customView = MapCardView(payload: itemAabba, parentAabbaIndex: index)
-
-            let callout = MapCalloutView(rootView: AnyView(customView))
-
-            annotationView.detailCalloutAccessoryView = callout
             
-            annotationView.canShowCallout = true
+            if parent.dataAabbaMap.count > 0 {
+                let customView = MapCardView(payload: parent.dataAabbaMap[index], parentAabbaIndex: index)
+                
+                let callout = MapCalloutView(rootView: AnyView(customView))
+                
+                annotationView.detailCalloutAccessoryView = callout
+                
+                annotationView.canShowCallout = true
+            }
             return annotationView
         } else if annotation is CustomWaypointAnnotation {
             let annotationView = CustomWaypointAnnotationView(annotation: annotation, reuseIdentifier: "CustomWaypointAnnotationView")

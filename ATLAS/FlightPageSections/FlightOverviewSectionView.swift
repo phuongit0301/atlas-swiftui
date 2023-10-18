@@ -1118,8 +1118,8 @@ struct FlightOverviewSectionView: View {
         
         print("dataFlightOverview?.unwrappedChockOff=========\(dataFlightOverview?.unwrappedChockOff)")
         print("dataFlightOverview?.unwrappedChockOn=========\(dataFlightOverview?.unwrappedChockOn)")
-        print("currentDateChockOff=========\(currentDateChockOff)")
-        print("currentDateChockOn=========\(currentDateChockOn)")
+        print("currentDateChockOff=========\(dateFormatter.string(from: currentDateChockOff))")
+        print("currentDateChockOn=========\(dateFormatter.string(from: currentDateChockOn))")
         
         let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
         

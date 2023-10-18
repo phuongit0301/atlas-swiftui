@@ -4058,6 +4058,7 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataAabbaMapList() -> [AabbaMapList] {
+        print("self.selectedEvent?.aabbaMapList--------\(self.selectedEvent?.aabbaMapList)")
         return self.selectedEvent?.aabbaMapList?.allObjects as? [AabbaMapList] ?? []
     }
     

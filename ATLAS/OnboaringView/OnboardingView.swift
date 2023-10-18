@@ -161,10 +161,13 @@ struct OnboardingView: View {
                                 
                                 var payloadExpiry: [Any] = []
                                 for item in onboardingModel.dataModelExpiry {
+                                    let key = item.documentType.lowercased().replacingOccurrences(of: " ", with:
+                                    "_")
+                                    
                                     payloadExpiry.append([
                                         "expiryDate": item.expiredDate,
 //                                        "requirement": item.requirement,
-                                        "type": item.documentType
+                                        "type": key
                                     ])
                                     
                                     let newObject = RecencyExpiryList(context: persistenceController.container.viewContext)

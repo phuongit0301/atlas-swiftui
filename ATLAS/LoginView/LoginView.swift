@@ -240,8 +240,7 @@ struct LoginView: View {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
             
             if authResult.user.isEmailVerified {
-                print(authResult.user.uid)
-                if let newObject = coreDataModel.readUserProfileById(authResult.user.uid), newObject {
+                if let newObject = coreDataModel.readUserProfileById(authResult.user.uid) {
                     coreDataModel.dataUser = newObject
                 } else {
                     let response = await remoteService.getUserData(["user_id": authResult.user.uid])
