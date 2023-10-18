@@ -241,20 +241,24 @@ struct LoginView: View {
             
             if authResult.user.isEmailVerified {
                 print(authResult.user.uid)
-                let response = await remoteService.getUserData(["user_id": authResult.user.uid])
-                
-                let newObject = UserProfileList(context: persistenceController.container.viewContext)
-                newObject.id = UUID()
-                newObject.username = response?.username
-                newObject.email = response?.email
-                newObject.firstName = response?.firstname
-                newObject.lastName = response?.lastname
-                newObject.airline = response?.airline
-                
-                coreDataModel.save()
-                
-                coreDataModel.dataUser = coreDataModel.readUser()
-                
+                if let newObject = coreDataModel.readUserProfileById(authResult.user.uid), newObject {
+                    coreDataModel.dataUser = newObject
+                } else {
+                    let response = await remoteService.getUserData(["user_id": authResult.user.uid])
+                    
+                    let newObject = UserProfileList(context: persistenceController.container.viewContext)
+                    newObject.id = UUID()
+                    newObject.username = response?.username
+                    newObject.email = response?.email
+                    newObject.firstName = response?.firstname
+                    newObject.lastName = response?.lastname
+                    newObject.airline = response?.airline
+                    newObject.userId = authResult.user.uid
+                    
+                    coreDataModel.save()
+                    coreDataModel.dataUser = coreDataModel.readUserProfileById(authResult.user.uid)
+                }
+               
                 withAnimation {
                     userID = authResult.user.uid
                     isLogin = "1"

@@ -418,6 +418,10 @@ public struct HasMainToolbar: ViewModifier {
                                 Text("Logout").font(.system(size: 17)).foregroundColor(.black)
                         }
                     }
+                }.onAppear {
+                    if userID != "" {
+                        coreDateModel.dataUser = coreDateModel.readUserProfileById(userID)
+                    }
                 }
         }
     }

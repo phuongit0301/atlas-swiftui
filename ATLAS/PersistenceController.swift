@@ -3308,19 +3308,6 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readNoteList() -> [NoteList] {
-        // create a temp array to save fetched notes
-//        var results: [NoteList] = []
-//        // initialize the fetch request
-//        let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
-//
-//        do {
-//            results = try service.container.viewContext.fetch(request)
-//        } catch {
-//            print("Could not fetch notes from Core Data.")
-//        }
-//
-//        // return results
-//        return results
         return self.selectedEvent?.noteList?.allObjects as? [NoteList] ?? []
     }
     
@@ -3331,8 +3318,6 @@ class CoreDataModelState: ObservableObject {
         if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList] {
             if(data.count > 0) {
                 data.forEach {item in
-                    print("target=========\(target)")
-                    print("item.type=========\(item.type)")
                     if item.type == target {
                         temp.append(item)
                     }
@@ -3978,6 +3963,23 @@ class CoreDataModelState: ObservableObject {
         var data: UserProfileList?
         
         let request: NSFetchRequest<UserProfileList> = UserProfileList.fetchRequest()
+        do {
+            let response: [UserProfileList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response.first
+            }
+        } catch {
+            print("Could not fetch notams from Core Data.")
+        }
+        
+        return data
+    }
+    
+    func readUserProfileById(_ id: String) -> UserProfileList? {
+        var data: UserProfileList?
+        
+        let request: NSFetchRequest<UserProfileList> = UserProfileList.fetchRequest()
+        request.predicate = NSPredicate(format: "userId == %@", id)
         do {
             let response: [UserProfileList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
