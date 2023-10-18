@@ -9783,7 +9783,7 @@
             startingLineNumber = "312"
             endingLineNumber = "312"
             landmarkName = "validateYourProfile()"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "D7D1648B-1708-49B3-9709-9E448C4BF5C6 - fcead89396c1b124"
@@ -9830,8 +9830,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "298"
             endingLineNumber = "298"
-            landmarkName = "OnboardingView"
-            landmarkType = "14">
+            landmarkName = "body"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "2F8383D4-3F44-4FA1-A6B6-DAE8696F02BE - fde932020431f6c4"
@@ -9879,7 +9879,7 @@
             startingLineNumber = "319"
             endingLineNumber = "319"
             landmarkName = "validateExperience()"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -9911,7 +9911,7 @@
             startingLineNumber = "320"
             endingLineNumber = "320"
             landmarkName = "validateExperience()"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "039F0289-3EF3-442E-8472-DFC64F99BF6A - 12de616b2a56bbe4"
@@ -9974,8 +9974,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
             endingLineNumber = "304"
-            landmarkName = "OnboardingView"
-            landmarkType = "14">
+            landmarkName = "body"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "273BCC8A-1C9A-4614-A210-DA15EE14AF1F - 28deebe2dc0982c4"
@@ -10023,7 +10023,7 @@
             startingLineNumber = "350"
             endingLineNumber = "350"
             landmarkName = "validateRecency()"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "55E7D8B8-C442-47BA-A926-D9FEEE5BC14D - 405754ea86614000"
@@ -10084,8 +10084,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "756"
-            endingLineNumber = "756"
+            startingLineNumber = "760"
+            endingLineNumber = "760"
             landmarkName = "getOrPostRecency()"
             landmarkType = "7">
             <Locations>
@@ -10162,8 +10162,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2680"
-            endingLineNumber = "2680"
+            startingLineNumber = "2704"
+            endingLineNumber = "2704"
             landmarkName = "initDataNotams(_:)"
             landmarkType = "7">
             <Locations>
@@ -10729,8 +10729,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2833"
-            endingLineNumber = "2833"
+            startingLineNumber = "2857"
+            endingLineNumber = "2857"
             landmarkName = "CoreDataModelState"
             landmarkType = "3">
          </BreakpointContent>
@@ -11435,8 +11435,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "757"
-            endingLineNumber = "757"
+            startingLineNumber = "761"
+            endingLineNumber = "761"
             landmarkName = "getOrPostRecency()"
             landmarkType = "7">
          </BreakpointContent>
@@ -11610,8 +11610,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2553"
-            endingLineNumber = "2553"
+            startingLineNumber = "2577"
+            endingLineNumber = "2577"
             landmarkName = "initDataNoteAabbaArrival(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11642,8 +11642,8 @@
             filePath = "ATLAS/FlightPageSections/DepartureSectionView/DepartureSectionListView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "resetData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -11658,8 +11658,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4068"
-            endingLineNumber = "4068"
+            startingLineNumber = "4095"
+            endingLineNumber = "4095"
             landmarkName = "readDataNoteAabbaPostList(_:predicateFormat:)"
             landmarkType = "7">
             <Locations>
@@ -11706,8 +11706,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4069"
-            endingLineNumber = "4069"
+            startingLineNumber = "4096"
+            endingLineNumber = "4096"
             landmarkName = "readDataNoteAabbaPostList(_:predicateFormat:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11722,8 +11722,8 @@
             filePath = "ATLAS/FlightPageSections/NotamSubSectionView/NotamSubSectionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -11785,8 +11785,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3318"
-            endingLineNumber = "3318"
+            startingLineNumber = "3345"
+            endingLineNumber = "3345"
             landmarkName = "read(_:predicateFormat:fetchLimit:)"
             landmarkType = "7">
             <Locations>
@@ -11848,8 +11848,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3322"
-            endingLineNumber = "3322"
+            startingLineNumber = "3349"
+            endingLineNumber = "3349"
             landmarkName = "read(_:predicateFormat:fetchLimit:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11864,8 +11864,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3321"
-            endingLineNumber = "3321"
+            startingLineNumber = "3348"
+            endingLineNumber = "3348"
             landmarkName = "read(_:predicateFormat:fetchLimit:)"
             landmarkType = "7">
             <Locations>
@@ -13361,54 +13361,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B3C59EBE-2E22-46CD-9D76-BE292117E54D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/FlightPageSections/NotamSubSectionView/NotamSubSectionView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "B3C59EBE-2E22-46CD-9D76-BE292117E54D - eda841a06478a50f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "partial apply forwarder for closure #7 () -&gt; () in ATLAS.NotamSubSectionView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/NotamSubSectionView/NotamSubSectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "413"
-                  endingLineNumber = "413"
-                  offsetFromSymbolStart = "3324">
-               </Location>
-               <Location
-                  uuid = "B3C59EBE-2E22-46CD-9D76-BE292117E54D - 5280884d6025f244"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "partial apply forwarder for closure #11 () -&gt; () in ATLAS.NotamSubSectionView.body.getter : some"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/NotamSubSectionView/NotamSubSectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "571"
-                  endingLineNumber = "571"
-                  offsetFromSymbolStart = "3440">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9FABA94B-C399-4AAD-99BA-EED64B74ABB1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -13416,8 +13368,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5812"
-            endingLineNumber = "5812"
+            startingLineNumber = "5839"
+            endingLineNumber = "5839"
             landmarkName = "deleteAllAirportColorList()"
             landmarkType = "7">
             <Locations>
@@ -13494,8 +13446,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5815"
-            endingLineNumber = "5815"
+            startingLineNumber = "5842"
+            endingLineNumber = "5842"
             landmarkName = "deleteAllAirportColorList()"
             landmarkType = "7">
          </BreakpointContent>
@@ -13510,8 +13462,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "5816"
-            endingLineNumber = "5816"
+            startingLineNumber = "5843"
+            endingLineNumber = "5843"
             landmarkName = "deleteAllAirportColorList()"
             landmarkType = "7">
          </BreakpointContent>

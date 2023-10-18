@@ -10,6 +10,7 @@ import SwiftUI
 
 struct NotamSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var persistenceController: PersistenceController
     @StateObject var notamSection = NotamSection()
     // initialise state variables
@@ -39,6 +40,9 @@ struct NotamSubSectionView: View {
     @State private var selectionDest = ""
     
     @State private var showUTC = true
+    @State private var isLoading = false
+    @State private var number = 0
+    let dateFormatter = DateFormatter()
 
     var body: some View {
         if coreDataModel.isNotamLoading {
@@ -55,14 +59,29 @@ struct NotamSubSectionView: View {
                         .padding(.leading)
                     Spacer()
                     
-//                    HStack {
-//                        Toggle(isOn: $isSortDateDep) {
-//                            Text("Local").font(.system(size: 17, weight: .regular))
-//                                .foregroundStyle(Color.black)
-//                        }
-//                        Text("UTC").font(.system(size: 17, weight: .regular))
-//                            .foregroundStyle(Color.black)
-//                    }.fixedSize()
+                    Spacer()
+                    
+                    if let notams = coreDataModel.dataSectionDateUpdate?.unwrappedNotam {
+                        Text("Last Update: \(notams)").foregroundColor(.black).font(.system(size: 15, weight: .regular))
+                    }
+                    
+                    Button(action: {
+                        onSyncData()
+                    }, label: {
+                        HStack {
+                            Text("Refresh").font(.system(size: 17, weight: .regular))
+                                .foregroundColor(Color.white)
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
+                        }
+                    }).background(Color.theme.azure)
+                        .cornerRadius(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(.white, lineWidth: 0)
+                        )
+                        .padding(.vertical, 8)
+                        .disabled(isLoading)
                 }.frame(height: 52)
                     .padding(.bottom, 8)
                 
@@ -296,6 +315,14 @@ struct NotamSubSectionView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
                 }.padding(.bottom, 32)
             }.padding(.horizontal, 16)
+                .overlay(Group {
+                    if isLoading {
+                        VStack {
+                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black))
+                        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.black.opacity(0.3))
+                    }
+                })
                 .background(Color.theme.antiFlashWhite)
                 .onChange(of: selectionDep) { newValue in
                     var temp = [String: [NotamsDataList]]()
@@ -521,58 +548,65 @@ struct NotamSubSectionView: View {
                     }
                     arrDestNotams = sortNotamsArray(notamsDict: temp, sortKey: newValue)
                 }
+                .onChange(of: number) {_ in
+                    arrDepNotams = [:]
+                    arrArrNotams = [:]
+                    arrEnrNotams = [:]
+                    arrDestNotams = [:]
+                    prepareData()
+                }
                 .onAppear {
-                    coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                    
-                    coreDataModel.dataNotams.forEach { item in
-                        if item.type == "arrNotams" {
-                            if let airport = item.airport {
-                                if arrArrNotams[airport] != nil {
-                                    arrArrNotams[airport]?.append(item)
-                                } else {
-                                    arrArrNotams.updateValue([item], forKey: airport)
-//                                    arrArrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
-                                }
-                            }
-                        } else if item.type == "depNotams" {
-                            if let airport = item.airport {
-                                if arrDepNotams[airport] != nil {
-                                    arrDepNotams[airport]?.append(item)
-                                } else {
-                                    arrDepNotams.updateValue([item], forKey: airport)
-//                                    arrDepNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
-                                }
-                            }
-                        } else if item.type == "enrNotams" {
-                            if let airport = item.airport {
-                                if arrEnrNotams[airport] != nil {
-                                    arrEnrNotams[airport]?.append(item)
-                                } else {
-                                    arrEnrNotams.updateValue([item], forKey: airport)
-//                                    arrEnrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
-                                }
-                            }
-                        } else {
-                            if let airport = item.airport {
-                                if arrDestNotams[airport] != nil {
-                                    arrDestNotams[airport]?.append(item)
-                                } else {
-                                    arrDestNotams.updateValue([item], forKey: airport)
-//                                    arrDestNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
-                                }
-                            }
-                        }
-                    }
-                    
-                    arrDepNotams = sortNotamsArray(notamsDict: arrDepNotams, sortKey: isSortDateDep)
-                    arrArrNotams = sortNotamsArray(notamsDict: arrArrNotams, sortKey: isSortDateArr)
-                    arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
-                    arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDateDest)
-                    coreDataModel.prepareRouteAlternate()
+                    prepareData()
                 }
                 .navigationTitle("NOTAMS")
                 .background(Color(.systemGroupedBackground))
         }
+    }
+    
+    func prepareData() {
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+        
+        coreDataModel.dataNotams.forEach { item in
+            if item.type == "arrNotams" {
+                if let airport = item.airport {
+                    if arrArrNotams[airport] != nil {
+                        arrArrNotams[airport]?.append(item)
+                    } else {
+                        arrArrNotams.updateValue([item], forKey: airport)
+                    }
+                }
+            } else if item.type == "depNotams" {
+                if let airport = item.airport {
+                    if arrDepNotams[airport] != nil {
+                        arrDepNotams[airport]?.append(item)
+                    } else {
+                        arrDepNotams.updateValue([item], forKey: airport)
+                    }
+                }
+            } else if item.type == "enrNotams" {
+                if let airport = item.airport {
+                    if arrEnrNotams[airport] != nil {
+                        arrEnrNotams[airport]?.append(item)
+                    } else {
+                        arrEnrNotams.updateValue([item], forKey: airport)
+                    }
+                }
+            } else {
+                if let airport = item.airport {
+                    if arrDestNotams[airport] != nil {
+                        arrDestNotams[airport]?.append(item)
+                    } else {
+                        arrDestNotams.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+        }
+        
+        arrDepNotams = sortNotamsArray(notamsDict: arrDepNotams, sortKey: isSortDateDep)
+        arrArrNotams = sortNotamsArray(notamsDict: arrArrNotams, sortKey: isSortDateArr)
+        arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
+        arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDateDest)
+        coreDataModel.prepareRouteAlternate()
     }
     
     func sortNotamsArray(notamsDict: [String: [NotamsDataList]], sortKey: Bool) -> [String: [NotamsDataList]] {
@@ -592,7 +626,6 @@ struct NotamSubSectionView: View {
             
             switch sortKey {
             case true:
-                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyMMddHHmm"
                 
                 sortedNotams = notamsDict.sorted {
@@ -620,5 +653,115 @@ struct NotamSubSectionView: View {
             
             return sortedNotams
         }
+    
+    func onSyncData() {
+        if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+            let dataFlightOverview = overviewList.first
+            
+            var payloadEnroute: [Any] = []
+            var payloadDestination: [Any] = []
+            var enrAirportNotam: [String: String] = [:]
+            var destAirportNotam: [String: String] = [:]
+            var depAirportNotam: [String: String] = [:]
+            depAirportNotam[dataFlightOverview?.unwrappedDep ?? ""] = dataFlightOverview?.unwrappedStd
+            
+            var arrAirportNotam: [String: String] = [:]
+            arrAirportNotam[dataFlightOverview?.unwrappedDest ?? ""] = dataFlightOverview?.unwrappedSta
+            
+            let (enrouteAlternates, destinationAlternates) = coreDataModel.prepareRouteAlternateByType()
+            
+            if enrouteAlternates.count > 0 {
+                for item in enrouteAlternates {
+                    payloadEnroute.append([
+                        "Airport": item.altn,
+                        "eta": item.eta
+                    ])
+                    enrAirportNotam[item.altn ?? ""] = item.eta
+                }
+            }
+            
+            if destinationAlternates.count > 0 {
+                for item in destinationAlternates {
+                    payloadDestination.append([
+                        "Airport": item.altn,
+                        "eta": item.eta
+                    ])
+                    destAirportNotam[item.altn ?? ""] = item.eta
+                }
+            }
+            
+            coreDataModel.enrAirportNotam = enrAirportNotam
+            coreDataModel.destAirportNotam = destAirportNotam
+            coreDataModel.depAirportNotam = depAirportNotam
+            coreDataModel.arrAirportNotam = arrAirportNotam
+            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+            
+            let payloadNotam: [String: Any] = [
+                "depAirport": [
+                    "Airport": dataFlightOverview?.unwrappedDep ?? "",
+                    "std": dataFlightOverview?.unwrappedStd ?? ""
+                ],
+                "arrAirport": [
+                    "Airport": dataFlightOverview?.unwrappedDest ?? "",
+                    "sta": dataFlightOverview?.unwrappedSta ?? ""
+                ],
+                "enrAirports": payloadEnroute,
+                "altnAirports": payloadDestination
+            ]
+            
+            handleNotam(payloadNotam)
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            if let newObj = coreDataModel.dataSectionDateUpdate {
+                newObj.notam = dateFormatter.string(from: Date())
+            } else {
+                let newObj = SectionDateUpdateList(context: persistenceController.container.viewContext)
+                newObj.notam = dateFormatter.string(from: Date())
+            }
+            coreDataModel.save()
+            coreDataModel.dataSectionDateUpdate = coreDataModel.readSectionDateUpdate()
+        }
+        
+    }
+
+    func handleNotam(_ payload: [String: Any]) {
+        Task {
+            print("handle notam")
+            isLoading = true
+            let responseNotam = await remoteService.getNotamData(payload)
+            
+//            if let metarTafData = responseNotam?.metarTafData {
+//                print("inside metar")
+//                await coreDataModel.deleteAllMetarTaf()
+//
+//                coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
+//                coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
+//
+//                if metarTafData.altnMetarTaf.count > 0 {
+//                    coreDataModel.initEnrDataMetarTaf(metarTafData.altnMetarTaf, type: "altnMetarTaf")
+//                }
+//
+//                if metarTafData.enrMetarTaf.count > 0 {
+//                    coreDataModel.initEnrDataMetarTaf(metarTafData.enrMetarTaf, type: "enrMetarTaf")
+//                }
+//            }
+//
+            if let notamsData = responseNotam?.notamsData {
+                print("inside notam")
+                await coreDataModel.deleteAllNotam()
+                coreDataModel.initDataNotams(notamsData)
+            }
+            
+            coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+            coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+            coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
+            coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
+            coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
+            coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
+            number += 1
+            print("end Notam")
+            isLoading = false
+        }
+    }
 }
 

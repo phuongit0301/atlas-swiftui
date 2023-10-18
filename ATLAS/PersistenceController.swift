@@ -193,6 +193,8 @@ class CoreDataModelState: ObservableObject {
     
     @Published var scratchPadArray: [ScratchPadList] = []
     
+    @Published var dataSectionDateUpdate: SectionDateUpdateList?
+    
     // For Fuel Chart
     @Published var dataProjDelays: ProjDelaysList?
     @Published var dataHistoricalDelays: [HistoricalDelaysList] = []
@@ -541,6 +543,8 @@ class CoreDataModelState: ObservableObject {
             
             // For signature
             self.dataSignature = self.readSignature()
+            
+            self.dataSectionDateUpdate = self.readSectionDateUpdate()
         }
     }
     
@@ -1558,6 +1562,26 @@ class CoreDataModelState: ObservableObject {
         // fetch with the request
         do {
             data = try service.container.viewContext.fetch(request)
+        } catch {
+            print("Could not fetch tag from Core Data.")
+        }
+        
+        // return results
+        return data
+    }
+    
+    func readSectionDateUpdate() -> SectionDateUpdateList? {
+        // create a temp array to save fetched notes
+        var data: SectionDateUpdateList?
+        // initialize the fetch request
+        let request: NSFetchRequest<SectionDateUpdateList> = SectionDateUpdateList.fetchRequest()
+        
+        // fetch with the request
+        do {
+            let response = try service.container.viewContext.fetch(request)
+            if response.count > 0 {
+                data = response.first
+            }
         } catch {
             print("Could not fetch tag from Core Data.")
         }
@@ -3007,6 +3031,7 @@ class CoreDataModelState: ObservableObject {
                     newObj.taf = item.taf
                     newObj.type = type
                     
+                    temp.append(newObj)
                     service.container.viewContext.performAndWait {
                         do {
                             try service.container.viewContext.save()
@@ -3019,11 +3044,11 @@ class CoreDataModelState: ObservableObject {
                             
                         }
                     }
-                    
-                    eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + temp)
-                    try service.container.viewContext.save()
-                    print("saved Metar Taf successfully")
                 }
+                
+                eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + temp)
+                try service.container.viewContext.save()
+                print("saved Metar Taf Enr/Altn successfully")
             }
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -3070,6 +3095,8 @@ class CoreDataModelState: ObservableObject {
                     newObj1.altnRwy = item.altnRwy
                     newObj1.eta = item.eta
                     newObj1.taf = item.taf
+                    
+                    
                     try service.container.viewContext.save()
                     print("saved altn taf successfully")
                 } catch {
@@ -6003,5 +6030,23 @@ class CoreDataModelState: ObservableObject {
         self.destAirportNotam = destAirport
         self.depAirportNotam = depAirport
         self.arrAirportNotam = arrAirport
+    }
+    
+    func prepareRouteAlternateByType() -> (enrouteAlternates: [RouteAlternateList], destinationAlternates: [RouteAlternateList]) {
+        var enrouteAlternates = [RouteAlternateList]()
+        var destinationAlternates = [RouteAlternateList]()
+        
+        if let dataAlternate = self.selectedEvent?.routeAlternate?.allObjects as? [RouteAlternateList], dataAlternate.count > 0 {
+            for item in dataAlternate {
+                if item.type == "enroute" {
+                    enrouteAlternates.append(item)
+                } else {
+                    destinationAlternates.append(item)
+                }
+                
+            }
+        }
+        
+        return (enrouteAlternates: enrouteAlternates, destinationAlternates: destinationAlternates)
     }
 }

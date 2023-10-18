@@ -619,6 +619,12 @@
         <attribute name="orderNum" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
+    <entity name="SectionDateUpdate" representedClassName="SectionDateUpdateList" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="metarTaf" optional="YES" attributeType="String"/>
+        <attribute name="notam" optional="YES" attributeType="String"/>
+        <attribute name="noteRelevant" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Signature" representedClassName="SignatureList" syncable="YES">
         <attribute name="comment" optional="YES" attributeType="String"/>
         <attribute name="flightNumber" optional="YES" attributeType="String"/>
