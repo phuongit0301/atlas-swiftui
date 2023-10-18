@@ -23,10 +23,14 @@ struct CardTextField: View {
 
 struct MapTrafficCardView: View {
     var title: String?
+    var aircraftType: String?
+    var baroAltitude: String?
     
     var body: some View {
-        HStack {
+        VStack(alignment: .leading, spacing: 8) {
             Text(title ?? "").font(.system(size: 15).weight(.semibold)).foregroundColor(.black)
+            Text(aircraftType ?? "").font(.system(size: 15).weight(.regular)).foregroundColor(.black)
+            Text(baroAltitude ?? "").font(.system(size: 15).weight(.regular)).foregroundColor(.black)
         }
     }
 }

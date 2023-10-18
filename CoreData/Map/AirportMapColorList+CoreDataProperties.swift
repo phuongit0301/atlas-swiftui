@@ -2,7 +2,7 @@
 //  AirportMapColorList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 15/10/2023.
+//  Created by phuong phan on 18/10/2023.
 //
 //
 
@@ -31,7 +31,7 @@ extension AirportMapColorList {
     @NSManaged public var depDelayColour: String?
     @NSManaged public var updatedAt: String?
     @NSManaged public var events: NSSet?
-
+    
     public var unwrappedAirportId: String {
         airportId ?? ""
     }

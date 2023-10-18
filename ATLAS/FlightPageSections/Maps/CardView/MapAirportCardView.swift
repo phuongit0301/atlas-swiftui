@@ -283,7 +283,7 @@ struct MapAirportCardView: View {
             print("notamsDataList===========\(notamsDataList)")
             
             for item in notamsDataList {
-                if item.isChecked {
+                if item.isChecked && item.unwrappedAirport == self.mapIconModel.titleModal {
                     dataNotams.append(item)
                 }
             }

@@ -483,6 +483,7 @@ struct MapViewModal: View {
             }
         }.onAppear {
             if let flightOverviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList], let flightOverview = flightOverviewList.first {
+                readData()
                 tfRoute = flightOverview.unwrappedRoute
                 selectedAddRoute = true
             }
@@ -503,6 +504,21 @@ struct MapViewModal: View {
         .sheet(isPresented: $mapIconModel.showModal) {
             MapAirportCardView().interactiveDismissDisabled(true)
         }
+    }
+    
+    func readData() {
+        coreDataModel.dataTrafficMap = coreDataModel.readDataTrafficMapList()
+        coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+        coreDataModel.dataWaypointMap = coreDataModel.readDataWaypontMapList()
+        coreDataModel.dataAirportColorMap = coreDataModel.readDataAirportMapColorList()
+        coreDataModel.dataAirportMap = coreDataModel.readDataAirportMapList()
+        coreDataModel.dataTrafficMap = coreDataModel.readDataTrafficMapList()
+        coreDataModel.dataNoteAabba = coreDataModel.readDataNoteAabbaPostList("")
+        coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
+        coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")
+        coreDataModel.dataNoteAabbaEnroute = coreDataModel.readDataNoteAabbaPostList("enroute")
+        coreDataModel.dataNoteAabbaArrival = coreDataModel.readDataNoteAabbaPostList("arrival")
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
     }
     
     func updateMapOverlayViews() {
@@ -676,7 +692,7 @@ struct MapViewModal: View {
                 defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
             }
             
-            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: "", flightNum: item.unwrappedCallsign, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: "", flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
             mapView.addAnnotation(annotation)
         }
     }
@@ -803,7 +819,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         } else if annotation is CustomTrafficAnnotation {
             let annotationView = CustomTrafficAnnotationView(annotation: annotation, reuseIdentifier: "CustomTrafficAnnotationView")
             let annotationData = annotation as? CustomTrafficAnnotation
-            let customView = MapTrafficCardView(title: annotationData?.flightNum as? String)
+            let customView = MapTrafficCardView(title: annotationData?.flightNum as? String, aircraftType: annotationData?.aircraftType as? String, baroAltitude: annotationData?.baroAltitude as? String)
             let callout = MapCalloutView(rootView: AnyView(customView))
 
             annotationView.detailCalloutAccessoryView = callout

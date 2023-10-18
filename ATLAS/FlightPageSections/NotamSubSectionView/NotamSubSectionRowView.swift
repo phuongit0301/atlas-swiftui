@@ -13,11 +13,16 @@ struct NotamSubSectionRowView: View {
     var item: [NotamsDataList]
     var dates: [String: String]
     let key: String
+    let suffix: String
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(spacing: 0) {
-                Text("\(key) \(dates[key] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                if suffix == "STD" || suffix == "STA" {
+                    Text("\(key) \(suffix): \(dates["date"] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                } else {
+                    Text("\(key) \(suffix): \(dates[key] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
+                }
                 Spacer()
             }.frame(height: 44)
 

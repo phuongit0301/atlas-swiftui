@@ -370,11 +370,11 @@ struct IWaypointDataJson: Decodable {
 }
 
 struct IAirportData: Decodable {
-    var airport_id: String
-    var lat: String
-    var long: String
-    var dep_delay: String
-    var arr_delay: String
+    var airport_id: String?
+    var lat: String?
+    var long: String?
+    var dep_delay: String?
+    var arr_delay: String?
 }
 
 struct IAirportDataJson: Decodable {
@@ -440,18 +440,18 @@ struct IAabbaDataJsonResponse: Codable {
 
 
 struct IAirportColor: Codable {
-    var airportID: String
-    var lat: String
-    var long: String
-    var selection: String
-    var colour: String
-    var notams: String
-    var metar: String
-    var taf: String
-    var arr_delay: String
-    var dep_delay: String
-    var arr_delay_colour: String
-    var dep_delay_colour: String
+    var airportID: String?
+    var lat: String?
+    var long: String?
+    var selection: String?
+    var colour: String?
+    var notams: String?
+    var metar: String?
+    var taf: String?
+    var arr_delay: String?
+    var dep_delay: String?
+    var arr_delay_colour: String?
+    var dep_delay_colour: String?
 }
 
 struct IMapDataModel: Decodable {
@@ -802,12 +802,12 @@ struct NotesV30Json: Codable {
 struct FlightDataV30Json: Codable {
     let status: String
     let flight_overview: FlightOverviewV30Json
-    let route: [RouteV30Json]
-    let colour_airport: [IAirportColor]
-    let notam: [String: [NotamV30Json]]
-    let metar_taf: [String: [MetarTafV30Json]]
-    let notes: [NotesV30Json]
-    let aabba_notes: [String: [INoteResponse]]
+    let route: [RouteV30Json]?
+    let colour_airport: [IAirportColor]?
+    let notam: [String: [NotamV30Json]]?
+    let metar_taf: [String: [MetarTafV30Json]]?
+    let notes: [NotesV30Json]?
+    let aabba_notes: [String: [INoteResponse]]?
 }
 
 class YourFlightPlanModel: ObservableObject {

@@ -147,6 +147,10 @@ class CoreDataModelState: ObservableObject {
     // For NoTams
     @Published var dataNotams: [NotamsDataList] = []
     @Published var dataNotamsRef: [NotamsDataList] = []
+    @Published var enrAirportNotam: [String: String] = [:]
+    @Published var destAirportNotam: [String: String] = [:]
+    @Published var depAirportNotam: [String: String] = [:]
+    @Published var arrAirportNotam: [String: String] = [:]
     
     @Published var dataDepartureNotamsRef: [NotamsDataList] = []
     @Published var dataEnrouteNotamsRef: [NotamsDataList] = []
@@ -461,7 +465,7 @@ class CoreDataModelState: ObservableObject {
             
             self.dataAlternate = self.readDataAlternate()
             self.dataUser = self.readUser()
-            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/3e919cac9c01/8000/2/0_1.png")
+//            self.loadImage(for: "https://tilecache.rainviewer.com/v2/radar/nowcast_fcaf3d9e4766/8000/2/0_1.png")
 //            self.loadImage(for: "https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=3c03dc234f4d074c7954855f4aa8e8e9")
 //            self.prepareDataForWaypointMap()
 //            self.prepareDataForAirportMap()
@@ -1301,39 +1305,39 @@ class CoreDataModelState: ObservableObject {
                             
                             event.flightStatus = item.status
                             
-                            if item.notes.count > 0 {
+                            if let itemNotes = item.notes, itemNotes.count > 0 {
                                 group.addTask {
-                                    self.initDataNoteList(item.notes, event)
+                                    self.initDataNoteList(itemNotes, event)
                                 }
                             }
                             
-                            if item.colour_airport.count > 0 {
+                            if let itemColourAirport = item.colour_airport, itemColourAirport.count > 0 {
                                 group.addTask {
-                                    self.initDataAirportColor(item.colour_airport, event)
+                                    self.initDataAirportColor(itemColourAirport, event)
                                 }
                             }
                             
-                            if item.route.count > 0 {
+                            if let itemRoute = item.route, itemRoute.count > 0 {
                                 group.addTask {
-                                    self.initDataRouteMap(item.route, event)
+                                    self.initDataRouteMap(itemRoute, event)
                                 }
                             }
                             
-                            if item.notam.count > 0 {
+                            if let itemNotam = item.notam, itemNotam.count > 0 {
                                 group.addTask {
-                                    self.initDataFlightNotams(item.notam, event)
+                                    self.initDataFlightNotams(itemNotam, event)
                                 }
                             }
                             
-                            if item.metar_taf.count > 0 {
+                            if let itemMetarTaf = item.metar_taf, itemMetarTaf.count > 0 {
                                 group.addTask {
-                                    self.initDataFlightMetarTaf(item.metar_taf, event)
+                                    self.initDataFlightMetarTaf(itemMetarTaf, event)
                                 }
                             }
                             
-                            if item.aabba_notes.count > 0 {
+                            if let itemAabbaNote = item.aabba_notes, itemAabbaNote.count > 0 {
                                 group.addTask {
-                                    self.initDataMapAabbaNotes(item.aabba_notes, event)
+                                    self.initDataMapAabbaNotes(itemAabbaNote, event)
                                 }
                             }
                             
@@ -1668,67 +1672,81 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataWaypoint(_ data: [IWaypointData]) {
-        if data.count > 0 {
-            data.forEach { item in
-                let newObj = WaypointMapList(context: service.container.viewContext)
+        if let eventList = self.selectedEvent {
+            if data.count > 0 {
+                var temp = [WaypointMapList]()
                 
-                newObj.id = UUID()
-                newObj.name = item.waypoint_id
-                newObj.latitude = item.lat
-                newObj.longitude = item.long
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved waypoint data successfully")
-                    } catch {
-                        print("Failed to waypoint data save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                data.forEach { item in
+                    let newObj = WaypointMapList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.name = item.waypoint_id
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            temp.append(newObj)
+                            try service.container.viewContext.save()
+                            print("saved waypoint data successfully")
+                        } catch {
+                            print("Failed to waypoint data save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.waypointMapList = NSSet(array: temp)
+                self.dataWaypointMap = readDataWaypontMapList()
             }
-            
-            self.dataWaypointMap = readDataWaypontMapList()
-//            self.prepareDataForWaypointMap()
         }
     }
     
     func initDataAirport(_ data: [IAirportData]) {
-        if data.count > 0 {
-            data.forEach { item in
-                let newObj = AirportMapList(context: service.container.viewContext)
+        if let eventList = self.selectedEvent {
+            if data.count > 0 {
+                var temp = [AirportMapList]()
                 
-                newObj.id = UUID()
-                newObj.name = item.airport_id
-                newObj.latitude = item.lat
-                newObj.longitude = item.long
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved data airport successfully")
-                    } catch {
-                        print("Failed to data airport save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                data.forEach { item in
+                    let newObj = AirportMapList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.name = item.airport_id
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            temp.append(newObj)
+                            try service.container.viewContext.save()
+                            print("saved data airport successfully")
+                        } catch {
+                            print("Failed to data airport save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.airportMapList = NSSet(array: temp)
+                self.dataAirportMap = readDataAirportMapList()
             }
-            
-            self.dataAirportMap = readDataAirportMapList()
         }
     }
     
     func initDataAirportMapColor(_ data: [IAirportColor], _ payload: [String: Any]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-//        let airportInformation: [IAirportColor] = extractAirportInformation(allAirportsData: data, depAirport: payload["depAirport"] as! String, arrAirport: payload["arrAirport"] as! String, enrAirports: payload["enrAirports"] as! [String], altnAirports: payload["altnAirports"] as! [String])
-        if data.count > 0 {
-            data.forEach { item in
-                do {
+        if let eventList = self.selectedEvent {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+
+            if data.count > 0 {
+                var temp = [AirportMapColorList]()
+                
+                data.forEach { item in
+                    
                     let newObj = AirportMapColorList(context: service.container.viewContext)
                     
                     newObj.id = UUID()
@@ -1746,23 +1764,22 @@ class CoreDataModelState: ObservableObject {
                     newObj.depDelayColour = item.dep_delay_colour
                     newObj.updatedAt = dateFormatter.string(from: Date())
                     
+                    
                     service.container.viewContext.performAndWait {
                         do {
+                            temp.append(newObj)
                             try service.container.viewContext.save()
                             print("saved data airport color successfully")
                         } catch {
-                            print("Failed to data airport color save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
+                            print("could not unarchive array: \(error)")
                         }
                     }
-                } catch {
-                    print("could not unarchive array: \(error)")
                 }
+                
+                eventList.airportMapColorList = NSSet(array: temp)
+                
+                self.dataAirportColorMap = readDataAirportMapColorList()
             }
-            
-            self.dataAirportColorMap = readDataAirportMapColorList()
         }
     }
     
@@ -1903,33 +1920,39 @@ class CoreDataModelState: ObservableObject {
 //    }
     
     func initDataTraffic(_ data: [ITrafficData]) {
-        if data.count > 0 {
-            data.forEach { item in
-                let newObj = TrafficMapList(context: service.container.viewContext)
+        if let eventList = self.selectedEvent {
+            if data.count > 0 {
+                var temp = [TrafficMapList]()
                 
-                newObj.id = UUID()
-                newObj.colour = item.colour
-                newObj.latitude = item.lat
-                newObj.longitude = item.long
-                newObj.callsign = item.callsign
-                newObj.trueTrack = item.true_track
-                newObj.baroAltitude = item.baro_altitude
-                newObj.aircraftType = item.aircraft_type
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved data traffic successfully")
-                    } catch {
-                        print("Failed to data traffic save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                data.forEach { item in
+                    let newObj = TrafficMapList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.colour = item.colour
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    newObj.callsign = item.callsign
+                    newObj.trueTrack = item.true_track
+                    newObj.baroAltitude = item.baro_altitude
+                    newObj.aircraftType = item.aircraft_type
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            temp.append(newObj)
+                            try service.container.viewContext.save()
+                            print("saved data traffic successfully")
+                        } catch {
+                            print("Failed to data traffic save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.trafficMapList = NSSet(array: temp)
+                self.dataTrafficMap = readDataTrafficMapList()
             }
-            
-            self.dataTrafficMap = readDataTrafficMapList()
         }
     }
     
@@ -1977,69 +2000,75 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataAabba(_ data: [IAabbaData]) {
-        if data.count > 0 {
-            for item in data {
-                var posts = [AabbaPostList]()
+        if let eventList = self.selectedEvent {
+            if data.count > 0 {
+                var temp = [AabbaMapList]()
                 
-                if (item.post_count as? NSString)!.integerValue > 0 {
-                    for post in item.posts {
-                        var comments = [AabbaCommentList]()
-                        
-                        if (post.comment_count as NSString).intValue > 0 {
-                            for comment in post.comments {
-                                let newComment = AabbaCommentList(context: service.container.viewContext)
-                                newComment.id = UUID()
-                                newComment.commentId = comment.comment_id
-                                newComment.postId = comment.post_id
-                                newComment.userId = comment.user_id
-                                newComment.commentDate = comment.comment_date
-                                newComment.commentText = comment.comment_text
-                                newComment.userName = comment.username
-                                
-                                comments.append(newComment)
+                for item in data {
+                    var posts = [AabbaPostList]()
+                    
+                    if (item.post_count as? NSString)!.integerValue > 0 {
+                        for post in item.posts {
+                            var comments = [AabbaCommentList]()
+                            
+                            if (post.comment_count as NSString).intValue > 0 {
+                                for comment in post.comments {
+                                    let newComment = AabbaCommentList(context: service.container.viewContext)
+                                    newComment.id = UUID()
+                                    newComment.commentId = comment.comment_id
+                                    newComment.postId = comment.post_id
+                                    newComment.userId = comment.user_id
+                                    newComment.commentDate = comment.comment_date
+                                    newComment.commentText = comment.comment_text
+                                    newComment.userName = comment.username
+                                    
+                                    comments.append(newComment)
+                                }
                             }
+                            
+                            let newPost = AabbaPostList(context: service.container.viewContext)
+                            newPost.id = UUID()
+                            newPost.postId = post.post_id
+                            newPost.userId = post.user_id
+                            newPost.userName = post.username
+                            newPost.postDate = post.post_date
+                            newPost.postTitle = post.post_title
+                            newPost.postText = post.post_text
+                            newPost.upvoteCount = Int32(post.upvote_count) ?? 0
+                            newPost.commentCount = post.comment_count
+                            newPost.category = post.category
+                            newPost.postUpdated = Date()
+                            newPost.comments = NSSet(array: comments)
+                            posts.append(newPost)
                         }
-                        
-                        let newPost = AabbaPostList(context: service.container.viewContext)
-                        newPost.id = UUID()
-                        newPost.postId = post.post_id
-                        newPost.userId = post.user_id
-                        newPost.userName = post.username
-                        newPost.postDate = post.post_date
-                        newPost.postTitle = post.post_title
-                        newPost.postText = post.post_text
-                        newPost.upvoteCount = Int32(post.upvote_count) ?? 0
-                        newPost.commentCount = post.comment_count
-                        newPost.category = post.category
-                        newPost.postUpdated = Date()
-                        newPost.comments = NSSet(array: comments)
-                        posts.append(newPost)
+                    }
+                    
+                    let newObj = AabbaMapList(context: service.container.viewContext)
+                    
+                    newObj.id = UUID()
+                    newObj.postCount = item.post_count
+                    newObj.latitude = item.lat
+                    newObj.longitude = item.long
+                    newObj.name = item.name
+                    newObj.posts = NSSet(array: posts)
+                    temp.append(newObj)
+                    
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved data aabba successfully")
+                        } catch {
+                            print("Failed to data aabba save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
                 
-                let newObj = AabbaMapList(context: service.container.viewContext)
-
-                newObj.id = UUID()
-                newObj.postCount = item.post_count
-                newObj.latitude = item.lat
-                newObj.longitude = item.long
-                newObj.name = item.name
-                newObj.posts = NSSet(array: posts)
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        try service.container.viewContext.save()
-                        print("saved data aabba successfully")
-                    } catch {
-                        print("Failed to data aabba save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-
-                    }
-                }
+                eventList.aabbaMapList = NSSet(array: temp)
+                self.dataAabbaMap = readDataAabbaMapList()
             }
-
-            self.dataAabbaMap = readDataAabbaMapList()
         }
     }
     
@@ -3985,83 +4014,49 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataWaypontMapList() -> [WaypointMapList] {
-        var data: [WaypointMapList] = []
-        
-        let request: NSFetchRequest<WaypointMapList> = WaypointMapList.fetchRequest()
-        do {
-            let response: [WaypointMapList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Map List from Core Data.")
-        }
-        
-        return data
+        return self.selectedEvent?.waypointMapList?.allObjects  as? [WaypointMapList] ?? []
     }
     
     func readDataAirportMapList() -> [AirportMapList] {
-        var data: [AirportMapList] = []
-        
-        let request: NSFetchRequest<AirportMapList> = AirportMapList.fetchRequest()
-        do {
-            let response: [AirportMapList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Airport List from Core Data.")
-        }
-        
-        return data
+        return self.selectedEvent?.airportMapList?.allObjects  as? [AirportMapList] ?? []
     }
     
     func readDataAirportMapColorList() -> [AirportMapColorList] {
-        var data: [AirportMapColorList] = []
-        
-        let request: NSFetchRequest<AirportMapColorList> = AirportMapColorList.fetchRequest()
-        do {
-            let response: [AirportMapColorList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Airport List Color from Core Data.")
-        }
-        
-        return data
+        return self.selectedEvent?.airportMapColorList?.allObjects as? [AirportMapColorList] ?? []
+//        var data: [AirportMapColorList] = []
+//
+//        let request: NSFetchRequest<AirportMapColorList> = AirportMapColorList.fetchRequest()
+//        do {
+//            let response: [AirportMapColorList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response
+//            }
+//        } catch {
+//            print("Could not fetch Airport List Color from Core Data.")
+//        }
+//
+//        return data
     }
     
     func readDataTrafficMapList() -> [TrafficMapList] {
-        var data: [TrafficMapList] = []
-        
-        let request: NSFetchRequest<TrafficMapList> = TrafficMapList.fetchRequest()
-        do {
-            let response: [TrafficMapList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Traffic List from Core Data.")
-        }
-        
-        return data
+        return self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList] ?? []
+//        var data: [TrafficMapList] = []
+//
+//        let request: NSFetchRequest<TrafficMapList> = TrafficMapList.fetchRequest()
+//        do {
+//            let response: [TrafficMapList] = try service.container.viewContext.fetch(request)
+//            if(response.count > 0) {
+//                data = response
+//            }
+//        } catch {
+//            print("Could not fetch Traffic List from Core Data.")
+//        }
+//
+//        return data
     }
     
     func readDataAabbaMapList() -> [AabbaMapList] {
-        var data: [AabbaMapList] = []
-        
-        let request: NSFetchRequest<AabbaMapList> = AabbaMapList.fetchRequest()
-        do {
-            let response: [AabbaMapList] = try service.container.viewContext.fetch(request)
-            if(response.count > 0) {
-                data = response
-            }
-        } catch {
-            print("Could not fetch Traffic List from Core Data.")
-        }
-        
-        return data
+        return self.selectedEvent?.aabbaMapList?.allObjects as? [AabbaMapList] ?? []
     }
     
     func readDataNoteAabbaPostList(_ target: String = "", predicateFormat: String? = "type = %@") -> [NoteAabbaPostList] {
@@ -5606,26 +5601,17 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllTrafficMap() async {
-        let fetchRequest: NSFetchRequest<TrafficMapList>
-        fetchRequest = TrafficMapList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+        if let objects = self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
                         service.container.viewContext.delete(object)
                     }
-                    
-                    // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
-                    print("Failed to delete Altn Taf : \(error)")
+                    print("Failed to delete Traffic Map List: \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Traffic Map update: \(error)")
         }
     }
     
@@ -5678,26 +5664,29 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllMapAabbMapList() async {
-        let fetchRequest: NSFetchRequest<AabbaMapList>
-        fetchRequest = AabbaMapList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+        if let objects = self.selectedEvent?.aabbaMapList?.allObjects as? [AabbaMapList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
+                        if let posts = object.posts?.allObjects as? [AabbaPostList], posts.count > 0 {
+                            for post in posts {
+                                if let comments = post.comments?.allObjects as? [AabbaCommentList], comments.count > 0 {
+                                    
+                                    for comment in comments {
+                                        service.container.viewContext.delete(comment)
+                                    }
+                                }
+                                service.container.viewContext.delete(post)
+                            }
+                            
+                        }
                         service.container.viewContext.delete(object)
                     }
-                    
-                    // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
-                    print("Failed to delete Altn Taf : \(error)")
+                    print("Failed to delete Airport Map Color List: \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Traffic Map update: \(error)")
         }
     }
     
@@ -5787,43 +5776,21 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllWaypointList() async {
-        let fetchRequest: NSFetchRequest<WaypointMapList>
-        fetchRequest = WaypointMapList.fetchRequest()
-        do {
-            // Perform the fetch request
-            let objects = try service.container.viewContext.fetch(fetchRequest)
-            
+        if let objects = self.selectedEvent?.waypointMapList?.allObjects as? [WaypointMapList] {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
                         service.container.viewContext.delete(object)
                     }
-                    
-                    // Save the deletions to the persistent store
                     try service.container.viewContext.save()
                 } catch {
-                    print("Failed to delete Altn Taf : \(error)")
+                    print("Failed to delete Waypoint List: \(error)")
                 }
             }
-        } catch {
-            print("Failed to Delete Traffic Map update: \(error)")
         }
     }
     
     func deleteAllAirportList() async {
-        if let objects = self.selectedEvent?.airportMapColorList?.allObjects as? [AirportMapColorList] {
-            service.container.viewContext.performAndWait {
-                do {
-                    for object in objects {
-                        service.container.viewContext.delete(object)
-                    }
-                    try service.container.viewContext.save()
-                } catch {
-                    print("Failed to delete Airport Map Color List: \(error)")
-                }
-            }
-        }
-        
         if let objects = self.selectedEvent?.airportMapList?.allObjects as? [AirportMapList] {
             service.container.viewContext.performAndWait {
                 do {
@@ -5836,27 +5803,21 @@ class CoreDataModelState: ObservableObject {
                 }
             }
         }
-//        let fetchRequest: NSFetchRequest<AirportMapList>
-//        fetchRequest = AirportMapList.fetchRequest()
-//        do {
-//            // Perform the fetch request
-//            let objects = try service.container.viewContext.fetch(fetchRequest)
-//
-//            service.container.viewContext.performAndWait {
-//                do {
-//                    for object in objects {
-//                        service.container.viewContext.delete(object)
-//                    }
-//
-//                    // Save the deletions to the persistent store
-//                    try service.container.viewContext.save()
-//                } catch {
-//                    print("Failed to delete Altn Taf : \(error)")
-//                }
-//            }
-//        } catch {
-//            print("Failed to Delete Traffic Map update: \(error)")
-//        }
+    }
+    
+    func deleteAllAirportColorList() async {
+        if let objects = self.selectedEvent?.airportMapColorList?.allObjects as? [AirportMapColorList] {
+            service.container.viewContext.performAndWait {
+                do {
+                    for object in objects {
+                        service.container.viewContext.delete(object)
+                    }
+                    try service.container.viewContext.save()
+                } catch {
+                    print("Failed to delete Airport Map Color List: \(error)")
+                }
+            }
+        }
     }
     
     func deleteAllMetarTaf() async {
@@ -6015,5 +5976,29 @@ class CoreDataModelState: ObservableObject {
         
         callback(true)
         
+    }
+    
+    func prepareRouteAlternate() {
+        let data = readDataAlternate()
+        var enrAirport: [String: String] = [:]
+        var destAirport: [String: String] = [:]
+        var depAirport: [String: String] = [:]
+        var arrAirport: [String: String] = [:]
+        
+        for item in data {
+            if item.type == "enroute" {
+                enrAirport[item.unwrappedAltn] = item.unwrappedEta
+            } else {
+                destAirport[item.unwrappedAltn] = item.unwrappedEta
+            }
+        }
+        
+        depAirport["date"] = dataFlightOverview?.unwrappedStd
+        arrAirport["date"] = dataFlightOverview?.unwrappedSta
+        
+        self.enrAirportNotam = enrAirport
+        self.destAirportNotam = destAirport
+        self.depAirportNotam = depAirport
+        self.arrAirportNotam = arrAirport
     }
 }

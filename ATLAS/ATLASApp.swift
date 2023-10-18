@@ -80,6 +80,12 @@ struct ATLASApp: App {
                                     if isBoardingCompleted == "1" {
                                         await coreDataModel.checkAndSyncData()
                                     }
+                                    
+                                    let response = await remoteServiceController.getWeatherData()
+                                    if let past = response?.radar.past, past.count > 0, let firstItem = past.first {
+//                                        print("response======\(response)")
+                                        coreDataModel.loadImage(for: "https://tilecache.rainviewer.com/\(firstItem.path)/8000/2/0_1.png")
+                                    }
                                 }
                             }
                         }

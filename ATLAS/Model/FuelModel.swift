@@ -51,8 +51,4 @@ struct FuelTab {
 
 class FlightPlanDetailModel: ObservableObject {
     @Published var isModal: Bool = false
-    @Published var enrAirportNotam: [String: String] = [:]
-    @Published var destAirportNotam: [String: String] = [:]
-    @Published var depAirportNotam: [String: String] = [:]
-    @Published var arrAirportNotam: [String: String] = [:]
 }

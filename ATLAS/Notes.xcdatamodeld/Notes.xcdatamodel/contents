@@ -16,6 +16,7 @@
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="postCount" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="aabbaMapList" inverseEntity="Event"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaPost" inverseName="list" inverseEntity="AabbaPost"/>
     </entity>
     <entity name="AabbaPost" representedClassName="AabbaPostList" syncable="YES">
@@ -184,6 +185,7 @@
         <attribute name="startDate" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="aabbaMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaMap" inverseName="events" inverseEntity="AabbaMap"/>
         <relationship name="airportMapColorList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
         <relationship name="airportMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMap" inverseName="events" inverseEntity="AirportMap"/>
         <relationship name="eventDateRangeList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateRange" inverseName="events" inverseEntity="EventDateRange"/>
@@ -195,6 +197,8 @@
         <relationship name="noteAabbaPostList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NoteAabbaPost" inverseName="events" inverseEntity="NoteAabbaPost"/>
         <relationship name="noteList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="events" inverseEntity="Note"/>
         <relationship name="routeAlternate" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RouteAlternate" inverseName="events" inverseEntity="RouteAlternate"/>
+        <relationship name="trafficMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrafficMap" inverseName="events" inverseEntity="TrafficMap"/>
+        <relationship name="waypointMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WaypointMap" inverseName="events" inverseEntity="WaypointMap"/>
     </entity>
     <entity name="EventDateRange" representedClassName="EventDateRangeList" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="String"/>
@@ -679,6 +683,7 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="trueTrack" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="trafficMapList" inverseEntity="Event"/>
     </entity>
     <entity name="UserProfile" representedClassName="UserProfileList" syncable="YES">
         <attribute name="airline" optional="YES" attributeType="String"/>
@@ -697,5 +702,6 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="waypointMapList" inverseEntity="Event"/>
     </entity>
 </model>

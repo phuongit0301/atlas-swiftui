@@ -681,12 +681,11 @@ class RemoteService: ObservableObject {
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
-//            let (data, _) = try await URLSession.shared.data(for: request)
-            let data: IAirportDataJsonResponse = load("airport_data.json")
+            let (data, _) = try await URLSession.shared.data(for: request)
 //            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
-//                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
-                return data
+                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
+                return decodedSearch
             } catch let error {
                 print("Error decoding: ", error)
             }
@@ -794,6 +793,28 @@ class RemoteService: ObservableObject {
             
             do {
                 return try JSONDecoder().decode(UserProfileDataJson.self, from: data)
+            } catch let error {
+                print("Error decoding: ", error)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return nil
+    }
+    
+    func getWeatherData() async -> WeatherModel?  {
+        guard let url = URL(string: "https://api.rainviewer.com/public/weather-maps.json") else { fatalError("Missing URL") }
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+        do {
+            // Set the Content-Type header to indicate JSON format
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let (data, _) = try await URLSession.shared.data(for: request)
+            
+            do {
+                return try JSONDecoder().decode(WeatherModel.self, from: data)
             } catch let error {
                 print("Error decoding: ", error)
             }

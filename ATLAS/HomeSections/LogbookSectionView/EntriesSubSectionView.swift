@@ -16,6 +16,13 @@ struct EntriesSubSectionView: View {
     @State private var selectedStartDate: String = ""
     @State private var selectedEndDate: String = ""
     @State private var dataLogbookEntries = [LogbookEntriesList]()
+    @State private var isShowSignature = false
+    @State private var isSignatureModalPresented = false
+    @State private var selectedEntry: LogbookEntriesList?
+    @State private var signatureImage: UIImage?
+    @State private var signatureTfLicense: String = ""
+    @State private var signatureTfComment: String = ""
+    @State private var selectedIndex = -1
     
     var body: some View {
         GeometryReader { proxy in
@@ -210,18 +217,38 @@ struct EntriesSubSectionView: View {
                                                             .gridCellColumns(7)
                                                         
                                                         if let fileUrl = dataLogbookEntries[index].signFileUrl, fileUrl != "none" {
-                                                            if fileUrl.contains("http") {
-                                                                AsyncImage(url: URL(string: fileUrl)).scaledToFit().frame(maxWidth: 100, maxHeight: 80)
-                                                            } else {
-                                                                if let uiImage = convertBase64ToImage(imageString: fileUrl) {
-                                                                    Image(uiImage: uiImage).resizable().scaledToFit().frame(width: 100, height: 80)
-                                                                }
-                                                            }
+                                                            HStack {
+                                                                Text("Signed by \(dataLogbookEntries[index].unwrappedLicenseNumber)")
+                                                                    .font(.system(size: 15, weight: .regular))
+                                                                    .frame(alignment: .leading)
+                                                                
+                                                                Button(action: {
+                                                                    selectedEntry = dataLogbookEntries[index]
+                                                                    isShowSignature.toggle()
+                                                                }, label: {
+                                                                    Text("See Signature").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                                                                })
+                                                            }.gridCellColumns(6)
+//                                                            if fileUrl.contains("http") {
+//                                                                AsyncImage(url: URL(string: fileUrl)).scaledToFit().frame(maxWidth: 100, maxHeight: 80)
+//                                                            } else {
+//                                                                if let uiImage = convertBase64ToImage(imageString: fileUrl) {
+//                                                                    Image(uiImage: uiImage).resizable().scaledToFit().frame(width: 100, height: 80)
+//                                                                }
+//                                                            }
                                                         } else {
-                                                            Text("None")
-                                                                .font(.system(size: 15, weight: .regular))
-                                                                .frame(alignment: .leading)
-                                                                .gridCellColumns(6)
+                                                            HStack {
+                                                                Text("Not Signed")
+                                                                    .font(.system(size: 15, weight: .regular))
+                                                                    .frame(alignment: .leading)
+                                                                
+                                                                Button(action: {
+                                                                    self.isSignatureModalPresented.toggle()
+                                                                    self.selectedIndex = index
+                                                                }, label: {
+                                                                    Text("Sign").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
+                                                                })
+                                                            }.gridCellColumns(6)
                                                         }
                                                         
                                                     }.frame(height: 44, alignment: .center)
@@ -246,12 +273,28 @@ struct EntriesSubSectionView: View {
                 }
             }.sheet(isPresented: $isShowDateModal) {
                 ModalDateRangeView(isShowing: $isShowDateModal, selectedDate: $selectedDate, selectedStartDate: $selectedStartDate, selectedEndDate: $selectedEndDate)
+            }.sheet(isPresented: $isShowSignature) {
+                ModalImageView(isShowing: $isShowSignature, selectedEntry: $selectedEntry)
+            }.sheet(isPresented: $isSignatureModalPresented) {
+                SignatureModalView(signatureImage: $signatureImage, signatureTfLicense: $signatureTfLicense, signatureTfComment: $signatureTfComment, isSignatureModalPresented: $isSignatureModalPresented)
             }
             .onAppear {
                 dataLogbookEntries = coreDataModel.dataLogbookEntries
             }
             .onChange(of: selectedDate) {_ in
                 dataLogbookEntries = extractEntriesInRange(coreDataModel.dataLogbookEntries, selectedStartDate, selectedEndDate)
+            }
+            .onChange(of: signatureImage) {newItem in
+                if let newImage = newItem {
+                    let str = convertImageToBase64(image: newImage)
+                    
+                    dataLogbookEntries[selectedIndex].licenseNumber = signatureTfLicense
+                    dataLogbookEntries[selectedIndex].comments = signatureTfComment
+                    dataLogbookEntries[selectedIndex].signFileUrl = str
+                    coreDataModel.save()
+                    
+                    coreDataModel.dataLogbookEntries = coreDataModel.readDataLogbookEntries()
+                }
             }
         }
     }

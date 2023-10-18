@@ -2,7 +2,7 @@
 //  EventList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 15/10/2023.
+//  Created by phuong phan on 18/10/2023.
 //
 //
 
@@ -37,6 +37,9 @@ extension EventList {
     @NSManaged public var noteAabbaPostList: NSSet?
     @NSManaged public var eventSector: EventSectorList?
     @NSManaged public var airportMapList: NSSet?
+    @NSManaged public var trafficMapList: NSSet?
+    @NSManaged public var aabbaMapList: NSSet?
+    @NSManaged public var waypointMapList: NSSet?
     
     public var unwrappedStartDate: String {
         startDate ?? ""
@@ -234,6 +237,57 @@ extension EventList {
 
     @objc(removeAirportMapList:)
     @NSManaged public func removeFromAirportMapList(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for trafficMapList
+extension EventList {
+
+    @objc(addTrafficMapListObject:)
+    @NSManaged public func addToTrafficMapList(_ value: TrafficMapList)
+
+    @objc(removeTrafficMapListObject:)
+    @NSManaged public func removeFromTrafficMapList(_ value: TrafficMapList)
+
+    @objc(addTrafficMapList:)
+    @NSManaged public func addToTrafficMapList(_ values: NSSet)
+
+    @objc(removeTrafficMapList:)
+    @NSManaged public func removeFromTrafficMapList(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for aabbaMapList
+extension EventList {
+
+    @objc(addAabbaMapListObject:)
+    @NSManaged public func addToAabbaMapList(_ value: AabbaMapList)
+
+    @objc(removeAabbaMapListObject:)
+    @NSManaged public func removeFromAabbaMapList(_ value: AabbaMapList)
+
+    @objc(addAabbaMapList:)
+    @NSManaged public func addToAabbaMapList(_ values: NSSet)
+
+    @objc(removeAabbaMapList:)
+    @NSManaged public func removeFromAabbaMapList(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for waypointMapList
+extension EventList {
+
+    @objc(addWaypointMapListObject:)
+    @NSManaged public func addToWaypointMapList(_ value: WaypointMapList)
+
+    @objc(removeWaypointMapListObject:)
+    @NSManaged public func removeFromWaypointMapList(_ value: WaypointMapList)
+
+    @objc(addWaypointMapList:)
+    @NSManaged public func addToWaypointMapList(_ values: NSSet)
+
+    @objc(removeWaypointMapList:)
+    @NSManaged public func removeFromWaypointMapList(_ values: NSSet)
 
 }
 

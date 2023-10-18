@@ -24,7 +24,6 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
-    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
     
     @AppStorage("uid") var userID: String = ""
     
@@ -561,10 +560,12 @@ struct SummarySubSectionView: View {
         var arrAirportNotam: [String: String] = [:]
         arrAirportNotam[dataFlightOverview?.unwrappedDest ?? ""] = dataFlightOverview?.unwrappedSta
         
-        flightPlanDetailModel.enrAirportNotam = enrAirportNotam
-        flightPlanDetailModel.destAirportNotam = destAirportNotam
-        flightPlanDetailModel.depAirportNotam = depAirportNotam
-        flightPlanDetailModel.arrAirportNotam = arrAirportNotam
+        coreDataModel.enrAirportNotam = enrAirportNotam
+        coreDataModel.destAirportNotam = destAirportNotam
+        coreDataModel.depAirportNotam = depAirportNotam
+        coreDataModel.arrAirportNotam = arrAirportNotam
+        
+        readData()
         
         let payloadNotam: [String: Any] = [
             "depAirport": [
@@ -595,6 +596,8 @@ struct SummarySubSectionView: View {
         ]
         
         print("payloadNotam========\(payloadNotam)")
+//        print("payloadMap========\(payloadMap)")
+        
         handleTraffic(payloadMap)
         handleMapAabba(payloadMap)
         handleWaypoint(payloadMap)
@@ -677,10 +680,16 @@ struct SummarySubSectionView: View {
             }
             
             coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+            
+            if tfRoute != "" {
+                dataFlightOverview?.route = tfRoute
+            }
+
         }
         
         coreDataModel.save()
         
+        readData()
         enrouteAlternates = []
         destinationAlternates = []
         
@@ -689,6 +698,21 @@ struct SummarySubSectionView: View {
         prepareData()
         
         self.isLoading = false
+    }
+    
+    func readData() {
+        coreDataModel.dataTrafficMap = coreDataModel.readDataTrafficMapList()
+        coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+        coreDataModel.dataWaypointMap = coreDataModel.readDataWaypontMapList()
+        coreDataModel.dataAirportColorMap = coreDataModel.readDataAirportMapColorList()
+        coreDataModel.dataAirportMap = coreDataModel.readDataAirportMapList()
+        coreDataModel.dataTrafficMap = coreDataModel.readDataTrafficMapList()
+        coreDataModel.dataNoteAabba = coreDataModel.readDataNoteAabbaPostList("")
+        coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
+        coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")
+        coreDataModel.dataNoteAabbaEnroute = coreDataModel.readDataNoteAabbaPostList("enroute")
+        coreDataModel.dataNoteAabbaArrival = coreDataModel.readDataNoteAabbaPostList("arrival")
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
     }
     
     func handleTraffic(_ payload: [String: Any]) {
@@ -756,6 +780,7 @@ struct SummarySubSectionView: View {
             }
             
             if let responseColorAirport = responseAirport?.colour_airports_data, responseColorAirport.count > 0 {
+                await coreDataModel.deleteAllAirportColorList()
                 coreDataModel.initDataAirportMapColor(responseColorAirport, payload)
             }
             print("end aiport")

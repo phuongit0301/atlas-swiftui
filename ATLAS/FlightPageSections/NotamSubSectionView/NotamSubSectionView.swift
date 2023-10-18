@@ -11,10 +11,12 @@ import SwiftUI
 struct NotamSubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
-    @EnvironmentObject var flightPlanDetailModel: FlightPlanDetailModel
     @StateObject var notamSection = NotamSection()
     // initialise state variables
-    @State private var isSortDate = true
+    @State private var isSortDateDep = true
+    @State private var isSortDateArr = true
+    @State private var isSortDateEnr = true
+    @State private var isSortDateDest = true
     @State var arrDepNotams = [String: [NotamsDataList]]()
     @State var arrDepNotamsDate = [String: String]()
     @State var arrArrNotams = [String: [NotamsDataList]]()
@@ -53,14 +55,14 @@ struct NotamSubSectionView: View {
                         .padding(.leading)
                     Spacer()
                     
-                    HStack {
-                        Toggle(isOn: $showUTC) {
-                            Text("Local").font(.system(size: 17, weight: .regular))
-                                .foregroundStyle(Color.black)
-                        }
-                        Text("UTC").font(.system(size: 17, weight: .regular))
-                            .foregroundStyle(Color.black)
-                    }.fixedSize()
+//                    HStack {
+//                        Toggle(isOn: $isSortDateDep) {
+//                            Text("Local").font(.system(size: 17, weight: .regular))
+//                                .foregroundStyle(Color.black)
+//                        }
+//                        Text("UTC").font(.system(size: 17, weight: .regular))
+//                            .foregroundStyle(Color.black)
+//                    }.fixedSize()
                 }.frame(height: 52)
                     .padding(.bottom, 8)
                 
@@ -93,7 +95,7 @@ struct NotamSubSectionView: View {
                             
                             HStack(alignment: .center, spacing: 16) {
                                 HStack(alignment: .center, spacing: 0) {
-                                    Toggle(isOn: $isSortDate) {
+                                    Toggle(isOn: $isSortDateDep) {
                                         Text("Most Recent")
                                             .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -115,7 +117,7 @@ struct NotamSubSectionView: View {
                         
                         if isDepShow {
                             ForEach(Array(arrDepNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrDepNotams[key] ?? [], dates: flightPlanDetailModel.depAirportNotam, key: key)
+                                NotamSubSectionRowView(item: arrDepNotams[key] ?? [], dates: coreDataModel.depAirportNotam, key: key, suffix: "STD")
                             }
                         }
                     }.padding(.horizontal)
@@ -151,7 +153,7 @@ struct NotamSubSectionView: View {
                             
                             HStack(alignment: .center, spacing: 16) {
                                 HStack(alignment: .center, spacing: 0) {
-                                    Toggle(isOn: $isSortDate) {
+                                    Toggle(isOn: $isSortDateEnr) {
                                         Text("Most Recent")
                                             .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -173,7 +175,7 @@ struct NotamSubSectionView: View {
                         
                         if isEnrShow {
                             ForEach(Array(arrEnrNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], dates: flightPlanDetailModel.enrAirportNotam, key: key)
+                                NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], dates: coreDataModel.enrAirportNotam, key: key, suffix: "ETA")
                             }
                         }
                     }.padding(.horizontal)
@@ -207,7 +209,7 @@ struct NotamSubSectionView: View {
                             
                             HStack(alignment: .center, spacing: 16) {
                                 HStack(alignment: .center, spacing: 0) {
-                                    Toggle(isOn: $isSortDate) {
+                                    Toggle(isOn: $isSortDateArr) {
                                         Text("Most Recent")
                                             .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -229,7 +231,7 @@ struct NotamSubSectionView: View {
                         
                         if isArrShow {
                             ForEach(Array(arrArrNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrArrNotams[key] ?? [], dates: flightPlanDetailModel.arrAirportNotam, key: key)
+                                NotamSubSectionRowView(item: arrArrNotams[key] ?? [], dates: coreDataModel.arrAirportNotam, key: key, suffix: "STA")
                             }
                         }
                     }.padding(.horizontal)
@@ -263,7 +265,7 @@ struct NotamSubSectionView: View {
                             
                             HStack(alignment: .center, spacing: 16) {
                                 HStack(alignment: .center, spacing: 0) {
-                                    Toggle(isOn: $isSortDate) {
+                                    Toggle(isOn: $isSortDateDest) {
                                         Text("Most Recent")
                                             .font(.system(size: 17, weight: .regular))
                                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -285,7 +287,7 @@ struct NotamSubSectionView: View {
                         
                         if isDestShow {
                             ForEach(Array(arrDestNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrDestNotams[key] ?? [], dates: flightPlanDetailModel.destAirportNotam, key: key)
+                                NotamSubSectionRowView(item: arrDestNotams[key] ?? [], dates: coreDataModel.destAirportNotam, key: key, suffix: "ETA")
                             }
                         }
                     }.padding(.horizontal)
@@ -300,51 +302,83 @@ struct NotamSubSectionView: View {
                     coreDataModel.dataNotams.forEach { item in
                         let category = item.category ?? ""
                         
-                        if item.type == "depNotams" && category == selectionDep {
-                            if let airport = item.airport {
-                                if temp[airport] != nil {
-                                    temp[airport]?.append(item)
-                                } else {
-                                    temp.updateValue([item], forKey: airport)
+                        if item.type == "depNotams" {
+                            if category == selectionDep {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionDep == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
                                 }
                             }
+                            
                         }
                     }
-                    arrDepNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                    arrDepNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDateDep)
                 }
                 .onChange(of: selectionEnr) { newValue in
                     var temp = [String: [NotamsDataList]]()
                     coreDataModel.dataNotams.forEach { item in
                         let category = item.category ?? ""
 
-                        if item.type == "enrNotams" && category == selectionEnr  {
-                            if let airport = item.airport {
-                                if temp[airport] != nil {
-                                    temp[airport]?.append(item)
-                                } else {
-                                    temp.updateValue([item], forKey: airport)
+                        if item.type == "enrNotams"  {
+                            if category == selectionEnr {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionEnr == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
                                 }
                             }
                         }
                     }
-                    arrEnrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                    arrEnrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDateEnr)
                 }
                 .onChange(of: selectionArr) { newValue in
                     var temp = [String: [NotamsDataList]]()
                     coreDataModel.dataNotams.forEach { item in
                         let category = item.category ?? ""
                         
-                        if item.type == "arrNotams" && category == selectionArr  {
-                            if let airport = item.airport {
-                                if temp[airport] != nil {
-                                    temp[airport]?.append(item)
-                                } else {
-                                    temp.updateValue([item], forKey: airport)
+                        if item.type == "arrNotams" {
+                            if category == selectionArr {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionArr == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
                                 }
                             }
+                            
                         }
                     }
-                    arrArrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                    arrArrNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDateArr)
                 }
                 .onChange(of: selectionDest) { newValue in
                     var temp = [String: [NotamsDataList]]()
@@ -352,17 +386,140 @@ struct NotamSubSectionView: View {
                     coreDataModel.dataNotams.forEach { item in
                         let category = item.category ?? ""
                         
-                        if item.type == "destNotams" && category == selectionArr  {
-                            if let airport = item.airport {
-                                if temp[airport] != nil {
-                                    temp[airport]?.append(item)
-                                } else {
-                                    temp.updateValue([item], forKey: airport)
+                        if item.type == "altnNotams"  {
+                            if category == selectionDest {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionDest == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    arrDestNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDateDest)
+                }
+                .onChange(of: isSortDateDep) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "depNotams" {
+                            if category == selectionDep {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionDep == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    arrDepNotams = sortNotamsArray(notamsDict: temp, sortKey: newValue)
+                }
+                .onChange(of: isSortDateEnr) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+
+                        if item.type == "enrNotams"  {
+                            if category == selectionEnr {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionEnr == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
                                 }
                             }
                         }
                     }
-                    arrDestNotams = sortNotamsArray(notamsDict: temp, sortKey: isSortDate)
+                    arrEnrNotams = sortNotamsArray(notamsDict: temp, sortKey: newValue)
+                }
+                .onChange(of: isSortDateArr) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "arrNotams" {
+                            if category == selectionArr {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionArr == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    arrArrNotams = sortNotamsArray(notamsDict: temp, sortKey: newValue)
+                }
+                .onChange(of: isSortDateDest) { newValue in
+                    var temp = [String: [NotamsDataList]]()
+                    
+                    coreDataModel.dataNotams.forEach { item in
+                        let category = item.category ?? ""
+                        
+                        if item.type == "altnNotams"  {
+                            if category == selectionDest {
+                                if let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            } else {
+                                if selectionDest == "", let airport = item.airport {
+                                    if temp[airport] != nil {
+                                        temp[airport]?.append(item)
+                                    } else {
+                                        temp.updateValue([item], forKey: airport)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    arrDestNotams = sortNotamsArray(notamsDict: temp, sortKey: newValue)
                 }
                 .onAppear {
                     coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
@@ -374,7 +531,7 @@ struct NotamSubSectionView: View {
                                     arrArrNotams[airport]?.append(item)
                                 } else {
                                     arrArrNotams.updateValue([item], forKey: airport)
-                                    arrArrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+//                                    arrArrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
                                 }
                             }
                         } else if item.type == "depNotams" {
@@ -383,7 +540,7 @@ struct NotamSubSectionView: View {
                                     arrDepNotams[airport]?.append(item)
                                 } else {
                                     arrDepNotams.updateValue([item], forKey: airport)
-                                    arrDepNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+//                                    arrDepNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
                                 }
                             }
                         } else if item.type == "enrNotams" {
@@ -392,7 +549,7 @@ struct NotamSubSectionView: View {
                                     arrEnrNotams[airport]?.append(item)
                                 } else {
                                     arrEnrNotams.updateValue([item], forKey: airport)
-                                    arrEnrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+//                                    arrEnrNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
                                 }
                             }
                         } else {
@@ -401,16 +558,17 @@ struct NotamSubSectionView: View {
                                     arrDestNotams[airport]?.append(item)
                                 } else {
                                     arrDestNotams.updateValue([item], forKey: airport)
-                                    arrDestNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
+//                                    arrDestNotamsDate.updateValue(item.date ?? "", forKey: "\(airport)")
                                 }
                             }
                         }
                     }
                     
-                    arrDepNotams = sortNotamsArray(notamsDict: arrDepNotams, sortKey: isSortDate)
-                    arrArrNotams = sortNotamsArray(notamsDict: arrArrNotams, sortKey: isSortDate)
-                    arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDate)
-                    arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDate)
+                    arrDepNotams = sortNotamsArray(notamsDict: arrDepNotams, sortKey: isSortDateDep)
+                    arrArrNotams = sortNotamsArray(notamsDict: arrArrNotams, sortKey: isSortDateArr)
+                    arrEnrNotams = sortNotamsArray(notamsDict: arrEnrNotams, sortKey: isSortDateEnr)
+                    arrDestNotams = sortNotamsArray(notamsDict: arrDestNotams, sortKey: isSortDateDest)
+                    coreDataModel.prepareRouteAlternate()
                 }
                 .navigationTitle("NOTAMS")
                 .background(Color(.systemGroupedBackground))
