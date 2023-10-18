@@ -374,7 +374,6 @@
 		3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170902AA9EC07004DA27C /* EventModalView.swift */; };
 		3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */; };
 		3EE170962AAC2138004DA27C /* iCalendarParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE170952AAC2138004DA27C /* iCalendarParser */; };
-		3EE1709A2AAC25DB004DA27C /* example.ics in Resources */ = {isa = PBXBuildFile; fileRef = 3EE170992AAC25DB004DA27C /* example.ics */; };
 		3EEBE63D2AB1A15E00421AFF /* airport_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE63C2AB1A15E00421AFF /* airport_data.json */; };
 		3EEBE63F2AB1A17300421AFF /* aabba_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE63E2AB1A17300421AFF /* aabba_data.json */; };
 		3EEBE6412AB1A74900421AFF /* airport_data_color.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE6402AB1A74900421AFF /* airport_data_color.json */; };
@@ -849,7 +848,6 @@
 		3EE1708E2AA9B525004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3EE170902AA9EC07004DA27C /* EventModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModalView.swift; sourceTree = "<group>"; };
 		3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInformationView.swift; sourceTree = "<group>"; };
-		3EE170992AAC25DB004DA27C /* example.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.ics; path = ../../../../../Documents/example.ics; sourceTree = "<group>"; };
 		3EEBE63B2AB1A0FC00421AFF /* waypoint_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = waypoint_data.json; sourceTree = "<group>"; };
 		3EEBE63C2AB1A15E00421AFF /* airport_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airport_data.json; sourceTree = "<group>"; };
 		3EEBE63E2AB1A17300421AFF /* aabba_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = aabba_data.json; sourceTree = "<group>"; };
@@ -1704,7 +1702,6 @@
 				3E72923E2AC99C0B000FF295 /* OnboaringView */,
 				3E72923B2AC99926000FF295 /* LoginView */,
 				3EF221912AAC5738000B8FFB /* example1.ics */,
-				3EE170992AAC25DB004DA27C /* example.ics */,
 				3E5AF6492A18FF2900A97ECF /* FlightPageSections */,
 				3EE170712AA82D59004DA27C /* HomeSections */,
 				3E63FC582A9AD144004BD54B /* Park Information */,
@@ -2250,7 +2247,6 @@
 				3EEBE65D2AB1E59A00421AFF /* waypoint_data.json in Resources */,
 				3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */,
 				3E8250642A1BAE0A008F616D /* Inter-Light.ttf in Resources */,
-				3EE1709A2AAC25DB004DA27C /* example.ics in Resources */,
 				3EEBE63D2AB1A15E00421AFF /* airport_data.json in Resources */,
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3E8250632A1BAE0A008F616D /* Inter-Bold.ttf in Resources */,
