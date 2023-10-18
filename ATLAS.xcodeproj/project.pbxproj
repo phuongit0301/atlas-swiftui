@@ -374,7 +374,6 @@
 		3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170902AA9EC07004DA27C /* EventModalView.swift */; };
 		3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */; };
 		3EE170962AAC2138004DA27C /* iCalendarParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE170952AAC2138004DA27C /* iCalendarParser */; };
-		3EE1709A2AAC25DB004DA27C /* example.ics in Resources */ = {isa = PBXBuildFile; fileRef = 3EE170992AAC25DB004DA27C /* example.ics */; };
 		3EEBE63D2AB1A15E00421AFF /* airport_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE63C2AB1A15E00421AFF /* airport_data.json */; };
 		3EEBE63F2AB1A17300421AFF /* aabba_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE63E2AB1A17300421AFF /* aabba_data.json */; };
 		3EEBE6412AB1A74900421AFF /* airport_data_color.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EEBE6402AB1A74900421AFF /* airport_data_color.json */; };
@@ -447,6 +446,7 @@
 		C5192C6E2ACA6B740029BC48 /* trackFlownViewBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5192C6A2ACA6B740029BC48 /* trackFlownViewBasic.swift */; };
 		C5192C6F2ACA6B740029BC48 /* taxiViewBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5192C6B2ACA6B740029BC48 /* taxiViewBasic.swift */; };
 		C5192C702ACA6B740029BC48 /* delaysViewBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5192C6C2ACA6B740029BC48 /* delaysViewBasic.swift */; };
+		C59493462ADBD59A0044F189 /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = C59493452ADBD59A0044F189 /* Solar */; };
 		C59C714D2A38AB130063D16B /* FuelViewSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C714C2A38AB130063D16B /* FuelViewSplit.swift */; };
 		C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A496492A4715F700653983 /* customKeyboard.swift */; };
 		C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A8DDF92A4E89F40045EB32 /* ArrivalDelayView.swift */; };
@@ -849,7 +849,6 @@
 		3EE1708E2AA9B525004DA27C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3EE170902AA9EC07004DA27C /* EventModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModalView.swift; sourceTree = "<group>"; };
 		3EE170922AAB52BD004DA27C /* CalendarInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInformationView.swift; sourceTree = "<group>"; };
-		3EE170992AAC25DB004DA27C /* example.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.ics; path = ../../../../../Documents/example.ics; sourceTree = "<group>"; };
 		3EEBE63B2AB1A0FC00421AFF /* waypoint_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = waypoint_data.json; sourceTree = "<group>"; };
 		3EEBE63C2AB1A15E00421AFF /* airport_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airport_data.json; sourceTree = "<group>"; };
 		3EEBE63E2AB1A17300421AFF /* aabba_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = aabba_data.json; sourceTree = "<group>"; };
@@ -1704,7 +1703,6 @@
 				3E72923E2AC99C0B000FF295 /* OnboaringView */,
 				3E72923B2AC99926000FF295 /* LoginView */,
 				3EF221912AAC5738000B8FFB /* example1.ics */,
-				3EE170992AAC25DB004DA27C /* example.ics */,
 				3E5AF6492A18FF2900A97ECF /* FlightPageSections */,
 				3EE170712AA82D59004DA27C /* HomeSections */,
 				3E63FC582A9AD144004BD54B /* Park Information */,
@@ -2250,7 +2248,6 @@
 				3EEBE65D2AB1E59A00421AFF /* waypoint_data.json in Resources */,
 				3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */,
 				3E8250642A1BAE0A008F616D /* Inter-Light.ttf in Resources */,
-				3EE1709A2AAC25DB004DA27C /* example.ics in Resources */,
 				3EEBE63D2AB1A15E00421AFF /* airport_data.json in Resources */,
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3E8250632A1BAE0A008F616D /* Inter-Bold.ttf in Resources */,
@@ -3097,6 +3094,14 @@
 				minimumVersion = 10.12.0;
 			};
 		};
+		C59493442ADBD59A0044F189 /* XCRemoteSwiftPackageReference "Solar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ceeK/Solar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3129,6 +3134,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EECB85C2A716481009D4971 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseAuthCombine-Community";
+		};
+		C59493452ADBD59A0044F189 /* Solar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C59493442ADBD59A0044F189 /* XCRemoteSwiftPackageReference "Solar" */;
+			productName = Solar;
 		};
 /* End XCSwiftPackageProductDependency section */
 

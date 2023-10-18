@@ -125,7 +125,7 @@ struct HomeInformationView: View {
                                                             "sta": endTime
                                                         ]
                                                         
-                                                        print("stat======\(requestBody)")
+//                                                        print("stat======\(requestBody)")
                                                         coreDataModel.loadingInitFuel = true
 
                                                         await coreDataModel.syncDataFlightStats(requestBody, callback: { success in

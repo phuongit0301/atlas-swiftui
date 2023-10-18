@@ -153,13 +153,18 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
     while currentTime < arrivalTime {
         let currentSegmentDistance = (currentTime.timeIntervalSince(departureTime)) / 3600 * averageGroundSpeedKph
         let currentSegmentPercentage = currentSegmentDistance / distanceKm
-        let currentLatitude = departureLocation.latitude + (destinationLocation.latitude - departureLocation.latitude) * currentSegmentPercentage
-        let currentLongitude = departureLocation.longitude + (destinationLocation.longitude - departureLocation.longitude) * currentSegmentPercentage
+        let currentCoordinate = intermediateCoordinateAlongGreatCircle(start: departureLocation, end: destinationLocation, percentage: currentSegmentPercentage)
+
+        let solar = Solar(for: currentTime, coordinate: currentCoordinate)
+
+//        let currentLatitude = departureLocation.latitude + (destinationLocation.latitude - departureLocation.latitude) * currentSegmentPercentage
+//        let currentLongitude = departureLocation.longitude + (destinationLocation.longitude - departureLocation.longitude) * currentSegmentPercentage
 //        print("currentSegmentDistance=========\(currentSegmentDistance)")
 //        print("currentSegmentPercentage=========\(currentSegmentPercentage)")
 //        print("currentLatitude=========\(currentLatitude)")
 //        print("currentLongitude=========\(currentLongitude)")
-        let solar = Solar(for: currentTime, coordinate: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
+        
+//        let solar = Solar(for: currentTime, coordinate: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
 
         if solar?.isDaytime != nil {
             totalDaylightHours += timeStep
@@ -172,15 +177,15 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
         }
         
         currentTime = currentTime.addingTimeInterval(timeStep)
-//        print("currentTime=========\(currentTime)")
+        print("currentTime=========\(currentTime)")
 
     }
-//    print("totalDaylightHours=========\(totalDaylightHours)")
-//    print("totalNightHours=========\(totalNightHours)")
+    print("totalDaylightHours=========\(totalDaylightHours)")
+    print("totalNightHours=========\(totalNightHours)")
     let dayDuration = doubleToHoursMinutesTuple(totalDaylightHours)
     let nightDuration = doubleToHoursMinutesTuple(totalNightHours)
-//    print("dayDuration=========\(dayDuration)")
-//    print("nightDuration=========\(nightDuration)")
+    print("dayDuration=========\(dayDuration)")
+    print("nightDuration=========\(nightDuration)")
 
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
 }
@@ -193,3 +198,35 @@ func doubleToHoursMinutesTuple(_ durationInSeconds: Double) -> (hours: Int, minu
     return (hours, minutes)
 }
 
+func intermediateCoordinateAlongGreatCircle(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, percentage: Double) -> CLLocationCoordinate2D {
+    let EarthRadiusKilometers: Double = 6371.0
+    let φ1 = start.latitude.toRadians
+    let λ1 = start.longitude.toRadians
+    let φ2 = end.latitude.toRadians
+    let λ2 = end.longitude.toRadians
+
+    let Δφ = φ2 - φ1
+    let Δλ = λ2 - λ1
+
+    let a = sin(Δφ / 2) * sin(Δφ / 2) + cos(φ1) * cos(φ2) * sin(Δλ / 2) * sin(Δλ / 2)
+    let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    let distance = Double(EarthRadiusKilometers) * c
+    let azimuth = atan2(sin(Δλ) * cos(φ2), cos(φ1) * sin(φ2) - sin(φ1) * cos(φ2) * cos(Δλ))
+
+    let newDistance = distance * percentage
+    let newφ = asin(sin(φ1) * cos(newDistance / Double(EarthRadiusKilometers)) + cos(φ1) * sin(newDistance / Double(EarthRadiusKilometers)) * cos(azimuth))
+    let newλ = λ1 + atan2(sin(azimuth) * sin(newDistance / Double(EarthRadiusKilometers)) * cos(φ1), cos(newDistance / Double(EarthRadiusKilometers)) - sin(φ1) * sin(newφ))
+
+    return CLLocationCoordinate2D(latitude: newφ.toDegrees, longitude: newλ.toDegrees)
+}
+
+extension Double {
+    var toRadians: Double {
+        return self * .pi / 180.0
+    }
+
+    var toDegrees: Double {
+        return self * 180.0 / .pi
+    }
+}
