@@ -73,7 +73,7 @@ struct ClipboardArrivalNoteView: View {
         viewModel.dataPostArrival = viewModel.readDataPostList("arrival", "")
         viewModel.dataPostArrivalRef = viewModel.readDataPostList("arrival", "ref")
         viewModel.arrivalArray = viewModel.read("arrival")
-        viewModel.arrivalRefArray = viewModel.read("arrivalref")
+        viewModel.arrivalRefArray = viewModel.readClipBoard("arrival")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

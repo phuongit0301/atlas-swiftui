@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ClipboardDepature: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     @EnvironmentObject var refState: ScreenReferenceModel
     
     var body: some View {
@@ -38,7 +39,7 @@ struct ClipboardDepature: View {
                 // End header
                 ScrollView {
                     VStack(spacing: 8) {
-                        ClipboardDepartureNotamView(itemList: $viewModel.dataDepartureNotamsRef)
+                        ClipboardDepartureNotamView(itemList: $coreDataModel.depNotamClipboard, dates: coreDataModel.depAirportNotam, suffix: "STD")
                         ClipboardDepartureNoteView(width: proxy.size.width)
                     }
                 }
@@ -47,6 +48,31 @@ struct ClipboardDepature: View {
         }.padding(.horizontal, 16)
             .padding(.bottom, 32)
             .background(Color.theme.antiFlashWhite)
+            .onAppear {
+                prepareData()
+            }.onChange(of: mapIconModel.num) { _ in
+                prepareData()
+            }
+    }
+    
+    func prepareData() {
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+        var temp = [String: [NotamsDataList]]()
+        
+        coreDataModel.dataNotams.forEach { item in
+            if item.type == "depNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp[airport] != nil {
+                        temp[airport]?.append(item)
+                    } else {
+                        temp.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+        }
+        
+        coreDataModel.depNotamClipboard = temp
+        coreDataModel.prepareRouteAlternate()
     }
 
 }

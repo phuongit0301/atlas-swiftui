@@ -105,7 +105,7 @@ struct ArrivalSectionListView: View {
                     resetData()
                 }
                 .onChange(of: mapIconModel.num) { _ in
-                    coreDataModel.dataNoteAabbaArrival = coreDataModel.readDataNoteAabbaPostList("arrival")
+                    resetData()
                 }.sheet(isPresented: $showModalComment) {
                     ArrivalModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
                 }.sheet(isPresented: $showSheet) {
@@ -126,7 +126,7 @@ struct ArrivalSectionListView: View {
     
     private func resetData() {
         coreDataModel.arrivalArray = coreDataModel.read("arrival")
-        coreDataModel.arrivalRefArray = coreDataModel.read("arrivalref")
+        coreDataModel.arrivalRefArray = coreDataModel.readClipBoard("arrival")
         
         coreDataModel.dataPostArrival = coreDataModel.readDataPostList("arrival", "")
         coreDataModel.dataPostArrivalRef = coreDataModel.readDataPostList("arrival", "ref")

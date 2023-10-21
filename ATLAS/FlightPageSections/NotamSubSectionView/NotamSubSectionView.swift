@@ -136,7 +136,7 @@ struct NotamSubSectionView: View {
                         
                         if isDepShow {
                             ForEach(Array(arrDepNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrDepNotams[key] ?? [], dates: coreDataModel.depAirportNotam, key: key, suffix: "STD")
+                                NotamSubSectionRowView(item: arrDepNotams[key] ?? [], dates: coreDataModel.depAirportNotam, key: key, suffix: "STD", hasCollapse: false)
                             }
                         }
                     }.padding(.horizontal)
@@ -194,7 +194,7 @@ struct NotamSubSectionView: View {
                         
                         if isEnrShow {
                             ForEach(Array(arrEnrNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], dates: coreDataModel.enrAirportNotam, key: key, suffix: "ETA")
+                                NotamSubSectionRowView(item: arrEnrNotams[key] ?? [], dates: coreDataModel.enrAirportNotam, key: key, suffix: "ETA", hasCollapse: true)
                             }
                         }
                     }.padding(.horizontal)
@@ -250,7 +250,7 @@ struct NotamSubSectionView: View {
                         
                         if isArrShow {
                             ForEach(Array(arrArrNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrArrNotams[key] ?? [], dates: coreDataModel.arrAirportNotam, key: key, suffix: "STA")
+                                NotamSubSectionRowView(item: arrArrNotams[key] ?? [], dates: coreDataModel.arrAirportNotam, key: key, suffix: "STA", hasCollapse: false)
                             }
                         }
                     }.padding(.horizontal)
@@ -306,7 +306,7 @@ struct NotamSubSectionView: View {
                         
                         if isDestShow {
                             ForEach(Array(arrDestNotams.keys), id: \.self) {key in
-                                NotamSubSectionRowView(item: arrDestNotams[key] ?? [], dates: coreDataModel.destAirportNotam, key: key, suffix: "ETA")
+                                NotamSubSectionRowView(item: arrDestNotams[key] ?? [], dates: coreDataModel.destAirportNotam, key: key, suffix: "ETA", hasCollapse: true)
                             }
                         }
                     }.padding(.horizontal)

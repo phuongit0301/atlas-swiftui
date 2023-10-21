@@ -73,7 +73,7 @@ struct ClipboardEnrouteNoteView: View {
         viewModel.dataPostEnroute = viewModel.readDataPostList("enroute", "")
         viewModel.dataPostEnrouteRef = viewModel.readDataPostList("enroute", "ref")
         viewModel.enrouteArray = viewModel.read("enroute")
-        viewModel.enrouteRefArray = viewModel.read("enrouteref")
+        viewModel.enrouteRefArray = viewModel.readClipBoard("enroute")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

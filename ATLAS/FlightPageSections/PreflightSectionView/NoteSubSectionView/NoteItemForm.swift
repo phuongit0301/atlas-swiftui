@@ -20,6 +20,7 @@ struct NoteItemForm: View {
     @State var tagListSelected: [TagList] = []
     @State var pasteboard = UIPasteboard.general
     @State var isIncludeBriefing = false
+    @State var isShareAabba = false
     
     @State private var animate = false
     
@@ -122,6 +123,14 @@ struct NoteItemForm: View {
                                 }
                             }.frame(height: 44)
                             
+//                            HStack {
+//                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
+//                                Toggle(isOn: $isShareAabba) {
+//                                    Text("").font(.system(size: 17, weight: .regular))
+//                                        .foregroundStyle(Color.black)
+//                                }
+//                            }.frame(height: 44)
+                            
                             Spacer()
                         }.padding(.horizontal)
                         
@@ -132,7 +141,6 @@ struct NoteItemForm: View {
 
                 }.background(Color.theme.platinum)
                     .keyboardAdaptive()
-//                    .frame(height: geo.size.height)
             }.cornerRadius(8)
                 .background(.white)
                 .frame(maxHeight: .infinity)
@@ -164,7 +172,7 @@ struct NoteItemForm: View {
                 let item = NoteList(context: persistenceController.container.viewContext)
                 item.id = UUID()
                 item.name = name
-                item.isDefault = (isCreateFromClipboard ?? false) ? true : false
+                item.isDefault = true
                 item.createdAt = dateFormatter.string(from: Date())
                 item.canDelete = true
                 item.fromParent = false
@@ -172,22 +180,12 @@ struct NoteItemForm: View {
                 item.includeCrew = isIncludeBriefing
                 item.addToTags(NSSet(array: tagListSelected))
                 
-                if isCreateFromClipboard != nil {
-                    let child = NoteList(context: persistenceController.container.viewContext)
-                    child.id = UUID()
-                    child.name = name
-                    child.isDefault = true
-                    child.createdAt = dateFormatter.string(from: Date())
-                    child.canDelete = true
-                    child.fromParent = true
-                    child.type = "\(type)ref"
-                    child.includeCrew = isIncludeBriefing
-                    child.parentId = item.id
-                    child.addToTags(NSSet(array: tagListSelected))
-                }
-                
                 eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
                 coreDataModel.save()
+                
+//                if isShareAabba {
+//                    saveNoteAabba()
+//                }
                 
                 currentIndex = -1
                 textNote = ""
@@ -195,6 +193,31 @@ struct NoteItemForm: View {
                 self.resetData()
                 self.showSheet.toggle()
             }
+        }
+    }
+    
+    func saveNoteAabba() {
+        if let eventList = coreDataModel.selectedEvent {
+            let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            var posts = [NotePostList]()
+            let comments = [NoteCommentList]()
+            let newObj = NoteAabbaPostList(context: persistenceController.container.viewContext)
+            
+            let newPost = NotePostList(context: persistenceController.container.viewContext)
+            newPost.comments = NSSet(array: comments)
+            posts.append(newPost)
+            
+            newObj.id = UUID()
+            newObj.postCount = "0"
+            newObj.latitude = "0"
+            newObj.longitude = "0"
+            newObj.name = name
+            newObj.type = "preflight"
+            newObj.posts = NSSet(array: posts)
+            
+            eventList.noteAabbaPostList = NSSet(array: (eventList.noteAabbaPostList ?? []) + [newObj])
+            coreDataModel.save()
         }
     }
     

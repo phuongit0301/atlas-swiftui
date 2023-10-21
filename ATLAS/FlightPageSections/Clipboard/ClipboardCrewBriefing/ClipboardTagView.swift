@@ -55,59 +55,57 @@ struct ClipboardTagView: View {
                         } else {
                             VStack(spacing: 0) {
                                 ForEach(itemList.indices, id: \.self) { index in
-                                    if itemList[index].postIsDefault {
-                                        VStack(spacing: 0) {
-                                            HStack(alignment: .center) {
-                                                Image(systemName: "line.3.horizontal")
-                                                    .foregroundColor(Color.theme.arsenic.opacity(0.3))
-                                                    .frame(width: 22, height: 22)
-                                                    .scaledToFit()
-                                                    .aspectRatio(contentMode: .fit)
+                                    VStack(spacing: 0) {
+                                        HStack(alignment: .center) {
+                                            Image(systemName: "line.3.horizontal")
+                                                .foregroundColor(Color.theme.arsenic.opacity(0.3))
+                                                .frame(width: 22, height: 22)
+                                                .scaledToFit()
+                                                .aspectRatio(contentMode: .fit)
+                                            
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text(itemList[index].postName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
                                                 
-                                                VStack(alignment: .leading, spacing: 8) {
-                                                    Text(itemList[index].postName).font(.system(size: 15, weight: .regular)).foregroundColor(.black)
+                                                HStack(spacing: 8) {
+                                                    Text(itemList[index].tagName).padding(.vertical, 4)
+                                                        .padding(.horizontal, 12)
+                                                        .font(.system(size: 11, weight: .regular))
+                                                        .background(Color.white)
+                                                        .foregroundColor(Color.black)
+                                                        .cornerRadius(12)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 12)
+                                                                .stroke(Color.black, lineWidth: 1)
+                                                        )
                                                     
-                                                    HStack(spacing: 8) {
-                                                        Text(itemList[index].tagName).padding(.vertical, 4)
-                                                            .padding(.horizontal, 12)
-                                                            .font(.system(size: 11, weight: .regular))
-                                                            .background(Color.white)
-                                                            .foregroundColor(Color.black)
-                                                            .cornerRadius(12)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 12)
-                                                                    .stroke(Color.black, lineWidth: 1)
-                                                            )
+                                                    Text(renderDate(itemList[index].postDate)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                }
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Button(action: {
+                                                if let notes = coreDataModel.selectedEvent?.noteList?.allObjects as? [NoteList], notes.count > 0 {
+                                                    
+                                                    if let currentNoteIndex = notes.firstIndex(where: {$0.id == itemList[index].postId}) {
+                                                        itemList[index].postIsDefault.toggle()
+                                                        notes[currentNoteIndex].includeCrew.toggle()
                                                         
-                                                        Text(renderDate(itemList[index].postDate)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                                        coreDataModel.save()
+                                                        mapIconModel.num += 1
                                                     }
                                                 }
-                                                
-                                                Spacer()
-                                                
-                                                Button(action: {
-                                                    if let notes = coreDataModel.selectedEvent?.noteList?.allObjects as? [NoteList], notes.count > 0 {
-                                                        
-                                                        if let currentNoteIndex = notes.firstIndex(where: {$0.id == itemList[index].postId}) {
-                                                            itemList[index].postIsDefault.toggle()
-                                                            notes[currentNoteIndex].isDefault.toggle()
-                                                            
-                                                            coreDataModel.save()
-                                                            mapIconModel.numAabba += 1
-                                                        }
-                                                    }
-                                                }, label: {
-                                                    Image(systemName: "star.fill")
-                                                        .foregroundColor(Color.theme.azure)
-                                                        .font(.system(size: 22))
-                                                }).buttonStyle(PlainButtonStyle())    
-                                            }.padding(.vertical, 8)
-                                            
-                                            if index + 1 < itemList.count {
-                                                Divider().padding(.horizontal, -16)
-                                            }
-                                        }.id(UUID())
-                                    }
+                                            }, label: {
+                                                Image(systemName: "star.fill")
+                                                    .foregroundColor(Color.theme.azure)
+                                                    .font(.system(size: 22))
+                                            }).buttonStyle(PlainButtonStyle())
+                                        }.padding(.vertical, 8)
+                                        
+                                        if index + 1 < itemList.count {
+                                            Divider().padding(.horizontal, -16)
+                                        }
+                                    }.id(UUID())
                                 }.onMove(perform: move)
                             }.padding(.bottom, 8)
                         }

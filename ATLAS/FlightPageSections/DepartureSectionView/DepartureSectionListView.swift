@@ -28,7 +28,7 @@ struct DepartureSectionListView: View {
     let dateFormmater = DateFormatter()
     
     var body: some View {
-        if coreDataModel.isNotamLoading {
+        if coreDataModel.isAabbaNoteLoading {
             HStack(alignment: .center) {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -105,7 +105,7 @@ struct DepartureSectionListView: View {
                     resetData()
                 }
                 .onChange(of: mapIconModel.num) { _ in
-                    coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")
+                    resetData()
                 }.sheet(isPresented: $showModalComment) {
                     DepartureModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
                 }.sheet(isPresented: $showSheet) {
@@ -126,7 +126,7 @@ struct DepartureSectionListView: View {
     
     private func resetData() {
         coreDataModel.departureArray = coreDataModel.read("departure")
-        coreDataModel.departureRefArray = coreDataModel.read("departureref")
+        coreDataModel.departureRefArray = coreDataModel.readClipBoard("departure")
         
         coreDataModel.dataPostDeparture = coreDataModel.readDataPostList("departure", "")
         coreDataModel.dataPostDepartureRef = coreDataModel.readDataPostList("departure", "ref")

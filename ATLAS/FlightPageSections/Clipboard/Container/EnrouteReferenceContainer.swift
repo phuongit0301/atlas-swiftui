@@ -18,7 +18,7 @@ struct EnrouteReferenceContainer: View {
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Enroute"
-    var target: String = "enrouteref"
+    var target: String = "enroute"
     
     var body: some View {
         VStack(spacing: 0) {

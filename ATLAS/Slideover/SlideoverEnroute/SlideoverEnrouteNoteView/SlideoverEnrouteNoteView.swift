@@ -60,7 +60,7 @@ struct SlideoverEnrouteNoteView: View {
         viewModel.dataPostEnroute = viewModel.readDataPostList("enroute", "")
         viewModel.dataPostEnrouteRef = viewModel.readDataPostList("enroute", "ref")
         viewModel.enrouteArray = viewModel.read("enroute")
-        viewModel.enrouteRefArray = viewModel.read("enrouteref")
+        viewModel.enrouteRefArray = viewModel.read("enroute")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

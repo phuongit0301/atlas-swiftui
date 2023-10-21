@@ -178,22 +178,22 @@ struct DepartureNoteItemList: View {
     private func addQR(_ index: Int) {
         if let eventList = coreDataModel.selectedEvent {
             let data = itemList[index]
-            let item = NoteList(context: persistenceController.container.viewContext)
-            item.id = UUID()
-            item.name = data.name
-            item.isDefault = false
-            item.createdAt = dateFormatter.string(from: Date())
-            item.canDelete = true
-            item.fromParent = true
-            item.type = "departureref"
-            item.includeCrew = data.includeCrew
-            item.parentId = data.id
-            
-            if let tags = data.tags {
-                item.addToTags(tags)
-            }
-            
-            eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
+//            let item = NoteList(context: persistenceController.container.viewContext)
+//            item.id = UUID()
+//            item.name = data.name
+//            item.isDefault = false
+//            item.createdAt = dateFormatter.string(from: Date())
+//            item.canDelete = true
+//            item.fromParent = true
+//            item.type = "departureref"
+//            item.includeCrew = data.includeCrew
+//            item.parentId = data.id
+//            
+//            if let tags = data.tags {
+//                item.addToTags(tags)
+//            }
+//            
+//            eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
             data.isDefault = true
             coreDataModel.save()
             resetData()

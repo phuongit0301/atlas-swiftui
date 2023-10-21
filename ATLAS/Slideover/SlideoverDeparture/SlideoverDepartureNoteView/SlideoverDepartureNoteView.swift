@@ -61,7 +61,7 @@ struct SlideoverDepartureNoteView: View {
         viewModel.dataPostDeparture = viewModel.readDataPostList("departure", "")
         viewModel.dataPostDepartureRef = viewModel.readDataPostList("departure", "ref")
         viewModel.departureArray = viewModel.read("departure")
-        viewModel.departureRefArray = viewModel.read("departureref")
+        viewModel.departureRefArray = viewModel.read("departure")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

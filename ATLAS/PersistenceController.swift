@@ -152,6 +152,11 @@ class CoreDataModelState: ObservableObject {
     @Published var depAirportNotam: [String: String] = [:]
     @Published var arrAirportNotam: [String: String] = [:]
     
+    @Published var enrNotamClipboard = [String: [NotamsDataList]]()
+    @Published var destNotamClipboard = [String: [NotamsDataList]]()
+    @Published var depNotamClipboard = [String: [NotamsDataList]]()
+    @Published var arrNotamClipboard = [String: [NotamsDataList]]()
+    
     @Published var dataDepartureNotamsRef: [NotamsDataList] = []
     @Published var dataEnrouteNotamsRef: [NotamsDataList] = []
     @Published var dataArrivalNotamsRef: [NotamsDataList] = []
@@ -290,21 +295,11 @@ class CoreDataModelState: ObservableObject {
             async let recencyService = remoteService.getRecencyData()
             
             //array handle call API parallel
-//            let (responseCalendar, responseLogbook, responseLimitation, responseRecency, responseFlightPlan) = await (calendarService, logbookService, limitationService, recencyService, flightPlanService)
             let (responseLogbook, responseLimitation, responseRecency) = await (logbookService, limitationService, recencyService)
             
             
             print("sync after signup")
             DispatchQueue.main.async {
-                //For calendar
-//                if let dataDateRange = responseCalendar?.COP_date_ranges, dataDateRange.count > 0 {
-//                    self.initDataEventDateRange(dataDateRange)
-//                }
-//
-//                if let events = responseCalendar?.events, events.count > 0 {
-//                    self.initDataEvent(events)
-//                }
-                
                 // Init Logbook
                 if let logbookEntry = responseLogbook?.logbook_data {
                     self.initDataLogbookEntries(logbookEntry)
@@ -320,39 +315,6 @@ class CoreDataModelState: ObservableObject {
                     
                     self.initDataRecencyExpiry(responseRecency.expiry_data)
                 }
-                
-//                if responseFlightPlan.count > 0 {
-//                    for item in responseFlightPlan {
-//                        // For Flight Plan
-//                        if item.notes.count > 0 {
-//                            self.initDataNoteList(item.notes)
-//                        }
-//
-//                        if item.colour_airport.count > 0 {
-//                            self.initDataAirportColor(item.colour_airport)
-//                        }
-//
-//                        if item.route.count > 0 {
-//                            self.initDataRouteMap(item.route)
-//                        }
-//
-//                        if item.notam.count > 0 {
-//                            self.initDataFlightNotams(item.notam)
-//                        }
-//
-//                        if item.metar_taf.count > 0 {
-//                            self.initDataFlightMetarTaf(item.metar_taf)
-//                        }
-//
-//                        if item.aabba_notes != nil {
-//                            self.initDataMapAabbaNotes(item.aabba_notes)
-//                        }
-//
-//                        if item.flight_overview != nil {
-//                            self.initDataFlightOverview(item.flight_overview)
-//                        }
-//                    }
-//                }
                 
                 self.isBoardingCompleted = ""
                 
@@ -433,17 +395,6 @@ class CoreDataModelState: ObservableObject {
     func initFetchData() async {
         DispatchQueue.main.async {
             self.tagList = self.readTag()
-//            self.tagListCabinDefects = self.readTagByName("Cabin Defects")
-//            self.tagListWeather = self.readTagByName("Weather")
-            self.noteListIncludeCrew = self.readNoteListIncludeCrew()
-//            self.preflightArray = self.read("preflight")
-//            self.departureArray = self.read("departure")
-//            self.enrouteArray = self.read("enroute")
-//            self.arrivalArray = self.read("arrival")
-//            self.preflightRefArray = self.read("preflightref")
-//            self.departureRefArray = self.read("departureref")
-//            self.enrouteRefArray = self.read("enrouteref")
-//            self.arrivalRefArray = self.read("arrivalref")
             self.scratchPadArray = self.readScratchPad()
             self.dataFPEnroute = self.readEnrouteList()
             
@@ -1368,58 +1319,10 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataTag() {
-        let newTags1 = TagList(context: service.container.viewContext)
-        newTags1.id = UUID()
-        newTags1.name = "Dispatch"
-        
-        let newTags2 = TagList(context: service.container.viewContext)
-        newTags2.id = UUID()
-        newTags2.name = "Terrain"
-        
-        let newTags3 = TagList(context: service.container.viewContext)
-        newTags3.id = UUID()
-        newTags3.name = "Weather"
-        
-        let newTags4 = TagList(context: service.container.viewContext)
-        newTags4.id = UUID()
-        newTags4.name = "Approach"
-        
-        let newTags5 = TagList(context: service.container.viewContext)
-        newTags5.id = UUID()
-        newTags5.name = "Airport"
-        
-        let newTags6 = TagList(context: service.container.viewContext)
-        newTags6.id = UUID()
-        newTags6.name = "ATC"
-        
-        let newTags7 = TagList(context: service.container.viewContext)
-        newTags7.id = UUID()
-        newTags7.name = "Aircraft"
-        
-        let newTags8 = TagList(context: service.container.viewContext)
-        newTags8.id = UUID()
-        newTags8.name = "Environment"
-        
-        service.container.viewContext.performAndWait {
-            do {
-                // Persist the data in this managed object context to the underlying store
-                try service.container.viewContext.save()
-                print("saved successfully")
-            } catch {
-                // Something went wrong 😭
-                print("Failed to save: \(error)")
-                // Rollback any changes in the managed object context
-                service.container.viewContext.rollback()
-                
-            }
-        }
-    }
-    
     func initData() {
         let newTags1 = TagList(context: service.container.viewContext)
         newTags1.id = UUID()
-        newTags1.name = "Terrain"
+        newTags1.name = "Aircraft Status"
         
         let newTags2 = TagList(context: service.container.viewContext)
         newTags2.id = UUID()
@@ -1427,31 +1330,11 @@ class CoreDataModelState: ObservableObject {
         
         let newTags3 = TagList(context: service.container.viewContext)
         newTags3.id = UUID()
-        newTags3.name = "Cabin Defects"
+        newTags3.name = "Terrain"
         
         let newTags4 = TagList(context: service.container.viewContext)
         newTags4.id = UUID()
-        newTags4.name = "Aircraft Status"
-        
-        let newTags5 = TagList(context: service.container.viewContext)
-        newTags5.id = UUID()
-        newTags5.name = "Preflight"
-        
-        let newTags6 = TagList(context: service.container.viewContext)
-        newTags6.id = UUID()
-        newTags6.name = "Departure"
-        
-        let newTags7 = TagList(context: service.container.viewContext)
-        newTags7.id = UUID()
-        newTags7.name = "Enroute"
-        
-        let newTags8 = TagList(context: service.container.viewContext)
-        newTags8.id = UUID()
-        newTags8.name = "Arrival"
-        
-        let newTags9 = TagList(context: service.container.viewContext)
-        newTags9.id = UUID()
-        newTags9.name = "Crew Briefing"
+        newTags4.name = "Weather"
         
         service.container.viewContext.performAndWait {
             do {
@@ -1529,10 +1412,10 @@ class CoreDataModelState: ObservableObject {
             self.departureArray = self.read("departure")
             self.enrouteArray = self.read("enroute")
             self.arrivalArray = self.read("arrival")
-            self.preflightRefArray = self.read("preflightref")
-            self.departureRefArray = self.read("departureref")
-            self.enrouteRefArray = self.read("enrouteref")
-            self.arrivalRefArray = self.read("arrivalref")
+            self.preflightRefArray = self.readClipBoard("preflight")
+            self.departureRefArray = self.readClipBoard("departure")
+            self.enrouteRefArray = self.readClipBoard("enroute")
+            self.arrivalRefArray = self.readClipBoard("arrival")
         }
         
     }
@@ -1592,55 +1475,33 @@ class CoreDataModelState: ObservableObject {
     
     func readTagByName(_ target: String = "") -> [CabinDefectModel] {
         var temp = [CabinDefectModel]()
-        
         if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList], data.count > 0 {
             for post in data {
-                if let tags = post.tags?.allObjects as? [TagList], tags.count > 0 {
-                    for tag in tags {
-                        if tag.name == target {
-                            temp.append(CabinDefectModel(postId: post.id ?? UUID(), postName: post.unwrappedName, postDate: post.unwrappedCreatedAt, tagName: tag.name, postIsDefault: post.isDefault))
+                if post.includeCrew {
+                    if let tags = post.tags?.allObjects as? [TagList], tags.count > 0 {
+                        for tag in tags {
+                            if tag.name == target {
+                                temp.append(CabinDefectModel(postId: post.id ?? UUID(), postName: post.unwrappedName, postDate: post.unwrappedCreatedAt, tagName: tag.name, postIsDefault: post.includeCrew))
+                            }
                         }
                     }
                 }
             }
         }
         return temp
-        
-        // create a temp array to save fetched notes
-//        var data: [TagList] = []
-//        // initialize the fetch request
-//        let request: NSFetchRequest<TagList> = TagList.fetchRequest()
-//
-//        if target != "" {
-//            request.predicate = NSPredicate(format: "name == %@", target)
-//        }
-//        // fetch with the request
-//        do {
-//            data = try service.container.viewContext.fetch(request)
-//        } catch {
-//            print("Could not fetch tag from Core Data.")
-//        }
-//
-//        // return results
-//        return data
     }
     
     func readNoteListIncludeCrew() -> [NoteList] {
-        // create a temp array to save fetched notes
-        var data: [NoteList] = []
-        // initialize the fetch request
-        let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
+        var temp = [NoteList]()
         
-        request.predicate = NSPredicate(format: "includeCrew == 1")
-        // fetch with the request
-        do {
-            data = try service.container.viewContext.fetch(request)
-        } catch {
-            print("Could not fetch tag from Core Data.")
+        if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList], data.count > 0 {
+            for post in data {
+                if post.includeCrew {
+                    temp.append(post)
+                }
+            }
         }
-        
-        // return results
-        return data
+        return temp
     }
     
     func initDataEnroute(_ dataEnroute: [IEnrouteDataResponseModel]) {
@@ -3344,7 +3205,7 @@ class CoreDataModelState: ObservableObject {
         
         if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList] {
             if(data.count > 0) {
-                data.forEach {item in
+                for item in data {
                     if item.type == target {
                         temp.append(item)
                     }
@@ -3352,30 +3213,21 @@ class CoreDataModelState: ObservableObject {
             }
         }
         return temp
+    }
+    
+    func readClipBoard(_ target: String = "preflight", predicateFormat: String? = "type = %@", fetchLimit: Int? = nil) -> [NoteList] {
+        var temp: [NoteList] = []
         
-        // create a temp array to save fetched notes
-//        var results: [NoteList] = []
-//        // initialize the fetch request
-//        let request: NSFetchRequest<NoteList> = NoteList.fetchRequest()
-//
-//        // define filter and/or limit if needed
-//        if predicateFormat != nil {
-//            request.predicate = NSPredicate(format: "type == %@", target)
-//        }
-//
-//        if fetchLimit != nil {
-//            request.fetchLimit = fetchLimit!
-//        }
-//
-//        // fetch with the request
-//        do {
-//            results = try service.container.viewContext.fetch(request)
-//        } catch {
-//            print("Could not fetch notes from Core Data.")
-//        }
-//
-//        // return results
-//        return results
+        if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList] {
+            if(data.count > 0) {
+                for item in data {
+                    if item.type == target && item.isDefault {
+                        temp.append(item)
+                    }
+                }
+            }
+        }
+        return temp
     }
     
     func readDepartureAtc() {
@@ -5607,27 +5459,6 @@ class CoreDataModelState: ObservableObject {
         }
         
         return data
-    }
-    
-    func prepareDataPostPreflight(_ data: [NoteAabbaPostList]) -> (postList: [NotePostList], postListRef :[NotePostList]) {
-        var postList = [NotePostList]()
-        var postListRef = [NotePostList]()
-        
-        if data.count > 0, let firstItem = data.first {
-            if let posts = firstItem.posts?.allObjects as? [NotePostList] {
-                for item in posts {
-                    if item.type == "preflight" {
-                        postList.append(item)
-                    }
-                    
-                    if item.type == "preflightref" {
-                        postListRef.append(item)
-                    }
-                }
-            }
-        }
-        
-        return (postList: postList, postListRef: postListRef)
     }
     
     func deleteAllTrafficMap() async {

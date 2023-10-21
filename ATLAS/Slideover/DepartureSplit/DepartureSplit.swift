@@ -16,7 +16,7 @@ struct DepartureSplit: View {
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Departure"
-    var target: String = "departureref"
+    var target: String = "departure"
     
     var geoWidth: Double = 0
     

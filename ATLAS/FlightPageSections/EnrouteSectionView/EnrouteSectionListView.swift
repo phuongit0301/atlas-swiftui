@@ -105,7 +105,7 @@ struct EnrouteSectionListView: View {
                     resetData()
                 }
                 .onChange(of: mapIconModel.num) { _ in
-                    coreDataModel.dataNoteAabbaEnroute = coreDataModel.readDataNoteAabbaPostList("enroute")
+                    resetData()
                 }.sheet(isPresented: $showModalComment) {
                     EnrouteModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
                 }.sheet(isPresented: $showSheet) {
@@ -126,7 +126,7 @@ struct EnrouteSectionListView: View {
     
     private func resetData() {
         coreDataModel.enrouteArray = coreDataModel.read("enroute")
-        coreDataModel.enrouteRefArray = coreDataModel.read("enrouteref")
+        coreDataModel.enrouteRefArray = coreDataModel.readClipBoard("enroute")
         
         coreDataModel.dataPostEnroute = coreDataModel.readDataPostList("enroute", "")
         coreDataModel.dataPostEnrouteRef = coreDataModel.readDataPostList("enroute", "ref")

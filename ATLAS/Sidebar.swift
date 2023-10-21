@@ -55,7 +55,7 @@ struct Sidebar: View {
                                 showUpcoming.toggle()
                             }
                         
-                        if showUpcoming {
+                        if showUpcoming && coreDataModel.dataEventUpcoming.count > 0 {
                             ForEach(coreDataModel.dataEventUpcoming.indices, id: \.self) { index in
                                 SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
                             }
@@ -80,9 +80,9 @@ struct Sidebar: View {
                                 showCompleted.toggle()
                             }
                         
-                        if showCompleted {
+                        if showCompleted && coreDataModel.dataEventCompleted.count > 0 {
                             ForEach(coreDataModel.dataEventCompleted.indices, id: \.self) { index in
-                                SidebarItem(item: $coreDataModel.dataEventUpcoming[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
+                                SidebarItem(item: $coreDataModel.dataEventCompleted[index], selectedItem: $coreDataModel.selectedEvent, isEventActive: $coreDataModel.isEventActive)
                             }
                         }
                     }.padding(.horizontal)

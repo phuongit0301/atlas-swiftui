@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClipboardCrewBriefingNoteView: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
     let width: CGFloat
@@ -27,18 +27,19 @@ struct ClipboardCrewBriefingNoteView: View {
                 header: header,
                 showSheet: $showSheet,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.noteListIncludeCrew,
+                itemList: $coreDataModel.noteListIncludeCrew,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
             ).frame(maxHeight: .infinity)
                 .background(Color.white)
                 .cornerRadius(8)
-        }.sheet(isPresented: $showSheet) {
+        }
+        .sheet(isPresented: $showSheet) {
             NoteItemForm(
                 textNote: $textNote,
-                tagList: $viewModel.tagList,
-                itemList: $viewModel.preflightRefArray,
+                tagList: $coreDataModel.tagList,
+                itemList: $coreDataModel.preflightRefArray,
                 currentIndex: $currentIndex,
                 showSheet: $showSheet,
                 type: "preflight",
@@ -49,15 +50,16 @@ struct ClipboardCrewBriefingNoteView: View {
     }
     
     private func resetData() {
-        viewModel.noteListIncludeCrew = viewModel.readNoteListIncludeCrew()
-        viewModel.preflightArray = viewModel.read("preflight")
-        viewModel.departureArray = viewModel.read("departure")
-        viewModel.enrouteArray = viewModel.read("enroute")
-        viewModel.arrivalArray = viewModel.read("arrival")
-        viewModel.preflightRefArray = viewModel.read("preflightref")
-        viewModel.departureRefArray = viewModel.read("departureref")
-        viewModel.enrouteRefArray = viewModel.read("enrouteref")
-        viewModel.arrivalRefArray = viewModel.read("arrivalref")
+        coreDataModel.noteListIncludeCrew = coreDataModel.readNoteListIncludeCrew()
+        coreDataModel.tagListCabinDefects = coreDataModel.readTagByName("Aircraft Status")
+        coreDataModel.preflightArray = coreDataModel.read("preflight")
+        coreDataModel.departureArray = coreDataModel.read("departure")
+        coreDataModel.enrouteArray = coreDataModel.read("enroute")
+        coreDataModel.arrivalArray = coreDataModel.read("arrival")
+        coreDataModel.preflightRefArray = coreDataModel.readClipBoard("preflight")
+        coreDataModel.departureRefArray = coreDataModel.readClipBoard("departure")
+        coreDataModel.enrouteRefArray = coreDataModel.readClipBoard("enroute")
+        coreDataModel.arrivalRefArray = coreDataModel.readClipBoard("arrival")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

@@ -165,7 +165,7 @@ struct DepartureNoteItemForm: View {
                 let item = NoteList(context: persistenceController.container.viewContext)
                 item.id = UUID()
                 item.name = name
-                item.isDefault = (isCreateFromClipboard ?? false) ? true : false
+                item.isDefault = true
                 item.createdAt = dateFormatter.string(from: Date())
                 item.canDelete = true
                 item.fromParent = false
@@ -173,19 +173,19 @@ struct DepartureNoteItemForm: View {
                 item.includeCrew = isIncludeBriefing
                 item.addToTags(NSSet(array: tagListSelected))
                 
-                if isCreateFromClipboard != nil {
-                    let child = NoteList(context: persistenceController.container.viewContext)
-                    child.id = UUID()
-                    child.name = name
-                    child.isDefault = true
-                    child.createdAt = dateFormatter.string(from: Date())
-                    child.canDelete = true
-                    child.fromParent = true
-                    child.type = "\(type)ref"
-                    child.includeCrew = isIncludeBriefing
-                    child.parentId = item.id
-                    child.addToTags(NSSet(array: tagListSelected))
-                }
+//                if isCreateFromClipboard != nil {
+//                    let child = NoteList(context: persistenceController.container.viewContext)
+//                    child.id = UUID()
+//                    child.name = name
+//                    child.isDefault = true
+//                    child.createdAt = dateFormatter.string(from: Date())
+//                    child.canDelete = true
+//                    child.fromParent = true
+//                    child.type = "\(type)ref"
+//                    child.includeCrew = isIncludeBriefing
+//                    child.parentId = item.id
+//                    child.addToTags(NSSet(array: tagListSelected))
+//                }
                 
                 eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
                 coreDataModel.save()

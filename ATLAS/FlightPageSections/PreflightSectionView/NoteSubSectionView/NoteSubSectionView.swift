@@ -28,7 +28,7 @@ struct NoteSubSectionView: View {
     let dateFormmater = DateFormatter()
     
     var body: some View {
-        if coreDataModel.isNotamLoading {
+        if coreDataModel.isAabbaNoteLoading {
             HStack(alignment: .center) {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
@@ -105,9 +105,7 @@ struct NoteSubSectionView: View {
                     resetData()
                 }
                 .onChange(of: mapIconModel.num) { _ in
-                    coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
-                    coreDataModel.preflightArray = coreDataModel.read("preflight")
-                    coreDataModel.preflightRefArray = coreDataModel.read("preflightref")
+                    resetData()
                 }.sheet(isPresented: $showModalComment) {
                     ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $coreDataModel.dataPostPreflight).interactiveDismissDisabled(true)
                 }.sheet(isPresented: $showSheet) {
@@ -128,7 +126,7 @@ struct NoteSubSectionView: View {
     
     private func resetData() {
         coreDataModel.preflightArray = coreDataModel.read("preflight")
-        coreDataModel.preflightRefArray = coreDataModel.read("preflightref")
+        coreDataModel.preflightRefArray = coreDataModel.readClipBoard("preflight")
         coreDataModel.dataPostPreflight = coreDataModel.readDataPostList("preflight", "")
         coreDataModel.dataPostPreflightRef = coreDataModel.readDataPostList("preflight", "ref")
         coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")

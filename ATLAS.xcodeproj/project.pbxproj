@@ -154,6 +154,9 @@
 		3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */; };
 		3E5CA5272AE0457600DE8042 /* SectionDateUpdateList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5252AE0457600DE8042 /* SectionDateUpdateList+CoreDataClass.swift */; };
 		3E5CA5282AE0457600DE8042 /* SectionDateUpdateList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5262AE0457600DE8042 /* SectionDateUpdateList+CoreDataProperties.swift */; };
+		3E5CA52A2AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */; };
+		3E5CA52C2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */; };
+		3E5CA52E2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */; };
 		3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */; };
 		3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */; };
 		3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */; };
@@ -632,6 +635,9 @@
 		3E5AF65C2A1A8AD900A97ECF /* CollapsibleTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTab.swift; sourceTree = "<group>"; };
 		3E5CA5252AE0457600DE8042 /* SectionDateUpdateList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionDateUpdateList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E5CA5262AE0457600DE8042 /* SectionDateUpdateList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionDateUpdateList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureNotamRowView.swift; sourceTree = "<group>"; };
+		3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteNotamRowView.swift; sourceTree = "<group>"; };
+		3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalNotamRowView.swift; sourceTree = "<group>"; };
 		3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WorldCoordinates.plist; sourceTree = "<group>"; };
 		3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAirportCardView.swift; sourceTree = "<group>"; };
 		3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1393,6 +1399,7 @@
 				3E7291DF2AC68418000FF295 /* ClipboardDepartureNoteView */,
 				3E7291DD2AC680E8000FF295 /* ClipboardDepartureNotamView.swift */,
 				3E7291DB2AC67F9C000FF295 /* ClipboardDepature.swift */,
+				3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */,
 			);
 			path = ClipboardDepature;
 			sourceTree = "<group>";
@@ -1413,6 +1420,7 @@
 				3E7291EB2AC6ACB2000FF295 /* ClipboardEnrouteNoteView */,
 				3E7291E72AC6AC78000FF295 /* ClipboardEnroute.swift */,
 				3E7291E92AC6ACA4000FF295 /* ClipboardEnrouteNotamView.swift */,
+				3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */,
 			);
 			path = ClipboardEnroute;
 			sourceTree = "<group>";
@@ -1433,6 +1441,7 @@
 				3E7291F72AC6BBE1000FF295 /* ClipboardArrivalNoteView */,
 				3E7291F32AC6BBC5000FF295 /* ClipboardArrival.swift */,
 				3E7291F52AC6BBD6000FF295 /* ClipboardArrivalNotamView.swift */,
+				3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */,
 			);
 			path = ClipboardArrival;
 			sourceTree = "<group>";
@@ -2454,6 +2463,7 @@
 				3E4A36972A570BA800027C61 /* DepartureATISList+CoreDataClass.swift in Sources */,
 				3E7F68372A2045F300EC2CA3 /* TabViewCustom.swift in Sources */,
 				3EEBE6812AB58A4300421AFF /* CustomAabbaAnnotation.swift in Sources */,
+				3E5CA52C2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift in Sources */,
 				3E4A364F2A566ACE00027C61 /* ArrivalEntriesList+CoreDataProperties.swift in Sources */,
 				3E5AF6462A18FF0500A97ECF /* FuelView.swift in Sources */,
 				3EE170872AA859AC004DA27C /* CalendarModel.swift in Sources */,
@@ -2548,6 +2558,7 @@
 				3E3FCBEE2A21C913008017FA /* ArrivalReferenceContainer.swift in Sources */,
 				3EECB8592A6FAC9B009D4971 /* DateTimePickerView.swift in Sources */,
 				3E4A377E2A5CD3C200027C61 /* FuelReciprocalRwyList+CoreDataProperties.swift in Sources */,
+				3E5CA52A2AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift in Sources */,
 				3E9A2C582AD91E300071F44C /* NoteAabbaPostList+CoreDataProperties.swift in Sources */,
 				3E7292522ACAA21B000FF295 /* LimitationTimeModalView.swift in Sources */,
 				3E4E102C2A6567C50026802B /* ScratchPadEditSplitForm.swift in Sources */,
@@ -2712,6 +2723,7 @@
 				3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */,
+				3E5CA52E2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift in Sources */,
 				3E2BA8A82AD5431A009ABCC2 /* EventDateRangeList+CoreDataProperties.swift in Sources */,
 				3E72922C2AC86E14000FF295 /* SlideoverArrival.swift in Sources */,
 				3E2BA8962AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift in Sources */,
@@ -2881,6 +2893,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "";
@@ -2924,6 +2937,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ATLAS/Preview Content\"";
 				DEVELOPMENT_TEAM = Z94SMABH4Y;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "";

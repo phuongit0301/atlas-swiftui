@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClipboardNoteView: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     
     let width: CGFloat
@@ -31,7 +31,7 @@ struct ClipboardNoteView: View {
                 header: header,
                 showSheet: $showSheet,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.preflightRefArray,
+                itemList: $coreDataModel.preflightRefArray,
                 isShowList: $isShowListNote,
                 geoWidth: width,
                 resetData: resetData
@@ -43,7 +43,7 @@ struct ClipboardNoteView: View {
                 header: "Relevant AABBA Posts",
                 showModalComment: $showModalComment,
                 currentIndex: $currentIndex,
-                itemList: $viewModel.dataPostPreflightRef,
+                itemList: $coreDataModel.dataPostPreflightRef,
                 isShowList: $isShowListRelevent,
                 postIndex: $postIndex,
                 geoWidth: width,
@@ -52,12 +52,12 @@ struct ClipboardNoteView: View {
                 .background(Color.white)
                 .cornerRadius(8)
         }.sheet(isPresented: $showModalComment) {
-            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $viewModel.dataPostPreflightRef).interactiveDismissDisabled(true)
+            ModalNoteCommentView(isShowing: $showModalComment, parentIndex: $parentIndex, postIndex: $postIndex, posts: $coreDataModel.dataPostPreflightRef).interactiveDismissDisabled(true)
         }.sheet(isPresented: $showSheet) {
             NoteItemForm(
                 textNote: $textNote,
-                tagList: $viewModel.tagList,
-                itemList: $viewModel.preflightRefArray,
+                tagList: $coreDataModel.tagList,
+                itemList: $coreDataModel.preflightRefArray,
                 currentIndex: $currentIndex,
                 showSheet: $showSheet,
                 type: "preflight",
@@ -70,10 +70,10 @@ struct ClipboardNoteView: View {
     }
     
     private func resetData() {
-        viewModel.dataPostPreflight = viewModel.readDataPostList("preflight", "")
-        viewModel.dataPostPreflightRef = viewModel.readDataPostList("preflight", "ref")
-        viewModel.preflightArray = viewModel.read("preflight")
-        viewModel.preflightRefArray = viewModel.read("preflightref")
+        coreDataModel.dataPostPreflight = coreDataModel.readDataPostList("preflight", "")
+        coreDataModel.dataPostPreflightRef = coreDataModel.readDataPostList("preflight", "ref")
+        coreDataModel.preflightArray = coreDataModel.read("preflight")
+        coreDataModel.preflightRefArray = coreDataModel.readClipBoard("preflight")
         
         if self.currentIndex > -1 {
             self.currentIndex = -1

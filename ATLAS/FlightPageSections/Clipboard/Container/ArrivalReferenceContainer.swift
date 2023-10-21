@@ -18,7 +18,7 @@ struct ArrivalReferenceContainer: View {
     @State private var showSheet: Bool = false
     @State private var textNote: String = ""
     var header: String = "Arrival"
-    var target: String = "arrivalref"
+    var target: String = "arrival"
     
     var body: some View {
         VStack(spacing: 0) {

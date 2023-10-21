@@ -54,9 +54,9 @@ struct MapViewModal: View {
     var body: some View {
         VStack {
             if coreDataModel.imageLoading || coreDataModel.isTrafficLoading || coreDataModel.isMapAabbaLoading || coreDataModel.isMapAirportLoading || coreDataModel.isMapWaypointLoading {
-                VStack {
-                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black))
-                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                HStack(alignment: .center) {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black)).controlSize(.large)
+                }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .background(Color.black.opacity(0.3))
             } else {
                 ZStack(alignment: .top) {
@@ -760,13 +760,17 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
 //        let mapView = MKMapView()
         if routeDatas.count > 0 {
-            let regionCustom: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: ((routeDatas[1].latitude) as NSString).doubleValue, longitude: ((routeDatas[1].longitude) as NSString).doubleValue), span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
-            mapView.setRegion(regionCustom, animated: true)
+            if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
+                let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
+                let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
+                let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
+                mapView.setRegion(regionCustom, animated: true)
+            }
+            
         }
         
         mapView.mapType = mapType
 //        mapView.region = region
-//
         
         mapView.showsUserLocation = false
         mapView.showsScale = true
@@ -785,12 +789,24 @@ struct MapView: UIViewRepresentable {
         return mapView
     }
     
+    func calculateRegion(startCoordinate: CLLocationCoordinate2D, endCoordinate: CLLocationCoordinate2D) -> MKCoordinateRegion {
+        let center = CLLocationCoordinate2D(
+            latitude: (startCoordinate.latitude + endCoordinate.latitude) / 2,
+            longitude: (startCoordinate.longitude + endCoordinate.longitude) / 2
+        )
+        
+        let span = MKCoordinateSpan(
+            latitudeDelta: abs(startCoordinate.latitude - endCoordinate.latitude) * 1.2,
+            longitudeDelta: abs(startCoordinate.longitude - endCoordinate.longitude) * 1.2
+        )
+        
+        let region = MKCoordinateRegion(center: center, span: span)
+        
+        return region
+    }
+    
     func updateUIView(_ view: MKMapView, context: Context) {
         view.showsUserLocation = false
-        
-        if routeDatas.count > 0 {
-            view.setCenter(CLLocationCoordinate2D(latitude: ((routeDatas[1].latitude) as NSString).doubleValue, longitude: ((routeDatas[1].longitude) as NSString).doubleValue), animated: true)
-        }
     }
     
     func makeCoordinator() -> Coordinator {
