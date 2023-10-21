@@ -52,15 +52,17 @@ struct ArrivalModalNoteCommentView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 8) {
-                            HStack {
-                                Text(post.unwrappedCategory)
-                                    .font(Font.custom("SF Pro", size: 11))
-                                    .foregroundColor(Color.white)
-                            }.padding(.horizontal, 12)
-                                .padding(.vertical, 4)
-                                .background(handleColor(post.unwrappedCategory))
-                                .cornerRadius(12)
-                                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
+                            if post.unwrappedCategory != "" {
+                                HStack {
+                                    Text(post.unwrappedCategory)
+                                        .font(Font.custom("SF Pro", size: 11))
+                                        .foregroundColor(Color.white)
+                                }.padding(.horizontal, 12)
+                                    .padding(.vertical, 4)
+                                    .background(handleColor(post.unwrappedCategory))
+                                    .cornerRadius(12)
+                                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
+                            }
                             
                             Text(post.unwrappedUserName)
                                 .font(Font.custom("SF Pro", size: 11))
@@ -79,10 +81,13 @@ struct ArrivalModalNoteCommentView: View {
                         
                         HStack {
                             Button(action: {
-                                post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
-//                                posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
-                                coreDataModel.save()
+                                if post.voted {
+                                    post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) - 1)"
+                                } else {
+                                    post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                }
                                 
+                                coreDataModel.save()
                                 mapIconModel.num += 1
                             }, label:  {
                                 HStack {
@@ -170,7 +175,7 @@ struct ArrivalModalNoteCommentView: View {
                                     item.userId = userID
                                     item.commentDate = dateFormatter.string(from: Date())
                                     item.commentText = tfComment.trimmingCharacters(in: .whitespacesAndNewlines)
-                                    item.userName = "phuongpt"
+                                    item.userName = coreDataModel.dataUser?.unwrappedUsername
                                     post.addToComments(item)
                                     
                                     post.commentCount = "\(((post.commentCount as? NSString)?.intValue ?? 0) + 1)"

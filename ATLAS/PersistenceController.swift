@@ -275,6 +275,10 @@ class CoreDataModelState: ObservableObject {
     @Published var isAabbaNoteLoading = false
     @Published var isNotamLoading = false
     
+    
+    // For autocomplete
+    @Published var listRoutes = [String]()
+    
     let dateFormatter = DateFormatter()
     
     init() {

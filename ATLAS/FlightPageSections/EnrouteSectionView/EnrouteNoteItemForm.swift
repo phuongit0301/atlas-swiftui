@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct EnrouteNoteItemForm: View {
+    @AppStorage("uid") var userID: String = ""
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
@@ -20,6 +21,7 @@ struct EnrouteNoteItemForm: View {
     @State var tagListSelected: [TagList] = []
     @State var pasteboard = UIPasteboard.general
     @State var isIncludeBriefing = false
+    @State var isShareAabba = false
     
     @State private var animate = false
     
@@ -122,6 +124,14 @@ struct EnrouteNoteItemForm: View {
                                 }
                             }.frame(height: 44)
                             
+                            HStack {
+                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
+                                Toggle(isOn: $isShareAabba) {
+                                    Text("").font(.system(size: 17, weight: .regular))
+                                        .foregroundStyle(Color.black)
+                                }
+                            }.frame(height: 44)
+                            
                             Spacer()
                         }.padding(.horizontal)
                         
@@ -175,12 +185,57 @@ struct EnrouteNoteItemForm: View {
                 eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
                 coreDataModel.save()
                 
+                if isShareAabba {
+                    saveNoteAabba()
+                }
+                
                 currentIndex = -1
                 textNote = ""
                 tagListSelected = []
                 self.resetData()
                 self.showSheet.toggle()
             }
+        }
+    }
+    
+    func saveNoteAabba() {
+        if let eventList = coreDataModel.selectedEvent {
+            if let noteAabbaPostList = eventList.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], noteAabbaPostList.count > 0 {
+                if let firstItem = noteAabbaPostList.first(where: {$0.unwrappedType == "enroute"}) {
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    
+                    let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    var posts = [NotePostList]()
+                    let comments = [NoteCommentList]()
+                    
+                    let newPost = NotePostList(context: persistenceController.container.viewContext)
+                    let tags = tagListSelected.map { $0.name }
+
+                    newPost.id = UUID()
+                    newPost.postId = UUID().uuidString
+                    newPost.userId = userID
+                    newPost.userName = coreDataModel.dataUser?.username ?? ""
+                    newPost.postDate = dateFormatter.string(from: Date())
+                    newPost.postTitle = name
+                    newPost.postText = name
+                    newPost.upvoteCount = "0"
+                    newPost.commentCount = "0"
+                    
+                    newPost.category = tags.joined(separator: ", ")
+                    newPost.postUpdated = Date()
+                    newPost.favourite = false
+                    newPost.blue = false
+                    newPost.voted = false
+                    newPost.type = "enroute"
+                    newPost.comments = NSSet(array: comments)
+                    posts.append(newPost)
+                    
+                    firstItem.addToPosts(NSSet(array: posts))
+                }
+            }
+
+            coreDataModel.save()
         }
     }
     

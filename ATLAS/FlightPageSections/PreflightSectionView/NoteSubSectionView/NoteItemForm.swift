@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NoteItemForm: View {
+    @AppStorage("uid") var userID: String = ""
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
@@ -123,13 +124,13 @@ struct NoteItemForm: View {
                                 }
                             }.frame(height: 44)
                             
-//                            HStack {
-//                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
-//                                Toggle(isOn: $isShareAabba) {
-//                                    Text("").font(.system(size: 17, weight: .regular))
-//                                        .foregroundStyle(Color.black)
-//                                }
-//                            }.frame(height: 44)
+                            HStack {
+                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
+                                Toggle(isOn: $isShareAabba) {
+                                    Text("").font(.system(size: 17, weight: .regular))
+                                        .foregroundStyle(Color.black)
+                                }
+                            }.frame(height: 44)
                             
                             Spacer()
                         }.padding(.horizontal)
@@ -183,9 +184,9 @@ struct NoteItemForm: View {
                 eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
                 coreDataModel.save()
                 
-//                if isShareAabba {
-//                    saveNoteAabba()
-//                }
+                if isShareAabba {
+                    saveNoteAabba()
+                }
                 
                 currentIndex = -1
                 textNote = ""
@@ -198,25 +199,41 @@ struct NoteItemForm: View {
     
     func saveNoteAabba() {
         if let eventList = coreDataModel.selectedEvent {
-            let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            var posts = [NotePostList]()
-            let comments = [NoteCommentList]()
-            let newObj = NoteAabbaPostList(context: persistenceController.container.viewContext)
-            
-            let newPost = NotePostList(context: persistenceController.container.viewContext)
-            newPost.comments = NSSet(array: comments)
-            posts.append(newPost)
-            
-            newObj.id = UUID()
-            newObj.postCount = "0"
-            newObj.latitude = "0"
-            newObj.longitude = "0"
-            newObj.name = name
-            newObj.type = "preflight"
-            newObj.posts = NSSet(array: posts)
-            
-            eventList.noteAabbaPostList = NSSet(array: (eventList.noteAabbaPostList ?? []) + [newObj])
+            if let noteAabbaPostList = eventList.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], noteAabbaPostList.count > 0 {
+                if let firstItem = noteAabbaPostList.first(where: {$0.unwrappedType == "preflight"}) {
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    
+                    let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    var posts = [NotePostList]()
+                    let comments = [NoteCommentList]()
+                    
+                    let newPost = NotePostList(context: persistenceController.container.viewContext)
+                    let tags = tagListSelected.map { $0.name }
+
+                    newPost.id = UUID()
+                    newPost.postId = UUID().uuidString
+                    newPost.userId = userID
+                    newPost.userName = coreDataModel.dataUser?.username ?? ""
+                    newPost.postDate = dateFormatter.string(from: Date())
+                    newPost.postTitle = name
+                    newPost.postText = name
+                    newPost.upvoteCount = "0"
+                    newPost.commentCount = "0"
+                    
+                    newPost.category = tags.joined(separator: ", ")
+                    newPost.postUpdated = Date()
+                    newPost.favourite = false
+                    newPost.blue = false
+                    newPost.voted = false
+                    newPost.type = "preflight"
+                    newPost.comments = NSSet(array: comments)
+                    posts.append(newPost)
+                    
+                    firstItem.addToPosts(NSSet(array: posts))
+                }
+            }
+
             coreDataModel.save()
         }
     }

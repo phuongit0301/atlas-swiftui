@@ -79,10 +79,13 @@ struct ModalNoteCommentView: View {
                         
                         HStack {
                             Button(action: {
-                                post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
-//                                posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
-                                coreDataModel.save()
+                                if post.voted {
+                                    post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) - 1)"
+                                } else {
+                                    post.upvoteCount = "\(((post.upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                }
                                 
+                                coreDataModel.save()
                                 mapIconModel.num += 1
                             }, label:  {
                                 HStack {
@@ -170,7 +173,7 @@ struct ModalNoteCommentView: View {
                                     item.userId = userID
                                     item.commentDate = dateFormatter.string(from: Date())
                                     item.commentText = tfComment.trimmingCharacters(in: .whitespacesAndNewlines)
-                                    item.userName = "phuongpt"
+                                    item.userName = coreDataModel.dataUser?.unwrappedUsername
                                     post.addToComments(item)
                                     
                                     post.commentCount = "\(((post.commentCount as? NSString)?.intValue ?? 0) + 1)"

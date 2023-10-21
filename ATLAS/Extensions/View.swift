@@ -253,7 +253,7 @@ func getDestinationSplitTable(_ item: ListFlightInformationItem) -> AnyView {
 
 public struct HasToolbar: ViewModifier {
     @EnvironmentObject var sideMenuState: SideMenuModelState
-    @EnvironmentObject var coreDateModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
@@ -275,8 +275,8 @@ public struct HasToolbar: ViewModifier {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
-                            coreDateModel.selectedEvent = nil
-                            coreDateModel.isEventActive = false
+                            coreDataModel.selectedEvent = nil
+                            coreDataModel.isEventActive = false
                             dismiss()
                         }) {
                             Image("icon_arrow_left")
@@ -299,13 +299,13 @@ public struct HasToolbar: ViewModifier {
                     
                     ToolbarItem(placement: .principal) {
                         HStack(alignment: .center) {
-                            Text(coreDateModel.selectedEvent?.unwrappedName ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            Text(coreDataModel.selectedEvent?.unwrappedName ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                             
-                            if let dep = coreDateModel.selectedEvent?.dep, let dest = coreDateModel.selectedEvent?.dest {
+                            if let dep = coreDataModel.selectedEvent?.dep, let dest = coreDataModel.selectedEvent?.dest {
                                 Text("\(dep)-\(dest)").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                             }
                             
-                            Text(coreDateModel.selectedEvent?.startDate ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            Text(coreDataModel.selectedEvent?.startDate ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                         }
                     }
                     
@@ -342,7 +342,7 @@ public struct HasToolbar: ViewModifier {
 
 public struct HasMainToolbar: ViewModifier {
     @EnvironmentObject var sideMenuState: SideMenuModelState
-    @EnvironmentObject var coreDateModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var onboardingModel: OnboardingModel
     // Custom Back button
     @Environment(\.dismiss) private var dismiss
@@ -364,8 +364,8 @@ public struct HasMainToolbar: ViewModifier {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
-                            coreDateModel.selectedEvent = nil
-                            coreDateModel.isEventActive = false
+                            coreDataModel.selectedEvent = nil
+                            coreDataModel.isEventActive = false
                             dismiss()
                         }) {
                             Image("icon_arrow_left")
@@ -388,7 +388,7 @@ public struct HasMainToolbar: ViewModifier {
                     
                     ToolbarItem(placement: .principal) {
                         HStack(alignment: .center) {
-                            Text(coreDateModel.dataUser?.username ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
+                            Text(coreDataModel.dataUser?.username ?? "").foregroundColor(Color.theme.eerieBlack).padding(.horizontal, 20).font(.custom("Inter-SemiBold", size: 17))
                         }
                     }
                     
@@ -420,7 +420,7 @@ public struct HasMainToolbar: ViewModifier {
                     }
                 }.onAppear {
                     if userID != "" {
-                        coreDateModel.dataUser = coreDateModel.readUserProfileById(userID)
+                        coreDataModel.dataUser = coreDataModel.readUserProfileById(userID)
                     }
                 }
         }

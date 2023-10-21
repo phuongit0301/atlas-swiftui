@@ -8,7 +8,14 @@
 import SwiftUI
 import UIKit
 
+enum Focusable: Hashable {
+  case none
+  case row(id: String)
+}
+
 struct RowAlternates: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    
     let width: CGFloat
     let item: IAlternate
     @Binding var itemList: [IAlternate]
@@ -19,18 +26,23 @@ struct RowAlternates: View {
     @State private var tfVis: String = ""
     @State private var tfMinima: String = ""
     
+    @State private var tfRoute = ""
+    @State private var listRoutes = [String]()
+    
     // For ETA modal
     @State private var currentDateEta = Date()
     @State private var currentDateEtaTemp = Date()
     @State private var isShowModal = false
     @State private var currentIndex = -1
     
+    @FocusState var focusedRoute: Focusable?
+    
     let dateFormatter = DateFormatter()
     let columns = [GridItem(.flexible())]
     
     var body: some View {
         HStack {
-            HStack {
+            HStack(alignment: .center) {
                 Button(action: {
                     itemList.removeAll(where: {$0.id == item.id})
                 }, label: {
@@ -41,15 +53,54 @@ struct RowAlternates: View {
                         .aspectRatio(contentMode: .fit)
                 }).padding(.trailing)
                 
-                Picker("", selection: $selectAltn) {
-                    Text("Select ALTN").tag("")
-                    ForEach(ALTN_DROP_DOWN, id: \.self) {
-                        Text($0).tag($0)
-                    }
-                }.pickerStyle(MenuPickerStyle()).fixedSize()
-                    .padding(.leading, -12)
-            }.fixedSize()
-                .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
+//                Picker("", selection: $selectAltn) {
+//                    Text("Select ALTN").tag("")
+//                    ForEach(ALTN_DROP_DOWN, id: \.self) {
+//                        Text($0).tag($0)
+//                    }
+//                }.pickerStyle(MenuPickerStyle()).fixedSize()
+//                    .padding(.leading, -12)
+                
+                    HStack {
+                        TextField("Enter Route", text: $tfRoute)
+                            .focused($focusedRoute, equals: .row(id: item.id.uuidString))
+                            .onChange(of: tfRoute) {newValue in
+                                if itemList[currentIndex].altn != newValue {
+                                    listRoutes = AIRLINE_DROP_DOWN.filter {$0.lowercased().hasPrefix(newValue.lowercased())}
+//                                    coreDataModel.listRoutes = listRoutes
+                                    isRouteFormChange = true
+                               }
+                            }.frame(height: 44)
+                        
+                            if listRoutes.count > 0 {
+                                ScrollView {
+                                    VStack {
+                                        ForEach(listRoutes.indices, id: \.self) { index in
+                                            Text(listRoutes[index])
+                                                .font(.system(size: 15, weight: .regular))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(8)
+                                                .onTapGesture {
+                                                    tfRoute = listRoutes[index]
+                                                    if itemList.count > 0 {
+                                                        isRouteFormChange = true
+                                                        itemList[currentIndex].altn = listRoutes[index]
+                                                        listRoutes = []
+                                                    }
+                                                }
+                                            
+                                            if index + 1 < listRoutes.count {
+                                                Divider().padding(.horizontal, -8)
+                                            }
+                                        }
+                                    }.background(Color.theme.antiFlashWhite)
+                                        .cornerRadius(8)
+                                }.frame(height: 200)
+                                    .offset(x: -30, y: 50)
+                                    .zIndex(50)
+                            }
+                }
+            }.frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
             HStack {
                 ButtonDateStepper(onToggle: onEta, value: $currentDateEta, suffix: "").fixedSize()
@@ -72,15 +123,15 @@ struct RowAlternates: View {
                 }
             
         }.frame(height: 44)
-            .onChange(of: selectAltn) {newValue in
-                if itemList.count > 0 {
-                    if itemList[currentIndex].altn != newValue {
-                        isRouteFormChange = true
-                    }
-                    
-                    itemList[currentIndex].altn = newValue
-                }
-            }
+//            .onChange(of: selectAltn) {newValue in
+//                if itemList.count > 0 {
+//                    if itemList[currentIndex].altn != newValue {
+//                        isRouteFormChange = true
+//                    }
+//
+//                    itemList[currentIndex].altn = newValue
+//                }
+//            }
             .formSheet(isPresented: $isShowModal) {
                 GeometryReader { proxy in
                     VStack {
@@ -128,7 +179,7 @@ struct RowAlternates: View {
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                 if let selectedIndex = itemList.firstIndex(of: item) {
                     currentIndex = selectedIndex
-                    selectAltn = itemList[currentIndex].altn
+                    tfRoute = itemList[currentIndex].altn
                     tfVis = itemList[currentIndex].vis ?? ""
                     tfMinima = itemList[currentIndex].minima ?? ""
                     
@@ -139,6 +190,11 @@ struct RowAlternates: View {
                 }
                 
             }
+//            .onChange(of: focusedRoute) { newValue in
+//                if Focusable.row(id: item.id.uuidString) != newValue {
+//                    listRoutes = []
+//                }
+//            }
     }
     
     func onEta() {

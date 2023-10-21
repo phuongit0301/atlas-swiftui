@@ -401,6 +401,26 @@ struct SummarySubSectionView: View {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates).id(UUID())
                                             }
                                         }
+                                        
+//                                        if coreDataModel.listRoutes.count > 0 {
+//                                            ScrollView {
+//                                                ForEach(coreDataModel.listRoutes, id: \.self) { route in
+//                                                    Text(route)
+//                                                        .font(.system(size: 15, weight: .regular))
+//                                                        .frame(alignment: .leading)
+////                                                        .onTapGesture {
+////                                                            tfRoute = route
+////                                                            if itemList.count > 0 {
+////                                                                isRouteFormChange = true
+////                                                                itemList[currentIndex].altn = route
+////                                                            }
+////                                                        }
+//                                                }
+//                                            }.frame(height: 200)
+//                                                .background(Color.theme.antiFlashWhite)
+//                                                .cornerRadius(8)
+//                                                .zIndex(10)
+//                                        }
                                     } else {
                                         HStack(alignment: .center) {
                                             if isEdit {

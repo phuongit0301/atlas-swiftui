@@ -76,8 +76,10 @@ struct ClipboardArrivalNoteRelevantList: View {
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                HStack(alignment: .center, spacing: 8) {
-                                                    NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                if itemList[index].unwrappedCategory != "" {
+                                                    HStack(alignment: .center, spacing: 8) {
+                                                        NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                    }
                                                 }
                                                 
                                                 Text(itemList[index].unwrappedUserName).foregroundColor(Color.theme.azure).font(.system(size: 11, weight: .regular))
@@ -85,16 +87,29 @@ struct ClipboardArrivalNoteRelevantList: View {
                                                 Text(renderDate(itemList[index].unwrappedPostDate)).foregroundColor(Color.theme.philippineGray).font(.system(size: 11, weight: .regular))
                                                 
                                                 Button(action: {
-                                                    itemList[index].upvoteCount = "\(((itemList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                                    if itemList[index].voted {
+                                                        itemList[index].upvoteCount = "\(((itemList[index].upvoteCount as? NSString)?.intValue ?? 0) - 1)"
+                                                    } else {
+                                                        itemList[index].upvoteCount = "\(((itemList[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                                    }
+                                                    
+                                                    itemList[index].voted.toggle()
                                                     coreDataModel.save()
                                                     
                                                     mapIconModel.num += 1
                                                 }, label: {
                                                     HStack(alignment: .center, spacing: 4) {
-                                                        Image(systemName: "arrowshape.left")
-                                                            .foregroundColor(Color.black)
-                                                            .font(.system(size: 20))
-                                                            .rotationEffect(.degrees(90))
+                                                        if itemList[index].voted {
+                                                            Image(systemName: "arrowshape.left")
+                                                                .foregroundColor(Color.theme.azure)
+                                                                .font(.system(size: 20))
+                                                                .rotationEffect(.degrees(90))
+                                                        } else {
+                                                            Image(systemName: "arrowshape.left")
+                                                                .foregroundColor(Color.black)
+                                                                .font(.system(size: 20))
+                                                                .rotationEffect(.degrees(90))
+                                                        }
                                                         
                                                         Text(itemList[index].unwrappedUpvoteCount).foregroundColor(Color.black).font(.system(size: 13, weight: .regular))
                                                     }
