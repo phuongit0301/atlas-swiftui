@@ -157,6 +157,10 @@
 		3E5CA52A2AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */; };
 		3E5CA52C2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */; };
 		3E5CA52E2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */; };
+		3E5CA5312AE414DF00DE8042 /* MetarTafDepSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5302AE414DF00DE8042 /* MetarTafDepSubSectionView.swift */; };
+		3E5CA5332AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5322AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift */; };
+		3E5CA5352AE415B400DE8042 /* MetarTafArrSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5342AE415B400DE8042 /* MetarTafArrSubSectionView.swift */; };
+		3E5CA5372AE415E300DE8042 /* MetarTafDestSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5362AE415E300DE8042 /* MetarTafDestSubSectionView.swift */; };
 		3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */; };
 		3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */; };
 		3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */; };
@@ -638,6 +642,10 @@
 		3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureNotamRowView.swift; sourceTree = "<group>"; };
 		3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteNotamRowView.swift; sourceTree = "<group>"; };
 		3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalNotamRowView.swift; sourceTree = "<group>"; };
+		3E5CA5302AE414DF00DE8042 /* MetarTafDepSubSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetarTafDepSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA5322AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTafEnrSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA5342AE415B400DE8042 /* MetarTafArrSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTafArrSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA5362AE415E300DE8042 /* MetarTafDestSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetarTafDestSubSectionView.swift; sourceTree = "<group>"; };
 		3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WorldCoordinates.plist; sourceTree = "<group>"; };
 		3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAirportCardView.swift; sourceTree = "<group>"; };
 		3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1254,6 +1262,18 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		3E5CA52F2AE414A400DE8042 /* MetarTafSubSectionView */ = {
+			isa = PBXGroup;
+			children = (
+				3E7291322AC08558000FF295 /* MetarTafSubSectionView.swift */,
+				3E5CA5302AE414DF00DE8042 /* MetarTafDepSubSectionView.swift */,
+				3E5CA5322AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift */,
+				3E5CA5342AE415B400DE8042 /* MetarTafArrSubSectionView.swift */,
+				3E5CA5362AE415E300DE8042 /* MetarTafDestSubSectionView.swift */,
+			);
+			path = MetarTafSubSectionView;
+			sourceTree = "<group>";
+		};
 		3E63FC582A9AD144004BD54B /* Park Information */ = {
 			isa = PBXGroup;
 			children = (
@@ -1308,9 +1328,9 @@
 		3E7291402AC264B0000FF295 /* PreflightSectionView */ = {
 			isa = PBXGroup;
 			children = (
+				3E5CA52F2AE414A400DE8042 /* MetarTafSubSectionView */,
 				C5192C662ACA693D0029BC48 /* StatisticsView */,
 				3E7291392AC1BD6E000FF295 /* NoteSubSectionView */,
-				3E7291322AC08558000FF295 /* MetarTafSubSectionView.swift */,
 				3E7291342AC188B8000FF295 /* SummarySubSectionView */,
 				3E7291432AC266A4000FF295 /* PreflightSectionView.swift */,
 			);
@@ -2383,6 +2403,7 @@
 				3ECD57962A98F83C00C5FEF3 /* ListViewSeparator.swift in Sources */,
 				3E3FCC552A2C199C008017FA /* SceneSessionKey.swift in Sources */,
 				3EEBE66F2AB34ECF00421AFF /* MapCardView.swift in Sources */,
+				3E5CA5312AE414DF00DE8042 /* MetarTafDepSubSectionView.swift in Sources */,
 				3E2BA8952AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift in Sources */,
 				3EE1708D2AA95FBC004DA27C /* HomeInformationView.swift in Sources */,
 				3E9A2CC92ADF9CCA0071F44C /* WaypointMapList+CoreDataClass.swift in Sources */,
@@ -2401,6 +2422,7 @@
 				3E7291252ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift in Sources */,
 				3E72919C2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift in Sources */,
 				3E7291E82AC6AC78000FF295 /* ClipboardEnroute.swift in Sources */,
+				3E5CA5332AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3E7291F92AC6BBF6000FF295 /* ClipboardArrivalNoteView.swift in Sources */,
 				3E77234B2AD6C97A000C7AA3 /* LimitationSubsectionFormView.swift in Sources */,
@@ -2492,6 +2514,7 @@
 				3E7291B02AC5946C000FF295 /* ArrivalNoteItemList.swift in Sources */,
 				3E9A2CAE2ADCC9510071F44C /* RecencyExpiryList+CoreDataProperties.swift in Sources */,
 				3EF221A12AAF0C2C000B8FFB /* FlightForm.swift in Sources */,
+				3E5CA5372AE415E300DE8042 /* MetarTafDestSubSectionView.swift in Sources */,
 				3E4A36612A56EAE800027C61 /* AltnTafDataList+CoreDataProperties.swift in Sources */,
 				3EE1707A2AA82E0E004DA27C /* LogbookSectionView.swift in Sources */,
 				3E2BA8992AD4FD06009ABCC2 /* NotamsDataList+CoreDataClass.swift in Sources */,
@@ -2621,6 +2644,7 @@
 				3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
+				3E5CA5352AE415B400DE8042 /* MetarTafArrSubSectionView.swift in Sources */,
 				3E9A2C422AD856480071F44C /* FlightOverviewList+CoreDataProperties.swift in Sources */,
 				3EEBE6A22AB8425C00421AFF /* CustomPicker.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
