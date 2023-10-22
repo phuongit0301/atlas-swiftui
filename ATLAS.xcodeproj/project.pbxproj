@@ -166,6 +166,7 @@
 		3E5CA5412AE5105600DE8042 /* NoteList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA53F2AE5105600DE8042 /* NoteList+CoreDataProperties.swift */; };
 		3E5CA5432AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5422AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift */; };
 		3E5CA5452AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */; };
+		3E5CA5472AE5323E00DE8042 /* SlideoverDestinationNotamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */; };
 		3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */; };
 		3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */; };
 		3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */; };
@@ -656,6 +657,7 @@
 		3E5CA53F2AE5105600DE8042 /* NoteList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E5CA5422AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteItemRelevantForm.swift; sourceTree = "<group>"; };
 		3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteItemRelevantForm.swift; sourceTree = "<group>"; };
+		3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDestinationNotamView.swift; sourceTree = "<group>"; };
 		3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WorldCoordinates.plist; sourceTree = "<group>"; };
 		3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAirportCardView.swift; sourceTree = "<group>"; };
 		3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1557,6 +1559,7 @@
 				3E72922F2AC86E2C000FF295 /* SlideoverArrivalNoteView */,
 				3E72922B2AC86E14000FF295 /* SlideoverArrival.swift */,
 				3E72922D2AC86E25000FF295 /* SlideoverArrivalNotamView.swift */,
+				3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */,
 			);
 			path = SlideoverArrival;
 			sourceTree = "<group>";
@@ -2451,6 +2454,7 @@
 				3E4E10202A65519A0026802B /* PreviousSearchSplitView.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				3EE170702AA827EE004DA27C /* MainView.swift in Sources */,
+				3E5CA5472AE5323E00DE8042 /* SlideoverDestinationNotamView.swift in Sources */,
 				3E766FA72A5F914200B11616 /* AISearchSegmented.swift in Sources */,
 				3E72924A2ACA8EDC000FF295 /* ModelRowView.swift in Sources */,
 				3E7292162AC860EE000FF295 /* SlideoverDepartureNotamView.swift in Sources */,

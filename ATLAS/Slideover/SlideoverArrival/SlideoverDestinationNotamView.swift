@@ -1,5 +1,5 @@
 //
-//  SlideoverDepartureNotamView.swift
+//  SlideoverDestinationNotamView.swift
 //  ATLAS
 //
 //  Created by phuong phan on 29/09/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SlideoverDepartureNotamView: View {
+struct SlideoverDestinationNotamView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @Binding var itemList: [String: [NotamsDataList]]
     var dates: [String: String]
@@ -19,7 +19,7 @@ struct SlideoverDepartureNotamView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 HStack(alignment: .center, spacing: 8) {
-                    Text("Departure NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
+                    Text("Destination Alternates NOTAMs").foregroundStyle(Color.black).font(.system(size: 17, weight: .semibold))
                     
                     if isShow {
                         Image(systemName: "chevron.down")
@@ -63,7 +63,7 @@ struct SlideoverDepartureNotamView: View {
                                 
                                 Divider().padding(.horizontal, -16)
                                 
-                                ClipboardDepartureNotamRowView(itemList: itemList[key] ?? [])
+                                ClipboardArrivalNotamRowView(itemList: itemList[key] ?? [])
                             }.padding(.bottom, 24)
                         }
                     }

@@ -119,10 +119,10 @@ struct NoteItemList: View {
                                                     .font(.system(size: 22))
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
-                                    }
+                                    }.padding(.vertical, 8)
                                     
                                     if index + 1 < itemList.count {
-                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                        Divider().padding(.horizontal, -16)
                                     }
                                     
                                 }.id(UUID())

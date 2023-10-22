@@ -606,7 +606,7 @@ struct FlightOverviewSectionView: View {
                                                     Text(dataFlightOverview?.unwrappedCaName ?? "").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
                                                 }
                                                 HStack {
-                                                    Picker("", selection: $selectedFO) {
+                                                    Picker("", selection: $selectedCA) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
                                                             Text($0.rawValue).tag($0.rawValue)
                                                         }
@@ -634,7 +634,7 @@ struct FlightOverviewSectionView: View {
                                                 }
                                                 
                                                 HStack {
-                                                    Picker("", selection: $selectedCA) {
+                                                    Picker("", selection: $selectedFO) {
                                                         ForEach(SummaryDataDropDown.allCases, id: \.self) {
                                                             Text($0.rawValue).tag($0.rawValue)
                                                         }
@@ -670,10 +670,14 @@ struct FlightOverviewSectionView: View {
                         
                         if let ca = dataFlightOverview?.unwrappedCaPicker {
                             selectedCA = SummaryDataDropDown(rawValue: ca) ?? SummaryDataDropDown.pic
+                        } else {
+                            selectedCA = SummaryDataDropDown.pic
                         }
                         
                         if let f0 = dataFlightOverview?.unwrappedF0Picker {
                             selectedFO = SummaryDataDropDown(rawValue: f0) ?? SummaryDataDropDown.pic
+                        } else {
+                            selectedFO = SummaryDataDropDown.pic
                         }
                         
                         if let model = dataFlightOverview?.model {
@@ -833,6 +837,7 @@ struct FlightOverviewSectionView: View {
                         
                         Task {
                             await withTaskGroup(of: Void.self) { group in
+                                coreDataModel.dataSignature = coreDataModel.readSignature()
                                 coreDataModel.dataEvents = coreDataModel.readEvents()
                                 coreDataModel.dataEventDateRange = coreDataModel.readEventDateRange()
                                 coreDataModel.dataLogbookEntries = coreDataModel.readDataLogbookEntries()
@@ -910,9 +915,12 @@ struct FlightOverviewSectionView: View {
                                     }
                                 }
                                 
-                                let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: dataFlightOverview?.unwrappedAircraft ?? "", departure: dataFlightOverview?.unwrappedDep ?? "", destination: dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: coreDataModel.dataSignature?.unwrappedComment ?? "", sign_file_name: "", sign_file_url: coreDataModel.dataSignature?.unwrappedImageString ?? "", licence_number: coreDataModel.dataSignature?.unwrappedLicenseNumber ?? "")
+                                if let flightNumber = dataFlightOverview?.callsign, let foundItem = coreDataModel.readSignatureByFlightNumber(flightNumber) {
+                                    let payload = ILogbookEntriesData(log_id: UUID().uuidString, date: dateFormatter.string(from: Date()), aircraft_category: "", aircraft_type: selectedModelPicker, aircraft: dataFlightOverview?.unwrappedAircraft ?? "", departure: dataFlightOverview?.unwrappedDep ?? "", destination: dataFlightOverview?.unwrappedDest ?? "", pic_day: picDay, pic_u_us_day: picUsDay, p1_day: p1Day, p2_day: p2Day, pic_night: picNight, pic_u_us_night: picUsNight, p1_night: p1Night, p2_night: p2Night, instr: "", exam: "", comments: foundItem.unwrappedComment , sign_file_name: "", sign_file_url: foundItem.unwrappedImageString , licence_number: foundItem.unwrappedLicenseNumber )
+                                    
+                                    coreDataModel.initDataLogbookEntries([payload])
+                                }
                                 
-                                coreDataModel.initDataLogbookEntries([payload])
                                 
                                 coreDataModel.dataLogbookEntries = coreDataModel.readDataLogbookEntries()
                                 

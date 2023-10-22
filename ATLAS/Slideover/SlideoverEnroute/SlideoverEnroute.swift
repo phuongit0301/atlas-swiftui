@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SlideoverEnroute: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     @EnvironmentObject var refState: ScreenReferenceModel
     
     var body: some View {
@@ -28,13 +29,38 @@ struct SlideoverEnroute: View {
                     // End header
                     ScrollView {
                         VStack(spacing: 8) {
-                            SlideoverEnrouteNotamView(itemList: $viewModel.dataEnrouteNotamsRef)
+                            SlideoverEnrouteNotamView(itemList: $coreDataModel.enrNotamClipboard, dates: coreDataModel.enrAirportNotam, suffix: "ETA")
                             SlideoverEnrouteNoteView(width: proxy.size.width)
                         }
                     }
                 }.padding(.horizontal, 16)
             }.padding(.bottom, 32)
                 .background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    prepareData()
+                }.onChange(of: mapIconModel.num) { _ in
+                    prepareData()
+                }
         }
+    }
+    
+    func prepareData() {
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+        var temp = [String: [NotamsDataList]]()
+        
+        coreDataModel.dataNotams.forEach { item in
+            if item.type == "enrNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp[airport] != nil {
+                        temp[airport]?.append(item)
+                    } else {
+                        temp.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+        }
+        
+        coreDataModel.enrNotamClipboard = temp
+        coreDataModel.prepareRouteAlternate()
     }
 }

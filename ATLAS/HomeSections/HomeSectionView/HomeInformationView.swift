@@ -202,33 +202,34 @@ struct HomeInformationView: View {
                                         .padding(.horizontal)
                                         .onTapGesture {
                                             Task {
-                                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                let currentEvent = coreDataModel.dataEventUpcoming[index]
-                                                
-                                                coreDataModel.selectedEvent = currentEvent
-                                                coreDataModel.isEventActive = true
-                                                
-                                                if let startDate = dateFormatter.date(from: currentEvent.unwrappedStartDate),
-                                                   let endDate = dateFormatter.date(from: currentEvent.unwrappedEndDate) {
+                                                if coreDataModel.dataEventCompleted.count > 0 {
+                                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                                                    let currentEvent = coreDataModel.dataEventCompleted[index]
                                                     
-                                                    dateFormatter.dateFormat = "HH:mm"
-                                                    let startTime = dateFormatter.string(from: startDate)
-                                                    let endTime = dateFormatter.string(from: endDate)
+                                                    coreDataModel.selectedEvent = currentEvent
+                                                    coreDataModel.isEventActive = true
                                                     
-                                                    let requestBody = [
-                                                        "flight_number": currentEvent.unwrappedName,
-                                                        "dep": currentEvent.unwrappedDep,
-                                                        "arr": currentEvent.unwrappedDest,
-                                                        "std": startTime,
-                                                        "sta": endTime
-                                                    ]
-                                                    
-                                                    print("stat======\(requestBody)")
-                                                    coreDataModel.loadingInitFuel = true
-
-                                                    await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
-                                                        coreDataModel.loadingInitFuel = false
-                                                    })
+                                                    if let startDate = dateFormatter.date(from: currentEvent.unwrappedStartDate),
+                                                       let endDate = dateFormatter.date(from: currentEvent.unwrappedEndDate) {
+                                                        
+                                                        dateFormatter.dateFormat = "HH:mm"
+                                                        let startTime = dateFormatter.string(from: startDate)
+                                                        let endTime = dateFormatter.string(from: endDate)
+                                                        
+                                                        let requestBody = [
+                                                            "flight_number": currentEvent.unwrappedName,
+                                                            "dep": currentEvent.unwrappedDep,
+                                                            "arr": currentEvent.unwrappedDest,
+                                                            "std": startTime,
+                                                            "sta": endTime
+                                                        ]
+                                                        
+                                                        coreDataModel.loadingInitFuel = true
+                                                        
+                                                        await coreDataModel.syncDataFlightStats(requestBody, callback: { success in
+                                                            coreDataModel.loadingInitFuel = false
+                                                        })
+                                                    }
                                                 }
                                             }
                                            

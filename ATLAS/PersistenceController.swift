@@ -1019,15 +1019,12 @@ class CoreDataModelState: ObservableObject {
             "night": dataSelected?.night ?? "",
             "totalTime": dataSelected?.totalTime ?? "",
             "password": dataSelected?.password ?? "",
-            "CAName": dataSelected?.caName ?? "",
+            "CAName": "\(dataUser?.unwrappedFirstName ?? "") \(dataUser?.unwrappedLastName ?? "")",
             "CAPicker": dataSelected?.caPicker ?? "",
-            "FOName": dataSelected?.f0Name ?? "",
+            "FOName": dataSelected?.crewName ?? "",
             "FOPicker": dataSelected?.f0Picker ?? "",
             "status": selectedEvent?.flightStatus ?? FlightStatusEnum.UPCOMING.rawValue,
         ]
-        
-        print("payloadOverview==========\(payloadOverview)")
-        print("dataSelected==========\(dataSelected)")
         
         var payloadRoute: [Any] = []
         
@@ -1244,8 +1241,7 @@ class CoreDataModelState: ObservableObject {
             "aabba_map": payloadMapList
         ]
         
-//        print("=======post flight plan payload===== \(payload)")
-        
+        print("=======post flight plan payload===== \(payload)")
         return await remoteService.postFlightPlanDataV3([payload])
     }
     
@@ -4764,6 +4760,20 @@ class CoreDataModelState: ObservableObject {
     func readSignature() -> SignatureList? {
         let request: NSFetchRequest<SignatureList> = SignatureList.fetchRequest()
         do {
+            let response: [SignatureList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                return response.first
+            }
+        } catch {
+            print("Could not fetch scratch pad from Core Data.")
+        }
+        return nil
+    }
+    
+    func readSignatureByFlightNumber(_ flightNumber: String) -> SignatureList? {
+        let request: NSFetchRequest<SignatureList> = SignatureList.fetchRequest()
+        do {
+            request.predicate = NSPredicate(format: "flightNumber == %@", flightNumber)
             let response: [SignatureList] = try service.container.viewContext.fetch(request)
             if(response.count > 0) {
                 return response.first

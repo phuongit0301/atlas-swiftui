@@ -9,8 +9,9 @@ import SwiftUI
 
 struct SlideoverArrivalNotamView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
-    @Binding var itemList: [NotamsDataList]
-//    var resetData: () -> Void
+    @Binding var itemList: [String: [NotamsDataList]]
+    var dates: [String: String]
+    let suffix: String
     
     @State private var isShow = true
     
@@ -49,40 +50,21 @@ struct SlideoverArrivalNotamView: View {
                             Spacer()
                         }.frame(height: 44)
                     } else {
-                        HStack(spacing: 0) {
-                            Text("[STATION NAME]: ETD DD/MM/YY HHMM")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Color.black)
-                            Spacer()
-                        }.frame(height: 44)
-                        
-                        Divider().padding(.horizontal, -16)
-                        
-                        ForEach(itemList.indices, id: \.self) { index in
-                            HStack(alignment: .center, spacing: 0) {
-                                // notam text
-                                Text(itemList[index].unwrappedNotam)
-                                    .font(.system(size: 15, weight: .regular))
-                                Spacer()
-                                // star function to add to reference
-                                Button(action: {
-                                    itemList[index].isChecked.toggle()
-                                    coreDataModel.save()
-                                    coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                                    coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
-                                }) {
-                                    if itemList[index].isChecked {
-                                        Image(systemName: "star.fill").foregroundColor(Color.theme.azure)
+                        ForEach(Array(itemList.keys), id: \.self) {key in
+                            VStack(spacing: 8) {
+                                HStack(spacing: 0) {
+                                    if suffix == "STD" || suffix == "STA" {
+                                        Text("\(key) \(suffix): \(dates["date"] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                                     } else {
-                                        Image(systemName: "star").foregroundColor(Color.theme.azure)
+                                        Text("\(key) \(suffix): \(dates[key] ?? "")").font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                                     }
-                                }.fixedSize()
-                                    .buttonStyle(PlainButtonStyle())
-                            }.padding(.bottom, 8)
-                            
-                            if index + 1 < itemList.count {
+                                    Spacer()
+                                }.frame(height: 44)
+                                
                                 Divider().padding(.horizontal, -16)
-                            }
+                                
+                                ClipboardArrivalNotamRowView(itemList: itemList[key] ?? [])
+                            }.padding(.bottom, 24)
                         }
                     }
                 }

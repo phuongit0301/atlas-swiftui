@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SlideoverArrival: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var mapIconModel: MapIconModel
     @EnvironmentObject var refState: ScreenReferenceModel
     
     var body: some View {
@@ -28,7 +29,8 @@ struct SlideoverArrival: View {
                     // End header
                     ScrollView {
                         VStack(spacing: 8) {
-                            SlideoverArrivalNotamView(itemList: $viewModel.dataArrivalNotamsRef)
+                            SlideoverArrivalNotamView(itemList: $coreDataModel.arrNotamClipboard, dates: coreDataModel.arrAirportNotam, suffix: "STA")
+                            SlideoverDestinationNotamView(itemList: $coreDataModel.destNotamClipboard, dates: coreDataModel.destAirportNotam, suffix: "ETA")
                             SlideoverArrivalNoteView(width: proxy.size.width)
                         }
                     }
@@ -36,6 +38,43 @@ struct SlideoverArrival: View {
                 
             }.padding(.bottom, 32)
                 .background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    prepareData()
+                }.onChange(of: mapIconModel.num) { _ in
+                    prepareData()
+                }
         }
+    }
+    
+    func prepareData() {
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+        var temp = [String: [NotamsDataList]]()
+        var temp1 = [String: [NotamsDataList]]()
+        
+        coreDataModel.dataNotams.forEach { item in
+            if item.type == "arrNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp[airport] != nil {
+                        temp[airport]?.append(item)
+                    } else {
+                        temp.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+            
+            if item.type == "altnNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp1[airport] != nil {
+                        temp1[airport]?.append(item)
+                    } else {
+                        temp1.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+        }
+        
+        coreDataModel.arrNotamClipboard = temp
+        coreDataModel.destNotamClipboard = temp1
+        coreDataModel.prepareRouteAlternate()
     }
 }

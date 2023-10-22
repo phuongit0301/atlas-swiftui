@@ -162,10 +162,10 @@ struct ArrivalNoteItemRelevantList: View {
                                         }.padding(.horizontal, 5)
                                             .buttonStyle(PlainButtonStyle())
                                             
-                                    }
+                                    }.padding(.vertical, 8)
                                     
                                     if index + 1 < itemList.count {
-                                        Divider().padding(.horizontal, -16).padding(.vertical, 8)
+                                        Divider().padding(.horizontal, -16)
                                     }
                                 }.id(UUID())
                                 .listRowSeparator(.hidden)

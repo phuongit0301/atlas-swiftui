@@ -91,7 +91,7 @@ struct SlideoverDepartureNoteItemList: View {
                                     Spacer()
                                     
                                     Button(action: {
-                                        if (itemList[index].canDelete && itemList[index].fromParent) {
+                                        if (itemList.indices.contains(index) && itemList[index].canDelete && itemList[index].fromParent) {
                                             update(index)
                                         } else {
                                             updateStatus(index)

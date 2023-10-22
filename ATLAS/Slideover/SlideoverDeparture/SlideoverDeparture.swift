@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SlideoverDeparture: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var refState: ScreenReferenceModel
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -28,14 +29,38 @@ struct SlideoverDeparture: View {
                     // End header
                     ScrollView {
                         VStack(spacing: 8) {
-                            SlideoverDepartureNotamView(itemList: $viewModel.dataDepartureNotamsRef)
+                            SlideoverDepartureNotamView(itemList: $coreDataModel.depNotamClipboard, dates: coreDataModel.depAirportNotam, suffix: "STD")
                             SlideoverDepartureNoteView(width: proxy.size.width)
                         }
                     }
                 }.padding(.horizontal, 16)
             }.padding(.bottom, 32)
                 .background(Color.theme.antiFlashWhite)
+                .onAppear {
+                    prepareData()
+                }.onChange(of: mapIconModel.num) { _ in
+                    prepareData()
+                }
         }
     }
 
+    func prepareData() {
+        coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+        var temp = [String: [NotamsDataList]]()
+        
+        coreDataModel.dataNotams.forEach { item in
+            if item.type == "depNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp[airport] != nil {
+                        temp[airport]?.append(item)
+                    } else {
+                        temp.updateValue([item], forKey: airport)
+                    }
+                }
+            }
+        }
+        
+        coreDataModel.depNotamClipboard = temp
+        coreDataModel.prepareRouteAlternate()
+    }
 }
