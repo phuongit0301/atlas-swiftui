@@ -17,6 +17,7 @@ struct NoteSubSectionView: View {
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
+    @State private var showSheetRelevant: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -79,7 +80,7 @@ struct NoteSubSectionView: View {
                         
                         NoteItemRelevantList(
                             header: "Relevant AABBA Posts",
-                            showSheet: $showSheet,
+                            showSheet: $showSheetRelevant,
                             showModalComment: $showModalComment,
                             currentIndex: $currentIndex,
                             itemList: $coreDataModel.dataPostPreflight,
@@ -115,6 +116,16 @@ struct NoteSubSectionView: View {
                         itemList: $coreDataModel.preflightArray,
                         currentIndex: $currentIndex,
                         showSheet: $showSheet,
+                        type: "preflight",
+                        resetData: resetData
+                    ).interactiveDismissDisabled(true)
+                }.sheet(isPresented: $showSheetRelevant) {
+                    NoteItemRelevantForm(
+                        textNote: $textNote,
+                        tagList: $coreDataModel.tagList,
+                        itemList: $coreDataModel.dataPostPreflight,
+                        currentIndex: $currentIndex,
+                        showSheet: $showSheetRelevant,
                         type: "preflight",
                         resetData: resetData
                     ).interactiveDismissDisabled(true)

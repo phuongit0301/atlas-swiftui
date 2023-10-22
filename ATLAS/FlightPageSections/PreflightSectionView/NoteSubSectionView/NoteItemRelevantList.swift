@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NoteItemRelevantList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
     
@@ -77,9 +77,13 @@ struct NoteItemRelevantList: View {
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                if itemList[index].unwrappedCategory != "" {
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                if let tags = renderTag(itemList[index].unwrappedCategory) {
+                                                    if tags.count > 0 {
+                                                        HStack(alignment: .center, spacing: 8) {
+                                                            ForEach(tags, id: \.self) {item in
+                                                                NoteTagItemColor(name: item)
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 
@@ -95,7 +99,7 @@ struct NoteItemRelevantList: View {
                                                     }
                                                     
                                                     itemList[index].voted.toggle()
-                                                    viewModel.save()
+                                                    coreDataModel.save()
                                                     mapIconModel.num += 1
                                                 }, label: {
                                                     HStack(alignment: .center, spacing: 4) {
@@ -169,12 +173,31 @@ struct NoteItemRelevantList: View {
                                 .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
-                                    Button {
-                                        // TODO
-                                    } label: {
-                                        Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                    if itemList[index].canDelete {
+                                        Button(role: .destructive) {
+                                            coreDataModel.delete(itemList[index])
+                                            coreDataModel.save()
+                                            resetData()
+                                        } label: {
+                                            Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }.tint(Color.theme.coralRed)
+                                        
+                                        Button {
+                                            self.currentIndex = index
+                                            self.showSheet.toggle()
+                                        } label: {
+                                            Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }
+                                        .tint(Color.theme.orangePeel)
+                                        
+                                    } else {
+                                        Button {
+                                            // TODO
+                                        } label: {
+                                            Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }
+                                        .tint(Color.theme.graniteGray)
                                     }
-                                    .tint(Color.theme.graniteGray)
                                 }
                             }.onMove(perform: move)
                         }.listStyle(.plain)
@@ -188,51 +211,19 @@ struct NoteItemRelevantList: View {
     
     private func addQR(_ index: Int) {
         let data = itemList[index]
-//        let newPost = NotePostList(context: persistenceController.container.viewContext)
-//        newPost.id = UUID()
-//        newPost.postId = data.postId
-//        newPost.userId = data.userId
-//        newPost.userName = data.userName
-//        newPost.postDate = data.postDate
-//        newPost.postTitle = data.postTitle
-//        newPost.postText = data.postText
-//        newPost.upvoteCount = data.upvoteCount
-//        newPost.commentCount = data.commentCount
-//        newPost.category = data.category
-//        newPost.postUpdated = data.postUpdated
-//        newPost.favourite = false
-//        newPost.blue = data.blue
-//        newPost.type = "preflightref"
-//        newPost.canDelete = true
-//        newPost.fromParent = true
-//        newPost.parentId = data.id
-//
-//        if let comments = data.comments {
-//            newPost.addToComments(comments)
-//        }
-//
-//        // add data to parent core data
-//        if itemList.count > 0 {
-//            if let dataExist = viewModel.dataNoteAabbaPreflight.first {
-//                if let oldPosts = dataExist.posts?.allObjects as? [NotePostList] {
-//                    dataExist.posts = NSSet(array: oldPosts + [newPost])
-//                }
-//            }
-//        }
-        
         data.favourite = true
         data.fromParent = true
-        viewModel.save()
+        coreDataModel.save()
         resetData()
     }
     
     private func removeQR(_ index: Int) {
         itemList[index].favourite = false
         itemList[index].fromParent = false
-//        if let found = viewModel.dataPostPreflightRef.first(where: {$0.parentId == itemList[index].id}) {
-//            viewModel.delete(found)
+//        if let found = coreDataModel.dataPostPreflightRef.first(where: {$0.parentId == itemList[index].id}) {
+//            coreDataModel.delete(found)
 //        }
-        viewModel.save()
+        coreDataModel.save()
         resetData()
     }
     

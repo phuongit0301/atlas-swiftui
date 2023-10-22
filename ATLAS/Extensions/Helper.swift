@@ -230,3 +230,14 @@ extension Double {
         return self * 180.0 / .pi
     }
 }
+
+func renderTag(_ tag: String) -> [String]? {
+    if tag != "" {
+        if tag.contains(", ") {
+            return tag.components(separatedBy: ", ")
+        } else {
+            return [tag]
+        }
+    }
+    return []
+}

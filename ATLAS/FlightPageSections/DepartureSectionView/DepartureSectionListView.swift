@@ -17,6 +17,7 @@ struct DepartureSectionListView: View {
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
+    @State private var showSheetRelevant: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -79,7 +80,7 @@ struct DepartureSectionListView: View {
                         
                         DepartureNoteItemRelevantList(
                             header: "Relevant AABBA Posts",
-                            showSheet: $showSheet,
+                            showSheet: $showSheetRelevant,
                             showModalComment: $showModalComment,
                             currentIndex: $currentIndex,
                             itemList: $coreDataModel.dataPostDeparture,
@@ -115,6 +116,16 @@ struct DepartureSectionListView: View {
                         itemList: $coreDataModel.departureArray,
                         currentIndex: $currentIndex,
                         showSheet: $showSheet,
+                        type: "departure",
+                        resetData: resetData
+                    ).interactiveDismissDisabled(true)
+                }.sheet(isPresented: $showSheetRelevant) {
+                    DepartureNoteItemRelevantForm(
+                        textNote: $textNote,
+                        tagList: $coreDataModel.tagList,
+                        itemList: $coreDataModel.dataPostDeparture,
+                        currentIndex: $currentIndex,
+                        showSheet: $showSheetRelevant,
                         type: "departure",
                         resetData: resetData
                     ).interactiveDismissDisabled(true)

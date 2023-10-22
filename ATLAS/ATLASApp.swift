@@ -45,6 +45,7 @@ struct ATLASApp: App {
     @StateObject var mapIconModel = MapIconModel()
     @StateObject var onboardingModel = OnboardingModel()
     @StateObject var yourFlightPlanModel = YourFlightPlanModel()
+    @StateObject var preflightModel = PreflightModel()
 
     var network = Network()
     var sideMenuModelState = SideMenuModelState()
@@ -130,6 +131,7 @@ struct ATLASApp: App {
                 .environmentObject(mapIconModel)
                 .environmentObject(onboardingModel)
                 .environmentObject(yourFlightPlanModel)
+                .environmentObject(preflightModel)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
         }

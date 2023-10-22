@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DepartureNoteItemRelevantList: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var viewModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
@@ -76,9 +77,13 @@ struct DepartureNoteItemRelevantList: View {
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                if itemList[index].unwrappedCategory != "" {
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                if let tags = renderTag(itemList[index].unwrappedCategory) {
+                                                    if tags.count > 0 {
+                                                        HStack(alignment: .center, spacing: 8) {
+                                                            ForEach(tags, id: \.self) {item in
+                                                                NoteTagItemColor(name: item)
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 
@@ -169,12 +174,31 @@ struct DepartureNoteItemRelevantList: View {
                                 .listRowInsets(EdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16))
                                 .listRowBackground(Color.white)
                                 .swipeActions(allowsFullSwipe: false) {
-                                    Button {
-                                        //Todo
-                                    } label: {
-                                        Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                    if itemList[index].canDelete {
+                                        Button(role: .destructive) {
+                                            coreDataModel.delete(itemList[index])
+                                            coreDataModel.save()
+                                            resetData()
+                                        } label: {
+                                            Text("Delete").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }.tint(Color.theme.coralRed)
+                                        
+                                        Button {
+                                            self.currentIndex = index
+                                            self.showSheet.toggle()
+                                        } label: {
+                                            Text("Edit").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }
+                                        .tint(Color.theme.orangePeel)
+                                        
+                                    } else {
+                                        Button {
+                                            //Todo
+                                        } label: {
+                                            Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
+                                        }
+                                        .tint(Color.theme.graniteGray)
                                     }
-                                    .tint(Color.theme.graniteGray)
                                 }
                             }.onMove(perform: move)
                         }.listStyle(.plain)

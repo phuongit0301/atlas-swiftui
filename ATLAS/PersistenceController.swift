@@ -1411,7 +1411,7 @@ class CoreDataModelState: ObservableObject {
                 
             }
             
-            self.readNoteListIncludeCrew()
+            self.noteListIncludeCrew = self.readNoteListIncludeCrew()
             self.preflightArray = self.read("preflight")
             self.departureArray = self.read("departure")
             self.enrouteArray = self.read("enroute")
@@ -1501,7 +1501,14 @@ class CoreDataModelState: ObservableObject {
         if let data = self.selectedEvent?.noteList?.allObjects as? [NoteList], data.count > 0 {
             for post in data {
                 if post.includeCrew {
-                    temp.append(post)
+                    if let tags = post.tags?.allObjects as? [TagList], tags.count > 0 {
+                        for tag in tags {
+                            print("tag=======\(tag)")
+                            if tag.name != "Aircraft Status" && tag.name != "Weather" {
+                                temp.append(post)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -3941,7 +3948,6 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataAabbaMapList() -> [AabbaMapList] {
-        print("self.selectedEvent?.aabbaMapList--------\(self.selectedEvent?.aabbaMapList)")
         return self.selectedEvent?.aabbaMapList?.allObjects as? [AabbaMapList] ?? []
     }
     

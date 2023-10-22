@@ -124,14 +124,6 @@ struct EnrouteNoteItemForm: View {
                                 }
                             }.frame(height: 44)
                             
-                            HStack {
-                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
-                                Toggle(isOn: $isShareAabba) {
-                                    Text("").font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                }
-                            }.frame(height: 44)
-                            
                             Spacer()
                         }.padding(.horizontal)
                         
@@ -221,6 +213,7 @@ struct EnrouteNoteItemForm: View {
                     newPost.postText = name
                     newPost.upvoteCount = "0"
                     newPost.commentCount = "0"
+                    newPost.canDelete = true
                     
                     newPost.category = tags.joined(separator: ", ")
                     newPost.postUpdated = Date()

@@ -1,5 +1,5 @@
 //
-//  DepartureNoteItemForm.swift
+//  ArrivalNoteItemRelevantForm.swift
 //  ATLAS
 //
 //  Created by phuong phan on 19/06/2023.
@@ -8,20 +8,18 @@
 import Foundation
 import SwiftUI
 
-struct DepartureNoteItemForm: View {
+struct ArrivalNoteItemRelevantForm: View {
     @AppStorage("uid") var userID: String = ""
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @Binding var textNote: String
     @Binding var tagList: [TagList]
-    @Binding var itemList: [NoteList]
+    @Binding var itemList: [NotePostList]
     @Binding var currentIndex: Int
     @Binding var showSheet: Bool
     @State var type: String // Preflight, Depature, Arrival, Enroute
     @State var tagListSelected: [TagList] = []
     @State var pasteboard = UIPasteboard.general
-    @State var isIncludeBriefing = false
-    @State var isShareAabba = false
     
     @State private var animate = false
     
@@ -46,19 +44,13 @@ struct DepartureNoteItemForm: View {
                         
                         Spacer()
                         
-                        if currentIndex > -1 {
-                            Text("Edit Note").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
-                        } else {
-                            Text("Add Note").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
-                        }
+                        Text("Edit Note").foregroundColor(.black).font(.system(size: 17, weight: .semibold))
                         
                         Spacer()
                         
                         Button(action: {
                             if currentIndex > -1 {
                                 update()
-                            } else {
-                                save()
                             }
                         }) {
                             Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .semibold))
@@ -116,22 +108,6 @@ struct DepartureNoteItemForm: View {
                                 }.padding(.vertical)
                             }
                             
-                            HStack {
-                                Text("Include in Crew Briefing").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
-                                Toggle(isOn: $isIncludeBriefing) {
-                                    Text("").font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                }
-                            }.frame(height: 44)
-                            
-                            HStack {
-                                Text("Share to AABBA").foregroundColor(Color.black).font(.system(size: 15, weight: .semibold))
-                                Toggle(isOn: $isShareAabba) {
-                                    Text("").font(.system(size: 17, weight: .regular))
-                                        .foregroundStyle(Color.black)
-                                }
-                            }.frame(height: 44)
-                            
                             Spacer()
                         }.padding(.horizontal)
                         
@@ -142,21 +118,26 @@ struct DepartureNoteItemForm: View {
 
                 }.background(Color.theme.platinum)
                     .keyboardAdaptive()
-//                    .frame(height: geo.size.height)
             }.cornerRadius(8)
                 .background(.white)
                 .frame(maxHeight: .infinity)
                 .onAppear {
                     if currentIndex > -1 {
-                        self.textNote = itemList[currentIndex].unwrappedName
-                        self.isIncludeBriefing = itemList[currentIndex].includeCrew
-                        self.isShareAabba = itemList[currentIndex].shareAabba
+                        self.textNote = itemList[currentIndex].unwrappedPostTitle
                         
-                        let tags = itemList[currentIndex].tags?.allObjects ?? []
+                        var tags = [String]()
+                        
+                        if let category = itemList[currentIndex].category, category != "" {
+                            if category.contains(", ") {
+                                tags = category.components(separatedBy: ", ")
+                            } else {
+                                tags = [category]
+                            }
+                        }
                         
                         if tags.count > 0 {
                             for index in 0..<tagList.count {
-                                if tags.contains(where: {($0 as AnyObject).name == tagList[index].name}) {
+                                if tags.contains(where: {$0 == tagList[index].name}) {
                                     tagListSelected.append(tagList[index])
                                 }
                             }
@@ -166,94 +147,17 @@ struct DepartureNoteItemForm: View {
         }
     }
     
-    func save() {
-        if let eventList = coreDataModel.selectedEvent {
-            let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            
-            if !name.isEmpty {
-                let item = NoteList(context: persistenceController.container.viewContext)
-                item.id = UUID()
-                item.name = name
-                item.isDefault = true
-                item.createdAt = dateFormatter.string(from: Date())
-                item.canDelete = true
-                item.fromParent = false
-                item.type = type
-                item.includeCrew = isIncludeBriefing
-                item.shareAabba = isShareAabba
-                item.addToTags(NSSet(array: tagListSelected))
-                
-                eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
-                coreDataModel.save()
-                
-                if isShareAabba {
-                    saveNoteAabba()
-                }
-                
-                currentIndex = -1
-                textNote = ""
-                tagListSelected = []
-                self.resetData()
-                self.showSheet.toggle()
-            }
-        }
-    }
-    
-    func saveNoteAabba() {
-        if let eventList = coreDataModel.selectedEvent {
-            if let noteAabbaPostList = eventList.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], noteAabbaPostList.count > 0 {
-                if let firstItem = noteAabbaPostList.first(where: {$0.unwrappedType == "departure"}) {
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    
-                    let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    var posts = [NotePostList]()
-                    let comments = [NoteCommentList]()
-                    
-                    let newPost = NotePostList(context: persistenceController.container.viewContext)
-                    let tags = tagListSelected.map { $0.name }
-
-                    newPost.id = UUID()
-                    newPost.postId = UUID().uuidString
-                    newPost.userId = userID
-                    newPost.userName = coreDataModel.dataUser?.username ?? ""
-                    newPost.postDate = dateFormatter.string(from: Date())
-                    newPost.postTitle = name
-                    newPost.postText = name
-                    newPost.upvoteCount = "0"
-                    newPost.commentCount = "0"
-                    newPost.canDelete = true
-                    
-                    newPost.category = tags.joined(separator: ", ")
-                    newPost.postUpdated = Date()
-                    newPost.favourite = false
-                    newPost.blue = false
-                    newPost.voted = false
-                    newPost.type = "departure"
-                    newPost.comments = NSSet(array: comments)
-                    posts.append(newPost)
-                    
-                    firstItem.addToPosts(NSSet(array: posts))
-                }
-            }
-
-            coreDataModel.save()
-        }
-    }
-    
     func update() {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            if isShareAabba != itemList[currentIndex].shareAabba {
-                saveNoteAabba()
-            }
+            let tags = tagListSelected.map { $0.name }
             
-            itemList[currentIndex].name = name
-            itemList[currentIndex].tags = NSSet(array: tagListSelected)
-            itemList[currentIndex].includeCrew = isIncludeBriefing
-            itemList[currentIndex].shareAabba = isShareAabba
+            itemList[currentIndex].postTitle = name
+            itemList[currentIndex].postText = name
+            itemList[currentIndex].category = tags.joined(separator: ", ")
+            itemList[currentIndex].postUpdated = Date()
+            
             coreDataModel.save()
             
             currentIndex = -1

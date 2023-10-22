@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct EnrouteNoteItemRelevantList: View {
-    @EnvironmentObject var viewModel: CoreDataModelState
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var mapIconModel: MapIconModel
     
     @State var header: String = "" // "Aircraft Status"
@@ -76,9 +77,13 @@ struct EnrouteNoteItemRelevantList: View {
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                if itemList[index].unwrappedCategory != "" {
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                if let tags = renderTag(itemList[index].unwrappedCategory) {
+                                                    if tags.count > 0 {
+                                                        HStack(alignment: .center, spacing: 8) {
+                                                            ForEach(tags, id: \.self) {item in
+                                                                NoteTagItemColor(name: item)
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 
@@ -94,7 +99,7 @@ struct EnrouteNoteItemRelevantList: View {
                                                     }
                                                     
                                                     itemList[index].voted.toggle()
-                                                    viewModel.save()
+                                                    coreDataModel.save()
                                                     mapIconModel.num += 1
                                                 }, label: {
                                                     HStack(alignment: .center, spacing: 4) {
@@ -172,7 +177,6 @@ struct EnrouteNoteItemRelevantList: View {
                                     } label: {
                                         Text("Info").font(.system(size: 15, weight: .medium)).foregroundColor(.white)
                                     }
-                                    .tint(Color.theme.graniteGray)
                                 }
                             }.onMove(perform: move)
                         }.listStyle(.plain)
@@ -188,7 +192,7 @@ struct EnrouteNoteItemRelevantList: View {
         let data = itemList[index]
         data.favourite = true
         data.fromParent = true
-        viewModel.save()
+        coreDataModel.save()
         resetData()
     }
     

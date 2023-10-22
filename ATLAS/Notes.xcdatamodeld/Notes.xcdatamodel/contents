@@ -450,14 +450,15 @@
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="notamsDataList" inverseEntity="Event"/>
     </entity>
     <entity name="Note" representedClassName="NoteList" syncable="YES">
-        <attribute name="canDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="canDelete" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="String"/>
-        <attribute name="fromParent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="fromParent" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="includeCrew" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="includeCrew" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="shareAabba" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="noteList" inverseEntity="Event"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="notes" inverseEntity="Tag"/>

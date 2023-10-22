@@ -149,6 +149,7 @@ struct NoteItemForm: View {
                     if currentIndex > -1 {
                         self.textNote = itemList[currentIndex].unwrappedName
                         self.isIncludeBriefing = itemList[currentIndex].includeCrew
+                        self.isShareAabba = itemList[currentIndex].shareAabba
                         
                         let tags = itemList[currentIndex].tags?.allObjects ?? []
                         
@@ -179,6 +180,7 @@ struct NoteItemForm: View {
                 item.fromParent = false
                 item.type = type
                 item.includeCrew = isIncludeBriefing
+                item.shareAabba = isShareAabba
                 item.addToTags(NSSet(array: tagListSelected))
                 
                 eventList.noteList = NSSet(array: (eventList.noteList ?? []) + [item])
@@ -220,6 +222,7 @@ struct NoteItemForm: View {
                     newPost.postText = name
                     newPost.upvoteCount = "0"
                     newPost.commentCount = "0"
+                    newPost.canDelete = true
                     
                     newPost.category = tags.joined(separator: ", ")
                     newPost.postUpdated = Date()
@@ -242,10 +245,14 @@ struct NoteItemForm: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
+            if isShareAabba != itemList[currentIndex].shareAabba {
+                saveNoteAabba()
+            }
+            
             itemList[currentIndex].name = name
             itemList[currentIndex].tags = NSSet(array: tagListSelected)
             itemList[currentIndex].includeCrew = isIncludeBriefing
-            
+            itemList[currentIndex].shareAabba = isShareAabba
             coreDataModel.save()
             
             currentIndex = -1

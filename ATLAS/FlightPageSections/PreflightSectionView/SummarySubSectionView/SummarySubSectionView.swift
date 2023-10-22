@@ -24,6 +24,7 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
+    @EnvironmentObject var preflightModel: PreflightModel
     
     @AppStorage("uid") var userID: String = ""
     
@@ -396,7 +397,7 @@ struct SummarySubSectionView: View {
                                     if enrouteAlternates.count > 0 {
                                         ForEach(enrouteAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates, isRouteFormChange: $isRouteFormChange, create: create).id(UUID())
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates, isRouteFormChange: $isRouteFormChange, create: create, routeAlternateType: "enroute").id(UUID())
                                             } else {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates).id(UUID())
                                             }
@@ -467,7 +468,7 @@ struct SummarySubSectionView: View {
                                     if destinationAlternates.count > 0 {
                                         ForEach(destinationAlternates, id: \.self) {item in
                                             if isEdit {
-                                                RowAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates, isRouteFormChange: $isRouteFormChange, create: create).id(UUID())
+                                                RowAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates, isRouteFormChange: $isRouteFormChange, create: create, routeAlternateType: "destination").id(UUID())
                                             } else {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $destinationAlternates).id(UUID())
                                             }
@@ -517,6 +518,13 @@ struct SummarySubSectionView: View {
                             .background(Color.black.opacity(0.3))
                     }
                 })
+                .sheet(isPresented: $preflightModel.isShowingAutoComplete) {
+                    if preflightModel.routeAlternateType == "enroute" {
+                        AutoCompleteView(isShowing: $preflightModel.isShowingAutoComplete, itemList: $enrouteAlternates, isRouteFormChange: $isRouteFormChange).interactiveDismissDisabled(true)
+                    } else {
+                        AutoCompleteView(isShowing: $preflightModel.isShowingAutoComplete, itemList: $destinationAlternates, isRouteFormChange: $isRouteFormChange).interactiveDismissDisabled(true)
+                    }
+                }
         }//end geometry
     }
     

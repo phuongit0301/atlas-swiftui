@@ -688,12 +688,12 @@ struct MapViewModal: View {
             if item.colour == "orange" {
                 defaultImage = UIImage(named: "icon_airplane_orange")
             } else if item.colour == "blue" {
-                defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
+                defaultImage = UIImage(named: "icon_airplane_blue")
             } else {
                 defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
             }
             
-            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: "", flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: item.trueTrack, flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
             mapView.addAnnotation(annotation)
         }
     }
@@ -850,7 +850,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
             annotationView.detailCalloutAccessoryView = callout
             annotationView.canShowCallout = true
-            
+            annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
             return annotationView
         } else if annotation is CustomAabbaAnnotation {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")

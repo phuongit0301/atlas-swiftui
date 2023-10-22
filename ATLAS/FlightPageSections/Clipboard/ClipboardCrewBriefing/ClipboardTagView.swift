@@ -70,12 +70,12 @@ struct ClipboardTagView: View {
                                                     Text(itemList[index].tagName).padding(.vertical, 4)
                                                         .padding(.horizontal, 12)
                                                         .font(.system(size: 11, weight: .regular))
-                                                        .background(Color.white)
-                                                        .foregroundColor(Color.black)
+                                                        .background(Color.theme.azure)
+                                                        .foregroundColor(Color.white)
                                                         .cornerRadius(12)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 12)
-                                                                .stroke(Color.black, lineWidth: 1)
+                                                                .stroke(Color.theme.azure, lineWidth: 0)
                                                         )
                                                     
                                                     Text(renderDate(itemList[index].postDate)).font(.system(size: 11, weight: .regular)).foregroundColor(Color.theme.arsenic.opacity(0.6))

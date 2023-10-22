@@ -39,6 +39,9 @@ struct ClipboardArrival: View {
                 // End header
                 ScrollView {
                     ClipboardArrivalNotamView(itemList: $coreDataModel.arrNotamClipboard, dates: coreDataModel.arrAirportNotam, suffix: "STA")
+                    
+                    ClipboardDestNotamView(itemList: $coreDataModel.destNotamClipboard, dates: coreDataModel.destAirportNotam, suffix: "ETA")
+                    
                     ClipboardArrivalNoteView(width: proxy.size.width)
                 }
             }
@@ -56,6 +59,7 @@ struct ClipboardArrival: View {
     func prepareData() {
         coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
         var temp = [String: [NotamsDataList]]()
+        var temp1 = [String: [NotamsDataList]]()
         
         coreDataModel.dataNotams.forEach { item in
             if item.type == "arrNotams" && item.isChecked {
@@ -67,9 +71,20 @@ struct ClipboardArrival: View {
                     }
                 }
             }
+            
+            if item.type == "altnNotams" && item.isChecked {
+                if let airport = item.airport {
+                    if temp1[airport] != nil {
+                        temp1[airport]?.append(item)
+                    } else {
+                        temp1.updateValue([item], forKey: airport)
+                    }
+                }
+            }
         }
         
         coreDataModel.arrNotamClipboard = temp
+        coreDataModel.destNotamClipboard = temp1
         coreDataModel.prepareRouteAlternate()
     }
 }

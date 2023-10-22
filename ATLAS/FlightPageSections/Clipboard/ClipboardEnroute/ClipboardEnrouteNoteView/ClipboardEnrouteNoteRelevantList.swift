@@ -76,9 +76,13 @@ struct ClipboardEnrouteNoteRelevantList: View {
                                                 .font(.system(size: 16, weight: .regular))
                                             
                                             HStack(alignment: .center, spacing: 8) {
-                                                if itemList[index].unwrappedCategory != "" {
-                                                    HStack(alignment: .center, spacing: 8) {
-                                                        NoteTagItemColor(name: itemList[index].unwrappedCategory)
+                                                if let tags = renderTag(itemList[index].unwrappedCategory) {
+                                                    if tags.count > 0 {
+                                                        HStack(alignment: .center, spacing: 8) {
+                                                            ForEach(tags, id: \.self) {item in
+                                                                NoteTagItemColor(name: item)
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 

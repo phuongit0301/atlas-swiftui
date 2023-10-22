@@ -2,7 +2,7 @@
 //  NoteList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 10/10/2023.
+//  Created by phuong phan on 22/10/2023.
 //
 //
 
@@ -25,8 +25,9 @@ extension NoteList {
     @NSManaged public var name: String?
     @NSManaged public var parentId: UUID?
     @NSManaged public var type: String?
-    @NSManaged public var tags: NSSet?
+    @NSManaged public var shareAabba: Bool
     @NSManaged public var events: NSSet?
+    @NSManaged public var tags: NSSet?
     
     public var unwrappedName: String {
         name ?? ""
@@ -39,23 +40,6 @@ extension NoteList {
     public var unwrappedType: String {
         type ?? ""
     }
-}
-
-// MARK: Generated accessors for tags
-extension NoteList {
-
-    @objc(addTagsObject:)
-    @NSManaged public func addToTags(_ value: TagList)
-
-    @objc(removeTagsObject:)
-    @NSManaged public func removeFromTags(_ value: TagList)
-
-    @objc(addTags:)
-    @NSManaged public func addToTags(_ values: NSSet)
-
-    @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for events
@@ -72,6 +56,23 @@ extension NoteList {
 
     @objc(removeEvents:)
     @NSManaged public func removeFromEvents(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for tags
+extension NoteList {
+
+    @objc(addTagsObject:)
+    @NSManaged public func addToTags(_ value: TagList)
+
+    @objc(removeTagsObject:)
+    @NSManaged public func removeFromTags(_ value: TagList)
+
+    @objc(addTags:)
+    @NSManaged public func addToTags(_ values: NSSet)
+
+    @objc(removeTags:)
+    @NSManaged public func removeFromTags(_ values: NSSet)
 
 }
 

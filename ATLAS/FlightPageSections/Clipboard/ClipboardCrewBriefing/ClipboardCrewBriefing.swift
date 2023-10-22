@@ -43,7 +43,6 @@ struct ClipboardCrewBriefing: View {
                     VStack(spacing: 8) {
                         ClipboardCrewBriefingSummaryView(width: proxy.size.width)
                         
-                        
                         ClipboardTagView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
 
                         ClipboardTagView(itemList: $coreDataModel.tagListWeather, tag: "Weather")

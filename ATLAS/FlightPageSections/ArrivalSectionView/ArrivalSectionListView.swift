@@ -17,6 +17,7 @@ struct ArrivalSectionListView: View {
     @State var postIndex = 0
     @State private var currentIndex: Int = -1
     @State private var showSheet: Bool = false
+    @State private var showSheetRelevant: Bool = false
     @State private var isShowListNote: Bool = true
     @State private var isShowListRelevent: Bool = true
     @State private var showModalComment: Bool = false
@@ -79,7 +80,7 @@ struct ArrivalSectionListView: View {
                         
                         ArrivalNoteItemRelevantList(
                             header: "Relevant AABBA Posts",
-                            showSheet: $showSheet,
+                            showSheet: $showSheetRelevant,
                             showModalComment: $showModalComment,
                             currentIndex: $currentIndex,
                             itemList: $coreDataModel.dataPostArrival,
@@ -115,6 +116,16 @@ struct ArrivalSectionListView: View {
                         itemList: $coreDataModel.arrivalArray,
                         currentIndex: $currentIndex,
                         showSheet: $showSheet,
+                        type: "arrival",
+                        resetData: resetData
+                    ).interactiveDismissDisabled(true)
+                }.sheet(isPresented: $showSheetRelevant) {
+                    NoteItemRelevantForm(
+                        textNote: $textNote,
+                        tagList: $coreDataModel.tagList,
+                        itemList: $coreDataModel.dataPostArrival,
+                        currentIndex: $currentIndex,
+                        showSheet: $showSheetRelevant,
                         type: "arrival",
                         resetData: resetData
                     ).interactiveDismissDisabled(true)
