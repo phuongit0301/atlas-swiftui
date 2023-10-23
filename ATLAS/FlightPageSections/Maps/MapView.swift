@@ -22,7 +22,7 @@ struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
     @EnvironmentObject var mapIconModel: MapIconModel
-    @State private var mapType: MKMapType = .mutedStandard
+    @State private var mapType: MKMapType = .hybridFlyover
     @State var tfRoute: String = ""
     
     @State private var showRoute = false
@@ -850,6 +850,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
             annotationView.detailCalloutAccessoryView = callout
             annotationView.canShowCallout = true
+            annotationView.layer.anchorPoint = CGPointMake(0, 0)
             annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
             return annotationView
         } else if annotation is CustomAabbaAnnotation {

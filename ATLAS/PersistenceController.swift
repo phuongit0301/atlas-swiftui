@@ -580,10 +580,10 @@ class CoreDataModelState: ObservableObject {
                 "p1_night": item.unwrappedP1Night,
                 "p2_night": item.unwrappedP2Night,
                 "instr": item.unwrappedInstr,
-                "exam": item.unwrappedAircraft,
+                "exam": item.unwrappedExam,
                 "comments": item.unwrappedComments,
                 "licence_number": dataSignature?.licenseNumber,
-                "signature_base64dataurl": dataSignature?.imageString
+                "signature_base64dataurl": "data:image/png;base64,\(dataSignature?.imageString)"
             ])
         }
         
@@ -592,7 +592,7 @@ class CoreDataModelState: ObservableObject {
             "logbook_data": payloadLogbook,
         ]
         
-        print("=======post logbook=====")
+        print("=======post logbook=====\(payload)")
         return await remoteService.postLogbookData(payload)
     }
     
@@ -774,19 +774,19 @@ class CoreDataModelState: ObservableObject {
                 
                 var payloadRoute: [Any] = []
                 
-                if dataRouteMap.count > 0 {
-                    for item in dataRouteMap {
+                if let dataWaypoint = dataEvent.waypointMapList?.allObjects as? [WaypointMapList], dataWaypoint.count > 0 {
+                    for item in dataWaypoint {
                         payloadRoute.append([
-                            "lat": item.latitude,
-                            "long": item.longitude,
-                            "name": item.name
+                            "lat": item.unwrappedLatitude,
+                            "long": item.unwrappedLongitude,
+                            "name": item.unwrappedName
                         ])
                     }
                 }
                 
                 var payloadColorMap: [Any] = []
-                if dataAirportColorMap.count > 0 {
-                    for item in dataAirportColorMap {
+                if let dataAirport = dataEvent.airportMapColorList?.allObjects as? [AirportMapColorList], dataAirport.count > 0 {
+                    for item in dataAirport {
                         payloadColorMap.append([
                             "airportID": item.unwrappedAirportId,
                             "colour": item.unwrappedColour,
@@ -801,8 +801,10 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 var payloadNotams: [String: [Any]] = [:]
-                if dataNotams.count > 0 {
-                    for item in dataNotams {
+                let notamsDataList = dataEvent.notamsDataList?.allObjects as? [NotamsDataList] ?? []
+                
+                if notamsDataList.count > 0 {
+                    for item in notamsDataList {
                         var type = "preflight"
                         
                         if item.unwrappedType == "arrNotams" {
@@ -814,9 +816,9 @@ class CoreDataModelState: ObservableObject {
                         }
                         
                         if let itemAirport = item.airport {
-                            payloadNotams[itemAirport]?.append([
+                            payloadNotams[itemAirport, default: []].append([
                                 "date": item.unwrappedDate,
-                                "id": item.id,
+                                "id": item.id?.uuidString ?? UUID(),
                                 "isChecked": item.isChecked,
                                 "notam": item.unwrappedNotam,
                                 "rank": item.unwrappedRank,
@@ -828,8 +830,9 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 var payloadMetarTaf: [String: [Any]] = [:]
-                if self.dataMetarTaf.count > 0 {
-                    for item in dataMetarTaf {
+
+                if let metarTafList = dataEvent.metarTafList?.allObjects as? [MetarTafDataList], metarTafList.count > 0 {
+                    for item in metarTafList {
                         var type = "departure"
                         
                         if item.unwrappedType == "arrMetarTaf" {
@@ -840,7 +843,7 @@ class CoreDataModelState: ObservableObject {
                             type = "destination_alternates"
                         }
                         
-                        payloadMetarTaf[type]?.append([
+                        payloadMetarTaf[type, default: []].append([
                             "airportText": item.unwrappedAirport,
                             "metar": item.unwrappedMetar,
                             "taf": item.unwrappedTaf
@@ -849,8 +852,8 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 var payloadNoteList: [Any] = []
-                if dataNoteList.count > 0 {
-                    for item in dataNoteList {
+                if let dataNote = dataEvent.noteList?.allObjects as? [NoteList], dataNote.count > 0 {
+                    for item in dataNote {
                         var payloadTagList = [String]()
 
                         if let tags = item.tags?.allObjects as? [TagList] {
@@ -875,8 +878,10 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 var payloadAabbaNoteList = [String: [Any]]()
-                if dataNoteAabba.count > 0 {
-                    for item in dataNoteAabba {
+               
+                
+                if let noteAabbaPostList = dataEvent.noteAabbaPostList?.allObjects as? [NoteAabbaPostList], noteAabbaPostList.count > 0 {
+                    for item in noteAabbaPostList {
                         var payloadAabbaPostList: [Any] = []
 
                         if let posts = item.posts?.allObjects as? [NotePostList], posts.count > 0 {
@@ -914,7 +919,7 @@ class CoreDataModelState: ObservableObject {
                             }
                         }
 
-                        payloadAabbaNoteList[item.unwrappedType]?.append([
+                        payloadAabbaNoteList[item.unwrappedType, default: []].append([
                             "name": item.unwrappedName,
                             "lat": item.unwrappedLatitude,
                             "long": item.unwrappedLongitude,
@@ -926,8 +931,8 @@ class CoreDataModelState: ObservableObject {
                 }
                 
                 var payloadMapList: [Any] = []
-                if dataAabbaMap.count > 0 {
-                    for item in dataAabbaMap {
+                if let aabbaMapList = dataEvent.aabbaMapList?.allObjects as? [AabbaMapList], aabbaMapList.count > 0 {
+                    for item in aabbaMapList {
                         var payloadMapPostList: [Any] = []
                         
                         if let posts = item.posts?.allObjects as? [AabbaPostList], posts.count > 0 {
@@ -989,7 +994,7 @@ class CoreDataModelState: ObservableObject {
                 
                 arrPayload.append(payload)
             }
-                    print("=======post flight plan payload===== \(arrPayload)")
+//                    print("=======post flight plan payload===== \(arrPayload)")
             return await remoteService.postFlightPlanDataV3(arrPayload)
         }
         return true
@@ -3902,7 +3907,7 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataWaypontMapList() -> [WaypointMapList] {
-        return self.selectedEvent?.waypointMapList?.allObjects  as? [WaypointMapList] ?? []
+        return self.selectedEvent?.waypointMapList?.allObjects as? [WaypointMapList] ?? []
     }
     
     func readDataAirportMapList() -> [AirportMapList] {

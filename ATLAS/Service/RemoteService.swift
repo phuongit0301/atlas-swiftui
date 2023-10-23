@@ -193,6 +193,7 @@ class RemoteService: ObservableObject {
 
         do {
             // Convert the request body to JSON data
+            
             let requestData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
             print("json=============\(String(data: requestData!, encoding: .utf8)!)")
             // Set the request body data
@@ -326,12 +327,15 @@ class RemoteService: ObservableObject {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_post_logbook_data") else { fatalError("Missing URL") }
         //make request
         var request = URLRequest(url: url)
-        let postData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = postData
         
         do {
+            let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            request.httpBody = postData
+            print("json=============\(String(data: postData, encoding: .utf8)!)")
+            
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
                     print("Request error: ", error)
@@ -340,7 +344,7 @@ class RemoteService: ObservableObject {
                 DispatchQueue.main.async {
                     guard let response = response as? HTTPURLResponse else { return }
                     if response.statusCode == 200 {
-                        print("Update calendar successfully")
+                        print("Post Logbook successfully")
                         return
                     }
                 }
@@ -348,7 +352,7 @@ class RemoteService: ObservableObject {
             
             dataTask.resume()
         } catch {
-            print("Error: \(error)")
+            print("Error Post Logbook: \(error)")
             return false
         }
         

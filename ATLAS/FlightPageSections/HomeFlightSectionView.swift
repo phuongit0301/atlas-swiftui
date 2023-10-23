@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomeFlightSectionView: View {
     var viewInformationModel = ListFlightInformationModel()
+    @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var modelState: TabModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
     
@@ -23,11 +24,19 @@ struct HomeFlightSectionView: View {
                     // Tabs
                     switch modelState.selectedTab.screenName {
                         case NavigationEnumeration.FlightOverviewSectionView:
-                            FlightOverviewSectionView()
-                                .tag(NavigationEnumeration.FlightOverviewSectionView)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .toolbar(.hidden, for: .tabBar)
-                                .ignoresSafeArea()
+                            if coreDataModel.selectedEvent?.flightStatus == FlightStatusEnum.COMPLETED.rawValue {
+                                FlightOverviewCompleteSectionView()
+                                    .tag(NavigationEnumeration.FlightOverviewSectionView)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .toolbar(.hidden, for: .tabBar)
+                                    .ignoresSafeArea()
+                            } else {
+                                FlightOverviewSectionView()
+                                    .tag(NavigationEnumeration.FlightOverviewSectionView)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .toolbar(.hidden, for: .tabBar)
+                                    .ignoresSafeArea()
+                            }
                         case NavigationEnumeration.PreflightSectionView:
                             PreflightSectionView()
                                 .tag(NavigationEnumeration.PreflightSectionView)
@@ -66,7 +75,7 @@ struct HomeFlightSectionView: View {
                                 .toolbar(.hidden, for: .tabBar)
                                 .ignoresSafeArea()
 
-                        }
+                    }
 
                 }
 //                .background(Color.theme.sonicSilver.opacity(0.12))

@@ -177,15 +177,9 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
         }
         
         currentTime = currentTime.addingTimeInterval(timeStep)
-        print("currentTime=========\(currentTime)")
-
     }
-    print("totalDaylightHours=========\(totalDaylightHours)")
-    print("totalNightHours=========\(totalNightHours)")
     let dayDuration = doubleToHoursMinutesTuple(totalDaylightHours)
     let nightDuration = doubleToHoursMinutesTuple(totalNightHours)
-    print("dayDuration=========\(dayDuration)")
-    print("nightDuration=========\(nightDuration)")
 
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
 }

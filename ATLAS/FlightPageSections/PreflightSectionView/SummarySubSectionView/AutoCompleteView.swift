@@ -96,7 +96,7 @@ struct AutoCompleteView: View {
                 }.padding(16)
                     .background(Color.theme.antiFlashWhite)
                     .onAppear {
-                        if preflightModel.currentIndexAutoComplete > -1 && itemList[preflightModel.currentIndexAutoComplete].altn != "" {
+                        if preflightModel.currentIndexAutoComplete > -1 && itemList[preflightModel.currentIndexAutoComplete].altn != "" && itemList[preflightModel.currentIndexAutoComplete].altn != "Enter Airport" {
                             tfRoute = itemList[preflightModel.currentIndexAutoComplete].altn
                         }
                     }

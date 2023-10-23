@@ -227,7 +227,7 @@ struct EntriesSubSectionView: View {
                                                                     isShowSignature.toggle()
                                                                 }, label: {
                                                                     Text("See Signature").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
-                                                                })
+                                                                }).buttonStyle(PlainButtonStyle())
                                                             }.gridCellColumns(6)
 //                                                            if fileUrl.contains("http") {
 //                                                                AsyncImage(url: URL(string: fileUrl)).scaledToFit().frame(maxWidth: 100, maxHeight: 80)
@@ -247,7 +247,7 @@ struct EntriesSubSectionView: View {
                                                                     self.selectedIndex = index
                                                                 }, label: {
                                                                     Text("Sign").font(.system(size: 15, weight: .regular)).foregroundColor(Color.theme.azure)
-                                                                })
+                                                                }).buttonStyle(PlainButtonStyle())
                                                             }.gridCellColumns(6)
                                                         }
                                                         

@@ -246,7 +246,7 @@ struct ArrivalNoteItemForm: View {
         let name = textNote.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if !name.isEmpty {
-            if isShareAabba != itemList[currentIndex].shareAabba {
+            if isShareAabba && isShareAabba != itemList[currentIndex].shareAabba {
                 saveNoteAabba()
             }
             

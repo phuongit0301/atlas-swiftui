@@ -53,13 +53,10 @@ struct RowAlternates: View {
                         .aspectRatio(contentMode: .fit)
                 }).padding(.trailing)
                 
-                Text(tfAirport)
+                FlightTimeButtonTimeStepper(onToggle: onAirport, value: tfAirport)
+                    .fixedSize()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .onTapGesture {
-                        preflightModel.currentIndexAutoComplete = currentIndex
-                        preflightModel.isShowingAutoComplete.toggle()
-                        preflightModel.routeAlternateType = routeAlternateType
-                    }
+
             }.frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
             HStack {
@@ -159,5 +156,11 @@ struct RowAlternates: View {
     
     func onEta() {
         self.isShowModal.toggle()
+    }
+    
+    func onAirport() {
+        preflightModel.currentIndexAutoComplete = currentIndex
+        preflightModel.isShowingAutoComplete.toggle()
+        preflightModel.routeAlternateType = routeAlternateType
     }
 }

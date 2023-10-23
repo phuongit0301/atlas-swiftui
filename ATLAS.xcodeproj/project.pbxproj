@@ -167,6 +167,7 @@
 		3E5CA5432AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5422AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift */; };
 		3E5CA5452AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */; };
 		3E5CA5472AE5323E00DE8042 /* SlideoverDestinationNotamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */; };
+		3E5CA5492AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5482AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift */; };
 		3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */; };
 		3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */; };
 		3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */; };
@@ -658,6 +659,7 @@
 		3E5CA5422AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteItemRelevantForm.swift; sourceTree = "<group>"; };
 		3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteItemRelevantForm.swift; sourceTree = "<group>"; };
 		3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDestinationNotamView.swift; sourceTree = "<group>"; };
+		3E5CA5482AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightOverviewCompleteSectionView.swift; sourceTree = "<group>"; };
 		3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WorldCoordinates.plist; sourceTree = "<group>"; };
 		3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAirportCardView.swift; sourceTree = "<group>"; };
 		3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1232,6 +1234,7 @@
 				3EFA5F2D2A458F25001ED6CF /* TableDetail.swift */,
 				3E4A36BC2A571A2500027C61 /* FlightInformationDetailView.swift */,
 				3E086D6E2A944CF200BE00AD /* FlightOverviewSectionView.swift */,
+				3E5CA5482AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift */,
 				3E7291722AC3C875000FF295 /* SignOffView.swift */,
 			);
 			path = FlightPageSections;
@@ -2556,6 +2559,7 @@
 				3EEBE6AC2AB873C700421AFF /* AabbaCommentList+CoreDataProperties.swift in Sources */,
 				3E4A36A42A570BA800027C61 /* SummaryRouteList+CoreDataClass.swift in Sources */,
 				3E72924C2ACA9FBC000FF295 /* ProvideLimitationView.swift in Sources */,
+				3E5CA5492AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift in Sources */,
 				3E7291AC2AC59448000FF295 /* ArrivalSectionView.swift in Sources */,
 				3E3FCBEA2A21C8E3008017FA /* NoteReferenceForm.swift in Sources */,
 				3E2BA8362ACEAAFF009ABCC2 /* VerifyEmailView.swift in Sources */,

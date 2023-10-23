@@ -322,11 +322,15 @@ struct SummarySubSectionView: View {
                                             Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
                                         })
                                     } else {
-                                        Button(action: {
-                                            self.isEdit.toggle()
-                                        }, label: {
-                                            Text("Edit").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
-                                        })
+                                        if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                            Button(action: {
+                                                self.isEdit.toggle()
+                                            }, label: {
+                                                Text("Edit").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
+                                            })
+                                        } else {
+                                            Text("Edit").foregroundColor(Color.black).font(.system(size: 17, weight: .regular))
+                                        }
                                     }
                                     
                                 }.frame(alignment: .leading)
@@ -373,7 +377,7 @@ struct SummarySubSectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    enrouteAlternates.append(IAlternate(altn: "", eta: "", isNew: true))
+                                                    enrouteAlternates.append(IAlternate(altn: "Enter Airport", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
@@ -402,26 +406,6 @@ struct SummarySubSectionView: View {
                                                 RowTextAlternates(width: proxy.size.width, item: item, itemList: $enrouteAlternates).id(UUID())
                                             }
                                         }
-                                        
-//                                        if coreDataModel.listRoutes.count > 0 {
-//                                            ScrollView {
-//                                                ForEach(coreDataModel.listRoutes, id: \.self) { route in
-//                                                    Text(route)
-//                                                        .font(.system(size: 15, weight: .regular))
-//                                                        .frame(alignment: .leading)
-////                                                        .onTapGesture {
-////                                                            tfRoute = route
-////                                                            if itemList.count > 0 {
-////                                                                isRouteFormChange = true
-////                                                                itemList[currentIndex].altn = route
-////                                                            }
-////                                                        }
-//                                                }
-//                                            }.frame(height: 200)
-//                                                .background(Color.theme.antiFlashWhite)
-//                                                .cornerRadius(8)
-//                                                .zIndex(10)
-//                                        }
                                     } else {
                                         HStack(alignment: .center) {
                                             if isEdit {
@@ -444,7 +428,7 @@ struct SummarySubSectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    destinationAlternates.append(IAlternate(altn: "", eta: "", isNew: true))
+                                                    destinationAlternates.append(IAlternate(altn: "Enter Airport", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
@@ -561,24 +545,28 @@ struct SummarySubSectionView: View {
         
         if enrouteAlternates.count > 0 {
             for item in enrouteAlternates {
-                payloadEnroute.append([
-                    "Airport": item.altn,
-                    "eta": item.eta
-                ])
-                payloadEnrouteMap.append(item.altn)
-                enrAirportNotam[item.altn] = item.eta
+                if item.altn != "Enter Airport" {
+                    payloadEnroute.append([
+                        "Airport": item.altn,
+                        "eta": item.eta
+                    ])
+                    payloadEnrouteMap.append(item.altn)
+                    enrAirportNotam[item.altn] = item.eta
+                }
             }
         }
         
         var destAirportNotam: [String: String] = [:]
         if destinationAlternates.count > 0 {
             for item in destinationAlternates {
-                payloadDestination.append([
-                    "Airport": item.altn,
-                    "eta": item.eta
-                ])
-                payloadDestinationMap.append(item.altn)
-                destAirportNotam[item.altn] = item.eta
+                if item.altn != "Enter Airport" {
+                    payloadDestination.append([
+                        "Airport": item.altn,
+                        "eta": item.eta
+                    ])
+                    payloadDestinationMap.append(item.altn)
+                    destAirportNotam[item.altn] = item.eta
+                }
             }
         }
         
