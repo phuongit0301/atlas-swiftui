@@ -377,7 +377,7 @@ struct SummarySubSectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    enrouteAlternates.append(IAlternate(altn: "Enter Airport", eta: "", isNew: true))
+                                                    enrouteAlternates.append(IAlternate(altn: "Select Airport", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
@@ -428,7 +428,7 @@ struct SummarySubSectionView: View {
                                             
                                             if isEdit {
                                                 Button(action: {
-                                                    destinationAlternates.append(IAlternate(altn: "Enter Airport", eta: "", isNew: true))
+                                                    destinationAlternates.append(IAlternate(altn: "Select Airport", eta: "", isNew: true))
                                                 }, label: {
                                                     Text("Add").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .medium))
                                                 }).padding(.trailing)
@@ -545,7 +545,7 @@ struct SummarySubSectionView: View {
         
         if enrouteAlternates.count > 0 {
             for item in enrouteAlternates {
-                if item.altn != "Enter Airport" {
+                if item.altn != "Select Airport" {
                     payloadEnroute.append([
                         "Airport": item.altn,
                         "eta": item.eta
@@ -559,7 +559,7 @@ struct SummarySubSectionView: View {
         var destAirportNotam: [String: String] = [:]
         if destinationAlternates.count > 0 {
             for item in destinationAlternates {
-                if item.altn != "Enter Airport" {
+                if item.altn != "Select Airport" {
                     payloadDestination.append([
                         "Airport": item.altn,
                         "eta": item.eta

@@ -28,7 +28,7 @@ struct RowAlternates: View {
     @State private var tfVis: String = ""
     @State private var tfMinima: String = ""
     
-    @State private var tfAirport = "Enter Airport"
+    @State private var tfAirport = "Select Airport"
     @State private var listRoutes = [String]()
     
     // For ETA modal
