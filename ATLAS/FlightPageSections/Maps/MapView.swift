@@ -559,6 +559,9 @@ struct MapViewModal: View {
         //get start and end route
         let departureLatLong = extractLatLong(forSelection: "departure", inDictionaries: coreDataModel.dataAirportColorMap)
         let arrivalLatLong = extractLatLong(forSelection: "arrival", inDictionaries: coreDataModel.dataAirportColorMap)
+        print("departureLatLong========\(departureLatLong)")
+        print("arrivalLatLong========\(arrivalLatLong)")
+
         
         if departureLatLong["latitude"] != nil {
             let firstCoord = CLLocationCoordinate2D(latitude: departureLatLong["latitude"]! as! CLLocationDegrees, longitude: departureLatLong["longitude"]! as! CLLocationDegrees)
@@ -781,8 +784,14 @@ struct MapView: UIViewRepresentable {
 //        let mapView = MKMapView()
         if routeDatas.count > 0 {
             if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
+                print("firstRoute========\(firstRoute)")
+                print("lastRoute========\(lastRoute)")
+
                 let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
                 let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
+                print("startCoord========\(startCoord)")
+                print("endCoord========\(endCoord)")
+
                 let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
                 mapView.setRegion(regionCustom, animated: true)
             }
@@ -821,7 +830,9 @@ struct MapView: UIViewRepresentable {
         )
         
         let region = MKCoordinateRegion(center: center, span: span)
-        
+        print("center========\(center)")
+        print("span========\(span)")
+
         return region
     }
     
@@ -877,7 +888,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             } else if dataAnnotation.colour == "blue" {
                 annotationView.updateImge(image: UIImage(named: "icon_airplane_blue"))
             } else {
-                annotationView.updateImge(image: UIImage(named: "icon_airplane_unfilled_orange"))
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_orange"))
             }
             
             annotationView.imageView?.transform = CGAffineTransform(rotationAngle: (annotation.subtitle!! as NSString).doubleValue)
