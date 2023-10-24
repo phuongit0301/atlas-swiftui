@@ -121,14 +121,14 @@ struct LoginView: View {
                             Text("Sign In")
                                 .foregroundColor(.white)
                                 .font(.system(size: 15, weight: .semibold))
-                                .frame(height: 20)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(validate())
-                                )
-                        }
+                                
+                        }.frame(height: 20)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(validate())
+                            )
                             
                     }
                     

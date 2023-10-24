@@ -740,7 +740,6 @@ struct SummarySubSectionView: View {
             if let responseTraffic = responseTraffic, responseTraffic.count > 0 {
                 print("inside handle traffic======\(responseTraffic)")
                 await coreDataModel.deleteAllTrafficMap()
-                
                 coreDataModel.initDataTraffic(responseTraffic)
             }
             print("end handle traffic")

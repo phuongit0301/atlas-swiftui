@@ -5489,17 +5489,19 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllTrafficMap() async {
-        if let objects = self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList] {
-            service.container.viewContext.performAndWait {
-                do {
-                    for object in objects {
-                        service.container.viewContext.delete(object)
-                    }
-                    try service.container.viewContext.save()
-                } catch {
-                    print("Failed to delete Traffic Map List: \(error)")
+        let context = service.container.newBackgroundContext()
+        
+        do {
+            try await context.perform {
+                if let objects = self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList] {
+                    let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: objects.map {$0.objectID})
+                    batchDeleteRequest.resultType = .resultTypeStatusOnly
+                    let result = try context.execute(batchDeleteRequest) as! NSBatchDeleteResult
+                    print("result=========\(result)")
                 }
             }
+        } catch {
+            print("Failed to delete traffic: \(error)")
         }
     }
     
