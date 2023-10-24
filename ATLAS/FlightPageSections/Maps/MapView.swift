@@ -47,7 +47,7 @@ struct MapViewModal: View {
     @State private var showPopoverGeneral = false
     @State private var showPopoverAskAABBA = false
     @State private var isLoading = true
-    
+    @State var airportIds = [String]()
     //Variable for verify data exists in Route Direction or not
     @State private var routeDatas = [SRoute]()
 
@@ -539,9 +539,12 @@ struct MapViewModal: View {
         if coreDataModel.image != nil {
             if selectedWeather { addOverlay() }
         }
-      if selectedAddRoute { addRoute() } // todo route always on, call on appear together with addAirportColor
+      if selectedAddRoute {
+          addRoute()
+          addAirportColor()
+      }
       if selectedWaypoint { addWaypoint() }
-      if selectedAirport { addAirportColor() } // todo should be addAirport here
+      if selectedAirport { addAirport(airportIds) }
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
     }
@@ -581,7 +584,9 @@ struct MapViewModal: View {
             mapView.addAnnotation(firstAnnotation)
             
             //Append data to route
-            routeDatas.append(SRoute(name: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: departureLatLong["latitude"] as? String ?? "0", longitude: departureLatLong["longitude"] as? String ?? "0"))
+            if let depLat = departureLatLong["latitude"], let depLong = departureLatLong["longitude"] {
+                routeDatas.append(SRoute(name: (departureLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: "\(depLat)", longitude: "\(depLong)"))
+            }
         }
         
         for item in payload {
@@ -617,12 +622,15 @@ struct MapViewModal: View {
             mapView.addAnnotation(lastAnnotation)
             
             //Append data to route
-            routeDatas.append(SRoute(name: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: arrivalLatLong["latitude"] as? String ?? "0", longitude: arrivalLatLong["longitude"] as? String ?? "0"))
+            if let arrLat = arrivalLatLong["latitude"], let arrLong = arrivalLatLong["longitude"] {
+                routeDatas.append(SRoute(name: (arrivalLatLong["name"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines), latitude: "\(arrLat)", longitude: "\(arrLong)"))
+            }
         }
         
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
         
+        print("routeDatas==========\(routeDatas)")
         mapIconModel.dataWaypoint = dataWaypoint
     }
     
@@ -674,8 +682,6 @@ struct MapViewModal: View {
     }
     
     func addAirportColor() {
-        var airportIds = [String]() // can we use a state variable instead so that addAirport can be done independently of addAirportColor
-        
         for item in coreDataModel.dataAirportColorMap {
             let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
             
@@ -698,24 +704,12 @@ struct MapViewModal: View {
             
             mapView.addAnnotation(annotation)
         }
-        
-        addAirport(airportIds)
     }
     
     func addTraffic() {
         for item in coreDataModel.dataTrafficMap {
             let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
-            var defaultImage = UIImage(named: "icon_airplane_orange")
-            
-            // Todo: get orange and blue icons
-            if item.colour == "orange" {
-                defaultImage = UIImage(named: "icon_airplane_orange")
-            } else if item.colour == "blue" {
-                defaultImage = UIImage(named: "icon_airplane_blue")
-            } else {
-                defaultImage = UIImage(named: "icon_airplane_orange")
-            }
-            
+
             let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: item.trueTrack, flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue), colour: item.colour)
             mapView.addAnnotation(annotation)
         }
@@ -782,6 +776,7 @@ struct MapView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MKMapView {
 //        let mapView = MKMapView()
+        print("routeDatas111111========\(routeDatas)")
         if routeDatas.count > 0 {
             if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
                 print("firstRoute========\(firstRoute)")

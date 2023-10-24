@@ -169,14 +169,14 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
     let departureTime = chocksOff
     let arrivalTime = chocksOn
     
-//    print("departureTime=========\(departureTime)")
-//    print("arrivalTime=========\(arrivalTime)")
+    print("departureTime=========\(departureTime)")
+    print("arrivalTime=========\(arrivalTime)")
     
     let coordinate₀ = CLLocation(latitude: departureLocation.latitude, longitude: departureLocation.longitude)
     let coordinate₁ = CLLocation(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)
     let distanceKm = coordinate₀.distance(from: coordinate₁)  / 1000.0
     let timeStep: TimeInterval = 1800  // 30mins in seconds
-//    print("distanceKm=========\(distanceKm)")
+    print("distanceKm=========\(distanceKm)")
 
     var totalDaylightHours: Double = 0
     var totalNightHours: Double = 0
@@ -195,8 +195,8 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
 
         let solar = Solar(for: currentTime, coordinate: currentCoordinate)
         
-//        print("solarDay=========\(solar?.isDaytime)")
-//        print("solarNight=========\(solar?.isNighttime)")
+        print("solarDay=========\(solar?.isDaytime)")
+        print("solarNight=========\(solar?.isNighttime)")
 
 //        let currentLatitude = departureLocation.latitude + (destinationLocation.latitude - departureLocation.latitude) * currentSegmentPercentage
 //        let currentLongitude = departureLocation.longitude + (destinationLocation.longitude - departureLocation.longitude) * currentSegmentPercentage
@@ -220,9 +220,9 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
     }
     let dayDuration = minimumDayTime(dayTime: doubleToHoursMinutesTuple(totalDaylightHours), duration: totalTime)
     let nightDuration = doubleToHoursMinutesTuple(totalNightHours)
-//    print("totalTime=========\(totalTime)")
-//    print("totalDaylightHours=========\(totalDaylightHours)")
-//    print("dayDuration=========\(dayDuration)")
+    print("totalTime=========\(totalTime)")
+    print("totalDaylightHours=========\(totalDaylightHours)")
+    print("dayDuration=========\(dayDuration)")
 
 
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))

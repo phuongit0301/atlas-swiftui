@@ -331,7 +331,6 @@ class CoreDataModelState: ObservableObject {
     @MainActor
     func checkAndSyncOrPostData() async {
         await withTaskGroup(of: Void.self) { group in
-            self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyDocument, monthsAhead: self.monthsAhead)
             self.dataEvents = self.readEvents()
             self.dataEventDateRange = self.readEventDateRange()
             self.dataLogbookEntries = readDataLogbookEntries()
@@ -339,6 +338,7 @@ class CoreDataModelState: ObservableObject {
             self.dataRecency = readDataRecency()
             self.dataRecencyExpiry = readDataRecencyExpiry()
             self.dataRecencyDocument = readDataRecencyDocument()
+            self.dataExpiringSoon = self.extractExpiringDocuments(expiryData: self.dataRecencyDocument, monthsAhead: self.monthsAhead)
             // For Flight Overview
             // NoteList
             self.dataNoteList = self.readNoteList()

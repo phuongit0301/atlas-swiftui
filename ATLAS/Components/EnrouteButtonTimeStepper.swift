@@ -56,16 +56,17 @@ struct FlightTimeButtonTimeStepper: View {
     let value: String
     
     var body: some View {
-        Button(action: { onToggle() }, label: {
-            HStack(spacing: 4) {
-                Text("\(value)").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
-                
-                VStack(spacing: 0) {
-                    Image(systemName: "chevron.up.chevron.down")
-                        .foregroundColor(Color.theme.azure)
-                        .font(.system(size: 15, weight: .medium))
-                }
+        HStack(spacing: 4) {
+            Text("\(value)").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
+            
+            VStack(spacing: 0) {
+                Image(systemName: "chevron.up.chevron.down")
+                    .foregroundColor(Color.theme.azure)
+                    .font(.system(size: 15, weight: .medium))
             }
-        }).buttonStyle(.plain)
+        }.contentShape(Rectangle())
+            .onTapGesture {
+                onToggle()
+            }
     }
 }
