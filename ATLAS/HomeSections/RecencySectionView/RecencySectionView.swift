@@ -388,6 +388,7 @@ struct RecencySectionView: View {
                 let data = calculateRecencyPercentage(coreDataModel.dataLogbookEntries, recencyRequirement, recencyLimit)
                 self.progress = data.percentage
                 self.count = data.count
+                coreDataModel.dataExpiringSoon = coreDataModel.extractExpiringDocuments(expiryData: coreDataModel.dataRecencyDocument, monthsAhead: coreDataModel.monthsAhead)
             }
         }.sheet(isPresented: $isShowDocumentModal) {
             RecencyDocumentFormView(isShowing: $isShowDocumentModal).interactiveDismissDisabled(true)

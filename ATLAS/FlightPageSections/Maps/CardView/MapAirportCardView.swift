@@ -330,8 +330,6 @@ struct MapAirportCardView: View {
     
     func prepareData() {
         if let notamsDataList = coreDataModel.selectedEvent?.notamsDataList?.allObjects as? [NotamsDataList] {
-            print("notamsDataList===========\(notamsDataList)")
-            
             for item in notamsDataList {
                 if item.isChecked && item.unwrappedAirport == self.mapIconModel.titleModal {
                     dataNotams.append(item)

@@ -65,7 +65,7 @@ struct INotePostResponse: Codable {
     var upvote_count: String
     var comment_count: String
     var category: String
-    var comments: [INoteCommentResponse]
+    var comments: [INoteCommentResponse]?
     var username: String
     var voted: Bool
     var favourite: Bool

@@ -273,5 +273,6 @@ class MapIconModel: ObservableObject {
     @Published var showModal: Bool = false
     @Published var titleModal: String = ""
     @Published var airportSelected: AirportMapColorList?
+    @Published var firstLoading: Bool = true
 }
 

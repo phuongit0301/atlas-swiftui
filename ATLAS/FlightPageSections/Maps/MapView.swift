@@ -49,7 +49,7 @@ struct MapViewModal: View {
     @State private var isLoading = true
     @State var airportIds = [String]()
     //Variable for verify data exists in Route Direction or not
-    @State private var routeDatas = [SRoute]()
+    @State var routeDatas = [SRoute]()
 
     var body: some View {
         VStack {
@@ -68,7 +68,9 @@ struct MapViewModal: View {
                         currentLocation: locationViewModel.currentLocation,
                         mapType: mapType,
                         isLoading: isLoading,
-                        routeDatas: routeDatas
+                        routeDatas: routeDatas,
+                        airportIds: airportIds,
+                        selectedAirport: selectedAirport
                     ).overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.azure, lineWidth: 0))
                         .cornerRadius(8)
                     
@@ -544,7 +546,7 @@ struct MapViewModal: View {
           addAirportColor()
       }
       if selectedWaypoint { addWaypoint() }
-      if selectedAirport { addAirport(airportIds) }
+//      if selectedAirport { addAirport(airportIds) }
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
     }
@@ -630,7 +632,6 @@ struct MapViewModal: View {
         let polyline = MKPolyline(coordinates: locationCoordinate, count: locationCoordinate.count)
         mapView.addOverlay(polyline)
         
-        print("routeDatas==========\(routeDatas)")
         mapIconModel.dataWaypoint = dataWaypoint
     }
     
@@ -663,22 +664,22 @@ struct MapViewModal: View {
     }
     
     func addAirport(_ airportIds: [String]) {
-        for item in coreDataModel.dataAirportMap {
-            if airportIds.count > 0 && item.unwrappedName != "" {
-                if !airportIds.contains(item.unwrappedName) {
-                    let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
-                    
-                    let annotation = CustomAirportAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
-                    
-                    // todo add annotation only if zoom is less than certain value -- can we use on change of or on update of instead? because current trigger is on user select layer
-                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-                        mapView.addAnnotation(annotation)
-                    }
-                }
-                
-            }
-            
-        }
+//        for item in coreDataModel.dataAirportMap {
+//            if airportIds.count > 0 && item.unwrappedName != "" {
+//                if !airportIds.contains(item.unwrappedName) {
+//                    let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
+//
+//                    let annotation = CustomAirportAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
+//
+//                    // todo add annotation only if zoom is less than certain value -- can we use on change of or on update of instead? because current trigger is on user select layer
+//                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+//                        mapView.addAnnotation(annotation)
+//                    }
+//                }
+//
+//            }
+//
+//        }
     }
     
     func addAirportColor() {
@@ -771,21 +772,17 @@ struct MapView: UIViewRepresentable {
     let mapType: MKMapType
     var isLoading: Bool
     var routeDatas: [SRoute]
+    var airportIds: [String]
+    var selectedAirport: Bool
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var mapIconModel: MapIconModel
     
     func makeUIView(context: Context) -> MKMapView {
 //        let mapView = MKMapView()
-        print("routeDatas111111========\(routeDatas)")
         if routeDatas.count > 0 {
             if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
-                print("firstRoute========\(firstRoute)")
-                print("lastRoute========\(lastRoute)")
-
                 let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
                 let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
-                print("startCoord========\(startCoord)")
-                print("endCoord========\(endCoord)")
 
                 let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
                 mapView.setRegion(regionCustom, animated: true)
@@ -825,14 +822,55 @@ struct MapView: UIViewRepresentable {
         )
         
         let region = MKCoordinateRegion(center: center, span: span)
-        print("center========\(center)")
-        print("span========\(span)")
 
         return region
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
         view.showsUserLocation = false
+        
+        if mapIconModel.firstLoading && routeDatas.count > 0 {
+            if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
+                let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
+                let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
+
+                let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
+                mapView.setRegion(regionCustom, animated: true)
+            }
+        }
+    }
+    
+    func getLocations(center: CLLocationCoordinate2D) -> [CustomAirportAnnotation] {
+        var annotations = [CustomAirportAnnotation]()
+        let annotationSpanIndex: Double = 10 * 0.035
+        // Loop through all places
+        for item in coreDataModel.dataAirportMap {
+            if airportIds.count > 0 && item.unwrappedName != "" {
+                if !airportIds.contains(item.unwrappedName) {
+                    
+                    let lat = (item.unwrappedLatitude as NSString).doubleValue
+                    let long = (item.unwrappedLongitude as NSString).doubleValue
+                    
+                    if lat >= center.latitude - annotationSpanIndex && lat <= center.latitude + annotationSpanIndex && long >= center.longitude - annotationSpanIndex && long <= center.longitude + annotationSpanIndex {
+                        // Create an annotation
+//                        let a = MKPointAnnotation()
+//                        a.coordinate = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
+//                        a.title = place.adresa ?? ""
+//
+//                        annotations.append(a)
+                        let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                        
+                        let annotation = CustomAirportAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
+                        annotations.append(annotation)
+                    }
+                }
+                
+            }
+            
+        }
+        
+        return annotations
+        
     }
     
     func makeCoordinator() -> Coordinator {
@@ -845,6 +883,17 @@ class Coordinator: NSObject, MKMapViewDelegate {
     
     init(_ parent: MapView) {
         self.parent = parent
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        
+        self.parent.mapIconModel.firstLoading = false
+        
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "CustomAirportAnnotationView") as? CustomAirportAnnotationView {
+            if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                mapView.addAnnotations(parent.getLocations(center: mapView.region.center))
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -934,7 +983,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return annotationView
         }  else if annotation is CustomAirportColorAnnotation {
             let annotationView = CustomAirportColorAnnotationView(annotation: annotation, reuseIdentifier: "CustomAirportColorAnnotationView")
-            annotationView.canShowCallout = true
+            annotationView.canShowCallout = false
             
             // Add Title beside icons
             let annotationLabel = UILabel(frame: CGRect(x: 15, y: -8, width: 105, height: 30))

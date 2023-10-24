@@ -1250,6 +1250,7 @@ class CoreDataModelState: ObservableObject {
         return await remoteService.postFlightPlanDataV3([payload])
     }
     
+    @MainActor
     func getOrPostFlightPlan() async -> Bool {
         if dataFlightOverviewList.count > 0 {
             return await postFlightPlan()
@@ -2135,8 +2136,8 @@ class CoreDataModelState: ObservableObject {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
-                        if (post.comment_count as NSString).intValue > 0 {
-                            for comment in post.comments {
+                        if (post.comment_count as NSString).intValue > 0, let postComments = post.comments {
+                            for comment in postComments {
                                 let newComment = NoteCommentList(context: service.container.viewContext)
                                 newComment.id = UUID()
                                 newComment.commentId = comment.comment_id
@@ -2222,8 +2223,8 @@ class CoreDataModelState: ObservableObject {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
-                        if (post.comment_count as NSString).intValue > 0 {
-                            for comment in post.comments {
+                        if (post.comment_count as NSString).intValue > 0, let postComments = post.comments{
+                            for comment in postComments {
                                 let newComment = NoteCommentList(context: service.container.viewContext)
                                 newComment.id = UUID()
                                 newComment.commentId = comment.comment_id
@@ -2309,8 +2310,8 @@ class CoreDataModelState: ObservableObject {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
-                        if (post.comment_count as NSString).intValue > 0 {
-                            for comment in post.comments {
+                        if (post.comment_count as NSString).intValue > 0, let postComments = post.comments {
+                            for comment in postComments {
                                 let newComment = NoteCommentList(context: service.container.viewContext)
                                 newComment.id = UUID()
                                 newComment.commentId = comment.comment_id
@@ -2396,8 +2397,8 @@ class CoreDataModelState: ObservableObject {
                     for post in item.posts {
                         var comments = [NoteCommentList]()
                         
-                        if (post.comment_count as NSString).intValue > 0 {
-                            for comment in post.comments {
+                        if (post.comment_count as NSString).intValue > 0, let postComments = post.comments {
+                            for comment in postComments {
                                 let newComment = NoteCommentList(context: service.container.viewContext)
                                 newComment.id = UUID()
                                 newComment.commentId = comment.comment_id
@@ -2732,6 +2733,7 @@ class CoreDataModelState: ObservableObject {
         if data.count > 0 {
             var payloadNotamsData = [NotamsDataList]()
             
+            print("data notams==========\(data)")
             for row in data {
                 if row.value.count > 0 {
                     row.value.forEach { item in
@@ -2810,11 +2812,10 @@ class CoreDataModelState: ObservableObject {
                         newObj.metar = item.metar
                         newObj.taf = item.taf
                         
-                        payloadMetarTaf.append(newObj)
-                        
                         self.service.container.viewContext.performAndWait {
                             do {
                                 try self.service.container.viewContext.save()
+                                payloadMetarTaf.append(newObj)
                                 print("saved notams successfully")
                             } catch {
                                 print("Failed to Notams depNotams save: \(error)")
@@ -2825,6 +2826,7 @@ class CoreDataModelState: ObservableObject {
                 }
             }
             
+            print("payloadMetarTaf==========\(payloadMetarTaf)")
             do {
                 event.metarTafList = NSSet(array: payloadMetarTaf)
                 try self.service.container.viewContext.save()

@@ -392,6 +392,7 @@ struct HomeInformationView: View {
             }.padding(.leading, 8)
                 .onAppear {
                     dataLimitation = checkLimitations(coreDataModel.dataLogbookEntries, coreDataModel.dataLogbookLimitation)
+                    coreDataModel.dataExpiringSoon = coreDataModel.extractExpiringDocuments(expiryData: coreDataModel.dataRecencyDocument, monthsAhead: coreDataModel.monthsAhead)
                 }
         } // End VStack
         .background(
