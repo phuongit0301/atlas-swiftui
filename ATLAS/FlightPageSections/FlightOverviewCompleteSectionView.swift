@@ -983,10 +983,9 @@ struct FlightOverviewCompleteSectionView: View {
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {
         if startDate != "" && endDate != "" {
-            let startTime = startDate.components(separatedBy: " ")
-            let endTime = endDate.components(separatedBy: " ")
-            
-            return calculateTime(startTime[1], endTime[1])
+            if startDate != "" && endDate != "" {
+                return calculateDateTime(startDate, endDate)
+            }
         }
         return ""
     }
@@ -1031,7 +1030,7 @@ struct FlightOverviewCompleteSectionView: View {
 //            print("dataFlightOverview?.unwrappedChockOff=========\(dataFlightOverview?.unwrappedChockOff)")
             return (day: "00:00", night: "00:00")
         }
-        
+        let totalTime = calculateTotalTime()
         let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
         let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
         
@@ -1040,7 +1039,7 @@ struct FlightOverviewCompleteSectionView: View {
         print("currentDateChockOff=========\(dateFormatter.string(from: currentDateChockOff))")
         print("currentDateChockOn=========\(dateFormatter.string(from: currentDateChockOn))")
         
-        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
+        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900, totalTime: totalTime)
         
         func formatTime(hours: Int, minutes: Int) -> String {
             let hourString = String(format: "%02d", hours)

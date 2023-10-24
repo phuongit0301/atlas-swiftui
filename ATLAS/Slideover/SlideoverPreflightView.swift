@@ -405,10 +405,9 @@ struct SlideoverPreflightView: View {
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {
         if startDate != "" && endDate != "" {
-            let startTime = startDate.components(separatedBy: " ")
-            let endTime = endDate.components(separatedBy: " ")
-            
-            return calculateTime(startTime[1], endTime[1])
+            if startDate != "" && endDate != "" {
+                return calculateDateTime(startDate, endDate)
+            }
         }
         return ""
     }

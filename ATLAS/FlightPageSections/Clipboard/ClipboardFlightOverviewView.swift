@@ -516,10 +516,9 @@ struct ClipboardFlightOverviewView: View {
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {
         if startDate != "" && endDate != "" {
-            let startTime = startDate.components(separatedBy: " ")
-            let endTime = endDate.components(separatedBy: " ")
-            
-            return calculateTime(startTime[1], endTime[1])
+            if startDate != "" && endDate != "" {
+                return calculateDateTime(startDate, endDate)
+            }
         }
         return ""
     }
@@ -570,7 +569,7 @@ struct ClipboardFlightOverviewView: View {
         if dataFlightOverview == nil || dataEventSector == nil || dataFlightOverview?.unwrappedChockOff == "" {
             return (day: "00:00", night: "00:00")
         }
-        
+        let totalTime = calculateTotalTime()
         let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
         let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
         
@@ -578,7 +577,7 @@ struct ClipboardFlightOverviewView: View {
         
         if let dateChockOff = dataFlightOverview?.unwrappedChockOff, let dateChockOn = dataFlightOverview?.unwrappedChockOn {
             if let currentDateChockOff = dateFormatter.date(from: dateChockOff), let currentDateChockOn = dateFormatter.date(from: dateChockOn) {
-                dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
+                dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900, totalTime: totalTime)
             }
         }
         

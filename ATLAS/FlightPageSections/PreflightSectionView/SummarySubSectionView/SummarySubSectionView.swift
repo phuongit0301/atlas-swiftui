@@ -866,10 +866,7 @@ struct SummarySubSectionView: View {
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {
         if startDate != "" && endDate != "" {
-            let startTime = startDate.components(separatedBy: " ")
-            let endTime = endDate.components(separatedBy: " ")
-            
-            return calculateTime(startTime[1], endTime[1])
+            return calculateDateTime(startDate, endDate)
         }
         return ""
     }
