@@ -22,7 +22,7 @@ struct MapViewModal: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @StateObject var locationViewModel = LocationViewModel()
     @EnvironmentObject var mapIconModel: MapIconModel
-    @State private var mapType: MKMapType = .hybridFlyover
+    @State private var mapType: MKMapType = .satelliteFlyover
     @State var tfRoute: String = ""
     
     @State private var showRoute = false
@@ -528,9 +528,9 @@ struct MapViewModal: View {
         if coreDataModel.image != nil {
             if selectedWeather { addOverlay() }
         }
-      if selectedAddRoute { addRoute() }
+      if selectedAddRoute { addRoute() } // todo route always on, call on appear together with addAirportColor
       if selectedWaypoint { addWaypoint() }
-      if selectedAirport { addAirportColor() }
+      if selectedAirport { addAirportColor() } // todo should be addAirport here
       if selectedTraffic { addTraffic() }
       if selectedAABBA { addAabba() }
     }
@@ -622,14 +622,20 @@ struct MapViewModal: View {
                     
                     let annotation = CustomWaypointAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle"))
                     
-                    mapView.addAnnotation(annotation)
+                    // todo add annotation only if zoom is less than certain value -- can we use on change of or on update of instead? because current trigger is on user select layer
+                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                        mapView.addAnnotation(annotation)
+                    }
                 }
             } else {
                 let coord = CLLocationCoordinate2D(latitude: (item.latitude! as NSString).doubleValue, longitude: (item.longitude! as NSString).doubleValue)
                 
                 let annotation = CustomWaypointAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_triangle"))
                 
-                mapView.addAnnotation(annotation)
+                // todo add annotation only if zoom is less than certain value -- can we use on change of or on update of instead? because current trigger is on user select layer
+                if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                    mapView.addAnnotation(annotation)
+                }
             }
         }
     }
@@ -642,7 +648,10 @@ struct MapViewModal: View {
                     
                     let annotation = CustomAirportAnnotation(coordinate: coord, title: item.name!.trimmingCharacters(in: .whitespacesAndNewlines), subtitle: "", image: UIImage(named: "icon_circle_unfilled"))
                     
-                    mapView.addAnnotation(annotation)
+                    // todo add annotation only if zoom is less than certain value -- can we use on change of or on update of instead? because current trigger is on user select layer
+                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                        mapView.addAnnotation(annotation)
+                    }
                 }
                 
             }
@@ -651,7 +660,7 @@ struct MapViewModal: View {
     }
     
     func addAirportColor() {
-        var airportIds = [String]()
+        var airportIds = [String]() // can we use a state variable instead so that addAirport can be done independently of addAirportColor
         
         for item in coreDataModel.dataAirportColorMap {
             let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
@@ -690,7 +699,7 @@ struct MapViewModal: View {
             } else if item.colour == "blue" {
                 defaultImage = UIImage(named: "icon_airplane_blue")
             } else {
-                defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
+                defaultImage = UIImage(named: "icon_airplane_orange")
             }
             
             let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: item.trueTrack, flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
@@ -771,7 +780,7 @@ struct MapView: UIViewRepresentable {
         
         mapView.mapType = mapType
 //        mapView.region = region
-        
+        mapView.pointOfInterestFilter?.includes(MKPointOfInterestCategory.airport)
         mapView.showsUserLocation = false
         mapView.showsScale = true
         mapView.showsTraffic = false

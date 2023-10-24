@@ -1085,10 +1085,9 @@ struct FlightOverviewSectionView: View {
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {
         if startDate != "" && endDate != "" {
-            let startTime = startDate.components(separatedBy: " ")
-            let endTime = endDate.components(separatedBy: " ")
-            
-            return calculateTime(startTime[1], endTime[1])
+            if startDate != "" && endDate != "" {
+                return calculateDateTime(startDate, endDate)
+            }
         }
         return ""
     }
@@ -1130,11 +1129,13 @@ struct FlightOverviewSectionView: View {
         if dataFlightOverview == nil || dataFlightOverview?.unwrappedChockOff == "" {
             return (day: "00:00", night: "00:00")
         }
-        
+        let totalTime = calculateTotalTime()
         let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
         let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
-        
-        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900)
+        print("departureLocation=========\(departureLocation)")
+        print("destinationLocation=========\(destinationLocation)")
+
+        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900, totalTime: totalTime)
         
         func formatTime(hours: Int, minutes: Int) -> String {
             let hourString = String(format: "%02d", hours)
@@ -1167,7 +1168,7 @@ struct FlightOverviewSectionView: View {
             return "00:00"
         }
         
-        return (day: formatTime(hours: dayNight.day.hours, minutes: dayNight.day.minutes), night: calculateNightTime(dayTime: dayNight.day, duration: calculateTotalTime()))
+        return (day: formatTime(hours: dayNight.day.hours, minutes: dayNight.day.minutes), night: calculateNightTime(dayTime: dayNight.day, duration: totalTime))
     }
     
     func handleData() async {

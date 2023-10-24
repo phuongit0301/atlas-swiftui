@@ -32,38 +32,39 @@ func calculateTime(_ startTime: String, _ endTime: String) -> String {
 
 func calculateDateTime(_ startTime: String, _ endTime: String) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HHmm"
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+
+//    let dateFormatterOut = DateFormatter()
+//    dateFormatterOut.dateFormat = "HH:mm"
     
-    let dateFormatterOut = DateFormatter()
-    dateFormatterOut.dateFormat = "HHmm"
-    
-    var sDateTime = dateFormatter.date(from: dateFormatter.string(from: Date()))
-    var eDateTime = dateFormatter.date(from: dateFormatter.string(from: Date()))
-    
-    if startTime.contains(" | ") {
-        let arr = startTime.components(separatedBy: " | ")
-        
-        if arr.count > 0 {
-            let dateMonth = arr[0].components(separatedBy: "/")
-            let currentYear = Calendar.current.component(.year, from: Date())
-            let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
-            sDateTime = dateFormatter.date(from: formattedDateString)
-        }
+    if let sDateTime = dateFormatter.date(from: startTime), let eDateTime = dateFormatter.date(from: endTime) {
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: sDateTime, to: eDateTime)
+        return "\(String(format:"%02d:%02d", components.hour ?? 0, components.minute ?? 0))"
     }
     
-    if endTime.contains(" | ") {
-        let arr = endTime.components(separatedBy: " | ")
-        
-        if arr.count > 0 {
-            let dateMonth = arr[0].components(separatedBy: "/")
-            let currentYear = Calendar.current.component(.year, from: Date())
-            let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
-            eDateTime = dateFormatter.date(from: formattedDateString)
-        }
-    }
+//    if startTime.contains(" | ") {
+//        let arr = startTime.components(separatedBy: " | ")
+//        
+//        if arr.count > 0 {
+//            let dateMonth = arr[0].components(separatedBy: "/")
+//            let currentYear = Calendar.current.component(.year, from: Date())
+//            let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
+//            sDateTime = dateFormatter.date(from: formattedDateString)
+//        }
+//    }
+//    
+//    if endTime.contains(" | ") {
+//        let arr = endTime.components(separatedBy: " | ")
+//        
+//        if arr.count > 0 {
+//            let dateMonth = arr[0].components(separatedBy: "/")
+//            let currentYear = Calendar.current.component(.year, from: Date())
+//            let formattedDateString = "\(currentYear)-\(dateMonth[1])-\(dateMonth[0]) \(arr[1])"
+//            eDateTime = dateFormatter.date(from: formattedDateString)
+//        }
+//    }
     
-    let components = Calendar.current.dateComponents([.day, .hour, .minute], from: sDateTime!, to: eDateTime!)
-    return "\(String(format:"%02d:%02d", components.hour ?? 0, components.minute ?? 0))"
+    return "00:00"
 }
 
 func addDurationToDateTime(_ dateTimeString: String, _ durationString: String) -> String? {
@@ -137,15 +138,46 @@ func convertUTCToLocalTime(timeString: String, timeDiff: String) -> String {
 }
 
 
-func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocationCoordinate2D, destinationLocation: CLLocationCoordinate2D, chocksOff: Date, chocksOn: Date, averageGroundSpeedKph: Double) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+
+func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocationCoordinate2D, destinationLocation: CLLocationCoordinate2D, chocksOff: Date, chocksOn: Date, averageGroundSpeedKph: Double, totalTime: String) -> (day: (hours: Int, minutes: Int), night: (hours: Int, minutes: Int)) {
+    
+    func minimumDayTime(dayTime: (hours: Int, minutes: Int), duration: String) -> (hours: Int, minutes: Int) {
+        // Convert dayTime to minutes
+        let dayTimeMinutes = dayTime.hours * 60 + dayTime.minutes
+
+        // Parse the duration string to get hours and minutes
+        let durationComponents = duration.components(separatedBy: ":")
+        if durationComponents.count == 2,
+           let durationHours = Int(durationComponents[0]),
+           let durationMinutes = Int(durationComponents[1]) {
+            
+            // Calculate duration in minutes
+            let totalMinutes = durationHours * 60 + durationMinutes
+            
+            // compare totalMinutes vs dayTime Minutes
+            if dayTimeMinutes > totalMinutes {
+                return (hours: durationHours, minutes: durationMinutes)
+            } else {
+                return (hours: dayTime.hours, minutes: dayTime.minutes)
+            }
+        }
+
+        // Return a default value or handle an invalid duration string
+        return (hours: dayTime.hours, minutes: dayTime.minutes)
+    }
     
     let departureTime = chocksOff
     let arrivalTime = chocksOn
+    
+//    print("departureTime=========\(departureTime)")
+//    print("arrivalTime=========\(arrivalTime)")
+    
     let coordinate₀ = CLLocation(latitude: departureLocation.latitude, longitude: departureLocation.longitude)
     let coordinate₁ = CLLocation(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)
     let distanceKm = coordinate₀.distance(from: coordinate₁)  / 1000.0
     let timeStep: TimeInterval = 1800  // 30mins in seconds
-    
+//    print("distanceKm=========\(distanceKm)")
+
     var totalDaylightHours: Double = 0
     var totalNightHours: Double = 0
     var currentTime = departureTime
@@ -153,20 +185,28 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
     while currentTime < arrivalTime {
         let currentSegmentDistance = (currentTime.timeIntervalSince(departureTime)) / 3600 * averageGroundSpeedKph
         let currentSegmentPercentage = currentSegmentDistance / distanceKm
+        
+//        print("currentSegmentDistance=========\(currentSegmentDistance)")
+//        print("currentSegmentPercentage=========\(currentSegmentPercentage)")
+        
         let currentCoordinate = intermediateCoordinateAlongGreatCircle(start: departureLocation, end: destinationLocation, percentage: currentSegmentPercentage)
+        
+//        print("currentCoordinate=========\(currentCoordinate)")
 
         let solar = Solar(for: currentTime, coordinate: currentCoordinate)
+        
+//        print("solarDay=========\(solar?.isDaytime)")
+//        print("solarNight=========\(solar?.isNighttime)")
 
 //        let currentLatitude = departureLocation.latitude + (destinationLocation.latitude - departureLocation.latitude) * currentSegmentPercentage
 //        let currentLongitude = departureLocation.longitude + (destinationLocation.longitude - departureLocation.longitude) * currentSegmentPercentage
-//        print("currentSegmentDistance=========\(currentSegmentDistance)")
-//        print("currentSegmentPercentage=========\(currentSegmentPercentage)")
+        
 //        print("currentLatitude=========\(currentLatitude)")
 //        print("currentLongitude=========\(currentLongitude)")
         
 //        let solar = Solar(for: currentTime, coordinate: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
 
-        if solar?.isDaytime != nil {
+        if solar?.isDaytime != nil && solar?.isDaytime == true {
             totalDaylightHours += timeStep
 //            print("totalDaylightHours=========\(totalDaylightHours)")
 
@@ -178,8 +218,12 @@ func segmentFlightAndCalculateDaylightAndNightHours(departureLocation: CLLocatio
         
         currentTime = currentTime.addingTimeInterval(timeStep)
     }
-    let dayDuration = doubleToHoursMinutesTuple(totalDaylightHours)
+    let dayDuration = minimumDayTime(dayTime: doubleToHoursMinutesTuple(totalDaylightHours), duration: totalTime)
     let nightDuration = doubleToHoursMinutesTuple(totalNightHours)
+//    print("totalTime=========\(totalTime)")
+//    print("totalDaylightHours=========\(totalDaylightHours)")
+//    print("dayDuration=========\(dayDuration)")
+
 
     return (day: (hours: dayDuration.hours, minutes: dayDuration.minutes), night: (hours: nightDuration.hours, minutes: nightDuration.minutes))
 }
