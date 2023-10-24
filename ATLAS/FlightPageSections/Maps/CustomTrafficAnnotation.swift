@@ -18,19 +18,19 @@ class CustomTrafficAnnotation: NSObject, MKAnnotation {
     let flightNum: String?
     let aircraftType: String?
     let baroAltitude: String?
-    let image: UIImage?
     let trueTrack: CGFloat?
     let rotationAngle: CGFloat?
+    let colour: String?
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, flightNum: String?, aircraftType: String?, baroAltitude: String?, image: UIImage?, trueTrack: CGFloat? = 0, rotationAngle: CGFloat? = 0) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, flightNum: String?, aircraftType: String?, baroAltitude: String?, trueTrack: CGFloat? = 0, rotationAngle: CGFloat? = 0, colour: String?) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.flightNum = flightNum
         self.aircraftType = aircraftType
         self.baroAltitude = baroAltitude
-        self.image = image
         self.trueTrack = trueTrack
         self.rotationAngle = rotationAngle
+        self.colour = colour
     }
 }

@@ -9,19 +9,6 @@ import SwiftUI
 import MapKit
 
 class CustomTrafficAnnotationView: MKAnnotationView {
-    //    override var annotation: MKAnnotation? { didSet { update(for: annotation) } }
-    var rotationAngle: CGFloat = 0.0 {
-        didSet {
-            transform = CGAffineTransform(rotationAngle: rotationAngle)
-        }
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // Ensure that user interactions are correctly handled for the rotated annotation view
-        let hitView = super.hitTest(point, with: event)
-        return hitView != nil ? hitView : self
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -30,9 +17,31 @@ class CustomTrafficAnnotationView: MKAnnotationView {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         guard let attractionAnnotation = self.annotation as? CustomTrafficAnnotation else { return }
         
-        image = attractionAnnotation.image
+//        image = attractionAnnotation.image
     }
     
+    var imageView: UIImageView?
+
+    override func prepareForReuse() {
+        imageView?.image = nil
+    }
+
+    func updateImge(image: UIImage?) {
+        guard let aImage = image else {
+            return
+        }
+
+        if imageView == nil {
+            imageView = UIImageView(image: aImage)
+            if imageView != nil {
+                frame = imageView!.frame
+                addSubview(imageView!)
+            }
+        } else {
+            imageView!.image = aImage
+            frame = imageView!.frame
+        }
+    }
     //    func update(for annotation: MKAnnotation?) {
     //       guard let annotation = annotation as? CustomRouteAnnotation else { return }
     //

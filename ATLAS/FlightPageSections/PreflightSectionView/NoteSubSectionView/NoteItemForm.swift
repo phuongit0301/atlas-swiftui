@@ -235,6 +235,8 @@ struct NoteItemForm: View {
                     
                     firstItem.addToPosts(NSSet(array: posts))
                 }
+            } else {
+                
             }
 
             coreDataModel.save()

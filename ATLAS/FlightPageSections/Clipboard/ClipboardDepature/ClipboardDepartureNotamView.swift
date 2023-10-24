@@ -63,7 +63,11 @@ struct ClipboardDepartureNotamView: View {
                                 
                                 Divider().padding(.horizontal, -16)
                                 
-                                ClipboardDepartureNotamRowView(itemList: itemList[key] ?? [])
+                                if coreDataModel.selectedEvent?.flightStatus == FlightStatusEnum.COMPLETED.rawValue {
+                                    ClipboardDepartureNotamCompletedRowView(itemList: itemList[key] ?? [])
+                                } else {
+                                    ClipboardDepartureNotamRowView(itemList: itemList[key] ?? [])
+                                }
                             }.padding(.bottom, 24)
                         }
                     }

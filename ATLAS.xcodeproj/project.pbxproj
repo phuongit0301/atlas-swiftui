@@ -168,6 +168,51 @@
 		3E5CA5452AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */; };
 		3E5CA5472AE5323E00DE8042 /* SlideoverDestinationNotamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */; };
 		3E5CA5492AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5482AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift */; };
+		3E5CA54B2AE7583C00DE8042 /* NotamIncomingSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA54A2AE7583C00DE8042 /* NotamIncomingSubSectionView.swift */; };
+		3E5CA54D2AE7584500DE8042 /* NotamCompletedSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA54C2AE7584500DE8042 /* NotamCompletedSubSectionView.swift */; };
+		3E5CA54F2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA54E2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift */; };
+		3E5CA5512AE7638C00DE8042 /* NoteIncomingSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5502AE7638C00DE8042 /* NoteIncomingSubSectionView.swift */; };
+		3E5CA5532AE7639600DE8042 /* NoteCompletedSubSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5522AE7639600DE8042 /* NoteCompletedSubSectionView.swift */; };
+		3E5CA5552AE7644400DE8042 /* NoteCompletedItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5542AE7644400DE8042 /* NoteCompletedItemList.swift */; };
+		3E5CA5572AE764BE00DE8042 /* NoteCompletedItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5562AE764BE00DE8042 /* NoteCompletedItemRelevantList.swift */; };
+		3E5CA5592AE7657600DE8042 /* DepartureIncomingSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5582AE7657600DE8042 /* DepartureIncomingSectionListView.swift */; };
+		3E5CA55B2AE7658400DE8042 /* DepartureCompletedSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA55A2AE7658400DE8042 /* DepartureCompletedSectionListView.swift */; };
+		3E5CA55F2AE7666200DE8042 /* DepartureNoteCompletedItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA55E2AE7666200DE8042 /* DepartureNoteCompletedItemList.swift */; };
+		3E5CA5612AE7669900DE8042 /* DepartureNoteCompletedItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5602AE7669900DE8042 /* DepartureNoteCompletedItemRelevantList.swift */; };
+		3E5CA5632AE7673400DE8042 /* EnrouteIncomingSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5622AE7673400DE8042 /* EnrouteIncomingSectionListView.swift */; };
+		3E5CA5652AE7674500DE8042 /* EnrouteCompletedSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5642AE7674500DE8042 /* EnrouteCompletedSectionListView.swift */; };
+		3E5CA5672AE767F200DE8042 /* EnrouteNoteCompletedItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5662AE767F200DE8042 /* EnrouteNoteCompletedItemList.swift */; };
+		3E5CA5692AE7682800DE8042 /* EnrouteNoteCompletedItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5682AE7682800DE8042 /* EnrouteNoteCompletedItemRelevantList.swift */; };
+		3E5CA56B2AE7688200DE8042 /* ArrivalIncomingSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA56A2AE7688200DE8042 /* ArrivalIncomingSectionListView.swift */; };
+		3E5CA56D2AE7689000DE8042 /* ArrivalCompletedSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA56C2AE7689000DE8042 /* ArrivalCompletedSectionListView.swift */; };
+		3E5CA56F2AE768DB00DE8042 /* ArrivalCompletedNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA56E2AE768DB00DE8042 /* ArrivalCompletedNoteItemList.swift */; };
+		3E5CA5712AE7693700DE8042 /* ArrivalNoteCompletedItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5702AE7693700DE8042 /* ArrivalNoteCompletedItemRelevantList.swift */; };
+		3E5CA5732AE76A6100DE8042 /* AISearchIncomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5722AE76A6100DE8042 /* AISearchIncomingView.swift */; };
+		3E5CA5752AE76A7100DE8042 /* AISearchCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5742AE76A7100DE8042 /* AISearchCompletedView.swift */; };
+		3E5CA5772AE76BA900DE8042 /* ClipboardNoteIncomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5762AE76BA900DE8042 /* ClipboardNoteIncomingView.swift */; };
+		3E5CA5792AE76BB300DE8042 /* ClipboardNoteCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5782AE76BB300DE8042 /* ClipboardNoteCompletedView.swift */; };
+		3E5CA57B2AE76C2B00DE8042 /* ClipboardNoteCompletedItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA57A2AE76C2B00DE8042 /* ClipboardNoteCompletedItemList.swift */; };
+		3E5CA57D2AE76C6400DE8042 /* ClipboardNoteCompletedItemRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA57C2AE76C6400DE8042 /* ClipboardNoteCompletedItemRelevantList.swift */; };
+		3E5CA57F2AE76D1300DE8042 /* ClipboardDepartureIncomingNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA57E2AE76D1300DE8042 /* ClipboardDepartureIncomingNoteView.swift */; };
+		3E5CA5812AE76D1E00DE8042 /* ClipboardDepartureCompletedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5802AE76D1E00DE8042 /* ClipboardDepartureCompletedNoteView.swift */; };
+		3E5CA5832AE76D6C00DE8042 /* ClipboardDepartureCompletedNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5822AE76D6C00DE8042 /* ClipboardDepartureCompletedNoteItemList.swift */; };
+		3E5CA5852AE76DCB00DE8042 /* ClipboardDepartureCompletedNoteRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5842AE76DCB00DE8042 /* ClipboardDepartureCompletedNoteRelevantList.swift */; };
+		3E5CA5872AE76E3600DE8042 /* ClipboardDepartureNotamCompletedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5862AE76E3600DE8042 /* ClipboardDepartureNotamCompletedRowView.swift */; };
+		3E5CA5892AE76E8E00DE8042 /* ClipboardEnrouteNotamCompletedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5882AE76E8E00DE8042 /* ClipboardEnrouteNotamCompletedRowView.swift */; };
+		3E5CA58B2AE76ECB00DE8042 /* ClipboardEnrouteIncomingNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA58A2AE76ECB00DE8042 /* ClipboardEnrouteIncomingNoteView.swift */; };
+		3E5CA58D2AE76ED600DE8042 /* ClipboardEnrouteCompletedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA58C2AE76ED600DE8042 /* ClipboardEnrouteCompletedNoteView.swift */; };
+		3E5CA58F2AE76F3300DE8042 /* ClipboardEnrouteCompletedNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA58E2AE76F3300DE8042 /* ClipboardEnrouteCompletedNoteItemList.swift */; };
+		3E5CA5912AE76F5E00DE8042 /* ClipboardEnrouteCompletedNoteRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5902AE76F5E00DE8042 /* ClipboardEnrouteCompletedNoteRelevantList.swift */; };
+		3E5CA5932AE770C400DE8042 /* ClipboardArrivalCompletedNotamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5922AE770C400DE8042 /* ClipboardArrivalCompletedNotamRowView.swift */; };
+		3E5CA5952AE7712000DE8042 /* ClipboardArrivalIncomingNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5942AE7711F00DE8042 /* ClipboardArrivalIncomingNoteView.swift */; };
+		3E5CA5972AE7713300DE8042 /* ClipboardArrivalCompletedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5962AE7713300DE8042 /* ClipboardArrivalCompletedNoteView.swift */; };
+		3E5CA5992AE7717800DE8042 /* ClipboardArrivalCompletedNoteItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5982AE7717800DE8042 /* ClipboardArrivalCompletedNoteItemList.swift */; };
+		3E5CA59B2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA59A2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift */; };
+		3E5CA59D2AE7723D00DE8042 /* ClipboardTagCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA59C2AE7723D00DE8042 /* ClipboardTagCompletedView.swift */; };
+		3E5CA59F2AE772B500DE8042 /* ClipboardCrewBriefingCompletedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA59E2AE772B500DE8042 /* ClipboardCrewBriefingCompletedNoteView.swift */; };
+		3E5CA5A12AE772D100DE8042 /* ClipboardCrewBriefingNoteCompletedItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5A02AE772D100DE8042 /* ClipboardCrewBriefingNoteCompletedItemList.swift */; };
+		3E5CA5A32AE777CD00DE8042 /* ClipboardAISearchIncomingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5A22AE777CD00DE8042 /* ClipboardAISearchIncomingResult.swift */; };
+		3E5CA5A52AE777D700DE8042 /* ClipboardAISearchCompletedResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5CA5A42AE777D700DE8042 /* ClipboardAISearchCompletedResult.swift */; };
 		3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */; };
 		3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */; };
 		3E7290FD2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */; };
@@ -660,6 +705,51 @@
 		3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteItemRelevantForm.swift; sourceTree = "<group>"; };
 		3E5CA5462AE5323E00DE8042 /* SlideoverDestinationNotamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideoverDestinationNotamView.swift; sourceTree = "<group>"; };
 		3E5CA5482AE614D100DE8042 /* FlightOverviewCompleteSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightOverviewCompleteSectionView.swift; sourceTree = "<group>"; };
+		3E5CA54A2AE7583C00DE8042 /* NotamIncomingSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotamIncomingSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA54C2AE7584500DE8042 /* NotamCompletedSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotamCompletedSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA54E2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotamCompletedSubSectionRowView.swift; sourceTree = "<group>"; };
+		3E5CA5502AE7638C00DE8042 /* NoteIncomingSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteIncomingSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA5522AE7639600DE8042 /* NoteCompletedSubSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCompletedSubSectionView.swift; sourceTree = "<group>"; };
+		3E5CA5542AE7644400DE8042 /* NoteCompletedItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCompletedItemList.swift; sourceTree = "<group>"; };
+		3E5CA5562AE764BE00DE8042 /* NoteCompletedItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCompletedItemRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA5582AE7657600DE8042 /* DepartureIncomingSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureIncomingSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA55A2AE7658400DE8042 /* DepartureCompletedSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureCompletedSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA55E2AE7666200DE8042 /* DepartureNoteCompletedItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteCompletedItemList.swift; sourceTree = "<group>"; };
+		3E5CA5602AE7669900DE8042 /* DepartureNoteCompletedItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureNoteCompletedItemRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA5622AE7673400DE8042 /* EnrouteIncomingSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteIncomingSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA5642AE7674500DE8042 /* EnrouteCompletedSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteCompletedSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA5662AE767F200DE8042 /* EnrouteNoteCompletedItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteNoteCompletedItemList.swift; sourceTree = "<group>"; };
+		3E5CA5682AE7682800DE8042 /* EnrouteNoteCompletedItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteNoteCompletedItemRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA56A2AE7688200DE8042 /* ArrivalIncomingSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalIncomingSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA56C2AE7689000DE8042 /* ArrivalCompletedSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalCompletedSectionListView.swift; sourceTree = "<group>"; };
+		3E5CA56E2AE768DB00DE8042 /* ArrivalCompletedNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalCompletedNoteItemList.swift; sourceTree = "<group>"; };
+		3E5CA5702AE7693700DE8042 /* ArrivalNoteCompletedItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalNoteCompletedItemRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA5722AE76A6100DE8042 /* AISearchIncomingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AISearchIncomingView.swift; sourceTree = "<group>"; };
+		3E5CA5742AE76A7100DE8042 /* AISearchCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AISearchCompletedView.swift; sourceTree = "<group>"; };
+		3E5CA5762AE76BA900DE8042 /* ClipboardNoteIncomingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteIncomingView.swift; sourceTree = "<group>"; };
+		3E5CA5782AE76BB300DE8042 /* ClipboardNoteCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteCompletedView.swift; sourceTree = "<group>"; };
+		3E5CA57A2AE76C2B00DE8042 /* ClipboardNoteCompletedItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteCompletedItemList.swift; sourceTree = "<group>"; };
+		3E5CA57C2AE76C6400DE8042 /* ClipboardNoteCompletedItemRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardNoteCompletedItemRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA57E2AE76D1300DE8042 /* ClipboardDepartureIncomingNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureIncomingNoteView.swift; sourceTree = "<group>"; };
+		3E5CA5802AE76D1E00DE8042 /* ClipboardDepartureCompletedNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureCompletedNoteView.swift; sourceTree = "<group>"; };
+		3E5CA5822AE76D6C00DE8042 /* ClipboardDepartureCompletedNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureCompletedNoteItemList.swift; sourceTree = "<group>"; };
+		3E5CA5842AE76DCB00DE8042 /* ClipboardDepartureCompletedNoteRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureCompletedNoteRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA5862AE76E3600DE8042 /* ClipboardDepartureNotamCompletedRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardDepartureNotamCompletedRowView.swift; sourceTree = "<group>"; };
+		3E5CA5882AE76E8E00DE8042 /* ClipboardEnrouteNotamCompletedRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteNotamCompletedRowView.swift; sourceTree = "<group>"; };
+		3E5CA58A2AE76ECB00DE8042 /* ClipboardEnrouteIncomingNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteIncomingNoteView.swift; sourceTree = "<group>"; };
+		3E5CA58C2AE76ED600DE8042 /* ClipboardEnrouteCompletedNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteCompletedNoteView.swift; sourceTree = "<group>"; };
+		3E5CA58E2AE76F3300DE8042 /* ClipboardEnrouteCompletedNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteCompletedNoteItemList.swift; sourceTree = "<group>"; };
+		3E5CA5902AE76F5E00DE8042 /* ClipboardEnrouteCompletedNoteRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardEnrouteCompletedNoteRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA5922AE770C400DE8042 /* ClipboardArrivalCompletedNotamRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalCompletedNotamRowView.swift; sourceTree = "<group>"; };
+		3E5CA5942AE7711F00DE8042 /* ClipboardArrivalIncomingNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalIncomingNoteView.swift; sourceTree = "<group>"; };
+		3E5CA5962AE7713300DE8042 /* ClipboardArrivalCompletedNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalCompletedNoteView.swift; sourceTree = "<group>"; };
+		3E5CA5982AE7717800DE8042 /* ClipboardArrivalCompletedNoteItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalCompletedNoteItemList.swift; sourceTree = "<group>"; };
+		3E5CA59A2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardArrivalCompletedNoteRelevantList.swift; sourceTree = "<group>"; };
+		3E5CA59C2AE7723D00DE8042 /* ClipboardTagCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardTagCompletedView.swift; sourceTree = "<group>"; };
+		3E5CA59E2AE772B500DE8042 /* ClipboardCrewBriefingCompletedNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefingCompletedNoteView.swift; sourceTree = "<group>"; };
+		3E5CA5A02AE772D100DE8042 /* ClipboardCrewBriefingNoteCompletedItemList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardCrewBriefingNoteCompletedItemList.swift; sourceTree = "<group>"; };
+		3E5CA5A22AE777CD00DE8042 /* ClipboardAISearchIncomingResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardAISearchIncomingResult.swift; sourceTree = "<group>"; };
+		3E5CA5A42AE777D700DE8042 /* ClipboardAISearchCompletedResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipboardAISearchCompletedResult.swift; sourceTree = "<group>"; };
 		3E63FC592A9AD172004BD54B /* WorldCoordinates.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WorldCoordinates.plist; sourceTree = "<group>"; };
 		3E7290F12ABAD69A000FF295 /* MapAirportCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAirportCardView.swift; sourceTree = "<group>"; };
 		3E7290FB2ABB2BD2000FF295 /* AabbaMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AabbaMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1041,7 +1131,10 @@
 			isa = PBXGroup;
 			children = (
 				3E7291302AC06133000FF295 /* NotamSubSectionView.swift */,
+				3E5CA54A2AE7583C00DE8042 /* NotamIncomingSubSectionView.swift */,
+				3E5CA54C2AE7584500DE8042 /* NotamCompletedSubSectionView.swift */,
 				3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */,
+				3E5CA54E2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift */,
 			);
 			path = NotamSubSectionView;
 			sourceTree = "<group>";
@@ -1331,9 +1424,13 @@
 			isa = PBXGroup;
 			children = (
 				3E7291372AC1BD04000FF295 /* NoteSubSectionView.swift */,
+				3E5CA5502AE7638C00DE8042 /* NoteIncomingSubSectionView.swift */,
+				3E5CA5522AE7639600DE8042 /* NoteCompletedSubSectionView.swift */,
 				3E72913C2AC1BE04000FF295 /* NoteItemForm.swift */,
 				3E72913A2AC1BD8A000FF295 /* NoteItemList.swift */,
+				3E5CA5542AE7644400DE8042 /* NoteCompletedItemList.swift */,
 				3E7291472AC2CBAD000FF295 /* NoteItemRelevantList.swift */,
+				3E5CA5562AE764BE00DE8042 /* NoteCompletedItemRelevantList.swift */,
 				3E5CA53C2AE50CED00DE8042 /* NoteItemRelevantForm.swift */,
 				3E72913E2AC1BE0D000FF295 /* NoteTagItem.swift */,
 				3E7291802AC3E0AF000FF295 /* NoteTagItemColor.swift */,
@@ -1376,9 +1473,13 @@
 			children = (
 				3E7291952AC5797A000FF295 /* DepartureSectionView.swift */,
 				3E7291B92AC59A8C000FF295 /* DepartureSectionListView.swift */,
+				3E5CA5582AE7657600DE8042 /* DepartureIncomingSectionListView.swift */,
+				3E5CA55A2AE7658400DE8042 /* DepartureCompletedSectionListView.swift */,
 				3E7291972AC579CB000FF295 /* DepartureNoteItemForm.swift */,
 				3E7291992AC579EB000FF295 /* DepartureNoteItemList.swift */,
+				3E5CA55E2AE7666200DE8042 /* DepartureNoteCompletedItemList.swift */,
 				3E72919B2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift */,
+				3E5CA5602AE7669900DE8042 /* DepartureNoteCompletedItemRelevantList.swift */,
 				3E5CA5422AE5144C00DE8042 /* DepartureNoteItemRelevantForm.swift */,
 				3E72919D2AC57A50000FF295 /* DepartureModalNoteCommentView.swift */,
 			);
@@ -1390,9 +1491,13 @@
 			children = (
 				3E7291A02AC59292000FF295 /* EnrouteSectionView.swift */,
 				3E7291B72AC599E3000FF295 /* EnrouteSectionListView.swift */,
+				3E5CA5622AE7673400DE8042 /* EnrouteIncomingSectionListView.swift */,
+				3E5CA5642AE7674500DE8042 /* EnrouteCompletedSectionListView.swift */,
 				3E7291A22AC592A3000FF295 /* EnrouteNoteItemForm.swift */,
 				3E7291A42AC592AF000FF295 /* EnrouteNoteItemList.swift */,
+				3E5CA5662AE767F200DE8042 /* EnrouteNoteCompletedItemList.swift */,
 				3E7291A62AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift */,
+				3E5CA5682AE7682800DE8042 /* EnrouteNoteCompletedItemRelevantList.swift */,
 				3E7291A82AC592C7000FF295 /* EnrouteModalNoteCommentView.swift */,
 			);
 			path = EnrouteSectionView;
@@ -1403,9 +1508,13 @@
 			children = (
 				3E7291AB2AC59448000FF295 /* ArrivalSectionView.swift */,
 				3E7291B52AC5977E000FF295 /* ArrivalSectionListView.swift */,
+				3E5CA56A2AE7688200DE8042 /* ArrivalIncomingSectionListView.swift */,
+				3E5CA56C2AE7689000DE8042 /* ArrivalCompletedSectionListView.swift */,
 				3E7291AD2AC59458000FF295 /* ArrivalNoteItemForm.swift */,
 				3E7291AF2AC5946C000FF295 /* ArrivalNoteItemList.swift */,
+				3E5CA56E2AE768DB00DE8042 /* ArrivalCompletedNoteItemList.swift */,
 				3E7291B12AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift */,
+				3E5CA5702AE7693700DE8042 /* ArrivalNoteCompletedItemRelevantList.swift */,
 				3E5CA5442AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift */,
 				3E7291B32AC59487000FF295 /* ArrivalModalNoteCommentView.swift */,
 			);
@@ -1426,8 +1535,12 @@
 			isa = PBXGroup;
 			children = (
 				3E7291CA2AC5C852000FF295 /* ClipboardNoteView.swift */,
+				3E5CA5762AE76BA900DE8042 /* ClipboardNoteIncomingView.swift */,
+				3E5CA5782AE76BB300DE8042 /* ClipboardNoteCompletedView.swift */,
 				3E7291C72AC5C7B2000FF295 /* ClipboardNoteItemList.swift */,
+				3E5CA57A2AE76C2B00DE8042 /* ClipboardNoteCompletedItemList.swift */,
 				3E7291CC2AC5CF28000FF295 /* ClipboardNoteItemRelevantList.swift */,
+				3E5CA57C2AE76C6400DE8042 /* ClipboardNoteCompletedItemRelevantList.swift */,
 			);
 			path = ClipboardNoteView;
 			sourceTree = "<group>";
@@ -1439,6 +1552,7 @@
 				3E7291DD2AC680E8000FF295 /* ClipboardDepartureNotamView.swift */,
 				3E7291DB2AC67F9C000FF295 /* ClipboardDepature.swift */,
 				3E5CA5292AE3B58600DE8042 /* ClipboardDepartureNotamRowView.swift */,
+				3E5CA5862AE76E3600DE8042 /* ClipboardDepartureNotamCompletedRowView.swift */,
 			);
 			path = ClipboardDepature;
 			sourceTree = "<group>";
@@ -1447,8 +1561,12 @@
 			isa = PBXGroup;
 			children = (
 				3E7291E02AC68434000FF295 /* ClipboardDepartureNoteView.swift */,
+				3E5CA57E2AE76D1300DE8042 /* ClipboardDepartureIncomingNoteView.swift */,
+				3E5CA5802AE76D1E00DE8042 /* ClipboardDepartureCompletedNoteView.swift */,
 				3E7291E22AC68454000FF295 /* ClipboardDepartureNoteItemList.swift */,
+				3E5CA5822AE76D6C00DE8042 /* ClipboardDepartureCompletedNoteItemList.swift */,
 				3E7291E42AC68490000FF295 /* ClipboardDepartureNoteRelevantList.swift */,
+				3E5CA5842AE76DCB00DE8042 /* ClipboardDepartureCompletedNoteRelevantList.swift */,
 			);
 			path = ClipboardDepartureNoteView;
 			sourceTree = "<group>";
@@ -1460,6 +1578,7 @@
 				3E7291E72AC6AC78000FF295 /* ClipboardEnroute.swift */,
 				3E7291E92AC6ACA4000FF295 /* ClipboardEnrouteNotamView.swift */,
 				3E5CA52B2AE3C2B100DE8042 /* ClipboardEnrouteNotamRowView.swift */,
+				3E5CA5882AE76E8E00DE8042 /* ClipboardEnrouteNotamCompletedRowView.swift */,
 			);
 			path = ClipboardEnroute;
 			sourceTree = "<group>";
@@ -1468,8 +1587,12 @@
 			isa = PBXGroup;
 			children = (
 				3E7291EC2AC6ACC2000FF295 /* ClipboardEnrouteNoteView.swift */,
+				3E5CA58A2AE76ECB00DE8042 /* ClipboardEnrouteIncomingNoteView.swift */,
+				3E5CA58C2AE76ED600DE8042 /* ClipboardEnrouteCompletedNoteView.swift */,
 				3E7291EE2AC6ACD0000FF295 /* ClipboardEnrouteNoteItemList.swift */,
+				3E5CA58E2AE76F3300DE8042 /* ClipboardEnrouteCompletedNoteItemList.swift */,
 				3E7291F02AC6ACE0000FF295 /* ClipboardEnrouteNoteRelevantList.swift */,
+				3E5CA5902AE76F5E00DE8042 /* ClipboardEnrouteCompletedNoteRelevantList.swift */,
 			);
 			path = ClipboardEnrouteNoteView;
 			sourceTree = "<group>";
@@ -1482,6 +1605,7 @@
 				3E7291F52AC6BBD6000FF295 /* ClipboardArrivalNotamView.swift */,
 				3E5CA5382AE4B9E000DE8042 /* ClipboardDestNotamView.swift */,
 				3E5CA52D2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift */,
+				3E5CA5922AE770C400DE8042 /* ClipboardArrivalCompletedNotamRowView.swift */,
 			);
 			path = ClipboardArrival;
 			sourceTree = "<group>";
@@ -1490,8 +1614,12 @@
 			isa = PBXGroup;
 			children = (
 				3E7291F82AC6BBF6000FF295 /* ClipboardArrivalNoteView.swift */,
+				3E5CA5942AE7711F00DE8042 /* ClipboardArrivalIncomingNoteView.swift */,
+				3E5CA5962AE7713300DE8042 /* ClipboardArrivalCompletedNoteView.swift */,
 				3E7291FA2AC6BC03000FF295 /* ClipboardArrivalNoteItemList.swift */,
+				3E5CA5982AE7717800DE8042 /* ClipboardArrivalCompletedNoteItemList.swift */,
 				3E7291FC2AC6BC0C000FF295 /* ClipboardArrivalNoteRelevantList.swift */,
+				3E5CA59A2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift */,
 			);
 			path = ClipboardArrivalNoteView;
 			sourceTree = "<group>";
@@ -1501,6 +1629,7 @@
 			children = (
 				3E7292072AC71011000FF295 /* ClipboardCrewBriefingNoteView */,
 				3E7292052AC6FCA2000FF295 /* ClipboardTagView.swift */,
+				3E5CA59C2AE7723D00DE8042 /* ClipboardTagCompletedView.swift */,
 				3E7292012AC6F7D0000FF295 /* ClipboardCrewBriefing.swift */,
 				3E7292032AC6F7F6000FF295 /* ClipboardCrewBriefingSummaryView.swift */,
 			);
@@ -1511,7 +1640,9 @@
 			isa = PBXGroup;
 			children = (
 				3E7292082AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift */,
+				3E5CA59E2AE772B500DE8042 /* ClipboardCrewBriefingCompletedNoteView.swift */,
 				3E72920A2AC7104B000FF295 /* ClipboardCrewBriefingNoteItemList.swift */,
+				3E5CA5A02AE772D100DE8042 /* ClipboardCrewBriefingNoteCompletedItemList.swift */,
 			);
 			path = ClipboardCrewBriefingNoteView;
 			sourceTree = "<group>";
@@ -1689,6 +1820,8 @@
 			isa = PBXGroup;
 			children = (
 				3E5AF6412A18DAB800A97ECF /* AISearchView.swift */,
+				3E5CA5722AE76A6100DE8042 /* AISearchIncomingView.swift */,
+				3E5CA5742AE76A7100DE8042 /* AISearchCompletedView.swift */,
 				3E766FAA2A5F920400B11616 /* AISearchContainerView.swift */,
 				3E766FAC2A5F92FA00B11616 /* PreviousSearchView.swift */,
 				3E4E10172A63E6F60026802B /* AISearchDetailView.swift */,
@@ -1725,6 +1858,8 @@
 			isa = PBXGroup;
 			children = (
 				3E4E101B2A652A2D0026802B /* ClipboardAISearchResult.swift */,
+				3E5CA5A22AE777CD00DE8042 /* ClipboardAISearchIncomingResult.swift */,
+				3E5CA5A42AE777D700DE8042 /* ClipboardAISearchCompletedResult.swift */,
 				3E7291FE2AC6F1A6000FF295 /* ClipboardAISearchDetailModal.swift */,
 			);
 			path = ClipboardAISearchResult;
@@ -2350,6 +2485,7 @@
 				3EEBE66D2AB34BE800421AFF /* MapCalloutView.swift in Sources */,
 				3EFA5F262A4341BE001ED6CF /* Notes.xcdatamodeld in Sources */,
 				3E4A371F2A5C361500027C61 /* HistoricalDelaysList+CoreDataClass.swift in Sources */,
+				3E5CA5A32AE777CD00DE8042 /* ClipboardAISearchIncomingResult.swift in Sources */,
 				3E766FA92A5F917100B11616 /* AISearchModel.swift in Sources */,
 				3E7291382AC1BD04000FF295 /* NoteSubSectionView.swift in Sources */,
 				3E7291DE2AC680E8000FF295 /* ClipboardDepartureNotamView.swift in Sources */,
@@ -2380,11 +2516,13 @@
 				3E7292382AC8721E000FF295 /* SlideoverAISearchResult.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E7291A12AC59292000FF295 /* EnrouteSectionView.swift in Sources */,
+				3E5CA5952AE7712000DE8042 /* ClipboardArrivalIncomingNoteView.swift in Sources */,
 				3E3FCC402A270851008017FA /* projArrDelaysView.swift in Sources */,
 				3E7292422AC99DE4000FF295 /* OnboardingModel.swift in Sources */,
 				3E7291EF2AC6ACD0000FF295 /* ClipboardEnrouteNoteItemList.swift in Sources */,
 				3E2BA8382ACEAE49009ABCC2 /* CreatePasswordView.swift in Sources */,
 				C5F9C81C2A14878D0076396F /* ContentView.swift in Sources */,
+				3E5CA5612AE7669900DE8042 /* DepartureNoteCompletedItemRelevantList.swift in Sources */,
 				3E7291732AC3C875000FF295 /* SignOffView.swift in Sources */,
 				3EFA5F062A42122E001ED6CF /* ItemListSplit.swift in Sources */,
 				3EB9DAE22A769B70009AEDFB /* FuelEnrWXRefList+CoreDataProperties.swift in Sources */,
@@ -2395,10 +2533,14 @@
 				3E7291ED2AC6ACC2000FF295 /* ClipboardEnrouteNoteView.swift in Sources */,
 				3E5CA5282AE0457600DE8042 /* SectionDateUpdateList+CoreDataProperties.swift in Sources */,
 				3E72922E2AC86E25000FF295 /* SlideoverArrivalNotamView.swift in Sources */,
+				3E5CA5712AE7693700DE8042 /* ArrivalNoteCompletedItemRelevantList.swift in Sources */,
+				3E5CA5632AE7673400DE8042 /* EnrouteIncomingSectionListView.swift in Sources */,
 				3E9A2C4F2AD91DCB0071F44C /* NotePostList+CoreDataClass.swift in Sources */,
+				3E5CA5592AE7657600DE8042 /* DepartureIncomingSectionListView.swift in Sources */,
 				3E7291C82AC5C7B2000FF295 /* ClipboardNoteItemList.swift in Sources */,
 				3E77235F2AD82E41000C7AA3 /* RecencyExperienceList+CoreDataProperties.swift in Sources */,
 				3E7291A72AC592B7000FF295 /* EnrouteNoteItemRelevantList.swift in Sources */,
+				3E5CA5672AE767F200DE8042 /* EnrouteNoteCompletedItemList.swift in Sources */,
 				3EECB8642A716638009D4971 /* LoginView.swift in Sources */,
 				3E766FAB2A5F920400B11616 /* AISearchContainerView.swift in Sources */,
 				3E7291B82AC599E3000FF295 /* EnrouteSectionListView.swift in Sources */,
@@ -2407,6 +2549,7 @@
 				3E3FCC442A270851008017FA /* flightLevelChart.swift in Sources */,
 				3E870BA12A73647F0036DE3B /* ProjDelaysList+CoreDataProperties.swift in Sources */,
 				3E086D942A94FF4700BE00AD /* EnrouteStepper.swift in Sources */,
+				3E5CA56B2AE7688200DE8042 /* ArrivalIncomingSectionListView.swift in Sources */,
 				3E77235B2AD789CF000C7AA3 /* UserProfileList+CoreDataProperties.swift in Sources */,
 				3E7292572ACAB100000FF295 /* ProvideRecencyView.swift in Sources */,
 				3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */,
@@ -2440,21 +2583,26 @@
 				3E4E101E2A654C1B0026802B /* FlightPlanNOTAMSplitView.swift in Sources */,
 				3E74C0FC2A3310CA0026938F /* KeyboardAvoiding.swift in Sources */,
 				3EE1708B2AA8768E004DA27C /* CommonStepper.swift in Sources */,
+				3E5CA59D2AE7723D00DE8042 /* ClipboardTagCompletedView.swift in Sources */,
 				3E086D852A94A00500BE00AD /* HistorycalDelaysRefList+CoreDataClass.swift in Sources */,
 				3E7291252ABDDD1E000FF295 /* CustomAirportColorAnnotation.swift in Sources */,
 				3E72919C2AC579F8000FF295 /* DepartureNoteItemRelevantList.swift in Sources */,
 				3E7291E82AC6AC78000FF295 /* ClipboardEnroute.swift in Sources */,
 				3E5CA5332AE4157A00DE8042 /* MetarTafEnrSubSectionView.swift in Sources */,
+				3E5CA56D2AE7689000DE8042 /* ArrivalCompletedSectionListView.swift in Sources */,
 				3E4A369E2A570BA800027C61 /* DepartureEntriesList+CoreDataClass.swift in Sources */,
 				3E7291F92AC6BBF6000FF295 /* ClipboardArrivalNoteView.swift in Sources */,
 				3E77234B2AD6C97A000C7AA3 /* LimitationSubsectionFormView.swift in Sources */,
 				3E9A2CB12ADD71CF0071F44C /* RecencyList+CoreDataClass.swift in Sources */,
 				3EB9DAE12A769B70009AEDFB /* FuelEnrWXRefList+CoreDataClass.swift in Sources */,
+				3E5CA5972AE7713300DE8042 /* ClipboardArrivalCompletedNoteView.swift in Sources */,
 				3E7291A52AC592AF000FF295 /* EnrouteNoteItemList.swift in Sources */,
 				3E766FA32A5EEFDA00B11616 /* FuelModel.swift in Sources */,
 				3EEBE6AB2AB873C700421AFF /* AabbaCommentList+CoreDataClass.swift in Sources */,
+				3E5CA5752AE76A7100DE8042 /* AISearchCompletedView.swift in Sources */,
 				3E3FCC222A2587E8008017FA /* AtlasSearchSplit.swift in Sources */,
 				3E4E10202A65519A0026802B /* PreviousSearchSplitView.swift in Sources */,
+				3E5CA5912AE76F5E00DE8042 /* ClipboardEnrouteCompletedNoteRelevantList.swift in Sources */,
 				3E03C6472A14B83C0099ACA3 /* SideMenuModel.swift in Sources */,
 				3EE170702AA827EE004DA27C /* MainView.swift in Sources */,
 				3E5CA5472AE5323E00DE8042 /* SlideoverDestinationNotamView.swift in Sources */,
@@ -2473,11 +2621,13 @@
 				3E4A36982A570BA800027C61 /* DepartureATISList+CoreDataProperties.swift in Sources */,
 				3E086D962A95000B00BE00AD /* EnrouteButtonTimeStepper.swift in Sources */,
 				3EEBE6652AB1FCEC00421AFF /* CustomAnnotation.swift in Sources */,
+				3E5CA5512AE7638C00DE8042 /* NoteIncomingSubSectionView.swift in Sources */,
 				3E9A2C572AD91E300071F44C /* NoteAabbaPostList+CoreDataClass.swift in Sources */,
 				3E7291332AC08558000FF295 /* MetarTafSubSectionView.swift in Sources */,
 				3E4A364B2A566ACE00027C61 /* ArrivalATCList+CoreDataProperties.swift in Sources */,
 				3E4A36992A570BA800027C61 /* PerfDataList+CoreDataClass.swift in Sources */,
 				3E7F682F2A1F634B00EC2CA3 /* OverviewView.swift in Sources */,
+				3E5CA56F2AE768DB00DE8042 /* ArrivalCompletedNoteItemList.swift in Sources */,
 				3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */,
 				3E870BB52A7485FD0036DE3B /* AISearchList+CoreDataClass.swift in Sources */,
 				3E086D8D2A94E4C500BE00AD /* EnrouteList+CoreDataClass.swift in Sources */,
@@ -2498,6 +2648,7 @@
 				3EEBE6C52AB893B800421AFF /* ModalCommentView.swift in Sources */,
 				3E2BA8B22AD56C59009ABCC2 /* RouteAlternateList+CoreDataProperties.swift in Sources */,
 				3E72917C2AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift in Sources */,
+				3E5CA54F2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift in Sources */,
 				3E4A37732A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift in Sources */,
 				3E9A2CC52ADF9CCA0071F44C /* EventList+CoreDataClass.swift in Sources */,
 				3EFA5F032A41DB82001ED6CF /* OverviewSplitView.swift in Sources */,
@@ -2517,10 +2668,13 @@
 				3E4A369F2A570BA800027C61 /* DepartureATCList+CoreDataClass.swift in Sources */,
 				3E3FCC042A24B2DF008017FA /* AircraftSplit.swift in Sources */,
 				3E4A36A62A570BA800027C61 /* FuelDataList+CoreDataClass.swift in Sources */,
+				3E5CA5552AE7644400DE8042 /* NoteCompletedItemList.swift in Sources */,
 				3E3FCC3C2A270851008017FA /* taxiChart.swift in Sources */,
 				3E7292542ACAA396000FF295 /* LimitationNumberModalView.swift in Sources */,
+				3E5CA5692AE7682800DE8042 /* EnrouteNoteCompletedItemRelevantList.swift in Sources */,
 				3E2BA8342ACE9DEA009ABCC2 /* SignUpView.swift in Sources */,
 				3E7291482AC2CBAD000FF295 /* NoteItemRelevantList.swift in Sources */,
+				3E5CA5652AE7674500DE8042 /* EnrouteCompletedSectionListView.swift in Sources */,
 				3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */,
 				3E7291B42AC59487000FF295 /* ArrivalModalNoteCommentView.swift in Sources */,
 				3EE170742AA82D7E004DA27C /* HomeSectionView.swift in Sources */,
@@ -2530,6 +2684,7 @@
 				3EFA5EF82A3FEB60001ED6CF /* CustomSegmentedControl.swift in Sources */,
 				3E4A36962A570BA800027C61 /* PerfInfoList+CoreDataProperties.swift in Sources */,
 				3E3FCC002A243A11008017FA /* FlightPlanSplit.swift in Sources */,
+				3E5CA5992AE7717800DE8042 /* ClipboardArrivalCompletedNoteItemList.swift in Sources */,
 				3EECB8552A6D7D6E009D4971 /* TextFieldCustom.swift in Sources */,
 				3E3FCC522A2C1954008017FA /* AppDelegate.swift in Sources */,
 				3E7292022AC6F7D0000FF295 /* ClipboardCrewBriefing.swift in Sources */,
@@ -2540,6 +2695,7 @@
 				3E4A36612A56EAE800027C61 /* AltnTafDataList+CoreDataProperties.swift in Sources */,
 				3EE1707A2AA82E0E004DA27C /* LogbookSectionView.swift in Sources */,
 				3E2BA8992AD4FD06009ABCC2 /* NotamsDataList+CoreDataClass.swift in Sources */,
+				3E5CA5852AE76DCB00DE8042 /* ClipboardDepartureCompletedNoteRelevantList.swift in Sources */,
 				3EE170802AA82E28004DA27C /* AABBASectionView.swift in Sources */,
 				3E7292222AC8677C000FF295 /* SlideoverEnrouteNotamView.swift in Sources */,
 				3E7292442AC9A247000FF295 /* CompleteYourProfileView.swift in Sources */,
@@ -2566,17 +2722,22 @@
 				3E7291442AC266A4000FF295 /* PreflightSectionView.swift in Sources */,
 				3E7F68312A1F640500EC2CA3 /* HomeFlightSectionView.swift in Sources */,
 				3E3FCBF22A21C934008017FA /* EnrouteReferenceContainer.swift in Sources */,
+				3E5CA58F2AE76F3300DE8042 /* ClipboardEnrouteCompletedNoteItemList.swift in Sources */,
 				3E72926E2ACC6355000FF295 /* SummaryInfoList+CoreDataProperties.swift in Sources */,
 				3E9A2C652ADA42C00071F44C /* EventSectorList+CoreDataClass.swift in Sources */,
 				3E870BB62A7485FD0036DE3B /* AISearchList+CoreDataProperties.swift in Sources */,
 				3EE170772AA82DF8004DA27C /* CalendarSectionView.swift in Sources */,
 				3E7290F22ABAD69A000FF295 /* MapAirportCardView.swift in Sources */,
 				3E4A364E2A566ACE00027C61 /* ArrivalEntriesList+CoreDataClass.swift in Sources */,
+				3E5CA59F2AE772B500DE8042 /* ClipboardCrewBriefingCompletedNoteView.swift in Sources */,
+				3E5CA58B2AE76ECB00DE8042 /* ClipboardEnrouteIncomingNoteView.swift in Sources */,
 				3E72913D2AC1BE04000FF295 /* NoteItemForm.swift in Sources */,
 				3E7291232ABDDD0B000FF295 /* CustomAirportColorAnnotationView.swift in Sources */,
+				3E5CA57B2AE76C2B00DE8042 /* ClipboardNoteCompletedItemList.swift in Sources */,
 				3E7291082ABC251F000FF295 /* LogbookSegmented.swift in Sources */,
 				3E5AF6512A19035200A97ECF /* TabbarScrollable.swift in Sources */,
 				3E4A368F2A570BA800027C61 /* SummaryRouteList+CoreDataProperties.swift in Sources */,
+				3E5CA58D2AE76ED600DE8042 /* ClipboardEnrouteCompletedNoteView.swift in Sources */,
 				3E5CA5412AE5105600DE8042 /* NoteList+CoreDataProperties.swift in Sources */,
 				3E3FCBF02A21C924008017FA /* DepartureReferenceContainer.swift in Sources */,
 				3E7291BF2AC5B549000FF295 /* ClipboardPreflight.swift in Sources */,
@@ -2598,6 +2759,8 @@
 				3E7291022ABC24BB000FF295 /* OverviewSubSectionView.swift in Sources */,
 				3E7292092AC71037000FF295 /* ClipboardCrewBriefingNoteView.swift in Sources */,
 				3E3FCC3E2A270851008017FA /* fuelCustomClasses.swift in Sources */,
+				3E5CA55F2AE7666200DE8042 /* DepartureNoteCompletedItemList.swift in Sources */,
+				3E5CA5A52AE777D700DE8042 /* ClipboardAISearchCompletedResult.swift in Sources */,
 				3E2BA8722AD30C92009ABCC2 /* SignatureList+CoreDataProperties.swift in Sources */,
 				3E086D722A945DEA00BE00AD /* Helper.swift in Sources */,
 				3EFA5F0B2A429B25001ED6CF /* ItemListReference.swift in Sources */,
@@ -2639,6 +2802,7 @@
 				3E2BA8902AD4FD06009ABCC2 /* MetarTafDataList+CoreDataProperties.swift in Sources */,
 				3EECB8532A6BC477009D4971 /* NoteDestinationSplit.swift in Sources */,
 				3EEBE67B2AB46A8C00421AFF /* CustomTrafficAnnotationView.swift in Sources */,
+				3E5CA5772AE76BA900DE8042 /* ClipboardNoteIncomingView.swift in Sources */,
 				3E72914E2AC300B1000FF295 /* RowTextAlternates.swift in Sources */,
 				3E72910C2ABC5F9E000FF295 /* RecencyModel.swift in Sources */,
 				3E3FCC572A2C19C0008017FA /* SceneTwoDelegate.swift in Sources */,
@@ -2650,6 +2814,7 @@
 				3EEBE6632AB1FA0400421AFF /* CustomAnnotationView.swift in Sources */,
 				3E72917D2AC3D7F6000FF295 /* NoteCommentList+CoreDataProperties.swift in Sources */,
 				C5A8DE062A4E930F0045EB32 /* reciprocalRwyView.swift in Sources */,
+				3E5CA54B2AE7583C00DE8042 /* NotamIncomingSubSectionView.swift in Sources */,
 				3E351CD72A17C02700207FF1 /* FlightPageModel.swift in Sources */,
 				3E4E10342A6A07460026802B /* ScratchPadList+CoreDataProperties.swift in Sources */,
 				3E086D7A2A94920900BE00AD /* MapView.swift in Sources */,
@@ -2658,6 +2823,7 @@
 				3E7291062ABC24E2000FF295 /* EntriesSubSectionView.swift in Sources */,
 				C5A8DDFA2A4E89F40045EB32 /* ArrivalDelayView.swift in Sources */,
 				3E5CA5452AE518DA00DE8042 /* ArrivalNoteItemRelevantForm.swift in Sources */,
+				3E5CA5572AE764BE00DE8042 /* NoteCompletedItemRelevantList.swift in Sources */,
 				3E72921D2AC8613F000FF295 /* SlideoverDepartureNoteRelevantList.swift in Sources */,
 				3EE170892AA859F7004DA27C /* HomeCalendarView.swift in Sources */,
 				3EECB8512A6AB139009D4971 /* ButtonDateStepper.swift in Sources */,
@@ -2666,13 +2832,16 @@
 				C5A4964A2A4715F700653983 /* customKeyboard.swift in Sources */,
 				3E7291F12AC6ACE0000FF295 /* ClipboardEnrouteNoteRelevantList.swift in Sources */,
 				3EB99CE52A51AA1D0091BC08 /* ButtonStepperMultiple.swift in Sources */,
+				3E5CA5812AE76D1E00DE8042 /* ClipboardDepartureCompletedNoteView.swift in Sources */,
 				3E3FCC452A270851008017FA /* enrWXChart.swift in Sources */,
+				3E5CA5892AE76E8E00DE8042 /* ClipboardEnrouteNotamCompletedRowView.swift in Sources */,
 				3EE1708F2AA9B525004DA27C /* CalendarView.swift in Sources */,
 				3E5AF65D2A1A8AD900A97ECF /* CollapsibleTab.swift in Sources */,
 				3E4A37652A5CCDFE00027C61 /* FuelEnrWXList+CoreDataClass.swift in Sources */,
 				3E5CA5352AE415B400DE8042 /* MetarTafArrSubSectionView.swift in Sources */,
 				3E9A2C422AD856480071F44C /* FlightOverviewList+CoreDataProperties.swift in Sources */,
 				3EEBE6A22AB8425C00421AFF /* CustomPicker.swift in Sources */,
+				3E5CA5A12AE772D100DE8042 /* ClipboardCrewBriefingNoteCompletedItemList.swift in Sources */,
 				3E3FCC492A270851008017FA /* trackMilesView.swift in Sources */,
 				3EEBE6982AB6AAA300421AFF /* CustomWaypointAnnotationView.swift in Sources */,
 				3E3FCBF42A23647D008017FA /* BottomTabs.swift in Sources */,
@@ -2687,10 +2856,13 @@
 				3EEBE6842AB6747300421AFF /* WeatherPopoverView.swift in Sources */,
 				3E7F68402A20ABCE00EC2CA3 /* PresentationDetentsViewModifier.swift in Sources */,
 				3E766FAD2A5F92FA00B11616 /* PreviousSearchView.swift in Sources */,
+				3E5CA5732AE76A6100DE8042 /* AISearchIncomingView.swift in Sources */,
+				3E5CA57F2AE76D1300DE8042 /* ClipboardDepartureIncomingNoteView.swift in Sources */,
 				3E7291BA2AC59A8C000FF295 /* DepartureSectionListView.swift in Sources */,
 				3EEBE69E2AB7F69D00421AFF /* CustomAirportAnnotation.swift in Sources */,
 				3E77235E2AD82E41000C7AA3 /* RecencyExperienceList+CoreDataClass.swift in Sources */,
 				3E5CA5272AE0457600DE8042 /* SectionDateUpdateList+CoreDataClass.swift in Sources */,
+				3E5CA59B2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift in Sources */,
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
 				3E72919E2AC57A50000FF295 /* DepartureModalNoteCommentView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
@@ -2702,6 +2874,7 @@
 				3E086D772A94918F00BE00AD /* MapModal.swift in Sources */,
 				3E5AF63E2A18D90F00A97ECF /* TabView.swift in Sources */,
 				3EE170912AA9EC07004DA27C /* EventModalView.swift in Sources */,
+				3E5CA5792AE76BB300DE8042 /* ClipboardNoteCompletedView.swift in Sources */,
 				C5192C6D2ACA6B740029BC48 /* flightLevelViewBasic.swift in Sources */,
 				3EF93D502A3025550043E91E /* MeasureSize.swift in Sources */,
 				3E7292252AC86792000FF295 /* SlideoverEnrouteNoteView.swift in Sources */,
@@ -2726,11 +2899,15 @@
 				3E870BA42A736A140036DE3B /* ProjDelaysListRef+CoreDataClass.swift in Sources */,
 				3EF221A32AAF0C3E000B8FFB /* COPForm.swift in Sources */,
 				3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */,
+				3E5CA5832AE76D6C00DE8042 /* ClipboardDepartureCompletedNoteItemList.swift in Sources */,
+				3E5CA5532AE7639600DE8042 /* NoteCompletedSubSectionView.swift in Sources */,
+				3E5CA57D2AE76C6400DE8042 /* ClipboardNoteCompletedItemRelevantList.swift in Sources */,
 				3E2BA8B12AD56C59009ABCC2 /* RouteAlternateList+CoreDataClass.swift in Sources */,
 				3E4A373A2A5C691500027C61 /* FuelTaxiList+CoreDataProperties.swift in Sources */,
 				3E7292462AC9A78E000FF295 /* ProvideExperienceView.swift in Sources */,
 				3E7292272AC867A6000FF295 /* SlideoverEnrouteNoteItemList.swift in Sources */,
 				3EFA5F2E2A458F25001ED6CF /* TableDetail.swift in Sources */,
+				3E5CA5872AE76E3600DE8042 /* ClipboardDepartureNotamCompletedRowView.swift in Sources */,
 				3E9A2CC82ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift in Sources */,
 				3E7292332AC86E53000FF295 /* SlideoverArrivalNoteItemList.swift in Sources */,
 				3EF221B12AAF4877000B8FFB /* OtherEventDetail.swift in Sources */,
@@ -2769,14 +2946,17 @@
 				3EEBE6882AB67B0000421AFF /* AskAabbaPopoverView.swift in Sources */,
 				3E9A2CA72ADC06190071F44C /* SlideoverRowTextAlternates.swift in Sources */,
 				3E2BA8622AD1C2DE009ABCC2 /* LogbookEntriesList+CoreDataProperties.swift in Sources */,
+				3E5CA55B2AE7658400DE8042 /* DepartureCompletedSectionListView.swift in Sources */,
 				3E9A2CB62ADE70D40071F44C /* ModalImageView.swift in Sources */,
 				3EFA5F012A419EF2001ED6CF /* FlowLayout.swift in Sources */,
 				3E4A36C22A57B3C700027C61 /* RemoteService.swift in Sources */,
 				3EE170932AAB52BD004DA27C /* CalendarInformationView.swift in Sources */,
 				3EFA5EE92A3C03D1001ED6CF /* Sidebar.swift in Sources */,
 				3EB9DADA2A750F5D009AEDFB /* FuelTaxiRefList+CoreDataProperties.swift in Sources */,
+				3E5CA5932AE770C400DE8042 /* ClipboardArrivalCompletedNotamRowView.swift in Sources */,
 				3E5CA52E2AE3C3F900DE8042 /* ClipboardArrivalNotamRowView.swift in Sources */,
 				3E2BA8A82AD5431A009ABCC2 /* EventDateRangeList+CoreDataProperties.swift in Sources */,
+				3E5CA54D2AE7584500DE8042 /* NotamCompletedSubSectionView.swift in Sources */,
 				3E72922C2AC86E14000FF295 /* SlideoverArrival.swift in Sources */,
 				3E2BA8962AD4FD06009ABCC2 /* MapRouteList+CoreDataProperties.swift in Sources */,
 				C5A8DDFC2A4E8BA50045EB32 /* fetchFuelData.swift in Sources */,

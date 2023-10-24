@@ -48,7 +48,7 @@ struct AutoCompleteView: View {
                     .roundedCorner(12, corners: [.topLeft, .topRight])
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    TextField("Enter Route", text: $tfRoute)
+                    TextField("Enter Airport", text: $tfRoute)
                         .padding(8)
                         .background(Color.white)
                         .cornerRadius(8)

@@ -139,6 +139,7 @@ struct MapViewModal: View {
                                                 Text("Enter Route")
                                                     .font(.system(size: 15, weight: .semibold)).foregroundColor(Color.black)
                                                     .padding(.vertical, 8)
+                                                    .disabled(coreDataModel.selectedEvent?.flightStatus == FlightStatusEnum.COMPLETED.rawValue)
                                                 
                                                 Divider().padding(.horizontal, -16)
                                                 
@@ -180,8 +181,10 @@ struct MapViewModal: View {
                                             Divider().padding(.horizontal, -16)
                                             
                                             Button(action: {
-                                                self.selectedTraffic.toggle()
-                                                self.updateMapOverlayViews()
+                                                if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                                    self.selectedTraffic.toggle()
+                                                    self.updateMapOverlayViews()
+                                                }
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -196,9 +199,11 @@ struct MapViewModal: View {
                                             Divider().padding(.horizontal, -16)
                                                 
                                             Button(action: {
-                                                if coreDataModel.image != nil {
-                                                    self.selectedWeather.toggle()
-                                                    self.updateMapOverlayViews()
+                                                if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                                    if coreDataModel.image != nil {
+                                                        self.selectedWeather.toggle()
+                                                        self.updateMapOverlayViews()
+                                                    }
                                                 }
                                             }, label: {
                                                 HStack {
@@ -216,8 +221,10 @@ struct MapViewModal: View {
                                         
                                         Group {
                                             Button(action: {
-                                                self.selectedAABBA.toggle()
-                                                self.updateMapOverlayViews()
+                                                if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                                    self.selectedAABBA.toggle()
+                                                    self.updateMapOverlayViews()
+                                                }
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -232,8 +239,10 @@ struct MapViewModal: View {
                                             Divider().padding(.horizontal, -16)
                                             
                                             Button(action: {
-                                                self.selectedWaypoint.toggle()
-                                                self.updateMapOverlayViews()
+                                                if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                                    self.selectedWaypoint.toggle()
+                                                    self.updateMapOverlayViews()
+                                                }
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -248,8 +257,10 @@ struct MapViewModal: View {
                                             Divider().padding(.horizontal, -16)
                                             
                                             Button(action: {
-                                                self.selectedAirport.toggle()
-                                                self.updateMapOverlayViews()
+                                                if coreDataModel.selectedEvent?.flightStatus != FlightStatusEnum.COMPLETED.rawValue {
+                                                    self.selectedAirport.toggle()
+                                                    self.updateMapOverlayViews()
+                                                }
                                             }, label: {
                                                 HStack {
                                                     Image(systemName: "checkmark")
@@ -693,7 +704,7 @@ struct MapViewModal: View {
                 defaultImage = UIImage(named: "icon_airplane_unfilled_orange")
             }
             
-            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: item.trueTrack, flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, image: defaultImage, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue))
+            let annotation = CustomTrafficAnnotation(coordinate: coord, title: "", subtitle: item.trueTrack, flightNum: item.unwrappedCallsign, aircraftType: item.unwrappedaircraftType, baroAltitude: item.unwrappedBaroAltitude, rotationAngle: CGFloat((item.trueTrack! as NSString).doubleValue), colour: item.colour)
             mapView.addAnnotation(annotation)
         }
     }
@@ -843,6 +854,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
             
             return annotationView
         } else if annotation is CustomTrafficAnnotation {
+            guard let dataAnnotation = annotation as? CustomTrafficAnnotation else { return nil }
             let annotationView = CustomTrafficAnnotationView(annotation: annotation, reuseIdentifier: "CustomTrafficAnnotationView")
             let annotationData = annotation as? CustomTrafficAnnotation
             let customView = MapTrafficCardView(title: annotationData?.flightNum as? String, aircraftType: annotationData?.aircraftType as? String, baroAltitude: annotationData?.baroAltitude as? String)
@@ -850,8 +862,17 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
             annotationView.detailCalloutAccessoryView = callout
             annotationView.canShowCallout = true
-            annotationView.layer.anchorPoint = CGPointMake(0, 0)
-            annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
+            
+            if dataAnnotation.colour == "orange" {
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_orange"))
+            } else if dataAnnotation.colour == "blue" {
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_blue"))
+            } else {
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_unfilled_orange"))
+            }
+            
+            annotationView.imageView?.transform = CGAffineTransform(rotationAngle: (annotation.subtitle!! as NSString).doubleValue)
+//            annotationView.rotationAngle = CGFloat((annotation.subtitle!! as NSString).doubleValue)
             return annotationView
         } else if annotation is CustomAabbaAnnotation {
             let annotationView = CustomAabbaAnnotationView(annotation: annotation, reuseIdentifier: "CustomAabbaAnnotationView")

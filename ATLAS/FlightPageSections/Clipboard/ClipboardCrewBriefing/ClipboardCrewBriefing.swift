@@ -43,11 +43,19 @@ struct ClipboardCrewBriefing: View {
                     VStack(spacing: 8) {
                         ClipboardCrewBriefingSummaryView(width: proxy.size.width)
                         
-                        ClipboardTagView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
-
-                        ClipboardTagView(itemList: $coreDataModel.tagListWeather, tag: "Weather")
-                        
-                        ClipboardCrewBriefingNoteView(width: proxy.size.width)
+                        if coreDataModel.selectedEvent?.flightStatus == FlightStatusEnum.COMPLETED.rawValue {
+                            ClipboardTagCompletedView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
+                            
+                            ClipboardTagCompletedView(itemList: $coreDataModel.tagListWeather, tag: "Weather")
+                            
+                            ClipboardCrewBriefingCompletedNoteView(width: proxy.size.width)
+                        } else {
+                            ClipboardTagView(itemList: $coreDataModel.tagListCabinDefects, tag: "Cabin Defects")
+                            
+                            ClipboardTagView(itemList: $coreDataModel.tagListWeather, tag: "Weather")
+                            
+                            ClipboardCrewBriefingNoteView(width: proxy.size.width)
+                        }
                     }
                 }
             }
