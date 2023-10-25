@@ -416,6 +416,7 @@ struct IAabbaPostData: Codable {
     var post_title: String
     var post_text: String
     var upvote_count: String
+    var voted: Bool
     var comment_count: String
     var category: String
     var username: String

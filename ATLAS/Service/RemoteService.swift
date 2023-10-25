@@ -528,7 +528,7 @@ class RemoteService: ObservableObject {
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
                 let (data, _) = try await URLSession.shared.data(for: request)
-                
+                print("aabba note json=============\(String(data: data, encoding: .utf8)!)")
                 do {
                     let decodedSearch = try JSONDecoder().decode([String: [INoteResponse]].self, from: data)
                     return decodedSearch
@@ -628,7 +628,7 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let (data, _) = try await URLSession.shared.data(for: request)
-            
+            print("map aabba json=============\(String(data: data, encoding: .utf8)!)")
             do {
                 let decodedSearch = try JSONDecoder().decode(IAabbaDataJsonResponse.self, from: data)
                 return decodedSearch.aabba_data
