@@ -446,10 +446,6 @@ private extension CalendarViewComponent {
                 let startDate = dateFormmater.date(from: arrStartDate[0])
                 let endDate = dateFormmater.date(from: arrEndDate[0])
                 let rowCompare = dateFormmater.date(from: dateFormat(row))
-                print("row=======\(row)")
-                print("rowCompare=======\(rowCompare)")
-                print("startDate=======\(startDate)")
-                print("endDate=======\(endDate)")
                 let dateString = dateFormmater.string(from: row)
                 
                 let num: Double = Double(index + 1)/7

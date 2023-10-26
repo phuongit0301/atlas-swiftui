@@ -1744,39 +1744,35 @@ class CoreDataModelState: ObservableObject {
             var payloadMapColor = [AirportMapColorList]()
             
             data.forEach { item in
-                do {
-                    let newObj = AirportMapColorList(context: service.container.viewContext)
-                    
-                    newObj.id = UUID()
-                    newObj.airportId = item.airportID
-                    newObj.latitude = item.lat
-                    newObj.longitude = item.long
-                    newObj.selection = item.selection
-                    newObj.colour = item.colour
-                    newObj.notams = item.notams
-                    newObj.metar = item.metar
-                    newObj.taf = item.taf
-                    newObj.arrDelay = item.arr_delay
-                    newObj.depDelay = item.dep_delay
-                    newObj.arrDelayColour = item.arr_delay_colour
-                    newObj.depDelayColour = item.dep_delay_colour
-                    newObj.updatedAt = dateFormatter.string(from: Date())
-                    
-                    payloadMapColor.append(newObj)
-                    
-                    service.container.viewContext.performAndWait {
-                        do {
-                            try service.container.viewContext.save()
-                            print("saved data airport color successfully")
-                        } catch {
-                            print("Failed to data airport color save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
-                        }
+                let newObj = AirportMapColorList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.airportId = item.airportID
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                newObj.selection = item.selection
+                newObj.colour = item.colour
+                newObj.notams = item.notams
+                newObj.metar = item.metar
+                newObj.taf = item.taf
+                newObj.arrDelay = item.arr_delay
+                newObj.depDelay = item.dep_delay
+                newObj.arrDelayColour = item.arr_delay_colour
+                newObj.depDelayColour = item.dep_delay_colour
+                newObj.updatedAt = dateFormatter.string(from: Date())
+                
+                payloadMapColor.append(newObj)
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data airport color successfully")
+                    } catch {
+                        print("Failed to data airport color save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
                     }
-                } catch {
-                    print("could not unarchive array: \(error)")
                 }
                 
             }
