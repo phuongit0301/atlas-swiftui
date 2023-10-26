@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import UIKit
+import OSLog
 
 struct IAlternate: Identifiable, Hashable {
     var id = UUID()
@@ -56,6 +57,8 @@ struct SummarySubSectionView: View {
     @State private var dataFlightOverview: FlightOverviewList?
     
     @State var isLoading = false
+    
+    let logger = Logger(subsystem: "atlas", category: "persistence")
     
     var body: some View {
         var std: String {
@@ -533,136 +536,102 @@ struct SummarySubSectionView: View {
     }
     
     func create() {
-        self.isLoading = true
-        
-        var payloadEnroute: [Any] = []
-        var payloadDestination: [Any] = []
-        
-        var payloadEnrouteMap: [String] = []
-        var payloadDestinationMap: [String] = []
-        
-        var enrAirportNotam: [String: String] = [:]
-        
-        if enrouteAlternates.count > 0 {
-            for item in enrouteAlternates {
-                if item.altn != "Select Airport" {
-                    payloadEnroute.append([
-                        "Airport": item.altn,
-                        "eta": item.eta
-                    ])
-                    payloadEnrouteMap.append(item.altn)
-                    enrAirportNotam[item.altn] = item.eta
-                }
-            }
-        }
-        
-        var destAirportNotam: [String: String] = [:]
-        if destinationAlternates.count > 0 {
-            for item in destinationAlternates {
-                if item.altn != "Select Airport" {
-                    payloadDestination.append([
-                        "Airport": item.altn,
-                        "eta": item.eta
-                    ])
-                    payloadDestinationMap.append(item.altn)
-                    destAirportNotam[item.altn] = item.eta
-                }
-            }
-        }
-        
-        var depAirportNotam: [String: String] = [:]
-        depAirportNotam[dataFlightOverview?.unwrappedDep ?? ""] = dataFlightOverview?.unwrappedStd
-        
-        var arrAirportNotam: [String: String] = [:]
-        arrAirportNotam[dataFlightOverview?.unwrappedDest ?? ""] = dataFlightOverview?.unwrappedSta
-        
-        coreDataModel.enrAirportNotam = enrAirportNotam
-        coreDataModel.destAirportNotam = destAirportNotam
-        coreDataModel.depAirportNotam = depAirportNotam
-        coreDataModel.arrAirportNotam = arrAirportNotam
-        
-        readData()
-        
-        let payloadNotam: [String: Any] = [
-            "depAirport": [
-                "Airport": dataFlightOverview?.unwrappedDep ?? "",
-                "std": dataFlightOverview?.unwrappedStd ?? ""
-            ],
-            "arrAirport": [
-                "Airport": dataFlightOverview?.unwrappedDest ?? "",
-                "sta": dataFlightOverview?.unwrappedSta ?? ""
-            ],
-            "enrAirports": payloadEnroute,
-            "altnAirports": payloadDestination
-        ]
-        
-        let payloadMap: [String: Any] = [
-            "depAirport": dataFlightOverview?.unwrappedDep ?? "",
-            "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
-            "enrAirports": payloadEnrouteMap,
-            "altnAirports": payloadDestinationMap,
-            "route": tfRoute
-        ]
-        
-        let payloadAabbaNote: [String: Any] = [
-            "depAirport": dataFlightOverview?.unwrappedDep ?? "",
-            "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
-            "enrALTNS": payloadEnrouteMap,
-            "destALTNS": payloadDestinationMap,
-        ]
-        
-        print("payloadNotam========\(payloadNotam)")
-//        print("payloadMap========\(payloadMap)")
-        
-        handleTraffic(payloadMap)
-        handleMapAabba(payloadMap)
-        handleWaypoint(payloadMap)
-        handleAirport(payloadMap)
-        handleAabbaNote(payloadAabbaNote)
-        handleNotam(payloadNotam)
-        
-        var routeAlternateList = [RouteAlternateList]()
-        
-        persistenceController.container.viewContext.performAndWait {
-            if (enrouteAlternates.count > 0) {
+        DispatchQueue.main.async {
+            self.isLoading = true
+            
+            var payloadEnroute: [Any] = []
+            var payloadDestination: [Any] = []
+            
+            var payloadEnrouteMap: [String] = []
+            var payloadDestinationMap: [String] = []
+            
+            var enrAirportNotam: [String: String] = [:]
+            
+            if enrouteAlternates.count > 0 {
                 for item in enrouteAlternates {
-                    do {
-                        let isNew = item.isNew ?? false
-                        if isNew {
-                            if item.eta != "" && item.altn != "" {
-                                let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
-                                newObject.id = UUID()
-                                newObject.altn = item.altn
-                                newObject.vis = item.vis
-                                newObject.minima = item.minima
-                                newObject.eta = item.eta
-                                newObject.type = "enroute"
-                                
-                                routeAlternateList.append(newObject)
-                                try persistenceController.container.viewContext.save()
-                                print("saved Enroute successfully")
-                            }
-                        } else {
-                            if let newObject = coreDataModel.readDataAlternateById(item.id) {
-                                newObject.altn = item.altn
-                                newObject.vis = item.vis
-                                newObject.minima = item.minima
-                                newObject.eta = item.eta
-                                routeAlternateList.append(newObject)
-                            }
-                        }
-                    } catch {
-                        print("Failed to Enroute save: \(error)")
-                        // Rollback any changes in the managed object context
-                        persistenceController.container.viewContext.rollback()
+                    if item.altn != "Select Airport" {
+                        payloadEnroute.append([
+                            "Airport": item.altn,
+                            "eta": item.eta
+                        ])
+                        payloadEnrouteMap.append(item.altn)
+                        enrAirportNotam[item.altn] = item.eta
                     }
                 }
-                
-                if (destinationAlternates.count > 0) {
-                    for item in destinationAlternates {
+            }
+            
+            var destAirportNotam: [String: String] = [:]
+            if destinationAlternates.count > 0 {
+                for item in destinationAlternates {
+                    if item.altn != "Select Airport" {
+                        payloadDestination.append([
+                            "Airport": item.altn,
+                            "eta": item.eta
+                        ])
+                        payloadDestinationMap.append(item.altn)
+                        destAirportNotam[item.altn] = item.eta
+                    }
+                }
+            }
+            
+            var depAirportNotam: [String: String] = [:]
+            depAirportNotam[dataFlightOverview?.unwrappedDep ?? ""] = dataFlightOverview?.unwrappedStd
+            
+            var arrAirportNotam: [String: String] = [:]
+            arrAirportNotam[dataFlightOverview?.unwrappedDest ?? ""] = dataFlightOverview?.unwrappedSta
+            
+            coreDataModel.enrAirportNotam = enrAirportNotam
+            coreDataModel.destAirportNotam = destAirportNotam
+            coreDataModel.depAirportNotam = depAirportNotam
+            coreDataModel.arrAirportNotam = arrAirportNotam
+            
+            readData()
+            
+            let payloadNotam: [String: Any] = [
+                "depAirport": [
+                    "Airport": dataFlightOverview?.unwrappedDep ?? "",
+                    "std": dataFlightOverview?.unwrappedStd ?? ""
+                ],
+                "arrAirport": [
+                    "Airport": dataFlightOverview?.unwrappedDest ?? "",
+                    "sta": dataFlightOverview?.unwrappedSta ?? ""
+                ],
+                "enrAirports": payloadEnroute,
+                "altnAirports": payloadDestination
+            ]
+            
+            let payloadMap: [String: Any] = [
+                "depAirport": dataFlightOverview?.unwrappedDep ?? "",
+                "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
+                "enrAirports": payloadEnrouteMap,
+                "altnAirports": payloadDestinationMap,
+                "route": tfRoute
+            ]
+            
+            let payloadAabbaNote: [String: Any] = [
+                "depAirport": dataFlightOverview?.unwrappedDep ?? "",
+                "arrAirport": dataFlightOverview?.unwrappedDest ?? "",
+                "enrALTNS": payloadEnrouteMap,
+                "destALTNS": payloadDestinationMap,
+            ]
+            
+            print("payloadNotam========\(payloadNotam)")
+            //        print("payloadMap========\(payloadMap)")
+            
+            handleTraffic(payloadMap)
+            handleMapAabba(payloadMap)
+            handleWaypoint(payloadMap)
+            handleAirport(payloadMap)
+            handleAabbaNote(payloadAabbaNote)
+            handleNotam(payloadNotam)
+            
+            var routeAlternateList = [RouteAlternateList]()
+            
+            persistenceController.container.viewContext.performAndWait {
+                if (enrouteAlternates.count > 0) {
+                    for item in enrouteAlternates {
                         do {
                             let isNew = item.isNew ?? false
-                            
                             if isNew {
                                 if item.eta != "" && item.altn != "" {
                                     let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
@@ -671,9 +640,9 @@ struct SummarySubSectionView: View {
                                     newObject.vis = item.vis
                                     newObject.minima = item.minima
                                     newObject.eta = item.eta
-                                    newObject.type = "destination"
-                                    routeAlternateList.append(newObject)
+                                    newObject.type = "enroute"
                                     
+                                    routeAlternateList.append(newObject)
                                     try persistenceController.container.viewContext.save()
                                     print("saved Enroute successfully")
                                 }
@@ -687,33 +656,69 @@ struct SummarySubSectionView: View {
                                 }
                             }
                         } catch {
-                            print("Failed to Destination save: \(error)")
+                            print("Failed to Enroute save: \(error)")
                             // Rollback any changes in the managed object context
                             persistenceController.container.viewContext.rollback()
                         }
                     }
+                    
+                    if (destinationAlternates.count > 0) {
+                        for item in destinationAlternates {
+                            do {
+                                let isNew = item.isNew ?? false
+                                
+                                if isNew {
+                                    if item.eta != "" && item.altn != "" {
+                                        let newObject = RouteAlternateList(context: persistenceController.container.viewContext)
+                                        newObject.id = UUID()
+                                        newObject.altn = item.altn
+                                        newObject.vis = item.vis
+                                        newObject.minima = item.minima
+                                        newObject.eta = item.eta
+                                        newObject.type = "destination"
+                                        routeAlternateList.append(newObject)
+                                        
+                                        try persistenceController.container.viewContext.save()
+                                        print("saved Enroute successfully")
+                                    }
+                                } else {
+                                    if let newObject = coreDataModel.readDataAlternateById(item.id) {
+                                        newObject.altn = item.altn
+                                        newObject.vis = item.vis
+                                        newObject.minima = item.minima
+                                        newObject.eta = item.eta
+                                        routeAlternateList.append(newObject)
+                                    }
+                                }
+                            } catch {
+                                print("Failed to Destination save: \(error)")
+                                // Rollback any changes in the managed object context
+                                persistenceController.container.viewContext.rollback()
+                            }
+                        }
+                    }
                 }
+                
+                coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+                
+                if tfRoute != "" {
+                    dataFlightOverview?.route = tfRoute
+                }
+                
             }
             
-            coreDataModel.selectedEvent?.routeAlternate = NSSet(array: routeAlternateList)
+            coreDataModel.save()
             
-            if tfRoute != "" {
-                dataFlightOverview?.route = tfRoute
-            }
-
+            readData()
+            enrouteAlternates = []
+            destinationAlternates = []
+            
+            coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
+            coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+            prepareData()
+            
+            self.isLoading = false
         }
-        
-        coreDataModel.save()
-        
-        readData()
-        enrouteAlternates = []
-        destinationAlternates = []
-        
-        coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
-        coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
-        prepareData()
-        
-        self.isLoading = false
     }
     
     func readData() {

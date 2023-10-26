@@ -542,50 +542,56 @@ struct MapViewModal: View {
     }
     
     func updateMapOverlayViews() {
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.removeOverlays(mapView.overlays)
-        
-        if coreDataModel.image != nil {
-            if selectedWeather {
-                addOverlay()
-            }
-        }
-        
-        if selectedAddRoute {
-            addRoute()
-            addAirportColor()
-        }
-        
-        if selectedWaypoint {
-            waypointArr = addWaypoint()
+        DispatchQueue.global(qos: .background).async {
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.removeOverlays(mapView.overlays)
             
-            if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-                mapView.addAnnotations(waypointArr)
-            } else {
-                mapView.removeAnnotations(waypointArr)
+            if coreDataModel.image != nil {
+                if selectedWeather {
+                    addOverlay()
+                }
             }
-        } else {
-            mapView.removeAnnotations(waypointArr)
-        }
-        
-        if selectedAirport {
-            airportArr = addAirport(airportIds)
             
-            if firstLoading {
-                onAppearAirport()
-                firstLoading = false
-            } else {
-                if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-                    mapView.addAnnotations(airportArr)
+            if selectedAddRoute {
+                addRoute()
+                addAirportColor()
+            }
+            
+            DispatchQueue.main.async {
+                if selectedWaypoint {
+                    waypointArr = addWaypoint()
+                    
+                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                        mapView.addAnnotations(waypointArr)
+                    } else {
+                        mapView.removeAnnotations(waypointArr)
+                    }
+                } else {
+                    mapView.removeAnnotations(waypointArr)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                if selectedAirport {
+                    airportArr = addAirport(airportIds)
+                    
+                    if firstLoading {
+                        onAppearAirport()
+                        firstLoading = false
+                    } else {
+                        if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
+                            mapView.addAnnotations(airportArr)
+                        } else {
+                            mapView.removeAnnotations(airportArr)
+                        }
+                    }
                 } else {
                     mapView.removeAnnotations(airportArr)
                 }
             }
-        } else {
-            mapView.removeAnnotations(airportArr)
+            if selectedTraffic { addTraffic() }
+            if selectedAABBA { addAabba() }
         }
-        if selectedTraffic { addTraffic() }
-        if selectedAABBA { addAabba() }
     }
     
     func onAppearAirport() {

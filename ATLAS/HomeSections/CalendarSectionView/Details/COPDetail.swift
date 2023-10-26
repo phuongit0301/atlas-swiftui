@@ -11,6 +11,7 @@ struct COPDetail: View {
     @Binding var event: EventList?
     @Binding var showModal: Bool
     @Binding var isEdit: Bool
+    @Binding var isBtnDisabled: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -19,12 +20,19 @@ struct COPDetail: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    self.isEdit.toggle()
-                    self.showModal.toggle()
-                }, label: {
-                    Text("Edit").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
-                }).buttonStyle(PlainButtonStyle())
+                if isBtnDisabled {
+                    Button(action: {
+                    }, label: {
+                        Text("Edit").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.philippineGray3)
+                    }).buttonStyle(PlainButtonStyle())
+                } else {
+                    Button(action: {
+                        self.isEdit.toggle()
+                        self.showModal.toggle()
+                    }, label: {
+                        Text("Edit").font(.system(size: 15, weight: .regular)).foregroundStyle(Color.theme.azure)
+                    }).buttonStyle(PlainButtonStyle())
+                }
             }.frame(height: 44).padding(.vertical, 8).padding(.horizontal)
             
             Divider()

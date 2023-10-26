@@ -119,15 +119,15 @@ struct CalendarView: View {
                         
                         Spacer()
                         
-                        HStack {
-                            Picker("", selection: $selected) {
-                                ForEach(CalendarMonthDropDown.allCases, id: \.self) {
-                                    Text($0.rawValue).tag($0.rawValue)
-                                }
-                            }.pickerStyle(MenuPickerStyle())
-                            
-                            Text("Today").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
-                        }.padding(.horizontal)
+//                        HStack {
+//                            Picker("", selection: $selected) {
+//                                ForEach(CalendarMonthDropDown.allCases, id: \.self) {
+//                                    Text($0.rawValue).tag($0.rawValue)
+//                                }
+//                            }.pickerStyle(MenuPickerStyle())
+//
+//                            Text("Today").foregroundColor(Color.theme.azure).font(.system(size: 15, weight: .regular))
+//                        }.padding(.horizontal)
                     }.background(Color.white)
                 }
             ).equatable()
@@ -315,6 +315,14 @@ public struct CalendarViewComponent<Day: View, Header: View, Title: View, Traili
                     self.rows = Int(days.count / 7)
                 }
             }
+            .onChange(of: date) {_ in
+                Task {
+                    self.days = makeDays()
+                    self.daysByRows = prepareDays(days)
+                    self.eventByRow = countEventByRow(events, days)
+                    self.rows = Int(days.count / 7)
+                }
+            }
             
         }
     }
@@ -438,7 +446,10 @@ private extension CalendarViewComponent {
                 let startDate = dateFormmater.date(from: arrStartDate[0])
                 let endDate = dateFormmater.date(from: arrEndDate[0])
                 let rowCompare = dateFormmater.date(from: dateFormat(row))
-                
+                print("row=======\(row)")
+                print("rowCompare=======\(rowCompare)")
+                print("startDate=======\(startDate)")
+                print("endDate=======\(endDate)")
                 let dateString = dateFormmater.string(from: row)
                 
                 let num: Double = Double(index + 1)/7

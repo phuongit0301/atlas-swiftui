@@ -23,7 +23,7 @@ struct ButtonDateStepper: View {
                 VStack {
                     Image(systemName: "chevron.up.chevron.down").foregroundColor(Color.theme.azure)
                 }
-            }
+            }.contentShape(Rectangle())
         }).buttonStyle(.plain)
     }
     

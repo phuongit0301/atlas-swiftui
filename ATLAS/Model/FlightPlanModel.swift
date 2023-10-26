@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import OSLog
 
 enum FlightPlanEnumeration: CustomStringConvertible {
     case SummaryScreen
@@ -379,6 +380,81 @@ struct IAirportData: Decodable {
 
 struct IAirportDataJson: Decodable {
     var airport_data: [IAirportData]
+}
+
+struct ITrafficDataV30: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case callsign
+        case aircraft_type
+        case lat
+        case long
+        case true_track
+        case baro_altitude
+        case colour
+    }
+    
+    var callsign: String
+    var aircraftType: String
+    var lat: String
+    var long: String
+    var trueTrack: String
+    var baroAltitude: String
+    var colour: String
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let rawCallsign = try? values.decode(String.self, forKey: .callsign)
+        let rawAircraftType = try? values.decode(String.self, forKey: .aircraft_type)
+        let rawLat = try? values.decode(String.self, forKey: .lat)
+        let rawLong = try? values.decode(String.self, forKey: .long)
+        let rawTrueTrack = try? values.decode(String.self, forKey: .true_track)
+        let rawBaroAltitude = try? values.decode(String.self, forKey: .baro_altitude)
+        let rawColour = try? values.decode(String.self, forKey: .colour)
+        
+        // Ignore with missing data.
+        guard let callsignStr = rawCallsign,
+              let aircraftTypeStr = rawAircraftType,
+              let latStr = rawLat,
+              let longStr = rawLong,
+              let trueTrackStr = rawTrueTrack,
+              let baroAltitudeStr = rawBaroAltitude,
+              let colourStr = rawColour
+        else {
+            let values = "callsign = \(rawCallsign?.description ?? "nil"), "
+            + "aircraftType = \(rawAircraftType?.description ?? "nil"), "
+            + "lat = \(rawLat?.description ?? "nil"), "
+            + "long = \(rawLong?.description ?? "nil")"
+            + "trueTrack = \(rawTrueTrack?.description ?? "nil")"
+            + "baroAltitude = \(rawBaroAltitude?.description ?? "nil")"
+            + "colour = \(rawColour?.description ?? "nil")"
+
+            let logger = Logger(subsystem: "insert.data.traffic", category: "parsing")
+            logger.debug("Ignored: \(values)")
+
+            throw CustomError.batchInsertError
+        }
+        
+        self.callsign = callsignStr
+        self.aircraftType = aircraftTypeStr
+        self.lat = latStr
+        self.long = longStr
+        self.trueTrack = trueTrackStr
+        self.baroAltitude = baroAltitudeStr
+        self.colour = colourStr
+    }
+    
+    // The keys must have the same name as the attributes of the Quake entity.
+    var dictionaryValue: [String: Any] {
+        [
+            "callsign": callsign,
+            "aircraftType": aircraftType,
+            "latitude": lat,
+            "longitude": long,
+            "trueTrack": trueTrack,
+            "baroAltitude": baroAltitude,
+            "colour": colour
+        ]
+    }
 }
 
 struct ITrafficData: Codable {

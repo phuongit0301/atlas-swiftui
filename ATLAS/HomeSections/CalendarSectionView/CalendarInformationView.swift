@@ -11,17 +11,20 @@ struct CalendarInformationView: View {
     @EnvironmentObject var calendarModel: CalendarModel
     @Binding var showModal: Bool
     @Binding var isEdit: Bool
+    @State var isBtnDisabled = false
+    
+    let dateFormatter = DateFormatter()
     
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 if calendarModel.selectedEvent != nil {
                     if calendarModel.selectedEvent?.type == "Flight" {
-                        FlightDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
+                        FlightDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit, isBtnDisabled: $isBtnDisabled)
                     } else if calendarModel.selectedEvent?.type == "COP" {
-                        COPDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
+                        COPDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit, isBtnDisabled: $isBtnDisabled)
                     } else {
-                        OtherEventDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit)
+                        OtherEventDetail(event: $calendarModel.selectedEvent, showModal: $showModal, isEdit: $isEdit, isBtnDisabled: $isBtnDisabled)
                     }
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
@@ -46,6 +49,16 @@ struct CalendarInformationView: View {
                 }
             }.padding(.top, 8)
                 .padding(.trailing)
+                .onChange(of: calendarModel.selectedEvent?.startDate) {newValue in
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    let dateNow = dateFormatter.string(from: Date())
+                    
+                    if let eventDate = newValue, let startDate = dateFormatter.date(from: eventDate), let now = dateFormatter.date(from: dateNow) {
+                        if startDate < now {
+                            isBtnDisabled = true
+                        }
+                    }
+                }
         }
     }
 }

@@ -9,6 +9,7 @@ import CoreData
 import SwiftUI
 import MapKit
 import iCalendarParser
+import OSLog
 
 class PersistenceController: ObservableObject {
     static let shared = PersistenceController()
@@ -58,6 +59,9 @@ struct IScratchPad: Identifiable, Hashable {
 class CoreDataModelState: ObservableObject {
     var remoteService = RemoteService.shared
     let service = PersistenceController.shared
+    
+    let logger = Logger(subsystem: "atlas", category: "persistence")
+    
     @AppStorage("isBoardingCompleted") var isBoardingCompleted: String = ""
     @AppStorage("uid") var userID: String = ""
     
@@ -1582,24 +1586,22 @@ class CoreDataModelState: ObservableObject {
                     newObj.latitude = item.lat
                     newObj.longitude = item.long
                     
-                    temp.append(newObj)
-                }
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        
-                        eventList.waypointMapList = NSSet(array: temp)
-                        try service.container.viewContext.save()
-                        print("saved waypoint data successfully")
-                        
-                        self.dataWaypointMap = readDataWaypontMapList()
-                    } catch {
-                        print("Failed to waypoint data save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                    service.container.viewContext.performAndWait {
+                        do {
+                            temp.append(newObj)
+                            try service.container.viewContext.save()
+                            print("saved waypoint data successfully")
+                        } catch {
+                            print("Failed to waypoint data save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.waypointMapList = NSSet(array: temp)
+                self.dataWaypointMap = readDataWaypontMapList()
             }
         }
     }
@@ -1617,22 +1619,22 @@ class CoreDataModelState: ObservableObject {
                     newObj.latitude = item.lat
                     newObj.longitude = item.long
                     
-                    temp.append(newObj)
-                }
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        eventList.airportMapList = NSSet(array: temp)
-                        try service.container.viewContext.save()
-                        print("saved data airport successfully")
-                        self.dataAirportMap = readDataAirportMapList()
-                    } catch {
-                        print("Failed to data airport save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                    service.container.viewContext.performAndWait {
+                        do {
+                            temp.append(newObj)
+                            try service.container.viewContext.save()
+                            print("saved data airport successfully")
+                        } catch {
+                            print("Failed to data airport save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.airportMapList = NSSet(array: temp)
+                self.dataAirportMap = readDataAirportMapList()
             }
         }
     }
@@ -1817,6 +1819,31 @@ class CoreDataModelState: ObservableObject {
 //        return airportInfo
 //    }
     
+    private func newTaskContext() -> NSManagedObjectContext {
+        // Create a private queue context.
+        /// - Tag: newBackgroundContext
+        let taskContext = service.container.newBackgroundContext()
+        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        // Set unused undoManager to nil for macOS (it is nil by default on iOS)
+        // to reduce resource requirements.
+        taskContext.undoManager = nil
+        return taskContext
+    }
+    
+    private func newBatchInsertRequest(with propertyList: [ITrafficDataV30], eventList: EventList) -> NSBatchInsertRequest {
+        var index = 0
+        let total = propertyList.count
+
+        // Provide one dictionary at a time when the closure is called.
+        let batchInsertRequest = NSBatchInsertRequest(entity: TrafficMapList.entity(), dictionaryHandler: { dictionary in
+            guard index < total else { return true }
+            dictionary.addEntries(from: propertyList[index].dictionaryValue)
+            index += 1
+            return false
+        })
+        return batchInsertRequest
+    }
+    
     func initDataTraffic(_ data: [ITrafficData]) {
         if let eventList = self.selectedEvent {
             if data.count > 0 {
@@ -1952,21 +1979,21 @@ class CoreDataModelState: ObservableObject {
                     newObj.posts = NSSet(array: posts)
                     temp.append(newObj)
                     
-                }
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        eventList.aabbaMapList = NSSet(array: temp)
-                        try service.container.viewContext.save()
-                        self.dataAabbaMap = readDataAabbaMapList()
-                        print("saved data aabba successfully")
-                    } catch {
-                        print("Failed to data aabba save: \(error)")
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved data aabba successfully")
+                        } catch {
+                            print("Failed to data aabba save: \(error)")
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.aabbaMapList = NSSet(array: temp)
+                self.dataAabbaMap = readDataAabbaMapList()
             }
         }
     }
@@ -2908,21 +2935,23 @@ class CoreDataModelState: ObservableObject {
                     newObj.type = type
                     
                     temp.append(newObj)
-                }
-                
-                service.container.viewContext.performAndWait {
-                    do {
-                        eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + temp)
-                        try service.container.viewContext.save()
-                        print("saved Metar Taf successfully")
-                    } catch {
-                        print("Failed to Metar Taf save: \(error)")
-                        existDataMetarTaf = false
-                        // Rollback any changes in the managed object context
-                        service.container.viewContext.rollback()
-                        
+                    service.container.viewContext.performAndWait {
+                        do {
+                            try service.container.viewContext.save()
+                            print("saved Metar Taf successfully")
+                        } catch {
+                            print("Failed to Metar Taf save: \(error)")
+                            existDataMetarTaf = false
+                            // Rollback any changes in the managed object context
+                            service.container.viewContext.rollback()
+                            
+                        }
                     }
                 }
+                
+                eventList.metarTafList = NSSet(array: (eventList.metarTafList ?? []) + temp)
+                try service.container.viewContext.save()
+                print("saved Metar Taf Enr/Altn successfully")
             }
         } catch {
             print("Failed to Metar Taf save: \(error)")
@@ -5494,8 +5523,8 @@ class CoreDataModelState: ObservableObject {
             try await context.perform {
                 if let objects = self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList], objects.count > 0 {
                     let objectIDs = objects.map {$0.objectID}
-                    print("objectIDs============\(objectIDs)")
-                    let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: objectIDs)
+                    print("objectIDs=========\(objectIDs)")
+                    let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: objects.map {$0.objectID})
                     batchDeleteRequest.resultType = .resultTypeStatusOnly
                     let result = try context.execute(batchDeleteRequest) as! NSBatchDeleteResult
                     print("result=========\(result)")
