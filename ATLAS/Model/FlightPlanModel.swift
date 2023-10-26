@@ -465,6 +465,7 @@ struct ITrafficData: Codable {
     var true_track: String
     var baro_altitude: String
     var colour: String
+    var vertical_speed: String
 }
 
 struct ITrafficDataResponseAPI: Codable {
@@ -496,7 +497,7 @@ struct IAabbaPostData: Codable {
     var comment_count: String
     var category: String
     var username: String
-    var comments: [IAabbaPostCommentData]
+    var comments: [IAabbaPostCommentData]?
 }
 
 struct IAabbaData: Codable {

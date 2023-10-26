@@ -79,9 +79,10 @@ struct StatisticsView: View {
                     }
                 }
             }
-        }.task {
-            await waitForResponse()
         }
+//        .task {
+//            await waitForResponse()
+//        }
 #if os(iOS)
         .background(Color(uiColor: .systemGroupedBackground))
 #else
