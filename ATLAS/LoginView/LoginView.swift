@@ -269,6 +269,7 @@ struct LoginView: View {
             }
         } catch {
             message = error.localizedDescription
+            coreDataModel.isLoginLoading = false
             return
         }
     }
