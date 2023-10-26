@@ -20,7 +20,7 @@ struct CompleteYourProfileView: View {
     @State private var selectedAirline = ""
     @State private var selectedMobile = ""
     @State private var isSubscribe = true
-    @State private var tfAirport = ONBOARDING_AIRLINE_DROP_DOWN.first
+    @State private var tfAirport = "Enter Airline"
     @State private var showModal = false
     
     var body: some View {
@@ -122,7 +122,7 @@ struct CompleteYourProfileView: View {
                         }.frame(height: 44)
                         
                         HStack(spacing: 8) {
-                            FlightTimeButtonTimeStepper(onToggle: onAirport, value: tfAirport ?? "")
+                            FlightTimeButtonTimeStepper(onToggle: onAirport, value: tfAirport)
                                 .fixedSize()
                                 .frame(maxWidth: .infinity, alignment: .leading)
 //                            Picker("", selection: $selectedAirline) {
@@ -230,11 +230,9 @@ struct CompleteYourProfileView: View {
                         .foregroundColor(.white)
                 )
         }.onAppear {
-            selectedAirline = AIRLINE_DROP_DOWN.first ?? ""
             selectedMobile = DataCountryDropdown.first ?? ""
             onboardingModel.dataYourProfile.email = email
             onboardingModel.dataYourProfile.user_id = userID
-            onboardingModel.dataYourProfile.airline = selectedAirline
             
             if onboardingModel.dataYourProfile.userName != "" {
                 username = onboardingModel.dataYourProfile.userName
@@ -249,7 +247,7 @@ struct CompleteYourProfileView: View {
             }
             
             if onboardingModel.dataYourProfile.airline != "" {
-                selectedAirline = onboardingModel.dataYourProfile.airline
+                tfAirport = onboardingModel.dataYourProfile.airline
             }
             
             if onboardingModel.dataYourProfile.mobile.country != "" {
@@ -265,7 +263,7 @@ struct CompleteYourProfileView: View {
             isSubscribe = onboardingModel.dataYourProfile.subscribe == "1" ? true : false
         }
         .onChange(of: tfAirport) { newValue in
-            onboardingModel.dataYourProfile.airline = newValue ?? ""
+            onboardingModel.dataYourProfile.airline = newValue
         }
         .onChange(of: selectedMobile) { newValue in
             onboardingModel.dataYourProfile.mobile.country = newValue

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomAutoCompleteView: View {
     @Binding var isShowing: Bool
-    @Binding var selectedAirport: String?
+    @Binding var selectedAirport: String
     
     @State private var listRoutes = [String]()
     @State private var tfRoute = ""
@@ -40,7 +40,7 @@ struct CustomAutoCompleteView: View {
                     .roundedCorner(12, corners: [.topLeft, .topRight])
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    TextField("Enter Airport", text: $tfRoute)
+                    TextField("Enter Airline", text: $tfRoute)
                         .padding(8)
                         .background(Color.white)
                         .cornerRadius(8)
@@ -79,8 +79,8 @@ struct CustomAutoCompleteView: View {
                 }.padding(16)
                     .background(Color.theme.antiFlashWhite)
                     .onAppear {
-                        if let temp = selectedAirport {
-                            tfRoute = temp
+                        if selectedAirport != "Enter Airline" {
+                            tfRoute = selectedAirport
                         }
                     }
                 
