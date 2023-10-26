@@ -536,7 +536,7 @@ struct SummarySubSectionView: View {
     }
     
     func create() {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             self.isLoading = true
             
             var payloadEnroute: [Any] = []
@@ -718,7 +718,7 @@ struct SummarySubSectionView: View {
             prepareData()
             
             self.isLoading = false
-        }
+//        }
     }
     
     func readData() {
@@ -727,7 +727,6 @@ struct SummarySubSectionView: View {
         coreDataModel.dataWaypointMap = coreDataModel.readDataWaypontMapList()
         coreDataModel.dataAirportColorMap = coreDataModel.readDataAirportMapColorList()
         coreDataModel.dataAirportMap = coreDataModel.readDataAirportMapList()
-        coreDataModel.dataTrafficMap = coreDataModel.readDataTrafficMapList()
         coreDataModel.dataNoteAabba = coreDataModel.readDataNoteAabbaPostList("")
         coreDataModel.dataNoteAabbaPreflight = coreDataModel.readDataNoteAabbaPostList("preflight")
         coreDataModel.dataNoteAabbaDeparture = coreDataModel.readDataNoteAabbaPostList("departure")

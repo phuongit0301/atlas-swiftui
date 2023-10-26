@@ -542,7 +542,7 @@ struct MapViewModal: View {
     }
     
     func updateMapOverlayViews() {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             mapView.removeAnnotations(mapView.annotations)
             mapView.removeOverlays(mapView.overlays)
             
@@ -588,7 +588,7 @@ struct MapViewModal: View {
             }
             if selectedTraffic { addTraffic() }
             if selectedAABBA { addAabba() }
-        }
+//        }
     }
     
     func onAppearAirport() {

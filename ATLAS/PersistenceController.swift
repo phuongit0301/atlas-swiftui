@@ -1586,22 +1586,22 @@ class CoreDataModelState: ObservableObject {
                     newObj.latitude = item.lat
                     newObj.longitude = item.long
                     
-                    service.container.viewContext.performAndWait {
-                        do {
-                            temp.append(newObj)
-                            try service.container.viewContext.save()
-                            print("saved waypoint data successfully")
-                        } catch {
-                            print("Failed to waypoint data save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
-                        }
-                    }
+                    temp.append(newObj)
                 }
                 
-                eventList.waypointMapList = NSSet(array: temp)
-                self.dataWaypointMap = readDataWaypontMapList()
+                service.container.viewContext.performAndWait {
+                    do {
+                        eventList.waypointMapList = NSSet(array: temp)
+                        try service.container.viewContext.save()
+                        print("saved waypoint data successfully")
+                        self.dataWaypointMap = readDataWaypontMapList()
+                    } catch {
+                        print("Failed to waypoint data save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
             }
         }
     }
@@ -1619,22 +1619,23 @@ class CoreDataModelState: ObservableObject {
                     newObj.latitude = item.lat
                     newObj.longitude = item.long
                     
-                    service.container.viewContext.performAndWait {
-                        do {
-                            temp.append(newObj)
-                            try service.container.viewContext.save()
-                            print("saved data airport successfully")
-                        } catch {
-                            print("Failed to data airport save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
-                        }
-                    }
+                    temp.append(newObj)
                 }
                 
-                eventList.airportMapList = NSSet(array: temp)
-                self.dataAirportMap = readDataAirportMapList()
+                service.container.viewContext.performAndWait {
+                    do {
+                        eventList.airportMapList = NSSet(array: temp)
+                        try service.container.viewContext.save()
+                        
+                        self.dataAirportMap = readDataAirportMapList()
+                        print("saved data airport successfully")
+                    } catch {
+                        print("Failed to data airport save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
             }
         }
     }
@@ -1974,22 +1975,21 @@ class CoreDataModelState: ObservableObject {
                     newObj.name = item.name
                     newObj.posts = NSSet(array: posts)
                     temp.append(newObj)
-                    
-                    service.container.viewContext.performAndWait {
-                        do {
-                            try service.container.viewContext.save()
-                            print("saved data aabba successfully")
-                        } catch {
-                            print("Failed to data aabba save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
-                        }
-                    }
                 }
                 
-                eventList.aabbaMapList = NSSet(array: temp)
-                self.dataAabbaMap = readDataAabbaMapList()
+                service.container.viewContext.performAndWait {
+                    do {
+                        eventList.aabbaMapList = NSSet(array: temp)
+                        try service.container.viewContext.save()
+                        self.dataAabbaMap = readDataAabbaMapList()
+                        print("saved data aabba successfully")
+                    } catch {
+                        print("Failed to data aabba save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
+                        
+                    }
+                }
             }
         }
     }
