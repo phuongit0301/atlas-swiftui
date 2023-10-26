@@ -64,6 +64,7 @@ struct RowAlternates: View {
             }.frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
             
             TextField("Enter VIS",text: $tfVis)
+                .textInputAutocapitalization(.characters)
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
                 .onSubmit {
                     if itemList.count > 0 {
@@ -72,6 +73,7 @@ struct RowAlternates: View {
                 }
             
             TextField("Enter Minima",text: $tfMinima)
+                .textInputAutocapitalization(.characters)
                 .frame(width: calculateWidthSummary(width - 56, 4), alignment: .leading)
                 .onSubmit {
                     if itemList.count > 0 {

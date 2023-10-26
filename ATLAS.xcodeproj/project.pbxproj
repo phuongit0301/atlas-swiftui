@@ -23,6 +23,7 @@
 		3E086D962A95000B00BE00AD /* EnrouteButtonTimeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D952A95000B00BE00AD /* EnrouteButtonTimeStepper.swift */; };
 		3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */; };
 		3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */; };
+		3E096C282AEA58DE005F184E /* CustomAutoCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C272AEA58DE005F184E /* CustomAutoCompleteView.swift */; };
 		3E15A4982AE8B8DA000DA474 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A4972AE8B8DA000DA474 /* CustomError.swift */; };
 		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
 		3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */; };
@@ -558,6 +559,7 @@
 		3E086D972A9501C200BE00AD /* ATLAS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ATLAS.entitlements; sourceTree = "<group>"; };
 		3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPicker.swift; sourceTree = "<group>"; };
 		3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPickerString.swift; sourceTree = "<group>"; };
+		3E096C272AEA58DE005F184E /* CustomAutoCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAutoCompleteView.swift; sourceTree = "<group>"; };
 		3E15A4972AE8B8DA000DA474 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
 		3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyNumberModalView.swift; sourceTree = "<group>"; };
@@ -1369,6 +1371,7 @@
 				3EEBE6A12AB8425C00421AFF /* CustomPicker.swift */,
 				3E7723432AD69946000C7AA3 /* CustomModalView.swift */,
 				3E15A4972AE8B8DA000DA474 /* CustomError.swift */,
+				3E096C272AEA58DE005F184E /* CustomAutoCompleteView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2868,6 +2871,7 @@
 				3E5CA5272AE0457600DE8042 /* SectionDateUpdateList+CoreDataClass.swift in Sources */,
 				3E5CA59B2AE771AD00DE8042 /* ClipboardArrivalCompletedNoteRelevantList.swift in Sources */,
 				3E4A36952A570BA800027C61 /* DepartureATCList+CoreDataProperties.swift in Sources */,
+				3E096C282AEA58DE005F184E /* CustomAutoCompleteView.swift in Sources */,
 				3E72919E2AC57A50000FF295 /* DepartureModalNoteCommentView.swift in Sources */,
 				3E3FCC412A270851008017FA /* enrWXView.swift in Sources */,
 				3E7723482AD6BDCB000C7AA3 /* RecencyDocumentRowEdit.swift in Sources */,

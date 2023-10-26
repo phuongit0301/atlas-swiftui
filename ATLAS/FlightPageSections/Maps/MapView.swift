@@ -152,6 +152,7 @@ struct MapViewModal: View {
                                                 Divider().padding(.horizontal, -16)
                                                 
                                                 TextField("Enter waypoint(s) route must pass through", text: $tfRoute)
+                                                    .textInputAutocapitalization(.characters)
                                                     .font(.system(size: 15))
                                                     .onSubmit {
                                                         if tfRoute != "" {

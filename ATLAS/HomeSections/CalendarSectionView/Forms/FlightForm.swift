@@ -28,6 +28,9 @@ struct FlightForm: View {
     @State private var selectedEndTime = Date()
     @State var tfLocation: String = ""
     @State private var isAllDay = false
+    @State private var startTime = Date()
+    @State private var endTime = Date()
+    
     let dateFormatterTime = DateFormatter()
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
@@ -107,15 +110,15 @@ struct FlightForm: View {
                         
                         GridRow {
                             HStack {
-                                DatePicker("", selection: $selectedStartDate, displayedComponents: .date).fixedSize()
-                                DatePicker("", selection: $selectedStartTime, displayedComponents: .hourAndMinute)
+                                DatePicker("", selection: $selectedStartDate, in: Date()..., displayedComponents: .date).fixedSize()
+                                DatePicker("", selection: $selectedStartTime, in: startTime..., displayedComponents: .hourAndMinute)
                                     .environment(\.locale, Locale(identifier: "en_GB"))
                                     .fixedSize()
                             }.padding(.leading, -8)
                             
                             HStack {
-                                DatePicker("", selection: $selectedEndDate, displayedComponents: .date).fixedSize()
-                                DatePicker("", selection: $selectedEndTime, displayedComponents: .hourAndMinute)
+                                DatePicker("", selection: $selectedEndDate, in: Date()..., displayedComponents: .date).fixedSize()
+                                DatePicker("", selection: $selectedEndTime, in: endTime..., displayedComponents: .hourAndMinute)
                                     .environment(\.locale, Locale(identifier: "en_GB"))
                                     .fixedSize()
                             }.padding(.leading, -4)
@@ -197,6 +200,36 @@ struct FlightForm: View {
                     selectedEndTime = endTimeFormat
                 }
             }
+        }
+        .onChange(of: selectedStartDate) {newValue in
+            if Date() < newValue {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH:mm"
+                
+                guard let inputDate = formatter.date(from: "00:01") else { return }
+                let inputComps = Calendar.current.dateComponents([.hour, .minute], from: inputDate)
+                if let temp = Calendar.current.date(from: inputComps) {
+                    startTime = temp
+                }
+            } else {
+                startTime = newValue
+            }
+            
+        }
+        .onChange(of: selectedEndDate) {newValue in
+            if Date() < newValue {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH:mm"
+                
+                guard let inputDate = formatter.date(from: "00:01") else { return }
+                let inputComps = Calendar.current.dateComponents([.hour, .minute], from: inputDate)
+                if let temp = Calendar.current.date(from: inputComps) {
+                    endTime = temp
+                }
+            } else {
+                endTime = newValue
+            }
+            
         }
     }
     

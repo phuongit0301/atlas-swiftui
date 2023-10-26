@@ -20,6 +20,8 @@ struct CompleteYourProfileView: View {
     @State private var selectedAirline = ""
     @State private var selectedMobile = ""
     @State private var isSubscribe = true
+    @State private var tfAirport = ONBOARDING_AIRLINE_DROP_DOWN.first
+    @State private var showModal = false
     
     var body: some View {
         ScrollView {
@@ -120,11 +122,14 @@ struct CompleteYourProfileView: View {
                         }.frame(height: 44)
                         
                         HStack(spacing: 8) {
-                            Picker("", selection: $selectedAirline) {
-                                ForEach(AIRLINE_DROP_DOWN, id: \.self) {
-                                    Text($0).tag($0)
-                                }
-                            }.pickerStyle(MenuPickerStyle())
+                            FlightTimeButtonTimeStepper(onToggle: onAirport, value: tfAirport ?? "")
+                                .fixedSize()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+//                            Picker("", selection: $selectedAirline) {
+//                                ForEach(AIRLINE_DROP_DOWN, id: \.self) {
+//                                    Text($0).tag($0)
+//                                }
+//                            }.pickerStyle(MenuPickerStyle())
                         }.frame(height: 44)
                             .padding(.horizontal)
                             .background(Color.white)
@@ -259,8 +264,8 @@ struct CompleteYourProfileView: View {
             
             isSubscribe = onboardingModel.dataYourProfile.subscribe == "1" ? true : false
         }
-        .onChange(of: selectedAirline) { newValue in
-            onboardingModel.dataYourProfile.airline = newValue
+        .onChange(of: tfAirport) { newValue in
+            onboardingModel.dataYourProfile.airline = newValue ?? ""
         }
         .onChange(of: selectedMobile) { newValue in
             onboardingModel.dataYourProfile.mobile.country = newValue
@@ -268,5 +273,12 @@ struct CompleteYourProfileView: View {
         .onChange(of: isSubscribe) { newValue in
             onboardingModel.dataYourProfile.subscribe = newValue ? "1" : "0"
         }
+        .sheet(isPresented: $showModal) {
+            CustomAutoCompleteView(isShowing: $showModal, selectedAirport: $tfAirport)
+        }
+    }
+    
+    func onAirport() {
+        showModal.toggle()
     }
 }

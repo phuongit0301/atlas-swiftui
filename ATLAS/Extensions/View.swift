@@ -286,16 +286,16 @@ public struct HasToolbar: ViewModifier {
                         }
                     }
                     
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            
-                        }) {
-                            Image("icon_arrow_right")
-                                .frame(width: 41, height: 72)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {
+//                            
+//                        }) {
+//                            Image("icon_arrow_right")
+//                                .frame(width: 41, height: 72)
+//                                .scaledToFit()
+//                                .aspectRatio(contentMode: .fit)
+//                        }
+//                    }
                     
                     ToolbarItem(placement: .principal) {
                         HStack(alignment: .center) {
@@ -362,29 +362,29 @@ public struct HasMainToolbar: ViewModifier {
                 .toolbarBackground(.visible, for: .navigationBar)
                 .toolbarBackground(.white, for: .navigationBar)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            coreDataModel.selectedEvent = nil
-                            coreDataModel.isEventActive = false
-                            dismiss()
-                        }) {
-                            Image("icon_arrow_left")
-                                .frame(width: 41, height: 72)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            
-                        }) {
-                            Image("icon_arrow_right")
-                                .frame(width: 41, height: 72)
-                                .scaledToFit()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {
+//                            coreDataModel.selectedEvent = nil
+//                            coreDataModel.isEventActive = false
+//                            dismiss()
+//                        }) {
+//                            Image("icon_arrow_left")
+//                                .frame(width: 41, height: 72)
+//                                .scaledToFit()
+//                                .aspectRatio(contentMode: .fit)
+//                        }
+//                    }
+//
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {
+//
+//                        }) {
+//                            Image("icon_arrow_right")
+//                                .frame(width: 41, height: 72)
+//                                .scaledToFit()
+//                                .aspectRatio(contentMode: .fit)
+//                        }
+//                    }
                     
                     ToolbarItem(placement: .principal) {
                         HStack(alignment: .center) {

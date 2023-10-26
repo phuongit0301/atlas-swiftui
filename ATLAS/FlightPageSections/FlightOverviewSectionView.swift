@@ -211,6 +211,7 @@ struct FlightOverviewSectionView: View {
                                         "Enter Aircraft",
                                         text: $tfAircraft
                                     ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .textInputAutocapitalization(.characters)
                                         .onSubmit {
                                             if dataFlightOverview != nil, let item = dataFlightOverview {
                                                 item.aircraft = tfAircraft
@@ -514,7 +515,8 @@ struct FlightOverviewSectionView: View {
                                             TextField(
                                                 "Enter name",
                                                 text: $tfCrewName
-                                            ).onSubmit {
+                                            ).textInputAutocapitalization(.characters)
+                                            .onSubmit {
                                                 if dataFlightOverview != nil, let item = dataFlightOverview {
                                                     item.crewName = tfCrewName
                                                 } else {
@@ -551,7 +553,8 @@ struct FlightOverviewSectionView: View {
                                         TextField(
                                             "Enter name",
                                             text: $tfCrewName
-                                        ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        ).textInputAutocapitalization(.characters)
+                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
                                             .onSubmit {
                                                 if dataFlightOverview != nil, let item = dataFlightOverview {
                                                     item.crewName = tfCrewName
@@ -576,6 +579,7 @@ struct FlightOverviewSectionView: View {
                                     VStack(alignment: .leading) {
                                         HStack(alignment: .center) {
                                             TextField("Enter Password", text: $tfPassword)
+                                                .textInputAutocapitalization(.characters)
                                                 .font(.system(size: 15, weight: .regular))
                                                 .foregroundStyle(Color.black)
                                                 .onSubmit {
