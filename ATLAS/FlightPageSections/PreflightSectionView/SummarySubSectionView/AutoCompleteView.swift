@@ -66,8 +66,10 @@ struct AutoCompleteView: View {
                         ScrollView {
                             ForEach(listRoutes.indices, id: \.self) { index in
                                 HStack(alignment: .center) {
-                                    Text(listRoutes[index]).font(.system(size: 15, weight: .regular))
-                                }.frame(width: proxy.size.width - 64, alignment: .leading)
+                                    Text(listRoutes[index]).font(.system(size: 15, weight: .regular)).frame(maxWidth: .infinity, alignment: .leading)
+                                    Spacer()
+                                }.frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
                                     .onTapGesture {
                                         tfRoute = listRoutes[index]
                                         if itemList.count > 0 {
