@@ -195,7 +195,7 @@ class RemoteService: ObservableObject {
             // Convert the request body to JSON data
             
             let requestData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("json post flight data =============\(String(data: requestData!, encoding: .utf8)!)")
+//            print("json post flight data =============\(String(data: requestData!, encoding: .utf8)!)")
             // Set the request body data
             request.httpBody = requestData
             
@@ -596,6 +596,8 @@ class RemoteService: ObservableObject {
             
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let sessionConfig = URLSessionConfiguration.default
+            sessionConfig.timeoutIntervalForRequest = 120.0
             
             let (data, _) = try await URLSession.shared.data(for: request)
             
@@ -626,6 +628,8 @@ class RemoteService: ObservableObject {
             
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let sessionConfig = URLSessionConfiguration.default
+            sessionConfig.timeoutIntervalForRequest = 60.0
             
             let (data, _) = try await URLSession.shared.data(for: request)
 //            print("map aabba json=============\(String(data: data, encoding: .utf8)!)")
@@ -656,7 +660,7 @@ class RemoteService: ObservableObject {
             // Set the Content-Type header to indicate JSON format
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             let sessionConfig = URLSessionConfiguration.default
-            sessionConfig.timeoutIntervalForRequest = 30.0
+            sessionConfig.timeoutIntervalForRequest = 60.0
             
             let (data, _) = try await URLSession.shared.data(for: request)
             
@@ -673,8 +677,36 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_airports_data
-    func getMapAirportData(_ parameters: Any) async -> IAirportDataJsonResponse? {
-        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_airports_data") else { fatalError("Missing URL") }
+    func getMapAirportData() async -> IAirportDataJsonResponse? {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_all_airports_data") else { fatalError("Missing URL") }
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+        do {
+            // Set the Content-Type header to indicate JSON format
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let sessionConfig = URLSessionConfiguration.default
+            sessionConfig.timeoutIntervalForRequest = 30.0
+            
+            let (data, _) = try await URLSession.shared.data(for: request)
+            
+//            print("json=============\(String(data: data, encoding: .utf8)!)")
+            do {
+                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
+                return decodedSearch
+            } catch let error {
+                print("Error decoding: ", error)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return nil
+    }
+    
+    //ATLAS_get_map_colour_airports_data
+    func getMapAirportColorData(_ parameters: Any) async -> IAirportColorDataJsonResponse? {
+        guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_colour_airports_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             
@@ -687,13 +719,13 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let sessionConfig = URLSessionConfiguration.default
-            sessionConfig.timeoutIntervalForRequest = 30.0
+            sessionConfig.timeoutIntervalForRequest = 120.0
             
             let (data, _) = try await URLSession.shared.data(for: request)
             
 //            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
-                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
+                let decodedSearch = try JSONDecoder().decode(IAirportColorDataJsonResponse.self, from: data)
                 return decodedSearch
             } catch let error {
                 print("Error decoding: ", error)

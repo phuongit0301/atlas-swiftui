@@ -377,6 +377,9 @@ class CoreDataModelState: ObservableObject {
             group.addTask {
                 await self.getOrPostRecency()
             }
+            group.addTask {
+                await self.getMapAirport()
+            }
             
     //        async let eventService = getOrPostEvent()
     //        async let logbookService = getOrPostLogbookEntries()
@@ -733,6 +736,17 @@ class CoreDataModelState: ObservableObject {
             print("=======get recency=====")
             
             return true
+        }
+    }
+    
+    func getMapAirport() async {
+        let responseAirport = await remoteService.getMapAirportData()
+        print("start airport")
+        if let responseAirportAll = responseAirport?.all_airports_data, responseAirportAll.count > 0 {
+//            print("inside aiport======\(responseAirportAll)")
+            await self.deleteAllAirportList()
+            self.initDataAirport(responseAirportAll)
+            print("end airport")
         }
     }
     

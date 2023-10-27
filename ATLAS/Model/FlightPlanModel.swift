@@ -545,6 +545,9 @@ struct IWaypointDataJsonResponse: Decodable {
 
 struct IAirportDataJsonResponse: Decodable {
     let all_airports_data: [IAirportData]
+}
+
+struct IAirportColorDataJsonResponse: Decodable {
     let colour_airports_data: [IAirportColor]
 }
 

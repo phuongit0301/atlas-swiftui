@@ -32,7 +32,6 @@ struct AutoCompleteView: View {
                     Spacer()
                     
                     Text("Enter ICAO")
-                        .textInputAutocapitalization(.characters)
                         .font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
                     
                     Spacer()
@@ -51,6 +50,7 @@ struct AutoCompleteView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     TextField("Enter Airport", text: $tfRoute)
+                        .textInputAutocapitalization(.characters)
                         .padding(8)
                         .background(Color.white)
                         .cornerRadius(8)
