@@ -279,6 +279,8 @@ class CoreDataModelState: ObservableObject {
     @Published var isAabbaNoteLoading = false
     @Published var isNotamLoading = false
     
+    @Published var idUnique = UUID()
+    
     
     // For autocomplete
     @Published var listRoutes = [String]()

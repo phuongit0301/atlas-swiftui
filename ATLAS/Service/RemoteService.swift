@@ -104,6 +104,8 @@ class RemoteService: ObservableObject {
                 
                 // Set the Content-Type header to indicate JSON format
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                let sessionConfig = URLSessionConfiguration.default
+                sessionConfig.timeoutIntervalForRequest = 60.0
                 
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
