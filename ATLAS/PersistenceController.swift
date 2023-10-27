@@ -2288,8 +2288,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.type = "departure"
                 newObj.posts = NSSet(array: posts)
                 
-                event.addToNoteAabbaPostList(newObj)
-//                payloadNoteAabba.append(newObj)
+                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2305,7 +2304,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2376,8 +2375,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.type = "enroute"
                 newObj.posts = NSSet(array: posts)
                     
-                event.addToNoteAabbaPostList(newObj)
-//                payloadNoteAabba.append(newObj)
+                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2393,7 +2391,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2464,8 +2462,7 @@ class CoreDataModelState: ObservableObject {
                 newObj.type = "arrival"
                 newObj.posts = NSSet(array: posts)
                 
-                event.addToNoteAabbaPostList(newObj)
-//                payloadNoteAabba.append(newObj)
+                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2481,7 +2478,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2780,8 +2777,7 @@ class CoreDataModelState: ObservableObject {
                             newObj.isChecked = item.isChecked
                             newObj.category = item.category
                             
-                            event.addToNotamsDataList(newObj)
-                            //                        payloadNotamsData.append(newObj)
+                            payloadNotamsData.append(newObj)
                             
                             self.service.container.viewContext.performAndWait {
                                 do {
@@ -2798,7 +2794,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-//                event.notamsDataList = NSSet(array: payloadNotamsData)
+                event.notamsDataList = NSSet(array: payloadNotamsData)
                 try self.service.container.viewContext.save()
                 print("saved notams successfully")
             } catch {
@@ -2837,7 +2833,7 @@ class CoreDataModelState: ObservableObject {
                         newObj.metar = item.metar
                         newObj.taf = item.taf
                         
-                        event.addToMetarTafList(newObj)
+                        payloadMetarTaf.append(newObj)
                         
                         self.service.container.viewContext.performAndWait {
                             do {
@@ -2855,7 +2851,7 @@ class CoreDataModelState: ObservableObject {
             
             print("payloadMetarTaf==========\(payloadMetarTaf)")
             do {
-//                event.metarTafList = NSSet(array: payloadMetarTaf)
+                event.metarTafList = NSSet(array: payloadMetarTaf)
                 try self.service.container.viewContext.save()
                 print("saved Metar Taf successfully")
             } catch {
