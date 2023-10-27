@@ -537,7 +537,7 @@ struct SummarySubSectionView: View {
     }
     
     func create() {
-//        DispatchQueue.main.async {
+        DispatchQueue.main.async {
             self.isLoading = true
             
             var payloadEnroute: [Any] = []
@@ -719,7 +719,7 @@ struct SummarySubSectionView: View {
             prepareData()
             
             self.isLoading = false
-//        }
+        }
     }
     
     func readData() {

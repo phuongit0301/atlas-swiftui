@@ -804,7 +804,7 @@ struct INotamWXDataJson: Decodable {
 
 // For v3.0
 
-struct FlightOverviewV30Json: Codable {
+struct FlightOverviewV30Json: Decodable {
     let CAName: String
     let CAPicker: String
     let ETA: String
@@ -831,13 +831,13 @@ struct FlightOverviewV30Json: Codable {
     let totalTime: String
 }
 
-struct RouteV30Json: Codable {
+struct RouteV30Json: Decodable {
     let lat: String
     let long: String
     let name: String
 }
 
-struct ColorAirportV30Json: Codable {
+struct ColorAirportV30Json: Decodable {
     let airportID: String
     let colour: String
     let lat: String
@@ -848,7 +848,7 @@ struct ColorAirportV30Json: Codable {
     let taf: String
 }
 
-struct NotamV30Json: Codable {
+struct NotamV30Json: Decodable {
     let category: String
     let date: String
     let id: String
@@ -858,13 +858,13 @@ struct NotamV30Json: Codable {
     let type: String
 }
 
-struct MetarTafV30Json: Codable {
+struct MetarTafV30Json: Decodable {
     let airportText: String
     let metar: String
     let taf: String
 }
 
-struct NotesV30Json: Codable {
+struct NotesV30Json: Decodable {
     let canDelete: Bool
     let createdAt: String
     let favourite: Bool
@@ -877,15 +877,71 @@ struct NotesV30Json: Codable {
     let type: String
 }
 
-struct FlightDataV30Json: Codable {
+struct FlightDataV30Json: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case status
+        case flight_overview
+        case route
+        case colour_airport
+        case notam
+        case metar_taf
+        case notes
+        case aabba_notes
+    }
+    
     let status: String
     let flight_overview: FlightOverviewV30Json
     let route: [RouteV30Json]?
-    let colour_airport: [IAirportColor]?
+    let colour_airport: [IAirportColor]
     let notam: [String: [NotamV30Json]]?
     let metar_taf: [String: [MetarTafV30Json]]?
-    let notes: [NotesV30Json]?
-    let aabba_notes: [String: [INoteResponse]]?
+    let notes: [NotesV30Json]
+    let aabba_notes: [String: [INoteResponse]]
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let rawStatus = try? values.decode(String.self, forKey: .status)
+        let rawFlightOverview = try values.decode(FlightOverviewV30Json.self, forKey: .flight_overview)
+        
+        self.status = rawStatus ?? ""
+        self.flight_overview = rawFlightOverview
+        
+        if let temp = try? values.decode([RouteV30Json].self, forKey: .route) {
+            self.route = temp
+        } else {
+            self.route = []
+        }
+        
+        if let temp = try? values.decode([IAirportColor].self, forKey: .colour_airport) {
+            self.colour_airport = temp
+        } else {
+            self.colour_airport = []
+        }
+        
+        if let temp = try? values.decode([String: [NotamV30Json]].self, forKey: .notam) {
+            self.notam = temp
+        } else {
+            self.notam = [:]
+        }
+        
+        if let temp = try? values.decode([String: [MetarTafV30Json]].self, forKey: .metar_taf) {
+            self.metar_taf = temp
+        } else {
+            self.metar_taf = [:]
+        }
+        
+        if let temp = try? values.decode([NotesV30Json].self, forKey: .notes) {
+            self.notes = temp
+        } else {
+            self.notes = []
+        }
+        
+        if let temp = try? values.decode([String: [INoteResponse]].self, forKey: .aabba_notes) {
+            self.aabba_notes = temp
+        } else {
+            self.aabba_notes = [:]
+        }
+    }
 }
 
 class YourFlightPlanModel: ObservableObject {

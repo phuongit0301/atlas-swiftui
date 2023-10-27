@@ -1270,15 +1270,15 @@ class CoreDataModelState: ObservableObject {
                             
                             event.flightStatus = item.status
                             
-                            if let itemNotes = item.notes, itemNotes.count > 0 {
+                            if item.notes.count > 0 {
                                 group.addTask {
-                                    self.initDataNoteList(itemNotes, event)
+                                    self.initDataNoteList(item.notes, event)
                                 }
                             }
                             
-                            if let itemColourAirport = item.colour_airport, itemColourAirport.count > 0 {
+                            if item.colour_airport.count > 0 {
                                 group.addTask {
-                                    self.initDataAirportColor(itemColourAirport, event)
+                                    self.initDataAirportColor(item.colour_airport, event)
                                 }
                             }
                             
@@ -1300,9 +1300,9 @@ class CoreDataModelState: ObservableObject {
                                 }
                             }
                             
-                            if let itemAabbaNote = item.aabba_notes, itemAabbaNote.count > 0 {
+                            if item.aabba_notes.count > 0 {
                                 group.addTask {
-                                    self.initDataMapAabbaNotes(itemAabbaNote, event)
+                                    self.initDataMapAabbaNotes(item.aabba_notes, event)
                                 }
                             }
                             
@@ -5777,12 +5777,7 @@ class CoreDataModelState: ObservableObject {
             service.container.viewContext.performAndWait {
                 do {
                     for object in objects {
-                        print("object======\(object)")
-                        do {
-                            try service.container.viewContext.delete(object)
-                        } catch {
-                            print("Failed to delete Notam : \(error)")
-                        }
+                        service.container.viewContext.delete(object)
                     }
                     // Save the deletions to the persistent store
                     try service.container.viewContext.save()
