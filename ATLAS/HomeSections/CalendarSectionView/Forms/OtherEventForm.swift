@@ -68,6 +68,7 @@ struct OtherEventForm: View {
                     }
                     
                     TextField("Enter Name of Event", text: $tfEventName)
+                        .textInputAutocapitalization(.characters)
                         .font(.system(size: 15)).frame(maxWidth: .infinity)
                         .frame(height: 44)
                     
@@ -107,6 +108,7 @@ struct OtherEventForm: View {
                         
                         GridRow {
                             TextField("Add location", text: $tfLocation)
+                                .textInputAutocapitalization(.characters)
                                 .font(.system(size: 15)).frame(maxWidth: .infinity)
                                 .padding(.vertical)
                         }.frame(maxWidth: .infinity, alignment: .leading).padding(.bottom)

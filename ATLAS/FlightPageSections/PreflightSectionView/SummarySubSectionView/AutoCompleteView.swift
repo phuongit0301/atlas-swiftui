@@ -31,7 +31,9 @@ struct AutoCompleteView: View {
                     
                     Spacer()
                     
-                    Text("Enter ICAO").font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
+                    Text("Enter ICAO")
+                        .textInputAutocapitalization(.characters)
+                        .font(Font.custom("SF Pro", size: 15).weight(.semibold)).foregroundColor(Color.black)
                     
                     Spacer()
                     
@@ -55,7 +57,7 @@ struct AutoCompleteView: View {
                         .frame(height: 44)
                         .onChange(of: tfRoute) {newValue in
                             if preflightModel.currentIndexAutoComplete != -1 && itemList[preflightModel.currentIndexAutoComplete].altn != newValue {
-                                listRoutes = AIRLINE_DROP_DOWN.filter {$0.lowercased().hasPrefix(newValue.lowercased())}
+                                listRoutes = AIRPORT_DROP_DOWN.filter {$0.lowercased().hasPrefix(newValue.lowercased())}
                                 isRouteFormChange = true
                             }
                         }

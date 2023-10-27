@@ -543,7 +543,7 @@ struct MapViewModal: View {
     }
     
     func updateMapOverlayViews() {
-//        DispatchQueue.main.async {
+        DispatchQueue.main.async {
             mapView.removeAnnotations(mapView.annotations)
             mapView.removeOverlays(mapView.overlays)
             
@@ -589,7 +589,7 @@ struct MapViewModal: View {
             }
             if selectedTraffic { addTraffic() }
             if selectedAABBA { addAabba() }
-//        }
+        }
     }
     
     func onAppearAirport() {
@@ -826,7 +826,9 @@ struct MapView: UIViewRepresentable {
             if let firstRoute = routeDatas.first, let lastRoute = routeDatas.last {
                 let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
                 let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
-
+                
+                print("firstRoute========\(firstRoute)")
+                print("lastRoute========\(lastRoute)")
                 let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
                 mapView.setRegion(regionCustom, animated: true)
             }
@@ -864,6 +866,8 @@ struct MapView: UIViewRepresentable {
             longitudeDelta: abs(startCoordinate.longitude - endCoordinate.longitude) * 1.2
         )
         
+        print("center========\(center)")
+        print("span========\(span)")
         let region = MKCoordinateRegion(center: center, span: span)
 
         return region
@@ -877,6 +881,8 @@ struct MapView: UIViewRepresentable {
                 let startCoord = CLLocationCoordinate2D(latitude: (firstRoute.latitude as NSString).doubleValue, longitude: ((firstRoute.longitude) as NSString).doubleValue)
                 let endCoord = CLLocationCoordinate2D(latitude: (lastRoute.latitude as NSString).doubleValue, longitude: (lastRoute.longitude as NSString).doubleValue)
 
+                print("firstRoute11111========\(firstRoute)")
+                print("lastRoute111111========\(lastRoute)")
                 let regionCustom = calculateRegion(startCoordinate: startCoord, endCoordinate: endCoord)
                 mapView.setRegion(regionCustom, animated: true)
             }
@@ -898,12 +904,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         self.parent.mapIconModel.firstLoading = false
         
-        print("11111111111")
-        print("mapView.region.span.longitudeDelta=========\(mapView.region.span.longitudeDelta)")
-        print("mapView.region.span.latitudeDelta=========\(mapView.region.span.latitudeDelta)")
         if parent.selectedAirport {
             if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-                print("222222222222")
                 mapView.addAnnotations(parent.airportArr)
             } else {
                 mapView.removeAnnotations(parent.airportArr)

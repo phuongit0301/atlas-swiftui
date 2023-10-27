@@ -26,6 +26,7 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var preflightModel: PreflightModel
+    @EnvironmentObject var mapIconModal: MapIconModel
     
     @AppStorage("uid") var userID: String = ""
     

@@ -67,6 +67,7 @@ struct COPForm: View {
                     }
                     
                     TextField("Enter COP title", text: $tfEventName)
+                        .textInputAutocapitalization(.characters)
                         .font(.system(size: 15)).frame(maxWidth: .infinity)
                         .frame(height: 44)
                     

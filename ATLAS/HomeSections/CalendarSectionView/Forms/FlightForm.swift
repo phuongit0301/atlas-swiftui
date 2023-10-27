@@ -83,6 +83,7 @@ struct FlightForm: View {
                     }
                     
                     TextField("Enter Flight Number", text: $tfEventName)
+                        .textInputAutocapitalization(.characters)
                         .font(.system(size: 15)).frame(maxWidth: .infinity)
                         .frame(height: 44)
                     
@@ -96,8 +97,10 @@ struct FlightForm: View {
                         
                         GridRow {
                             TextField("Input Dep", text: $tfDep)
+                                .textInputAutocapitalization(.characters)
                                 .font(.system(size: 15)).frame(maxWidth: .infinity)
                             TextField("Input Dest", text: $tfDest)
+                                .textInputAutocapitalization(.characters)
                                 .font(.system(size: 15)).frame(maxWidth: .infinity)
                         }.frame(maxWidth: .infinity, alignment: .leading).frame(height: 44)
                         

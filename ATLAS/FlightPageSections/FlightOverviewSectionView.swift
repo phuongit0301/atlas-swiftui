@@ -260,6 +260,7 @@ struct FlightOverviewSectionView: View {
                                         "Enter POB",
                                         text: $tfPob
                                     ).frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+                                        .textInputAutocapitalization(.characters)
                                         .keyboardType(.numberPad)
                                         .onReceive(Just(tfPob)) { output in
                                             let newOutput = output.filter { "0123456789".contains($0) }

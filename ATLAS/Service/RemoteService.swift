@@ -130,7 +130,7 @@ class RemoteService: ObservableObject {
         do {
             // Convert the request body to JSON data
             let requestData: Data? = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("json=============\(String(data: requestData!, encoding: .utf8)!)")
+//            print("json=============\(String(data: requestData!, encoding: .utf8)!)")
             // Set the request body data
             request.httpBody = requestData
             
@@ -169,7 +169,7 @@ class RemoteService: ObservableObject {
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
                 let (data, _) = try await URLSession.shared.data(for: request)
-                
+                print("json flight plan data =============\(data)")
                 do {
                     let decodedSearch = try JSONDecoder().decode([FlightDataV30Json].self, from: data)
                     return decodedSearch
@@ -195,7 +195,7 @@ class RemoteService: ObservableObject {
             // Convert the request body to JSON data
             
             let requestData: Data? = try? JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("json=============\(String(data: requestData!, encoding: .utf8)!)")
+            print("json post flight data =============\(String(data: requestData!, encoding: .utf8)!)")
             // Set the request body data
             request.httpBody = requestData
             
@@ -334,7 +334,7 @@ class RemoteService: ObservableObject {
         do {
             let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
             request.httpBody = postData
-            print("json=============\(String(data: postData, encoding: .utf8)!)")
+//            print("json=============\(String(data: postData, encoding: .utf8)!)")
             
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
@@ -528,7 +528,7 @@ class RemoteService: ObservableObject {
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
                 let (data, _) = try await URLSession.shared.data(for: request)
-                print("aabba note json=============\(String(data: data, encoding: .utf8)!)")
+//                print("aabba note json=============\(String(data: data, encoding: .utf8)!)")
                 do {
                     let decodedSearch = try JSONDecoder().decode([String: [INoteResponse]].self, from: data)
                     return decodedSearch
@@ -628,7 +628,7 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let (data, _) = try await URLSession.shared.data(for: request)
-            print("map aabba json=============\(String(data: data, encoding: .utf8)!)")
+//            print("map aabba json=============\(String(data: data, encoding: .utf8)!)")
             do {
                 let decodedSearch = try JSONDecoder().decode(IAabbaDataJsonResponse.self, from: data)
                 return decodedSearch.aabba_data
@@ -681,7 +681,6 @@ class RemoteService: ObservableObject {
         do {
             // Convert the request body to JSON data
             let requestData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            print("json=============\(String(data: requestData, encoding: .utf8)!)")
             // Set the request body data
             request.httpBody = requestData
             // Set the Content-Type header to indicate JSON format
@@ -691,7 +690,8 @@ class RemoteService: ObservableObject {
             sessionConfig.timeoutIntervalForRequest = 30.0
             
             let (data, _) = try await URLSession.shared.data(for: request)
-
+            
+//            print("json=============\(String(data: data, encoding: .utf8)!)")
             do {
                 let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
                 return decodedSearch

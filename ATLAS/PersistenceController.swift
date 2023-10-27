@@ -362,9 +362,7 @@ class CoreDataModelState: ObservableObject {
             self.dataNoteAabbaArrival = readDataNoteAabbaPostList("arrival")
             self.dataFlightOverviewList = readFlightOverviewList()
             
-            group.addTask {
-                await self.getOrPostEvent()
-            }
+            await self.getOrPostEvent()
             
             group.addTask {
                 await self.getOrPostFlightPlan()
@@ -1702,16 +1700,8 @@ class CoreDataModelState: ObservableObject {
                     
                     payloadMapRoute.append(newObj)
                     
-                    service.container.viewContext.performAndWait {
-                        do {
-                            try service.container.viewContext.save()
-                            print("saved data route map successfully")
-                        } catch {
-                            print("Failed to data route map save: \(error)")
-                            // Rollback any changes in the managed object context
-                            service.container.viewContext.rollback()
-                            
-                        }
+                    try service.container.viewContext.performAndWait {
+                        try service.container.viewContext.save()
                     }
                 } catch {
                     print("could not unarchive array: \(error)")
@@ -1765,7 +1755,8 @@ class CoreDataModelState: ObservableObject {
                 newObj.depDelayColour = item.dep_delay_colour
                 newObj.updatedAt = dateFormatter.string(from: Date())
                 
-                payloadMapColor.append(newObj)
+//                payloadMapColor.append(newObj)
+                event.addToAirportMapColorList(newObj)
                 
                 service.container.viewContext.performAndWait {
                     do {
@@ -1782,7 +1773,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.airportMapColorList = NSSet(array: payloadMapColor)
+//                event.airportMapColorList = NSSet(array: payloadMapColor)
                 try service.container.viewContext.save()
                 print("saved data event airport color successfully")
             } catch {
@@ -1908,7 +1899,8 @@ class CoreDataModelState: ObservableObject {
         newObj.timeDiffDep = data.time_diff_dep
         newObj.totalTime = data.totalTime
         
-        event.flightOverviewList = NSSet(array: [newObj])
+        event.addToFlightOverviewList(newObj)
+//            .flightOverviewList = NSSet(array: [newObj])
         
         self.service.container.viewContext.performAndWait {
             do {
@@ -2296,7 +2288,8 @@ class CoreDataModelState: ObservableObject {
                 newObj.type = "departure"
                 newObj.posts = NSSet(array: posts)
                 
-                payloadNoteAabba.append(newObj)
+                event.addToNoteAabbaPostList(newObj)
+//                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2312,7 +2305,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2382,8 +2375,9 @@ class CoreDataModelState: ObservableObject {
                 newObj.name = item.name
                 newObj.type = "enroute"
                 newObj.posts = NSSet(array: posts)
-                
-                payloadNoteAabba.append(newObj)
+                    
+                event.addToNoteAabbaPostList(newObj)
+//                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2399,7 +2393,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2470,7 +2464,8 @@ class CoreDataModelState: ObservableObject {
                 newObj.type = "arrival"
                 newObj.posts = NSSet(array: posts)
                 
-                payloadNoteAabba.append(newObj)
+                event.addToNoteAabbaPostList(newObj)
+//                payloadNoteAabba.append(newObj)
                 
 //                service.container.viewContext.performAndWait {
 //                    do {
@@ -2486,7 +2481,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
+//                event.noteAabbaPostList = NSSet(array: payloadNoteAabba + (event.noteAabbaPostList ?? []))
                 try service.container.viewContext.save()
                 print("saved data event aabba successfully")
             } catch {
@@ -2763,44 +2758,47 @@ class CoreDataModelState: ObservableObject {
             print("data notams==========\(data)")
             for row in data {
                 if row.value.count > 0 {
-                    row.value.forEach { item in
-                        let newObj = NotamsDataList(context: self.service.container.viewContext)
-                        newObj.id = UUID()
-                        
-                        if item.type == "departure" {
-                            newObj.type = "depNotams"
-                        } else if item.type == "arrival" {
-                            newObj.type = "arrNotams"
-                        } else if item.type == "enroute" {
-                            newObj.type = "enrNotams"
-                        } else {
-                            newObj.type = "altnNotams"
-                        }
-                        
-                        newObj.airport = row.key
-                        newObj.notam = item.notam
-                        newObj.date = item.date
-                        newObj.rank = item.rank
-                        newObj.isChecked = item.isChecked
-                        newObj.category = item.category
-                        
-                        payloadNotamsData.append(newObj)
-                        
-                        self.service.container.viewContext.performAndWait {
-                            do {
-                                try self.service.container.viewContext.save()
-                                print("saved notams successfully")
-                            } catch {
-                                print("Failed to Notams depNotams save: \(error)")
+                    if !row.value.isEmpty {
+                        row.value.forEach { item in
+                            let newObj = NotamsDataList(context: self.service.container.viewContext)
+                            newObj.id = UUID()
+                            
+                            if item.type == "departure" {
+                                newObj.type = "depNotams"
+                            } else if item.type == "arrival" {
+                                newObj.type = "arrNotams"
+                            } else if item.type == "enroute" {
+                                newObj.type = "enrNotams"
+                            } else {
+                                newObj.type = "altnNotams"
                             }
                             
+                            newObj.airport = row.key
+                            newObj.notam = item.notam
+                            newObj.date = item.date
+                            newObj.rank = item.rank
+                            newObj.isChecked = item.isChecked
+                            newObj.category = item.category
+                            
+                            event.addToNotamsDataList(newObj)
+                            //                        payloadNotamsData.append(newObj)
+                            
+                            self.service.container.viewContext.performAndWait {
+                                do {
+                                    try self.service.container.viewContext.save()
+                                    print("saved notams successfully")
+                                } catch {
+                                    print("Failed to Notams depNotams save: \(error)")
+                                }
+                                
+                            }
                         }
                     }
                 }
             }
             
             do {
-                event.notamsDataList = NSSet(array: payloadNotamsData)
+//                event.notamsDataList = NSSet(array: payloadNotamsData)
                 try self.service.container.viewContext.save()
                 print("saved notams successfully")
             } catch {
@@ -2839,10 +2837,12 @@ class CoreDataModelState: ObservableObject {
                         newObj.metar = item.metar
                         newObj.taf = item.taf
                         
+                        event.addToMetarTafList(newObj)
+                        
                         self.service.container.viewContext.performAndWait {
                             do {
                                 try self.service.container.viewContext.save()
-                                payloadMetarTaf.append(newObj)
+//                                payloadMetarTaf.append(newObj)
                                 print("saved notams successfully")
                             } catch {
                                 print("Failed to Notams depNotams save: \(error)")
@@ -2855,11 +2855,11 @@ class CoreDataModelState: ObservableObject {
             
             print("payloadMetarTaf==========\(payloadMetarTaf)")
             do {
-                event.metarTafList = NSSet(array: payloadMetarTaf)
+//                event.metarTafList = NSSet(array: payloadMetarTaf)
                 try self.service.container.viewContext.save()
-                print("saved notams successfully")
+                print("saved Metar Taf successfully")
             } catch {
-                print("Failed to Notams depNotams save: \(error)")
+                print("Failed to Metar Taf save: \(error)")
             }
             
 //            self.dataDepartureMetarTaf = self.readDataMetarTafByType("depMetarTaf")

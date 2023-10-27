@@ -100,6 +100,7 @@ struct SignatureModalView: View {
                         Divider().padding(.horizontal, -16)
                         
                         TextField("Enter Licence Number", text: $signatureTfLicense)
+                            .textInputAutocapitalization(.characters)
                             .font(.system(size: 15)).frame(maxWidth: .infinity)
                             .padding(.vertical)
                             .frame(height: 55)
