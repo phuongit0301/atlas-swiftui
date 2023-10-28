@@ -7966,8 +7966,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
+            startingLineNumber = "605"
+            endingLineNumber = "605"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -8029,8 +8029,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
+            startingLineNumber = "607"
+            endingLineNumber = "607"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
             <Locations>
@@ -8077,8 +8077,8 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
+            startingLineNumber = "616"
+            endingLineNumber = "616"
             landmarkName = "updateMapData(_:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10825,42 +10825,10 @@
             filePath = "ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "730"
-            endingLineNumber = "730"
+            startingLineNumber = "742"
+            endingLineNumber = "742"
             landmarkName = "create()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DFD29A10-B47B-4170-BE6E-A0C9789082EB - 6707b3c13e93b817"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 @Sendable () async -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "730"
-                  endingLineNumber = "730"
-                  offsetFromSymbolStart = "11112">
-               </Location>
-               <Location
-                  uuid = "DFD29A10-B47B-4170-BE6E-A0C9789082EB - 6707b3c13e93b849"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 @Sendable () async -&gt; () in ATLAS.SummarySubSectionView.create() -&gt; ()"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "732"
-                  endingLineNumber = "732"
-                  offsetFromSymbolStart = "10464">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -12168,13 +12136,13 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "798"
-            endingLineNumber = "798"
+            startingLineNumber = "950"
+            endingLineNumber = "950"
             landmarkName = "getSectorData(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc347e0"
+                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc34cac"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -12184,27 +12152,27 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "764"
-                  endingLineNumber = "764"
-                  offsetFromSymbolStart = "304">
+                  startingLineNumber = "816"
+                  endingLineNumber = "816"
+                  offsetFromSymbolStart = "1908">
                </Location>
                <Location
-                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc347e0"
+                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - f9bbf679a5092aa1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
+                  symbolName = "(4) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "764"
-                  endingLineNumber = "764"
-                  offsetFromSymbolStart = "748">
+                  startingLineNumber = "816"
+                  endingLineNumber = "816"
+                  offsetFromSymbolStart = "424">
                </Location>
                <Location
-                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc34200"
+                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc35edf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -12214,23 +12182,8 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "796"
-                  endingLineNumber = "796"
-                  offsetFromSymbolStart = "748">
-               </Location>
-               <Location
-                  uuid = "0AB0734E-7401-4683-928C-D1D28854E21F - 6d5a12126dc3425e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "798"
-                  endingLineNumber = "798"
+                  startingLineNumber = "957"
+                  endingLineNumber = "957"
                   offsetFromSymbolStart = "748">
                </Location>
             </Locations>
@@ -12246,58 +12199,88 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "804"
-            endingLineNumber = "804"
+            startingLineNumber = "956"
+            endingLineNumber = "956"
             landmarkName = "getSectorData(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 6d5a12126dc346ba"
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 129da78bdae9e091"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
+                  symbolName = "ATLAS.RemoteService.getUserData(Any) async -&gt; Swift.Optional&lt;ATLAS.UserProfileDataJson&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "770"
-                  endingLineNumber = "770"
-                  offsetFromSymbolStart = "552">
+                  startingLineNumber = "822"
+                  endingLineNumber = "822"
+                  offsetFromSymbolStart = "20">
                </Location>
                <Location
-                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 6d5a12126dc346ba"
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - b96eafcb75471084"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
+                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getUserData(Any) async -&gt; Swift.Optional&lt;ATLAS.UserProfileDataJson&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "770"
-                  endingLineNumber = "770"
-                  offsetFromSymbolStart = "1244">
+                  startingLineNumber = "823"
+                  endingLineNumber = "823"
+                  offsetFromSymbolStart = "52">
                </Location>
                <Location
-                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 6d5a12126dc342da"
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - b96eafcb75471067"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getSectorData(Any) async -&gt; Swift.Optional&lt;ATLAS.SectorDataJson&gt;"
+                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getUserData(Any) async -&gt; Swift.Optional&lt;ATLAS.UserProfileDataJson&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "802"
-                  endingLineNumber = "802"
-                  offsetFromSymbolStart = "1244">
+                  startingLineNumber = "822"
+                  endingLineNumber = "822"
+                  offsetFromSymbolStart = "2400">
                </Location>
                <Location
-                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 6d5a12126dc34d18"
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 82c345efcf985c65"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getUserData(Any) async -&gt; Swift.Optional&lt;ATLAS.UserProfileDataJson&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "822"
+                  endingLineNumber = "822"
+                  offsetFromSymbolStart = "1676">
+               </Location>
+               <Location
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 79112891fc8cfa64"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for ATLAS.RemoteService.getUserData(Any) async -&gt; Swift.Optional&lt;ATLAS.UserProfileDataJson&gt;"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "822"
+                  endingLineNumber = "822"
+                  offsetFromSymbolStart = "900">
+               </Location>
+               <Location
+                  uuid = "12B69BA8-E18C-4406-8068-4CB0404958D2 - 6d5a12126dc35999"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -12307,8 +12290,8 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "804"
-                  endingLineNumber = "804"
+                  startingLineNumber = "963"
+                  endingLineNumber = "963"
                   offsetFromSymbolStart = "1244">
                </Location>
             </Locations>
@@ -12432,28 +12415,28 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
             landmarkName = "getNotamData(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 38914e10bdd1a01e"
+                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 806f07105d3cd2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
+                  symbolName = "ATLAS.RemoteService.load&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Swift.String) -&gt; &#x3c4;_0_0"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "725"
-                  endingLineNumber = "725"
-                  offsetFromSymbolStart = "84">
+                  startingLineNumber = "775"
+                  endingLineNumber = "775"
+                  offsetFromSymbolStart = "472">
                </Location>
                <Location
-                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 38914e10bdd1a01e"
+                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 38914e10bdd14d2d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -12463,38 +12446,8 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "725"
-                  endingLineNumber = "725"
-                  offsetFromSymbolStart = "364">
-               </Location>
-               <Location
-                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 38914e10bdd15ffe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "757"
-                  endingLineNumber = "757"
-                  offsetFromSymbolStart = "364">
-               </Location>
-               <Location
-                  uuid = "43660D3D-73E0-46E0-9D64-1480F2B10337 - 38914e10bdd15fbc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "759"
-                  endingLineNumber = "759"
+                  startingLineNumber = "872"
+                  endingLineNumber = "872"
                   offsetFromSymbolStart = "364">
                </Location>
             </Locations>
@@ -12510,28 +12463,28 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "745"
-            endingLineNumber = "745"
+            startingLineNumber = "852"
+            endingLineNumber = "852"
             landmarkName = "getNotamData(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 956311ff1bbf1dea"
+                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 38914e10bdd15f5b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
+                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "711"
-                  endingLineNumber = "711"
-                  offsetFromSymbolStart = "304">
+                  startingLineNumber = "762"
+                  endingLineNumber = "762"
+                  offsetFromSymbolStart = "664">
                </Location>
                <Location
-                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 956311ff1bbf1dea"
+                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 956311ff1bbfeefd"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -12541,38 +12494,8 @@
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "711"
-                  endingLineNumber = "711"
-                  offsetFromSymbolStart = "748">
-               </Location>
-               <Location
-                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 956311ff1bbfe1ca"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "743"
-                  endingLineNumber = "743"
-                  offsetFromSymbolStart = "748">
-               </Location>
-               <Location
-                  uuid = "2BD63BD7-744B-4A2F-8BA8-DDBFA6BDF4C7 - 956311ff1bbfe18c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getNotamData(Any) async -&gt; Swift.Optional&lt;ATLAS.INotamWXDataJson&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "745"
-                  endingLineNumber = "745"
+                  startingLineNumber = "858"
+                  endingLineNumber = "858"
                   offsetFromSymbolStart = "748">
                </Location>
             </Locations>
@@ -14221,130 +14144,40 @@
             filePath = "ATLAS/Service/RemoteService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "605"
-            endingLineNumber = "605"
-            landmarkName = "getMapTrafficData(_:)"
+            startingLineNumber = "673"
+            endingLineNumber = "673"
+            landmarkName = "getMapTrafficData(_:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - ced5a87d468276a2"
+                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 1d364e34cbe8a19c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
+                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getMapAabbaData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.IAabbaData&gt;&gt;"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "601"
-                  endingLineNumber = "601"
-                  offsetFromSymbolStart = "828">
+                  startingLineNumber = "627"
+                  endingLineNumber = "627"
+                  offsetFromSymbolStart = "768">
                </Location>
                <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - d9deb080d4cbe8a5"
+                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3afc7ed3fe9e0141"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
+                  symbolName = "(1) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(_: Any, completion: (Swift.Array&lt;ATLAS.ITrafficData&gt;) -&gt; ()) async -&gt; ()"
                   moduleName = "ATLAS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "601"
-                  endingLineNumber = "601"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3eff8141d6bb4aa0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "601"
-                  endingLineNumber = "601"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 669575ca1eb8a4a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "601"
-                  endingLineNumber = "601"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3eff8141d6bb4962"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "603"
-                  endingLineNumber = "603"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3eff8141d6bb4962"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "603"
-                  endingLineNumber = "603"
-                  offsetFromSymbolStart = "356">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3eff8141d6bb493c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "605"
-                  endingLineNumber = "605"
-                  offsetFromSymbolStart = "356">
-               </Location>
-               <Location
-                  uuid = "A587244A-DE5D-4D72-B190-B6887C42D35A - 3eff8141d6bb49fe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for ATLAS.RemoteService.getMapTrafficData(Any) async -&gt; Swift.Optional&lt;Swift.Array&lt;ATLAS.ITrafficData&gt;&gt;"
-                  moduleName = "ATLAS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/Service/RemoteService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "607"
-                  endingLineNumber = "607"
-                  offsetFromSymbolStart = "356">
+                  startingLineNumber = "676"
+                  endingLineNumber = "676"
+                  offsetFromSymbolStart = "1844">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -14489,6 +14322,68 @@
             endingLineNumber = "1071"
             landmarkName = "init(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "864490CB-AEFA-4772-B375-9FD257EC3DB5 - 2a0f14efe6ca2ea3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.MapView.makeCoordinator() -&gt; ATLAS.Coordinator"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1071"
+                  endingLineNumber = "1071"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "864490CB-AEFA-4772-B375-9FD257EC3DB5 - 911705b9806e03aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.Coordinator.__allocating_init(ATLAS.MapView) -&gt; ATLAS.Coordinator"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1071"
+                  endingLineNumber = "1071"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "864490CB-AEFA-4772-B375-9FD257EC3DB5 - da825fa5c0662b0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "protocol witness for SwiftUI.UIViewRepresentable.makeCoordinator() -&gt; &#x3c4;_0_0.Coordinator in conformance ATLAS.MapView : SwiftUI.UIViewRepresentable in ATLAS"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1071"
+                  endingLineNumber = "1071"
+                  offsetFromSymbolStart = "1080">
+               </Location>
+               <Location
+                  uuid = "864490CB-AEFA-4772-B375-9FD257EC3DB5 - f1a9d4bd0a5ad162"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.Coordinator.init(ATLAS.MapView) -&gt; ATLAS.Coordinator"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1071"
+                  endingLineNumber = "1071"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
