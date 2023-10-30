@@ -1276,7 +1276,7 @@ class CoreDataModelState: ObservableObject {
             let responseFlightPlan = await remoteService.getFlightPlanDataV3()
             print("responseFlightPlan======\(responseFlightPlan)")
             if responseFlightPlan.count > 0 {
-                await withTaskGroup(of: Void.self) { group in
+//                await withTaskGroup(of: Void.self) { group in
                     for item in responseFlightPlan {
                         //Check event exists or not to create relationship
                         if let event = readEventsByName(flight: item.flight_overview.callsign) {
@@ -1285,46 +1285,46 @@ class CoreDataModelState: ObservableObject {
                             event.flightStatus = item.status
                             
                             if item.notes.count > 0 {
-                                group.addTask {
-                                    self.initDataNoteList(item.notes, event)
-                                }
+//                                group.addTask {
+                                    await self.initDataNoteList(item.notes, event)
+//                                }
                             }
                             
                             if item.colour_airport.count > 0 {
-                                group.addTask {
-                                    self.initDataAirportColor(item.colour_airport, event)
-                                }
+//                                group.addTask {
+                                await self.initDataAirportColor(item.colour_airport, event)
+//                                }
                             }
                             
                             if let itemRoute = item.route, itemRoute.count > 0 {
-                                group.addTask {
-                                    self.initDataRouteMap(itemRoute, event)
-                                }
+//                                group.addTask {
+                                await self.initDataRouteMap(itemRoute, event)
+//                                }
                             }
                             
                             if let itemNotam = item.notam, itemNotam.count > 0 {
-                                group.addTask {
-                                    self.initDataFlightNotams(itemNotam, event)
-                                }
+//                                group.addTask {
+                                await self.initDataFlightNotams(itemNotam, event)
+//                                }
                             }
                             
                             if let itemMetarTaf = item.metar_taf, itemMetarTaf.count > 0 {
-                                group.addTask {
-                                    self.initDataFlightMetarTaf(itemMetarTaf, event)
-                                }
+//                                group.addTask {
+                                await self.initDataFlightMetarTaf(itemMetarTaf, event)
+//                                }
                             }
                             
                             if item.aabba_notes.count > 0 {
-                                group.addTask {
-                                    self.initDataMapAabbaNotes(item.aabba_notes, event)
-                                }
+//                                group.addTask {
+                                await self.initDataMapAabbaNotes2(item.aabba_notes, event)
+//                                }
                             }
                             
-                            group.addTask {
-                                self.initDataFlightOverview(item.flight_overview, event)
-                            }
+//                            group.addTask {
+                            await self.initDataFlightOverview(item.flight_overview, event)
+//                            }
                         }
-                    }
+//                    }
                    
                 }
             }
@@ -1375,7 +1375,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataNoteList(_ notes: [NotesV30Json], _ event: EventList) {
+    func initDataNoteList(_ notes: [NotesV30Json], _ event: EventList) async {
         if notes.count > 0 {
             var noteList = [NoteList]()
             
@@ -1701,7 +1701,7 @@ class CoreDataModelState: ObservableObject {
     }
 
     
-    func initDataRouteMap(_ data: [RouteV30Json], _ event: EventList) {
+    func initDataRouteMap(_ data: [RouteV30Json], _ event: EventList) async {
         if data.count > 0 {
             var payloadMapRoute = [MapRouteList]()
             
@@ -1740,7 +1740,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataAirportColor(_ data: [IAirportColor], _ event: EventList) {
+    func initDataAirportColor(_ data: [IAirportColor], _ event: EventList) async {
 //        let depAirport = "VTBS"
 //        let arrAirport = "WSSS"
 //        let enrAirports = ["WMKK", "WMKP"]
@@ -1887,7 +1887,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataFlightOverview(_ data: FlightOverviewV30Json, _ event: EventList) {
+    func initDataFlightOverview(_ data: FlightOverviewV30Json, _ event: EventList) async {
         let newObj = FlightOverviewList(context: self.service.container.viewContext)
         newObj.id = UUID()
         newObj.caName = data.CAName
@@ -2145,6 +2145,22 @@ class CoreDataModelState: ObservableObject {
     }
     
     func initDataMapAabbaNotes(_ data: [String: [INoteResponse]], _ event: EventList) {
+        for row in data {
+            if row.value.count > 0 {
+                if row.key == "preflight" {
+                    self.initDataNoteAabbaPreflight(row.value, event)
+                } else if row.key == "departure" {
+                    self.initDataNoteAabbaDepature(row.value, event)
+                } else if row.key == "enroute" {
+                    self.initDataNoteAabbaEnroute(row.value, event)
+                } else if row.key == "arrival" {
+                    self.initDataNoteAabbaArrival(row.value, event)
+                }
+            }
+        }
+    }
+    
+    func initDataMapAabbaNotes2(_ data: [String: [INoteResponse]], _ event: EventList) async {
         for row in data {
             if row.value.count > 0 {
                 if row.key == "preflight" {
@@ -2764,7 +2780,7 @@ class CoreDataModelState: ObservableObject {
 
     }
     
-    func initDataFlightNotams(_ data: [String: [NotamV30Json]], _ event: EventList) {
+    func initDataFlightNotams(_ data: [String: [NotamV30Json]], _ event: EventList) async {
         if data.count > 0 {
             var payloadNotamsData = [NotamsDataList]()
             
@@ -2824,7 +2840,7 @@ class CoreDataModelState: ObservableObject {
         }
     }
     
-    func initDataFlightMetarTaf(_ data: [String: [MetarTafV30Json]],_ event: EventList) {
+    func initDataFlightMetarTaf(_ data: [String: [MetarTafV30Json]],_ event: EventList) async {
         if data.count > 0 {
             var payloadMetarTaf = [MetarTafDataList]()
             
