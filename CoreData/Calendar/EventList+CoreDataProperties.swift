@@ -2,7 +2,7 @@
 //  EventList+CoreDataProperties.swift
 //  ATLAS
 //
-//  Created by phuong phan on 18/10/2023.
+//  Created by phuong phan on 30/10/2023.
 //
 //
 
@@ -26,19 +26,18 @@ extension EventList {
     @NSManaged public var startDate: String?
     @NSManaged public var status: Int32
     @NSManaged public var type: String?
+    @NSManaged public var aabbaMapList: NSSet?
     @NSManaged public var airportMapColorList: NSSet?
     @NSManaged public var eventDateRangeList: NSSet?
+    @NSManaged public var eventSector: EventSectorList?
     @NSManaged public var flightOverviewList: NSSet?
     @NSManaged public var mapRouteList: NSSet?
     @NSManaged public var metarTafList: NSSet?
     @NSManaged public var notamsDataList: NSSet?
+    @NSManaged public var noteAabbaPostList: NSSet?
     @NSManaged public var noteList: NSSet?
     @NSManaged public var routeAlternate: NSSet?
-    @NSManaged public var noteAabbaPostList: NSSet?
-    @NSManaged public var eventSector: EventSectorList?
-    @NSManaged public var airportMapList: NSSet?
     @NSManaged public var trafficMapList: NSSet?
-    @NSManaged public var aabbaMapList: NSSet?
     @NSManaged public var waypointMapList: NSSet?
     
     public var unwrappedStartDate: String {
@@ -68,6 +67,23 @@ extension EventList {
     public var unwrappedDest: String {
         dest ?? ""
     }
+}
+
+// MARK: Generated accessors for aabbaMapList
+extension EventList {
+
+    @objc(addAabbaMapListObject:)
+    @NSManaged public func addToAabbaMapList(_ value: AabbaMapList)
+
+    @objc(removeAabbaMapListObject:)
+    @NSManaged public func removeFromAabbaMapList(_ value: AabbaMapList)
+
+    @objc(addAabbaMapList:)
+    @NSManaged public func addToAabbaMapList(_ values: NSSet)
+
+    @objc(removeAabbaMapList:)
+    @NSManaged public func removeFromAabbaMapList(_ values: NSSet)
+
 }
 
 // MARK: Generated accessors for airportMapColorList
@@ -172,6 +188,23 @@ extension EventList {
 
 }
 
+// MARK: Generated accessors for noteAabbaPostList
+extension EventList {
+
+    @objc(addNoteAabbaPostListObject:)
+    @NSManaged public func addToNoteAabbaPostList(_ value: NoteAabbaPostList)
+
+    @objc(removeNoteAabbaPostListObject:)
+    @NSManaged public func removeFromNoteAabbaPostList(_ value: NoteAabbaPostList)
+
+    @objc(addNoteAabbaPostList:)
+    @NSManaged public func addToNoteAabbaPostList(_ values: NSSet)
+
+    @objc(removeNoteAabbaPostList:)
+    @NSManaged public func removeFromNoteAabbaPostList(_ values: NSSet)
+
+}
+
 // MARK: Generated accessors for noteList
 extension EventList {
 
@@ -206,40 +239,6 @@ extension EventList {
 
 }
 
-// MARK: Generated accessors for noteAabbaPostList
-extension EventList {
-
-    @objc(addNoteAabbaPostListObject:)
-    @NSManaged public func addToNoteAabbaPostList(_ value: NoteAabbaPostList)
-
-    @objc(removeNoteAabbaPostListObject:)
-    @NSManaged public func removeFromNoteAabbaPostList(_ value: NoteAabbaPostList)
-
-    @objc(addNoteAabbaPostList:)
-    @NSManaged public func addToNoteAabbaPostList(_ values: NSSet)
-
-    @objc(removeNoteAabbaPostList:)
-    @NSManaged public func removeFromNoteAabbaPostList(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for airportMapList
-extension EventList {
-
-    @objc(addAirportMapListObject:)
-    @NSManaged public func addToAirportMapList(_ value: AirportMapList)
-
-    @objc(removeAirportMapListObject:)
-    @NSManaged public func removeFromAirportMapList(_ value: AirportMapList)
-
-    @objc(addAirportMapList:)
-    @NSManaged public func addToAirportMapList(_ values: NSSet)
-
-    @objc(removeAirportMapList:)
-    @NSManaged public func removeFromAirportMapList(_ values: NSSet)
-
-}
-
 // MARK: Generated accessors for trafficMapList
 extension EventList {
 
@@ -254,23 +253,6 @@ extension EventList {
 
     @objc(removeTrafficMapList:)
     @NSManaged public func removeFromTrafficMapList(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for aabbaMapList
-extension EventList {
-
-    @objc(addAabbaMapListObject:)
-    @NSManaged public func addToAabbaMapList(_ value: AabbaMapList)
-
-    @objc(removeAabbaMapListObject:)
-    @NSManaged public func removeFromAabbaMapList(_ value: AabbaMapList)
-
-    @objc(addAabbaMapList:)
-    @NSManaged public func addToAabbaMapList(_ values: NSSet)
-
-    @objc(removeAabbaMapList:)
-    @NSManaged public func removeFromAabbaMapList(_ values: NSSet)
 
 }
 

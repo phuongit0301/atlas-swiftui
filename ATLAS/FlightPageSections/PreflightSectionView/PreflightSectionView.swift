@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct PreflightSectionView: View {
-    @State var selectedTab: PreflightTabEnumeration = IPreflightTabs.first?.screenName ?? PreflightTabEnumeration.SummaryScreen
+    @EnvironmentObject var preflightModel: PreflightModel
+//    @State var selectedTab: PreflightTabEnumeration = IPreflightTabs.first?.screenName ?? PreflightTabEnumeration.SummaryScreen
     @State var planTab = IPreflightTabs
     
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
-                switch selectedTab {
+                switch preflightModel.selectedTab {
                     case .SummaryScreen:
                         SummarySubSectionView()
                     case .NotamScreen:
@@ -30,9 +31,8 @@ struct PreflightSectionView: View {
                         NoteSubSectionView()
                 }
                 
-                PreflightSegmented(preselected: $selectedTab, options: planTab, geoWidth: proxy.size.width)
+                PreflightSegmented(preselected: $preflightModel.selectedTab, options: planTab, geoWidth: proxy.size.width)
             }.frame(maxHeight: .infinity)
-                
         }
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeInformationView: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var remoteService: RemoteService
+//    @SceneStorage("selectedEvent") private var selectedEvent: EventList?
+    @SceneStorage("isEventActive") private var isEventActive: Bool = false
     
     @State var isCollapseFlight = false
     @State var isCollapseExpiring = false
@@ -395,9 +397,9 @@ struct HomeInformationView: View {
                     coreDataModel.dataExpiringSoon = coreDataModel.extractExpiringDocuments(expiryData: coreDataModel.dataRecencyDocument, monthsAhead: coreDataModel.monthsAhead)
                 }
         } // End VStack
-        .background(
-            NavigationLink(destination: HomeFlightSectionView(), isActive: $coreDataModel.isEventActive) { EmptyView() }
-        )
+//        .background(
+//            NavigationLink(destination: HomeFlightSectionView(), isActive: $coreDataModel.isEventActive) { EmptyView() }.isDetailLink(false)
+//        )
     }
     
     func renderItem(_ item: EventList) -> String {

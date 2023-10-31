@@ -118,7 +118,7 @@ class TabModelState: ObservableObject {
 //        ITabs(name: "Arrival", iconName: "map", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ArrivalScreen, isDefault: false, isDisabled: false, scheme: "jdmpro.jeppesen://"),
 //        ITabs(name: "Weather", iconName: "sun.max", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.WeatherScreen, isDefault: false, isDisabled: false, scheme: "ewas://"),
 //        ITabs(name: "eDocuments", iconName: "doc.viewfinder", isExternal: true, isShowTabbar: true, screenName: NavigationEnumeration.ChartScreen, isDefault: false, isDisabled: false, scheme: "com.adobe.Adobe-Reader://"),
-        ITabs(name: "AI Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.AtlasSearchScreen, isDefault: false, isDisabled: false),
+        ITabs(name: "AI(P) Search", iconName: "globe", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.AtlasSearchScreen, isDefault: false, isDisabled: true),
         ITabs(name: "Utilities", iconName: "rectangle.stack", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ReportingScreen, isDefault: false, isDisabled: true),
         ITabs(name: "Clipboard", iconName: "list.bullet.clipboard", isExternal: false, isShowTabbar: true, screenName: NavigationEnumeration.ClipboardScreen, isDefault: false, isDisabled: false),
     ]
@@ -167,7 +167,7 @@ class MainTabModelState: ObservableObject {
         IMainTabs(id: UUID(), name: "Logbook", screenName: MainNavigationEnumeration.LogbookSectionView, isShowTabbar: true, isDisabled: false),
         IMainTabs(id: UUID(), name: "Recency", screenName: MainNavigationEnumeration.RecencySectionView, isShowTabbar: true, isDisabled: false),
 //        IMainTabs(id: UUID(), name: "AABBA", screenName: MainNavigationEnumeration.AABBASectionView, isShowTabbar: true, isDisabled: false),
-        IMainTabs(id: UUID(), name: "Chat", screenName: MainNavigationEnumeration.ChatSectionView, isShowTabbar: true, isDisabled: true),
+//        IMainTabs(id: UUID(), name: "Chat", screenName: MainNavigationEnumeration.ChatSectionView, isShowTabbar: true, isDisabled: true),
     ]
     
     @Published var selectedNav: MainNavigationEnumeration

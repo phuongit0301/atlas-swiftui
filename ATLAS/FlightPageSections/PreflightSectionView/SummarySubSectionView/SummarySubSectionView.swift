@@ -26,7 +26,7 @@ struct SummarySubSectionView: View {
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var remoteService: RemoteService
     @EnvironmentObject var preflightModel: PreflightModel
-    @EnvironmentObject var mapIconModal: MapIconModel
+    @EnvironmentObject var mapIconModel: MapIconModel
     
     @AppStorage("uid") var userID: String = ""
     
@@ -107,192 +107,192 @@ struct SummarySubSectionView: View {
                     .padding(.bottom, 8)
                 // End header
                 ScrollView {
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center, spacing: 0) {
-                            Button(action: {
-                                self.isCollapseFlightInfo.toggle()
-                            }, label: {
-                                HStack(alignment: .center, spacing: 8) {
-                                    Text("Flight Information").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
-                                    
-                                    if isCollapseFlightInfo {
-                                        Image(systemName: "chevron.down")
-                                            .foregroundColor(Color.blue)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    } else {
-                                        Image(systemName: "chevron.up")
-                                            .foregroundColor(Color.blue)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                }.frame(alignment: .leading)
-                            }).buttonStyle(PlainButtonStyle())
-                            
-                            Spacer()
-                        }.frame(height: 52)
-                        
-                        if isCollapseFlightInfo {
-                            VStack(spacing: 0) {
-                                HStack(spacing: 0) {
-                                    Text("Callsign")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Model")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Aircraft")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                HStack(spacing: 0) {
-                                    Text(dataFlightOverview?.unwrappedCallsign ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedModel ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedAircraft ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                HStack(spacing: 0) {
-                                    Text("Dep")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("Dest")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text("POB").foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                HStack(spacing: 0) {
-                                    Text(dataFlightOverview?.unwrappedDep ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedDest ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                    Text(dataFlightOverview?.unwrappedPob ?? "")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .regular))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
-                                }.frame(height: 44)
-                            } //end VStack
-                        }// end if
-                    }.padding(.horizontal)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                    
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center, spacing: 0) {
-                            Button(action: {
-                                self.isCollapsePlanTime.toggle()
-                            }, label: {
-                                HStack(alignment: .center, spacing: 8) {
-                                    Text("Planned times").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
-                                    if isCollapsePlanTime {
-                                        Image(systemName: "chevron.down")
-                                            .foregroundColor(Color.blue)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    } else {
-                                        Image(systemName: "chevron.up")
-                                            .foregroundColor(Color.blue)
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                }.frame(alignment: .leading)
-                            }).buttonStyle(PlainButtonStyle())
-                            
-                            Spacer()
-                        }.frame(height: 52)
-                        
-                        if isCollapsePlanTime {
-                            VStack(spacing: 0) {
-                                HStack(spacing: 0) {
-                                    Text("STD")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text("STA")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                HStack(spacing: 0) {
-                                    Text(std).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text(sta).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                HStack(spacing: 0) {
-                                    Text("Block Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    Text("Flight Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    
-                                }.frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                HStack(spacing: 0) {
-                                    Text(renderTime(std, sta)).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-                                    
-                                    Text(dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
-
-                                }.frame(height: 44)
-                                
-                                HStack(spacing: 0) {
-                                    Text("Block Time - Flight Time")
-                                        .foregroundStyle(Color.black)
-                                        .font(.system(size: 15, weight: .semibold))
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
-                                }.frame(height: 44)
-                                
-                                Divider().padding(.horizontal, -16)
-                                
-                                HStack(spacing: 0) {
-                                    Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
-                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
-                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
-                                }.frame(height: 44)
-                            }// End VStack
-                        }// end If
-                    }.padding(.horizontal)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
-                    
+//                    VStack(spacing: 0) {
+//                        HStack(alignment: .center, spacing: 0) {
+//                            Button(action: {
+//                                self.isCollapseFlightInfo.toggle()
+//                            }, label: {
+//                                HStack(alignment: .center, spacing: 8) {
+//                                    Text("Flight Information").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
+//
+//                                    if isCollapseFlightInfo {
+//                                        Image(systemName: "chevron.down")
+//                                            .foregroundColor(Color.blue)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    } else {
+//                                        Image(systemName: "chevron.up")
+//                                            .foregroundColor(Color.blue)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    }
+//                                }.frame(alignment: .leading)
+//                            }).buttonStyle(PlainButtonStyle())
+//
+//                            Spacer()
+//                        }.frame(height: 52)
+//
+//                        if isCollapseFlightInfo {
+//                            VStack(spacing: 0) {
+//                                HStack(spacing: 0) {
+//                                    Text("Callsign")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text("Model")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text("Aircraft")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                Divider().padding(.horizontal, -16)
+//
+//                                HStack(spacing: 0) {
+//                                    Text(dataFlightOverview?.unwrappedCallsign ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text(dataFlightOverview?.unwrappedModel ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text(dataFlightOverview?.unwrappedAircraft ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                HStack(spacing: 0) {
+//                                    Text("Dep")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text("Dest")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text("POB").foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                Divider().padding(.horizontal, -16)
+//
+//                                HStack(spacing: 0) {
+//                                    Text(dataFlightOverview?.unwrappedDep ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text(dataFlightOverview?.unwrappedDest ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                    Text(dataFlightOverview?.unwrappedPob ?? "")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .regular))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 3), alignment: .leading)
+//                                }.frame(height: 44)
+//                            } //end VStack
+//                        }// end if
+//                    }.padding(.horizontal)
+//                        .background(Color.white)
+//                        .cornerRadius(8)
+//                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+//
+//                    VStack(spacing: 0) {
+//                        HStack(alignment: .center, spacing: 0) {
+//                            Button(action: {
+//                                self.isCollapsePlanTime.toggle()
+//                            }, label: {
+//                                HStack(alignment: .center, spacing: 8) {
+//                                    Text("Planned times").font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.black)
+//                                    if isCollapsePlanTime {
+//                                        Image(systemName: "chevron.down")
+//                                            .foregroundColor(Color.blue)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    } else {
+//                                        Image(systemName: "chevron.up")
+//                                            .foregroundColor(Color.blue)
+//                                            .scaledToFit()
+//                                            .aspectRatio(contentMode: .fit)
+//                                    }
+//                                }.frame(alignment: .leading)
+//                            }).buttonStyle(PlainButtonStyle())
+//
+//                            Spacer()
+//                        }.frame(height: 52)
+//
+//                        if isCollapsePlanTime {
+//                            VStack(spacing: 0) {
+//                                HStack(spacing: 0) {
+//                                    Text("STD")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//                                    Text("STA")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                Divider().padding(.horizontal, -16)
+//
+//                                HStack(spacing: 0) {
+//                                    Text(std).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//                                    Text(sta).font(.system(size: 15, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                HStack(spacing: 0) {
+//                                    Text("Block Time")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//                                    Text("Flight Time")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//
+//                                }.frame(height: 44)
+//
+//                                Divider().padding(.horizontal, -16)
+//
+//                                HStack(spacing: 0) {
+//                                    Text(renderTime(std, sta)).font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//
+//                                    Text(dataFlightOverview?.unwrappedFlightTime ?? "").font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
+//
+//                                }.frame(height: 44)
+//
+//                                HStack(spacing: 0) {
+//                                    Text("Block Time - Flight Time")
+//                                        .foregroundStyle(Color.black)
+//                                        .font(.system(size: 15, weight: .semibold))
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
+//                                }.frame(height: 44)
+//
+//                                Divider().padding(.horizontal, -16)
+//
+//                                HStack(spacing: 0) {
+//                                    Text(renderBlockFlightTime(dataFlightOverview?.unwrappedFlightTime ?? "00:00", renderTime(std, sta)))
+//                                        .font(.system(size: 17, weight: .regular)).foregroundStyle(Color.black)
+//                                        .frame(width: calculateWidthSummary(proxy.size.width - 32, 1), alignment: .leading)
+//                                }.frame(height: 44)
+//                            }// End VStack
+//                        }// end If
+//                    }.padding(.horizontal)
+//                        .background(Color.white)
+//                        .cornerRadius(8)
+//                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 0))
+//
                     
                     VStack(spacing: 0) {
                         HStack(alignment: .center, spacing: 0) {
@@ -347,10 +347,19 @@ struct SummarySubSectionView: View {
                             VStack(spacing: 8) {
                                 VStack(spacing: 0) {
                                     HStack {
-                                        Text("Route").frame(width: proxy.size.width - 64, alignment: .leading)
+                                        Text("Route").frame(alignment: .leading)
                                             .foregroundStyle(Color.black)
                                             .font(.system(size: 15, weight: .semibold))
-                                    }.frame(height: 44)
+                                        
+                                        Spacer()
+                                        
+                                        if isEdit {
+                                            Button(action: {
+                                            }, label: {
+                                                Image(systemName: "camera").foregroundColor(Color.theme.philippineGray3)
+                                            }).padding(.trailing, 8)
+                                        }
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 32, 1), height: 44, alignment: .leading)
                                     
                                     Divider().padding(.horizontal, -16)
                                     
@@ -370,7 +379,7 @@ struct SummarySubSectionView: View {
                                                 isRouteFormChange = true
                                                 coreDataModel.save()
                                             }
-                                    }.frame(height: 44)
+                                    }.frame(width: calculateWidthSummary(proxy.size.width - 32, 1), height: 44, alignment: .leading)
                                 }
                                 
                                 // Enroute Alternates
@@ -622,7 +631,7 @@ struct SummarySubSectionView: View {
                 coreDataModel.isTrafficLoading = true
                 coreDataModel.isMapAabbaLoading = true
                 coreDataModel.isMapWaypointLoading = true
-                coreDataModel.isMapAirportLoading = true
+                coreDataModel.isMapAirportColorLoading = true
                 coreDataModel.isAabbaNoteLoading = true
                 coreDataModel.isNotamLoading = true
                 
@@ -757,6 +766,7 @@ struct SummarySubSectionView: View {
                 
                 coreDataModel.dataAlternate = coreDataModel.readDataAlternate()
                 coreDataModel.dataAabbaMap = coreDataModel.readDataAabbaMapList()
+                mapIconModel.firstLoading = true
                 prepareData()
                 
                 self.isLoading = false
@@ -840,7 +850,7 @@ struct SummarySubSectionView: View {
     func handleAirport(_ payload: [String: Any]) async {
         print("handle aiport")
         
-        coreDataModel.isMapAirportLoading = true
+        coreDataModel.isMapAirportColorLoading = true
         await remoteService.getMapAirportColorData(payload, completion: { (success, responseColorAirport) in
             Task {
                 if success {
@@ -849,7 +859,7 @@ struct SummarySubSectionView: View {
                         coreDataModel.initDataAirportMapColor(responseColorAirport.colour_airports_data, payload)
                     }
                     print("end aiport")
-                    coreDataModel.isMapAirportLoading = false
+                    coreDataModel.isMapAirportColorLoading = false
                 }
             }
         })

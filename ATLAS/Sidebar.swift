@@ -11,16 +11,20 @@ import SwiftUI
 struct Sidebar: View {
     @EnvironmentObject var coreDataModel: CoreDataModelState
     @EnvironmentObject var sideMenuState: SideMenuModelState
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.presentationMode) var presentation
     
     @State private var showUpcoming = true
     @State private var showCompleted = true
+    
+    @State private var isActive = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .center, spacing: 0) {
                 VStack(spacing: 0) {
-                    Text("Captain Muhammad Adil").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
-                    Text("Accumulus Airlines").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
+                    Text("\(coreDataModel.dataUser?.firstName ?? "") \(coreDataModel.dataUser?.lastName ?? "")").font(.system(size: 17, weight: .semibold)).foregroundColor(Color.black)
+                    Text(coreDataModel.dataUser?.airline ?? "").font(.system(size: 15, weight: .regular)).foregroundColor(Color.black)
                 }.padding(.vertical, 8)
                     .padding(.horizontal, 14)
                     .background(Color.theme.tealDeer.opacity(0.25))
@@ -35,6 +39,12 @@ struct Sidebar: View {
                 .font(.system(size: 20, weight: .semibold))
                 .padding(.horizontal)
                 .frame(height: 44)
+                .onTapGesture {
+                    coreDataModel.selectedEvent = nil
+                    coreDataModel.isEventActive = false
+                    dismiss()
+                }
+
             
             ScrollView {
                 VStack (alignment: .leading, spacing: 8) {
@@ -87,20 +97,20 @@ struct Sidebar: View {
                         }
                     }.padding(.horizontal)
                     
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Logbook")
-                                .foregroundColor(Color.theme.eerieBlack)
-                                .font(.system(size: 20, weight: .semibold))
-                                
-                            Spacer()
-                        }.frame(height: 44)
-                    }.padding(.horizontal)
+//                    VStack(alignment: .leading) {
+//                        HStack {
+//                            Text("Logbook")
+//                                .foregroundColor(Color.theme.eerieBlack)
+//                                .font(.system(size: 20, weight: .semibold))
+//
+//                            Spacer()
+//                        }.frame(height: 44)
+//                    }.padding(.horizontal)
                 }
             }
         }.background(Color.theme.cultured)
 //            .background(
-//                NavigationLink(destination: HomeFlightSectionView(), isActive: $coreDataModel.isEventActive) { EmptyView() }
+//                NavigationLink(destination: HomeSectionView(), isActive: $isActive) { EmptyView() }
 //            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -108,9 +118,7 @@ struct Sidebar: View {
                     Button(action: {
                         // todo
                     }) {
-                        Image(systemName: "gear").foregroundColor(Color.theme.azure)
-                            .font(.system(
-                                size: 22))
+                        Image(systemName: "gear").foregroundColor(Color.theme.philippineGray3).font(.system(size: 22))
                     }
                 }
                 ToolbarItem(placement: .principal) {

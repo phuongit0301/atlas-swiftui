@@ -370,16 +370,63 @@ struct IWaypointDataJson: Decodable {
     var waypoints_data: [IWaypointData]
 }
 
+struct IAirportDataResponse: Decodable {
+    var airport_id: String
+    var lat: String
+    var long: String
+    var dep_delay: String
+    var arr_delay: String
+}
+
 struct IAirportData: Decodable {
-    var airport_id: String?
-    var lat: String?
-    var long: String?
-    var dep_delay: String?
-    var arr_delay: String?
+    private enum CodingKeys: String, CodingKey {
+        case airport_id
+        case lat
+        case long
+        case dep_delay
+        case arr_delay
+    }
+    
+    var airport_id: String
+    var lat: String
+    var long: String
+    var dep_delay: String
+    var arr_delay: String
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.airport_id = try values.decode(String.self, forKey: .airport_id)
+        self.lat = try values.decode(String.self, forKey: .lat)
+        self.long = try values.decode(String.self, forKey: .long)
+        self.dep_delay = try values.decode(String.self, forKey: .dep_delay)
+        self.arr_delay = try values.decode(String.self, forKey: .arr_delay)
+    }
+    
+    // The keys must have the same name as the attributes of the Quake entity.
+    var dictionaryValue: [String: Any] {
+        [
+            "name": airport_id,
+            "latitude": lat,
+            "longitude": long,
+        ]
+    }
 }
 
 struct IAirportDataJson: Decodable {
-    var airport_data: [IAirportData]
+    private enum RootCodingKeys: String, CodingKey {
+        case airport_data
+    }
+    
+    private(set) var airport_data = [IAirportData]()
+    
+    init(from decoder: Decoder) throws {
+        let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
+        if let properties = try? rootContainer.decode(IAirportData.self, forKey: .airport_data) {
+            airport_data.append(properties)
+        }
+    }
+        
+//    var airport_data: [IAirportData]
 }
 
 struct ITrafficDataV30: Decodable {

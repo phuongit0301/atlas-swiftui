@@ -61,7 +61,7 @@ struct CalendarView: View {
                         }).buttonStyle(PlainButtonStyle())
                         .frame(maxWidth: .infinity)
 
-                    }.frame(height: 103, alignment: .top)
+                    }.frame(height: 80, alignment: .top)
                     .background(eventsOfRange(date: date))
                 },
                 // assign color for past and future dates
@@ -71,7 +71,7 @@ struct CalendarView: View {
                             .foregroundColor(.secondary)
                             .padding(6)
                             .frame(width: 33, height: 33)
-                    }.frame(height: 103, alignment: .top)
+                    }.frame(height: 80, alignment: .top)
                         .frame(maxWidth: .infinity)
                 },
                 header: { date in

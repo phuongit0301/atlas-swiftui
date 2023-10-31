@@ -80,7 +80,7 @@ struct ListReferenceModel {
             ListFlightInformationItem(name: "Departure", date: "XX:XX", screenName: NavigationEnumeration.ClipboardDepature),
             ListFlightInformationItem(name: "Enroute", date: "00:XX", screenName: NavigationEnumeration.ClipboardEnroute),
             ListFlightInformationItem(name: "Arrival", date: "XX:XX", screenName: NavigationEnumeration.ClipboardArrival),
-            ListFlightInformationItem(name: "AI Search Results", date: "XXX", screenName: NavigationEnumeration.ClipboardAISearch),
+//            ListFlightInformationItem(name: "AI Search Results", date: "XXX", screenName: NavigationEnumeration.ClipboardAISearch),
 //            ListFlightInformationItem(name: "Utilities", date: "XXX", screenName: NavigationEnumeration.ScratchPadScreen),
         ]
         

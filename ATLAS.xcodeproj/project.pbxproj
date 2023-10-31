@@ -24,6 +24,10 @@
 		3E086D992A95022000BE00AD /* EnrouteModalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */; };
 		3E086D9D2A951B9700BE00AD /* EnrouteModalPickerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */; };
 		3E096C282AEA58DE005F184E /* CustomAutoCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C272AEA58DE005F184E /* CustomAutoCompleteView.swift */; };
+		3E096C2D2AEF9A6B005F184E /* AirportMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C292AEF9A6B005F184E /* AirportMapList+CoreDataClass.swift */; };
+		3E096C2E2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2A2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift */; };
+		3E096C2F2AEF9A6B005F184E /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2B2AEF9A6B005F184E /* EventList+CoreDataClass.swift */; };
+		3E096C302AEF9A6B005F184E /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2C2AEF9A6B005F184E /* EventList+CoreDataProperties.swift */; };
 		3E15A4982AE8B8DA000DA474 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A4972AE8B8DA000DA474 /* CustomError.swift */; };
 		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
 		3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */; };
@@ -389,12 +393,8 @@
 		3E9A2CB12ADD71CF0071F44C /* RecencyList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CAF2ADD71CF0071F44C /* RecencyList+CoreDataClass.swift */; };
 		3E9A2CB22ADD71CF0071F44C /* RecencyList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CB02ADD71CF0071F44C /* RecencyList+CoreDataProperties.swift */; };
 		3E9A2CB62ADE70D40071F44C /* ModalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CB52ADE70D40071F44C /* ModalImageView.swift */; };
-		3E9A2CC12ADF9CCA0071F44C /* AirportMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CB72ADF9CCA0071F44C /* AirportMapList+CoreDataClass.swift */; };
-		3E9A2CC22ADF9CCA0071F44C /* AirportMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CB82ADF9CCA0071F44C /* AirportMapList+CoreDataProperties.swift */; };
 		3E9A2CC32ADF9CCA0071F44C /* AirportMapColorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CB92ADF9CCA0071F44C /* AirportMapColorList+CoreDataClass.swift */; };
 		3E9A2CC42ADF9CCA0071F44C /* AirportMapColorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBA2ADF9CCA0071F44C /* AirportMapColorList+CoreDataProperties.swift */; };
-		3E9A2CC52ADF9CCA0071F44C /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBB2ADF9CCA0071F44C /* EventList+CoreDataClass.swift */; };
-		3E9A2CC62ADF9CCA0071F44C /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBC2ADF9CCA0071F44C /* EventList+CoreDataProperties.swift */; };
 		3E9A2CC72ADF9CCA0071F44C /* TrafficMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBD2ADF9CCA0071F44C /* TrafficMapList+CoreDataClass.swift */; };
 		3E9A2CC82ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBE2ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift */; };
 		3E9A2CC92ADF9CCA0071F44C /* WaypointMapList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A2CBF2ADF9CCA0071F44C /* WaypointMapList+CoreDataClass.swift */; };
@@ -560,6 +560,10 @@
 		3E086D982A95022000BE00AD /* EnrouteModalPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPicker.swift; sourceTree = "<group>"; };
 		3E086D9C2A951B9700BE00AD /* EnrouteModalPickerString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalPickerString.swift; sourceTree = "<group>"; };
 		3E096C272AEA58DE005F184E /* CustomAutoCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAutoCompleteView.swift; sourceTree = "<group>"; };
+		3E096C292AEF9A6B005F184E /* AirportMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E096C2A2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E096C2B2AEF9A6B005F184E /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E096C2C2AEF9A6B005F184E /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E15A4972AE8B8DA000DA474 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
 		3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyNumberModalView.swift; sourceTree = "<group>"; };
@@ -924,12 +928,8 @@
 		3E9A2CAF2ADD71CF0071F44C /* RecencyList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2CB02ADD71CF0071F44C /* RecencyList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecencyList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2CB52ADE70D40071F44C /* ModalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalImageView.swift; sourceTree = "<group>"; };
-		3E9A2CB72ADF9CCA0071F44C /* AirportMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E9A2CB82ADF9CCA0071F44C /* AirportMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2CB92ADF9CCA0071F44C /* AirportMapColorList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2CBA2ADF9CCA0071F44C /* AirportMapColorList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapColorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E9A2CBB2ADF9CCA0071F44C /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E9A2CBC2ADF9CCA0071F44C /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2CBD2ADF9CCA0071F44C /* TrafficMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrafficMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E9A2CBE2ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrafficMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E9A2CBF2ADF9CCA0071F44C /* WaypointMapList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaypointMapList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -2049,12 +2049,12 @@
 		3EEBE6542AB1AE5000421AFF /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3E096C292AEF9A6B005F184E /* AirportMapList+CoreDataClass.swift */,
+				3E096C2A2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift */,
 				3E9A2CBD2ADF9CCA0071F44C /* TrafficMapList+CoreDataClass.swift */,
 				3E9A2CBE2ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift */,
 				3E9A2CB92ADF9CCA0071F44C /* AirportMapColorList+CoreDataClass.swift */,
 				3E9A2CBA2ADF9CCA0071F44C /* AirportMapColorList+CoreDataProperties.swift */,
-				3E9A2CB72ADF9CCA0071F44C /* AirportMapList+CoreDataClass.swift */,
-				3E9A2CB82ADF9CCA0071F44C /* AirportMapList+CoreDataProperties.swift */,
 				3E9A2CBF2ADF9CCA0071F44C /* WaypointMapList+CoreDataClass.swift */,
 				3E9A2CC02ADF9CCA0071F44C /* WaypointMapList+CoreDataProperties.swift */,
 				3E2BA8872AD4FD06009ABCC2 /* MapRouteList+CoreDataClass.swift */,
@@ -2099,8 +2099,8 @@
 		3EF221932AAEBFEC000B8FFB /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				3E9A2CBB2ADF9CCA0071F44C /* EventList+CoreDataClass.swift */,
-				3E9A2CBC2ADF9CCA0071F44C /* EventList+CoreDataProperties.swift */,
+				3E096C2B2AEF9A6B005F184E /* EventList+CoreDataClass.swift */,
+				3E096C2C2AEF9A6B005F184E /* EventList+CoreDataProperties.swift */,
 				3E9A2C632ADA42C00071F44C /* EventSectorList+CoreDataClass.swift */,
 				3E9A2C642ADA42C00071F44C /* EventSectorList+CoreDataProperties.swift */,
 				3E2BA8A32AD5431A009ABCC2 /* EventDateRangeList+CoreDataClass.swift */,
@@ -2517,9 +2517,9 @@
 				3E4A36CF2A5A4A6400027C61 /* ArrivalATISList+CoreDataClass.swift in Sources */,
 				3E7291B62AC5977E000FF295 /* ArrivalSectionListView.swift in Sources */,
 				3E7291962AC5797A000FF295 /* DepartureSectionView.swift in Sources */,
-				3E9A2CC22ADF9CCA0071F44C /* AirportMapList+CoreDataProperties.swift in Sources */,
 				3E2BA85D2AD1A02D009ABCC2 /* AabbaPostList+CoreDataClass.swift in Sources */,
 				3E7292382AC8721E000FF295 /* SlideoverAISearchResult.swift in Sources */,
+				3E096C2D2AEF9A6B005F184E /* AirportMapList+CoreDataClass.swift in Sources */,
 				3E3FCC462A270851008017FA /* trackMilesChart.swift in Sources */,
 				3E7291A12AC59292000FF295 /* EnrouteSectionView.swift in Sources */,
 				3E5CA5952AE7712000DE8042 /* ClipboardArrivalIncomingNoteView.swift in Sources */,
@@ -2563,10 +2563,10 @@
 				3E7291E12AC68434000FF295 /* ClipboardDepartureNoteView.swift in Sources */,
 				3EEBE68A2AB67BED00421AFF /* TurbulencePopoverView.swift in Sources */,
 				C5192C702ACA6B740029BC48 /* delaysViewBasic.swift in Sources */,
-				3E9A2CC62ADF9CCA0071F44C /* EventList+CoreDataProperties.swift in Sources */,
 				3E766FA12A5EEF9900B11616 /* FuelSegmented.swift in Sources */,
 				3E7291B22AC5947A000FF295 /* ArrivalNoteItemRelevantList.swift in Sources */,
 				3E4A36A72A570BA800027C61 /* FuelExtraList+CoreDataClass.swift in Sources */,
+				3E096C2F2AEF9A6B005F184E /* EventList+CoreDataClass.swift in Sources */,
 				3E4E10282A6567910026802B /* ItemListScratchPadSplit.swift in Sources */,
 				3E8250772A1E1FB6008F616D /* View.swift in Sources */,
 				3E086D6F2A944CF200BE00AD /* FlightOverviewSectionView.swift in Sources */,
@@ -2657,7 +2657,6 @@
 				3E72917C2AC3D7F6000FF295 /* NoteCommentList+CoreDataClass.swift in Sources */,
 				3E5CA54F2AE7616F00DE8042 /* NotamCompletedSubSectionRowView.swift in Sources */,
 				3E4A37732A5CD18C00027C61 /* FuelFlightLevelList+CoreDataClass.swift in Sources */,
-				3E9A2CC52ADF9CCA0071F44C /* EventList+CoreDataClass.swift in Sources */,
 				3EFA5F032A41DB82001ED6CF /* OverviewSplitView.swift in Sources */,
 				3E4A36602A56EAE800027C61 /* AltnTafDataList+CoreDataClass.swift in Sources */,
 				3E2BA85E2AD1A02D009ABCC2 /* AabbaPostList+CoreDataProperties.swift in Sources */,
@@ -2901,6 +2900,7 @@
 				3E9A2CB22ADD71CF0071F44C /* RecencyList+CoreDataProperties.swift in Sources */,
 				3E4A37392A5C691500027C61 /* FuelTaxiList+CoreDataClass.swift in Sources */,
 				3E7292622ACABDFB000FF295 /* ExpiryRowView.swift in Sources */,
+				3E096C2E2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift in Sources */,
 				3EB9DAD92A750F5D009AEDFB /* FuelTaxiRefList+CoreDataClass.swift in Sources */,
 				3EEBE67F2AB54CFD00421AFF /* CustomAabbaAnnotationView.swift in Sources */,
 				3E7291832AC3E8B6000FF295 /* ModalNoteCommentView.swift in Sources */,
@@ -2919,6 +2919,7 @@
 				3E9A2CC82ADF9CCA0071F44C /* TrafficMapList+CoreDataProperties.swift in Sources */,
 				3E7292332AC86E53000FF295 /* SlideoverArrivalNoteItemList.swift in Sources */,
 				3EF221B12AAF4877000B8FFB /* OtherEventDetail.swift in Sources */,
+				3E096C302AEF9A6B005F184E /* EventList+CoreDataProperties.swift in Sources */,
 				3E7291E52AC68490000FF295 /* ClipboardDepartureNoteRelevantList.swift in Sources */,
 				3EEBE68E2AB67ED700421AFF /* WindPopoverView.swift in Sources */,
 				3E4E101A2A6431CF0026802B /* FlightPlanNOTAMReferenceView.swift in Sources */,
@@ -2932,7 +2933,6 @@
 				3E7291A32AC592A3000FF295 /* EnrouteNoteItemForm.swift in Sources */,
 				3E4E10332A6A07460026802B /* ScratchPadList+CoreDataClass.swift in Sources */,
 				3E3FCBFA2A236D14008017FA /* HomeViewSplit.swift in Sources */,
-				3E9A2CC12ADF9CCA0071F44C /* AirportMapList+CoreDataClass.swift in Sources */,
 				3E4A36A32A570BA800027C61 /* PerfWeightList+CoreDataClass.swift in Sources */,
 				3EB9DAE52A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataClass.swift in Sources */,
 				3E5CA53D2AE50CED00DE8042 /* NoteItemRelevantForm.swift in Sources */,

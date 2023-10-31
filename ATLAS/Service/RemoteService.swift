@@ -149,7 +149,7 @@ class RemoteService: ObservableObject {
         }
     }
     
-    func getFlightPlanDataV3() async -> [FlightDataV30Json]  {
+    func getFlightPlanDataV3() async -> [FlightDataV30Json]?  {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_flights_data") else { fatalError("Missing URL") }
             //make request
             var request = URLRequest(url: url)
@@ -173,10 +173,11 @@ class RemoteService: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 print("json flight plan data =============\(data)")
                 do {
-                    let decodedSearch = try JSONDecoder().decode([FlightDataV30Json].self, from: data)
+                    let decodedSearch = try? JSONDecoder().decode([FlightDataV30Json]?.self, from: data) ?? []
                     return decodedSearch
                 } catch let error {
                     print("Error decoding flight plan: ", error)
+                    return []
                 }
                  
             } catch {
@@ -772,7 +773,7 @@ class RemoteService: ObservableObject {
     }
     
     //ATLAS_get_map_airports_data
-    func getMapAirportData() async -> IAirportDataJsonResponse? {
+    func getMapAirportData(completion: @escaping (Bool, IAirportDataJsonResponse) -> Void) async {
         guard let url = URL(string: "https://accumulus-backend-atlas-lvketaariq-et.a.run.app/ATLAS_get_map_all_airports_data") else { fatalError("Missing URL") }
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -782,21 +783,35 @@ class RemoteService: ObservableObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let sessionConfig = URLSessionConfiguration.default
-            sessionConfig.timeoutIntervalForRequest = 30.0
+            sessionConfig.timeoutIntervalForRequest = 60
+            sessionConfig.timeoutIntervalForResource = 90
+            let session = URLSession(configuration: sessionConfig)
             
-            let (data, _) = try await URLSession.shared.data(for: request)
-            
-//            print("json=============\(String(data: data, encoding: .utf8)!)")
-            do {
-                let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
-                return decodedSearch
-            } catch let error {
-                print("Error decoding: ", error)
+            let dataTask = session.dataTask(with: request) { (data, response, error) in
+                do {
+                    if let error = error {
+                        print("Request error: ", error)
+                        completion(true, IAirportDataJsonResponse(all_airports_data: []))
+                        return
+                    }
+                    
+                    guard let response = response as? HTTPURLResponse else { return }
+                    
+                    if response.statusCode == 200, let data = data {
+                        let decodedSearch = try JSONDecoder().decode(IAirportDataJsonResponse.self, from: data)
+                        completion(true, decodedSearch)
+                    }
+                } catch let error {
+                    print("Error decoding: ", error)
+                    completion(true, IAirportDataJsonResponse(all_airports_data: []))
+                }
             }
+            
+            dataTask.resume()
         } catch {
             print("Error: \(error)")
+            completion(true, IAirportDataJsonResponse(all_airports_data: []))
         }
-        return nil
     }
     
     //ATLAS_get_map_colour_airports_data

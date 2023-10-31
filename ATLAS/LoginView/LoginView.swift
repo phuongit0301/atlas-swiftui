@@ -195,7 +195,7 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                Text("Copyright 2003 Accumulus Pte. Ltd. All Rights Reserved ").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 50)
+                Text("Copyright 2023 Accumulus Pte. Ltd. All Rights Reserved ").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 50)
                 
             }.frame(width: 550)
                 

@@ -421,11 +421,11 @@ struct FlightOverviewSectionView: View {
                                 Divider().padding(.horizontal, -16)
                                 
                                 HStack(spacing: 0) {
-                                    ButtonDateStepper(onToggle: onChockOff, value: $currentDateChockOff, suffix: "")
+                                    ButtonDateStepper1(onToggle: onChockOff, value: $currentDateChockOff, suffix: "")
                                         .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
-                                    ButtonDateStepper(onToggle: onChockOn, value: $currentDateChockOn, suffix: "")
+                                    ButtonDateStepper1(onToggle: onChockOn, value: $currentDateChockOn, suffix: "")
                                         .fixedSize()
                                         .frame(width: calculateWidthSummary(proxy.size.width - 32, 2), alignment: .leading)
                                     
@@ -671,7 +671,9 @@ struct FlightOverviewSectionView: View {
                     }
                     
                     if let overviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList] {
+                        dateFormatter.timeZone = TimeZone(identifier: "UTC")
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                        
                         dataFlightOverview = overviewList.first
                         
                         if let ca = dataFlightOverview?.unwrappedCaPicker {
@@ -717,6 +719,7 @@ struct FlightOverviewSectionView: View {
                     self.nightHours = dayNight.night
                 }
                 .onChange(of: coreDataModel.selectedEvent?.id) {_ in
+                    dateFormatter.timeZone = TimeZone(identifier: "UTC")
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                     if let sectorList = coreDataModel.selectedEvent?.eventSector as? EventSectorList {
                         dataEventSector = sectorList
@@ -793,6 +796,7 @@ struct FlightOverviewSectionView: View {
                 }
                 .onChange(of: currentDateChockOff) { value in
                     if dataFlightOverview != nil, let item = dataFlightOverview {
+                        dateFormatter.timeZone = TimeZone(identifier: "UTC")
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         item.chockOff = dateFormatter.string(from: value)
                         coreDataModel.save()
@@ -807,6 +811,7 @@ struct FlightOverviewSectionView: View {
                 }
                 .onChange(of: currentDateChockOn) { value in
                     if dataFlightOverview != nil, let item = dataFlightOverview {
+                        dateFormatter.timeZone = TimeZone(identifier: "UTC")
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         item.chockOn = dateFormatter.string(from: value)
                         coreDataModel.save()
@@ -977,6 +982,7 @@ struct FlightOverviewSectionView: View {
                             Button(action: {
                                 // assign value from modal to entries form
                                 dateFormatter.dateFormat = "HH:mm"
+
                                 self.currentDateFlightTime = dateFormatter.string(from: currentDateFlightTimeTemp)
                                 
                                 self.isShowFlightTimeModal.toggle()
@@ -992,6 +998,7 @@ struct FlightOverviewSectionView: View {
                         VStack {
                             DatePicker("", selection: $currentDateFlightTimeTemp, displayedComponents: [ .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                                 .environment(\.locale, Locale(identifier: "en_GB"))
+                                .environment(\.timeZone, TimeZone(identifier: "UTC")!)
                         }
                         Spacer()
                     }
@@ -1013,8 +1020,6 @@ struct FlightOverviewSectionView: View {
                             Button(action: {
                                 // assign value from modal to entries form
                                 self.currentDateChockOff = currentDateChockOffTemp
-//                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                
                                 self.isShowChockOffModal.toggle()
                             }) {
                                 Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -1028,6 +1033,7 @@ struct FlightOverviewSectionView: View {
                         VStack {
                             DatePicker("", selection: $currentDateChockOffTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                                 .environment(\.locale, Locale(identifier: "en_GB"))
+                                .environment(\.timeZone, TimeZone(identifier: "UTC")!)
                         }
                         Spacer()
                     }
@@ -1048,9 +1054,8 @@ struct FlightOverviewSectionView: View {
                             Spacer()
                             Button(action: {
                                 // assign value from modal to entries form
-                                self.currentDateChockOn = currentDateChockOnTemp
-                                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                 
+                                self.currentDateChockOn = currentDateChockOnTemp
                                 self.isShowChockOnModal.toggle()
                             }) {
                                 Text("Done").font(.system(size: 17, weight: .regular)).foregroundColor(Color.theme.azure)
@@ -1064,6 +1069,7 @@ struct FlightOverviewSectionView: View {
                         VStack {
                             DatePicker("", selection: $currentDateChockOnTemp, displayedComponents: [.date, .hourAndMinute]).labelsHidden().datePickerStyle(WheelDatePickerStyle())
                                 .environment(\.locale, Locale(identifier: "en_GB"))
+                                .environment(\.timeZone, TimeZone(identifier: "UTC")!)
                         }
                         Spacer()
                     }
@@ -1131,16 +1137,23 @@ struct FlightOverviewSectionView: View {
     }
         
     func calculateDayNight() -> (day: String, night: String) {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        
         if dataFlightOverview == nil || dataFlightOverview?.unwrappedChockOff == "" {
             return (day: "00:00", night: "00:00")
         }
         let totalTime = calculateTotalTime()
         let departureLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedDepLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedDepLong ?? "") ?? 0)
         let destinationLocation = CLLocationCoordinate2D(latitude: Double(dataEventSector?.unwrappedArrLat ?? "") ?? 0, longitude: Double(dataEventSector?.unwrappedArrLong ?? "") ?? 0)
-        print("departureLocation=========\(departureLocation)")
-        print("destinationLocation=========\(destinationLocation)")
-
-        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: currentDateChockOff, chocksOn: currentDateChockOn, averageGroundSpeedKph: 900, totalTime: totalTime)
+        
+        let tempDateChockOffStr = dateFormatter.string(from: currentDateChockOff)
+        let tempDateChockOnStr = dateFormatter.string(from: currentDateChockOn)
+        
+        let tempDateChockOff = dateFormatter.date(from: tempDateChockOffStr) ?? currentDateChockOff
+        let tempDateChockOn = dateFormatter.date(from: tempDateChockOnStr) ?? currentDateChockOn
+        
+        let dayNight = segmentFlightAndCalculateDaylightAndNightHours(departureLocation: departureLocation, destinationLocation: destinationLocation, chocksOff: tempDateChockOff, chocksOn: tempDateChockOn, averageGroundSpeedKph: 900, totalTime: totalTime)
         
         func formatTime(hours: Int, minutes: Int) -> String {
             let hourString = String(format: "%02d", hours)

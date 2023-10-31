@@ -24,11 +24,11 @@ struct CalendarSectionView: View {
                     Spacer()
                     
                     Button(action: {
-                        Task {
-                            showLoading = true
-                            await coreDataModel.syncDataEvent()
-                            showLoading = false
-                        }
+//                        Task {
+//                            showLoading = true
+//                            await coreDataModel.syncDataEvent()
+//                            showLoading = false
+//                        }
                     }, label: {
                         HStack {
                             Text("Sync Calendar").font(.system(size: 17, weight: .regular)).foregroundColor(Color.white)
@@ -40,7 +40,7 @@ struct CalendarSectionView: View {
                         
                     }).padding(.vertical, 11)
                         .padding(.horizontal)
-                        .background(Color.theme.azure)
+                        .background(Color.theme.philippineGray3)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1))
                         .cornerRadius(8)
                         .buttonStyle(PlainButtonStyle())

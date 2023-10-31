@@ -43,7 +43,11 @@ struct ContentView: View {
                     NavigationSplitView(columnVisibility: $columnVisibility) {
                         Sidebar()
                     } detail: {
-                        MainView()
+                        if coreDataModel.isEventActive {
+                            HomeFlightSectionView()
+                        } else {
+                            MainView()
+                        }
                     }.accentColor(Color.theme.tuftsBlue)
                         
                 }

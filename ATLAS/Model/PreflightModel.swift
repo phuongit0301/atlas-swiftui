@@ -36,15 +36,16 @@ enum PreflightTabEnumeration: CustomStringConvertible {
 struct PreflightTab {
     var title: String
     var screenName: PreflightTabEnumeration
+    var disabled: Bool
 }
 
 let IPreflightTabs = [
-    PreflightTab(title: "Summary", screenName: PreflightTabEnumeration.SummaryScreen),
-    PreflightTab(title: "NOTAMs", screenName: PreflightTabEnumeration.NotamScreen),
-    PreflightTab(title: "METAR & TAF", screenName: PreflightTabEnumeration.MetarTafScreen),
-    PreflightTab(title: "Statistics", screenName: PreflightTabEnumeration.StatisticsScreen),
-    PreflightTab(title: "Map", screenName: PreflightTabEnumeration.Mapcreen),
-    PreflightTab(title: "Notes", screenName: PreflightTabEnumeration.NotesScreen),
+    PreflightTab(title: "Summary", screenName: PreflightTabEnumeration.SummaryScreen, disabled: false),
+    PreflightTab(title: "NOTAMs", screenName: PreflightTabEnumeration.NotamScreen, disabled: false),
+    PreflightTab(title: "METAR & TAF", screenName: PreflightTabEnumeration.MetarTafScreen, disabled: false),
+    PreflightTab(title: "Statistics", screenName: PreflightTabEnumeration.StatisticsScreen, disabled: true),
+    PreflightTab(title: "Map", screenName: PreflightTabEnumeration.Mapcreen, disabled: false),
+    PreflightTab(title: "Notes", screenName: PreflightTabEnumeration.NotesScreen, disabled: false),
 ]
 
 struct INoteCommentResponse: Codable {
@@ -97,4 +98,5 @@ class PreflightModel: ObservableObject {
     @Published var isShowingAutoComplete = false
     @Published var currentIndexAutoComplete = -1
     @Published var routeAlternateType = ""
+    @Published var selectedTab: PreflightTabEnumeration = PreflightTabEnumeration.SummaryScreen
 }

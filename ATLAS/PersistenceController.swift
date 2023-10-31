@@ -276,6 +276,7 @@ class CoreDataModelState: ObservableObject {
     @Published var isMapAabbaLoading = false
     @Published var isMapWaypointLoading = false
     @Published var isMapAirportLoading = false
+    @Published var isMapAirportColorLoading = false
     @Published var isAabbaNoteLoading = false
     @Published var isNotamLoading = false
     
@@ -350,6 +351,7 @@ class CoreDataModelState: ObservableObject {
             self.dataNoteList = self.readNoteList()
             
             self.dataAirportColorMap = readDataAirportMapColorList()
+            self.dataAirportMap = readDataAirportMapList()
             
             self.dataRouteMap = readDataRouteMapList()
             
@@ -369,7 +371,7 @@ class CoreDataModelState: ObservableObject {
             group.addTask {
                 await self.getOrPostFlightPlan()
             }
-            
+
             group.addTask {
                 await self.getOrPostLogbookEntries()
             }
@@ -379,8 +381,11 @@ class CoreDataModelState: ObservableObject {
             group.addTask {
                 await self.getOrPostRecency()
             }
-            group.addTask {
-                await self.getMapAirport()
+            
+            if dataAirportMap.isEmpty {
+                group.addTask {
+                    await self.getMapAirport()
+                }
             }
             
     //        async let eventService = getOrPostEvent()
@@ -742,14 +747,43 @@ class CoreDataModelState: ObservableObject {
     }
     
     func getMapAirport() async {
-        let responseAirport = await remoteService.getMapAirportData()
         print("start airport")
-        if let responseAirportAll = responseAirport?.all_airports_data, responseAirportAll.count > 0 {
-//            print("inside aiport======\(responseAirportAll)")
-            await self.deleteAllAirportList()
-            self.initDataAirport(responseAirportAll)
-            print("end airport")
-        }
+        self.isMapAirportLoading = true
+        await remoteService.getMapAirportData(completion: { (success, responseAirport) in
+            
+            guard !responseAirport.all_airports_data.isEmpty else { return }
+            
+            Task {
+                await self.deleteAllAirportList()
+                
+                let taskContext = self.newTaskContext()
+                // Add name and author to identify source of persistent history changes.
+                taskContext.name = "importMapAirport"
+                taskContext.transactionAuthor = "importMap"
+                
+                /// - Tag: performAndWait
+                try await taskContext.perform {
+                    // Execute the batch insert.
+                    /// - Tag: batchInsertRequest
+                    let batchInsertRequest = self.newBatchInsertRequest(with: responseAirport.all_airports_data)
+                    if let fetchResult = try? taskContext.execute(batchInsertRequest),
+                       let batchInsertResult = fetchResult as? NSBatchInsertResult,
+                       let success = batchInsertResult.result as? Bool, success {
+                        return
+                    }
+                    self.logger.debug("Failed to execute batch insert Map Airport request.")
+                    throw CustomError.batchInsertError
+                }
+                
+                self.isMapAirportLoading = false
+                print("end airport")
+            }
+//            if success, responseAirport.all_airports_data.count > 0 {
+//                await self.deleteAllAirportList()
+//                self.initDataAirport(responseAirport.all_airports_data)
+//                print("end airport")
+//            }
+        })
     }
     
     func postFlightPlan() async -> Bool {
@@ -1273,9 +1307,9 @@ class CoreDataModelState: ObservableObject {
         if dataFlightOverviewList.count > 0 {
             return await postFlightPlan()
         } else {
-            let responseFlightPlan = await remoteService.getFlightPlanDataV3()
-            print("responseFlightPlan======\(responseFlightPlan)")
-            if responseFlightPlan.count > 0 {
+            let response = await remoteService.getFlightPlanDataV3()
+//            print("responseFlightPlan======\(responseFlightPlan)")
+            if let responseFlightPlan = response, responseFlightPlan.count > 0 {
 //                await withTaskGroup(of: Void.self) { group in
                     for item in responseFlightPlan {
                         //Check event exists or not to create relationship
@@ -1614,45 +1648,48 @@ class CoreDataModelState: ObservableObject {
                     }
                 }
                 
-                eventList.waypointMapList = NSSet(array: temp)
-                self.dataWaypointMap = readDataWaypontMapList()
+                do {
+                    eventList.waypointMapList = NSSet(array: temp)
+                    try service.container.viewContext.save()
+                    self.dataWaypointMap = readDataWaypontMapList()
+                    print("saved data traffic successfully")
+                } catch {
+                    print("Failed to data traffic save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                }
+                
             }
         }
     }
 
     
     func initDataAirport(_ data: [IAirportData]) {
-            if let eventList = self.selectedEvent {
-                if data.count > 0 {
-                    var temp = [AirportMapList]()
-                    
-                    data.forEach { item in
-                        let newObj = AirportMapList(context: service.container.viewContext)
+        if data.count > 0 {
+            for item in data {
+                let newObj = AirportMapList(context: service.container.viewContext)
+                
+                newObj.id = UUID()
+                newObj.name = item.airport_id
+                newObj.latitude = item.lat
+                newObj.longitude = item.long
+                
+                service.container.viewContext.performAndWait {
+                    do {
+                        try service.container.viewContext.save()
+                        print("saved data airport successfully")
+                    } catch {
+                        print("Failed to data airport save: \(error)")
+                        // Rollback any changes in the managed object context
+                        service.container.viewContext.rollback()
                         
-                        newObj.id = UUID()
-                        newObj.name = item.airport_id
-                        newObj.latitude = item.lat
-                        newObj.longitude = item.long
-                        
-                        service.container.viewContext.performAndWait {
-                            do {
-                                temp.append(newObj)
-                                try service.container.viewContext.save()
-                                print("saved data airport successfully")
-                            } catch {
-                                print("Failed to data airport save: \(error)")
-                                // Rollback any changes in the managed object context
-                                service.container.viewContext.rollback()
-                                
-                            }
-                        }
                     }
-                    
-                    eventList.airportMapList = NSSet(array: temp)
-                    self.dataAirportMap = readDataAirportMapList()
                 }
             }
+            
+            self.dataAirportMap = readDataAirportMapList()
         }
+    }
         
     func initDataAirportMapColor(_ data: [IAirportColor], _ payload: [String: Any]) {
         if let eventList = self.selectedEvent {
@@ -1694,8 +1731,18 @@ class CoreDataModelState: ObservableObject {
                     
                 }
                 
-                eventList.airportMapColorList = NSSet(array: temp)
-                self.dataAirportColorMap = readDataAirportMapColorList()
+                service.container.viewContext.performAndWait {
+                    do {
+                        eventList.airportMapColorList = NSSet(array: temp)
+                        self.dataAirportColorMap = readDataAirportMapColorList()
+                        try service.container.viewContext.save()
+                        print("saved data airport color successfully")
+                        
+                    } catch {
+                        print("could not unarchive array: \(error)")
+                    }
+                }
+                
             }
         }
     }
@@ -1705,7 +1752,7 @@ class CoreDataModelState: ObservableObject {
         if data.count > 0 {
             var payloadMapRoute = [MapRouteList]()
             
-            data.forEach { item in
+            for item in data {
                 do {
                     let newObj = MapRouteList(context: service.container.viewContext)
                     
@@ -1771,8 +1818,8 @@ class CoreDataModelState: ObservableObject {
                 newObj.depDelayColour = item.dep_delay_colour
                 newObj.updatedAt = dateFormatter.string(from: Date())
                 
-//                payloadMapColor.append(newObj)
-                event.addToAirportMapColorList(newObj)
+                payloadMapColor.append(newObj)
+//                event.addToAirportMapColorList(newObj)
                 
                 service.container.viewContext.performAndWait {
                     do {
@@ -1789,7 +1836,7 @@ class CoreDataModelState: ObservableObject {
             }
             
             do {
-//                event.airportMapColorList = NSSet(array: payloadMapColor)
+                event.airportMapColorList = NSSet(array: payloadMapColor)
                 try service.container.viewContext.save()
                 print("saved data event airport color successfully")
             } catch {
@@ -1837,12 +1884,11 @@ class CoreDataModelState: ObservableObject {
         return taskContext
     }
     
-    private func newBatchInsertRequest(with propertyList: [ITrafficDataV30], eventList: EventList) -> NSBatchInsertRequest {
+    private func newBatchInsertRequest(with propertyList: [IAirportData]) -> NSBatchInsertRequest {
         var index = 0
         let total = propertyList.count
-
         // Provide one dictionary at a time when the closure is called.
-        let batchInsertRequest = NSBatchInsertRequest(entity: TrafficMapList.entity(), dictionaryHandler: { dictionary in
+        let batchInsertRequest = NSBatchInsertRequest(entity: AirportMapList.entity(), dictionaryHandler: { dictionary in
             guard index < total else { return true }
             dictionary.addEntries(from: propertyList[index].dictionaryValue)
             index += 1
@@ -1881,8 +1927,16 @@ class CoreDataModelState: ObservableObject {
                     }
                 }
                 
-                eventList.trafficMapList = NSSet(array: temp)
-                self.dataTrafficMap = readDataTrafficMapList()
+                do {
+                    eventList.trafficMapList = NSSet(array: temp)
+                    try service.container.viewContext.save()
+                    self.dataTrafficMap = readDataTrafficMapList()
+                    print("saved data traffic successfully")
+                } catch {
+                    print("Failed to data traffic save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                }
             }
         }
     }
@@ -1998,8 +2052,17 @@ class CoreDataModelState: ObservableObject {
                     }
                 }
                 
-                eventList.aabbaMapList = NSSet(array: temp)
-                self.dataAabbaMap = readDataAabbaMapList()
+                do {
+                    eventList.aabbaMapList = NSSet(array: temp)
+                    try service.container.viewContext.save()
+                    self.dataAabbaMap = readDataAabbaMapList()
+                    print("saved data aabba successfully")
+                } catch {
+                    print("Failed to data aabba save: \(error)")
+                    // Rollback any changes in the managed object context
+                    service.container.viewContext.rollback()
+                    
+                }
             }
         }
     }
@@ -3968,7 +4031,19 @@ class CoreDataModelState: ObservableObject {
     }
     
     func readDataAirportMapList() -> [AirportMapList] {
-        return self.selectedEvent?.airportMapList?.allObjects  as? [AirportMapList] ?? []
+        var data: [AirportMapList] = []
+
+        let request: NSFetchRequest<AirportMapList> = AirportMapList.fetchRequest()
+        do {
+            let response: [AirportMapList] = try service.container.viewContext.fetch(request)
+            if(response.count > 0) {
+                data = response
+            }
+        } catch {
+            print("Could not fetch Airport List from Core Data.")
+        }
+
+        return data
     }
     
     func readDataAirportMapColorList() -> [AirportMapColorList] {
@@ -3990,19 +4065,6 @@ class CoreDataModelState: ObservableObject {
     
     func readDataTrafficMapList() -> [TrafficMapList] {
         return self.selectedEvent?.trafficMapList?.allObjects as? [TrafficMapList] ?? []
-//        var data: [TrafficMapList] = []
-//
-//        let request: NSFetchRequest<TrafficMapList> = TrafficMapList.fetchRequest()
-//        do {
-//            let response: [TrafficMapList] = try service.container.viewContext.fetch(request)
-//            if(response.count > 0) {
-//                data = response
-//            }
-//        } catch {
-//            print("Could not fetch Traffic List from Core Data.")
-//        }
-//
-//        return data
     }
     
     func readDataAabbaMapList() -> [AabbaMapList] {
@@ -5734,10 +5796,10 @@ class CoreDataModelState: ObservableObject {
     }
     
     func deleteAllAirportList() async {
-        if let objects = self.selectedEvent?.airportMapList?.allObjects as? [AirportMapList] {
+        if dataAirportMap.count > 0 {
             service.container.viewContext.performAndWait {
                 do {
-                    for object in objects {
+                    for object in dataAirportMap {
                         service.container.viewContext.delete(object)
                     }
                     try service.container.viewContext.save()

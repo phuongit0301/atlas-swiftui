@@ -54,6 +54,6 @@ enum FlightNoteEnumeration: CustomStringConvertible {
 }
 
 let IFlightNoteTabs = [
-    CustomTab(title: "Map", screenName: FlightNoteEnumeration.MapScreen),
     CustomTab(title: "Notes", screenName: FlightNoteEnumeration.NoteScreen),
+    CustomTab(title: "Map", screenName: FlightNoteEnumeration.MapScreen),
 ]

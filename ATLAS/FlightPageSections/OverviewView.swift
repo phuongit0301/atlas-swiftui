@@ -31,9 +31,10 @@ struct OverviewView: View {
                     ClipboardArrival().padding(.top, -8)
                 } else if currentItem.screenName == NavigationEnumeration.ClipboardArrival {
                     ClipboardArrival().padding(.top, -8)
-                } else if currentItem.screenName == NavigationEnumeration.ClipboardAISearch {
-                    ClipboardAISearchResult().padding(.top, -8)
                 }
+//                else if currentItem.screenName == NavigationEnumeration.ClipboardAISearch {
+//                    ClipboardAISearchResult().padding(.top, -8)
+//                }
             } else {
                 HStack(spacing: 0) {
                     Text("Clipboard").foregroundColor(Color.black).font(.system(size: 17, weight: .semibold))

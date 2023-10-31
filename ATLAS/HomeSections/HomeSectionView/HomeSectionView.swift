@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeSectionView: View {
+    @EnvironmentObject var coreDataModel: CoreDataModelState
+    
     var body: some View {
         GeometryReader { proxy in
             HStack(spacing: 0) {
@@ -16,6 +18,11 @@ struct HomeSectionView: View {
                 HomeInformationView()
             }.padding(.horizontal)
                 .padding(.bottom)
+        }.onAppear {
+            if coreDataModel.isEventActive {
+                coreDataModel.isEventActive.toggle()
+                coreDataModel.selectedEvent = nil
+            }
         }
     }
 }

@@ -41,7 +41,6 @@
         <attribute name="latitude" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="airportMapList" inverseEntity="Event"/>
     </entity>
     <entity name="AirportMapColor" representedClassName="AirportMapColorList" syncable="YES">
         <attribute name="airportId" optional="YES" attributeType="String"/>
@@ -187,7 +186,6 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="aabbaMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AabbaMap" inverseName="events" inverseEntity="AabbaMap"/>
         <relationship name="airportMapColorList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMapColor" inverseName="events" inverseEntity="AirportMapColor"/>
-        <relationship name="airportMapList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirportMap" inverseName="events" inverseEntity="AirportMap"/>
         <relationship name="eventDateRangeList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateRange" inverseName="events" inverseEntity="EventDateRange"/>
         <relationship name="eventSector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventSector" inverseName="event" inverseEntity="EventSector"/>
         <relationship name="flightOverviewList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlightOverview" inverseName="events" inverseEntity="FlightOverview"/>
