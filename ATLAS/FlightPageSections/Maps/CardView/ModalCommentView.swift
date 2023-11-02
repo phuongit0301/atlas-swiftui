@@ -79,8 +79,13 @@ struct ModalCommentView: View {
                         
                         HStack {
                             Button(action: {
-                                post.upvoteCount = post.upvoteCount + 1
-//                                posts[index].upvoteCount = "\(((posts[index].upvoteCount as? NSString)?.intValue ?? 0) + 1)"
+                                if post.voted {
+                                    post.upvoteCount = post.upvoteCount - 1
+                                } else {
+                                    post.upvoteCount = post.upvoteCount + 1
+                                }
+                                
+                                post.voted.toggle()
                                 coreDataModel.save()
                                 
                                 mapIconModel.num += 1

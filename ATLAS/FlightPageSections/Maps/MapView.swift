@@ -629,53 +629,6 @@ struct MapViewModal: View {
                 onAppearTraffic()
                 onAppearAabba()
             }
-//            else {
-//                waypointArr = addWaypoint()
-//                airportArr = addAirport(airportIds)
-//                mapTraffic = addTraffic()
-//                mapAabba = addAabba()
-//            }
-//            if selectedWaypoint {
-//                waypointArr = addWaypoint()
-//
-//                if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-//                    mapView.addAnnotations(waypointArr)
-//                } else {
-//                    mapView.removeAnnotations(waypointArr)
-//                }
-//            } else {
-//                mapView.removeAnnotations(waypointArr)
-//            }
-//
-//            if selectedAirport {
-//                airportArr = addAirport(airportIds)
-//
-//                if firstLoading {
-//                    onAppearAirport()
-//                    firstLoading = false
-//                } else {
-//                    if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
-//                        mapView.addAnnotations(airportArr)
-//                    } else {
-//                        mapView.removeAnnotations(airportArr)
-//                    }
-//                }
-//            } else {
-//                mapView.removeAnnotations(airportArr)
-//                mapView.removeAnnotations(mapAirportColor)
-//            }
-            
-//            if selectedTraffic {
-//                addTraffic()
-//            } else {
-//                mapView.removeAnnotations(mapTraffic)
-//            }
-            
-//            if selectedAABBA {
-//                addAabba()
-//            } else {
-//                mapView.removeAnnotations(mapAabba)
-//            }
         }
     }
     
@@ -915,7 +868,7 @@ struct MapViewModal: View {
         for(index, item) in coreDataModel.dataAabbaMap.enumerated() {
             let coord = CLLocationCoordinate2D(latitude: (item.unwrappedLatitude as NSString).doubleValue, longitude: (item.unwrappedLongitude as NSString).doubleValue)
             
-            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String((item.postCount as? NSString)!.integerValue + 1), subtitle: "", index: index)
+            let annotation = CustomAabbaAnnotation(coordinate: coord, title: String((item.postCount as? NSString)!.integerValue), subtitle: "", index: index)
 
             temp.append(annotation)
         }
@@ -1277,8 +1230,11 @@ class Coordinator: NSObject, MKMapViewDelegate {
             parent.mapIconModel.titleModal = annotationView?.title ?? ""
             parent.mapIconModel.airportSelected = annotationView?.item 
         } else if view is CustomTrafficAnnotationView {
-            let annotationView = view.annotation as? CustomTrafficAnnotationView
-            annotationView?.updateImge(image: UIImage(named: "icon_airplane_blue"))
+            let annotationView = view.annotation as? CustomTrafficAnnotation
+            let customView = view.annotation as? CustomTrafficAnnotationView
+//            view.image?.renderingMode(.template)
+//            view.image?.foregroundColor(Color.theme.azure)
+            
         }
     }
     

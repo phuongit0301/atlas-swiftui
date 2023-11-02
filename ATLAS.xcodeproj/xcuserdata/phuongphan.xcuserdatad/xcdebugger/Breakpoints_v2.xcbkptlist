@@ -1244,7 +1244,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0F4BE1EE-438D-441A-91DC-CABC43912B60"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/QuickReferenceCard/List/ItemListReference.swift"
@@ -1888,7 +1888,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EECE5521-8CDB-4857-AFFB-CE52355993DF"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
@@ -3507,7 +3507,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "75B1B7D5-B7D1-4311-A9EB-4DF3663FAA7A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanSummaryView.swift"
@@ -3602,7 +3602,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "093107F2-A766-4D3B-9AAF-97893F35CBF4"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FuelView/FuelChartsResources/Pages/ArrivalDelayView.swift"
@@ -3804,7 +3804,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9BB0D7A8-D38D-4172-B3EE-DD42B923447F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -4320,7 +4320,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6555652F-5449-485B-B355-E0932C3291B6"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/ScratchPad/ItemListScratchPad.swift"
@@ -4636,7 +4636,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "905B4925-1751-4D51-842A-E644F6011222"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Extensions/DateTimePickerView.swift"
@@ -4744,7 +4744,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5869FA8E-805D-46EF-8101-4431564117AB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Extensions/DateTimePickerView.swift"
@@ -4837,7 +4837,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FF0D2B4C-86FE-47EA-83D1-7D6ED9F218D8"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Extensions/DateTimePickerView.swift"
@@ -4964,7 +4964,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.SwiftErrorBreakpoint">
          <BreakpointContent
             uuid = "2CE646D6-3BFA-42D1-8B1B-18707E8FD9FC"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No">
          </BreakpointContent>
@@ -5053,7 +5053,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "88B0C723-31AB-42E0-9361-EEF93EC77135"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FuelView/FuelChartsResources/ChartViews/taxiView.swift"
@@ -5069,7 +5069,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A0593DEB-E463-409D-9457-D6EF14785004"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FuelView/FuelChartsResources/ChartViews/taxiView.swift"
@@ -5585,7 +5585,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6F5A60FE-F3B7-4811-B2FD-4A504E12FCF4"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightInformationDetailView.swift"
@@ -5678,7 +5678,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "60087E91-A67D-4A70-9276-2473126B86A0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -5787,7 +5787,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C35ACD91-DBF8-49BB-971C-0E6CB43F4C65"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -5896,7 +5896,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "DD4105F4-81FB-4B00-A3A9-9CB9C810BEDE"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanDepView.swift"
@@ -6005,7 +6005,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "E31B5000-1BCA-4656-BF43-34AD6473C02A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Extensions/KeyboardAvoiding.swift"
@@ -6069,7 +6069,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "17A86E4A-4721-4E86-AEC7-D5A7C0DD41B8"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanArrView.swift"
@@ -6117,7 +6117,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "17E49E20-1FC9-41A8-BCE6-227B405CFD09"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Tabs/FlightPlanView/FlightPlanArrView.swift"
@@ -6165,7 +6165,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5A76197C-BFDF-412C-B9C1-48FF76ED42C0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
@@ -6495,7 +6495,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7CC9093A-FFFA-4485-ABC6-A5DE05BF88BD"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
@@ -6511,7 +6511,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "BABA9639-2405-4CCD-ABAE-FE0F0B1EF1C0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
@@ -6575,7 +6575,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7861EE53-FEE0-43C0-913B-8A91F5D7563A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanNOTAMView.swift"
@@ -6798,7 +6798,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "20B26DD1-CFE3-4EE2-A64C-D1761D80E296"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
@@ -6876,7 +6876,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "BA02D78A-D296-4A94-898B-FB2DC4CAE34D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
@@ -6924,7 +6924,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "99393F61-8179-44FB-80BD-3934760997CC"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanEnrView.swift"
@@ -6988,7 +6988,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "11360EB5-6BAB-49E0-9685-44BF0EB19BC7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/Sections/CalendarSectionView/CalendarView.swift"
@@ -7099,7 +7099,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C270BDAA-1FE8-463C-997A-958EDCA7B2F3"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/HomeSections/CalendarSectionView/Forms/COPForm.swift"
@@ -7183,8 +7183,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "749"
-            endingLineNumber = "749"
+            startingLineNumber = "702"
+            endingLineNumber = "702"
             landmarkName = "addOverlay()"
             landmarkType = "7">
             <Locations>
@@ -7309,8 +7309,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1285"
-            endingLineNumber = "1285"
+            startingLineNumber = "1241"
+            endingLineNumber = "1241"
             landmarkName = "Coordinator"
             landmarkType = "3">
          </BreakpointContent>
@@ -7319,7 +7319,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FB8A8451-DD5C-4520-8A39-1CE147147D72"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/FlightPlanView/FlightPlanSummaryView.swift"
@@ -7335,7 +7335,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3108A925-BC73-43B4-B5C5-0106BF3007E7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/MapCardView.swift"
@@ -7434,8 +7434,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/CardView/ModalCommentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -7450,8 +7450,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/CardView/ModalCommentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -7570,7 +7570,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B0CBF905-6F38-416E-B6DE-D3058AE74E85"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/Popover/VisibilityPopoverView.swift"
@@ -7648,7 +7648,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EB095D98-EB2F-4A64-817F-6B8D8FFF4781"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/Popover/VisibilityPopoverView.swift"
@@ -7726,7 +7726,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "22BA0300-48C5-4B9B-AD5F-BDFBDEAE0358"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/Popover/VisibilityPopoverView.swift"
@@ -7804,7 +7804,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "997A9F63-CE7D-4A18-8BA2-5A92F4645E36"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/Popover/WeatherPopoverView.swift"
@@ -9332,8 +9332,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "934"
-            endingLineNumber = "934"
+            startingLineNumber = "887"
+            endingLineNumber = "887"
             landmarkName = "extractFiveLetterWords(from:)"
             landmarkType = "7">
             <Locations>
@@ -14101,8 +14101,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "760"
-            endingLineNumber = "760"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
             landmarkName = "addRoute()"
             landmarkType = "7">
          </BreakpointContent>
@@ -14117,8 +14117,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "755"
-            endingLineNumber = "755"
+            startingLineNumber = "708"
+            endingLineNumber = "708"
             landmarkName = "addRoute()"
             landmarkType = "7">
          </BreakpointContent>
@@ -14133,8 +14133,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "947"
-            endingLineNumber = "947"
+            startingLineNumber = "900"
+            endingLineNumber = "900"
             landmarkName = "extractLatLong(forSelection:inDictionaries:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14149,8 +14149,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "850"
-            endingLineNumber = "850"
+            startingLineNumber = "803"
+            endingLineNumber = "803"
             landmarkName = "addAirport(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14165,8 +14165,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1057"
-            endingLineNumber = "1057"
+            startingLineNumber = "1010"
+            endingLineNumber = "1010"
             landmarkName = "Coordinator"
             landmarkType = "3">
          </BreakpointContent>
@@ -14430,8 +14430,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1033"
-            endingLineNumber = "1033"
+            startingLineNumber = "986"
+            endingLineNumber = "986"
             landmarkName = "updateUIView(_:context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14439,33 +14439,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8799BF71-5313-406D-9021-DB307BB1C118"
+            uuid = "B2AAF9D2-65AB-48FE-9BDD-548E4CAA42BD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "646"
-            endingLineNumber = "646"
-            landmarkName = "updateMapOverlayViews()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B2AAF9D2-65AB-48FE-9BDD-548E4CAA42BD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1094"
-            endingLineNumber = "1094"
+            startingLineNumber = "1047"
+            endingLineNumber = "1047"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B2AAF9D2-65AB-48FE-9BDD-548E4CAA42BD - a6a2844aa77f918e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.Coordinator.mapViewDidChangeVisibleRegion(__C.MKMapView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1105"
+                  endingLineNumber = "1105"
+                  offsetFromSymbolStart = "2880">
+               </Location>
+               <Location
+                  uuid = "B2AAF9D2-65AB-48FE-9BDD-548E4CAA42BD - a6a2844aa77f9b9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.Coordinator.mapViewDidChangeVisibleRegion(__C.MKMapView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1058"
+                  endingLineNumber = "1058"
+                  offsetFromSymbolStart = "2880">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -14478,8 +14494,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1051"
-            endingLineNumber = "1051"
+            startingLineNumber = "1004"
+            endingLineNumber = "1004"
             landmarkName = "Coordinator"
             landmarkType = "3">
             <Locations>
@@ -14559,22 +14575,6 @@
                   offsetFromSymbolStart = "32">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "50E125A0-E3B2-44A4-B551-36380D81346C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "668"
-            endingLineNumber = "668"
-            landmarkName = "updateMapOverlayViews()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -14852,8 +14852,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1061"
-            endingLineNumber = "1061"
+            startingLineNumber = "1014"
+            endingLineNumber = "1014"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14862,7 +14862,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6292493A-069A-488A-BB2F-4B5341A2F403"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
@@ -14878,32 +14878,78 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0C545D48-0A3E-463F-84E9-32DC38A6842D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1279"
-            endingLineNumber = "1279"
+            startingLineNumber = "1232"
+            endingLineNumber = "1232"
             landmarkName = "mapView(_:didSelect:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8FC209A4-FF0F-4D76-B480-ABDDFDEC35A7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1281"
-            endingLineNumber = "1281"
-            landmarkName = "mapView(_:didSelect:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0C545D48-0A3E-463F-84E9-32DC38A6842D - 28cf7619ba667dcc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Dead&gt; of ATLAS.Coordinator.mapView(_: __C.MKMapView, didSelect: __C.MKAnnotationView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1279"
+                  endingLineNumber = "1279"
+                  offsetFromSymbolStart = "576">
+               </Location>
+               <Location
+                  uuid = "0C545D48-0A3E-463F-84E9-32DC38A6842D - 28cf7619ba667bfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Dead&gt; of ATLAS.Coordinator.mapView(_: __C.MKMapView, didSelect: __C.MKAnnotationView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1232"
+                  endingLineNumber = "1232"
+                  offsetFromSymbolStart = "564">
+               </Location>
+               <Location
+                  uuid = "0C545D48-0A3E-463F-84E9-32DC38A6842D - 28cf7619ba667bfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Dead&gt; of ATLAS.Coordinator.mapView(_: __C.MKMapView, didSelect: __C.MKAnnotationView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1232"
+                  endingLineNumber = "1232"
+                  offsetFromSymbolStart = "572">
+               </Location>
+               <Location
+                  uuid = "0C545D48-0A3E-463F-84E9-32DC38A6842D - 28cf7619ba667bfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Dead&gt; of ATLAS.Coordinator.mapView(_: __C.MKMapView, didSelect: __C.MKAnnotationView) -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1232"
+                  endingLineNumber = "1232"
+                  offsetFromSymbolStart = "600">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -14916,8 +14962,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1058"
-            endingLineNumber = "1058"
+            startingLineNumber = "1011"
+            endingLineNumber = "1011"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14942,16 +14988,48 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7D026362-41BB-482C-BDB5-398E49062D55"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "683"
-            endingLineNumber = "683"
+            startingLineNumber = "636"
+            endingLineNumber = "636"
             landmarkName = "onAppearMapOverlay()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7D026362-41BB-482C-BDB5-398E49062D55 - c0617625ac31d18b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.MapViewModal.onAppearMapOverlay() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "683"
+                  endingLineNumber = "683"
+                  offsetFromSymbolStart = "240">
+               </Location>
+               <Location
+                  uuid = "7D026362-41BB-482C-BDB5-398E49062D55 - c0617625ac31cf9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ATLAS.MapViewModal.onAppearMapOverlay() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/FlightPageSections/Maps/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "636"
+                  endingLineNumber = "636"
+                  offsetFromSymbolStart = "240">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -14968,6 +15046,38 @@
             endingLineNumber = "43"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2BE15D4E-B7D8-4F23-AF80-CAEDAC464731"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "988"
+            endingLineNumber = "988"
+            landmarkName = "updateUIView(_:context:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B8D31858-6011-40AC-9928-7F704A6745E8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1224"
+            endingLineNumber = "1224"
+            landmarkName = "mapView(_:didSelect:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

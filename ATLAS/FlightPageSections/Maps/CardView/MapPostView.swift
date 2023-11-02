@@ -21,108 +21,120 @@ struct MapPostView: View {
     
     var body: some View {
         
-        let postSort = sortPost(posts: posts)
+//        let postSort = sortPost(posts: posts)
         
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(0..<postSort.count, id: \.self) {index in
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text(postSort[index].unwrappedCategory)
-                            .font(Font.custom("SF Pro", size: 11))
-                            .foregroundColor(Color.white)
-                    }.padding(.horizontal, 12)
-                        .padding(.vertical, 4)
-                        .background(handleColor(postSort[index].unwrappedCategory))
-                        .cornerRadius(12)
-                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
-                    
-                    Text(postSort[index].unwrappedPostTitle)
-                        .font(Font.custom("SF Pro", size: 15))
-                        .foregroundColor(.black)
-                    
-                    HStack {
-                        Text(postSort[index].unwrappedUserName)
-                            .font(Font.custom("SF Pro", size: 11))
-                            .foregroundColor(Color.theme.azure)
-                        Text("Posted \(postSort[index].unwrappedPostDate)")
-                            .font(Font.custom("SF Pro", size: 11))
-                            .foregroundColor(Color.theme.arsenic.opacity(0.6))
+            if !posts.isEmpty {
+                Text("No Posts").font(.system(size: 12)).foregroundColor(Color.black).padding(.vertical, 8)
+            } else {
+                ForEach(0..<posts.count, id: \.self) {index in
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text(posts[index].unwrappedCategory)
+                                .font(.system(size: 11))
+                                .foregroundColor(Color.white)
+                        }.padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(handleColor(posts[index].unwrappedCategory))
+                            .cornerRadius(12)
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0))
                         
-                    }
-                    
-                    Divider()
-                    
-                    HStack {
-                        Button(action: {
-                            postSort[index].upvoteCount = postSort[index].upvoteCount + 1
-                            coreDataModel.save()
+                        Text(posts[index].unwrappedPostTitle)
+                            .font(.system(size: 15))
+                            .foregroundColor(.black)
+                        
+                        HStack {
+                            Text(posts[index].unwrappedUserName)
+                                .font(.system(size: 11))
+                                .foregroundColor(Color.theme.azure)
+                            Text("Posted \(posts[index].unwrappedPostDate)")
+                                .font(.system(size: 11))
+                                .foregroundColor(Color.theme.arsenic.opacity(0.6))
                             
-                            mapIconModel.num += 1
-                        }, label:  {
-                            HStack {
-                                Image("icon_arrowshape_up")
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                                
-                                Text("\(posts[index].upvoteCount)")
-                                    .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                    .foregroundColor(.black)
-                            }
-                        })
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.postIndex = index
-                            self.showModal.toggle()
-                        }, label:  {
-                            HStack {
-                                Image(systemName: "bubble.left.and.bubble.right")
-                                    .foregroundColor(Color.theme.azure)
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fit)
-                                
-                                if let comments = postSort[index].comments {
-                                    Text("\(comments.count)")
-                                        .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                        .foregroundColor(.black)
-                                } else {
-                                    Text("0")
-                                        .font(Font.custom("SF Pro", size: 13).weight(.medium))
-                                        .foregroundColor(.black)
-                                }
-                                
-                            }
-                        }).buttonStyle(PlainButtonStyle())
-                    }
-                    
-                    // Get first comment and show
-                    if let comments = postSort[index].comments, comments.count > 0 {
-                        if let firstComment = sortComment(comments: (postSort[index].comments?.allObjects as? [AabbaCommentList])!).first {
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(firstComment.unwrappedUserName)
-                                        .font(Font.custom("SF Pro", size: 11))
-                                        .foregroundColor(Color.theme.azure)
-                                    Text("Posted \(firstComment.unwrappedCommentDate)")
-                                        .font(Font.custom("SF Pro", size: 11))
-                                        .foregroundColor(Color.theme.arsenic.opacity(0.6))
-                                }
-                                Text(firstComment.unwrappedCommentText)
-                                    .font(Font.custom("SF Pro", size: 13))
-                                    .foregroundColor(Color.black)
-                            }.frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(8)
-                                .background(Color.theme.antiFlashWhite)
-                                .cornerRadius(8)
-                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.arsenic.opacity(0.36), lineWidth: 0))
                         }
-                    }
-                }.padding(.horizontal, 8)
-                    .padding(.vertical, 8)
-                    .background(Color.white)
+                        
+                        Divider()
+                        
+                        HStack {
+                            Button(action: {
+                                if posts[index].voted {
+                                    posts[index].upvoteCount = posts[index].upvoteCount - 1
+                                } else {
+                                    posts[index].upvoteCount = posts[index].upvoteCount + 1
+                                }
+                                
+                                posts[index].voted.toggle()
+                                coreDataModel.save()
+                                
+                                mapIconModel.num += 1
+                            }, label:  {
+                                HStack {
+                                    Image("icon_arrowshape_up")
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                    
+                                    Text("\(posts[index].upvoteCount)")
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundColor(.black)
+                                }
+                            })
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                self.postIndex = index
+                                self.showModal.toggle()
+                            }, label:  {
+                                HStack {
+                                    Image(systemName: "bubble.left.and.bubble.right")
+                                        .foregroundColor(Color.theme.azure)
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                    
+                                    if let comments = posts[index].comments {
+                                        Text("\(comments.count)")
+                                            .font(Font.custom("SF Pro", size: 13).weight(.medium))
+                                            .foregroundColor(.black)
+                                    } else {
+                                        Text("0")
+                                            .font(Font.custom("SF Pro", size: 13).weight(.medium))
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                }
+                            }).buttonStyle(PlainButtonStyle())
+                        }
+                        
+                        // Get first comment and show
+                        if let comments = posts[index].comments, comments.count > 0 {
+                            if let firstComment = sortComment(comments: (posts[index].comments?.allObjects as? [AabbaCommentList])!).first {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text(firstComment.unwrappedUserName)
+                                            .font(Font.custom("SF Pro", size: 11))
+                                            .foregroundColor(Color.theme.azure)
+                                        Text("Posted \(firstComment.unwrappedCommentDate)")
+                                            .font(Font.custom("SF Pro", size: 11))
+                                            .foregroundColor(Color.theme.arsenic.opacity(0.6))
+                                    }
+                                    Text(firstComment.unwrappedCommentText)
+                                        .font(Font.custom("SF Pro", size: 13))
+                                        .foregroundColor(Color.black)
+                                }.frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(8)
+                                    .background(Color.theme.antiFlashWhite)
+                                    .cornerRadius(8)
+                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.theme.arsenic.opacity(0.36), lineWidth: 0))
+                            }
+                        }
+                    }.padding(.horizontal, 8)
+                        .padding(.vertical, 8)
+                        .background(Color.white)
+                }
             }
-        }.sheet(isPresented: $showModal) {
+        }.padding(8)
+        .cornerRadius(8)
+        .sheet(isPresented: $showModal) {
             ModalCommentView(isShowing: $showModal, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
         }
     }

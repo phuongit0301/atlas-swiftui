@@ -60,15 +60,15 @@ struct MapCardView: View {
 //                        })
                     }
                     
-                }.background(Color.white.opacity(0.75))
-                    .roundedCorner(14, corners: [.topLeft, .topRight])
+                }
                 
                 if let posts = payload?.posts?.allObjects as? [AabbaPostList] {
                     MapPostView(posts: posts, parentIndex: $parentIndex)
                 }
             }.frame(width: 360)
                 .background(.regularMaterial)
-        }.frame(maxHeight: 448)
+                .cornerRadius(8)
+        }.frame(maxHeight: 400)
             .onAppear {
                 parentIndex = parentAabbaIndex
             }
