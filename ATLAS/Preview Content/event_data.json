@@ -1,0 +1,65 @@
+{
+    "COP_date_ranges": [
+        {
+            "endDate": "2023-10-30 01:45",
+            "startDate": "2023-10-25 07:15"
+        }
+    ],
+    "events": [
+        {
+            "UUID": "someUUID",
+            "dep": "BKK",
+            "dest": "SIN",
+            "endDate": "2023-10-30 01:15",
+            "location": "someLocation",
+            "name": "TR753",
+            "startDate": "2023-10-29 23:15",
+            "status": "5",
+            "type": "Flight"
+        },
+        {
+            "UUID": "someUUID",
+            "dep": "BKK",
+            "dest": "SIN",
+            "endDate": "2023-10-25 10:15",
+            "location": "someLocation",
+            "name": "TR757",
+            "startDate": "2023-10-25 08:15",
+            "status": "5",
+            "type": "Flight"
+        },
+        {
+            "UUID": "someUUID",
+            "dep": "",
+            "dest": "",
+            "endDate": "2023-10-26 23:59",
+            "location": "someLocation",
+            "name": "REST",
+            "startDate": "2023-10-26 00:00",
+            "status": "6",
+            "type": "REST"
+        },
+        {
+            "UUID": "someUUID",
+            "dep": "",
+            "dest": "",
+            "endDate": "2023-10-27 23:59",
+            "location": "someLocation",
+            "name": "STANDBY",
+            "startDate": "2023-10-27 00:00",
+            "status": "1",
+            "type": "STANDBY"
+        },
+        {
+            "UUID": "someUUID",
+            "dep": "",
+            "dest": "",
+            "endDate": "2023-10-28 23:59",
+            "location": "someLocation",
+            "name": "OFF",
+            "startDate": "2023-10-28 00:00",
+            "status": "6",
+            "type": "REST"
+        }
+    ]
+}

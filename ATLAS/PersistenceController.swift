@@ -552,23 +552,24 @@ class CoreDataModelState: ObservableObject {
     }
     
     func getOrPostEvent() async -> Bool {
-        if dataEvents.count > 0 {
-            return await postEvent(dataEvents)
-        } else {
+//        if dataEvents.count > 0 {
+//            return await postEvent(dataEvents)
+//        } else {
             // Get event data
-            let calendarService = await remoteService.getCalendarData()
+//            let calendarService = await remoteService.getCalendarData()
+        let calendarService: ICalendarResponse = remoteService.load("airport_data.json")
                     
             print("calendarService======\(calendarService)")
-            if let dateRange = calendarService?.COP_date_ranges, dateRange.count > 0 {
+            if let dateRange = calendarService.COP_date_ranges, dateRange.count > 0 {
                 self.initDataEventDateRange(dateRange)
             }
     
-            if let events = calendarService?.events, events.count > 0 {
+            if let events = calendarService.events, events.count > 0 {
                 self.initDataEvent(events)
             }
             print("=======get event=====")
             return true
-        }
+//        }
     }
     
     func postLogbookEntries(_ payload: [LogbookEntriesList]) async -> Bool {
@@ -609,9 +610,9 @@ class CoreDataModelState: ObservableObject {
     }
     
     func getOrPostLogbookEntries() async -> Bool {
-        if dataLogbookEntries.count > 0 {
-            return await postLogbookEntries(dataLogbookEntries)
-        } else {
+//        if dataLogbookEntries.count > 0 {
+//            return await postLogbookEntries(dataLogbookEntries)
+//        } else {
             let logbookService = await remoteService.getLogbookData()
             
             if let logbookEntry = logbookService?.logbook_data, logbookEntry.count > 0 {
@@ -651,7 +652,7 @@ class CoreDataModelState: ObservableObject {
             
             print("=======get logbook=====")
             return true
-        }
+//        }
     }
     
     func getOrPostLogbookLimitation() async -> Bool {
@@ -690,47 +691,47 @@ class CoreDataModelState: ObservableObject {
     }
     
     func getOrPostRecency() async -> Bool {
-        if dataRecency.count > 0 {
-            var payloadRecency: [Any] = []
-            var payloadExpiry: [Any] = []
-            var payloadVisa: [Any] = []
-            
-            for item in dataRecency {
-                payloadRecency.append([
-                    "recency_type": item.unwrappedType,
-                    "recency_requirement": item.unwrappedRequirement,
-                    "recency_limit": item.unwrappedLimit
-                ] as [String : Any])
-            }
-            
-            for item in dataRecencyDocument {
-                var temp = [String: Any]()
-                let key = item.unwrappedType.lowercased().replacingOccurrences(of: " ", with:
-                "_")
-                
-                temp[key] = item.unwrappedExpiredDate
-                
-                payloadExpiry.append(temp)
-            }
-            
-            for item in dataRecencyExpiry {
-                payloadVisa.append([
-                    "visa": item.unwrappedType,
-                    "expiry": item.unwrappedExpiredDate,
-                ])
-            }
-            
-            let payload: [String: Any] = [
-                "user_id": userID,
-                "recency_data": payloadRecency,
-                "expiry_data": payloadExpiry,
-                "visa_data": payloadVisa
-            ]
-            
-            print("=======post recency ===== \(payload)")
-            
-            return await remoteService.postRecencyData(payload)
-        } else {
+//        if dataRecency.count > 0 {
+//            var payloadRecency: [Any] = []
+//            var payloadExpiry: [Any] = []
+//            var payloadVisa: [Any] = []
+//
+//            for item in dataRecency {
+//                payloadRecency.append([
+//                    "recency_type": item.unwrappedType,
+//                    "recency_requirement": item.unwrappedRequirement,
+//                    "recency_limit": item.unwrappedLimit
+//                ] as [String : Any])
+//            }
+//
+//            for item in dataRecencyDocument {
+//                var temp = [String: Any]()
+//                let key = item.unwrappedType.lowercased().replacingOccurrences(of: " ", with:
+//                "_")
+//
+//                temp[key] = item.unwrappedExpiredDate
+//
+//                payloadExpiry.append(temp)
+//            }
+//
+//            for item in dataRecencyExpiry {
+//                payloadVisa.append([
+//                    "visa": item.unwrappedType,
+//                    "expiry": item.unwrappedExpiredDate,
+//                ])
+//            }
+//
+//            let payload: [String: Any] = [
+//                "user_id": userID,
+//                "recency_data": payloadRecency,
+//                "expiry_data": payloadExpiry,
+//                "visa_data": payloadVisa
+//            ]
+//
+//            print("=======post recency ===== \(payload)")
+//
+//            return await remoteService.postRecencyData(payload)
+//        } else {
             let recencyService = await remoteService.getRecencyData()
             
             if let recencyData = recencyService?.recency_data, recencyData.count > 0 {
@@ -743,13 +744,14 @@ class CoreDataModelState: ObservableObject {
             print("=======get recency=====")
             
             return true
-        }
+//        }
     }
     
     func getMapAirport() async {
         print("start airport")
         self.isMapAirportLoading = true
-        await remoteService.getMapAirportData(completion: { (success, responseAirport) in
+//        await remoteService.getMapAirportData(completion: { (success, responseAirport) in
+        let responseAirport: IAirportDataJsonResponse = await remoteService.load("airport_data.json")
             
             guard !responseAirport.all_airports_data.isEmpty else { return }
             
@@ -783,7 +785,7 @@ class CoreDataModelState: ObservableObject {
 //                self.initDataAirport(responseAirport.all_airports_data)
 //                print("end airport")
 //            }
-        })
+//        })
     }
     
     func postFlightPlan() async -> Bool {
@@ -1304,9 +1306,9 @@ class CoreDataModelState: ObservableObject {
     
     @MainActor
     func getOrPostFlightPlan() async -> Bool {
-        if dataFlightOverviewList.count > 0 {
-            return await postFlightPlan()
-        } else {
+//        if dataFlightOverviewList.count > 0 {
+//            return await postFlightPlan()
+//        } else {
             let response = await remoteService.getFlightPlanDataV3()
 //            print("responseFlightPlan======\(responseFlightPlan)")
             if let responseFlightPlan = response, responseFlightPlan.count > 0 {
@@ -1366,7 +1368,7 @@ class CoreDataModelState: ObservableObject {
             
             print("=======get flight plan=====")
             return true
-        }
+//        }
     }
     
     func checkAndSyncDataNote() async {

@@ -1,422 +1,457 @@
 [
-  {
-     "name":"VTBS",
-     "lat":"13.6811",
-     "long":"100.747",
-     "post_count": 9,
-     "posts":[
         {
-           "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-           "user_id":"abc122",
-           "post_date":"2023-09-14 23:15:00",
-           "post_title":"Too many planes",
-           "post_text":"30 mins delay",
-           "upvote_count":"4",
-           "comment_count":"1",
-           "category":"Congestion",
-           "comments":[
-              {
-                 "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
-                 "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-                 "user_id":"abc123",
-                 "comment_date":"2023-09-15 22:15:00",
-                 "comment_text":"Healing",
-                 "username":"Adil_Accumulus"
-              }
-           ],
-           "username":"Nasrun360"
+            "name": "VTBS",
+            "lat": "13.6811",
+            "long": "100.747",
+            "post_count": "6",
+            "posts": [
+                {
+                    "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-14 23:15:00",
+                    "post_title": "Too many planes 00",
+                    "post_text": "30 mins delay",
+                    "category": "Congestion",
+                    "comments": [
+                        {
+                            "comment_id": "a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                            "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-15 22:15:00",
+                            "comment_text": "Test Test",
+                            "username": "Adil_Accumulus"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "1"
+                },
+                {
+                    "post_id": "5a7111a1-4edb-47b7-9d95-bce5fffe6525",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 23:15:00",
+                    "post_title": "Departure delay",
+                    "post_text": "10 mins delay",
+                    "category": "Congestion",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 23:15:00",
+                    "post_title": "Runway conditions",
+                    "post_text": "Bumpy runway",
+                    "category": "Runway",
+                    "comments": [
+                        {
+                            "comment_id": "23fe0160-7fd0-4ea9-9ec5-a65848384fd5",
+                            "post_id": "9ed431a2-e13e-4625-be00-3299c1a3e5ee",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-10 22:15:00",
+                            "comment_text": "Rough landing",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                },
+                {
+                    "post_id": "d6b6fa36-34bc-490c-bfcb-9a88b9f1d8c9",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-14 23:15:00",
+                    "post_title": "Test for new post",
+                    "post_text": "New Post",
+                    "category": "Congestion",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "E3204423-399D-4B95-99AA-2B42079DC6B5",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-14 23:15:00",
+                    "post_title": "Too many planes 00",
+                    "post_text": "30 mins delay",
+                    "category": "Congestion",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "e3a31a78-855c-4ac6-b6cd-ba0094a2e698",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-14 23:15:00",
+                    "post_title": "Too many planes",
+                    "post_text": "30 mins delay",
+                    "category": "Congestion",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "0"
+                }
+            ]
         },
         {
-           "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Departure delay",
-           "post_text":"10 mins delay",
-           "upvote_count":"4",
-           "comment_count":"0",
-           "category":"Congestion",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
+            "name": "WSSS",
+            "lat": "1.35019",
+            "long": "103.994",
+            "post_count": "4",
+            "posts": [
+                {
+                    "post_id": "0c08b1db-8bb5-4f59-b11b-617337eeb9b0",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-09 14:00:00",
+                    "post_title": "Strong Wind",
+                    "post_text": "Wind direction from the north",
+                    "category": "Runway",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "2352c2a4-4e35-4ee0-af38-7764e8576784",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 14:00:00",
+                    "post_title": "This runway has resurfaced",
+                    "post_text": "Smooth landing",
+                    "category": "Runway",
+                    "comments": [
+                        {
+                            "comment_id": "20586f6f-3ef9-46a4-9f83-304206df5eeb",
+                            "post_id": "2352c2a4-4e35-4ee0-af38-7764e8576784",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-14 04:00:00",
+                            "comment_text": "I m a smooth operator",
+                            "username": "Nasrun360"
+                        },
+                        {
+                            "comment_id": "262c3ff8-a463-4bc8-8c84-60d987a0f3d0",
+                            "post_id": "2352c2a4-4e35-4ee0-af38-7764e8576784",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-14 04:00:00",
+                            "comment_text": "Yeap clean landing, smooth operator",
+                            "username": "Adil_Accumulus"
+                        },
+                        {
+                            "comment_id": "74c41d22-dc53-44b9-bbd0-1452179c0149",
+                            "post_id": "2352c2a4-4e35-4ee0-af38-7764e8576784",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-15 22:15:00",
+                            "comment_text": "New Comment",
+                            "username": "Adil_Accumulus"
+                        },
+                        {
+                            "comment_id": "999c3f6f-c116-4b29-a8e3-184e83bf6ba0",
+                            "post_id": "2352c2a4-4e35-4ee0-af38-7764e8576784",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-14 04:00:00",
+                            "comment_text": "Yeap clean landing, smooth operator",
+                            "username": "Adil_Accumulus"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "4"
+                },
+                {
+                    "post_id": "747f9ccc-8ee2-4082-bfc1-c46f7a821621",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 14:00:00",
+                    "post_title": "This runway has resurfaced",
+                    "post_text": "Smooth landing",
+                    "category": "Runway",
+                    "comments": [
+                        {
+                            "comment_id": "b2ea63d4-9abd-418d-9866-b76b2f21681f",
+                            "post_id": "747f9ccc-8ee2-4082-bfc1-c46f7a821621",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-14 04:00:00",
+                            "comment_text": "Yeap clean landing",
+                            "username": "Adil_Accumulus"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                },
+                {
+                    "post_id": "ce7ecb52-9784-410e-afdc-ac21dd319189",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-05 01:00:00",
+                    "post_title": "Air Turbulence",
+                    "post_text": "Pilots please beware",
+                    "category": "Turbulence",
+                    "comments": [
+                        {
+                            "comment_id": "1c031752-3abd-40ae-8001-cb202c0042d9",
+                            "post_id": "ce7ecb52-9784-410e-afdc-ac21dd319189",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-06 13:00:00",
+                            "comment_text": "Had a rough time flying over",
+                            "username": "Nasrun360"
+                        },
+                        {
+                            "comment_id": "2807ea3d-5b6d-4ba0-9a0d-7fede97898d5",
+                            "post_id": "ce7ecb52-9784-410e-afdc-ac21dd319189",
+                            "user_id": "abc123",
+                            "comment_date": "2023-09-05 04:00:00",
+                            "comment_text": "This is the comment",
+                            "username": "Adil_Accumulus"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "2"
+                }
+            ]
         },
         {
-           "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Runway conditions",
-           "post_text":"Bumpy runway",
-           "upvote_count":"6",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
+            "name": "PASVA",
+            "lat": "6.25",
+            "long": "102.066667",
+            "post_count": "1",
+            "posts": [
+                {
+                    "post_id": "c7e4f1d4-57e5-4c30-9a01-c435c6f6094e",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-13 12:00:00",
+                    "post_title": "UFO",
+                    "post_text": "Flying at 5000 ft",
+                    "category": "Hazard",
+                    "comments": [
+                        {
+                            "comment_id": "a93901eb-b29c-4ff1-962b-5ec8567dfa18",
+                            "post_id": "c7e4f1d4-57e5-4c30-9a01-c435c6f6094e",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-13 13:00:00",
+                            "comment_text": "ET is in town",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "1"
+                }
+            ]
         },
         {
-           "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-           "user_id":"abc122",
-           "post_date":"2023-09-14 23:15:00",
-           "post_title":"Too many planes",
-           "post_text":"30 mins delay",
-           "upvote_count":"4",
-           "comment_count":"1",
-           "category":"Congestion",
-           "comments":[
-              {
-                 "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
-                 "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-                 "user_id":"abc123",
-                 "comment_date":"2023-09-15 22:15:00",
-                 "comment_text":"Healing",
-                 "username":"Adil_Accumulus"
-              }
-           ],
-           "username":"Adil_Accumulus"
+            "name": "PIBAP",
+            "lat": "2.5",
+            "long": "104.1",
+            "post_count": "2",
+            "posts": [
+                {
+                    "post_id": "441dfc7c-3445-4cb1-86d3-6991a9f3026c",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-10 17:00:00",
+                    "post_title": "Strong wind",
+                    "post_text": "Pilots please beware",
+                    "category": "Turbulence",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "8001EC6B-B1A5-4EC7-9FC0-CA2E3FAB2A34",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-22 08:40:27",
+                    "post_title": "Weather Observation",
+                    "post_text": "200 Test",
+                    "category": "Weather",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "0"
+                }
+            ]
         },
         {
-           "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Departure delay",
-           "post_text":"10 mins delay",
-           "upvote_count":"4",
-           "comment_count":"0",
-           "category":"Congestion",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
+            "name": "PASPU",
+            "lat": "1.983333",
+            "long": "104.1",
+            "post_count": "2",
+            "posts": [
+                {
+                    "post_id": "b7fc9026-5373-490e-b6d7-fe50c46e37fa",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 14:00:00",
+                    "post_title": "Strong Wind",
+                    "post_text": "Wind direction from the north",
+                    "category": "Wind",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "cdead350-d303-4000-ad9c-c2a50b0ab1b7",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-09 14:00:00",
+                    "post_title": "Strong Wind",
+                    "post_text": "Wind direction from the north",
+                    "category": "Hazard",
+                    "comments": [
+                        {
+                            "comment_id": "02b5155d-14d5-447e-a071-5aaa0c747cd6",
+                            "post_id": "cdead350-d303-4000-ad9c-c2a50b0ab1b7",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-14 04:00:00",
+                            "comment_text": "Having the same experience",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                }
+            ]
         },
         {
-           "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Runway conditions",
-           "post_text":"Bumpy runway",
-           "upvote_count":"6",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
+            "name": "NYLON",
+            "lat": "1.61555",
+            "long": "104.10638",
+            "post_count": "1",
+            "posts": [
+                {
+                    "post_id": "64d756d3-3c09-48f3-80e0-cc728470d3f2",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-05 01:00:00",
+                    "post_title": "Forest fires",
+                    "post_text": "Forest fires been going on for 24h around here. Any visibility issue here?",
+                    "category": "Hazard",
+                    "comments": [
+                        {
+                            "comment_id": "afc53a40-377b-46ef-a298-385e12f0eadc",
+                            "post_id": "64d756d3-3c09-48f3-80e0-cc728470d3f2",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-06 13:00:00",
+                            "comment_text": "Negative, winds blowing smoke in another direction",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                }
+            ]
         },
         {
-           "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-           "user_id":"abc122",
-           "post_date":"2023-09-14 23:15:00",
-           "post_title":"Too many planes",
-           "post_text":"30 mins delay",
-           "upvote_count":"4",
-           "comment_count":"1",
-           "category":"Congestion",
-           "comments":[
-              {
-                 "comment_id":"a0d2df5e-6817-40c8-8b36-8b28f9b33293",
-                 "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
-                 "user_id":"abc123",
-                 "comment_date":"2023-09-15 22:15:00",
-                 "comment_text":"Healing",
-                 "username":"Adil_Accumulus"
-              }
-           ],
-           "username":"Adil_Accumulus"
+            "name": "POSUB",
+            "lat": "1.45",
+            "long": "104.116667",
+            "post_count": "1",
+            "posts": [
+                {
+                    "post_id": "99d4252c-7d07-45d0-a699-dc60defaf173",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-14 12:15:00",
+                    "post_title": "Heavy clouds",
+                    "post_text": "Only see white clouds",
+                    "category": "Visibility",
+                    "comments": [
+                        {
+                            "comment_id": "675850ea-f5f1-4b77-a7b8-4e4e78c9e3ab",
+                            "post_id": "99d4252c-7d07-45d0-a699-dc60defaf173",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-15 13:15:00",
+                            "comment_text": "White Screen",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                }
+            ]
         },
         {
-           "post_id":"5a7111a1-4edb-47b7-9d95-bce5fffe6525",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Departure delay",
-           "post_text":"10 mins delay",
-           "upvote_count":"4",
-           "comment_count":"0",
-           "category":"Congestion",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 23:15:00",
-           "post_title":"Runway conditions",
-           "post_text":"Bumpy runway",
-           "upvote_count":"6",
-           "comment_count":"1",
-           "category":"Runway",
-           "comments":[
-              {
-                 "comment_id":"23fe0160-7fd0-4ea9-9ec5-a65848384fd5",
-                 "post_id":"9ed431a2-e13e-4625-be00-3299c1a3e5ee",
-                 "user_id":"abc122",
-                 "comment_date":"2023-09-10 22:15:00",
-                 "comment_text":"Rough landing",
-                 "username":"Nasrun360"
-              }
-           ],
-           "username":"Nasrun360"
+            "name": "SANAT",
+            "lat": "1.116667",
+            "long": "103.983333",
+            "post_count": "3",
+            "posts": [
+                {
+                    "post_id": "03c57297-7abd-414d-accd-d32c617d7c2c",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-15 12:15:00",
+                    "post_title": "Ships on fire",
+                    "post_text": "What happen?",
+                    "category": "Hazard",
+                    "comments": [
+                        {
+                            "comment_id": "fb626ba8-9b10-4222-987a-9bef713d9ebc",
+                            "post_id": "03c57297-7abd-414d-accd-d32c617d7c2c",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-16 13:15:00",
+                            "comment_text": "Fire Fire Fire!!",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                },
+                {
+                    "post_id": "af0b7ede-0506-4243-8ed3-f6bcc7d3049b",
+                    "user_id": "abc122",
+                    "post_date": "2023-09-13 11:00:00",
+                    "post_title": "Crane on building",
+                    "post_text": "Big Crane",
+                    "category": "Hazard",
+                    "comments": [],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Nasrun360",
+                    "comment_count": "0"
+                },
+                {
+                    "post_id": "beb632ef-92c1-4e16-9534-c50cd548173b",
+                    "user_id": "abc123",
+                    "post_date": "2023-09-14 12:15:00",
+                    "post_title": "Heavy clouds",
+                    "post_text": "Only see white clouds",
+                    "category": "Visibility",
+                    "comments": [
+                        {
+                            "comment_id": "08382177-74f6-41d8-939b-64433aa247e2",
+                            "post_id": "beb632ef-92c1-4e16-9534-c50cd548173b",
+                            "user_id": "abc122",
+                            "comment_date": "2023-09-15 13:15:00",
+                            "comment_text": "White Screen",
+                            "username": "Nasrun360"
+                        }
+                    ],
+                    "upvote_count": "0",
+                    "voted": false,
+                    "username": "Adil_Accumulus",
+                    "comment_count": "1"
+                }
+            ]
         }
-     ]
-  },
-  {
-     "name":"WSSS",
-     "lat":"1.35019",
-     "long":"103.994",
-     "post_count":5,
-     "posts":[
-        {
-           "post_id":"0c08b1db-8bb5-4f59-b11b-617337eeb9b0",
-           "user_id":"abc122",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"7",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Nasrun360"
-        },
-        {
-           "post_id":"2352c2a4-4e35-4ee0-af38-7764e8576784",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"This runway has resurfaced",
-           "post_text":"Smooth landing",
-           "upvote_count":"0",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"747f9ccc-8ee2-4082-bfc1-c46f7a821621",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"This runway has resurfaced",
-           "post_text":"Smooth landing",
-           "upvote_count":"6",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"ce7ecb52-9784-410e-afdc-ac21dd319189",
-           "user_id":"abc123",
-           "post_date":"2023-09-05 01:00:00",
-           "post_title":"Air Turbulence",
-           "post_text":"Pilots please beware",
-           "upvote_count":"1",
-           "comment_count":"0",
-           "category":"Turbulence",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"0c08b1db-8bb5-4f59-b11b-617337eeb9b0",
-           "user_id":"abc122",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"7",
-           "comment_count":"0",
-           "category":"Runway",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        }
-     ]
-  },
-  {
-     "name":"PASVA",
-     "lat":"6.25",
-     "long":"102.066667",
-     "post_count":1,
-     "posts":[
-        {
-           "post_id":"c7e4f1d4-57e5-4c30-9a01-c435c6f6094e",
-           "user_id":"abc122",
-           "post_date":"2023-09-13 12:00:00",
-           "post_title":"UFO",
-           "post_text":"Flying at 5000 ft",
-           "upvote_count":"5",
-           "comment_count":"1",
-           "category":"Hazard",
-           "comments":[
-              {
-                 "comment_id":"a93901eb-b29c-4ff1-962b-5ec8567dfa18",
-                 "post_id":"c7e4f1d4-57e5-4c30-9a01-c435c6f6094e",
-                 "user_id":"abc122",
-                 "comment_date":"2023-09-13 13:00:00",
-                 "comment_text":"ET is in town",
-                 "username":"Nasrun360"
-              }
-           ],
-           "username":"Nasrun360"
-        }
-     ]
-  },
-  {
-     "name":"PIBAP",
-     "lat":"2.5",
-     "long":"104.1",
-     "post_count":1,
-     "posts":[
-        {
-           "post_id":"441dfc7c-3445-4cb1-86d3-6991a9f3026c",
-           "user_id":"abc123",
-           "post_date":"2023-09-10 17:00:00",
-           "post_title":"Strong wind",
-           "post_text":"Pilots please beware",
-           "upvote_count":"0",
-           "comment_count":"0",
-           "category":"Turbulence",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        }
-     ]
-  },
-  {
-     "name":"PASPU",
-     "lat":"1.983333",
-     "long":"104.1",
-     "post_count":4,
-     "posts":[
-        {
-           "post_id":"b7fc9026-5373-490e-b6d7-fe50c46e37fa",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"5",
-           "comment_count":"0",
-           "category":"Wind",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"cdead350-d303-4000-ad9c-c2a50b0ab1b7",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"9",
-           "comment_count":"0",
-           "category":"Hazard",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"b7fc9026-5373-490e-b6d7-fe50c46e37fa",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"5",
-           "comment_count":"0",
-           "category":"Wind",
-           "comments":[
-              
-           ],
-           "username":"Adil_Accumulus"
-        },
-        {
-           "post_id":"cdead350-d303-4000-ad9c-c2a50b0ab1b7",
-           "user_id":"abc123",
-           "post_date":"2023-09-09 14:00:00",
-           "post_title":"Strong Wind",
-           "post_text":"Wind direction from the north",
-           "upvote_count":"9",
-           "comment_count":"1",
-           "category":"Hazard",
-           "comments":[
-              {
-                 "comment_id":"02b5155d-14d5-447e-a071-5aaa0c747cd6",
-                 "post_id":"cdead350-d303-4000-ad9c-c2a50b0ab1b7",
-                 "user_id":"abc122",
-                 "comment_date":"2023-09-14 04:00:00",
-                 "comment_text":"Having the same experience",
-                 "username":"Nasrun360"
-              }
-           ],
-           "username":"Nasrun360"
-        }
-     ]
-  },
-  {
-     "name":"NYLON",
-     "lat":"1.61555",
-     "long":"104.10638",
-     "post_count":1,
-     "posts":[
-        {
-           "post_id":"64d756d3-3c09-48f3-80e0-cc728470d3f2",
-           "user_id":"abc123",
-           "post_date":"2023-09-05 01:00:00",
-           "post_title":"Forest fires",
-           "post_text":"Forest fires been going on for 24h around here. Any visibility issue here?",
-           "upvote_count":"10",
-           "comment_count":"1",
-           "category":"Hazard",
-           "comments":[
-              {
-                 "comment_id":"afc53a40-377b-46ef-a298-385e12f0eadc",
-                 "post_id":"64d756d3-3c09-48f3-80e0-cc728470d3f2",
-                 "user_id":"abc122",
-                 "comment_date":"2023-09-06 13:00:00",
-                 "comment_text":"Negative, winds blowing smoke in another direction",
-                 "username":"Nasrun360"
-              }
-           ],
-           "username":"Adil_Accumulus"
-        }
-     ]
-  },
-  {
-     "name":"POSUB",
-     "lat":"1.45",
-     "long":"104.116667",
-     "post_count":1,
-     "posts":[
-        {
-           "post_id":"99d4252c-7d07-45d0-a699-dc60defaf173",
-           "user_id":"abc123",
-           "post_date":"2023-09-14 12:15:00",
-           "post_title":"Heavy clouds",
-           "post_text":"Only see white clouds",
-           "upvote_count":"10",
-           "comment_count":"1",
-           "category":"Visibility",
-           "comments":[
-              {
-                 "comment_id":"675850ea-f5f1-4b77-a7b8-4e4e78c9e3ab",
-                 "post_id":"99d4252c-7d07-45d0-a699-dc60defaf173",
-                 "user_id":"abc122",
-                 "comment_date":"2023-09-15 13:15:00",
-                 "comment_text":"White Screen",
-                 "username":"Nasrun360"
-              }
-           ],
-           "username":"Adil_Accumulus"
-        }
-     ]
-  }
-]
+    ]

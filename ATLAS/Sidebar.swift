@@ -122,11 +122,11 @@ struct Sidebar: View {
                     }
                 }
                 ToolbarItem(placement: .principal) {
-                    Image("logo")
-                        .frame(width: 100, height: 32)
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(20)
+//                    Image("logo")
+//                        .frame(width: 100, height: 32)
+//                        .scaledToFit()
+//                        .aspectRatio(contentMode: .fit)
+//                        .padding(20)
                 }
             }
     }

@@ -33,7 +33,7 @@ struct MapViewModal: View {
     @State var selectedWeather = true
     @State var selectedAddRoute = false
     @State var selectedAABBA = true
-    @State var selectedWaypoint = false
+    @State var selectedWaypoint = true
     @State var selectedAirport = true
     
     @State private var showPopoverWeather = false
@@ -506,6 +506,7 @@ struct MapViewModal: View {
                     .onAppear {
                         firstLoading = true
                         
+                        
                         if let flightOverviewList = coreDataModel.selectedEvent?.flightOverviewList?.allObjects as? [FlightOverviewList], let flightOverview = flightOverviewList.first {
                             readData()
                             tfRoute = flightOverview.unwrappedRoute
@@ -566,7 +567,6 @@ struct MapViewModal: View {
     
     func updateWaypoint() {
         if selectedWaypoint {
-            mapView.removeAnnotations(waypointArr)
             mapView.addAnnotations(waypointArr)
         } else {
             mapView.removeAnnotations(waypointArr)
@@ -575,12 +575,7 @@ struct MapViewModal: View {
     
     func updateAirport() {
         if selectedAirport {
-            if mapView.region.span.longitudeDelta < 30 && mapView.region.span.latitudeDelta < 30 {
-                mapView.removeAnnotations(airportArr)
-                mapView.addAnnotations(airportArr)
-            } else {
-                mapView.removeAnnotations(airportArr)
-            }
+            mapView.addAnnotations(airportArr)
         } else {
             mapView.removeAnnotations(airportArr)
         }
@@ -588,12 +583,7 @@ struct MapViewModal: View {
     
     func updateTraffic() {
         if selectedTraffic {
-            if mapView.region.span.longitudeDelta < 80 && mapView.region.span.latitudeDelta < 80 {
-                mapView.removeAnnotations(mapTraffic)
-                mapView.addAnnotations(mapTraffic)
-            } else {
-                mapView.removeAnnotations(mapTraffic)
-            }
+            mapView.addAnnotations(mapTraffic)
         } else {
             mapView.removeAnnotations(mapTraffic)
         }
@@ -622,13 +612,12 @@ struct MapViewModal: View {
                 }
             }
             
-            if firstLoading {
-                onAppearAirport()
-                onAppearMapOverlay()
-//                onAppearWaypoint()
-                onAppearTraffic()
-                onAppearAabba()
-            }
+            print("traffic data===========\(coreDataModel.dataTrafficMap)")
+            onAppearAirport()
+            onAppearMapOverlay()
+            onAppearWaypoint()
+            onAppearTraffic()
+            onAppearAabba()
         }
     }
     
@@ -648,11 +637,7 @@ struct MapViewModal: View {
         if selectedAirport {
             airportArr = addAirport(airportIds)
             
-            if mapView.region.span.longitudeDelta < 0.3 && mapView.region.span.latitudeDelta < 0.3 {
-                mapView.addAnnotations(airportArr)
-            } else {
-                mapView.removeAnnotations(airportArr)
-            }
+            mapView.addAnnotations(airportArr)
         } else {
             mapView.removeAnnotations(airportArr)
         }
@@ -662,11 +647,7 @@ struct MapViewModal: View {
         waypointArr = addWaypoint()
         
         if selectedWaypoint {
-            if mapView.region.span.longitudeDelta < 0.1 && mapView.region.span.latitudeDelta < 0.1 {
-                mapView.addAnnotations(waypointArr)
-            } else {
-                mapView.removeAnnotations(waypointArr)
-            }
+            mapView.addAnnotations(waypointArr)
         } else {
             mapView.removeAnnotations(waypointArr)
         }
@@ -675,16 +656,7 @@ struct MapViewModal: View {
     func onAppearTraffic() {
         if selectedTraffic {
             mapTraffic = addTraffic()
-            
-            if mapIconModel.firstLoading && mapView.region.span.longitudeDelta < 0.5 && mapView.region.span.latitudeDelta < 0.5 {
-                mapView.addAnnotations(mapTraffic)
-            } else {
-                if mapView.region.span.longitudeDelta < 80 && mapView.region.span.latitudeDelta < 80 {
-                    mapView.addAnnotations(mapTraffic)
-                } else {
-                    mapView.removeAnnotations(mapTraffic)
-                }
-            }
+            mapView.addAnnotations(mapTraffic)
         } else {
             mapView.removeAnnotations(mapTraffic)
         }
@@ -1011,27 +983,27 @@ class Coordinator: NSObject, MKMapViewDelegate {
     @MainActor func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         self.parent.mapIconModel.firstLoading = false
         
-        if parent.selectedAirport {
-            if mapView.region.span.longitudeDelta < 30 && mapView.region.span.latitudeDelta < 30 {
-                
-                var containAnnotation = false
-                
-                for item in parent.airportArr {
-                    if mapView.view(for: item) != nil {
-                        containAnnotation = true
-                        break
-                    }
-                }
-                
-                if !containAnnotation {
-                    mapView.addAnnotations(parent.airportArr)
-                }
-            } else {
-                mapView.removeAnnotations(parent.airportArr)
-            }
-        } else {
-            mapView.removeAnnotations(parent.airportArr)
-        }
+//        if parent.selectedAirport {
+//            if mapView.region.span.longitudeDelta < 30 && mapView.region.span.latitudeDelta < 30 {
+//
+//                var containAnnotation = false
+//
+//                for item in parent.airportArr {
+//                    if mapView.view(for: item) != nil {
+//                        containAnnotation = true
+//                        break
+//                    }
+//                }
+//
+//                if !containAnnotation {
+//                    mapView.addAnnotations(parent.airportArr)
+//                }
+//            } else {
+//                mapView.removeAnnotations(parent.airportArr)
+//            }
+//        } else {
+//            mapView.removeAnnotations(parent.airportArr)
+//        }
 
 //        if parent.selectedWaypoint {
 //            if mapView.region.span.longitudeDelta < 10 && mapView.region.span.latitudeDelta < 10 {
@@ -1055,44 +1027,44 @@ class Coordinator: NSObject, MKMapViewDelegate {
 //            mapView.removeAnnotations(parent.waypointArr)
 //        }
         
-        if parent.selectedTraffic {
-            if mapView.region.span.longitudeDelta < 80 && mapView.region.span.latitudeDelta < 80 {
-                
-                var containAnnotation = false
-                
-                for item in parent.mapTraffic {
-                    if mapView.view(for: item) != nil {
-                        containAnnotation = true
-                        break
-                    }
-                }
-                
-                if !containAnnotation {
-                    mapView.addAnnotations(parent.mapTraffic)
-                }
-            } else {
-                mapView.removeAnnotations(parent.mapTraffic)
-            }
-        } else {
-            mapView.removeAnnotations(parent.mapTraffic)
-        }
-        
-        if parent.selectedAABBA {
-            var containAnnotation = false
-            
-            for item in parent.mapAabba {
-                if mapView.view(for: item) != nil {
-                    containAnnotation = true
-                    break
-                }
-            }
-            
-            if !containAnnotation {
-                mapView.addAnnotations(parent.mapAabba)
-            }
-        } else {
-            mapView.removeAnnotations(parent.mapAabba)
-        }
+//        if parent.selectedTraffic {
+//            if mapView.region.span.longitudeDelta < 80 && mapView.region.span.latitudeDelta < 80 {
+//
+//                var containAnnotation = false
+//
+//                for item in parent.mapTraffic {
+//                    if mapView.view(for: item) != nil {
+//                        containAnnotation = true
+//                        break
+//                    }
+//                }
+//
+//                if !containAnnotation {
+//                    mapView.addAnnotations(parent.mapTraffic)
+//                }
+//            } else {
+//                mapView.removeAnnotations(parent.mapTraffic)
+//            }
+//        } else {
+//            mapView.removeAnnotations(parent.mapTraffic)
+//        }
+//
+//        if parent.selectedAABBA {
+//            var containAnnotation = false
+//
+//            for item in parent.mapAabba {
+//                if mapView.view(for: item) != nil {
+//                    containAnnotation = true
+//                    break
+//                }
+//            }
+//
+//            if !containAnnotation {
+//                mapView.addAnnotations(parent.mapAabba)
+//            }
+//        } else {
+//            mapView.removeAnnotations(parent.mapAabba)
+//        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -1127,13 +1099,13 @@ class Coordinator: NSObject, MKMapViewDelegate {
             annotationView.canShowCallout = true
             
             if dataAnnotation.colour == "dark" {
-                annotationView.updateImge(image: UIImage(named: "icon_airplane_orange"))
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_blue"))
             } else if dataAnnotation.colour == "medium" {
                 annotationView.updateImge(image: UIImage(named: "icon_airplane_medium"))
             } else if dataAnnotation.colour == "light" {
                 annotationView.updateImge(image: UIImage(named: "icon_airplane_light"))
             } else {
-                annotationView.updateImge(image: UIImage(named: "icon_airplane_unfilled_orange"))
+                annotationView.updateImge(image: UIImage(named: "icon_airplane_orange"))
             }
             
             annotationView.imageView?.transform = CGAffineTransform(rotationAngle: (annotation.subtitle!! as NSString).doubleValue)

@@ -791,7 +791,7 @@ class RemoteService: ObservableObject {
                 do {
                     if let error = error {
                         print("Request error: ", error)
-                        completion(true, IAirportDataJsonResponse(all_airports_data: []))
+                        completion(true, IAirportDataJsonResponse(all_airports_data: [], colour_airports_data: []))
                         return
                     }
                     
@@ -803,14 +803,14 @@ class RemoteService: ObservableObject {
                     }
                 } catch let error {
                     print("Error decoding: ", error)
-                    completion(true, IAirportDataJsonResponse(all_airports_data: []))
+                    completion(true, IAirportDataJsonResponse(all_airports_data: [], colour_airports_data: []))
                 }
             }
             
             dataTask.resume()
         } catch {
             print("Error: \(error)")
-            completion(true, IAirportDataJsonResponse(all_airports_data: []))
+            completion(true, IAirportDataJsonResponse(all_airports_data: [], colour_airports_data: []))
         }
     }
     

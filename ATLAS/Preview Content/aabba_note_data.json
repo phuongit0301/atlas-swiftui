@@ -4,7 +4,7 @@
          "name":"VTBS",
          "lat":"13.6811",
          "long":"100.747",
-         "post_count":9,
+         "post_count": "9",
          "posts":[
             {
                "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
@@ -13,6 +13,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -36,6 +37,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -52,6 +54,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -68,6 +71,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -91,6 +95,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -107,6 +112,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -123,6 +129,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -146,6 +153,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -162,6 +170,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"1",
                "category":"Runway",
                "comments":[
@@ -186,7 +195,7 @@
          "name":"VTBS",
          "lat":"13.6811",
          "long":"100.747",
-         "post_count":9,
+         "post_count": "9",
          "posts":[
             {
                "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
@@ -195,6 +204,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -218,6 +228,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -234,6 +245,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -250,6 +262,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -273,6 +286,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -289,6 +303,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -305,6 +320,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -328,6 +344,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -344,6 +361,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"1",
                "category":"Runway",
                "comments":[
@@ -368,7 +386,7 @@
          "name":"VTBS",
          "lat":"13.6811",
          "long":"100.747",
-         "post_count":9,
+         "post_count": "9",
          "posts":[
             {
                "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
@@ -377,6 +395,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -400,6 +419,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -416,6 +436,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -432,6 +453,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -455,6 +477,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -471,6 +494,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -487,6 +511,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -510,6 +535,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -526,6 +552,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"1",
                "category":"Runway",
                "comments":[
@@ -550,7 +577,7 @@
          "name":"VTBS",
          "lat":"13.6811",
          "long":"100.747",
-         "post_count":9,
+         "post_count": "9",
          "posts":[
             {
                "post_id":"01f7670a-3731-4553-92bf-534ff80f0e75",
@@ -559,6 +586,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -582,6 +610,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -598,6 +627,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -614,6 +644,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -637,6 +668,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -653,6 +685,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"0",
                "category":"Runway",
                "comments":[
@@ -669,6 +702,7 @@
                "post_title":"Too many planes",
                "post_text":"30 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"1",
                "category":"Congestion",
                "comments":[
@@ -692,6 +726,7 @@
                "post_title":"Departure delay",
                "post_text":"10 mins delay",
                "upvote_count":"4",
+               "voted": false,
                "comment_count":"0",
                "category":"Congestion",
                "comments":[
@@ -708,6 +743,7 @@
                "post_title":"Runway conditions",
                "post_text":"Bumpy runway",
                "upvote_count":"6",
+               "voted": false,
                "comment_count":"1",
                "category":"Runway",
                "comments":[

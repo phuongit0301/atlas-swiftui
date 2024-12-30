@@ -37,13 +37,13 @@ struct LoginView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                HStack {
-                    Image("logo")
-                        .frame(width: 100, height: 32)
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.bottom, 48)
-                }
+//                HStack {
+//                    Image("logo")
+//                        .frame(width: 100, height: 32)
+//                        .scaledToFit()
+//                        .aspectRatio(contentMode: .fit)
+//                        .padding(.bottom, 48)
+//                }
                 
                 VStack(spacing: 8) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -195,7 +195,7 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                Text("Copyright 2023 Accumulus Pte. Ltd. All Rights Reserved ").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 50)
+//                Text("Copyright 2023 Accumulus Pte. Ltd. All Rights Reserved ").font(.system(size: 13, weight: .regular)).foregroundColor(Color.black).padding(.bottom, 50)
                 
             }.frame(width: 550)
                 

@@ -1,0 +1,58 @@
+[
+    {
+        "airportID": "VTBS",
+        "lat": "13.6811",
+        "long": "100.747",
+        "selection": "departure",
+        "arr_delay": "0",
+        "dep_delay": "0",
+        "arr_delay_colour": "green",
+        "dep_delay_colour": "green",
+        "colour": "blue",
+        "notams": "",
+        "metar": "VTBS 150330Z 10006KT 060V130 9999 FEW020 SCT035 31/25 Q1010 NOSIG",
+        "taf": "TAF VTBS 142300Z 1500/1606 35005KT 9999 FEW020 BECMG 1506/1508 06008KT BECMG 1514/1516 35005KT BECMG 1603/1605 05008KT"
+    },
+    {
+        "airportID": "WSSS",
+        "lat": "1.35019",
+        "long": "103.994",
+        "selection": "arrival",
+        "arr_delay": "0",
+        "dep_delay": "0",
+        "arr_delay_colour": "green",
+        "dep_delay_colour": "green",
+        "colour": "blue",
+        "notams": "",
+        "metar": "WSSS 150330Z 16008KT 120V200 9999 FEW018 FEW020TCU BKN300 32/25 Q1012 NOSIG",
+        "taf": "TAF WSSS 142300Z 1500/1606 19009KT 9999 FEW015 SCT020"
+    },
+    {
+        "airportID": "WMKP",
+        "lat": "5.29714",
+        "long": "100.277",
+        "selection": "ALTN",
+        "arr_delay": "0",
+        "dep_delay": "0",
+        "arr_delay_colour": "green",
+        "dep_delay_colour": "green",
+        "colour": "green",
+        "notams": "",
+        "metar": "WMKP 150330Z 20004KT 160V240 9000 FEW020 31/24 Q1012 NOSIG",
+        "taf": "TAF WMKP 142300Z 1500/1600 VRB03KT 9000 SCT020 TEMPO 1500/1505 5000 TSRA FEW010 FEW017CB TEMPO 1505/1510 23009KT 7000 -TSRA FEW010 FEW017CB BECMG 1511/1513 VRB03KT 8000 SCT025"
+    },
+    {
+        "airportID": "VTSP",
+        "lat": "8.1132",
+        "long": "98.3169",
+        "selection": "ALTN",
+        "arr_delay": "0",
+        "dep_delay": "0",
+        "arr_delay_colour": "green",
+        "dep_delay_colour": "green",
+        "colour": "amber",
+        "notams": "",
+        "metar": "VTSP 150330Z VRB02KT 9999 FEW020 30/24 Q1011 NOSIG",
+        "taf": "TAF VTSP 142300Z 1500/1606 29005KT 9999 SCT020 TEMPO 1500/1508 -TSRA FEW018CB SCT020 BKN100"
+    }
+]

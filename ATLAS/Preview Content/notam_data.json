@@ -1,0 +1,769 @@
+{
+    "metarTafData": {
+        "depMetarTaf": {
+            "airport": "VTBS",
+            "std": "2023-09-08 20:00",
+            "metar": "VTBS 111230Z 25003KT 220V280 9999 FEW020 27/22 Q1011 NOSIG",
+            "taf": "TAF VTBS 111100Z 1112/1218 07008KT 9999 FEW020 TEMPO 1116/1120 VRB15KT 3000 TSRA FEW018CB SCT035"
+        },
+        "arrMetarTaf": {
+            "airport": "WSSS",
+            "sta": "2023-09-08 23:00",
+            "metar": "WSSS 111230Z 08006KT 9999 FEW020 BKN300 30/25 Q1010 NOSIG",
+            "taf": "TAF WSSS 111100Z 1112/1218 17008KT 9999 FEW015 SCT020"
+        },
+        "altnMetarTaf": [
+            {
+                "airport": "WMKJ",
+                "eta": "2023-09-08 22:00",
+                "metar": "WMKJ 111200Z 00000KT 7000 FEW022 28/25 Q1010",
+                "taf": "TAF WMKJ 111100Z 1112/1212 VRB02KT 8000 FEW022"
+            },
+            {
+                "airport": "WIDD",
+                "eta": "2023-09-08 22:00",
+                "metar": "WIDD 111230Z 13003KT 9999 FEW014 29/25 Q1012 NOSIG",
+                "taf": "TAF WIDD 111100Z 1112/1212 13005KT 9000 FEW014"
+            }
+        ],
+        "enrMetarTaf": [
+            {
+                "airport": "WMKJ",
+                "eta": "2023-09-08 22:00",
+                "metar": "WMKJ 111200Z 00000KT 7000 FEW022 28/25 Q1010",
+                "taf": "TAF WMKJ 111100Z 1112/1212 VRB02KT 8000 FEW022"
+            },
+            {
+                "airport": "WIDD",
+                "eta": "2023-09-08 22:00",
+                "metar": "WIDD 111230Z 13003KT 9999 FEW014 29/25 Q1012 NOSIG",
+                "taf": "TAF WIDD 111100Z 1112/1212 13005KT 9000 FEW014"
+            }
+        ]
+    },
+    "notamsData": {
+        "depNotams": {
+            "Airport": "VTBS",
+            "Runway": [
+                {
+                    "rank": "1",
+                    "date": "2308030400",
+                    "notam": "A) VTBS  B) 2308030400  C) 2311292359\nE) THE CLOSURE OF TAXIWAY E BETWEEN TAXIWAY E13 AND \n   TAXIWAY E19, TAXIWAY E15 AND OPERATIONAL RESTRICTIONS \n   OF RUNWAY 01L/19R AT SUVARNABHUMI INTERNATIONAL AIRPORT\n   THIS AIP SUP WILL REMAIN CURRENT UNTIL 29 NOVEMBER 2023\n   REF AIRAC AIP SUP A10/23\nCREATED: 03 Aug 2023 04:04:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "2",
+                    "date": "2311020000",
+                    "notam": "A) VTBS B) 2311020000 C) 2311152359\nE) TRIGGER NOTAM-PERM AIRAC AIP AMDT 11/23 WEF 02 NOV 2023.\nAD 2-VTBS-1 AD 2.2 AD GEOGRAPHICAL AND ADMINISTRATIONS DATA\nAD 2.5 PASSENGER FAC\nAD 2.8 APN, TWY AND CHECK LOCATIONS/PSN DATA\nAD 2.20 LCA AD REGULATIONS\nAD 2.24 CHARTS RELATED TO AN AD\nAD 2-VTBS-2 ADC-ICAO\n            AIRCRAFT PARKING/DOCKING CHART-ICAO\n            AD GROUND MOVEMENT CHART-ICAO\nAD 2-VTBS-6 SID-ICAO-RNAV RWY 19L, RWY 19R, RWY 01L, RWY 01R\nAD 2-VTBS-7 STAR-ICAO-RNAV RWY 19L/19R, 01L/01R\nAD 2-VTBS-8 IAC-ICAO-ILS OR LOC Z RWY 01L, RWY 01R, RWY 19L, RWY 19R\nCREATED: 05 Oct 2023 04:00:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "3",
+                    "date": "",
+                    "notam": "A) VTBS B) 2308221014 C) PERM\nE) AD 2.2 AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA AMD TO READ\n   AS FLW:\n   ITEM 3 ELEVATION/REFERENCE TEMPERATURE : 4.2FT (1.3M)/ \n          32.4 DEGREE CELSIUS\n\n   AD 2.12 RUNWAY PHYSICAL CHARACTERISTICS DATA AMD TO READ AS FLW :\n   COLUMN 1: RWY NR      COLUMN 6: THR/TDZ\n     01L                   4.2FT (1.3M) \n     19R                   4.0FT (1.2M)\n     01R                   3.7FT (1.1M)  \n     19L                   3.7FT (1.1M) \nREF AIP VTBS AD 2-VTBS-1-1, AD 2-VTBS-1-7\nCREATED: 22 Aug 2023 10:15:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "4",
+                    "date": "2308030445",
+                    "notam": "A) VTBS B) 2308030445 C) 2310310200\nE) GROUP OF 6 OBST HIGH-MAST LGT PENETRATE TKOF CLIMB SFC RWY 01L\n   ERECTED AT FLW LCA: \n   -PSN 1: 134255.5N1004449.9E ELEV 61.86FT AMSL DIST 1373.29M \n    N OF THR RWY 19R \n   -PSN 2: 134257.4N1004448.3E ELEV 63.17FT AMSL DIST 1419.29M\n    N OF THR RWY 19R \n   -PSN 3: 134300.1N1004447.0E ELEV 79.67FT AMSL DIST 1489.07M\n    N OF THR RWY 19R \n   -PSN 4: 134301.3N1004444.2E ELEV 82.20FT AMSL DIST 1503.49M\n    N OF THR RWY 19R \n   -PSN 5: 134301.1N1004449.9E ELEV 82.13FT AMSL DIST 1539.90M\n    N OF THR RWY 19R \n   -PSN 6: 134303.7N1004447.1E ELEV 79.44FT AMSL DIST 1592.58M\n    N OF THR RWY 19R\nCREATED: 03 Aug 2023 04:55:00 \nSOURCE: VTBDYNYX"
+                }
+            ],
+            "Taxiway": [
+                {
+                    "rank": "1",
+                    "date": "2309080100",
+                    "notam": "A) VTBS B) 2309080100 C) 2312051000\nE) TEMPO OBST FENCE INSTL ALONG TWY K AND TWY D11 \n   MNM DIST 43.5M SOUTH OF TWY CL\n   RMK/TWY K BTN TWY J4 AND TWY D11, TWY D11\n   CAN ACCOMMODATE ACFT UP TO CODE E\nCREATED: 07 Sep 2023 10:22:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "2",
+                    "date": "2310111830",
+                    "notam": "A) VTBS B) 2310111830 C) 2310112300\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\n   -TWY B BTN TWY C6 AND TWY C9\n   -TWY B5 \n   -TWY B6\n   -TWY C BTN TWY C6 AND TWY C9\n   -TWY C7 \n   -TWY C8\n   -TWY H BTN TWY C AND TWY H4\n   -TXL T18 BTN TWY C AND ACFT STAND NR S101\n   -TXL T19 BTN TWY C AND ACFT STAND NR S102\n   REF AIRAC AIP SUP A37/23\nCREATED: 11 Oct 2023 04:27:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "3",
+                    "date": "2310090815",
+                    "notam": "A) VTBS B) 2310090815 C) 2310310900\nE) THE CLOSURE OF TAXIWAY AND TAXILANE FOR PAVEMENT RECONSTRUCTION\n   PHASE 1 AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS) \n   EXTD TO 31 OCT 2023, 0900 UTC AND AMD AS FLW:\n   ITEM 2 THE TEMPORARY CLOSURE AREAS AND PERIODS\n   CONSTRUCTION AREA : 1\n   CLOSURE AREA :\n   -TAXILANE T6 BEHIND AIRCRAFT STANDS: B2, B4, B6\n   -TAXILANE T7 BEHIND AIRCRAFT STANDS: C1, C3, C5, 201, 202\n   PERIOD : 6 JUNE 2023, 0100 UTC TO 31 OCTOBER 2023, 0900 UTC\n   REF NON-AIRAC AIP SUP A21/23\nCREATED: 09 Oct 2023 08:18:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "4",
+                    "date": "2309140745",
+                    "notam": "A) VTBS B) 2309140745 C) 2310250900\nE) THE CLOSURE OF TAXIWAY AND TAXILANE FOR PAVEMENT RECONSTRUCTION\n   PHASE 1 AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS) AMD AS FLW:\n   ITEM 2 THE TEMPORARY CLOSURE AREAS AND PERIODS\n   CONSTRUCTION AREA : 2\n   CLOSURE AREA :\n   -TAXILANE T16\n   -TAXILANE T17 BEHIND AIRCRAFT STANDS: G4, G5, 501, 503, 504, 505\n   PERIOD : 3 JULY 2023, 0200 UTC TO 25 OCTOBER 2023, 0900 UTC\n   REF NON-AIRAC AIP SUP A21/23\nCREATED: 14 Sep 2023 07:48:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "5",
+                    "date": "2309070000",
+                    "notam": "A) VTBS  B) 2309070000  C) 2312061000\nE) TWY CLSD DUE TO TEMPO ACFT PRKG DETAIL AS FLW:\n   -TWY D10\n   -TWY D11\n   -TWY J3\n   -TWY J4\n   -TWY K\nCREATED: 06 Sep 2023 10:37:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "6",
+                    "date": "2308251830",
+                    "notam": "A) VTBS B) 2308251830 C) 2311080900\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\n   -TWY B BTN TWY C2 AND TWY C4\n   -TWY B1\n   -TWY C3\nCREATED: 25 Aug 2023 04:36:00 \nSOURCE: VTBDYNYX"
+                }
+            ],
+            "Approach_Departure": [],
+            "Obstacles": [],
+            "Others": [
+                {
+                    "rank": "1",
+                    "date": "2310031145",
+                    "notam": "A) VTBS B) 2310031145 C) 2312270600\nE) VISUAL DOCKING GUIDANCE SYSTEM (VDGS) \n   ACFT STAND NR 101-129, 201-203, 301-308, 401-403, 501-525,\n   A1-A6, B1-B6, C1-C10, D1-D8, E1-E10, F1-F6, G1-G5 \n   U/S DUE TO MAINT\n   RMK: ACFT HAVE TO FLW MARSHALLING SIGNALS STRICTLY\nCREATED: 03 Oct 2023 11:46:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "2",
+                    "date": "2311020000",
+                    "notam": "A) VTBS B) 2311020000 C) 2311152359\nE) TRIGGER NOTAM-AIRAC AIP SUP A41/23 WEF 02 NOV 2023 TIL\n   31 OCT 2024. REVISED IMPLEMENTATION OF AIRPORT COLLABORATIVE\n   DECISION MAKING (A-CDM) AT VTBS\nCREATED: 01 Oct 2023 03:52:00 \nSOURCE: VTBDYNYX"
+                },
+                {
+                    "rank": "3",
+                    "date": "2308172300",
+                    "notam": "A) VTBS B) 2308172300 C) 2311151659\nE) ACFT STAND NR 131 AND 132 CLSD DUE TO WIP\nCREATED: 17 Aug 2023 04:50:00 \nSOURCE: VTBDYNYX"
+                }
+            ]
+        },
+        "arrNotams": {
+            "Airport": "WSSS",
+            "Runway": [
+                {
+                    "rank": "1",
+                    "date": "",
+                    "notam": "A) WSSS B) 2311300000 C) PERM\nE) REF THE FOLLOWING SINGAPORE CHANGI AIRPORT SID CHART FLIP-PAGE,\nAMEND\nAS FOLLOWS:\nI. AD-2-WSSS-SID-19.1, CHA 1D SID (RADAR) RWY 20L - DESCRIPTIONS,\nAMEND THE FORMAL DESCRIPTION COLUMN FM 'CLIMB HEADING 023 DEG' TO\n'CLIMB HEADING 203 DEG'. REST NC\nCREATED: 11 Oct 2023 11:18:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "2",
+                    "date": "2310090200",
+                    "notam": "A) WSSS B) 2310090200 C) 2311241000\nD) OCT 09-31 0200-1000, NOV 01-24 0200-1000\nE) AIRFIELD LIGHTING TEST WILL BE CONDUCTED ON CLOSED RWY 02C/20C AND\nTAXIWAYS\nCREATED: 07 Oct 2023 07:21:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "3",
+                    "date": "",
+                    "notam": "A) WSSS B) 2311302000 C) PERM\nE) REF AIRAC AIP SUP 128/2023 DATED 21 SEP 2023, ANNEX A, WSSS AD\n2.14, TABLE, COLUMN 4, ROW 3, RWY 20C: PAPI 003 DEGREES LOCATED ON\nLEFT SIDE OF RWY, 418M FROM THR. REST NC\nCREATED: 05 Oct 2023 02:38:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "4",
+                    "date": "",
+                    "notam": "A) WSSS B) 2311300000 C) PERM\nE) REF THE FOLLOWING SINGAPORE CHANGI AIRPORT INSTRUMENT APPROACH\nCHARTS, AMEND AS FOLLOWS:\n\n1) AD-2-WSSS-IAC-2, ICE ILS/DME RWY 02C, AMEND THE THR ELEVATION FROM\n14FT TO 16FT AND THE RDH FROM 56 TO 54\n2) AD-2-WSSS-IAC-6, ICC ILS/DME RWY 20C, AMEND THE THR ELEVATION FROM\n15FT TO 16FT AND THE RDH FROM 56 TO 53\n3) AD-2-WSSS-IAC-10, RNP RWY 02C, AMEND THE THR ELEVATION FROM 14FT\nTO 16FT\n4) AD-2-WSSS-IAC-12, RNP RWY 20C, AMEND THE THR ELEVATION FROM 15FT\nTO 16FT\n\nREST NC\nCREATED: 02 Oct 2023 06:01:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "5",
+                    "date": "2309261040",
+                    "notam": "A) WSSS B) 2309261040 C) 2311300759\nE) RWY 20C IDENT TST 109.7MHZ AND RWY 02C IDENT TST 108.3MHZ ON TEST.\nPILOTS TO IGNORE TST SIGNAL\nCREATED: 26 Sep 2023 10:55:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "6",
+                    "date": "2310052000",
+                    "notam": "A) WSSS B) 2310052000 C) 2310122100\nE) REF AIP SINGAPORE AD 2.WSSS-17, TABLE, ITEM 14, PARA 6B(III)(II),\nFLW RWY MAINTENANCE CLOSURES IS CNL: \n-RWY 02R/20L CLSD BTN 2000-2100 ON 5 OCT 2023 \n-RWY 02R/20L CLSD BTN 2000-2100 ON 10 OCT 2023 \n-RWY 02R/20L CLSD BTN 2000-2100 ON 12 OCT 2023 REST NO CHANGE\nCREATED: 26 Sep 2023 10:09:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "7",
+                    "date": "2310051830",
+                    "notam": "A) WSSS B) 2310051830 C) 2310121900\nE) REF AIP SINGAPORE AD 2.WSSS-17, TABLE, ITEM 14, PARA 6B(I)(II), FLW\nRWY MAINTENANCE CLOSURES IS CNL: \n-RWY 02L/20R CLSD BTN 1830-1900 ON 5 OCT 2023 \n-RWY 02L/20R CLSD BTN 1830-1900 ON 10 OCT 2023 \n-RWY 02L/20R CLSD BTN 1830-1900 ON 12 OCT 2023 REST NO CHANGE\nCREATED: 26 Sep 2023 10:05:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "8",
+                    "date": "2309261700",
+                    "notam": "A) WSSS B) 2309261700 C) 2310122100\nD) SEP 26 28 1700-2100, OCT 03 05 10 12 1700-2100\nE) RWY 02R/20L CLSD DUE WIP\nCREATED: 26 Sep 2023 07:35:00 \nSOURCE: WSSSYNYX"
+                }
+            ],
+            "Taxiway": [
+                {
+                    "rank": "1",
+                    "date": "2310111700",
+                    "notam": "A) WSSS B) 2310111700 C) 2310111900\nE) TWY N2 BEHIND ACFT STANDS 502 TO 505 CLSD\nCREATED: 10 Oct 2023 08:01:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "2",
+                    "date": "2310092000",
+                    "notam": "A) WSSS B) 2310092000 C) 2310192100\nE) TWY T BTN TXL R1 AND TXL R3 INCLUDING JUNCTION OF TWY T/TXL R2/TWY\nT5 CLSD DUE WIP\nCREATED: 07 Oct 2023 15:33:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "3",
+                    "date": "2310080000",
+                    "notam": "A) WSSS B) 2310080000 C) 2310311400\nD) OCT 08-31 0000-1400\nE) TWY RESTRICTIONS:\nI. ACFT TAX ON TWY T SOUTHBOUND NOT ALLOWED TO TURN RIGHT ONTO TWY P\nAND TWY Q\nII. ACFT TAX ON TWY T NORTHBOUND NOT ALLOWED TO TURN LEFT ONTO TWY P\nCREATED: 04 Oct 2023 07:49:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "4",
+                    "date": "2309280615",
+                    "notam": "A) WSSS B) 2309280615 C) 2310191659\nE) TXL R3 BEHIND ACFT STAND F34 CLOSURE CNL. REF AIP SUP 162/2022\nITEM 2.1\nCREATED: 28 Sep 2023 04:18:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "5",
+                    "date": "2309301600",
+                    "notam": "A) WSSS B) 2309301600 C) 2311301559\nE) TWY S2 AND TWY S7 CLSD\nCREATED: 26 Sep 2023 13:24:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "6",
+                    "date": "2309301600",
+                    "notam": "A) WSSS B) 2309301600 C) 2311301559\nE) TWY N BTN TXL N4 AND TWY P1 CLSD\nCREATED: 26 Sep 2023 07:25:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "7",
+                    "date": "2309301600",
+                    "notam": "A) WSSS B) 2309301600 C) 2311301559\nE) TXL N1 BEHIND STAND 517L CLSD\nCREATED: 26 Sep 2023 07:20:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "8",
+                    "date": "2310100200",
+                    "notam": "A) WSSS B) 2310100200 C) 2310120800\nD) OCT 10-12 0200-0800\nE) TWY K BTN JUNCTION OF TWY P1/TWY K/TXL N5 AND TWY K2, INCLUDING\nJUNCTIONS OF TWY K/TWY T AND TWY K/TWY K1 CLSD\nCREATED: 26 Sep 2023 05:08:00 \nSOURCE: WSSSYNYX"
+                },
+                {
+                    "rank": "9",
+                    "date": "2309200200",
+                    "notam": "A) WSSS B) 2309200200 C) 2311300900\nE) TWY RESTRICTION: ACFT TAXIING ON TWY R8 NORTHBOUND NOT ALLOWED\nTO TURN RIGHT ONTO TWY R5\nCREATED: 18 Sep 2023 05:21:00 \nSOURCE: WSSSYNYX"
+                }
+            ],
+            "Approach_Departure": [],
+            "Obstacles": [],
+            "Others": [
+                {
+                    "rank": "1",
+                    "date": "2310110315",
+                    "notam": "A) WSSS B) 2310110315 C) 2310170345\nD) OCT 11 17 0315-0345\nE) AD CLSD DUE EXERCISE BERSAMA LIMA 2023. REF AIP SUP 126/2023\nCREATED: 01 Oct 2023 04:58:00 \nSOURCE: WSSSYNYX"
+                }
+            ]
+        },
+        "enrNotams": [
+            {
+                "Airport": {
+                    "Airport": "WMKK",
+                    "eta": "2023-09-08 22:00"
+                },
+                "Runway": [
+                    {
+                        "rank": "1",
+                        "date": "2310051829",
+                        "notam": "A) WMKK B) 2310051829 C) 2311012359\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE\n COMPLETELY WITHDRAWN ILS OR LOC RWY 32R\nCREATED: 05 Oct 2023 18:29:00 \nSOURCE: PPAA"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310031700",
+                        "notam": "A) WMKK B) 2310031700 C) 2310312200 \nD) DLY 1700-2200\nE) RWY 15/33 CLSD\nCREATED: 02 Oct 2023 06:26:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310040300",
+                        "notam": "A) WMKK B) 2310040300 C) 2310250400 \nD) EV WED 0300-0400\nE) RWY 15/33 CLSD\nCREATED: 02 Oct 2023 06:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310031700",
+                        "notam": "A) WMKK B) 2310031700 C) 2310312200 \nD) EV TUE THU SAT 1700-2200\nE) RWY14R/32L CLSD\nCREATED: 02 Oct 2023 06:22:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2310030300",
+                        "notam": "A) WMKK B) 2310030300 C) 2310310400 \nD) EV TUE 0300-0400\nE) RWY 14R/32L CLSD\nCREATED: 02 Oct 2023 06:19:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2310041700",
+                        "notam": "A) WMKK B) 2310041700 C) 2310302200 \nD) EV WED FRI SUN MON 1700-2200\nE) RWY 14L/32R CLSD\nCREATED: 02 Oct 2023 06:16:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2310090300",
+                        "notam": "A) WMKK B) 2310090300 C) 2310300400 \nD) EV MON 0300-0400\nE) RWY 14L/32R CLSD\nCREATED: 02 Oct 2023 06:12:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "8",
+                        "date": "2310020000",
+                        "notam": "A) WMKK B) 2310020000 C) 2311012359 \nE) ILS RWY 32R NOT AVBL\nCREATED: 01 Oct 2023 13:48:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "9",
+                        "date": "",
+                        "notam": "A) WMKK B) 2308160650 C) PERM \nE) REF AIP MALAYSIA IAP RWY33 WMKK PAGE AD-WMKK-8-44. \n   WPT MESUP TRACK 088 DEG TO READ AS 066 DEG.\nCREATED: 16 Aug 2023 07:01:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "10",
+                        "date": "2310071730",
+                        "notam": "A) WMKP B) 2310071730 C) 2311302130 \nD) EV TUE THU SAT 1730-2130\nE) RWY 04/22 CLSD.\nCREATED: 05 Oct 2023 11:46:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "11",
+                        "date": "2310120130",
+                        "notam": "A) WMKP B) 2310120130 C) 2310120330 \nE) ILS IPG RWY04 LOC 109.9MHZ WITHDRAWN FOR MAINT\nCREATED: 05 Oct 2023 07:05:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "12",
+                        "date": "2309291302",
+                        "notam": "A) WMKP B) 2309291302 C) 2310141500 \nE) WDI RWY 04 U/S\nCREATED: 29 Sep 2023 13:01:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "13",
+                        "date": "2309291259",
+                        "notam": "A) WMKP B) 2309291259 C) 2310141500 \nE) WDI RWY 22 U/S\nCREATED: 29 Sep 2023 12:59:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Taxiway": [
+                    {
+                        "rank": "1",
+                        "date": "2310121700",
+                        "notam": "A) WMKK B) 2310121700 C) 2310122200 \nE) PORTION OF TWY D FM INT T13 TILL INT D1 CLSD.\nCREATED: 11 Oct 2023 09:28:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310121700",
+                        "notam": "A) WMKK B) 2310121700 C) 2310122200 \nE) PORTION OF TWY C BTN INT C9 AND C11 CLSD.\n \n RMK: INT C10 AND D12 NOT AVBL.\nCREATED: 11 Oct 2023 09:20:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310120200",
+                        "notam": "A) WMKK B) 2310120200 C) 2310121000 \nE) PORTION OF TWY S10 ABM ACFT STAND C2 CLSD.\nCREATED: 11 Oct 2023 08:59:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310111700",
+                        "notam": "A) WMKK B) 2310111700 C) 2310112200 \nE) PORTION OF TWY B BTN INT B8 AND B10 CLSD,\nCREATED: 10 Oct 2023 07:48:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2310110200",
+                        "notam": "A) WMKK B) 2310110200 C) 2310120200 \nE) PORTION OF TWYZ BTN INT Z4 AND Z6 CLSD,\nCREATED: 10 Oct 2023 07:02:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2310111700",
+                        "notam": "A) WMKK B) 2310111700 C) 2310112000 \nE) PORTION OF TWY U3 BTN ACFT STAND J2 AND TWY Z CLSD,\nCREATED: 10 Oct 2023 06:57:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2309291306",
+                        "notam": "A) WMKP B) 2309291306 C) 2310141500 \nE) TWY E CLSD\n RMK/TEMPORARY PARKING BAY\nCREATED: 29 Sep 2023 13:06:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Approach_Departure": [
+                    {
+                        "rank": "1",
+                        "date": "",
+                        "notam": "A) WMKK B) 2303020440 C) PERM \nE) REF AIP MALAYSIAA ENR PAGE ENR 4.1-1 AND WMKK PAGE AD2.19. ADD  \nSEPANG DVOR/DME (VSP)114.40MHZ/CH91X (024507.71N 101405.72E\nCREATED: 02 Mar 2023 04:44:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310130130",
+                        "notam": "A) WMKP B) 2310130130 C) 2310130330 \nE) VOR/DME VPG FREQ 116.2MHZ CH109X WITHDRAWN FOR MAINT.\nCREATED: 05 Oct 2023 07:07:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310120630",
+                        "notam": "A) WMKP B) 2310120630 C) 2310120830 \nE) ILS GP 333.8MHZ WITHDRAWN FOR MAINT.\nCREATED: 05 Oct 2023 07:06:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Obstacles": [
+                    {
+                        "rank": "1",
+                        "date": "2310120100",
+                        "notam": "A) WMKK B) 2310120100 C) 2310130900 \nE) CRANE ERECTED AT COORD (ACFT STAND F32) :\n\n 1) 024422N 1014320E\n 2) 024419N 1014322E\n 3) 024421N 1014324E\n 4) 024423N 1014323E\n\n CRANE MAX HEIGHT 25M / 83FT AGL.\nCREATED: 11 Oct 2023 09:46:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040200",
+                        "notam": "A) WMKK B) 2310040200 C) 2310251200 \nE) CRANE ERECTED AT COORD OF 024407.3N1014239.7E, \n024405.4N1014235.6E, 024400.5N1014239.5E AND 024402.8N1014242.9E \nWITH MAX HEIGHT 98FT.\nCREATED: 04 Oct 2023 04:44:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2309041600",
+                        "notam": "A) WMKK B) 2309041600 C) 2312041559 \nE) CRANE ERECTED AT COORD:\n  1.024331N1014323E\n  2.024329N1014320E\n  3.024337N1014315E\n  4.024339N1014318E\n  5.024335N1014321E\n  6.024333N1014321E\n  7.024332N1014322E\n  (GAS DISTRICT COOLING (GDC) AREA . HGT 138 FT AGL\nCREATED: 04 Sep 2023 15:19:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Others": [
+                    {
+                        "rank": "1",
+                        "date": "2310120200",
+                        "notam": "A) WMKK B) 2310120200 C) 2310120700 \nD) 0200-0300 0400-0500 0600-0700\nE) AERIAL FILMING ACT WILL TAKE PLACE WI 0.4NM RADIUS OF \n   024538.65N 1014413.68E\n   (MC LAREN NEW LAUNCH DEMO FILMING AT SEPANG INTERNATIONAL CIRCUIT)\nF) SFC                             G) 500FT AMSL\nCREATED: 11 Oct 2023 08:38:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310101400",
+                        "notam": "A) WMKK B) 2310101400 C) 2310152100 \nD) 1400-2100\nE) HYDRANT PIPELINE CAMERA INSPECTION AT ACFT STAND J-EVEN.\n\n   RMK : 1. NO FUEL SUPPLY AT ACFT STAND J-EVEN.\nCREATED: 09 Oct 2023 11:50:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310071048",
+                        "notam": "A) WMKK B) 2310071048 C) 2310302359 \nE) STOPBAR AND LEAD IN LGT FM Y1 TIL Y9 U/S\nCREATED: 07 Oct 2023 10:50:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310060900",
+                        "notam": "A) WMKK B) 2310060900 C) 2310192359 \nE) STOPBAR AND LEAD IN LGT FM C1 TIL C3 U/S.\nCREATED: 06 Oct 2023 09:02:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2309210000",
+                        "notam": "A) WMKK B) 2309210000 C) 2310202359 \nE) HAZARDOUS WEATHER WARNING SYSTEM(HWWS) WITHDRAWN FOR MAINT. \nMICROBURST AD WIND SHEAR INFORMATION ONLY FM PILOT REPORTS\nCREATED: 20 Sep 2023 07:31:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "",
+                        "notam": "A) WMKK B) 2303020030 C) PERM \nE) REF AIP MALAYSIA ENR PAGE ENR 4,1-1 AND WMKK AD2.19 ADD DME \nTANJUNG   SEPAT DTS CH 84X (023944,60N 1013333.60E\nCREATED: 02 Mar 2023 00:23:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2310201000",
+                        "notam": "A) WMKP B) 2310201000 C) 2310201600 \nE) TETHERED HOT AIR BALLOON ACT WILL TAKE PLACE AT                 \n052553.1N 1001813.5E\n   (ADVENTIS HOSPITAL, PULAU PINANG)\nF) GND                             G) 100FT AGL\nCREATED: 10 Oct 2023 03:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "8",
+                        "date": "2310090230",
+                        "notam": "A) WMKP B) 2310090230 C) 2310120330 \nD) 0230-0330\nE) SPECIAL ROYAL MALAYSIAN POLICE EXER WILL TAKE PLACE WI 01NM RADIUS\n OF\n   052112.00N 1001852.00E \n   (MARKAS PASUKAN POLIS MARIN,BATU UBAN,PENANG)\n   \n   RMK/ ACT SUB ATC\nF) SFC                             G) 500FT AMSL\nCREATED: 06 Oct 2023 02:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "9",
+                        "date": "2310111600",
+                        "notam": "A) WMKP B) 2310111600 C) 2310111800 \nE) GP/DME 333.8MHZ CH36X WITHDRAWN FOR MAINT.\nCREATED: 04 Oct 2023 13:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "10",
+                        "date": "2309272200",
+                        "notam": "A) WMKP B) 2309272200 C) 2310311130 \nD) SEP 27        2200-2359\nSEP 28-OCT 31 0000-1130 2200-2359\nOCT 31        0000-1130\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   052856.03N 1001434.12E - 052605.71N 1001950.53E -\n   052205.22N 1001540.30E - 052514.05N 1001246.90E\n   (GEORGETOWN, PENANG BOTANIC GARDEN,LANGUR BAY CANOPY WALK) \n   (TELUK BAHANG RECREATIONAL PARK)\n\n   RMK:ACT SUBJ ATC\nF) SFC                             G) 270FT AGL\nCREATED: 27 Sep 2023 03:10:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "11",
+                        "date": "2310020000",
+                        "notam": "A) WMKP B) 2310020000 C) 2312080900 \nD) OCT 02-06 NOV 06-10 DEC 04-08 0000-0900\nE) UAV ACT WILL TAKE PLACE WI THE FLW COORD:   \n   051617.67N 1001615.78E - 051510.67N 1001642.14E -\n   051457.55N 1001611.99E - 051605.56N 1001544.50E\n   (PANTAI ESEN, PEMATANG DAMAR LAUT, PENANG)\n\n   RMK: ACT SUBJ ATC\nF) SFC                             G) 400FT AGL\nCREATED: 27 Sep 2023 02:53:00 \nSOURCE: WMKKYNYM"
+                    }
+                ]
+            },
+            {
+                "Airport": {
+                    "Airport": "WMKP",
+                    "eta": "2023-09-08 22:00"
+                },
+                "Runway": [
+                    {
+                        "rank": "1",
+                        "date": "2310051829",
+                        "notam": "A) WMKK B) 2310051829 C) 2311012359\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE\n COMPLETELY WITHDRAWN ILS OR LOC RWY 32R\nCREATED: 05 Oct 2023 18:29:00 \nSOURCE: PPAA"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310031700",
+                        "notam": "A) WMKK B) 2310031700 C) 2310312200 \nD) DLY 1700-2200\nE) RWY 15/33 CLSD\nCREATED: 02 Oct 2023 06:26:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310040300",
+                        "notam": "A) WMKK B) 2310040300 C) 2310250400 \nD) EV WED 0300-0400\nE) RWY 15/33 CLSD\nCREATED: 02 Oct 2023 06:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310031700",
+                        "notam": "A) WMKK B) 2310031700 C) 2310312200 \nD) EV TUE THU SAT 1700-2200\nE) RWY14R/32L CLSD\nCREATED: 02 Oct 2023 06:22:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2310030300",
+                        "notam": "A) WMKK B) 2310030300 C) 2310310400 \nD) EV TUE 0300-0400\nE) RWY 14R/32L CLSD\nCREATED: 02 Oct 2023 06:19:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2310041700",
+                        "notam": "A) WMKK B) 2310041700 C) 2310302200 \nD) EV WED FRI SUN MON 1700-2200\nE) RWY 14L/32R CLSD\nCREATED: 02 Oct 2023 06:16:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2310090300",
+                        "notam": "A) WMKK B) 2310090300 C) 2310300400 \nD) EV MON 0300-0400\nE) RWY 14L/32R CLSD\nCREATED: 02 Oct 2023 06:12:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "8",
+                        "date": "2310020000",
+                        "notam": "A) WMKK B) 2310020000 C) 2311012359 \nE) ILS RWY 32R NOT AVBL\nCREATED: 01 Oct 2023 13:48:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "9",
+                        "date": "",
+                        "notam": "A) WMKK B) 2308160650 C) PERM \nE) REF AIP MALAYSIA IAP RWY33 WMKK PAGE AD-WMKK-8-44. \n   WPT MESUP TRACK 088 DEG TO READ AS 066 DEG.\nCREATED: 16 Aug 2023 07:01:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "10",
+                        "date": "2310071730",
+                        "notam": "A) WMKP B) 2310071730 C) 2311302130 \nD) EV TUE THU SAT 1730-2130\nE) RWY 04/22 CLSD.\nCREATED: 05 Oct 2023 11:46:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "11",
+                        "date": "2310120130",
+                        "notam": "A) WMKP B) 2310120130 C) 2310120330 \nE) ILS IPG RWY04 LOC 109.9MHZ WITHDRAWN FOR MAINT\nCREATED: 05 Oct 2023 07:05:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "12",
+                        "date": "2309291302",
+                        "notam": "A) WMKP B) 2309291302 C) 2310141500 \nE) WDI RWY 04 U/S\nCREATED: 29 Sep 2023 13:01:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "13",
+                        "date": "2309291259",
+                        "notam": "A) WMKP B) 2309291259 C) 2310141500 \nE) WDI RWY 22 U/S\nCREATED: 29 Sep 2023 12:59:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Taxiway": [
+                    {
+                        "rank": "1",
+                        "date": "2310121700",
+                        "notam": "A) WMKK B) 2310121700 C) 2310122200 \nE) PORTION OF TWY D FM INT T13 TILL INT D1 CLSD.\nCREATED: 11 Oct 2023 09:28:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310121700",
+                        "notam": "A) WMKK B) 2310121700 C) 2310122200 \nE) PORTION OF TWY C BTN INT C9 AND C11 CLSD.\n \n RMK: INT C10 AND D12 NOT AVBL.\nCREATED: 11 Oct 2023 09:20:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310120200",
+                        "notam": "A) WMKK B) 2310120200 C) 2310121000 \nE) PORTION OF TWY S10 ABM ACFT STAND C2 CLSD.\nCREATED: 11 Oct 2023 08:59:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310111700",
+                        "notam": "A) WMKK B) 2310111700 C) 2310112200 \nE) PORTION OF TWY B BTN INT B8 AND B10 CLSD,\nCREATED: 10 Oct 2023 07:48:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2310110200",
+                        "notam": "A) WMKK B) 2310110200 C) 2310120200 \nE) PORTION OF TWYZ BTN INT Z4 AND Z6 CLSD,\nCREATED: 10 Oct 2023 07:02:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2310111700",
+                        "notam": "A) WMKK B) 2310111700 C) 2310112000 \nE) PORTION OF TWY U3 BTN ACFT STAND J2 AND TWY Z CLSD,\nCREATED: 10 Oct 2023 06:57:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2309291306",
+                        "notam": "A) WMKP B) 2309291306 C) 2310141500 \nE) TWY E CLSD\n RMK/TEMPORARY PARKING BAY\nCREATED: 29 Sep 2023 13:06:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Approach_Departure": [
+                    {
+                        "rank": "1",
+                        "date": "",
+                        "notam": "A) WMKK B) 2303020440 C) PERM \nE) REF AIP MALAYSIAA ENR PAGE ENR 4.1-1 AND WMKK PAGE AD2.19. ADD  \nSEPANG DVOR/DME (VSP)114.40MHZ/CH91X (024507.71N 101405.72E\nCREATED: 02 Mar 2023 04:44:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310130130",
+                        "notam": "A) WMKP B) 2310130130 C) 2310130330 \nE) VOR/DME VPG FREQ 116.2MHZ CH109X WITHDRAWN FOR MAINT.\nCREATED: 05 Oct 2023 07:07:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310120630",
+                        "notam": "A) WMKP B) 2310120630 C) 2310120830 \nE) ILS GP 333.8MHZ WITHDRAWN FOR MAINT.\nCREATED: 05 Oct 2023 07:06:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Obstacles": [
+                    {
+                        "rank": "1",
+                        "date": "2310120100",
+                        "notam": "A) WMKK B) 2310120100 C) 2310130900 \nE) CRANE ERECTED AT COORD (ACFT STAND F32) :\n\n 1) 024422N 1014320E\n 2) 024419N 1014322E\n 3) 024421N 1014324E\n 4) 024423N 1014323E\n\n CRANE MAX HEIGHT 25M / 83FT AGL.\nCREATED: 11 Oct 2023 09:46:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040200",
+                        "notam": "A) WMKK B) 2310040200 C) 2310251200 \nE) CRANE ERECTED AT COORD OF 024407.3N1014239.7E, \n024405.4N1014235.6E, 024400.5N1014239.5E AND 024402.8N1014242.9E \nWITH MAX HEIGHT 98FT.\nCREATED: 04 Oct 2023 04:44:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2309041600",
+                        "notam": "A) WMKK B) 2309041600 C) 2312041559 \nE) CRANE ERECTED AT COORD:\n  1.024331N1014323E\n  2.024329N1014320E\n  3.024337N1014315E\n  4.024339N1014318E\n  5.024335N1014321E\n  6.024333N1014321E\n  7.024332N1014322E\n  (GAS DISTRICT COOLING (GDC) AREA . HGT 138 FT AGL\nCREATED: 04 Sep 2023 15:19:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Others": [
+                    {
+                        "rank": "1",
+                        "date": "2310120200",
+                        "notam": "A) WMKK B) 2310120200 C) 2310120700 \nD) 0200-0300 0400-0500 0600-0700\nE) AERIAL FILMING ACT WILL TAKE PLACE WI 0.4NM RADIUS OF \n   024538.65N 1014413.68E\n   (MC LAREN NEW LAUNCH DEMO FILMING AT SEPANG INTERNATIONAL CIRCUIT)\nF) SFC                             G) 500FT AMSL\nCREATED: 11 Oct 2023 08:38:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310101400",
+                        "notam": "A) WMKK B) 2310101400 C) 2310152100 \nD) 1400-2100\nE) HYDRANT PIPELINE CAMERA INSPECTION AT ACFT STAND J-EVEN.\n\n   RMK : 1. NO FUEL SUPPLY AT ACFT STAND J-EVEN.\nCREATED: 09 Oct 2023 11:50:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310071048",
+                        "notam": "A) WMKK B) 2310071048 C) 2310302359 \nE) STOPBAR AND LEAD IN LGT FM Y1 TIL Y9 U/S\nCREATED: 07 Oct 2023 10:50:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310060900",
+                        "notam": "A) WMKK B) 2310060900 C) 2310192359 \nE) STOPBAR AND LEAD IN LGT FM C1 TIL C3 U/S.\nCREATED: 06 Oct 2023 09:02:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2309210000",
+                        "notam": "A) WMKK B) 2309210000 C) 2310202359 \nE) HAZARDOUS WEATHER WARNING SYSTEM(HWWS) WITHDRAWN FOR MAINT. \nMICROBURST AD WIND SHEAR INFORMATION ONLY FM PILOT REPORTS\nCREATED: 20 Sep 2023 07:31:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "",
+                        "notam": "A) WMKK B) 2303020030 C) PERM \nE) REF AIP MALAYSIA ENR PAGE ENR 4,1-1 AND WMKK AD2.19 ADD DME \nTANJUNG   SEPAT DTS CH 84X (023944,60N 1013333.60E\nCREATED: 02 Mar 2023 00:23:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "7",
+                        "date": "2310201000",
+                        "notam": "A) WMKP B) 2310201000 C) 2310201600 \nE) TETHERED HOT AIR BALLOON ACT WILL TAKE PLACE AT                 \n052553.1N 1001813.5E\n   (ADVENTIS HOSPITAL, PULAU PINANG)\nF) GND                             G) 100FT AGL\nCREATED: 10 Oct 2023 03:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "8",
+                        "date": "2310090230",
+                        "notam": "A) WMKP B) 2310090230 C) 2310120330 \nD) 0230-0330\nE) SPECIAL ROYAL MALAYSIAN POLICE EXER WILL TAKE PLACE WI 01NM RADIUS\n OF\n   052112.00N 1001852.00E \n   (MARKAS PASUKAN POLIS MARIN,BATU UBAN,PENANG)\n   \n   RMK/ ACT SUB ATC\nF) SFC                             G) 500FT AMSL\nCREATED: 06 Oct 2023 02:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "9",
+                        "date": "2310111600",
+                        "notam": "A) WMKP B) 2310111600 C) 2310111800 \nE) GP/DME 333.8MHZ CH36X WITHDRAWN FOR MAINT.\nCREATED: 04 Oct 2023 13:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "10",
+                        "date": "2309272200",
+                        "notam": "A) WMKP B) 2309272200 C) 2310311130 \nD) SEP 27        2200-2359\nSEP 28-OCT 31 0000-1130 2200-2359\nOCT 31        0000-1130\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   052856.03N 1001434.12E - 052605.71N 1001950.53E -\n   052205.22N 1001540.30E - 052514.05N 1001246.90E\n   (GEORGETOWN, PENANG BOTANIC GARDEN,LANGUR BAY CANOPY WALK) \n   (TELUK BAHANG RECREATIONAL PARK)\n\n   RMK:ACT SUBJ ATC\nF) SFC                             G) 270FT AGL\nCREATED: 27 Sep 2023 03:10:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "11",
+                        "date": "2310020000",
+                        "notam": "A) WMKP B) 2310020000 C) 2312080900 \nD) OCT 02-06 NOV 06-10 DEC 04-08 0000-0900\nE) UAV ACT WILL TAKE PLACE WI THE FLW COORD:   \n   051617.67N 1001615.78E - 051510.67N 1001642.14E -\n   051457.55N 1001611.99E - 051605.56N 1001544.50E\n   (PANTAI ESEN, PEMATANG DAMAR LAUT, PENANG)\n\n   RMK: ACT SUBJ ATC\nF) SFC                             G) 400FT AGL\nCREATED: 27 Sep 2023 02:53:00 \nSOURCE: WMKKYNYM"
+                    }
+                ]
+            }
+        ],
+        "altnNotams": [
+            {
+                "Airport": {
+                    "Airport": "WMKJ",
+                    "eta": "2023-09-08 22:00"
+                },
+                "Runway": [
+                    {
+                        "rank": "1",
+                        "date": "2308042300",
+                        "notam": "A) WIDD\nB) 2308042300 \nC) 2311042345 \nD) 04 2300-2345, 05 AUG - 04 NOV 1010-1025 2300-2345\nE) RWY 04/22 CLSD DUE TO RWY INSPECTION\nCREATED: 04 Aug 2023 10:58:00 \nSOURCE: WRRRYNYX"
+                    }
+                ],
+                "Taxiway": [],
+                "Approach_Departure": [
+                    {
+                        "rank": "1",
+                        "date": "2309010522",
+                        "notam": "A) WMKJ B) 2309010522 C) 2311302359 \nE) NDB JR 245KHZ U/S\nCREATED: 01 Sep 2023 05:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2309300015",
+                        "notam": "A) WMKJ B) 2309300015 C) 2310312359 \nE) APCH RADAR OPS HRS CHG AS FLW:\n\nSEPT 30 0000-1130 2330-2359\nOCT 1-17 0000-1130 2330-2359\nOCT 18-19 0000-0900\nOCT 20 0000-0900 2330-2359\nOCT 21-31 0000-1130 2330-2359\nCREATED: 30 Sep 2023 00:35:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Obstacles": [
+                    {
+                        "rank": "1",
+                        "date": "2310110300",
+                        "notam": "A) WMKJ B) 2310110300 C) 2310121600 \nE) CRANE ERECTED AND OPS WI 150M RADIUS OF COORDS 013826.1N \n1033955.0E,\n   013831.4N 1033953.0E. CRANE HGT 190FT AMSL.\n   RMK/CRANE MARKED WITH CHEQUERED FLAG AND ROTATING BEACON.\nCREATED: 11 Oct 2023 02:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040000",
+                        "notam": "A) WMKJ B) 2310040000 C) 2312031600 \nE) CRANE WITH HEIGHT 190FT OPS WI 150M RAD 13746.6N 1034003.4E \n   (BMW FACTORY SENAI) \n   \n   RMK/CRANE MARKED WITH CHEQUERED FLAG AND ROTATING BEACON.\nCREATED: 03 Oct 2023 15:40:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Others": [
+                    {
+                        "rank": "1",
+                        "date": "2310110100",
+                        "notam": "A) WMKJ B) 2310110100 C) 2312270900 \nD) OCT 11 18 25 NOV 01 08 15 22 29 DEC 06 13 20 27 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   013629.12N 1034118.83E - 013636.88N 1034129.39E -\n   013629.18N 1034137.71E - 013620.00N 1034126.13E \n   (SENAI,JOHOR)\n\n   RMK/ ACT SUBJ ATC\n   \nF) SFC                             G) 250FT AMSL\nCREATED: 10 Oct 2023 07:21:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040100",
+                        "notam": "A) WMKJ B) 2310040100 C) 2312310900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   014544.85N 1032538.44E - 014538.66N 1032546.21E -\n   014528.77N 1032538.35E - 014528.12N 1032534.42E -\n   014536.64N 1032523.02E - 014543.36N 1032528.63E -\n   014539.41N 1032533.97E\n   (JALAN PENCAWANG GRID TNB,LAYANG-LAYANG,JOHOR)\n\n   RMK : ACT SUBJ ATC\nF) SFC                             G) 360FT AGL\nCREATED: 03 Oct 2023 02:17:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310180100",
+                        "notam": "A) WMKJ B) 2310180100 C) 2310190900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   013753.05N 1034004.10E - 013741.12N 1034008.66E -\n   013738.13N 1034001.59E - 013750.66N 1033957.39E\n   (SENAI INTERNATIONAL AIRPORT, JOHOR)\n\n   RMK : ACT SUBJ ATC\nF) SFC                             G) 400FT AGL\nCREATED: 03 Oct 2023 02:08:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310020455",
+                        "notam": "A) WMKJ B) 2310020455 C) 2310310900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM:\n   015519.61N 1032241.84E - 014946.41N 1032821.00E -\n   014946.41N 1032821.00E - 014727.43N 1033006.14E -\n   014727.43N 1033006.14E - 014258.40N 1033139.48E\n   (PGB GTR LONG RANGE DRONE LAYANG-LAYANG, JOHOR)\n\n   RMK : 1. ACT SUBJ ATC\n         2. 50 METER BUFFER LEFT AND RIGHT OF THE ROUTE\nF) SFC                             G) 2000FT AMSL\nCREATED: 02 Oct 2023 04:57:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2308140000",
+                        "notam": "A) WMKJ B) 2308140000 C) 2310271000 \nD) 0000-1000\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n   013508.41N 1034644.34E - 013427.89N 1034723.37E - \n   013437.77N 1034824.70E - 013325.56N 1034933.66E - \n   013116.26N 1034943.30E - 013116.22N 1035014.09E - \n   013028.51N 1035021.62E - 013018.76N 1034905.31E - \n   012942.78N 1034818.22E\n   (JOHOR BAHRU)\n  \n   RMK: 1. 50 METER BUFFER ON LEFT AND RIGHT OF THE PIPELINE\n        2. ACT SUBJ ATC.\n \nF) SFC                             G) 400FT AMSL\nCREATED: 02 Aug 2023 08:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2308140000",
+                        "notam": "A) WMKJ B) 2308140000 C) 2310271000 \nD) 0000-1000\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n   013827.36N 1033731.31E - 013717.62N 1033844.30E - \n   013638.83N 1033911.57E - 013528.24N 1033935.38E -\n   013508.41N 1034644.34E\n   (SENAI, JOHOR)\n  \n   RMK: 1. 50 METER BUFFER ON LEFT AND RIGHT OF THE PIEPLINE\n        2. ACT SUBJ ATC.\nF) SFC                             G) 500FT AMSL\nCREATED: 02 Aug 2023 08:19:00 \nSOURCE: WMKKYNYM"
+                    }
+                ]
+            },
+            {
+                "Airport": {
+                    "Airport": "WIDD",
+                    "eta": "2023-09-08 22:00"
+                },
+                "Runway": [
+                    {
+                        "rank": "1",
+                        "date": "2308042300",
+                        "notam": "A) WIDD\nB) 2308042300 \nC) 2311042345 \nD) 04 2300-2345, 05 AUG - 04 NOV 1010-1025 2300-2345\nE) RWY 04/22 CLSD DUE TO RWY INSPECTION\nCREATED: 04 Aug 2023 10:58:00 \nSOURCE: WRRRYNYX"
+                    }
+                ],
+                "Taxiway": [],
+                "Approach_Departure": [
+                    {
+                        "rank": "1",
+                        "date": "2309010522",
+                        "notam": "A) WMKJ B) 2309010522 C) 2311302359 \nE) NDB JR 245KHZ U/S\nCREATED: 01 Sep 2023 05:55:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2309300015",
+                        "notam": "A) WMKJ B) 2309300015 C) 2310312359 \nE) APCH RADAR OPS HRS CHG AS FLW:\n\nSEPT 30 0000-1130 2330-2359\nOCT 1-17 0000-1130 2330-2359\nOCT 18-19 0000-0900\nOCT 20 0000-0900 2330-2359\nOCT 21-31 0000-1130 2330-2359\nCREATED: 30 Sep 2023 00:35:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Obstacles": [
+                    {
+                        "rank": "1",
+                        "date": "2310110300",
+                        "notam": "A) WMKJ B) 2310110300 C) 2310121600 \nE) CRANE ERECTED AND OPS WI 150M RADIUS OF COORDS 013826.1N \n1033955.0E,\n   013831.4N 1033953.0E. CRANE HGT 190FT AMSL.\n   RMK/CRANE MARKED WITH CHEQUERED FLAG AND ROTATING BEACON.\nCREATED: 11 Oct 2023 02:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040000",
+                        "notam": "A) WMKJ B) 2310040000 C) 2312031600 \nE) CRANE WITH HEIGHT 190FT OPS WI 150M RAD 13746.6N 1034003.4E \n   (BMW FACTORY SENAI) \n   \n   RMK/CRANE MARKED WITH CHEQUERED FLAG AND ROTATING BEACON.\nCREATED: 03 Oct 2023 15:40:00 \nSOURCE: WMKKYNYM"
+                    }
+                ],
+                "Others": [
+                    {
+                        "rank": "1",
+                        "date": "2310110100",
+                        "notam": "A) WMKJ B) 2310110100 C) 2312270900 \nD) OCT 11 18 25 NOV 01 08 15 22 29 DEC 06 13 20 27 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   013629.12N 1034118.83E - 013636.88N 1034129.39E -\n   013629.18N 1034137.71E - 013620.00N 1034126.13E \n   (SENAI,JOHOR)\n\n   RMK/ ACT SUBJ ATC\n   \nF) SFC                             G) 250FT AMSL\nCREATED: 10 Oct 2023 07:21:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "2",
+                        "date": "2310040100",
+                        "notam": "A) WMKJ B) 2310040100 C) 2312310900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   014544.85N 1032538.44E - 014538.66N 1032546.21E -\n   014528.77N 1032538.35E - 014528.12N 1032534.42E -\n   014536.64N 1032523.02E - 014543.36N 1032528.63E -\n   014539.41N 1032533.97E\n   (JALAN PENCAWANG GRID TNB,LAYANG-LAYANG,JOHOR)\n\n   RMK : ACT SUBJ ATC\nF) SFC                             G) 360FT AGL\nCREATED: 03 Oct 2023 02:17:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "3",
+                        "date": "2310180100",
+                        "notam": "A) WMKJ B) 2310180100 C) 2310190900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE WI THE FLW COORD:\n   013753.05N 1034004.10E - 013741.12N 1034008.66E -\n   013738.13N 1034001.59E - 013750.66N 1033957.39E\n   (SENAI INTERNATIONAL AIRPORT, JOHOR)\n\n   RMK : ACT SUBJ ATC\nF) SFC                             G) 400FT AGL\nCREATED: 03 Oct 2023 02:08:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "4",
+                        "date": "2310020455",
+                        "notam": "A) WMKJ B) 2310020455 C) 2310310900 \nD) 0100-0900\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM:\n   015519.61N 1032241.84E - 014946.41N 1032821.00E -\n   014946.41N 1032821.00E - 014727.43N 1033006.14E -\n   014727.43N 1033006.14E - 014258.40N 1033139.48E\n   (PGB GTR LONG RANGE DRONE LAYANG-LAYANG, JOHOR)\n\n   RMK : 1. ACT SUBJ ATC\n         2. 50 METER BUFFER LEFT AND RIGHT OF THE ROUTE\nF) SFC                             G) 2000FT AMSL\nCREATED: 02 Oct 2023 04:57:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "5",
+                        "date": "2308140000",
+                        "notam": "A) WMKJ B) 2308140000 C) 2310271000 \nD) 0000-1000\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n   013508.41N 1034644.34E - 013427.89N 1034723.37E - \n   013437.77N 1034824.70E - 013325.56N 1034933.66E - \n   013116.26N 1034943.30E - 013116.22N 1035014.09E - \n   013028.51N 1035021.62E - 013018.76N 1034905.31E - \n   012942.78N 1034818.22E\n   (JOHOR BAHRU)\n  \n   RMK: 1. 50 METER BUFFER ON LEFT AND RIGHT OF THE PIPELINE\n        2. ACT SUBJ ATC.\n \nF) SFC                             G) 400FT AMSL\nCREATED: 02 Aug 2023 08:24:00 \nSOURCE: WMKKYNYM"
+                    },
+                    {
+                        "rank": "6",
+                        "date": "2308140000",
+                        "notam": "A) WMKJ B) 2308140000 C) 2310271000 \nD) 0000-1000\nE) UA ACT WILL TAKE PLACE ALONG THE PETRONAS GAS PIPELINE FM :\n   013827.36N 1033731.31E - 013717.62N 1033844.30E - \n   013638.83N 1033911.57E - 013528.24N 1033935.38E -\n   013508.41N 1034644.34E\n   (SENAI, JOHOR)\n  \n   RMK: 1. 50 METER BUFFER ON LEFT AND RIGHT OF THE PIEPLINE\n        2. ACT SUBJ ATC.\nF) SFC                             G) 500FT AMSL\nCREATED: 02 Aug 2023 08:19:00 \nSOURCE: WMKKYNYM"
+                    }
+                ]
+            }
+        ]
+    }
+}

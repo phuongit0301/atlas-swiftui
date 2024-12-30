@@ -24,7 +24,7 @@ struct MapPostView: View {
 //        let postSort = sortPost(posts: posts)
         
         VStack(alignment: .leading, spacing: 8) {
-            if !posts.isEmpty {
+            if posts.isEmpty {
                 Text("No Posts").font(.system(size: 12)).foregroundColor(Color.black).padding(.vertical, 8)
             } else {
                 ForEach(0..<posts.count, id: \.self) {index in
@@ -137,6 +137,7 @@ struct MapPostView: View {
         .sheet(isPresented: $showModal) {
             ModalCommentView(isShowing: $showModal, parentIndex: $parentIndex, postIndex: $postIndex).interactiveDismissDisabled(true)
         }
+        .Print("posts==========\(posts)")
     }
     
     func sortComment(comments: [AabbaCommentList]) -> [AabbaCommentList] {

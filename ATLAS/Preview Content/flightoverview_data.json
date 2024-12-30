@@ -1,0 +1,393 @@
+[
+    {
+        "status": "completed",
+        "flight_overview": {
+            "CAName": "Tom",
+            "CAPicker": "PIC",
+            "ETA": "2023-10-26 10:15",
+            "FOName": "Dom",
+            "FOPicker": "P1(u/s)",
+            "aircraft": "9VSLS",
+            "blockTime": "03:30",
+            "blockTime-FlightTime": "00:15",
+            "callsign": "TR753",
+            "chockOff": "2023-10-26 08:15",
+            "chockOn": "2023-10-26 10:20",
+            "day": "02:05",
+            "dep": "VTBS",
+            "dest": "WSSS",
+            "flightTime": "03:15",
+            "model": "A320",
+            "night": "00:00",
+            "password": "Chelsea",
+            "pob": "122",
+            "sta": "2023-10-26 10:15",
+            "std": "2023-10-26 08:15",
+            "time_diff_arr": "8",
+            "time_diff_dep": "9",
+            "totalTime": "02:05"
+        },
+        "route": [
+            {
+                "lat": "45.2",
+                "long": "103.2",
+                "name": "VTBS"
+            },
+            {
+                "lat": "45.2",
+                "long": "103.2",
+                "name": "PASVA"
+            },
+            {
+                "lat": "45.2",
+                "long": "103.2",
+                "name": "WSSS"
+            }
+        ],
+        "colour_airport": [
+            {
+                "airportID": "VTBS",
+                "colour": "blue",
+                "lat": "103.2",
+                "long": "103.2",
+                "metar": "someMetar",
+                "notams": [
+                    "notam1",
+                    "notam2"
+                ],
+                "selection": "departure",
+                "taf": "someTaf"
+            },
+            {
+                "airportID": "WSSS",
+                "colour": "blue",
+                "lat": "103.2",
+                "long": "103.2",
+                "metar": "someMetar",
+                "notams": [
+                    "notam1",
+                    "notam2"
+                ],
+                "selection": "arrival",
+                "taf": "someTaf"
+            }
+        ],
+        "notam": {
+            "VTBS | STD 26 0815": [
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "1",
+                    "type": "departure"
+                },
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "2",
+                    "type": "departure"
+                }
+            ],
+            "WMKP | STD 26 0815": [
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "1",
+                    "type": "enroute"
+                },
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "2",
+                    "type": "enroute"
+                }
+            ],
+            "WSSS | STD 26 0815": [
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "1",
+                    "type": "arrival"
+                },
+                {
+                    "category": "runway",
+                    "date": "someDate",
+                    "id": "someId",
+                    "isChecked": true,
+                    "notam": "notamContent",
+                    "rank": "2",
+                    "type": "arrival"
+                }
+            ]
+        },
+        "metar_taf": {
+            "arrival": [
+                {
+                    "airportText": "WSSS | STD 26 1015",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                }
+            ],
+            "departure": [
+                {
+                    "airportText": "VTBS | STD 26 0815",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                }
+            ],
+            "destination_alternates": [
+                {
+                    "airportText": "WMKJ | STD 26 1015",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                },
+                {
+                    "airportText": "WIDD | STD 26 1015",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                }
+            ],
+            "enroute_alternates": [
+                {
+                    "airportText": "WMKP | STD 26 0915",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                },
+                {
+                    "airportText": "WMKK | STD 26 0915",
+                    "metar": "someMetar",
+                    "taf": "someTaf"
+                }
+            ]
+        },
+        "notes": [
+            {
+                "canDelete": true,
+                "createdAt": "someDateTime",
+                "favourite": true,
+                "fromParent": false,
+                "includeCrew": false,
+                "isDefault": true,
+                "name": "Hills to the north",
+                "parentId": "aa1122",
+                "tags": [
+                    "Terrain",
+                    "Environment"
+                ],
+                "type": "departure"
+            },
+            {
+                "canDelete": true,
+                "createdAt": "someDateTime",
+                "favourite": false,
+                "fromParent": false,
+                "includeCrew": false,
+                "isDefault": true,
+                "name": "Gusts on short finals",
+                "parentId": "aa1122",
+                "tags": [
+                    "Approach",
+                    "Environment"
+                ],
+                "type": "arrival"
+            }
+        ],
+        "aabba_notes": {
+            "arrival": [
+                {
+                    "lat": "13.6811",
+                    "long": "100.747",
+                    "name": "VTBS",
+                    "post_count": "9",
+                    "posts": [
+                        {
+                            "blue": true,
+                            "category": "Congestion",
+                            "comment_count": "1",
+                            "comments": [
+                                {
+                                    "comment_date": "2023-09-15 22:15:00",
+                                    "comment_id": "a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                                    "comment_text": "Healing",
+                                    "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                                    "user_id": "abc123",
+                                    "username": "Adil_Accumulus"
+                                }
+                            ],
+                            "favourite": true,
+                            "post_date": "2023-09-14 23:15:00",
+                            "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                            "post_text": "30 mins delay",
+                            "post_title": "Too many planes",
+                            "upvote_count": "4",
+                            "user_id": "abc122",
+                            "username": "Nasrun360",
+                            "voted": true
+                        }
+                    ]
+                }
+            ],
+            "departure": [
+                {
+                    "lat": "13.6811",
+                    "long": "100.747",
+                    "name": "VTBS",
+                    "post_count": "9",
+                    "posts": [
+                        {
+                            "blue": true,
+                            "category": "Congestion",
+                            "comment_count": "1",
+                            "comments": [
+                                {
+                                    "comment_date": "2023-09-15 22:15:00",
+                                    "comment_id": "a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                                    "comment_text": "Healing",
+                                    "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                                    "user_id": "abc123",
+                                    "username": "Adil_Accumulus"
+                                }
+                            ],
+                            "favourite": true,
+                            "post_date": "2023-09-14 23:15:00",
+                            "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                            "post_text": "30 mins delay",
+                            "post_title": "Too many planes",
+                            "upvote_count": "4",
+                            "user_id": "abc122",
+                            "username": "Nasrun360",
+                            "voted": false
+                        }
+                    ]
+                }
+            ],
+            "enroute": [
+                {
+                    "lat": "13.6811",
+                    "long": "100.747",
+                    "name": "VTBS",
+                    "post_count": "9",
+                    "posts": [
+                        {
+                            "blue": true,
+                            "category": "Congestion",
+                            "comment_count": "1",
+                            "comments": [
+                                {
+                                    "comment_date": "2023-09-15 22:15:00",
+                                    "comment_id": "a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                                    "comment_text": "Healing",
+                                    "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                                    "user_id": "abc123",
+                                    "username": "Adil_Accumulus"
+                                }
+                            ],
+                            "favourite": true,
+                            "post_date": "2023-09-14 23:15:00",
+                            "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                            "post_text": "30 mins delay",
+                            "post_title": "Too many planes",
+                            "upvote_count": "4",
+                            "user_id": "abc122",
+                            "username": "Nasrun360",
+                            "voted": true
+                        }
+                    ]
+                }
+            ],
+            "preflight": [
+                {
+                    "lat": "13.6811",
+                    "long": "100.747",
+                    "name": "VTBS",
+                    "post_count": "9",
+                    "posts": [
+                        {
+                            "blue": true,
+                            "category": "Congestion",
+                            "comment_count": "1",
+                            "comments": [
+                                {
+                                    "comment_date": "2023-09-15 22:15:00",
+                                    "comment_id": "a0d2df5e-6817-40c8-8b36-8b28f9b33293",
+                                    "comment_text": "Healing",
+                                    "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                                    "user_id": "abc123",
+                                    "username": "Adil_Accumulus"
+                                }
+                            ],
+                            "favourite": true,
+                            "post_date": "2023-09-14 23:15:00",
+                            "post_id": "01f7670a-3731-4553-92bf-534ff80f0e75",
+                            "post_text": "30 mins delay",
+                            "post_title": "Too many planes",
+                            "upvote_count": "4",
+                            "user_id": "abc122",
+                            "username": "Nasrun360",
+                            "voted": false
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "status": "upcoming",
+        "flight_overview": {
+            "CAName": "tom",
+            "CAPicker": "",
+            "ETA": "",
+            "FOName": "",
+            "FOPicker": "",
+            "aircraft": "",
+            "blockTime": "02:00",
+            "blockTime-FlightTime": "",
+            "callsign": "TR757",
+            "chockOff": "",
+            "chockOn": "",
+            "day": "",
+            "dep": "VTBS",
+            "dest": "WSSS",
+            "flightTime": "",
+            "model": "",
+            "night": "",
+            "password": "",
+            "pob": "",
+            "sta": "2023-10-25 10:15",
+            "std": "2023-10-25 08:15",
+            "time_diff_arr": "8",
+            "time_diff_dep": "7",
+            "totalTime": ""
+        },
+        "route": "",
+        "colour_airport": "",
+        "notam": "",
+        "metar_taf": {
+            "arrival": "",
+            "departure": "",
+            "destination_alternates": "",
+            "enroute_alternates": ""
+        },
+        "notes": "",
+        "aabba_notes": {
+            "arrival": "",
+            "departure": "",
+            "enroute": "",
+            "preflight": ""
+        }
+    }
+]

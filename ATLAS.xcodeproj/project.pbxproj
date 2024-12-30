@@ -28,6 +28,14 @@
 		3E096C2E2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2A2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift */; };
 		3E096C2F2AEF9A6B005F184E /* EventList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2B2AEF9A6B005F184E /* EventList+CoreDataClass.swift */; };
 		3E096C302AEF9A6B005F184E /* EventList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E096C2C2AEF9A6B005F184E /* EventList+CoreDataProperties.swift */; };
+		3E0BEABF2B30645900DF9026 /* event_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEABE2B30645800DF9026 /* event_data.json */; };
+		3E0BEAC12B30655200DF9026 /* flightoverview_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEAC02B30655200DF9026 /* flightoverview_data.json */; };
+		3E0BEAC32B3065CF00DF9026 /* recency_data_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEAC22B3065CF00DF9026 /* recency_data_new.json */; };
+		3E0BEAC52B306A6000DF9026 /* sector_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEAC42B306A6000DF9026 /* sector_data.json */; };
+		3E0BEAC72B306A6B00DF9026 /* sector_data_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEAC62B306A6B00DF9026 /* sector_data_new.json */; };
+		3E0BEAC92B306FFC00DF9026 /* airport_data_color_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEAC82B306FFC00DF9026 /* airport_data_color_new.json */; };
+		3E0BEACB2B3078AA00DF9026 /* waypoint_data_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEACA2B3078AA00DF9026 /* waypoint_data_new.json */; };
+		3E0BEACD2B307C6300DF9026 /* traffic_data_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E0BEACC2B307C6300DF9026 /* traffic_data_new.json */; };
 		3E15A4982AE8B8DA000DA474 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A4972AE8B8DA000DA474 /* CustomError.swift */; };
 		3E2BA82E2ACDB874009ABCC2 /* NotamSubSectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */; };
 		3E2BA8322ACDC73B009ABCC2 /* RecencyNumberModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */; };
@@ -413,6 +421,7 @@
 		3EB9DAE62A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE42A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift */; };
 		3EB9DAE92A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE72A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift */; };
 		3EB9DAEA2A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */; };
+		3EBFE6872B0474C9000C78D0 /* notam_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE6862B0474C9000C78D0 /* notam_data.json */; };
 		3ECD577D2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD577C2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift */; };
 		3ECD57942A98E19300C5FEF3 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD57932A98E19300C5FEF3 /* MapViewModel.swift */; };
 		3ECD57962A98F83C00C5FEF3 /* ListViewSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD57952A98F83C00C5FEF3 /* ListViewSeparator.swift */; };
@@ -564,6 +573,14 @@
 		3E096C2A2AEF9A6B005F184E /* AirportMapList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirportMapList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E096C2B2AEF9A6B005F184E /* EventList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E096C2C2AEF9A6B005F184E /* EventList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E0BEABE2B30645800DF9026 /* event_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event_data.json; sourceTree = "<group>"; };
+		3E0BEAC02B30655200DF9026 /* flightoverview_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flightoverview_data.json; sourceTree = "<group>"; };
+		3E0BEAC22B3065CF00DF9026 /* recency_data_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = recency_data_new.json; sourceTree = "<group>"; };
+		3E0BEAC42B306A6000DF9026 /* sector_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sector_data.json; sourceTree = "<group>"; };
+		3E0BEAC62B306A6B00DF9026 /* sector_data_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sector_data_new.json; sourceTree = "<group>"; };
+		3E0BEAC82B306FFC00DF9026 /* airport_data_color_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airport_data_color_new.json; sourceTree = "<group>"; };
+		3E0BEACA2B3078AA00DF9026 /* waypoint_data_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waypoint_data_new.json; sourceTree = "<group>"; };
+		3E0BEACC2B307C6300DF9026 /* traffic_data_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traffic_data_new.json; sourceTree = "<group>"; };
 		3E15A4972AE8B8DA000DA474 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		3E2BA82D2ACDB874009ABCC2 /* NotamSubSectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotamSubSectionRowView.swift; sourceTree = "<group>"; };
 		3E2BA8312ACDC73B009ABCC2 /* RecencyNumberModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecencyNumberModalView.swift; sourceTree = "<group>"; };
@@ -948,6 +965,7 @@
 		3EB9DAE42A769BF0009AEDFB /* FuelFlightLevelRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelFlightLevelRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EB9DAE72A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EB9DAE82A769C9F009AEDFB /* FuelReciprocalRwyRefList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FuelReciprocalRwyRefList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3EBFE6862B0474C9000C78D0 /* notam_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notam_data.json; sourceTree = "<group>"; };
 		3ECD577C2A95F1EC00C5FEF3 /* EnrouteModalWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrouteModalWheel.swift; sourceTree = "<group>"; };
 		3ECD57932A98E19300C5FEF3 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		3ECD57952A98F83C00C5FEF3 /* ListViewSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewSeparator.swift; sourceTree = "<group>"; };
@@ -1939,13 +1957,22 @@
 			isa = PBXGroup;
 			children = (
 				3EEBE63B2AB1A0FC00421AFF /* waypoint_data.json */,
+				3E0BEACA2B3078AA00DF9026 /* waypoint_data_new.json */,
+				3EBFE6862B0474C9000C78D0 /* notam_data.json */,
+				3E0BEABE2B30645800DF9026 /* event_data.json */,
+				3E0BEAC02B30655200DF9026 /* flightoverview_data.json */,
 				3E7291182ABD83C3000FF295 /* recency_data.json */,
+				3E0BEAC22B3065CF00DF9026 /* recency_data_new.json */,
 				3E7291162ABD49E4000FF295 /* logbook_data.json */,
 				3EEBE63C2AB1A15E00421AFF /* airport_data.json */,
 				3EEBE6402AB1A74900421AFF /* airport_data_color.json */,
+				3E0BEAC82B306FFC00DF9026 /* airport_data_color_new.json */,
 				3EEBE63E2AB1A17300421AFF /* aabba_data.json */,
 				3E7291532AC3B7E6000FF295 /* aabba_note_data.json */,
 				3EEBE6422AB1A8D200421AFF /* traffic_data.json */,
+				3E0BEACC2B307C6300DF9026 /* traffic_data_new.json */,
+				3E0BEAC42B306A6000DF9026 /* sector_data.json */,
+				3E0BEAC62B306A6B00DF9026 /* sector_data_new.json */,
 				3E7292772ACC8C25000FF295 /* testing_data.json */,
 				3ED754722A11E1BC003072A1 /* Preview Assets.xcassets */,
 			);
@@ -2444,25 +2471,34 @@
 				3EEBE65D2AB1E59A00421AFF /* waypoint_data.json in Resources */,
 				3E82505F2A1BAE0A008F616D /* Inter-Medium.ttf in Resources */,
 				3E8250642A1BAE0A008F616D /* Inter-Light.ttf in Resources */,
+				3E0BEACB2B3078AA00DF9026 /* waypoint_data_new.json in Resources */,
 				3EEBE63D2AB1A15E00421AFF /* airport_data.json in Resources */,
 				3ED754732A11E1BC003072A1 /* Preview Assets.xcassets in Resources */,
 				3E8250632A1BAE0A008F616D /* Inter-Bold.ttf in Resources */,
 				3E8250612A1BAE0A008F616D /* Inter-Thin.ttf in Resources */,
+				3EBFE6872B0474C9000C78D0 /* notam_data.json in Resources */,
 				3E7291542AC3B7E6000FF295 /* aabba_note_data.json in Resources */,
 				3E63FC5A2A9AD172004BD54B /* WorldCoordinates.plist in Resources */,
 				3EECB85B2A716362009D4971 /* GoogleService-Info.plist in Resources */,
+				3E0BEAC72B306A6B00DF9026 /* sector_data_new.json in Resources */,
 				3EEBE6432AB1A8D200421AFF /* traffic_data.json in Resources */,
 				3E8250602A1BAE0A008F616D /* Inter-Black.ttf in Resources */,
 				3EEBE63F2AB1A17300421AFF /* aabba_data.json in Resources */,
+				3E0BEAC12B30655200DF9026 /* flightoverview_data.json in Resources */,
 				3E8250652A1BAE0A008F616D /* Inter-Regular.ttf in Resources */,
 				3EEBE6412AB1A74900421AFF /* airport_data_color.json in Resources */,
+				3E0BEAC52B306A6000DF9026 /* sector_data.json in Resources */,
 				3E7292782ACC8C25000FF295 /* testing_data.json in Resources */,
+				3E0BEABF2B30645900DF9026 /* event_data.json in Resources */,
 				3E7291192ABD83C3000FF295 /* recency_data.json in Resources */,
 				3ED754702A11E1BC003072A1 /* Assets.xcassets in Resources */,
+				3E0BEAC32B3065CF00DF9026 /* recency_data_new.json in Resources */,
 				3E8250662A1BAE0A008F616D /* Inter-ExtraLight.ttf in Resources */,
 				3E8250622A1BAE0A008F616D /* Inter-SemiBold.ttf in Resources */,
 				3E7291172ABD49E4000FF295 /* logbook_data.json in Resources */,
 				3EF221922AAC5738000B8FFB /* example1.ics in Resources */,
+				3E0BEAC92B306FFC00DF9026 /* airport_data_color_new.json in Resources */,
+				3E0BEACD2B307C6300DF9026 /* traffic_data_new.json in Resources */,
 				3E8250672A1BAE0A008F616D /* Inter-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

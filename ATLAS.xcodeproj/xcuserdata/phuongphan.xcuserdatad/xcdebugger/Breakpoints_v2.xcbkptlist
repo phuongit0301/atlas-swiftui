@@ -7183,8 +7183,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "702"
-            endingLineNumber = "702"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "addOverlay()"
             landmarkType = "7">
             <Locations>
@@ -7309,8 +7309,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1241"
-            endingLineNumber = "1241"
+            startingLineNumber = "1213"
+            endingLineNumber = "1213"
             landmarkName = "Coordinator"
             landmarkType = "3">
          </BreakpointContent>
@@ -9332,8 +9332,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "887"
-            endingLineNumber = "887"
+            startingLineNumber = "859"
+            endingLineNumber = "859"
             landmarkName = "extractFiveLetterWords(from:)"
             landmarkType = "7">
             <Locations>
@@ -9641,7 +9641,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6A0734EB-0100-4BBF-BA7E-D8E264571412"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/LoginView/CreatePasswordView.swift"
@@ -9719,7 +9719,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "DBDDDBCB-9D27-4B1A-B942-B2964240AED2"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ATLAS/LoginView/CreatePasswordView.swift"
@@ -10732,6 +10732,21 @@
                   endingLineNumber = "246"
                   offsetFromSymbolStart = "860">
                </Location>
+               <Location
+                  uuid = "C474E4DD-E823-42D4-BF03-23CE747B5958 - 112492308bb13600"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in ATLAS.FlightForm.addEvent() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/HomeSections/CalendarSectionView/Forms/FlightForm.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "972">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -10761,8 +10776,8 @@
             filePath = "ATLAS/FlightPageSections/PreflightSectionView/SummarySubSectionView/SummarySubSectionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
+            startingLineNumber = "757"
+            endingLineNumber = "757"
             landmarkName = "create()"
             landmarkType = "7">
          </BreakpointContent>
@@ -12058,6 +12073,21 @@
                   startingLineNumber = "266"
                   endingLineNumber = "266"
                   offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "E5EAB175-ECAF-4CA7-96B7-73047CBF9613 - 112492308bb133cb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in ATLAS.FlightForm.addEvent() -&gt; ()"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/HomeSections/CalendarSectionView/Forms/FlightForm.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "6688">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -14101,8 +14131,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "713"
-            endingLineNumber = "713"
+            startingLineNumber = "685"
+            endingLineNumber = "685"
             landmarkName = "addRoute()"
             landmarkType = "7">
          </BreakpointContent>
@@ -14117,8 +14147,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "708"
-            endingLineNumber = "708"
+            startingLineNumber = "680"
+            endingLineNumber = "680"
             landmarkName = "addRoute()"
             landmarkType = "7">
          </BreakpointContent>
@@ -14133,8 +14163,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "900"
-            endingLineNumber = "900"
+            startingLineNumber = "872"
+            endingLineNumber = "872"
             landmarkName = "extractLatLong(forSelection:inDictionaries:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14149,8 +14179,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "803"
-            endingLineNumber = "803"
+            startingLineNumber = "775"
+            endingLineNumber = "775"
             landmarkName = "addAirport(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14165,8 +14195,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1010"
-            endingLineNumber = "1010"
+            startingLineNumber = "982"
+            endingLineNumber = "982"
             landmarkName = "Coordinator"
             landmarkType = "3">
          </BreakpointContent>
@@ -14322,8 +14352,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1308"
-            endingLineNumber = "1308"
+            startingLineNumber = "1310"
+            endingLineNumber = "1310"
             landmarkName = "getOrPostFlightPlan()"
             landmarkType = "7">
             <Locations>
@@ -14430,8 +14460,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "986"
-            endingLineNumber = "986"
+            startingLineNumber = "958"
+            endingLineNumber = "958"
             landmarkName = "updateUIView(_:context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14446,8 +14476,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1047"
-            endingLineNumber = "1047"
+            startingLineNumber = "1019"
+            endingLineNumber = "1019"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
             <Locations>
@@ -14494,8 +14524,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1004"
-            endingLineNumber = "1004"
+            startingLineNumber = "976"
+            endingLineNumber = "976"
             landmarkName = "Coordinator"
             landmarkType = "3">
             <Locations>
@@ -14587,8 +14617,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2343"
-            endingLineNumber = "2343"
+            startingLineNumber = "2345"
+            endingLineNumber = "2345"
             landmarkName = "initDataNoteAabbaDepature(_:_:)"
             landmarkType = "7">
             <Locations>
@@ -14650,8 +14680,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1309"
-            endingLineNumber = "1309"
+            startingLineNumber = "1311"
+            endingLineNumber = "1311"
             landmarkName = "getOrPostFlightPlan()"
             landmarkType = "7">
          </BreakpointContent>
@@ -14666,8 +14696,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1313"
-            endingLineNumber = "1313"
+            startingLineNumber = "1315"
+            endingLineNumber = "1315"
             landmarkName = "getOrPostFlightPlan()"
             landmarkType = "7">
             <Locations>
@@ -14746,6 +14776,36 @@
                   endingLineNumber = "1316"
                   offsetFromSymbolStart = "5292">
                </Location>
+               <Location
+                  uuid = "467F28F3-753A-4F8C-B2CF-0C8715556763 - ae5091e12d93ac31"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ATLAS.CoreDataModelState.getOrPostFlightPlan() async -&gt; Swift.Bool"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1318"
+                  endingLineNumber = "1318"
+                  offsetFromSymbolStart = "168">
+               </Location>
+               <Location
+                  uuid = "467F28F3-753A-4F8C-B2CF-0C8715556763 - 3196aafc82ff3459"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(16) suspend resume partial function for ATLAS.CoreDataModelState.getOrPostFlightPlan() async -&gt; Swift.Bool"
+                  moduleName = "ATLAS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phuongphan/Working/Swift/Atlas/ATLAS/ATLAS/PersistenceController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1318"
+                  endingLineNumber = "1318"
+                  offsetFromSymbolStart = "5292">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -14759,8 +14819,8 @@
             filePath = "ATLAS/PersistenceController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1310"
-            endingLineNumber = "1310"
+            startingLineNumber = "1312"
+            endingLineNumber = "1312"
             landmarkName = "getOrPostFlightPlan()"
             landmarkType = "7">
             <Locations>
@@ -14852,8 +14912,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1014"
-            endingLineNumber = "1014"
+            startingLineNumber = "986"
+            endingLineNumber = "986"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14884,8 +14944,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1232"
-            endingLineNumber = "1232"
+            startingLineNumber = "1204"
+            endingLineNumber = "1204"
             landmarkName = "mapView(_:didSelect:)"
             landmarkType = "7">
             <Locations>
@@ -14962,8 +15022,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
+            startingLineNumber = "983"
+            endingLineNumber = "983"
             landmarkName = "mapViewDidChangeVisibleRegion(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -14994,8 +15054,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "636"
-            endingLineNumber = "636"
+            startingLineNumber = "625"
+            endingLineNumber = "625"
             landmarkName = "onAppearMapOverlay()"
             landmarkType = "7">
             <Locations>
@@ -15058,8 +15118,8 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "988"
-            endingLineNumber = "988"
+            startingLineNumber = "960"
+            endingLineNumber = "960"
             landmarkName = "updateUIView(_:context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -15074,9 +15134,25 @@
             filePath = "ATLAS/FlightPageSections/Maps/MapView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1224"
-            endingLineNumber = "1224"
+            startingLineNumber = "1196"
+            endingLineNumber = "1196"
             landmarkName = "mapView(_:didSelect:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C5175D5-FD4E-49C5-A6E7-AA9493C1B11B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ATLAS/FlightPageSections/Maps/Popover/WeatherPopoverView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "onFlight(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

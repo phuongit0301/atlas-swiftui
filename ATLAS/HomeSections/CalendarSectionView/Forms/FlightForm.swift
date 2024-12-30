@@ -263,7 +263,8 @@ struct FlightForm: View {
                     "std": "\(startDateFm) \(startTimeFmSave)",
                     "sta": "\(endDateFm) \(endTimeFmSave)"
                 ]
-                let response = await remoteService.getSectorData(payload)
+//                let response = await remoteService.getSectorData(payload)
+                let response: SectorDataJson? = remoteService.load("sector_data.json")
                 
                 do {
                     let eventSector = EventSectorList(context: persistenceController.container.viewContext)

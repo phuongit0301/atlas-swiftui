@@ -1,0 +1,33 @@
+{
+    "depICAO": "VTBS",
+    "arrICAO": "WSSS",
+    "depLat": "13.6811",
+    "depLong": "100.747",
+    "dep_time_diff": "7",
+    "dep_sunrise_time": "23:16",
+    "dep_sunset_time": "10:47",
+    "dep_next_sunrise_time": "23:16",
+    "arrLat": "1.35019",
+    "arrLong": "103.994",
+    "arr_time_diff": "8",
+    "arr_sunrise_time": "22:47",
+    "arr_sunset_time": "10:50",
+    "arr_next_sunrise_time": "22:47",
+    "route": "VTBS SID KIGOB M904 BUT Y11 PIDEL M904 UPRON Q803 ELALO STAR WSSS",
+    "route_waypoints": [
+        "VTBS",
+        "KIGOB",
+        "BUT",
+        "PIDEL",
+        "DIPUN",
+        "SIRAT",
+        "TONIK",
+        "TIDAR",
+        "ODONO",
+        "UPRON",
+        "IPDOL",
+        "KEXOL",
+        "ELALO",
+        "WSSS"
+    ]
+}

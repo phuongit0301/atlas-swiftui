@@ -319,9 +319,9 @@ struct SummarySubSectionView: View {
                                         Button(action: {
                                             self.isEdit.toggle()
                                             
-                                            if isRouteFormChange {
+//                                            if isRouteFormChange {
                                                 create()
-                                            }
+//                                            }
                                         }, label: {
                                             Text("Done").foregroundColor(Color.theme.azure).font(.system(size: 17, weight: .regular))
                                         })
@@ -600,16 +600,22 @@ struct SummarySubSectionView: View {
                 readData()
                 
                 let payloadNotam: [String: Any] = [
-                    "depAirport": [
-                        "Airport": dataFlightOverview?.unwrappedDep ?? "",
-                        "std": dataFlightOverview?.unwrappedStd ?? ""
+                    "BKK": [
+                        "time": "2023-09-08 20:00",
+                        "category": "departure"
                     ],
-                    "arrAirport": [
-                        "Airport": dataFlightOverview?.unwrappedDest ?? "",
-                        "sta": dataFlightOverview?.unwrappedSta ?? ""
+                    "SIN": [
+                        "time": "2023-09-08 22:00",
+                        "category": "arrival"
                     ],
-                    "enrAirports": payloadEnroute,
-                    "altnAirports": payloadDestination
+                    "WMKP": [
+                        "time": "2023-09-08 22:00",
+                        "category": "enrAltn"
+                    ],
+                    "WIPA": [
+                        "time": "2023-09-08 22:00",
+                        "category": "destAltn"
+                    ]
                 ]
                 
                 let payloadMap: [String: Any] = [
@@ -628,33 +634,33 @@ struct SummarySubSectionView: View {
                 ]
                 
                 print("payloadNotam========\(payloadNotam)")
-                coreDataModel.isTrafficLoading = true
+//                coreDataModel.isTrafficLoading = true
                 coreDataModel.isMapAabbaLoading = true
-                coreDataModel.isMapWaypointLoading = true
-                coreDataModel.isMapAirportColorLoading = true
-                coreDataModel.isAabbaNoteLoading = true
-                coreDataModel.isNotamLoading = true
+//                coreDataModel.isMapWaypointLoading = true
+//                coreDataModel.isMapAirportColorLoading = true
+//                coreDataModel.isAabbaNoteLoading = true
+//                coreDataModel.isNotamLoading = true
                 
                 group.addTask(priority: .background) {
                     await handleTraffic(payloadMap)
                 }
-                
+
                 group.addTask(priority: .background) {
                     await handleMapAabba(payloadMap)
                 }
-                
+
                 group.addTask(priority: .background) {
                     await handleWaypoint(payloadMap)
                 }
-                
+
                 group.addTask(priority: .background) {
                     await handleAirport(payloadMap)
                 }
-                
+
                 group.addTask(priority: .background) {
                     await handleAabbaNote(payloadAabbaNote)
                 }
-                
+
                 group.addTask(priority: .background) {
                     await handleNotam(payloadNotam)
                 }
@@ -792,142 +798,146 @@ struct SummarySubSectionView: View {
         print("handle traffic")
         
         coreDataModel.isTrafficLoading = true
-        await remoteService.getMapTrafficData(payload, completion: { (success, responseTraffic) in
+//        await remoteService.getMapTrafficData(payload, completion: { (success, responseTraffic) in
             Task {
-                if success {
-                    if responseTraffic.count > 0 {
-                        print("inside handle traffic======\(responseTraffic)")
-                        await coreDataModel.deleteAllTrafficMap()
-                        coreDataModel.initDataTraffic(responseTraffic)
-                    }
-                    print("end handle traffic")
-                    coreDataModel.isTrafficLoading = false
+                let responseTraffic: [ITrafficData] = await remoteService.load("traffic_data_new.json")
+                if responseTraffic.count > 0 {
+                    print("inside handle traffic======\(responseTraffic)")
+                    await coreDataModel.deleteAllTrafficMap()
+                    coreDataModel.initDataTraffic(responseTraffic)
                 }
+                print("end handle traffic")
+                coreDataModel.isTrafficLoading = false
             }
-        })
+//        })
     }
     
     func handleMapAabba(_ payload: [String: Any]) async {
         print("handle map aabba")
         coreDataModel.isMapAabbaLoading = true
         
-        await remoteService.getMapAabbaData(payload, completion: { (success, responseMapAabba) in
+//        await remoteService.getMapAabbaData(payload, completion: { (success, responseMapAabba) in
             Task {
-                if success {
-                    if responseMapAabba.count > 0 {
+                let response: [IAabbaData] = await remoteService.load("aabba_data.json")
+                if response.count > 0 {
+                    if response.count > 0 {
                         await coreDataModel.deleteAllMapAabbaCommentList()
                         await  coreDataModel.deleteAllMapAabbaPostList()
                         await coreDataModel.deleteAllMapAabbMapList()
                         
-                        coreDataModel.initDataAabba(responseMapAabba)
+                        coreDataModel.initDataAabba(response)
                     }
                     print("end map aabba")
                     coreDataModel.isMapAabbaLoading = false
                 }
             }
-        })
+//        })
     }
     
     func handleWaypoint(_ payload: [String: Any]) async {
         print("handle waypoint")
         coreDataModel.isMapWaypointLoading = true
         
-        await remoteService.getMapWaypointData(payload, completion: { (success, responseWaypoint) in
+//        await remoteService.getMapWaypointData(payload, completion: { (success, responseWaypoint) in
             Task {
-                if success {
-                    if responseWaypoint.count > 0 {
-                        print("inside waypoint======\(responseWaypoint)")
-                        await coreDataModel.deleteAllWaypointList()
-                        coreDataModel.initDataWaypoint(responseWaypoint)
-                    }
-                    print("end waypoint")
-                    coreDataModel.isMapWaypointLoading = false
+                let responseWaypoint: [IWaypointData] = await remoteService.load("waypoint_data_new.json")
+                
+                if responseWaypoint.count > 0 {
+                    print("inside waypoint======\(responseWaypoint)")
+                    await coreDataModel.deleteAllWaypointList()
+                    coreDataModel.initDataWaypoint(responseWaypoint)
                 }
+                print("end waypoint")
+                coreDataModel.isMapWaypointLoading = false
             }
-        })
+//        })
     }
     
     func handleAirport(_ payload: [String: Any]) async {
         print("handle aiport")
         
         coreDataModel.isMapAirportColorLoading = true
-        await remoteService.getMapAirportColorData(payload, completion: { (success, responseColorAirport) in
+//        await remoteService.getMapAirportColorData(payload, completion: { (success, responseColorAirport) in
             Task {
-                if success {
-                    if responseColorAirport.colour_airports_data.count > 0 {
+                let responseAirport: [IAirportColor] = await remoteService.load("airport_data_color_new.json")
+                print("responseAirport---------\(responseAirport)");
+                if responseAirport.count > 0 {
+                    if responseAirport.count > 0 {
                         await coreDataModel.deleteAllAirportColorList()
-                        coreDataModel.initDataAirportMapColor(responseColorAirport.colour_airports_data, payload)
+                        coreDataModel.initDataAirportMapColor(responseAirport, payload)
                     }
                     print("end aiport")
                     coreDataModel.isMapAirportColorLoading = false
                 }
             }
-        })
+//        })
     }
     
     func handleAabbaNote(_ payload: [String: Any]) async {
         print("handle aabba note")
         coreDataModel.isAabbaNoteLoading = true
         
-        await remoteService.getAabbaNoteDataCallback(payload, completion: { (success, responseAabbaNote) in
+        let responseAabbaNote: [String: [INoteResponse]] = await remoteService.load("aabba_note_data.json")
+//        await remoteService.getAabbaNoteDataCallback(payload, completion: { (success, responseAabbaNote) in
             Task {
-                if success {
+//                if success {
                     if responseAabbaNote.count > 0, let eventList = coreDataModel.selectedEvent {
                         await coreDataModel.deleteAllAabbaNoteList(eventList)
                         coreDataModel.initDataMapAabbaNotes(responseAabbaNote, eventList)
                     }
                     print("end aabba note")
                     coreDataModel.isAabbaNoteLoading = false
-                }
+//                }
             }
-        })
+//        })
     }
     
     func handleNotam(_ payload: [String: Any]) async {
         print("handle notam")
         coreDataModel.isNotamLoading = true
         
-        await remoteService.getNotamDataCallback(payload, completion: { (success, responseNotam) in
-            Task {
-                if success {
-                    if let metarTafData = responseNotam?.metarTafData {
-                        print("inside metar")
-                        await coreDataModel.deleteAllMetarTaf()
-                        
-                        coreDataModel.initDepDataMetarTaf(metarTafData.depMetarTaf, type: "depMetarTaf")
-                        coreDataModel.initArrDataMetarTaf(metarTafData.arrMetarTaf, type: "arrMetarTaf")
-                        
-                        if metarTafData.altnMetarTaf.count > 0 {
-                            coreDataModel.initEnrDataMetarTaf(metarTafData.altnMetarTaf, type: "altnMetarTaf")
-                        }
-                        
-                        if metarTafData.enrMetarTaf.count > 0 {
-                            coreDataModel.initEnrDataMetarTaf(metarTafData.enrMetarTaf, type: "enrMetarTaf")
-                        }
+//        await remoteService.getNotamDataCallback(payload, completion: { (success, responseNotam) in
+        Task {
+            let responseNotam: INotamWXDataJson = await remoteService.load("notam_data.json")
+            print("responseNotam===========\(responseNotam)")
+            
+                if responseNotam.metarTafData != nil {
+                    print("inside metar")
+                    await coreDataModel.deleteAllMetarTaf()
+                    
+                    coreDataModel.initDepDataMetarTaf(responseNotam.metarTafData.depMetarTaf, type: "depMetarTaf")
+                    coreDataModel.initArrDataMetarTaf(responseNotam.metarTafData.arrMetarTaf, type: "arrMetarTaf")
+                    
+                    if responseNotam.metarTafData.altnMetarTaf.count > 0 {
+                        coreDataModel.initEnrDataMetarTaf(responseNotam.metarTafData.altnMetarTaf, type: "altnMetarTaf")
                     }
                     
-                    if let notamsData = responseNotam?.notamsData {
-                        print("inside notam")
-                        await coreDataModel.deleteAllNotam()
-                        coreDataModel.initDataNotams(notamsData)
+                    if responseNotam.metarTafData.enrMetarTaf.count > 0 {
+                        coreDataModel.initEnrDataMetarTaf(responseNotam.metarTafData.enrMetarTaf, type: "enrMetarTaf")
                     }
-                    
-                    coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
-                    coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
-                    coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
-                    coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
-                    coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
-                    coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
-                    coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
-                    coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
-                    coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
-                    coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
-                    
-                    print("end Notam")
-                    coreDataModel.isNotamLoading = false
                 }
+                
+                if responseNotam.notamsData != nil {
+                    print("inside notam")
+                    await coreDataModel.deleteAllNotam()
+                    coreDataModel.initDataNotams(responseNotam.notamsData)
+                }
+                
+                coreDataModel.dataDepartureMetarTaf = coreDataModel.readDataMetarTafByType("depMetarTaf")
+                coreDataModel.dataEnrouteMetarTaf = coreDataModel.readDataMetarTafByType("enrMetarTaf")
+                coreDataModel.dataArrivalMetarTaf = coreDataModel.readDataMetarTafByType("arrMetarTaf")
+                coreDataModel.dataDestinationMetarTaf = coreDataModel.readDataMetarTafByType("altnMetarTaf")
+                coreDataModel.dataNotams = coreDataModel.readDataNotamsList()
+                coreDataModel.dataNotamsRef = coreDataModel.readDataNotamsRefList()
+                coreDataModel.dataDepartureNotamsRef = coreDataModel.readDataNotamsByType("depNotams")
+                coreDataModel.dataEnrouteNotamsRef = coreDataModel.readDataNotamsByType("enrNotams")
+                coreDataModel.dataArrivalNotamsRef = coreDataModel.readDataNotamsByType("arrNotams")
+                coreDataModel.dataDestinationNotamsRef = coreDataModel.readDataNotamsByType("destNotams")
+                
+                print("end Notam")
+                coreDataModel.isNotamLoading = false
             }
-        })
+//        }
     }
     
     func renderTime(_ startDate: String, _ endDate: String) -> String {

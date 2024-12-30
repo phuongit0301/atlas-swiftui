@@ -70,17 +70,17 @@ struct ATLASApp: App {
                             .onAppear {
                                 Task {
                                     // After user login
-                                    if userID != "" && isBoardingCompleted == "" {
-                                        coreDataModel.isLoginLoading = true
-                                        await coreDataModel.checkAndSyncOrPostData()
-                                        isLogin = "0"
-                                        coreDataModel.isLoginLoading = false
-                                    }
+//                                    if userID != "" && isBoardingCompleted == "" {
+//                                        coreDataModel.isLoginLoading = true
+//                                        await coreDataModel.checkAndSyncOrPostData()
+//                                        isLogin = "0"
+//                                        coreDataModel.isLoginLoading = false
+//                                    }
                                     
                                     // After Onboarding
-                                    if isBoardingCompleted == "1" {
-                                        await coreDataModel.checkAndSyncData()
-                                    }
+//                                    if isBoardingCompleted == "1" {
+//                                        await coreDataModel.checkAndSyncData()
+//                                    }
                                     
                                     let response = await remoteServiceController.getWeatherData()
                                     if let past = response?.radar.past, past.count > 0, let firstItem = past.first {
@@ -103,7 +103,7 @@ struct ATLASApp: App {
                 Task {
                     coreDataModel.loading = true
                     print("fetch reader")
-                    await coreDataModel.checkAndSyncDataNote()
+//                    await coreDataModel.checkAndSyncDataNote()
                     await coreDataModel.initFetchData()
                     coreDataModel.loading = false
                 }

@@ -1,0 +1,14 @@
+{
+    "depLat": "13.6811",
+    "depLong": "100.747",
+    "dep_time_diff": "7",
+    "dep_sunrise_time": "23:08",
+    "dep_sunset_time": "10:58",
+    "dep_next_sunrise_time": "23:08",
+    "arrLat": "1.35019",
+    "arrLong": "103.994",
+    "arr_time_diff": "8",
+    "arr_sunrise_time": "22:48",
+    "arr_sunset_time": "10:52",
+    "arr_next_sunrise_time": "22:47"
+}
